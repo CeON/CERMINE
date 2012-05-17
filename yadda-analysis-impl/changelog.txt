@@ -1,0 +1,8 @@
+==VERSION: 0.1.2==
+* unspecified changes, nothing to see here
+
+==VERSION: 0.1.1==
+* unspecified changes, nothing to see here
+
+==VERSION: 0.1.0==
+* Initial release

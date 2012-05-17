@@ -1,0 +1,161 @@
+<class-diagram version="1.0.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.nodes.iterator.JournalMetaRepoIteratorBuilder" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/nodes/iterator/JournalMetaRepoIteratorBuilder.java" 
+    binary="false">    
+    <position x="196" y="83" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.JournalPairMetaData" 
+    project="process-nodes" file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/JournalPairMetaData.java" 
+    binary="false">    
+    <position x="325" y="363" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.nodes.processing.CalculateSimilarityProcessingNode" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/nodes/processing/CalculateSimilarityProcessingNode.java" 
+    binary="false">    
+    <position x="751" y="73" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="4" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.process.SimilarityCalculateMethod" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/process/SimilarityCalculateMethod.java" binary="false">    
+    <position x="674" y="165" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.process.BasicSimilarityCaculateMethod" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/process/BasicSimilarityCaculateMethod.java" binary="false">    
+    <position x="661" y="289" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.DoubleJournalSimilarity" 
+    project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/DoubleJournalSimilarity.java" binary="false">    
+    <position x="915" y="226" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="7" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.JournalSimilarity" 
+    project="process-nodes" file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/JournalSimilarity.java" 
+    binary="false">    
+    <position x="1112" y="124" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.nodes.writer.JournalSimilarityRepoWritingNode" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/nodes/writer/JournalSimilarityRepoWritingNode.java" 
+    binary="false">    
+    <position x="203" y="733" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.repo.sim.SimMatrixRepo" 
+    project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/SimMatrixRepo.java" binary="false">    
+    <position x="801" y="907" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="10" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.common.repo.sim.connector.SimMatrixRepoConnector" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/connector/SimMatrixRepoConnector.java" 
+    binary="false">    
+    <position x="437" y="914" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="11" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.common.repo.sim.connector.SimRepoConnector" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/connector/SimRepoConnector.java" 
+    binary="false">    
+    <position x="542" y="714" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="12" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.repo.sim.SimRepo" 
+    project="process-nodes" file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/SimRepo.java" 
+    binary="false">    
+    <position x="888" y="798" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <association>    
+    <end type="SOURCE" nodeId="10" navigable="false">      
+      <attribute name="repoInstance"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <end type="SOURCE" nodeId="5"/>    
+    <end type="TARGET" nodeId="4"/>  
+  </realization>  
+  <association>    
+    <end type="SOURCE" nodeId="5" navigable="false">      
+      <attribute name="journalPair"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="9" navigable="false">      
+      <attribute name="instance"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <end type="SOURCE" nodeId="6"/>    
+    <end type="TARGET" nodeId="7"/>  
+  </realization>  
+  <realization>    
+    <end type="SOURCE" nodeId="10"/>    
+    <end type="TARGET" nodeId="11"/>  
+  </realization>  
+  <realization>    
+    <end type="SOURCE" nodeId="9"/>    
+    <end type="TARGET" nodeId="12"/>  
+  </realization>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

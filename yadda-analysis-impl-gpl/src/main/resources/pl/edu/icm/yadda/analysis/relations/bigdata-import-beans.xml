@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/util classpath:/org/springframework/beans/factory/xml/spring-util-2.0.xsd">
+
+	<bean id="sesameRepository" class="org.openrdf.repository.sail.SailRepository" init-method="initialize">
+		<constructor-arg>
+			<bean class="org.openrdf.sail.nativerdf.NativeStore">
+				<constructor-arg value="${storeDirectory}" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="sesamePersonDirectory" class="pl.edu.icm.yadda.analysis.relations.SesamePersonDirectory">
+		<property name="repository" ref="sesameRepository" />
+	</bean>
+	<alias name="sesamePersonDirectory" alias="personDirectoryBackend" />
+	<alias name="sesamePersonDirectory" alias="personDirectory" />
+
+	
+	<bean id="singleLinkCustomizedClusterizer" class="pl.edu.icm.yadda.analysis.relations.pj.clusterizer.PJSingleLinkHAC_Customized" />
+
+
+	<bean id="referenceToSameNameProof" class="pl.edu.icm.yadda.analysis.relations.pj.proofs.PJReferenceToSameNameProof" >
+		<property name="repository" ref="sesameRepository" />
+	</bean>	
+	<bean id="tagWordsClue" class="pl.edu.icm.yadda.analysis.relations.pj.clues.PJTagWordsClue" >
+		<property name="repository" ref="sesameRepository" />
+	</bean>
+  	<bean id="strictLanguageClue" class="pl.edu.icm.yadda.analysis.relations.pj.clues.PJStrictLanguageClue" >
+		<property name="repository" ref="sesameRepository" />
+	</bean>
+	<bean id="sameJournalClue" class="pl.edu.icm.yadda.analysis.relations.pj.clues.PJSameJournalClue" >
+		<property name="repository" ref="sesameRepository" />
+	</bean>	
+	<bean id="strictLessThen70YearsClue" class="pl.edu.icm.yadda.analysis.relations.pj.clues.PJStrictLessThen70YearsClue" >
+		<property name="repository" ref="sesameRepository" />
+	</bean>
+	<!-- <bean id="notStrictLanguageClue" class="pl.edu.icm.yadda.analysis.relations.pj.clues.PJNotStrictLanguageClue" >
+		<property name="repository" ref="sesameRepository" />
+	</bean>
+	<bean id="notStrictLessThen70YearsClue" class="pl.edu.icm.yadda.analysis.relations.pj.clues.PJNotStrictLessThen70YearsClue" >
+		<property name="repository" ref="sesameRepository" />
+	</bean> -->
+	
+	<bean id="personDirectoryCreator" class="pl.edu.icm.yadda.analysis.relations.PersonDirectoryCreator">
+		<property name="backend" ref="sesamePersonDirectory" />
+		<property name="weighedDisambiguators">
+			<list>
+				<bean class="pl.edu.icm.yadda.analysis.relations.WeighedDisambiguator">
+					<constructor-arg value="1000.0" />
+					<constructor-arg ref="referenceToSameNameProof" />
+				</bean>
+				<bean class="pl.edu.icm.yadda.analysis.relations.WeighedDisambiguator">
+					<constructor-arg value="1000.0" />
+					<constructor-arg ref="tagWordsClue" />
+				</bean>				
+				<bean class="pl.edu.icm.yadda.analysis.relations.WeighedDisambiguator">
+					<constructor-arg value="1000.0" />
+					<constructor-arg ref="strictLanguageClue" />
+				</bean>				
+				<bean class="pl.edu.icm.yadda.analysis.relations.WeighedDisambiguator">
+					<constructor-arg value="1000.0" />
+					<constructor-arg ref="sameJournalClue" />
+				</bean>
+				<bean class="pl.edu.icm.yadda.analysis.relations.WeighedDisambiguator">
+					<constructor-arg value="1000.0" />
+					<constructor-arg ref="strictLessThen70YearsClue" />
+				</bean>
+			</list>
+		</property>
+		<property name="clusterizer" ref="singleLinkCustomizedClusterizer" />
+		<property name="threshold" value="50"/>
+	</bean>
+</beans>

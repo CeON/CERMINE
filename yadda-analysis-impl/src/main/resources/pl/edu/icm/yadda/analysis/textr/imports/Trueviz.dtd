@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v2.5  - http://www.xmlspy.com -->
+<!--Beta 1 - Document Image Database: XML Storage-->
+<!--Document Definition:-->
+<!ELEMENT Document (DocID,DocTitle,DocPubName,DocVolNum,DocIssueNum,DocMargins,DocDate,DocPages,DocImage,Language,Font,ReadingDir,CharOrient,Classification,GT_Text,Page*)>
+<!ELEMENT DocID EMPTY>
+<!ATTLIST DocID Value CDATA #IMPLIED>
+<!ELEMENT DocTitle EMPTY>
+<!ATTLIST DocTitle Value CDATA #IMPLIED>
+<!ELEMENT DocPubName EMPTY>
+<!ATTLIST DocPubName Value CDATA #IMPLIED>
+<!ELEMENT DocVolNum EMPTY>
+<!ATTLIST DocVolNum Value CDATA #IMPLIED>
+<!ELEMENT DocIssueNum EMPTY>
+<!ATTLIST DocIssueNum Value CDATA  #IMPLIED>
+<!ELEMENT DocMargins EMPTY>
+<!ATTLIST DocMargins Value CDATA #IMPLIED>
+<!ELEMENT DocDate EMPTY>
+<!ATTLIST DocDate Value CDATA #IMPLIED>
+<!ELEMENT DocPages EMPTY>
+<!ATTLIST DocPages Value CDATA #IMPLIED>
+<!ELEMENT DocImage (Name,Format,Depth,Compression,Capture,Quality)>
+<!ATTLIST DocImage >
+<!ELEMENT Name EMPTY>
+<!ATTLIST Name Value CDATA #IMPLIED>
+<!ELEMENT Format EMPTY>
+<!ATTLIST Format Value CDATA #IMPLIED>
+<!ELEMENT Depth EMPTY>
+<!ATTLIST Depth Value CDATA #IMPLIED>
+<!ELEMENT Compression EMPTY>
+<!ATTLIST Compression Value CDATA #IMPLIED>
+<!ELEMENT Capture EMPTY>
+<!ATTLIST Capture Value CDATA #IMPLIED>
+<!ELEMENT Quality EMPTY>
+<!ATTLIST Quality Value CDATA #IMPLIED>
+<!ELEMENT Language EMPTY>
+<!ATTLIST Language Type      CDATA #IMPLIED
+Script     CDATA #IMPLIED
+Codeset CDATA #IMPLIED>
+<!ELEMENT Font EMPTY>
+<!ATTLIST Font Type      CDATA #IMPLIED
+Style      CDATA #IMPLIED
+Spacing CDATA #IMPLIED
+Size       CDATA #IMPLIED>
+<!ELEMENT Alignment EMPTY>
+<!ATTLIST Alignment Value CDATA #IMPLIED>
+<!ELEMENT ReadingDir EMPTY>
+<!ATTLIST ReadingDir Value CDATA #IMPLIED>
+<!ELEMENT CharOrient EMPTY>
+<!ATTLIST CharOrient Value CDATA #IMPLIED>
+<!ELEMENT Classification (Category, Type)>
+<!ATTLIST Classification >
+<!ELEMENT Category EMPTY>
+<!ATTLIST Category Value CDATA #IMPLIED>
+<!ELEMENT Type EMPTY>
+<!ATTLIST Type Value CDATA #IMPLIED>
+<!ELEMENT GT_Text EMPTY>
+<!ATTLIST GT_Text Value CDATA #IMPLIED>
+<!--Page Definition:-->
+<!ELEMENT Page (PageID,PageType,PageNumber,PageColumns,PageNext,PageZones,Language?,Font?,Alignment?,ReadingDir?,CharOrient?,Classification?,GT_Text?,Zone*)>
+<!ELEMENT PageID EMPTY>
+<!ATTLIST PageID Value CDATA #IMPLIED>
+<!ELEMENT PageType EMPTY>
+<!ATTLIST PageType Value CDATA #IMPLIED>
+<!ELEMENT PageNumber EMPTY>
+<!ATTLIST PageNumber Value CDATA #IMPLIED>
+<!ELEMENT PageColumns EMPTY>
+<!ATTLIST PageColumns Value CDATA #IMPLIED>
+<!ELEMENT PageNext EMPTY>
+<!ATTLIST PageNext Value CDATA #IMPLIED>
+<!ELEMENT PageZones EMPTY>
+<!ATTLIST PageZones Value CDATA #IMPLIED>
+<!--Zone Definition:-->
+<!ELEMENT Zone (ZoneID,ZoneCorners,ZoneNext,ZoneInsets,ZoneLines,Language?,Font?,Alignment?,ReadingDir?,CharOrient?,Classification?,GT_Text?,Line*)>
+<!ELEMENT ZoneID EMPTY>
+<!ATTLIST ZoneID Value CDATA #IMPLIED>
+<!ELEMENT ZoneCorners (Vertex*)>
+<!ATTLIST ZoneCorners >
+<!ELEMENT ZoneNext EMPTY>
+<!ATTLIST ZoneNext Value CDATA #IMPLIED>
+<!ELEMENT ZoneInsets EMPTY>
+<!ATTLIST ZoneInsets Top      CDATA #IMPLIED
+Bottom CDATA #IMPLIED
+Left      CDATA #IMPLIED
+Right    CDATA #IMPLIED>
+<!ELEMENT ZoneLines EMPTY>
+<!ATTLIST ZoneLines Value CDATA #IMPLIED>
+<!--Line Definition:-->
+<!ELEMENT Line (LineID,LineCorners,LineNext,LineNumChars,Language?,Font?,Alignment?,ReadingDir?,CharOrient?,GT_Text?,(Word | Character)*)>
+<!ELEMENT LineID EMPTY>
+<!ATTLIST LineID Value CDATA #IMPLIED>
+<!ELEMENT LineCorners (Vertex*)>
+<!ATTLIST LineCorners >
+<!ELEMENT LineNext EMPTY>
+<!ATTLIST LineNext Value CDATA #IMPLIED>
+<!ELEMENT LineNumChars EMPTY>
+<!ATTLIST LineNumChars Value CDATA #IMPLIED>
+<!ELEMENT Word (WordID,WordCorners,WordNext,WordNumChars,Language?,Font?,Alignment?,ReadingDir?,CharOrient?,GT_Text?,Character*)>
+<!ELEMENT WordID EMPTY>
+<!ATTLIST WordID Value CDATA #IMPLIED>
+<!ELEMENT WordCorners (Vertex*)>
+<!ATTLIST WordCorners >
+<!ELEMENT WordNext EMPTY>
+<!ATTLIST WordNext Value CDATA #IMPLIED>
+<!ELEMENT WordNumChars EMPTY>
+<!ATTLIST WordNumChars Value CDATA #IMPLIED>
+<!ELEMENT Character (CharacterID,CharacterCorners,CharacterNext,Language?,Font?,Alignment?,ReadingDir?,CharOrient?,GT_Text?)>
+<!ELEMENT CharacterID EMPTY>
+<!ATTLIST CharacterID Value CDATA #IMPLIED>
+<!ELEMENT CharacterCorners (Vertex*)>
+<!ATTLIST CharacterCorners >
+<!ELEMENT CharacterNext EMPTY>
+<!ATTLIST CharacterNext Value CDATA #IMPLIED>
+<!ELEMENT Vertex EMPTY>
+<!ATTLIST Vertex x CDATA #IMPLIED
+y CDATA #IMPLIED>

@@ -1,0 +1,911 @@
+YGMOD 729 S1524-0703(08)00033-7 10.1016/j.gmod.2008.12.002
+Elsevier Inc. Fig. 1 Extracted noise for N1 sample given
+Assumption A1, shown with Phong shading: (a) measured noise
+(colour scale in mm), and (b) the sign of the noise:
+positive, white; negative, black. (For interpretation of the
+references to colour in this figure legend, the reader is
+referred to the web version of this article.) Fig. 2
+Extracted noise for N1 sample given Assumption A1 (specimen
+rotated90^orelative toFig. 1before scanning), else as
+perFig. 1. Fig. 3 Extracted noise for N8 sample given
+Assumption A1, as perFig. 1. Fig. 4 Extracted noise for N1
+sample given Assumption A2, as perFig. 1. Fig. 5 Extracted
+noise for N1 sample given Assumption A3, as perFig. 1. Fig.
+6 Differences betweenFig. 4andFig. 5, in mm. Fig. 7
+Normal-optical axis angletheta. Fig. 8 Standard deviation of
+noise: variation with surface distance. Fig. 9 Standard
+deviation of noise: variation with scanner laser intensity.
+Fig. 10 Standard deviation of noise: variation with
+normal-optical angle. Dashed line: original values. Solid
+line: after removal of outliers. Fig. 11 Histogram of
+estimated noise magnitude. Red line: best fit Gaussian
+distribution. Fig. 12 Linear autocorrelation showing
+probabilityP(t(M-2)>|T|)inx- andy-directions. Fig. 13
+Spearman autocorrelation showing
+probabilityP(t(M-2)>|T|)inx- andy-directions. Fig. 14 Power
+spectrum alongx- (top) andy- (bottom) directions; the green
+vertical lines are at a frequency1/0.8mm. Fig. 15 2D
+discrete Fourier transform (zero-frequency at the centre).
+Top: logarithmic magnitude of the spectrum. Bottom: phase of
+the spectrum, in degrees. Fig. 16 Generating noise by
+inverse Fourier transform with low frequency components
+zeroed. Top: original magnitude and phase except for low
+frequencies; Middle: synthetic noise with fitted magnitude
+and original phase except for low frequencies; and Bottom:
+synthetic noise with fitted magnitude and random phase
+except for low frequencies. Fig. 17 Denoising using
+Laplacian smoothing[14]: real scanner data (left), data with
+synthetic noise (middle), and data with Gaussian white noise
+(right). Top: original data. Other rows: denoising results
+after 5, 20, and 50 iterations. Fig. 18 Denoising using
+bilateral filtering[6]: real scanner data (left), data with
+synthetic noise (middle), and data with Gaussian white noise
+(right). Rows: results after 5, 20, and 50 iterations. Fig.
+19 Denoising using feature- preserving denoising[12]: real
+scanner data (left), data with synthetic noise (middle), and
+data with Gaussian white noise (right). Rows: denoising
+results after 5, 20, and 50 iterations. Noise analysis and
+synthesis for 3D laser depth scanners Xianfang Sun a b ?
+Xianfang.Sun@cs.cardiff.ac.uk Paul L. Rosin a
+Paul.Rosin@cs.cardiff.ac.uk Ralph R. Martin a
+Ralph.Martin@cs.cardiff.ac.uk Frank C. Langbein a
+F.C.Langbein@cs.cardiff.ac.uk a School of Computer Science,
+Cardiff University, Queen's Buildings, 5 The Parade, Roath,
+Cardiff CF24 3AA, UK b School of Automation Science and
+Electrical Engineering, Beihang University, China ?
+Corresponding author. Address: School of Computer Science,
+Cardiff University, Queen's Buildings, 5 The Parade, Roath,
+Cardiff CF24 3AA, UK. Fax: +44 (0) 29 2087 4598. Abstract
+This paper analyses the noise present in range data measured
+by a Konica Minolta Vivid 910 scanner, in order to better
+characterise real scanner noise. Methods for denoising 3D
+mesh data have often assumed the noise to be Gaussian, and
+independently distributed at each mesh point. We show via
+measurements of an accurately machined almost planar test
+surface that real scanner data does not have such
+properties: the errors are not quite Gaussian, and more
+importantly, exhibit significant short range correlation. We
+use this to give a simple model for generating noise with
+similar characteristics. We also consider how noise varies
+with such factors as laser intensity, orientation of the
+surface, and distance from the scanner. Finally, we evaluate
+the performance of three typical mesh denoising algorithms
+using real and synthetic test data, and suggest that new
+denoising algorithms are required for effective removal of
+real noise. Keywords 3D laser scanner Scanner noise analysis
+Noise modelling 3D surface denoising 1 Introduction Surface
+mesh models built using data obtained from 3D laser depth
+scanners necessarily contain some noise. To remove such
+noise from surface mesh models, many mesh denoising
+algorithms have been developed-see[1-19]and other references
+therein. In evaluating the effectiveness of such denoising
+algorithms, both visual and numerical comparisons are
+used[12]. For meshes corresponding to real scanned data,
+however, in most cases only visual comparisons are
+performed, because exact ground truth data are almost always
+unavailable. However, more objective evaluation requires
+numerical comparisons, and this is generally done using
+synthetic data-known meshes to which noise has been added,
+following a simple model. Better characterisation of real
+scanner noise would allow more realistic artificial test
+data to be produced for such purposes. Many authors have
+assumed, either when formulating mesh denoising
+algorithms[1,5], or testing them[2,8,12,18,19], that the
+measurement noise is Gaussian white noise (independently
+distributed per measurement point). However, real 3D laser
+scanner noise is, as we will show later, not quite Gaussian,
+and more significantly, is strongly correlated at adjacent
+mesh points. Shen[20]has previously observed that real
+measurement noise onedgesdoes not exactly follow a pattern
+expected based on a random number generator, and gave a
+method for generating synthetic edge noise. More recently,
+Van Gestel et al.[21]evaluated the performance of laser line
+scanners mounted on coordinate-measuring machines (CMMs).
+They mainly analysed the influence of various factors on
+random and systematic errors of the scanner; they tested a
+different scanner arrangement to the one we use, which is
+fixed in position rather than being mounted on a CMM. In
+this paper, we focus on characterising scanner noise from
+the point of view of denoising. One approach to
+characterising system noise is to combine noise models for
+the components of the measurement system. For example, an
+optical sensor is used, and intensity noise models for
+optical sensors have been discussed in the literature[22].
+However, depth values are not computed directly from
+intensity values, but instead triangulation is used after
+locating pixels ofmaximumintensity. Other sources of noise
+potentially include optical components such as the lens, the
+mirror (and its actuators), and laser, as well as electronic
+noise. Furthermore, numerical errors may arise in the
+proprietary software used to calculate positions.
+Ultimately, we do not have access to all the components of a
+commercial system, and even if we did, the noise due to some
+components may not be well understood. Thus, a
+component-wise noise modelling approach is not practical.
+Instead, we analyse overall noise in the measurements
+provided by a 3D range scanner, taken over aflat area. The
+main aim of this paper is to bring the attention of the mesh
+processing community to the fact thatreal scanner noise is
+not independent Gaussian noise per mesh vertex. Algorithm
+evaluation and development should be based on more realistic
+assumptions about 3D scanner noise. We also discuss the
+different results obtained when applying various denoising
+algorithms to real scanner data and synthetic data with
+added Gaussian noise. We furthermore give a method to
+synthesise noise with similar characteristics to that
+observed. This paper is an extended version of a paper
+presented at the SMI'08 conference[23]. Here, we
+additionally analyse the variation of noise with respect to
+ambient lighting conditions, scanner laser intensity,
+surface distance from the scanner, and orientation of the
+surface. We also present a linear correlation analysis to
+add further evidence of autocorrelation in the noise.
+Denoising experiments using synthetic noise generated by our
+model are also presented, and a further denoising algorithm
+is tested, making the experimental results more
+representative. The remainder of this paper is organised as
+follows. Section2discusses acquisition of data for our
+experiments, considering choice of test specimens, data
+preprocessing procedures, and the shape of the underlying
+test surface. Section3analyses noise in the test data using
+a quasi-statistical approach; we also employ the discrete
+Fourier transform to characterise the scanner noise.
+Section4describes synthesis of artificial noise based on
+this analysis, using the inverse discrete Fourier transform.
+Section5demonstrates the difficulties of removing real
+scanner noise, as opposed to synthetic Gaussian white noise,
+for three typical mesh denoising algorithms.
+Section6concludes the paper. 2 Data acquisition and
+preprocessing 2.1 Data acquisition We now describe the
+scanner used, the test piece, and our methods of acquiring
+data. The scanner used in our tests was a Konica Minolta
+Vivid 910 with 'TELE' lens (focal distance=25mm), which has
+a specified accuracy of100mumin thez(depth) direction in
+'FINE' mode. Boehnen and Flynn[24]evaluated several
+different 3D scanners, and found that Konica Minolta Vivid
+910 was the most accurate for use in a face scanning
+scenario. Here we take it as a representative commercial
+scanner using optical triangulation of a laser stripe to
+capture range data. Clearly, the higher the precision of the
+test specimen, the more certain we can be that any measured
+noise is due to the scanning process and not surface
+roughness of the specimen. We first considered use of a
+standard gauge block as the specimen. While very flat, it
+was too polished and almost mirror-like, and the scanner was
+unable to acquire satisfactory measurements. Instead,
+aslightlyrough surface was needed to obtainsatisfactory
+measurements. (The standard alternative, coating the test
+part with a white powder, would lead to an unacceptably
+uneven surface due to the nature of the powder spraying
+process.) We chose to use as our main test surface the N1
+specimen from a Microsurf 315 set of test surfaces produced
+by Rubert & Co. Ltd. Such test plates are produced for the
+purpose of testing surface roughness measuring machines.
+This specimen is a22.5mmx15mmrectangular flat metal plate
+with mean roughnessRa=0.025mumand mean roughness
+depthRz=0.29mum(see later). To give confidence that the
+results obtained were not specific to this particular test
+specimen, we also tested the N8 specimen from the same
+Microsurf 315 set, which is much rougher than N1
+withRa=3.2mumandRz=15.6mum. Analysis results were similar to
+those from the N1 specimen, so we do not report details, but
+simply show its noise surface inFig. 3. This visually
+demonstrates that the noise from this specimen has similar
+characteristics, although the correlation length appears
+shorter. While it might have been useful to also consider
+curved test pieces, we did not do so because of the
+difficulty in obtaining one machined to a known roughness.
+However, we measured the flat plate at different
+orientations, which gives some insight into what might be
+expected when scanning a curved surface. RaandRzare
+parameters of surface roughness as defined by ISO Standard
+4287/1:1984[25].Rais the arithmetic average of the absolute
+values of the roughness profile ordinates, andRzis the
+arithmetic mean value of the single roughness depths, taken
+over consecutive sampling lengths[26]. The sampling length
+for these test pieces was0.8mm. Note that for the N1
+specimen, bothRaandRzare significantly smaller than the
+depth accuracy of100mumclaimed for the Konica Minolta Vivid
+910 scanner. Henceforth, we simply consider any sub-area on
+the test surface with diameter smaller than the sampling
+length as planar, and ignore noise due to the surface
+roughness. However, over sub-areas larger than0.8mmin
+extent, we must be careful not to assume that the surface is
+exactly planar-on the scale of the whole test piece, it may
+exhibit non-negligible curvature. We collected measurement
+data as follows. During scanning, the test plate was fixed
+at about585mmfrom the focus of the scanner, with its normal
+approximately aligned with the scanner's optical axis
+(unless stated otherwise), and the centre of the test plate
+approximately on the optical axis. (Although we did not use
+an instrument to align the optical axis precisely, the
+actual angle between the optical axis and the normal to the
+test plate could be computed accurately from the test data
+itself). Unless otherwise stated, we aligned the long side
+of the N1 specimen with thex-direction-the N1 specimen is
+produced by grinding, so its surface finish is anisotropic,
+albeit on a very fine scale. For each complete scan we
+obtained an array of 3D point coordinatesxi,yi,ziin the
+scanning coordinate system, wherexandzaxes are aligned with
+scan lines and the optical axis, respectively, and
+thex,y,andzaxes form a right-hand coordinate system.
+Thexi,yicoordinates lie on a grid, andzimeasures distance of
+a surface pointito the focal plane of the scanner. We
+captured data from the test plate in several different ways.
+Firstly, in order to test the repeatability, we fixed the
+test plate in the same place and repeatedly scanned it
+several times. Test results showed that the noise properties
+were repeatable in the statistical sense that the standard
+deviation of the noise varied little between scans (see
+Section3.1.1), and visually, the scans had similar raised
+and sunken areas as are apparent inFig. 1. We also tried
+scanning under different ambient lighting conditions, and
+again the results were similar. This repeatability justifies
+the use of a single set of test data in our analysis, except
+as specified later. Secondly, to analyse the effect of
+surface orientation on noise, we rotated the test plate
+through varying angles about thex-axis before scanning it.
+The results showed that varying orientation had little
+effect-only minor changes were found in standard deviation
+of noise and correlation, and obvious raised and sunken
+areas still existed. We thus only present our main analysis
+for data measured with the test plate approximately
+orthogonal to the optical axis. Thirdly, to assess the
+effect of the scan line direction on the noise, given that
+our sample was anisotropic, we took two scans with the test
+plate aligned so that first its long side ran approximately
+in thex-direction, then in they-direction. This allowed us
+to verify that the anisotropy of the test surface did not
+have a significant effect on the noise. 2.2 Data
+preprocessing After capturing the raw measurement data we
+preprocessed the data to separate the noise from the
+background surface, using the following steps:S1: Trim off
+measured data near the edges of the test piece, as the noise
+in such regions has quite different characteristics from
+that at interior points, and needs to be analysed
+specifically[20]. Our primary trimmed data consists in each
+case of 9375 gridded points with 125 columns in
+thex-direction and 75 rows in they-direction, with intervals
+between successive points in thex- andy-directions
+of0.1735and0.1733mm, respectively. S2: Fit a smooth surface
+around each measured surface pointiin 3D using the
+measurement data in its neighbourhoodNi,(xj,yj,zj):j?Ni. The
+fitted surface is represented as(1) z=f(x,y,p), wherepis a
+parameter vector defining the surface. Choice of surface
+model and neighbourhood size are discussed below. S3:
+Estimate the measurement noiseeicorresponding to each
+surface pointias(2) ei=zi-f(xi,yi,p). The second
+preprocessing step requires choice of a surface model and
+size of surface fitting neighbourhood. We considered three
+possible assumptions about the shape of the underlying test
+surface:A1: A plane gives an adequateglobalfit to the data;
+A2: A quadratic surface gives an adequateglobalfit to the
+data; or A3: No assumption is made about the global shape.
+Instead a procedural model is used based on iterative
+fitting of planes to the data in local regions, taking into
+account how the ISO standard characterises noise. Under
+Assumption A1, we fit a plane to the whole set of
+measurement data. Functionfin Eq.(1)then becomes(3)
+f(x,y,p)=a+bx+cy. and the parameter vector isp=[a,b,c]. Fig.
+1shows the estimated measured noise using Eq.(2)together
+with Assumption A1. To help visualise the noise surface, we
+have magnified theeinoise values 50 times, and used Phong
+shading to produceFig. 1a;actualnoise heights (in mm) are
+given by the associated colour bar: shading effects have
+been exaggerated while the colouring is unalterated. A
+similar technique has also been used later for other
+Figures.Fig. 1b simply shows thesignof the noise, black
+being negative.Fig. 1shows that the noise surface based on
+this assumption has obvious raised and sunken areas, and is
+clearly curved-its top-right and bottom-left corners are
+higher than other parts of the surface. Firstly, we note
+that bumps of the magnitude indicated by the noise surface
+would easily be seen by anyone visually examining the test
+plate, if they were actually present. The test plate does
+not show an appearance anything like that inFig. 1, but
+instead, a very fine pattern ofx-direction scratches at a
+much smaller size (due to the grinding process used to make
+the test plate). Thus, the local structure visible inFig.
+1must be due to measurement errors, and not surface bumps in
+the test plate. This deduction is backed up by noting that
+the measured bumps are much greater than the manufacturer's
+claimed roughness of the test plate. Secondly, the apparent
+curvature of the noise surface may be due to actual
+curvature of the test surface (which is only guaranteed to
+belocallyflat), or due to systematic error over a long scale
+produced by the scanner. To resolve this issue, we rotated
+the specimen by90^oaround thez-axis, and obtained another
+data set.Fig. 2shows the extracted noise in this case, again
+under Assumption A1. It can be seen that while the detailed
+noise pattern is somewhat different, the overall curvature
+in the noise surface has also rotated with it-its top-left
+and bottom-right corners are now higher. Thus, the curvature
+of the noise surface comes from the specimen itself, and is
+not due to systematic errors produced by the scanner-in the
+latter case, the noise distribution would not have rotated.
+We also conclude that Assumption A1 is unsatisfactory, and a
+better surface model is needed. A further observation is
+that, while inFig. 1the noise shows a diagonal structuring
+tendency, inFig. 2this is less clear, and even in some
+places tends perhaps more to a horizontal structuring. This
+is probably due to interaction between the laser striping
+system and the anisotropy of the test surface. Apart from
+this question of directionality, however, the
+generalstructureof the noise appears similar in both
+orientations. Thus, subsequent experiments were restricted
+to data measured with the long side of the specimen aligned
+with thex-axis. Fig. 3shows the noise for the N8 test piece
+under Assumption A1. The N8 specimen is clearly curved in a
+different way to the N1 specimen. Again, there are obvious
+bumps on the noise surface, with a similar general pattern
+as for the N1 noise surface, although the characteristic
+size and spacing of bumps is smaller than for the N1 sample.
+We thus concentrated solely on the N1 specimen in our
+further analysis. Next, we considered Assumption A2 as a
+potentially better model for the shape of the N1 test piece,
+and fitted a quadratic surface to the whole set of
+measurement data. In this case the functionftakes the
+form(4) f(x,y,p)=a+bx+cy+dx2+exy+fy2 and the parameter
+vector isp=[a,b,c,d,e,f]. Fig. 4shows the estimated noise
+using Assumption A2. Again,the noise surface again has
+obvious large scale raised and lowered areas with a similar
+distribution to that seen inFig. 1, except that the overall
+curvature inFig. 1is no longer present. Using the same
+reasoning as before, we again claim that the magnitude of
+the noise is due to the scanner. We still needed to decide
+whether a quadratic surface could sufficiently represent the
+underlying surface of the N1 specimen. To answer this
+question, we also fitted higher order surfaces, e.g. cubic
+surfaces, to the measurement data, and extracted the noise
+using Eq.(2). Visually, the distribution pattern of the
+extracted noise in each case is similar to that shown inFig.
+4. Furthermore, the differences in the residual errors when
+fitting quadratic, and cubic or other higher order surfaces,
+are less than the specified roughness heightsRaandRzof the
+test specimen. Thus, we can safely say that a quadratic
+surface sufficiently represents the underlying surface of
+the specimen, and the estimated noise surface with this
+assumption is close to the real noise due to the scanner. We
+also used assumption A3 as an alternative method of
+verifying the above assertion: A3 makes no assumptions about
+the global shape of the underlying test surface. Under
+Assumption A3, we only need to consider the parameters of
+roughness. As the roughness of the specimen (measured
+byRaandRz) is significantly smaller than the scanner
+accuracy, the true surface can be effectively considered to
+be planar over regions with diameter smaller than the
+sampling length used to defineRaandRz. The sampling length
+is0.8mm. Thus, for each measured point on the surface, we
+fitted a local plane to the measured data within a circular
+neighbourhood of diameter0.8mm. The measured point was then
+projected onto the plane, and the projected point was taken
+as the estimated position of the real point on the
+underlying test surface. However, because the surface fitted
+to the noisy measured points has a roughness exceeding the
+range designated byRaandRz, it is not a good approximation
+to the true surface. Thus, we iteratively used the
+approximate points to fit local planes and provide new
+projected approximate points until the roughness of the
+surface formed by the new approximate points reached the
+range designated byRaandRz(this required 323 iterations).
+The final approximate points can be considered to be good
+approximations to the real surface points: the difference
+between each measured point and the corresponding
+approximate point then gives an estimate of the noise. Note
+that because of the iteration process, the surface may
+exhibit a global shift-in fact, the mean of the differences
+is-2.3mum, so we subtract the mean from each difference, to
+get the final estimated noise with zero mean. Fig. 5shows
+the extracted noise surface using the above method. The
+noise pattern is clearly very similar to that estimated
+using Assumption A2, shown inFig. 4, although actual values
+differ slightly. The independent assumptions made for
+approaches A2 and A3 give us confidence that the similar
+results obtained are useful estimates of the actual scanner
+noise, and that this noise really does contain the
+structures visible inFigs. 4 and 5. We also determined the
+standard deviation of the differences between noise values
+estimated using A2 and A3 to be4.9mum, which is only10%of
+the specified accuracy of the scanner. While these
+differences are not negligible, the difference surface is
+slowly varying over a long distance with low amplitude
+(seeFig. 6). We also computed the standard deviations of the
+noise based on A2 and A3, which are16.2and16.6mum,
+respectively. They are very close and both are less than the
+specified accuracy of the scanner. For purposes of analysing
+correlations in noise inx-y, both Assumptions A2 and A3
+provide reasonable models of the real scanner noise;
+however, Assumption A2 leads to a much simpler computation,
+so in the rest of the paper, our analysis is based on
+Assumption A2. We now make perhaps the most important point
+in the whole paper, which is clear from a visual inspection
+ofFigs. 4 and 5:noise at each measurement site is not
+independent. There is a clear correlation between noise at
+adjacent measurement sites, and indeed on longer length
+scales, too. This is contrary to a common assumption adopted
+by many papers on mesh denoising, which often assume scanner
+noise to be independent Gaussian noise at each measurement
+point[1,2,5,8,18,19]. 3 Noise analysis We now analyse the
+properties of the estimated noise. We carry out both a
+statistical analysis, and a Fourier analysis of the noise.
+Because we only have an estimate of the scanner noise (based
+on assumption A2), we call our analysis
+aquasi-statisticalanalysis of the real scanner noise. 3.1
+Quasi-statistical analysis 3.1.1 Noise variation under
+different scanning conditions We start our quasi-statistical
+analysis with a discussion of how the noise varies with
+different factors, including ambient light, distance of
+specimen to the camera, scanner laser intensity, and
+orientation of the specimen (defined bytheta, the angle
+between the normal and the optical axis: seeFig. 7). We
+assess this by computing the standard deviation of the noise
+at all sample points, as these various factors change. Many
+other environmental factors, such as temperature, may also
+influence the level of noise, but because the user typically
+does not have control over such factors, we do not analyse
+variation with respect to them in this paper. Firstly, we
+tested whether typical changes in ambient light have any
+significant effect on the standard deviation of noise.
+(Again, we did not consider subtle changes under controlled
+lighting, but rather the gross effects of large changes in
+lighting.) To do so, we aligned the sample with 24 different
+choices oftheta, and for each we scanned the sample first 5
+times with the fluorescent ceiling lamp on (giving normal
+'office' lighting conditions), and then 5 times with it off
+(giving a more-or-less darkened room). We calculated the
+standard deviation in noise for each such set of scanned
+data, denoted bysigmai,j, whereicorresponds to a different
+orientation andjnumbers the datasets at a given orientation.
+For each orientationi,i=1,...,24, we calculated the
+meanmui'and standard deviationsigmai'of the above standard
+deviations themselvessigmai,j,j=1,...,10, and then
+calculated the relative variation:sigmai'/mui'. The result
+shows that the relative variation fori=1,...,24lies
+between0.46%and2.05%. Thus, for a given orientation, the
+variation in level of noise is very small, irrespective of
+the ambient light conditions. This result also implies that
+the magnitude of scanner noise has a high repeatability for
+a given set of conditions. Secondly, we adjusted the
+distance between the scanner and the test piece, to assess
+its influence on the standard deviation of noise; we
+attempted to keep the angle between the normal and the
+optical axis almost constant at zero degrees. (Because we
+did not have a precision instrument to fix the angle, we
+could only keep the angle approximately unchanged and check
+it was satisfactory after scanning.)Fig. 8shows the
+variation of standard deviation of noise with respect to
+distance: the standard deviation increases with distance.
+Thirdly, we considered the influence of scanner laser
+intensity on the standard deviation of noise, for the sample
+in a fixed position. SeeFig. 9. Provided that the intensity
+is kept within a suitable range, the variation in noise
+level is very small-the relative variation over the
+intensity range from 45 to 85 (using the manufacturer's
+units) is only5.2%. However, if the intensity is
+inappropriately chosen, the standard deviation can become
+much larger. In this example, when the intensity is set to
+175, the standard deviation reaches345mum. Looking in detail
+at the data captured under these conditions, we found it to
+contain many outliers, and such data would not be useful for
+any practical application. This emphasises the need to
+correctly set up the laser scanner to obtain satisfactory
+results, following the manufacturer's procedures. Note that
+correct choice of intensity depends on the colour and
+reflectance of the surface being measured. Fourthly, we
+considered the influence of the angle between the normal and
+the optical axisthetaon the standard deviation of noise.
+SeeFig. 10. The dashed line shows the noise estimated with
+assumption A2. Unfortunately, it was not possible to pick a
+single laser intensity which would both capture a full set
+of data, and avoid outliers, over this complete range of
+angles. We thus processed the raw scans to remove the
+outliers, and the solid line inFig. 10shows the standard
+deviation of noise after outliers in the data have been
+discarded. To remove outliers, we iteratively removed those
+points with noise greater than three times the standard
+deviation of the whole data set. After doing so, the
+variation of standard deviation of noise withthetabecomes
+much smaller. In particular for angles of less than-15^o,
+which has fewer outliers, the noise varies little with angle
+(the relative variation is8%). Overall, there is a trend to
+increasing noise with increasing angle between the normal
+and the optical axis, although the variation is not smooth.
+As a final comment, we note that the measurements above show
+that the scanner does indeed meet the manufacturer's claimed
+accuracy of100mum. 3.1.2 Is the noise Gaussian? We next
+discuss the distribution of the estimated noise for a
+particular scan.Fig. 11shows a histogram of the magnitude of
+the estimated noise taken at all points of the test surface,
+together with a zero-mean Gaussian distribution with the
+same standard deviation as the estimated distribution. This
+histogram has 80 equally spaced bins. The noise histogram
+appears to agree fairly well with the Gaussian distribution,
+but to decide this issue more definitely, a statisticaltest
+is necessary. We need to verify the null
+hypothesis:H0:f(x)=12pisigmae-x22sigma2 with the alternative
+hypothesisH1:f(x)<>12pisigmae-x22sigma2 wheref(x)is a
+Gaussian function of appropriate standard deviation. The
+standard deviation of the estimated noise issigma=16.2mum.
+For this we use Pearson's chi-square test[27]. Consider the
+statistic(5) K=1N?i=1mni2pi-N, whereNis the number of
+observations (measurement points:N=9375),mis the number of
+bins in the histogram (discussed later),niis the number of
+observations in theith bin, andpiis the probability content
+of theith bin. Under the hypothesisH0, the distribution
+ofKis generally accepted as close enough tochi2(m-1)provided
+that we ensure that the expected numbers of events per
+bin,Npi, is greater than five in each case[27]. If the
+probabilityP(chi2(m-1)>K)<alpha, the null hypothesis is said
+to be rejected at the significance levelalpha. Commonly
+usedalphavalues are5%,1%, and0.1%. The smaller thealpha, the
+stronger the conclusion. We use thealpha=5%significance
+level. We generated histograms usingm0=3,...,100equal-width
+bins, except that we combined neighbouring bins with small
+expected numbers of events into larger bins so that each bin
+was expected to have more than five events.mwas the number
+of bins after merging small bins. We then used Eq.(5)to
+computeK, and computed the probability thatchi2(m-1)>K. The
+result shows that except for the
+casesm0=4,5,7,8,10(corresponding tom=4,5,5,6,7,
+respectively), the probabilities are all less than0.05, and
+furthermore, except form=4(m0=4)andm=6(m0=8), there always
+exists another division ofmbins which has a probability of
+less than0.05. This means that except for two special
+choices ofm, we should rejectH0at thealpha=5%level of
+significance. In simple words,we should reject the
+hypothesis that the estimated noise distribution is
+Gaussian. The test does not tell us what the true
+distribution is. Nevertheless,Fig. 11makes it clear that the
+distribution of the estimated noise is quite Gaussian-like.
+We must caution that, as well as the direct interpretation
+that the noise itself is not Gaussian, other explanations
+are available. Errors in the estimated noise due to the
+estimation procedure, or the presence of small bumps on the
+surface, may also explain the small deviation between the
+estimated noise and a Gaussian model. 3.1.3 Noise
+correlation We now consider noise autocorrelation in thex-
+andy-directions. We usei,j,i=1,...,Nx,j=1,...,Ny, to denote
+the point in theith column and thejth row, ande(i,j)to
+denote the estimated noise at this point.Nx=125andNy=75for
+our data. We first discuss the linear autocorrelation.
+Linear autocorrelation coefficients are defined by(6)
+rhox(k)=?j=1Ny?i=1Nx-ke(i,j)e(i+k,j)?j=1Ny?i=1Nx-ke2(i,j)?j=1Ny?i=1Nx-ke2(i+k,j),
+(7)
+rhoy(k)=?i=1Nx?j=1Ny-ke(i,j)e(i,j+k)?i=1Nx?j=1Ny-ke2(i,j)?i=1Nx?j=1Ny-ke2(i,j+k),
+Having obtained the autocorrelation
+coefficientsrhox(k),k=1,...,Nx-1and{rhoy(k),k=1,...,Ny-1},
+we consider the null hypothesis that the noise at each
+measurement location is uncorrelated, corresponding
+toH0:rhox(i)=0,i=1,...,Nx-1, and similarly fory. The
+alternative hypothesis is that the noise at each measurement
+location is correlated, corresponding toH1:rhox(i)<>0, and
+similarly fory. If the noise distribution were Gaussian, we
+could use thet-test to assess the correlation[28]. However,
+as we have shown above, the noise distribution is not
+strictly Gaussian, and we can only conservatively borrow the
+conclusions from performing at-test. Nevertheless, the noise
+distribution is quite close to Gaussian - at least visually
+- as shown by the histogram inFig. 11, which suggests that
+thet-test results will be useful. Given a correlation
+coefficientrho, (rhocould be eitherrhox(k)orrhoy(k)), the
+statistic(8) T=M-2rho1-rho2, should be close
+tot(M-2)(at-distribution withM-2degrees of freedom) under
+hypothesisH0, wereMis the number of sample points used to
+computerho. Thus, if the probabilityP(t(M-2)>|T|)<alpha, the
+null hypothesis is to be rejected at the significance
+levelalpha. Fig. 12shows how the
+probabilityP(t(M-2)>|T|)varies withk; the green1 For
+interpretation of colour in Figs. 11 and 14, the reader is
+referred to the web version of this article. 1 line is set
+atP=5%. From the figure it can be seen
+thatP(t(M-2)>|T|)<5%for all correlation lengths less than 11
+in thex-direction and 46 in they-direction, respectively;
+other correlation lengths greater than these values also
+haveP(t(M-2)>|T|)<5%. Thus we conclude that the noise is
+autocorrelated in bothx- andy-directions, at various length
+scales. Because the above hypothesis test is based on an
+assumption of Gaussian statistics, which the estimated noise
+does not exactly exhibit, it is more appropriate to use a
+non-parametric test. We used Spearman rank-order correlation
+coefficients, which do not require knowledge of the
+probability distribution of the noise[28]. Letk=1,...,Nx-1be
+the autocorrelation length to be considered in
+thex-direction, andRx1k(i,j)andRx2k(i,j)be the rank values
+ofe(i,j)among all othere(m,n)in the square
+areas(m=1,...,Nx-k,n=1,...,Ny)and(m=k+1,...,Nx,n=1,...,Ny),
+respectively. Furthermore, letR?xkbe the mean of the rank
+value in either square area, given by(Nx-k)Ny+1)/2.
+DefineR?x1k(i,j)=Rx1k(i,j)-R?xkandR?x2k(i,j)=Rx2k(i,j)-R?xk.
+Then the rank-order autocorrelation coefficient in
+thex-direction is computed by(9)
+rhoSx(k)=?j=1Ny?i=1Nx-kR?x1k(i,j)R?x2k(i+k,j)?j=1Ny?i=1Nx-kR?x1k2(i,j)?j=1Ny?i=1Nx-kR?x2k2(i+k,j).
+Similarly in they-direction, the rank-order autocorrelation
+coefficient is computed by(10)
+rhoSy(k)=?i=1Nx?j=1Ny-kR?y1k(i,j)R?y2k(i,j+k)?i=1Nx?j=1Ny-kR?y1k2(i,j)?i=1Nx?j=1Ny-kR?y2k2(i,j+k).
+Given the rank-order correlation coefficients, we can again
+use the statisticTdefined in(8)(rhonow is
+eitherrhoSx(k)orrhoSy(k)) to evaluate the autocorrelation of
+the estimated noise.Fig. 13shows how the
+probabilityP(t(M-2)>|T|)varies withk. From the figure it can
+be seen that this test yields very similar results to those
+obtained with the linear autocorrelation coefficients: the
+probability thatP(t(M-2)>|T|)in this case is less than5%for
+all correlation lengths less than 11 in thex-direction and
+47 in they-direction, respectively. We can rely on the
+robustness of the non-parametric test[28]to conclude from
+the above results thatthe estimated noise shows significant
+autocorrelation. 3.2 Fourier analysis The above section
+provides a quasi-statistical analysis of theestimatednoise.
+Because this analysis is based on Assumption A2, and hence
+an estimate of the noise, we can only state that the above
+analysis provides a qualitative analysis. In this section,
+we perform an alternative Fourier analysis of
+themeasurements themselves, which does not require any
+assumption concerning specimen shape. We first performed 1D
+Fourier analysis on themeasurement datafor a particular scan
+(not the extractednoise).Fig. 14shows a log-log scale plot
+of the power spectrum for thex- andy-directions
+respectively. It can be seen that the measurement data are
+correlated, since the power spectra are not constant in any
+band. However, the correlation here could be from either the
+measurement noise, or from the surface signal itself of the
+specimen. Considering that the specimen surface is quite
+smooth and its fluctuations are quite small, such a signal
+will mainly exist at low frequencies, and the high-frequency
+components will mainly consist of measurement noise. The
+vertical green line shown inFig. 14is at the
+frequencyf=1/0.8mm, corresponding to the roughness sampling
+length. Above this frequency, surface shape effects are
+negligible, and we can assume the surface is flat. Thus, the
+spectral power for frequenciesf>1/0.8mm(to the right of the
+green line) is certainly due to scanner noise. (It may also
+be mainly due to scanner noisebelowthis cut-off, but we
+cannot guarantee this). Since the power spectra are not
+constant above this cut-off, the measurement noise is
+notwhite noise. To consider the noise as a 2D process, we
+also performed a 2D Fourier analysis of the measurement
+data.Fig. 15shows its 2D discrete Fourier transform. As for
+the 1D Fourier transforms, the magnitude of the 2D Fourier
+transform decreases with frequency, varying less at high
+frequencies. It can also be seen that the phase of the 2D
+discrete Fourier transform varies randomly with little
+regularity. The 2D Fourier transform shown here again tells
+us that the measurement data are correlated, and
+furthermore, the measurement noise is not white noise. 4
+Noise synthesis We now know that the noise is not white and
+its distribution is not quite Gaussian, so we cannot
+generate realistic synthetic noise using straightforward
+pseudo-random noise sequences. However, using the Fourier
+analysis results from Section3.2, we may generate synthetic
+noise by using the inverse Fourier transforms. The Fourier
+transform of the measured data represents both the noise,
+and an underlying signal (due to non-planarity of the test
+specimen). Because thesignalis potentially significant
+mainly at low frequencies,noiserepresents most of the
+amplitude of the transform at high frequencies, so we may
+simply set the lowest frequency components of the Fourier
+transform to zero, and use the remaining components to
+approximately model the noise. While a sharp cut-off filter
+can introduce ringing artifacts, these were negligible in
+practice. The top ofFig. 16shows the inverse Fourier
+transform of the original scan data with the lowest 5
+frequency components in bothx- andy-directions set to zero.
+Clearly, using the inverse Fourier transform in this way
+preserves the general structure of the original noise seen
+inFigs. 1, 4 and 5, while removing the obvious curvature of
+the specimen surface visible inFig. 1. Having obtained the
+Fourier transform of the measurement data, we can use a
+simple model to fit the magnitudes with respect to
+frequency. We tried severalmodels, and selected that
+particular model which gave minimum fitting residual among
+those models. The model we use is(11)
+Z(i,j)14=a0+b0i+c0j+d0i2+e0ij+f0j2i<>0,j<>0,a1+b1i+d1i2j=0,a2+b2j+f2j2i=0,
+whereZ(i,j)is the magnitude at frequencyfx=i/Lx,fy=j/Ly,
+andLxandLyare the specimen side lengths in thex-
+andy-directions, respectively. The parameters giving a best
+fit
+area0=1.5600,b0=-0.0185,c0=-0.0176,d0=0.0001,e0=0.0003,f0=0.0000,a1=1.9134,b1=-0.0417,d1=0.0005,a2=1.8352,b2=-0.0530,andf2=0.0008;
+with these values, the squared sum of the residual errors
+is2.2%of the squared sum of the noise magnitudes.Fig. 16,
+middle, shows the result of computing an inverse Fourier
+transform using the modelled magnitude together with the
+original phase data. This generated noise has a structure
+quite close to the original structure, verifying the utility
+of this model. Because the phase spectrum is rather
+unstructured-seeFig. 15-we cannot easily fit a model to it,
+but we do not wish to store it as a table of values, either.
+Instead, we suggest the use of random phases to generate
+synthetic noise.Fig. 16, bottom, shows noise synthesised by
+inverse Fourier transform of the modelled amplitudes and
+random phases. The synthetic noise in this case has a
+slightly different structure to the original one, which is
+to be expected as there issomestructure in the phase of the
+noise-again seeFig. 15. Nevertheless, the structure of this
+synthetic noise is quite similar to that of the original
+noise at least with respect to the magnitudes, sizes, shapes
+and density of the bumps. In practice, synthetic noise is
+not necessarily an exact copy of any original noise, and we
+consider the noise generated using inverse discrete Fourier
+transforms of fitted magnitudes and random phase as
+acceptable. It is certainly closer to real scanner noise
+than white Gaussian noise. 5 Denoising experiments As
+demonstrated, scanner noise is neither strictly Gaussian,
+nor independent at each location nor white in nature,
+contrary to the most common assumptions adopted by many
+papers considering denoising or other processing of scanner
+data. We compare denoising results by various algorithms on
+three sets of data: real scanner data, data generated by
+adding synthetic noise described in Section4to the best
+quadratic surface fitted to the scanning data, and data
+obtained by adding Gaussian white noise with the same
+standard deviation as that of the scanned data, again to the
+best fitted quadratic surface. Gaussian noise has often been
+used in the past to assess denoising algorithms. Three
+representative denoising algorithms were chosen: the
+original Laplacian smoothing algorithm[14], the bilateral
+filtering algorithm[6], and our own feature-preserving
+denoising algorithm[12]. Fig. 17shows the denoising results
+obtained for each kind of noise using the original Laplacian
+smoothing algorithm[14]with 5, 20, and 50 iterations, as
+commonly used in the literature. The Figure shows that fewer
+iterations are needed to remove Gaussian white noise than to
+remove the synthetic noise generated by our method, and real
+scanner noise requires yet more iterations. Furthermore,
+although the original Laplacian algorithm can effectively
+remove Gaussian noise, it is less successful at completely
+removing the bumpy structures present in real scanner noise,
+and to a lesser degree, in the synthetic noise generated by
+our method. Figs. 18 and 19show comparable denoising results
+for the bilateral filtering algorithm[6]and our
+feature-preserving denoising algorithm[12]. Both algorithms
+show similar results to those obtained for Laplacian
+smoothing: Gaussian noise is easiest to remove, then our
+synthetic noise, and finally real scanner noise. However,
+because these two algorithms are designed to preserve
+features, unlike Laplacian smoothing[14], these algorithms
+have more difficulty than Laplacian smoothing in removing
+the structured features (bumps) due to correlations in real
+scanner noise and our synthetic noise. Compared to our
+algorithm, bilateral filtering is slightly more efficient in
+removing such structural features of the noise. From these
+experiments, we see that although the synthetic noise
+generated by our method does not behave exactly in the same
+way as real noise, it more closely resembles real noise than
+does Gaussian noise, and it is somewhat better at predicting
+how algorithms will perform in removing real noise. We have
+shown that denoising algorithms, whether feature-preserving
+or not, cannot effectively deal with the structured nature
+of real scanner noise. We thus conclude thatmany previous
+papers claiming good denoising results based on experiments
+with synthetic Gaussian noise are over-optimistic in their
+assessment of the ability of algorithms to remove real
+scanner noise. Synthetic noise of the type generated by our
+method described in Section4would be a better basis for
+evaluating smoothing algorithms. There would seem to be
+plenty of scope to carefully design new algorithms which
+take into account the real, rather than assumed, nature of
+scanner noise. This does not necessarily require precise
+modelling of the scanner noise. Instead, by just assuming
+the noise to be non-Gaussian and correlated, we may be able
+to make better generic algorithms than if we assume
+uncorrelated Gaussian noise, even if the optimal filters
+would involve too many specific parameters dependent on the
+precise scanning conditions. 6 Conclusions We have
+investigated the noise characteristics in measurement data
+obtained by a Konica Minolta Vivid 910 scanner. We have
+found that there is little systematic variation in noise
+resulting from different scanning conditions, providing that
+care is taken in choice of laser intensity. Consideration of
+careful estimates of the noise has shown that real scanner
+noise is not quite Gaussian, but more importantly, neither
+is it independently distributed. Fourier analysis has
+further demonstrated that such noise is not white noise.
+Based on the Fourier analysis, we have proposed a noise
+synthesis method which applies the inverse discrete Fourier
+transform to a model-generated power spectrum with random
+phase. Such synthetic noise has broadly the same visual
+structural features as real scanner noise. Experimentally,
+our synthetic noise behaves in a qualitatively similar way
+to real scanner noise in denoising algorithms, and thus is
+more suitable than Gaussian white noise for algorithm
+evaluation. Our above analysis is based on scanning an N1
+specimen from a Microsurf 315 set of test surfaces. An N8
+specimen from the same set was also tested and gave
+qualitatively similar results, so we do not report the
+details here. Note, however, that the precise numerical
+results, and suggested synthetic noise model, only hold for
+this specific type of surface material and this specific
+laser scanner. For other types of surface material or other
+kinds of laser scanners, the results may be quite different.
+We have also tested the effectiveness of three typical mesh
+denoising algorithms against real measurement data, Gaussian
+synthetic white noise, and our synthetic noise. The results
+have shown that it is more difficult to remove noise from
+real measurement data than from data with our synthetic
+noise, and it is easiest to remove Gaussian white noise. New
+denoising algorithms are required which take into account
+the real nature of scanner noise; we intend to investigate
+such methods in the future. Improvement on robust estimation
+algorithms such as robust moving least-squares
+fitting[29]may be of use here. Acknowledgments We are
+grateful to Dr. Shenglan Liu for helpful discussions and
+preparation of the measurement data. This work was supported
+by EPSRC Grant EP/C007972 and NSFC Grant 60674030.
+References [1] M. Alexa Wiener filtering of meshes Proc.
+Shape Modeling International 2002 IEEE Computer Society
+Washington, DC, USA 51 57 [2] C.-Y. Chen H.-Y. Cheng A
+sharpness dependent filter for mesh smoothing Comput. Aid.
+Geomet. Des. 22 5 2005 376 391 [3] U. Clarenz U. Diewald M.
+Rumpf Anisotropic geometric diffusion in surface processing
+Proc. Conf. Visualization 2000 IEEE Computer Society 397 405
+[4] M. Desbrun M. Meyer P. Schroder A.H. Barr Implicit
+fairing of irregular meshes using diffusion and curvature
+flow Proc. 26th Conf. Computer Graphics and Interactive
+Techniques 1999 ACM Press/Addison-Wesley Publishing Co. New
+York, NY, USA 317 324 [5] J.R. Diebel S. Thrun M. Brunig A
+Bayesian method for probable surface reconstruction and
+decimation ACM Trans. Graph. 25 1 2006 39 59 [6] S.
+Fleishman I. Drori D. Cohen-Or Bilateral mesh denoising ACM
+Trans. Graph. 22 3 2003 950 953 [7] K. Hildebrandt K.
+Polthier Anisotropic filtering of non-linear surface
+features Comput. Graph. Forum 23 3 2004 391 400 [8] T.R.
+Jones F. Durand M. Desbrun Non-iterative, feature-preserving
+mesh smoothing ACM Trans. Graph. 22 3 2003 943 949 [9] Y.
+Ohtake, A. Belyaev, H.-P. Seidel, Mesh smoothing by adaptive
+and anisotropic Gaussian filter applied to mesh normals, in:
+Vision, Modeling, and Visualization, 2002, pp. 203-210. [10]
+O. Schall A. Belyaev H.-P. Seidel Feature-preserving
+non-local denoising of static and time-varying range data
+Proc. ACM Symp. Solid and Physical Modeling 2007 ACM Press
+New York, NY, USA 217 222 [11] J. Shen B. Maxim K.
+Akingbehin Accurate correction of surface noises of
+polygonal meshes Int. J. Numer. Methods Eng. 64 12 2005 1678
+1698 [12] X. Sun P.L. Rosin R.R. Martin F.C. Langbein Fast
+and effective feature-preserving mesh denoising IEEE Trans.
+Visual. Comput. Graph. 13 5 2007 925 938 [13] X. Sun P.L.
+Rosin R.R. Martin F.C. Langbein Random walks for
+feature-preserving mesh denoising Comput. Aid. Geomet. Des.
+25 7 2008 437 456 [14] G. Taubin, A signal processing
+approach to fair surface design, in: Proc. SIGGRAPH'95,
+1995, pp. 351-358. [15] G. Taubin, Linear anisotropic mesh
+filtering, IBM Research Report RC22213(W0110-051), IBM T.J.
+Watson ResearchCenter, October 2001. [16] J. Vollmer R.
+Mencl H. Muller Improved Laplacian smoothing of noisy
+surface meshes Comput. Graph. Forum 18 3 1999 131 138 [17]
+H. Yagou, Y. Ohtake, A.G. Belyaev, Mesh smoothing via mean
+and median filtering applied to face normals, in: Proc.
+Geometric Modeling and Processing, 2002, pp. 124-131. [18]
+S. Yoshizawa A. Belyaev H.-P. Seidel Smoothing by example:
+Mesh denoising by averaging with similarity-based weights
+Proce. Shape Modeling and Applications 2000 IEEE Computer
+Society Washington, DC, USA 9 [19] Y. Yu K. Zhou D. Xu X.
+Shi H. Bao B. Guo H. Shum Mesh editing with Poisson-based
+gradient field manipulation ACM Trans. Graph. 23 3 2004 644
+651 [20] J. Shen Synthesization of edge noises for touch
+probe and laser sensor measurement Comput.-Aid. Des.
+Applicat. 4 1-4 2007 247 256 [21] N. Van Gestel, S. Cuypers,
+P. Bleys, J.-P. Kruth, A performance evaluation test for
+laser line scanners on CMMs, Opt. Lasers Eng., in
+press,doi:10.1016/j.optlaseng.2008.06.001. [22] Y. Hwang,
+J.-S. Kim, I.-S. Kweon, Sensor noise modeling using the
+Skellam distribution: application to the colour edge
+detection, in: CVPR, 2007, pp. 1-8. [23] X. Sun P.L. Rosin
+R.R. Martin F.C. Langbein Noise in 3D laser range scanner
+data Proc. IEEE Int. Conf. on Shape Modeling and
+Applications 2008 IEEE 37 45 [24] C. Boehnen P. Flynn
+Accuracy of 3D scanning technologies in a face scanning
+scenario 3DIM'05: Proceedings of the Fifth International
+Conference on 3D Digital Imaging and Modeling 2005 IEEE
+Computer Society Washington, DC, USA 310 317 [25] ISO,
+Surface Roughness - Terminology - Part 1: Surface and its
+Parameters, International Standard ISO 4287/1, 1984. [26]
+Rubert & Co. Ltd., Roughness
+Parameters,http://www.rubert.co.uk/Ra.htm. [27] F. James
+Statistical Methods in Experimental Physics second ed. 2006
+World Scientific Publishing Ltd. New Jersey [28] W.H. Press
+S.A. Teukolsky W.T. Vetterling B.P. Flannery Numerical
+Recipes in C: The Art of Scientific Computing second ed.
+1992 Cambridge University Press Cambridge, UK [29] S.
+Fleishman D. Cohen-Or C.T. Silva Robust moving least-squares
+fitting with sharp features ACM Trans. Graph. 24 3 2005 544
+552

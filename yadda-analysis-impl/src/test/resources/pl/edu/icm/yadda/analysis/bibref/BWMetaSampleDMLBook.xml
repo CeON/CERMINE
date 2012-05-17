@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<element xmlns="http://yadda.icm.edu.pl/bwmeta-1.2.0.xsd" id="bwmeta1.element.dl-catalog-93aeaa4c-9455-4cb8-9b0b-b49a211903f5">
+  <attribute key="bibliographical.description" value="Monografie Matematyczne, Tom 16" />
+  <contents>
+    <file format="application/pdf" id="1" type="chapter">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1601.pdf</location>
+      <name lang="zxx" type="file-name">ROZDZIAŁ I. RZUTY CECHOWANE</name>
+    </file>
+    <file format="application/pdf" id="2" type="chapter">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1602.pdf</location>
+      <name lang="zxx" type="file-name">ROZDZIAŁ II. RZUTY NA DWIE PŁASZCZYZNY</name>
+    </file>
+    <file format="application/pdf" id="3" type="chapter">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1603.pdf</location>
+      <name lang="zxx" type="file-name">ROZDZIAŁ III. KRZYWE DRUGIEGO STOPNIA</name>
+    </file>
+    <file format="application/pdf" id="4" type="chapter">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1604.pdf</location>
+      <name lang="zxx" type="file-name">ROZDZIAŁ IV. POWIERZCHNIE DRUGIEGO STOPNIA</name>
+    </file>
+    <file format="application/pdf" id="5" type="chapter">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1605.pdf</location>
+      <name lang="zxx" type="file-name">ROZDZIAŁ V. PRZENIKANIE POWIERZCHNI</name>
+    </file>
+    <file format="application/pdf" id="6" type="chapter">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1606.pdf</location>
+      <name lang="zxx" type="file-name">ROZDZIAŁ VI. AKSONOMETRIA</name>
+    </file>
+    <file format="application/pdf" id="7" type="chapter">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1607.pdf</location>
+      <name lang="zxx" type="file-name">ROZDZIAŁ VII. PERSPEKTYWA</name>
+    </file>
+    <file format="application/pdf" id="8" type="unknown">
+      <location>http://matwbn.icm.edu.pl/ksiazki/mon/mon16/mon1608.pdf</location>
+      <name lang="zxx" type="file-name">Przedmowa, spis rzeczy, skorowidz nazw</name>
+    </file>
+  </contents>
+  <contributor institution="false" role="editor">
+    <attribute key="person" value="_">
+      <attribute key="person.surname" value="Otto" />
+      <attribute key="person.firstname" value="Edward" />
+    </attribute>
+    <name lang="zxx" type="canonical">Otto, Edward</name>
+    <name lang="zxx" type="surname">Otto</name>
+    <name lang="zxx" type="forenames">Edward</name>
+  </contributor>
+  <date type="published" year="1950" month="10">1950</date>
+  <description lang="pol" type="note">description</description>
+  <language lang="pol" />
+  <name lang="pol">Geometria wykreślna</name>
+  <structure hierarchy="bwmeta1.hierarchy-class.hierarchy_Book">
+    <ancestor level="bwmeta1.level.hierarchy_Book_Publisher" identity="bwmeta1.element.dl-catalog-d9e0f18e-367b-49bc-930a-b1ca9f73e4c3">
+      <name lang="pol" type="canonical">Instytut Matematyczny Polskiej Akademii Nauk</name>
+    </ancestor>
+    <ancestor level="bwmeta1.level.hierarchy_Book_Publisher" identity="bwmeta1.element.dl-catalog-d9e0f18e-367b-49bc-930a-b1ca9f73e4c3">
+      <name lang="fra" type="canonical">Institut of Mathématique de L'Académie Polonaise des Sciences</name>
+    </ancestor>
+    <ancestor level="bwmeta1.level.hierarchy_Book_Publisher" identity="bwmeta1.element.dl-catalog-d9e0f18e-367b-49bc-930a-b1ca9f73e4c3">
+      <name lang="eng" type="canonical">Institute of Mathematics Polish Academy of Sciences</name>
+    </ancestor>
+    <ancestor level="bwmeta1.level.hierarchy_Book_Series" identity="bwmeta1.element.dl-catalog-80f4c443-e772-4939-9305-45fe3beb92ec">
+      <name lang="pol" type="canonical">Monografie Matematyczne</name>
+    </ancestor>
+    <current level="bwmeta1.level.hierarchy_Book_Book" position="16" />
+  </structure>
+</element>

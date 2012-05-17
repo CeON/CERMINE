@@ -1,0 +1,105 @@
+<class-diagram version="1.0.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.repo.sim.SimRepo" 
+    project="process-nodes" file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/SimRepo.java" 
+    binary="false">    
+    <position x="173" y="69" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.repo.sim.SimMatrixRepo" 
+    project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/SimMatrixRepo.java" binary="false">    
+    <position x="278" y="311" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="eu.eudml.jrlsimilarity.common.repo.sim.SimTreeRepo" 
+    project="process-nodes" file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/SimTreeRepo.java" 
+    binary="false">    
+    <position x="124" y="465" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="4" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.common.repo.sim.connector.SimRepoConnector" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/connector/SimRepoConnector.java" 
+    binary="false">    
+    <position x="764" y="112" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.common.repo.sim.connector.SimMatrixRepoConnector" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/connector/SimMatrixRepoConnector.java" 
+    binary="false">    
+    <position x="621" y="309" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" 
+    name="eu.eudml.jrlsimilarity.common.repo.sim.connector.SimTreeRepoConnector" project="process-nodes" 
+    file="/process-nodes/src/main/java/eu/eudml/jrlsimilarity/common/repo/sim/connector/SimTreeRepoConnector.java" 
+    binary="false">    
+    <position x="854" y="529" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <realization>    
+    <end type="SOURCE" nodeId="5"/>    
+    <end type="TARGET" nodeId="4"/>  
+  </realization>  
+  <association>    
+    <end type="SOURCE" nodeId="5" navigable="false">      
+      <attribute name="repoInstance"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <end type="SOURCE" nodeId="6"/>    
+    <end type="TARGET" nodeId="4"/>  
+  </realization>  
+  <realization>    
+    <end type="SOURCE" nodeId="3"/>    
+    <end type="TARGET" nodeId="1"/>  
+  </realization>  
+  <association>    
+    <end type="SOURCE" nodeId="6" navigable="false">      
+      <attribute name="repoInstance"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <end type="SOURCE" nodeId="2" navigable="false">      
+      <attribute name="instance"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" nodeId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <end type="SOURCE" nodeId="2"/>    
+    <end type="TARGET" nodeId="1"/>  
+  </realization>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

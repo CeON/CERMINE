@@ -1,0 +1,198 @@
+<?xml version="1.0" ?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>pl.edu.icm.yadda</groupId>
+        <artifactId>yadda</artifactId>
+        <version>4-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>pl.edu.icm.yadda</groupId>
+    <artifactId>yadda-analysis-impl-gpl</artifactId>
+    <packaging>jar</packaging>
+    <version>0.2.0-SNAPSHOT</version>
+    <name>YADDA Analysis (implementation) GPL</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>pl.edu.icm.yadda</groupId>
+            <artifactId>bwmeta-core</artifactId>
+            <version>2.4.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>iText</artifactId>
+                    <groupId>iText</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>pl.edu.icm.yadda</groupId>
+            <artifactId>yadda-analysis-api</artifactId>
+            <version>1.1.0-SNAPSHOT</version>
+        </dependency>        
+<!--         <dependency> -->
+<!--             <groupId>pl.edu.icm.yadda</groupId> -->
+<!--             <artifactId>yadda-analysis-impl</artifactId> -->
+<!--             <version>0.1.2-SNAPSHOT</version> -->
+<!--             <type>jar</type> -->
+<!--         </dependency> -->
+		<!-- bigdata gpl-dependencies -->
+		<dependency> 
+			<groupId>bigdata</groupId>
+			<artifactId>bigdata</artifactId>
+			<version>0.83.2</version>
+		</dependency>		
+		<dependency>
+        	<groupId>fastutil</groupId>
+  			<artifactId>fastutil</artifactId>
+  			<version>5.1.5</version>
+        </dependency>
+        <dependency>
+        	<groupId>dsi-utils</groupId>
+  			<artifactId>dsi-utils</artifactId>
+  			<version>1.0.6</version>
+        </dependency>
+        <dependency>
+        	<groupId>cweb-extser</groupId>
+  			<artifactId>cweb-extser</artifactId>
+  			<version>0.1-b2</version>
+        </dependency>
+        <dependency>
+  			<groupId>ctc_utils</groupId>
+  			<artifactId>ctc_utils</artifactId>
+  			<version>5-4</version>
+        </dependency>
+        <dependency>
+          	<groupId>lgpl-utils</groupId>
+  			<artifactId>lgpl-utils</artifactId>
+  			<version>1.0.6</version>
+        </dependency>
+        <dependency>
+          	<groupId>colt</groupId>
+  			<artifactId>colt</artifactId>
+  			<version>1.2.0</version>
+        </dependency>
+        <dependency>
+          	<groupId>icu4j</groupId>
+  			<artifactId>icu4j</artifactId>
+  			<version>3_6</version>
+        </dependency>        
+        <dependency>
+            <groupId>high-scale-lib</groupId>
+  			<artifactId>high-scale-lib</artifactId>
+  			<version>1.1.2</version>
+        </dependency>        
+        <!-- bigdata gpl-deps -->
+		<!-- bigdata yadda-deps -->
+        <dependency>
+            <groupId>pl.edu.icm.yadda</groupId>
+            <artifactId>yadda-analysis-impl</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
+        </dependency>
+        <!-- bigdata yadda-deps -->
+
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.1</version>
+        </dependency>				
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+        	<groupId>ch.qos.logback</groupId>
+        	<artifactId>logback-classic</artifactId>
+        	<version>0.9.26</version>
+        </dependency>
+		<dependency>
+        	<groupId>ch.qos.logback</groupId>
+        	<artifactId>logback-access</artifactId>
+        	<version>0.9.26</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.edu.icm.yadda</groupId>
+            <artifactId>yadda-analysis-utils</artifactId>
+            <version>1.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.hadoop</groupId> -->
+<!-- 			<artifactId>hadoop-core</artifactId> -->
+<!-- 			<version>0.20.205.0</version> -->
+<!-- 		</dependency> -->
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.codehaus.jackson</groupId> -->
+<!-- 			<artifactId>jackson-jaxrs</artifactId> -->
+<!-- 			<version>1.0.1</version> -->
+<!-- 		</dependency> -->
+        
+    </dependencies>
+    
+    
+    
+    <build>
+      <plugins>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <descriptors>
+              <descriptor>src/main/assembly/dist.xml</descriptor>
+            </descriptors>
+          </configuration>
+          <executions>
+            <execution>
+              <id>assemblies</id>
+              <phase>package</phase>
+              <goals><goal>single</goal></goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>mvnrepo</id>
+            <url>http://mvnrepository.com/artifact/</url>
+        </repository>
+        <repository>
+            <id>yadda</id>
+            <name>YADDA project repository</name>
+            <url>http://maven.icm.edu.pl/artifactory/repo</url>
+        </repository>
+    </repositories>
+</project>

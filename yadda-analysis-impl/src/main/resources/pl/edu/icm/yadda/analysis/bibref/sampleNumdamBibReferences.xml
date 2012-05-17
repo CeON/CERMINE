@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:noNamespaceSchemaLocation="http://dtd.nlm.nih.gov/archiving/3.0/xsd/archivearticle3.xsd" xml:lang="en">
+   <front>
+      <journal-meta>
+         <journal-id journal-id-type="numdam-id">AIHPB</journal-id>
+         <journal-title-group>
+            <journal-title>Annales de l'institut Henri Poincar&#xE9; (B) Probabilit&#xE9;s et Statistiques</journal-title>
+            <abbrev-journal-title abbrev-type="short-title">Ann. Inst. Henri Poincar&#xE9; (B)</abbrev-journal-title></journal-title-group>
+         <issn pub-type="ppub">0020-2347</issn>
+         <publisher>
+            <publisher-name>Gauthier-Villars</publisher-name>
+            <publisher-loc>Paris (France)</publisher-loc></publisher></journal-meta>
+      <article-meta>
+         <article-id pub-id-type="numdam-id">AIHPB_1997__33_5_591_0</article-id>
+         <title-group>
+            <article-title>Local statistics of lattice dimers</article-title></title-group>
+         <contrib-group content-type="authors">
+            <contrib contrib-type="author">
+               <name>
+                  <surname>Kenyon</surname>
+                  <given-names>Richard</given-names></name></contrib></contrib-group>
+         <pub-date>
+            <year>1997</year></pub-date>
+         <volume>33</volume>
+         <issue>5</issue>
+         <issue-id pub-id-type="numdam-id">AIHPB_1997__33_5</issue-id>
+         <fpage>591</fpage>
+         <lpage>618</lpage>
+         <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1473567">1473567</ext-link>
+         <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0893.60047">0893.60047</ext-link>
+         <history>
+            <named-content content-type="digitisation-info">Numerisation &#xE0; d&#xE9;filement &#xE0; 600 dpi noir et blanc, par NUMDAM</named-content>
+            <date date-type="digitisation">
+               <day>08</day>
+               <month>09</month>
+               <year>2005</year></date>
+            <date date-type="metadata-creation">
+               <day>29</day>
+               <month>11</month>
+               <year>2005</year></date></history>
+         <self-uri xlink:href="http://www.numdam.org/item?id=AIHPB_1997__33_5_591_0">Access to full text</self-uri>
+         <self-uri content-type="application/pdf" xlink:href="http://archive.numdam.org/article/AIHPB_1997__33_5_591_0.pdf">Full (PDF)</self-uri>
+         <self-uri content-type="image/x.djvu" xlink:href="http://archive.numdam.org/article/AIHPB_1997__33_5_591_0.djvu">Full (DjVu)</self-uri>
+         <custom-meta-group>
+            <custom-meta>
+               <meta-name>provider</meta-name>
+               <meta-value>numdam</meta-value></custom-meta></custom-meta-group></article-meta></front>
+   <back>
+      <ref-list>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=679091">679091</ext-link>[BH] <string-name>
+                  <given-names>H.W.J.</given-names>
+                  <surname>Bl&#xF6;te</surname></string-name> and <string-name>
+                  <given-names>H.J.</given-names>
+                  <surname>Hilhorst</surname></string-name>, <article-title>Roughening transitions and the zerotemperature triangular Ising antiferromagnet</article-title>, <source>J. Phys. A</source> Vol. <volume>15</volume>, <year>1982</year>, <fpage>L631</fpage>-<lpage>L637</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1235419">1235419</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0785.60007">0785.60007</ext-link>[BP] <string-name>
+                  <given-names>R.</given-names>
+                  <surname>Burton</surname></string-name> and <string-name>
+                  <given-names>R.</given-names>
+                  <surname>Pemantle</surname></string-name>, <article-title>Local characteristics, entropy and limit theorems for spanning trees and domino tilings via transfer impedances</article-title>, <source>Ann. Probab.</source>, Vol. <volume>21</volume>, <year>1993</year>, pp. <fpage>1329</fpage>-<lpage>1371</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=460128">460128</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0283.05001">0283.05001</ext-link>[C] <string-name>
+                  <given-names>L.</given-names>
+                  <surname>Comtet</surname></string-name> , <article-title>Advanced combinatorics</article-title>, <publisher-name>D. Reidel Publishing Company</publisher-name>, <publisher-loc>Dordrecht</publisher-loc>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1412441">1412441</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0866.60018">0866.60018</ext-link>[CEP] <string-name>
+                  <given-names>H.</given-names>
+                  <surname>Cohn</surname></string-name> and <string-name>
+                  <given-names>N.</given-names>
+                  <surname>Elkies</surname></string-name>, <string-name>
+                  <given-names>J.</given-names>
+                  <surname>Propp</surname></string-name>, <article-title>Local statistics for random domino tilings of the Aztec diamond</article-title>, <source>Duke Math. J.</source>, Vol. <volume>85</volume>, <year>1996</year>, pp. <fpage>117</fpage>-<lpage>166</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>[CKP] <string-name>
+                  <given-names>H.</given-names>
+                  <surname>Cohn</surname></string-name> and <string-name>
+                  <given-names>R.</given-names>
+                  <surname>Kenyon</surname></string-name>, <string-name>
+                  <given-names>J.</given-names>
+                  <surname>Propp</surname></string-name>, in preparation. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1226347">1226347</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0779.05009">0779.05009</ext-link>[EKLP] <string-name>
+                  <given-names>N.</given-names>
+                  <surname>Elkies</surname></string-name>, <string-name>
+                  <given-names>G.</given-names>
+                  <surname>Kuperberg</surname></string-name> and <string-name>
+                  <given-names>M.</given-names>
+                  <surname>Larsen</surname></string-name>, <string-name>
+                  <given-names>J.</given-names>
+                  <surname>Propp</surname></string-name>, <article-title>Alternating sign matrices and domino tilings</article-title>. <source>J. Alg. Combinatorics</source>, Vol. <volume>1</volume>, <year>1992</year>, pp. <fpage>111</fpage>-<lpage>132</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=158705">158705</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0132.22304">0132.22304</ext-link>[FS] <string-name>
+                  <given-names>M.E.</given-names>
+                  <surname>Fisher</surname></string-name> and <string-name>
+                  <given-names>J.</given-names>
+                  <surname>Stephenson</surname></string-name>, <article-title>Statistical mechanics of dimers on a plane lattice II. Dimer correlations and monomers</article-title>, <source>Phys. Rev.</source> , Vol. <volume>132</volume>, <year>1963</year>, pp. <fpage>1411</fpage>-<lpage>1431</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=116546">116546</ext-link>[HG] <string-name>
+                  <given-names>C.A.</given-names>
+                  <surname>Hurst</surname></string-name> and <string-name>
+                  <given-names>H.S.</given-names>
+                  <surname>Green</surname></string-name>, <article-title>New solution of the Ising problem for a rectangular lattice</article-title>, <source>J. Chem. Phys.</source>, Vol. <volume>33</volume>, <year>1960</year>, pp. <fpage>1059</fpage>-<lpage>1062</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>[K1] <string-name>
+                  <given-names>P.W.</given-names>
+                  <surname>Kasteleyn</surname></string-name>, <article-title>The statistics of dimers on a lattice</article-title>, <source>Physica</source>, Vol. <volume>27</volume>, <year>1961</year>, pp. <fpage>1209</fpage>-<lpage>1225</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=253689">253689</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0205.28402">0205.28402</ext-link>[K2] <string-name>
+                  <given-names>P.W.</given-names>
+                  <surname>Kasteleyn</surname></string-name>, <article-title>Graph theory and crystal physics</article-title>, in <source>Graph Theory and Theoretical Physics</source>, <publisher-name>Academic Press</publisher-name>, <publisher-loc>London</publisher-loc>
+               <year>1967</year>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=148406">148406</ext-link>[MPW] <string-name>
+                  <given-names>E.W.</given-names>
+                  <surname>Montroll</surname></string-name>, <string-name>
+                  <given-names>R.B.</given-names>
+                  <surname>Potts</surname></string-name> and <string-name>
+                  <given-names>J.C.</given-names>
+                  <surname>Ward</surname></string-name>, <article-title>Correlations and spontaneous magnetization of the two-dimensional Ising model</article-title>, <source>J. Math. Phys.</source>, Vol. <volume>4</volume>, <year>1963</year>, p. <fpage>308</fpage>-<lpage>322</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=833286">833286</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0507.28010">0507.28010</ext-link>[P] <string-name>
+                  <given-names>K.</given-names>
+                  <surname>Petersen</surname></string-name>, <article-title>Ergodic theory, Cambridge studes in advanced mathematics 2</article-title>, <publisher-name>Cambridge university press</publisher-name>, <publisher-loc>Cambridge</publisher-loc>, <year>1983</year>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>[PW] <string-name>
+                  <given-names>J.</given-names>
+                  <surname>Propp</surname></string-name> and <string-name>
+                  <given-names>D.</given-names>
+                  <surname>Wilson</surname></string-name>, in preparation. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=168310">168310</ext-link>[St] <string-name>
+                  <given-names>J.</given-names>
+                  <surname>Stephenson</surname></string-name>, <article-title>Ising-model spin correlations on the triangular lattice</article-title>, <source>J. Math. Phys.</source>, Vol. <volume>5</volume>, <year>1964</year>, pp. <fpage>1009</fpage>-<lpage>1024</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1072815">1072815</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0714.52007">0714.52007</ext-link>[T] <string-name>
+                  <given-names>W.</given-names>
+                  <surname>Thurston</surname></string-name> , <article-title>Conway's tiling groups</article-title>, <source>Am. Math. Monthly</source>, Vol. <volume>97</volume>, <year>1990</year>, pp. <fpage>757</fpage>-<lpage>773</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=136398">136398</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0126.25102">0126.25102</ext-link>[TF] <string-name>
+                  <given-names>H.</given-names>
+                  <surname>Templerley</surname></string-name> and <string-name>
+                  <given-names>M.</given-names>
+                  <surname>Fisher</surname></string-name>, <article-title>The dimer problem in statistical mechanics - an exact result</article-title>. <source>Phil Mag.</source>, Vol. <volume>6</volume>, <year>1961</year>, pp. <fpage>1061</fpage>-<lpage>1063</lpage>. </mixed-citation></ref>
+         <ref>
+            <mixed-citation>
+               <ext-link ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=149896">149896</ext-link>
+               <ext-link ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0113.23406">0113.23406</ext-link>[W] <string-name>
+                  <given-names>T.</given-names>
+                  <surname>Wu</surname></string-name>, <article-title>Dimers on rectangular lattices</article-title>, <source>J. Math. Phys</source>, Vol. <volume>3</volume>, <year>1962</year>, pp. <fpage>1265</fpage>-<lpage>1266</lpage>. </mixed-citation></ref></ref-list></back></article>

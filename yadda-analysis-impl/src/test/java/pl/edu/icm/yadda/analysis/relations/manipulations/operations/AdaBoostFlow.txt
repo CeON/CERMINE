@@ -1,0 +1,6 @@
+1) [Contributions2Observations] Create pairs of contributors called later observations 
+2) [AreTheSameInitializer] Check if both contributions of each pair look at the same object through given "is-person" predicate
+3) [AssignWeight] Mark each pair with the same weight
+4) [extension of WeightRecalculatorBase] Check if both contributors look through given "predicate" on the same object. 
+      if result is same as "are-same" predicate of observation praise weight, else punish it.
+5) Repeat from step 4 against best Feature till no of repetitions exceed maximum no of repetitions.

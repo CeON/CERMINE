@@ -1,0 +1,102 @@
+
+<http://yadda.icm.edu.pl/document#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33> <http://yadda.icm.edu.pl/yadda#in-language> "english" ;
+	<http://yadda.icm.edu.pl/yadda#contains-affiliation> <http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a0> , <http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a1> , <http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a2> , <http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a3> ;
+	<http://yadda.icm.edu.pl/yadda#has-contributor> <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#c0> , <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#c1> , <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#c2> , <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#c3> ;
+	<http://yadda.icm.edu.pl/yadda#has-title> "Cobham’s theorem and its extensions" ;
+	<http://yadda.icm.edu.pl/yadda#has-publisher> "CIRM" ;
+	<http://yadda.icm.edu.pl/yadda#in-journal> "Actes des rencontres du CIRM" ;
+	<http://yadda.icm.edu.pl/yadda#published-in-year> "2009" ;
+	<http://yadda.icm.edu.pl/yadda#in-volume> "1" ;
+	<http://yadda.icm.edu.pl/yadda#is-between-pages> "11-16" ;
+	<http://yadda.icm.edu.pl/yadda#has-description> "http://yadda.icm.edu.pl/description#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#1" ;
+	<http://yadda.icm.edu.pl/yadda#references> <http://yadda.icm.edu.pl/reference#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r0> , <http://yadda.icm.edu.pl/reference#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r1> .
+
+<http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a0> <http://yadda.icm.edu.pl/yadda#has-text> "Jason Bell Department of Mathematics Simon Fraser University Burnaby, BC V5A 1S6 Canada" .
+
+<http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a1> <http://yadda.icm.edu.pl/yadda#has-text> "Université Claude-Bernard, Institut Camille-Jordan, 43 Bd du 11 novembre 1918, 69622 Villeurbanne cedex, France" .
+
+<http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a2> <http://yadda.icm.edu.pl/yadda#has-text> "IRISA, Campus de Beaulieu, 35042 Rennes cedex, France" .
+
+<http://yadda.icm.edu.pl/affiliation#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#a3> <http://yadda.icm.edu.pl/yadda#has-text> "Université Denis-Diderot, LIAFA, case 7014, 75205 Paris cedex 13, France" .
+
+<http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#c1> <http://yadda.icm.edu.pl/yadda#has-position-in-document> "1" ;
+	<http://yadda.icm.edu.pl/yadda#has-contact-email> "boris.adamczewski@math.univ-lyon1.fr" ;
+	<http://yadda.icm.edu.pl/yadda#is-person> <http://yadda.icm.edu.pl/person#zbl#adamczewski.boris> ;
+	<http://yadda.icm.edu.pl/yadda#has-role> "organizer-of-meeting" ;
+	<http://yadda.icm.edu.pl/yadda#has-canonical-name> "Boris Adamczewski" ;
+	<http://yadda.icm.edu.pl/yadda#has-surname> "Adamczewski" ;
+	<http://yadda.icm.edu.pl/yadda#has-forenames> "Boris" .
+
+<http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r0#c0> <http://yadda.icm.edu.pl/yadda#has-position-in-reference-document> "0" ;
+	<http://yadda.icm.edu.pl/yadda#has-contact-email> "boris.adamczewski@math.univ-lyon1.fr" ;
+	<http://yadda.icm.edu.pl/yadda#is-person> <http://yadda.icm.edu.pl/person#zbl#adamczewski.boris> ;
+	<http://yadda.icm.edu.pl/yadda#has-forenames> "Boris" ;
+	<http://yadda.icm.edu.pl/yadda#has-surname> "Adamczewski" ;
+	<http://yadda.icm.edu.pl/yadda#has-canonical-name> "Boris Adamczewski" .
+
+<http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r0#c1> <http://yadda.icm.edu.pl/yadda#has-position-in-reference-document> "1" ;
+	<http://yadda.icm.edu.pl/yadda#has-contact-email> "boris.adamczewski@math.univ-lyon1.fr" ;
+	<http://yadda.icm.edu.pl/yadda#is-person> <http://yadda.icm.edu.pl/person#zbl#bell.jason-p> ;
+	<http://yadda.icm.edu.pl/yadda#has-forenames> "Jason" ;
+	<http://yadda.icm.edu.pl/yadda#has-surname> "Bell" ;
+	<http://yadda.icm.edu.pl/yadda#has-canonical-name> "Jason Bell" .
+
+<http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r1#c0> <http://yadda.icm.edu.pl/yadda#has-position-in-reference-document> "0" ;
+	<http://yadda.icm.edu.pl/yadda#has-contact-email> "allouche.jean-paul@math.univ-lyon1.fr" ;
+	<http://yadda.icm.edu.pl/yadda#is-person> <http://yadda.icm.edu.pl/person#zbl#adamczewski.boris> ;
+	<http://yadda.icm.edu.pl/yadda#has-forenames> "Jean-Paul" ;
+	<http://yadda.icm.edu.pl/yadda#has-surname> "Allouche" ;
+	<http://yadda.icm.edu.pl/yadda#has-canonical-name> "Jean-Paul Allouche" .
+
+<http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r1#c1> <http://yadda.icm.edu.pl/yadda#has-position-in-reference-document> "1" ;
+	<http://yadda.icm.edu.pl/yadda#has-contact-email> "shallit.jeffrey-o@math.univ-lyon1.fr" ;
+	<http://yadda.icm.edu.pl/yadda#is-person> <http://yadda.icm.edu.pl/person#zbl#shallit.jeffrey-o> ;
+	<http://yadda.icm.edu.pl/yadda#has-forenames> "Jeffrey" ;
+	<http://yadda.icm.edu.pl/yadda#has-surname> "Shallit" ;
+	<http://yadda.icm.edu.pl/yadda#has-canonical-name> "Jeffrey Shallit" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#1> <http://yadda.icm.edu.pl/yadda#has-type> "keyword" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#2> <http://yadda.icm.edu.pl/yadda#in-language> "Undetermined" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#3> <http://yadda.icm.edu.pl/yadda#has-text> "automatic sequences" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#4> <http://yadda.icm.edu.pl/yadda#has-text> "cobham's theorem" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#5> <http://yadda.icm.edu.pl/yadda#has-text> "christol's theorem" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#6> <http://yadda.icm.edu.pl/yadda#has-text> "hahn's power series" .
+
+<http://yadda.icm.edu.pl/reference#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r0> <http://yadda.icm.edu.pl/yadda#is-document> <http://yadda.icm.edu.pl/document#MR#2388308> , <http://yadda.icm.edu.pl/document#ZBL#1151.11060> ;
+	<http://yadda.icm.edu.pl/yadda#is-in-category-MSC> "11R58" , "13F25" ;
+	<http://yadda.icm.edu.pl/yadda#has-contributor> <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r0#c0> , <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r0#c1> ;
+	<http://yadda.icm.edu.pl/yadda#is-document> <http://yadda.icm.edu.pl/document#ZBL#05242952> ;
+	<http://yadda.icm.edu.pl/yadda#has-issn> "http://yadda.icm.edu.pl/issn#0021-8693" ;
+	<http://yadda.icm.edu.pl/yadda#has-title> "Function fields in positive characteristic: expansions and Cobham's theorem." ;
+	<http://yadda.icm.edu.pl/yadda#has-tag> "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#1" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#2" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#3" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#4" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#5" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#0#t#6" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#1> <http://yadda.icm.edu.pl/yadda#has-type> "keyword" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#2> <http://yadda.icm.edu.pl/yadda#in-language> "Undetermined" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#3> <http://yadda.icm.edu.pl/yadda#has-text> "fourier expansion" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#4> <http://yadda.icm.edu.pl/yadda#has-text> "automatic sequence" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#5> <http://yadda.icm.edu.pl/yadda#has-text> "$k$-regular sequences" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#6> <http://yadda.icm.edu.pl/yadda#has-text> "closure properties" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#7> <http://yadda.icm.edu.pl/yadda#has-text> "formal power series" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#8> <http://yadda.icm.edu.pl/yadda#has-text> "$\\bbfz$-rational formal series" .
+
+<http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#9> <http://yadda.icm.edu.pl/yadda#has-text> "pattern sequence" .
+
+<http://yadda.icm.edu.pl/reference#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r1> <http://yadda.icm.edu.pl/yadda#is-document> <http://yadda.icm.edu.pl/document#MR#1166363> , <http://yadda.icm.edu.pl/document#ZBL#0774.68072> ;
+	<http://yadda.icm.edu.pl/yadda#is-in-category-MSC> "68Q45" , "11B83" , "11B85" , "16W60" , "68R15" ;
+	<http://yadda.icm.edu.pl/yadda#has-contributor> <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r1#c0> , <http://yadda.icm.edu.pl/contributor#bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r1#c1> ;
+	<http://yadda.icm.edu.pl/yadda#is-document> <http://yadda.icm.edu.pl/document#ZBL#00065314> ;
+	<http://yadda.icm.edu.pl/yadda#has-issn> "http://yadda.icm.edu.pl/issn#0304-3975" ;
+	<http://yadda.icm.edu.pl/yadda#has-title> "The ring of $k$-regular sequences." ;
+	<http://yadda.icm.edu.pl/yadda#has-tag> "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#1" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#2" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#3" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#4" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#5" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#6" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#7" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#8" , "http://yadda.icm.edu.pl/tag#-bwmeta1.element.88f45a13-d609-3d9e-97a4-5967f3b74d33#r#1#t#9" .

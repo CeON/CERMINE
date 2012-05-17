@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>pl.edu.icm.yadda</groupId>
+        <artifactId>yadda</artifactId>
+        <version>4-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>pl.edu.icm.yadda</groupId>
+    <artifactId>yadda-analysis-utils</artifactId>
+    <packaging>jar</packaging>
+    <version>1.1.0-SNAPSHOT</version>
+    <name>YADDA Analysis (light utilities)</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <!-- We should choose either iText or PDFBox, but not both. -->
+        <!--
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>yadda</id>
+            <name>YADDA project repository</name>
+            <url>http://maven.icm.edu.pl/artifactory/repo</url>
+        </repository>
+    </repositories>
+
+  <scm>
+    <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/yadda-analysis-utils/tags/yadda-analysis-utils-1.0.3</connection>
+    <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/yadda-analysis-utils/tags/yadda-analysis-utils-1.0.3</developerConnection>
+  </scm>
+</project>
+

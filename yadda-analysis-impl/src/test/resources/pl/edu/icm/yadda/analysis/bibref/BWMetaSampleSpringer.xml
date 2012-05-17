@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+    Created on : December 21, 2010, 8:14 PM
+    Author     : estocka
+-->
+
+<element id="bwmeta1.element.ee4d5ced-0bd3-3c13-bdb2-81753de76099">
+    <affiliation id="Aff1">
+        <attribute key="org-division" value="Department of Computer Science and Applied Mathematics" />
+        <attribute key="org-name" value="Illinois Institute of Technology" />
+        <attribute key="address-postcode" value="60616" />
+        <attribute key="address-city" value="Chicago" />
+        <attribute key="address-state" value="IL" />
+        <attribute key="address-country" value="USA" />
+        <text>Department of Computer Science and Applied Mathematics, Illinois Institute of Technology</text>
+    </affiliation>
+    <affiliation id="Aff2">
+        <attribute key="org-division" value="Department of Mathematics" />
+        <attribute key="org-name" value="Northwestern University" />
+        <attribute key="address-postcode" value="60208" />
+        <attribute key="address-city" value="Evanston" />
+        <attribute key="address-state" value="IL" />
+        <attribute key="address-country" value="USA" />
+        <text>Department of Mathematics, Northwestern University</text>
+    </affiliation>
+    <attribute key="springer.type" value="OriginalPaper" />
+    <attribute key="springer.numbering-style" value="Unnumbered" />
+    <attribute key="springer.toc-levels" value="0" />
+    <attribute key="springer.contains-esm" value="No" />
+    <attribute key="springer.id" value="Art1" />
+    <attribute key="springer.id" value="325322" />
+    <attribute key="copyright-holder" value="Kluwer Academic Publishers" />
+    <attribute key="copyright-year" value="1999" />
+    <attribute key="source-id" value="kluwer/kluwer_backfiles/PUB=Baltzer_Science_Publishers,_Baarn-Kluwer_Academic_Publishers-Dordrecht/JOU=10444/VOL=10/ISU=1/ART=2004_325322" />
+    <contributor institution="false" role="author">
+        <affiliation-ref ref="Aff1" />
+        <attribute key="springer.display-order" value="Western" />
+        <attribute key="contact-email" value="fass@amadeus.csam.iit.edu" />
+        <name lang="zxx" type="canonical">Gregory E. Fasshauer</name>
+        <name lang="zxx" type="surname">Fasshauer</name>
+        <name lang="zxx" type="forename">Gregory</name>
+        <name lang="zxx" type="forename">E.</name>
+    </contributor>
+    <contributor role="publisher">
+        <name lang="und" type="canonical">Kluwer Academic Publishers</name>
+        <attribute key="address-city" value="Dordrecht" />
+    </contributor>
+    <contributor institution="false" role="author">
+        <affiliation-ref ref="Aff2" />
+        <attribute key="springer.display-order" value="Western" />
+        <attribute key="contact-email" value="jwj@math.nwu.edu" />
+        <name lang="zxx" type="canonical">Joseph W. Jerome Jr.</name>
+        <name lang="zxx" type="surname">Jerome</name>
+        <name lang="zxx" type="forename">Joseph</name>
+        <name lang="zxx" type="forename">W.</name>
+        <name lang="zxx" type="suffix">Jr.</name>
+    </contributor>
+    <contributor institution="false" role="author">
+        <attribute key="person">
+            <value>_</value>
+            <attribute key="person.surname">
+                <value>Walaszek</value>
+            </attribute>
+            <attribute key="person.firstname">
+                <value>J.</value>
+            </attribute>
+        </attribute>
+        <name lang="zxx" type="canonical">Walaszek  J. K.</name>
+        <name lang="zxx" type="surname">Walaszek</name>
+        <name lang="zxx" type="forenames">J. K.</name>
+    </contributor>
+    <date type="registration" day="29" month="9" year="2004" />
+    <description lang="eng" type="abstract">Abstract We show how certain widely used multistep approximation algorithms can be interpreted as instances of an approximate Newton method. It was shown in an earlier paper by the second author that the convergence rates of approximate Newton methods (in the context of the numerical solution of PDEs) suffer from a “loss of derivatives”, and that the subsequent linear rate of convergence can be improved to be superlinear using an adaptation of Nash–Moser iteration for numerical analysis purposes; the essence of the adaptation being a splitting of the inversion and the smoothing into two separate steps. We show how these ideas apply to scattered data approximation as well as the numerical solution of partial differential equations. We investigate the use of several radial kernels for the smoothing operation. In our numerical examples we use radial basis functions also in the inversion step.</description>
+    <id scheme="bwmeta1.id-class.DOI" value="10.1023/A:1018962112170" />
+    <language lang="eng" />
+    <name lang="eng" type="canonical">Multistep approximation algorithms: Improved convergence rates through postconditioning with smoothing kernels</name>
+    <structure hierarchy="bwmeta1.hierarchy-class.hierarchy_Journal">
+        <ancestor level="bwmeta1.level.hierarchy_Journal_Publisher" identity="bwmeta1.element.02264259-4010-366b-aff6-0d30b24252d7">
+            <name lang="und" type="canonical">Kluwer Academic Publishers</name>
+        </ancestor>
+        <ancestor level="bwmeta1.level.hierarchy_Journal_Journal" identity="bwmeta1.element.3dcfd849-682a-3838-a421-05e570bc4a38">
+            <name lang="und" type="canonical">Advances in Computational Mathematics</name>
+        </ancestor>
+        <ancestor level="bwmeta1.level.hierarchy_Journal_Year" identity="bwmeta1.element.4cf2b07a-dc72-3b0f-acfd-898a6716967c">
+            <name lang="zxx" type="canonical">1999</name>
+        </ancestor>
+        <ancestor level="bwmeta1.level.hierarchy_Journal_Volume" identity="bwmeta1.element.5ec4fefc-07a0-3702-a591-81aceed80594">
+            <name lang="zxx" type="canonical">10</name>
+        </ancestor>
+        <ancestor level="bwmeta1.level.hierarchy_Journal_Number" identity="bwmeta1.element.697e5ca7-d9e0-30fc-b46b-0cc64d0e0ebb">
+            <name lang="zxx" type="canonical">1</name>
+        </ancestor>
+        <current level="bwmeta1.level.hierarchy_Journal_Article" position="1-27" />
+    </structure>
+    <tags lang="eng" type="keyword">
+        <tag>capacitated location</tag>
+        <tag>Lagrangean heuristic</tag>
+        <tag>mixed integer linear programming</tag>
+    </tags>
+</element>
+  

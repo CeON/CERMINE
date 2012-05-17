@@ -1,0 +1,2006 @@
+Comprehensive Summaries of Uppsala Dissertations
+from the Faculty of Medicine   1076
+_____________________________ _____________________________
+Asthma:
+Respiratory Symptoms, Atopy and 
+Bronchial Hyperresponsiveness in 
+Young Adults in Estonia and Sweden
+BY
+RAIN JÕGI
+ACTA UNIVERSITATIS UPSALIENSIS
+UPPSALA 2001
+Dissertation for the Degree of Doctor of Philosophy
+(Faculty of Medicine) in Respiratory Medicine presented at
+Uppsala University in 2001
+Abstract
+Jõgi, R. 2001. Asthma: Respiratory Symptoms, Atopy and Bronchial
+Hyperresponsiveness in Young Adults in Estonia and Sweden. Acta Universitatis
+Upsaliensis. Comprehensive Summaries of Uppsala Dissertations from the Faculty of
+Medicine 1076. 64 pp. Uppsala.
+ISBN 91-554-5119-5.
+Morbidity of asthma has increased over the world. The reasons for this increase have
+remained unclear. Studies in children have reported considerable East-West difference
+in the prevalence of atopy and respiratory allergies.
+   The aim of this thesis was to compare the prevalence and risk factors of respiratory
+symptoms, atopic sensitisation and bronchial hyperresponsiveness (BHR) in young
+adults in Estonia and Sweden. 
+   Following the protocol of the European Community Respiratory Health Survey
+(ECRHS), two random population samples, 3000 from Tartu, Estonia, and 3600 from
+Uppsala, Sweden were investigated with postal questionnaires. Random sub samples
+and subjects with asthma-like complaints were subsequently interviewed, BHR was
+tested and serum samples analysed for total and specific IgE and eosinophil cationic
+protein (ECP). In a separate study two methacholine challenge methods, using either
+Spira Elektro2 or Mefar MB3 as dosimeters, were compared on 28 mild to moderate
+asthma patients.
+   Symptoms of asthma and hay fever were less common in Estonia than in Sweden,
+while respiratory symptoms in general were more common in Estonia. The prevalence
+of BHR was high and the prevalence of atopy and the levels of serum ECP were low in
+Tartu. The differences between the two centres in the prevalence of atopy and allergic
+rhinitis diminished with age, indicating a probable cohort effect. Current smoking was a
+dominant risk factor BHR and for all respiratory symptoms, except attacks of asthma,
+both in Tartu and Uppsala. There was some difference between risk factors for BHR
+and atopy between Tartu and Uppsala, mostly of social and environmental origin. The
+low prevalence of hay fever and asthma in Tartu seemed to be partly explained by a
+lack of awareness of  atopy and allergic diseases in the Estonian society. The estimated
+cumulative dose causing a 20% fall in FEV1 was smaller and the decline of FEV1
+/log(dose) curve steeper, using the Spira, compared to Mefar protocol. 
+Key words: asthma, atopic sensitisation, prevalence, epidemiology, ECRHS.
+Rain Jõgi, Department of Medical Sciences: Respiratory Medicine and Allergology,
+Akademiska sjukhuset S-751 85 Uppsala, Sweden
+© Rain Jõgi 2001
+ISSN 0282-7476
+ISBN 91-554-5119-5
+Printed in Sweden by Uppsala University, Tryck & Medier, Uppsala 2001
+iii
+Kitkus Irmi
+Katkus Armi
+Murdis maha Mustukene
+“Kalevipoeg”, kolmas lugu
+iv
+List of papers 
+This thesis is based on the following papers, referred in the text by Roman numbers I-V:
+I. The prevalence of asthmatic respiratory symptoms among adults in an Estonian
+and Swedish university town. Rain Jõgi, Christer Janson, Eythor Björnsson, Gunnar
+Boman, Bengt Björkstén. Allergy 1996; 51:331-336.
+II. Atopy and allergic disorders among adults in Tartu, Estonia compared to
+Uppsala, Sweden. Rain Jõgi, Christer Janson, Eythor Björnsson, Gunnar Boman,
+Bengt Björkstén. Clin Exp Allergy 1998; 28:1072-1081.
+III. Bronchial hyperresponsiveness in two populations with different prevalences of
+atopy. Rain Jõgi, Bengt  Björkstén, Gunnar Boman, Christer Janson. Submitted.
+IV. Serum eosinophil cationic protein (S-ECP) in a population with low prevalence
+of atopy. Rain Jõgi, Bengt Björkstén, Gunnar Boman, Christer Janson. Submitted.
+V. Comparison of two methacholine challenge methods using Spira-2 or Mefar do-
+simeter. Rain Jõgi, Christer Janson, Hans Hedenström. Clin Phys 1999; 4:300-303.
+Reprints were made with permission from the publishers.
+v
+List of abbreviations
+AMP Adenosine monophosphate 
+BCG Attenuated bovine tuberculosis vaccine bacillus Calmette-Guérin
+B-Eos Eosinophil granulocyte in peripheral blood 
+BHR Bronchial hyperresponsiveness 
+BMI Body mass index
+CI Confidence interval 
+DDD Defined daily dose
+DNA Deoxyribonucleic acid
+ECP Eosinophil cationic protein 
+ECRHS European Community Respiratory Health Survey
+ETS Environmental tobacco smoke 
+FEV1 Forced expiratory flow in first second
+FEV1% Forced expiratory flow in first second as percentage of the predicted value
+FVC Forced vital capacity
+GNP Gross national product
+IgE Immunoglobuline E
+ISAAC International Study of Asthma and Allergy in Childhood 
+IUATLD International Union Against Tuberculosis and Lung Disease 
+NO2 Nitrogen dioxide
+OR Odds ratio
+PD20 Provocative dose causing 20% decline if FEV1 
+PGE2 Prostaglandin E2 
+RHINE Respiratory Health in Northern Europe 
+SD Standard deviation
+SO2 Sulphur dioxide
+SPT Skin prick test
+Thx Lymphocyte class T helperx
+VOC Volatile organic compound 
+vi
+CONTENTS
+Abstract ii
+List of papers iv
+List of abbreviations v
+INTRODUCTION 1
+BACKGROUND 2
+Definition of asthma 2
+Outcome variables in asthma epidemiology 3
+Variable obstruction 3
+Self reported asthma 3
+Symptoms of asthma 3
+Bronchial hyperresponsiveness (BHR) 4
+Other outcome variables 5
+Increase in prevalence 6
+Regional differences in prevalence 6
+East-West difference in asthma prevalence 8
+Factors that influence asthma 10
+Age and Sex 10
+Genetic factors 11
+Atopic sensitisation 12
+Furry pets 14
+Smoking 14
+Environmental tobacco smoke (ETS) 15
+Indoor environment 16
+Outdoor environment 17
+Occupational exposures 17
+Socio-economic status 18
+Number of siblings,  day-care attendance and infections 18
+Diet 21
+THE AIMS OF THE STUDY 24
+MATERIAL AND METHODS 25
+Definitions used 25
+European Community Respiratory Health Survey (ECRHS) 26
+Study areas (I-IV) 26
+vii
+Phase 1 27
+Subjects (I) 27
+Questionnaire (I) 27
+Phase 2 28
+Subjects (II-IV) 28
+Questionnaire (II-IV) 29
+Serum IgE levels and circulating IgE antibodies (II-IV) 29
+Serum ECP (IV) 29
+Spirometry (II-V) 29
+Methacholine challenge test (II-V) 29
+Comparison of two dosimeter methods 30
+Subjects (V) 30
+Ethical considerations 31
+STATISTICAL ANALYSIS 31
+RESULTS 32
+Paper I 32
+Paper II 32
+Paper III 33
+Paper IV 33
+Paper V 34
+DISCUSSION 35
+Methodological implications 40
+Internal validity 41
+External validity 42
+Future aspects 42
+CONCLUSIONS 43
+ACKNOWLEDGEMENTS 44
+REFERENCES 45
+
+1
+INTRODUCTION
+Asthma has been recognised by clinicians for more than two millenniums. Probably not much
+has changed from that time in the clinical picture of the disease, as the first descriptions of
+asthma resemble to that what doctors would also nowadays consider classical asthma. The first
+epidemiological studies of asthma date back to the first half of the XXth century. Since then a
+global increase in asthma prevalence has been revealed. While the reasons for this increase re-
+main unclear, there can be no doubt that asthma is now a major health problem worldwide.
+Clustered in families, asthma has a genetic predisposition. It is unlikely, however, that the ge-
+netic makeup of stable populations can change significantly within one century, so the probable
+cause of the asthma epidemic must lie in the environment.
+Asthma epidemiological studies are currently in the phase of that of cancer and coronary heart
+disease at the mid of the XXth century when international comparisons of the prevalence and
+incidence of those diseases revealed the major risk factors and formed the bases of the further
+research. The major obstacles in asthma epidemiology are the lack of a definition of asthma, the
+transient nature of the principal symptom, and the absence of simple, sensitive, and specific
+markers for the condition.
+2
+BACKGROUND
+Definition of asthma
+Many pulmonary diseases can be defined by their causative agent e.g., tuberculosis, or by de-
+fined pathology e.g., squamous cell carcinoma, or by characteristic clinical presentation. For
+asthma, the primary cause remains unknown, pathology is rarely available at the time of diag-
+nosis and the clinical presentation can be variable. Hence, to date, no universally acceptable
+definition has been formulated 1. The term “asthma” encompasses a disparate group of disor-
+ders which produce similar clinical effects – that is, variable airflow obstruction - and this has
+formed the basis of the definition of asthma. Perhaps the most concise and useful description of
+asthma is: a clinical syndrome of  “variable airflow obstruction.”
+Development of understanding the mechanisms of asthma, and desire to give a definition that
+would satisfy clinicians, physiologist, genetics, immunologists, molecular biologists, pharma-
+cologists, epidemiologists as well as pathologists have added new components to the definition.
+Current consensus definition of asthma has captured the history of development of understand-
+ing of the mechanisms of asthma in last decades and states:
+Asthma is a chronic inflammatory disorder of the airways, in which many cells play a role, in
+particular mast cells, eosinophils, and T-lymphocytes. In susceptible individuals, this inflam-
+mation causes recurrent episodes of wheezing, chest tightness, and cough, particularly at night
+and/or in the early morning. Theses symptoms are usually associated with widespread but vari-
+able airflow limitation that is at least partially reversible either spontaneously or with treat-
+ment. The inflammation also causes an associated increase in airway responsiveness to a vari-
+ety of stimuli 2.
+This descriptive definition of asthma, however, can not be translated into practical terms for
+epidemiological studies. Furthermore, despite the definition accepted for asthma, a diagnosis of
+asthma in clinical practice is made on the basis of combined information from history, physical
+examination, and respiratory function tests, often over a period of time. Time-consuming clini-
+cal testing is of little value in epidemiological setting because of low response rates and possi-
+ble noncomparability of methods across countries and regions. For these reasons, comparisons
+of asthma prevalence are increasingly being based on a simple comparison of symptom preva-
+lence in a questionnaire survey of a large number of people, followed by more intensive testing
+3
+of the underlying immunological and physiological components that often characterise clinical
+asthma, like bronchial hyperresponsiveness (BHR) and atopy, in a sub sample. 
+Outcome variables in asthma epidemiology
+Variable obstruction
+Methods used in clinical diagnosing of asthma are difficult to apply in epidemiological settings,
+especially in cross sectional studies. The main reason for that is the variable nature of asthma.
+Verification of reversible airway obstruction, which is considered critical in establishing a clear
+clinical diagnosing of asthma 2,3, would therefore underestimate the true prevalence, as reversi-
+ble airway obstruction might not be revealed at time of testing.
+Self reported asthma
+Questionnaire based self reported asthma is often used in epidemiological studies. It has usually
+high specificity but low sensitivity to the actual disease, as all the cases of asthma are never di-
+agnosed in the population 4. This leads to an underestimation of the true prevalence of asthma.
+Further problems arise, when different populations with differences in labelling of asthma and
+diagnostic practice are compared, as the differences in diagnostic practice may be as great in
+magnitude as the real differences in asthma morbidity. A definition of high specificity is how-
+ever important, when risk factors are estimated 5. 
+Symptoms of asthma
+A number of symptoms, including wheezing, chest tightness, breathlessness, and coughing with
+or without sputum, are recognized by physicians as indicative of asthma. Symptom recording,
+based on standard postal and interview questionnaires, have also widely been used in epidemi-
+ological studies and can overcome some of the problems with diagnostic labelling. Symptom
+recording has, however, its own potential problems, arising from subjective symptoms recogni-
+tion and recall, depending on variety of psychological, social and cultural characteristics, in-
+cluding healthcare practices, and also on the translation of the questionnaire. Those problems
+are evidently enhanced, when populations with different background regarding those factors are
+compared. To give an example, the term “wheeze” that has been used most often in epidemiol-
+ogical studies for the identification of asthma, can not be easily translated into many languages,
+furthermore, the specificity of the symptom to asthma may differ in populations with different
+prevalence of other conditions that can cause wheeze, like chronic bronchitis or COPD. High
+international consistency has, however, been shown in answers to different questions in multi-
+4
+lingual studies, indicating that international comparisons are not affected by errors due to cross-
+cultural variations in the reporting of symptoms 6.
+To overcome cultural and language differences, video questionnaires have been introduced to
+asthma epidemiology studies. So far they have been used in children, and have shown good re-
+peatability and slightly lower accuracy in detecting asthma 7, but general good correlation with
+the results of the written questionnaires 8.
+Bronchial hyperresponsiveness (BHR)
+The main objective using BHR in asthma epidemiology studies is, to avoid problems of subjec-
+tive symptom recall that may occur with symptom questionnaires. The results of BHR testing
+clearly depend on which agent or stimulus has been used for provocation 9. The best standard-
+ised methods are today available for direct stimuli, like histamine and methacholine that cause
+air-flow limitation by a direct action on the effector cells involved in the air-glow limitation,
+such as airway smooth-muscle cells, bronchial vascular endothelial cells and mucus-producing
+cells 10. Comparisons between different delivery systems 11-13 and agents used 14 have shown
+good correlation, so different methods using either histamine or methacholine, have been con-
+sidered roughly equivalent 9. As choosing a threshold is always arbitrary in defining if the sub-
+ject is bronchially hyperreactive or not, and to overcome the data loss in dichotomous analyses
+of the data, slope measures have been introduced that allow to get data for analyses from all
+participants in the study 11. Agents that act as specific constrictors in asthma through indirect
+stimuli via cellular activation or neural stimuli, such as inhaled adenosine monophosphate
+(AMP) are more closely associated with eosinophilic airway inflammation in asthma, but have
+so far been used sparsely in community studies 15,16.
+BHR testing was introduced to the asthma epidemiology studies at the beginning of the 1980s,
+based on early studies, where high sensitivity of BHR for diagnosed asthma was shown on se-
+lected groups of  patients compared to healthy controls 17,18. Subsequent, population based vali-
+dations, comparing both symptom questionnaires and BHR, with asthma defined on the basis of
+a clinical assessment by a physician, however, did not confirm those results 4,19,20. Thus, while
+the sensitivity of questionnaires for physician diagnosis of asthma was 80% in adults and 61%
+in children, and the specificity 97% and 94%, respectively, the sensitivity of BHR for physician
+diagnosed asthma was only 39% for adults and 54% for children 19. The problems of the valid-
+ity of BHR testing in asthma prevalence studies can not be overcome by combining BHR with
+symptoms in defining asthma, which has also been suggested 3,18. A definition of asthma re-
+5
+quiring both a positive questionnaire response and BHR was highly specific but not sensitive
+for adults (37%) or children (47%) 19.
+The subject of validity of BHR testing in asthma prevalent studies has recently been summa-
+rised by Pearce et al. 21, concluding that current evidence suggests that BHR testing has no
+greater validity (and may even have lesser) than symptom questionnaires for measuring the dif-
+ference in asthma prevalence between populations with the same language and similar symptom
+recognition and reporting, but it may provide more comparable information when comparing
+populations which do not share these characteristics. BHR testing in epidemiological studies
+can, besides potentially lowering the response rate, introduce selection bias, as severe obstruc-
+tion is usually considered a contraindication for provocation test and the most severe cases will
+therefore not be tested.
+Thus, BHR testing can not provide validation of the existence of differences in the prevalence
+of asthma between populations but can, however, be useful in terms of interpreting the findings
+of symptom prevalence questionnaire, showing to what extent the differences can be explained
+by BHR.
+Other outcome variables
+Although asthma and atopy are strongly associated, they also occur independently of each
+other 22. Thus, in asthma epidemiology studies, atopy is not a surrogate measure for asthma. It
+is both an associated condition (which is of interest in itself), and a risk factor for developing
+asthma. In the latter context, atopy can also be considered as an intermediate step in the causal
+pathways leading from allergen exposure to asthma – i.e., it may be an intermediate factor and a
+modifier of the effects of other exposures 23. Atopy is also strongly associated with BHR, but
+the two conditions often occur independently of each other. 
+The number of eosinophil granulocytes in peripheral blood (B-Eos) is traditionally the most
+common method in assessing inflammation in epidemiological research 24-28. More recently,
+measurements of eosinophil degranulation products, such as eosinophil cationic protein (ECP)
+in peripheral blood has been introduced as a method to assess and monitor inflammation in
+asthmatic patients 29-31. There is, however, limited experience in using these kinds of  inflam-
+matory markers in asthma epidemiological research 32,33.
+6
+Increase in prevalence
+Data from epidemiological studies conducted in several countries worldwide have revealed that
+the prevalence of allergic conditions, including allergic rhinitis, asthma and eczema, have in-
+creased from the 1940s/50s to the 1990s 34-37. Although the increase of asthma prevalence may,
+in part, be explained by altered diagnostic criteria and increased awareness of the disease, both
+in the general population and among physicians, these studies together indicate that the in-
+creased prevalence of asthma during the last decades is real. Trends of increasing prevalence of
+asthma have also been shown in Nordic countries 38,39. Data on asthma prevalence in Estonia
+are limited to studies conducted in the 1990s and it might be too early to look for changes in
+prevalence.
+Regional differences in prevalence
+International and regional asthma prevalence comparisons are required as a key step in ascer-
+taining the causes of asthma 40. The key issue in prevalence comparisons is, that the information
+is obtained in a comparable manner across all participating centres and countries, and that
+problems of translation of questionnaires and other problems of noncomparability of informa-
+tion are minimised. Two large scale epidemiological studies that allow comparison across sev-
+eral countries fulfil these criteria: The European Community Health Survey (ECRHS) 41,42
+among adults and the International Study of Asthma and Allergy in Childhood (ISAAC) 43 in
+children.
+The database of the ECRHS includes information from approximately 140,000 individuals from
+22 countries. Based on analyses of the whole ECRHS data set, geographical variations in dif-
+ferent outcome variables, i.e. diagnosed asthma, respiratory symptoms, atopic sensitisation and
+bronchial responsiveness have been described 44-47. An eight-fold variation in the prevalence of
+wheeze, a four-fold variation in the prevalence of nasal allergy 44 and a six-fold variation in the
+prevalence of current asthma 44,47 was found. The prevalence of all symptoms varied widely.
+Although these were generally lower in northern, central and southern Europe and higher in the
+British Isles, New Zealand, Australia and the United States, there were wide variations even
+within some countries 48. Analyses of bronchial responsiveness showed an eight-fold variation
+in BHR (PD20 < 1 mg). The geographical distribution of bronchial responsiveness (ECRHS
+slope) and BHR fitted well with that for symptoms and asthma 45. A wide geographical varia-
+tion was also found when investigating the prevalence of atopic sensitisation (specific IgE) 46.
+A high prevalence was found in Australia, New Zealand, United Kingdom and United States,
+while the prevalence was low in Iceland, Greece, Norway, Italy and parts of Spain. A five-fold
+7
+variation was found in the geometric mean of total IgE but there was no correlation between
+total IgE and atopic sensitisation 46. 
+The ISAAC design comprises three phases. Phase One used simple core written questionnaires
+for two age groups, and was completed in 156 collaborating centres in 56 countries and a total
+of 721.601 children participated. In the 13-14 years age group 155 centres from 56 countries
+participated, of which 99 centres also completed a video questionnaire. For the 6-7 years age
+group there were 91 collaborating centres in 38 countries. The study has demonstrated a large
+variation in the prevalence of asthma symptoms in children throughout the world. The preva-
+lence of wheeze in the last 12 months ranged from 2-32% in the older age group and from 4-
+32% in the younger age group and was particularly high in English speaking countries and
+Latin America. A video questionnaire, completed in the older age group in 99 centres (42
+countries), showed a similar pattern 8,49. The prevalence of atopy-related disorders was higher
+in Scandinavia than in Estonia, Latvia and Poland, which in turn had a higher prevalence than
+five other countries of eastern Europe with a culture less similar to western Europe 50. The
+prevalence data from the ISAAC study were compared to the data from the ECRHS 51. The
+prevalence estimates in the ECRHS were consistently lower than the prevalence rates in the 13-
+14 years age group in the ISAAC study. There was, however, generally a good correlation be-
+tween the prevalence of wheeze and asthma in the ECRHS and the corresponding prevalence in
+the ISAAC study.
+Within country comparisons of urban and rural populations have shown lower prevalence of
+asthma in the latter, both in western 52 and in developing countries 53. In some cases the differ-
+ences have been striking 54. Furthermore, comparing the lifetime prevalence of physician diag-
+nosed asthma in Finnish first-year university students aged 18-24 according to childhood resi-
+dence, revealed a significantly lower prevalence in those students who grew up in farm envi-
+ronments compared to those who grew up in urban or rural areas but not in a farm. No differ-
+ence in asthma prevalence was found when students from urban and from rural non-farm envi-
+ronment were compared 55. 
+Prevalence studies have revealed three distinctive patterns: first, asthma is more prevalent in
+English-speaking countries; second, asthma is more common in Western countries than in de-
+veloping countries and the difference is larger in later birth cohorts; third, the prevalence of
+asthma is lower in rural than in urban regions, especially among those, who have grown up in
+8
+farm environment. These results also indicate that the current recognised risk factors for the de-
+velopment of asthma probably cannot fully account neither for the worldwide increase in
+prevalence nor for the international variations in asthma prevalence. For example, the global
+pattern of asthma prevalence is consistent with the considerable body of evidence that air pol-
+lution is not a major risk factor for the development of asthma. Regions such as China and
+Eastern Europe, where some of the highest levels of traditional air pollution such as particulate
+matter and SO2 are found, generally have lower asthma prevalence than the countries of West-
+ern Europe and North America, Australia, and New Zealand, which have lower levels of pollu-
+tion.
+East-West difference in asthma prevalence
+Western lifestyle has been accused for the increase in the prevalence of asthma and allergies.
+Prosperity in West European countries with market economy might have changed the environ-
+ment to the extent, where the spread of possible disease modifiers have reached to the extent
+where it is not possible to evaluate their impact without comparing them with reference popula-
+tions. Comparisons of populations that are culturally and geographically similar but differ on
+the level of “westernisation” could give better possibility to extract risk factors from the
+“westernisation” than comparing populations that differ in many other aspects. The end of the
+Soviet era in Eastern Europe has given a unique possibility to evaluate the health effects of
+“westernisation”.
+The firs east-west comparison was carried out shortly after the reunification of Germany among
+10-year old schoolchildren living in Leipzig, former East, and Munich, former West Ger-
+many 56. The study found lower prevalence of hay fever in the eastern part of Germany. The
+prevalence of asthma, defined as either doctor diagnosed asthma ever or recurrent wheezy
+bronchitis did not differ significantly between the two populations, while the doctor diagnosed
+chronic bronchitis was about twice as high in Leipzig. The prevalence of wheeze was similar
+and there was no difference in the prevalence of BHR measured by cold air challenge. 
+In a subsequent study, the same population in Munich was compared to a bigger random sample
+from Leipzig and Dresden. Atopic sensitisation was estimated by skin prick testing, current
+asthma, and life long incidence of asthma was reported, and definition of BHR was slightly
+changed. In this study the prevalence of asthma, hay fever, atopic sensitisation and BHR was
+lower in Leipzig and Dresden, while the prevalence of respiratory symptoms and chronic bron-
+chitis was higher in Leipzig and Dresden than in Munich 57.
+9
+Other prevalence comparisons in the beginning of the 1990s between previously socialist coun-
+tries in Eastern Europe and industrialised countries with market economy in Western Europe,
+have constantly shown lower prevalence of atopic sensitisation and hay fever, both among chil-
+dren 52,57-61 and adults 62,63. The difference in sensitisation between the centres has been found
+to decrease with increasing age 63,64, indicating a cohort effect, i.e. the causative environmental
+factors would be operating mainly in early childhood. There is at least one presented exception,
+where no east-west difference in the prevalence of atopic sensitisation was revealed in the study
+conducted in the year 1991. In this study five- to seven-year-old children from Eastern and
+Western Germany were tested by a multipuncture device 60. The groups were, however, rela-
+tively small (Eastern Germany was represented only by 287 subjects) and there were big differ-
+ences in the prevalence of atopy between centres from the western part of Germany.
+The rate for diagnosed asthma has also tended to be higher in western than in eastern popula-
+tions 48,57,61,62,65, whereas less information is available on BHR and the results have been con-
+tradictory. Thus, the comparisons of eastern and western Germany have shown a higher preva-
+lence of BHR in the West, both among children, measured either by cold air challenge 57 or hy-
+pertonic saline 65 and among adults, measured by methacholine challenge 62. The prevalence of
+BHR, as measured by methacholine challenge, was however high among Estonian children 66.  
+The reasons for the East-West differences in atopy and related respiratory diseases has re-
+mained mostly unexplained. In most cases neither personal nor environmental risk factors could
+provide satisfactory explanations for the area differences in symptoms, BHR 62 or atopic sensi-
+tisation 57,63, as the differences in prevalence have remained statistically significant after al-
+lowing for confounding factors. In some reports the observed prevalence differences in atopy
+and respiratory allergies have partly been related to factors like “wood or coal heating” 61,62 or
+“reported family history of atopy” 61, that can also serve as surrogate measures for some envi-
+ronmental factors not measured. The published data do not support the view that the differences
+in sensitisation are caused by differences in the exposure to specific allergens 67. The east-west
+difference in the prevalence of respiratory symptoms and chronic bronchitis has been explained
+by higher prevalence of smoking and ambient air pollution with particulate matter and SO2 56,68. 
+ 
+Recent studies have shown some converging in the described differences. Thus, the prevalence
+of atopic sensitisation and hay fever had increased in Leipzig after four years of unification 69 
+10
+and no difference in the prevalence of atopic sensitisation and hay fever among 9-11 year old
+children could be revealed between Leipzig and Munich 65. Similar trends have shown among
+adults. By the ECRHS study group in Germany a second stage 1 questionnaire was sent out to a
+new random population sample 3-4 years after the previous one. The result of this study showed
+that the prevalence rates of wheezing, asthma attacks, asthma medication and allergic rhinitis
+were stable in Hamburg but increasing in Erfurt and approaching those of Hamburg 70. In a sub-
+sequent follow up of the German stage 2 sample the prevalence of BHR was found to have in-
+creased in subjects living in Erfurt, while BHR remained unchanged in the group of subjects
+from Hamburg 71. In Estonia two cross-sectional studies, the first in 1992-1993 58 and the sec-
+ond in 1996-1997 72, among 10-year-old children did not show significant increase in 12-
+month prevalence of wheeze, self reported asthma or atopic sensitisation. 
+Factors that influence asthma
+The prime consideration in asthma epidemiology studies is usually to obtain exposure informa-
+tion of similar accuracy for the groups being compared. Strictly speaking, “exposure” refers to
+the presence of a substance in the environment, whereas “dose” refers to the amount of sub-
+stance that reaches susceptibility targets within the body. As personal dose measurements can
+often not be obtained, the term exposure has been used in the very general sense, including
+other attributes or agents that may be risk factors for asthma, like demographic and genetic
+factors 23. Due to inherent variable nature of asthma, it is also usually not possible to distin-
+guish, especially in cross sectional studies, if the factor studied is attributable to development of
+or exacerbation of asthma. However, major problems of morbidity, occurring through exacer-
+bation and prolongation of asthma symptoms, can best be addressed by studying prevalence
+rather than incidence. Thus, if factors are found to be associated with asthma prevalence, then
+this is of major interest in itself, irrespective of whether the etiologic mechanism involves in-
+crease in asthma incidence or increase in duration.
+Age and Sex
+The prevalence of wheeze and reported asthma is negatively related to age among adults 73-76.
+BHR declines with age in atopic non-smokers and increases with age in smokers 77,78. Further-
+more, many cases of adult-onset asthma can actually be the return of asthma symptoms in sub-
+jects who had asthma in childhood.
+In childhood males have a higher incidence of asthma than females, but in adolescence this re-
+verses and between the ages 10-50 years females have a higher incidence than males. In later
+11
+life the incidence possibly reverses once more 79. This has also been reflected in prevalence
+studies 80-82. In males, higher BHR has been observed in childhood-adolescence age groups and
+at older ages, while in females a higher level of BHR has been observed during adulthood 83,84.
+Those differences can be partly attributable to sex differences in lung growth and airway ge-
+ometry 82,85, but may also be connected to the sex-related differences in the immune system.
+Facilitation of ovule implantation and tolerance to the foetus (a semi allograft) are required for
+a successful pregnancy. A decrease in the rejection of potential allogens is particularly marked
+during pregnancy, but also occurs in general in women, during the childbearing age, and more
+particularly during the periovular phase of the menstrual cycle 78,86. A positive correlation has
+been found in asthma incidence and hormone replacement therapy in postmenopausal
+women 87. Also, premenstrual worsening of asthma symptoms with increase in airway resis-
+tance has been reported 88,89.
+Gender differences in the effects of environmental factors may be related to personal habits,
+like tobacco and alcohol consumption, the occupational environment, and the home environ-
+ment. Women have been found to be more susceptible than men to environmental factors 90-93.
+As it is, in general, socially acceptable for women to be breathless of effort and for men to bring
+up phlegm and snore, this can introduce recall bias and challenge the interpretation of results 86.
+Genetic factors
+Asthma appears to be multifactorial in origin and influenced by multiple genes and environ-
+mental factors. A particular genetic factor may increase susceptibility to the effects of an envi-
+ronmental exposure and may thereby affect one or more aspects of the complex etiological pro-
+cess involved in asthma, but whether this genetic potential is expressed will depend on whether
+sufficient exposure to the environmental factor occurs. Asthma genetic studies are further com-
+plicated by the difficulties in defining the asthma “phenotype” and by the fact that this pheno-
+typic expression may vary with age. Despite the fact that genetic susceptibility to changing en-
+vironmental exposures may play an important role in the changes in asthma prevalence, the
+considerable increase in asthma prevalence during the last decades indicates that genetic factors
+alone are unlikely to account for a substantial proportion of asthma cases. Major susceptibility
+genes for asthma and atopy have not been determined to date.
+Family concordance
+People with family history of asthma are more likely to develop asthma themselves, and paren-
+tal asthma is a stronger predictor of asthma in the offspring than parental atopy 94. This associa-
+12
+tion, however, is not necessarily due to genetic factors, and could merely reflect similar life-
+styles and exposures in family members.
+Twin concordance
+Twin studies have shown the considerable genetic component of asthma. This component most
+likely consists of genes of additive effect 95. The probandwise concordance for asthma in
+monozygotic twins has been 38-52% 96,97, and even this may in part be due to similar environ-
+mental exposures, including common intrauterine environment. Twin studies have also indi-
+cated that not only the shared, but also the individual specific environmental factors may be im-
+portant as well 96. Most of the environmental risk factors are, however, shared by nature. Fur-
+thermore, two presumptions of the genetic studies using twin-designs, first, that twins are repre-
+sentative of the general population and second, that the environment for both monozygous and
+dizygous twins is similar, may not be totally valid. Thus, the shared intrauterine environment
+may have an adverse effect on the growth and organ maturation of the foetus and higher simi-
+larity in environment for monozygous compared to dizygous twins is likely 95.
+Segregation and linkage analysis
+Segregation analysis tests explicit models of inheritance in families – for example, by observing
+the frequency of the condition in offspring and siblings and comparing it to the distribution ex-
+pected on the basis of various models of inheritance. Linkage analysis uses DNA marker data in
+order to follow the transmission of genetic information between generations in order to deter-
+mine if a genetic marker is linked to the gene involved in a particular disease. Attention has
+been particularly focused on chromosomes 5 and 11, both of which may contain genes relevant
+to asthma and atopy.
+Atopic sensitisation
+“Atopy” has previously been used as a poorly defined term to refer to allergic conditions that
+tend to cluster in families, including hay fever, asthma, atopic eczema, and other specific and
+non-specific allergic states. More recently, atopy has been characterised by the production of
+circulating IgE in response to common environmental allergens. Although atopy has sometimes
+been defined as “a genetic disposition” for this IgE response, most definitions focus on the pro-
+duction of IgE irrespective of the mechanism (genetic or environmental) by which it is pro-
+duced 23. The commonly accepted hypothesis of the relationship between atopy and asthma is,
+that exposure of genetically susceptible individuals to allergen leads to the development of sen-
+sitisation, and continued exposure leads to clinical asthma through the development of airway
+13
+inflammation, BHR and reversible airway obstruction 22. The nature of the relationship between
+allergic sensitisation to specific allergens and asthma can either be a direct causative one, with
+allergen exposure causing asthma in susceptible individuals, or an indirect one, where the ge-
+netically determined atopic diathesis causes both asthma and expression of sensitisation 98.
+The association between atopy and asthma depends on the population studied. There is a con-
+siderable amount of studies showing an association between atopy and asthma 22,62,81,99-101. In a
+Finnish twin cohort, 262 twin pairs discordant for incident asthma were analysed. The atopic
+twin had an increased risk of asthma compared with the non-atopic co-twin (RR 2.91, 95% CI
+1.81 to 4.68) 102. There are, however, negative reports 103, and inverse association between
+asthma and atopy has been reported 54. Reviewing the available epidemiological evidence on
+the association of  asthma and atopy, Pearce and co-authors showed that the proportion of
+asthmatic and non-asthmatic subjects who are skin prick test positive vary considerably be-
+tween different studies. The population attributable risk varied from 25% to 63% in children
+and from 8% to 55% in adults. The results were similar if specific or total IgE was used as an
+outcome. Furthermore, increase of the prevalence of atopic sensitisation without increase in the
+prevalence of asthma 69, as well as increase in the prevalence of  asthma with only minor
+changes in the prevalence of atopy 104 has been reported. Allergens differ in their potency to
+cause asthma symptoms, thus pets are more potent than pollen 105. 
+The association between allergic sensitisation and bronchial responsiveness has been studied on
+a combined ECRHS data set 106. Sensitisation to mite, cat and timothy grass explained between
+1.4 to 12.7% of the total variation in bronchial responsiveness in the different centres. The
+variation of bronchial responsiveness was better explained by taking account of all the individ-
+ual allergens than by classifying the subjects as atopic or non-atopic. Mite sensitisation was the
+most important allergen in 15 centres, cat in 8, cat and mite equally in 1, timothy in 8 and Cla-
+dosporium in 2 centres. Total IgE has been showed to associate with BHR independently of
+specific IgE 106-108. The attributable risk of atopic sensitisation for BHR was found to be 19% in
+Sweden and 21% in Spain 105. Possibility has been proposed that asthmatics become sensitised
+disproportionately to those allergens that (because of particle size) are deposited in the in-
+flamed/primed lower airway (so asthma causes sensitisation). Bronchial hyperresponsiveness
+can in turn prevent the deposition of larger particles in the lower airways, thus prevent sensiti-
+sation. 
+14
+Furry pets
+Positive correlation has been reported between the community prevalence of cat ownership and
+sensitisation to cat, as well as respiratory symptoms and physician diagnosed asthma in young
+adults 109, stressing the importance of cat allergens in developing and exacerbating
+asthma 105,110,111. Children exposed to cat during the first year of life were, however, less often
+SPT positive to cat at 12-13 years and children exposed to pets during the first year of life had a
+lower frequency of allergic rhinitis at 7-9 years of age and of asthma at 12-13 years 112.
+Analyses of the combined ECRHS data have shown a positive association between current cat
+ownership and specific sensitisation in subjects reporting no respiratory symptoms associated
+with pet exposure. Subjects with symptoms associated with exposure to pets were deliberately
+excluded from the analyses to avoid the selection bias in cat ownership. Having a cat in child-
+hood was, however, negatively associated with cat sensitisation in the same analysis in subjects
+with a family history of atopy, while this association was not found in subjects without such a
+family history . Based on the analyses of the same database, Svanes et al. reported that atopy
+was negatively associated with having a dog in childhood, but that there was no significant as-
+sociation with having a cat as a child, and atopy 113. The possibility, that higher allergen expo-
+sure had induced tolerance in those having a dog in childhood is unlikely, as having a dog in
+childhood was protective also against sensitisation to other allergens. The finding may reflect
+pet avoidance by allergic families, however, there is no reason why dogs, but not cats, should
+be selectively avoided, as cats are often more potent to cause symptoms 105. It is therefore more
+likely, that some lifestyle factors confound the favourable effect of dog keeping, that are not
+present among cat keepers, or that more potent cat allergen overwhelms the potential protective
+effect. 
+Smoking
+Smoking is a well recognised and prevalent risk factor for respiratory symptoms 75,100,114,115, as
+well as BHR 77,84,84,116. The association between current smoking and asthma is less clear. As-
+sociation between smoking and asthma has been found cross-sectionally 101, also an association
+between adult onset asthma 117,118 and severity of asthma 119 has been found. Many cross-
+sectional 75,120,121, and some longitudinal studies 115 have, however, not found a clear association
+between smoking and asthma. Furthermore, in a case control study of subjects from 16 coun-
+tries, the risk of asthma with an onset within the last 3 years before the survey was found to be
+43% lower in current smokers than in never smokers 82. However, in a three-year follow up
+15
+study Plaschke et al found that onset of asthma was more common in current smokers than in
+non-smokers, but this effect of smoking was mainly found in non-atopic subjects 122. Similarly,
+Sunyer and co-workers found, that smoking was associated with bronchial responsiveness only
+in subjects without atopy 123. 
+In the analysis of the combined ECRHS data set Jarvis et al reported a higher risk of sensitisa-
+tion to mite in smokers than in never smokers 124. The risk of sensitisation to grass and cat was,
+however, lower in current and ex-smokers than in never smokers. Smoking has been found to
+be positively associated with total IgE 124-126 though less than 1% of the variation in total IgE
+could be explained by smoking 124.
+Every risk factor that is voluntary, is selection biased to factors like social status, personal hab-
+its and awareness. Smoking in this sense is an extreme example. Unhealthy nutrition patterns
+have been found consistently higher in smokers than in non-smokers. Smokers consume more
+saturated fat, more alcohol, more cholesterol, less fruit, and fewer vegetables, more fried foods,
+less fibre, less antioxidant vitamins, more salt. Smokers have less knowledge on how to im-
+prove risk and lower intention to change 127. Thus, part of the association or lack of association
+found between respiratory symptoms, asthma and smoking, can be attributed to other factors
+than smoking itself.
+Environmental tobacco smoke (ETS)
+Passive smoking is widespread and passive smokers are exposed to both side-stream and main-
+stream tobacco smoke which contains many potent respiratory irritants. A considerable amount
+of studies have evaluated the effects of ETS on asthma in childhood 128. There is strong evi-
+dence for a causal role of ETS in the development of asthma in children and parental smoking
+is related to more severe prognosis of asthma at least until school-age 129.
+Much less is, however, known on the relationship between ETS and asthma in adulthood. Six
+studies, one longitudinal 130, four cross-sectional 131-134 and one nested case-reference study 135
+have addressed the role of  ETS in induction of asthma in adults, and shown the excess risk of
+asthma from 10 to over 200% in young adults and from 40 to 60% in older age groups due to
+ETS exposure 128. ETS has also shown to worsen the existing asthma 136, and impair the lung
+function 137. A recent paper, based on the analysis of the whole ECRHS data set showed that
+passive smoking in the workplace, but not at home, was significantly related to current asthma
+as well as all respiratory symptoms except attacks of breathlessness at rest 132. A significant
+16
+dose-related association to passive smoking was found for respiratory symptoms. ETS was also
+related to increased bronchial hyperresponsiveness.
+Indoor environment
+Importance of indoor environment is stressed by the fact that in developed countries people
+spend the major part of the time indoors. The data on the indoor environmental risk factors for
+asthma in adults is, however, limited. Physical characteristics of the indoor environment include
+temperature and humidity. The latter increases when ventilation is inadequate. Home dampness,
+reflected as damp stains or visible mould was shown to associate with cough and asthma in a
+population based study in adults in the Netherlands 138. The association between asthma, and
+both dampness and visible mould, was strong in crude analysis but was not statistically signifi-
+cant when two markers were combined and adjusted for active and passive smoking, indoor
+NO2 sources and educational level in multiple regression analyses. Self-reported mould growth
+at home has been associated with asthma in young adults in a selected population attending the
+smoking cessation programme 131, first year university students 139 and in a case control study
+of physician diagnosed asthma patients 140. In the latter study the severity of asthma correlated
+with actual measures of total dampness in the dwelling. In Uppsala current asthma was more
+prevalent in subjects living in damp dwellings and particularly so in those living in dwellings
+with dampness in the floor construction 141. Dampness in the home during childhood has been
+associated with increased airway responsiveness in adolescence 142. In a recent population
+based case-references study of adult onset asthma, Thorn et al. reported increased  risk to out-
+come in subjects who reported visible mould growth (OR 1.4-3.5), visible dampness and mould
+growth (OR 1.1-3.1) or who had a wood stove in their dwelling 135. 
+Homes abound in chemical air pollutants. Sources include unvented combustion appliances,
+smoking, building materials, carpets etc. In 1996 Jarvis and co-workers reported that in the UK,
+women who used gas cookers had an increased risk of wheeze and other asthma symptoms as
+well as lower lung function (FEV1 and FEV1/FVC) than women not using gas cookers 91. No
+such association was found in men. In a subsequent analysis of the combined data set, Jarvis et
+al. reported that there was an overall association between the use of gas cookers and respiratory
+symptoms in women, but that this association varied considerably between the centres 92. In
+general there was a positive association between gas cooking and symptoms in most European
+centres but a negative association in Australia, New Zealand and the United States. The reason
+for this across country heterogeneity was not explained but could possibly be related to differ-
+ences in the nature of the gas in different countries.
+17
+Building materials can act as sources of formaldehyde and other volatile organic compounds
+(VOC). Nocturnal breathlessness has been shown to associate with higher levels of CO2, for-
+maldehyde and total concentration of VOC 143. An association between respiratory symptoms
+and living or working in a newly painted dwelling, and BHR and living in a dwelling with
+newly painted wood details or kitchen painting has been reported 144. Björnsson et al. have re-
+ported higher levels of house dust mite and airborne bacteria in houses of subjects with asthma
+related symptoms 145. This association was, however, not related to mite allergy as none of the
+subjects who lived in houses with measurable house dust mite levels were sensitised to house
+dust mite. 
+Outdoor environment
+Air pollution is convincingly associated with many signs of asthma aggravation. The adverse
+effects of SO2 , ozone, and particulate matter to asthma patients have been proved in many ex-
+perimental studies 146. There is less evidence of effects of NO2 from experimental studies.
+However, a slight increase in daily admissions to hospital for asthma in adults has been seen in
+relation to increasing ambient levels of nitrogen dioxide (NO2) 147. In adults no consistent ef-
+fects of long-term exposure to ambient ozone concentrations on the development of asthma and
+atopy have been demonstrated 148.
+If air pollution influences the prevalence of asthma, it has clearly not been the main driving in-
+fluence over the last decades, as the main increase in asthma prevalence in Western countries
+has come at a time when air pollution has been considerably decreased, and Eastern Europe that
+had particularly bad air pollution had a markedly low prevalence of asthma. That, however,
+concerns mainly particulate matter and SO2. It has been argued that NO2, diesel particles of
+other products associated with traffic pollution may be responsible for the West-East difference
+in the prevalence of asthma.
+Occupational exposures
+Asthma is the most common occupational respiratory disorder in industrialised countries. Oc-
+cupational asthma can be caused by several high and low molecular weight sensitises, of which
+more than 250 have been identified 149. The determination of how many cases of asthma may be
+caused or worsened by occupational exposures is highly dependent on how asthma is defined,
+what constitutes work-relatedness, and what specific methodology is employed. The proportion
+of asthma attributed to occupational exposure has been estimated to be 5–10% 150-153. Asthma
+18
+has been associated with high dose exposure to biological, and mineral dust as well as exposure
+to gases and fumes 151. A higher risk for asthma has been found among laboratory technicians,
+painters, plastic workers, cleaners and agricultural workers 152,153. 
+Socio-economic status 
+A high prevalence of asthma has been found in affluent Western countries. On the community
+level a higher prevalence of asthma has been shown in more affluent regions in developing
+countries 148,154. Higher paternal social class was also associated with increased asthma preva-
+lence in a British 1970 birth cohort studied at 26 years of age 155, and in children who had
+wheezed by five years of age, the persistence of symptoms at 16 years of age was independ-
+ently related to high social status of the mother 156. Higher educational level was also a risk
+factor for clinical allergies among adults in East Germany 63. However, the more educated twin
+of 262 twin pairs discordant for incident asthma, had a decreased risk of asthma compared to
+twin sibling with less education 102, and asthma has shown to be more severe in patients from
+poorer background 157. 
+Number of siblings,  day-care attendance and infections
+One temporal association with the increase in atopy in developed countries has been the use of
+antibiotics, widespread vaccination of children and the fall in exposure to helminths. In his re-
+cent review, Weiss concludes that there is no conclusive evidence that parasitic infections pro-
+tect against asthma development 158. The association with antibiotic use and asthma is difficult
+to study as the use of antibiotics is widespread and the predominant reason for prescription is
+prolonged respiratory symptoms after a viral infection, where a bacterial involvement in the
+disease is suspected. Misclassification with asthma in this situations is likely, leading to a non-
+casual positive association between asthma and antibiotic use. There are social groups where
+conventional treatments, including antibiotics, are deliberately rejected. One study, carried out
+on a selected group of children at Rudolf Steiner schools, showed 400% increase in asthma
+prevalence associated with use of  antibiotics 159. There are, however, many other aspects of the
+anthroposophic lifestyle which may be relevant and antibiotic use in this context may be a
+marker of non-adherence to the anthroposophic lifestyle. Nevertheless, the effects of antimicro-
+bial therapy on bacterial colonisation of the infant gut should also be regarded.
+Several studies have found negative associations of family size, and particularly with the num-
+ber of older siblings 160,161 with atopy 59,62,161,162, hay fever 55,112, asthma 81,112,155,163 and
+BHR 164. In the analysis of the whole ECRHS data set, atopy was negatively associated with
+19
+family size, partly attributable to an independent protective effect of a greater number of broth-
+ers, but not older siblings. Bedroom sharing was associated with a lower prevalence of atopy,
+particularly to cat allergen 113. However, a protective effect of family size and bedroom sharing
+could only be detected in subjects reporting no parental allergy, indicating that in subjects with
+a strong genetic predisposition, environmental factors in childhood are possibly of less impor-
+tance. 
+Similarly, day-care attendance has been associated with decreased risk of atopy, but that only in
+children from families with up to three people. The association was higher among children who
+attended day-care earlier 165 but an opposite association also has been reported 55, where day-
+care attendance at age 0-2 years was a weak risk factor for allergic rhinitis but not for asthma.
+Furthermore, children who attend day-care have shown to have increased risk of asthma with
+early infections as a probable mediator of risk 166. In Swedish young adults an increased risk of
+atopic sensitisation was found in subjects who had attended a day-care centre before the age of
+five  years 125, but this association was not found to be significant when analysing the combined
+ECRHS data set 113. No association of adult asthma and day-care attendance has been reported. 
+ 
+Strachan, who first found the negative association between hay fever and number of older chil-
+dren in the household, suggested that small family size could reduce infectious diseases
+“transmitted by unhygienic contact with older siblings”, but not respiratory viral infections in
+infancy, and that this could in turn increase the risk of atopic disease at older ages 160. This hy-
+pothesis has been developed further. The immunological bases of the hypothesis  stands on T
+helper (Th) lymphocyte differentiation in maturation of  the immune system. Th2-like cytokines
+(interleukin (IL) 4, IL-13, and IL-5) produced in the uterine environment are important to
+maintain the pregnancy. The continuation of foetal allergen-specific Th2 responses during in-
+fancy is associated with decreased capacity for production of the Th1 cytokine interferon γ by
+atopic neonates 167. According to the hygiene hypothesis, T-cell responses to the microbial and
+viral infections generate Th1-like cytokines such as IL-12 and interferon-γ that down-regulate
+Th2 responses, helping T-cell immune responses to mature into a balanced phenotype that
+would be less likely to favour allergen sensitisation 168,169.  
+There is also more direct evidence that childhood exposure to infections might prevent atopic
+diseases. Less atopy 170 and asthma 171, in those with history of measles and less atopy in those
+with hepatitis A 172 has been reported. Furthermore, in a study of Italian male military students
+20
+the prevalence of serum markers of microbes transmitted through the oral rout was higher in the
+non-atopic than in the atopic cadets, while presence of serum markers of the viruses transmitted
+by other routes was not associated with atopy 173.
+Strongly positive tuberculin responses in early life were associated significantly with less
+asthma in later childhood in Japanese children 174. The positive tuberculin responses in early
+life were also associated with a dominance of  lymphocyte class T helper (Th1) over Th2 in the
+blood cytokine profiles at 12 years of age. However, differences in immune responses and natu-
+ral resistance in different subjects result in differences in handling both infections and potential
+allergens, and thus differences in the clinical expression of a disease. This difference in host
+characteristics is reflected also in differences in cytokine levels. The intensity of tuberculin re-
+sponses in young adults receiving BCG at 14 years of age did not correlate with total serum IgE
+in the Norwegian population, nor did the positive tuberculin test distinguish the atopics from
+nonatopics 175. These two papers together indicate, that it is not the host characteristics in the Th
+lymphocyte balance, but rather the subclinical exposure to M.Tuberculosis or immunisation
+earlier in life, that can result in decrease in atopy. The latter hypothesis has, however, been re-
+jected by two Swedish studies on children 176,177. As a proxy of differences in natural exposure
+to M. tuberculosis, WHO derived tuberculosis notification rates were matched to the prevalence
+of respiratory symptoms within the ISAAC study in ecological analyses. The results showed
+that increase in notification was negatively correlated with the prevalence of wheeze and
+asthma in 85 centres from 23 countries studied 178. A Finnish registry based study has shown
+reduced occurrence of subsequent asthma in women with M.Tuberculosis infection in child-
+hood, the relation was, however, inverse among men 179. Thus, BCG vaccination once, either in
+infancy or adolescence, seems not to shift the Th1-Th2 balance. There is also no conclusive evi-
+dence that treated active tuberculosis before the age of 20 could do that. However, repeated
+contacts with mycobacteria at a certain age might have an influence on the immune system.
+This is supported by the results of von Mutius et al. An other possibility is, that these relations
+can be confounded by other aspects of lifestyle. 
+While some kinds of infections may have a role in the maturation of the immune system in
+early childhood with consequences that can last to adulthood and determine the subsequent de-
+velopment of respiratory diseases 148,180, viral upper respiratory infections are a common trigger
+for episodes of bronchospasm and have been associated with 80% of all asthma exacerbations
+181,182. Prospective studies in children, where viral markers have been measured at clinical respi-
+21
+ratory infection episodes in early childhood, have shown variable, but declining with age, asso-
+ciation between respiratory virus infections in infancy, and frequent wheeze up to at least 13
+years of age 183,184. The extent of the association depends on the severity of the disease episode.
+The strongest association has been found between respiratory syncytial virus (RSV) bronchioli-
+tis in infancy, severe enough to cause hospitalisation 183. A positive association with respiratory
+syncytial virus infection and BHR has been shown among adults 185. As no population based
+studies with serological proof and adult asthma as an outcome are available, the causal role of
+viral infections in asthma has remained unclear. The role of bacterial infections in exacerbating
+asthma is more controversial. A positive association with serological signs of a current or recent
+Chlamydia pneumoniae infection and reported wheeze has been reported 186 but not confirmed
+by others 187. 
+Diet
+There are different ways in which food could affect lung health. First, relative deficiencies of
+certain foods may alter the lung’s defence mechanisms, making it more liable to develop dis-
+ease. Second, food sensitivity may act through immunological or nonimmunological mecha-
+nisms to cause bronchoconstriction 188. Third, changes from locally produced food, like fresh
+and fermented vegetables, and non sterilised diary products to industrially prepared and proc-
+essed foods and use of microwave ovens, can change microbial load and influence the gut mi-
+cro flora. 
+One of the first observations on the association of general dietal habits and asthma was, that the
+regional sales of table salt were related to asthma morbidity statistics in Britain. This gave rise
+to the suggestion that salt intake is relevant for the risk of asthma 189. Later studies have not
+proved this and it has been suggested that salt intake can be a marker of generally poor
+diet 188,189. Another early observation was, that low prevalence of asthma in Eskimos could be
+associated with their diet, rich in fish and marine mammals or, with a genetic deviation in fat
+metabolism in Eskimos, or both 190. The increase of asthma prevalence has been subsequent to
+the fall in the consumption of animal fat and oily fish with high content of saturated fat and in-
+crease in the amount of margarine and vegetable oils, containing polyunsaturated fat, in the diet
+of Western countries. It has been suggested, that an increase in the intake of ω-6 fatty acids,
+such as lineleic acid, and a decrease in the intake of ω-3 fatty acids, such as eicosapentaenoic
+acid, may have led to an increase in allergic sensitisation, which in turn may account for the in-
+crease in the prevalence of asthma. The reason, why a decreased consumption of ω-3 fatty acids
+may lead to increased prevalence of allergy may be the ability of ω-3 fatty acids to inhibit the
+22
+synthesis of arachidonic acid from linoleic acid and prostaglandin E2 (PGE2) from arachidonic
+acid. The ability of PGE2  to inhibit the productions of interferon γ would in turn lead to the
+immune modulation towards Th2 inflammatory reaction to allergens 191. Association between
+the intake of polyunsaturated fat and atopy has been shown in children 192,193 and adults 194.
+Epidemiological evidence to show the importance of these mechanisms in asthma is scarce. The
+association with asthma and dietary fat has been revealed in some studies in children 116,195, but
+not others 192 and not among adults. Thus, among young Norwegian adults, with an overall high
+fish intake, fish consumption was not a significant predictor of current respiratory symptoms or
+asthma 196, similarly, no relation between the intake of various fats and asthma was found in the
+Nurses’ Health Study 197. However, improvement of asthma in children using fish oil capsules
+vs. capsules with olive oil in a double blind clinical trial in a strictly controlled environment has
+been shown 198. It has been suggested that intake of a mild anti-inflammatory agent, like fish
+oil, might matter more in children, than in adults 199.
+Acting as antioxidants, or through influences on immune function, vitamins C and E and beta
+carotene in the diet may reduce airway inflammation, thereby decreasing the severity of asthma
+or preventing the expression of asthma in susceptible individuals. Vitamin E intake from diet
+was inversely associated with adult onset asthma in the prospective Nurses’ Health Study.
+Thus, women in the highest quintile of daily vitamin E intake from diet alone had a 47% lower
+risk of asthma than women in the lowest quintile 197.
+The effect of  processed food consumption instead of eating locally produced food and food
+products and potential effect of the dietal changes on gut microflora and the subsequent devel-
+opment of  atopy and  asthma has been less studied. However, studies comparing infants in
+Sweden and Estonia have shown marked differences in the types of faecal bacteria in unse-
+lected infants in the two countries, which broadly match the differences seen between atopic
+and non-atopic infants in each country 200,201. The differences included a more intensive coloni-
+zation with lactobacilli and eubacteria in Estonian children, whereas the Swedish infants had
+increased numbers of clostridia, particularly C. difficile, as well as bacterioides and other anaer-
+obes 201.  
+In Britain and in the USA the rise in asthma has been accompanied by an epidemic increase in
+the prevalence of obesity, a characteristic related to diet, and often unbalanced diet. An inde-
+pendent association between increase of body mass index (BMI) and prevalence of current
+23
+wheeze, chest tightness and breathlessness at night, after controlling for age, sex, occupational
+exposure, smoking and dietary fish consumption, has been relieved in young Norwegian
+adults 196. The prevalence of asthma increased with BMI also among British adults studied at 26
+years of age. The association between fatness and asthma was stronger among women 155. In an
+Australian study among adults 17-73 years, it was found that severe obesity, defined as a BMI
+of >35 kg/m2, was associated with a higher prevalence of wheeze, diagnosed asthma and medi-
+cation use. Despite the fact that FEV1 and FVC were significantly reduced in severely obese
+subjects, there was no increase in airway responsiveness to histamine among them. A low level
+of physical activity, clearly associated with higher BMI, can be a result of asthmatic individuals
+avoiding physical exercise. However, asthmatic children have been shown to be physically as
+active as non-asthmatic children 202. Furthermore, it has been shown, that weight reduction has
+both short time and long-time favourable effects on lung function, and symptoms 203.
+24
+THE AIMS OF THE STUDY
+1. To compare the prevalence of respiratory symptoms, self reported asthma and allergic rhini-
+tis based on postal questionnaire results among adults in Tartu, Estonia and in Uppsala,
+Sweden in relation to age, gender and smoking history (I).
+2. To estimate the prevalence of BHR and atopic sensitisation, among young adults in Estonia
+and to compare the prevalence of certain risk factors for BHR, atopy, allergic rhino-
+conjunctivitis, and allergic asthma in Tartu, Estonia and Uppsala, Sweden (II, III).
+3. To study the relationship between levels of S-ECP and variables related to asthma and al-
+lergy among young adults in Estonia (IV).
+4. To compare PD20 and log-slope of methacholine challenge methods using either Mefar or
+Spira as a dosimeter and to calculate the respective transition equations to permit the com-
+parison of  the results obtained by the two methods (V).
+25
+MATERIAL AND METHODS
+Definitions used
+Allergic heredity: Asthma, skin allergy of hay fever either in parents or in siblings.
+Allergic rhinitis: Positive answer to the question: ”Do you have any nasal allergies, including
+hay fever?”
+Allergy associated symptoms of  asthma (pollen, mite or cat asthma): The presence of cough,
+wheeze, chest tightness or shortness of breath upon contact with pollen, bedclothes, dusty parts
+of the house or animals, respectively, in combination with IgE antibodies against defined aller-
+gens.
+Allergy associated symptoms of rhino-conjunctivitis (ARC): A history of itchy or watering eyes
+or runny nose either seasonal or on contact with animals, bedclothes or dusty parts of the house,
+combined with  IgE antibodies against timothy or birch (pollen ARC), D. pteronyssinus (mite
+ARC), cat (cat ARC) or Cladosporium.
+Asthma: An affirmative answer to the question: ”Have you ever had asthma?”
+Asthmatic symptoms:  Wheeze with breathlessness occurring in the absence of colds in the last
+12 months.
+Atopy: Presence of  serum IgE antibodies > 0.35 kU/l against at least one allergen.  
+Current asthma : Asthma diagnosed by a doctor and attack of asthma during the last 12 months
+or currently taking asthma medication.
+Bronchial hyperresponsiveness (BHR): A 20% decline in FEV1 compared with the post-diluent
+value were the cut of point was <1.5 mg with the Mefar method. When other limits were used,
+this is indicated.
+Bronchial responsiveness to methacholine (Slope): 100/(regression coefficient + 10), where the
+regression coefficient was calculated by regressing percentage fall in FEV1 on log10 (methacho-
+line dose)45. 
+Skin allergy : Positive answer to the question: ”Have you ever had eczema or any kind of skin
+allergy?”
+Subjects exposed to environmental tobacco smoke (ETS): Non-smokers who reported exposure
+to ETS on most days or nights during the last 12 months.
+Visible mould: Affirmative answer to the question “Has there been mould or mildew on any
+surface, other than food, inside the home in the last 12 months?”
+Wheeze: Affirmative answer to the question: “Have you had wheezing or whistling in your
+chest at any time in the last 12 months?”.
+26
+European Community Respiratory Health Survey (ECRHS)
+ECRHS is a multicentre survey of the prevalence, determinants and management of asthma. A
+screening questionnaire, including seven questions relating to the 12 month prevalence of
+symptoms of asthma, was distributed to representative samples of 20-44 year old men and
+women in 48 centres, predominantly in Western Europe, followed by the tests for allergy, lung
+function measurements, tests of airway responsiveness, and blood and urine collection in the
+clinical phase of the study in 38 centres from 18 countries. The total number of subjects that re-
+sponded to stage 1 was 137,619. The random sample of stage 2 comprised 18,811 subjects. A
+symptomatic stage 2 sample was included in 25 centres and comprised 2,998 subjects. 
+ 
+The three main objectives of the survey were:
+1. To estimate the variation in the prevalence of asthma, asthma-like symptoms, atopic sensi-
+tisation and bronchial lability in Europe.
+2. To estimate variation in exposure to known or suspected risk factors for asthma; to measure
+their association with asthma and to assess further the extent to which they explain varia-
+tions in the prevalence across Europe.
+3. To estimate the variation in treatment practice for asthma in the European Community.
+Study areas (I-IV)
+Following the protocol of the ECRHS 42, two areas were compared, i.e. Tartu in Estonia and
+Uppsala in Sweden. Both are university towns (population 110,000 and 167,000, respectively)
+with little industry. They are located at a similar latitude and they have a similar climate. The
+track of development of the countries parted 50 years ago and the study group in Tartu has been
+living in a socialist economy from birth. In 1993, the mean monthly salary was 80$ in Tartu and
+2,612$ in Uppsala  and the purchasing power of the salary for the inner market five times
+higher in Sweden than in Estonia (personal communication, Ministry of Economics in Estonia).
+The living area per inhabitant was 12 m2 in Tartu, as compared to 40 m2 in Uppsala. In Tartu
+63% of people used gas stoves for cooking, as compared to less than 1% in Uppsala. There
+were also major differences in the use of asthma medication between the countries 204 (Fig-
+ure 1).
+27
+Phase 1 
+Subjects (I)
+Random samples, of 3000 individuals in Tartu and 3600 in Uppsala between ages 20 and 44,
+with equal number from either sex, were taken from the Civil Registers. To avoid linguistic
+problems, only people of Estonian nationality were selected in Tartu.
+Questionnaire (I)
+The ECRHS modified version of the International Union Against Tuberculosis and Lung Dis-
+ease (IUATLD) questionnaire 75,205 was used. It included seven questions commonly related to
+the diagnosis of asthma. Questions on smoking history were added both in Uppsala and Tartu.
+The questionnaire was translated from English into Estonian and Swedish and re-translated into
+English. The Estonian questionnaire was also translated into Swedish for comparison. The
+questionnaires were mailed in December 1990 in Uppsala and in December 1993 in Tartu, to-
+gether with a letter of explanation and a stamped reply envelope. Two additional questionnaires
+were sent to non-responders.
+0
+10
+20
+30
+40
+50
+60
+70
+1994 1995
+DDD p
+er
+ 1
+00
+0 i
+nh
+ab
+ita
+nt
+s p
+er
+ d
+ay Estonia
+Sweden
+Figure 1. The use of anti-asthma drugs in Estonia and Sweden in
+DDD per 1,000 inhabitants 204.
+28
+Phase 2 
+Subjects (II-IV)
+A random sample of 800 persons in both centres was selected for further investigations, which
+included a structured interview and the determination of circulating IgE antibodies to allergens.
+Only individuals who had answered to the mailed questionnaire were invited to participate (n=
+723 in Tartu, n=706 in Uppsala) (II-IV). 
+Tartu Uppsala
+Phase 1
+Phase 2
+3000 3600
+Responders 2460 3146
+Random
+subsample 723 706
+Symptomatic
+individuals 197 216
+Interviewed
+S-IgE measured
+BHR tested
+431 127 623 201
+47095 201
+498
+351
+307
+S-ECP measured 351 95
+Figure 2. Selection of the subjects and response rates in different parts of
+the study.
+29
+In addition, a symptomatic sample comprising all persons from the original study group who
+reported use of asthma medication, attacks of asthma, or awakening because of shortness of
+breath and who were not already included in the random sample were invited to participate (n=
+197 in Tartu and n= 216 in Uppsala) (II, IV). The study was conducted from April 1991 to Feb-
+ruary 1992 in Uppsala and from March 1994 to July 1995 in Tartu. The study flow is presented
+on figure 2.
+Questionnaire (II-IV)
+The ECRHS questionnaire for a structured interview was used 42,205,206. The questionnaire was
+translated from English into Estonian and Swedish and re-translated into English. The interview
+included questions on symptoms, diagnoses, smoking history, parental smoking history, family
+structure, family history, early environment, education, employment, home environment, diet,
+use of medicines, attitudes to medicines and the use of health services. In addition individuals
+with pollen associated symptoms were asked about what time of the year the symptoms ap-
+peared. Allergy to birch and timothy were only considered when the symptoms appeared in the
+spring and summer, respectively.
+Serum IgE levels and circulating IgE antibodies (II-IV)
+Serum IgE levels and IgE antibodies against D. pteronyssinus, timothy, birch, cat and Clado-
+sporium  were determined by Pharmacia CAP™ system (Pharmacia, Uppsala, Sweden).
+Serum ECP (IV)
+The blood samples that were collected for ECP measurements were kept at 24oC for 60 minutes
+before they were centrifuged. Sera were stored at –20oC. The concentration of S-ECP was as-
+sayed with a double antibody radioimmuno assay (Pharmacia Diagnostics, Uppsala, Sweden).
+Spirometry (II-V)
+Forced expiratory volume in one second (FEV1) was measured with Jäeger Flowscreen, Lilly
+type pneumotachograph (Erich JÄEGER GmbH & CoKG, Würzburg, Germany) in Tartu and
+with Spiro Medics computerised dry-rolling seal spirometer system 2130 (Sensor Medics, Ana-
+heim, California, USA) in Uppsala. The predicted value was calculated for each subject 207. 
+Methacholine challenge test (II-V)
+Two automatic inhalation synchronised dosimeter jet nebulisers were used. In the clinical phase
+of ECRHS (II-IV), Spira Elektro2 (Respiratory Care Centre, Hämeenlinna, Finland) 208 was
+30
+used in Tartu and Mefar MB3 dosimeter (Mefar, Brescia, Italy) 209 in Uppsala. The methods
+were compared in a separate analyses (V).
+The Spira dosimeter was adjusted to nebulise for 0.5 seconds from the beginning of each
+inhalation. Patients controlled their tidal breathing with the flow indicator and volume digital
+readout to achieve a stable flow of 0.5 l/s with tidal volume 0.4-0.6 l. Employing the Mefar
+protocol, slow inspirations from functional residual capacity to total lung capacity with breath
+holding for at least three seconds were done. Aerosol delivery time was set to one second and
+pause time to six seconds.
+FEV1 was measured, before the challenge and either two (Mefar) or three minutes (Spira) after
+inhalation of normal saline and each dose of methacholine. The best of two attempts was regis-
+tered. The decline of FEV1  was calculated from the control value, i.e. the value of FEV1 after
+four inhalations of saline (36 µg) using Mefar dosimeter and five inhalations (32 µg) using
+Spira-2. Methacholine challenges were terminated after a fall of FEV1 ≥ 20% from the control
+value or after the last dose inhaled. The test was not performed if the post diluent FEV1 was re-
+duced by more than 10% compared with the pre-diluent FEV1. Appropriate transition equations
+were used to transform the Tartu data, making them comparable to those obtained in Uppsala.
+After transforming the data maximum cumulative dose administered using the Spira (2.3 mg)
+corresponded to 1.5 mg using that of the Mefar method. This cut-off point was used to define
+BHR. 
+Comparison of two dosimeter methods
+Subjects (V)
+Twenty-eight patients (16 males) with mild to moderate asthma were recruited through the
+Asthma Register of Tartu University Lung Clinic. The mean age was 30.5 years (range 17-43
+years). All patients had a documented variation in forced expired volume in one second (FEV1)
+of more than 15% after β2-agonist and fulfilled the criteria of asthma (International Consensus
+Report on Diagnosis and Management of Asthma, 1992). They  had to be symptomatic or on
+inhaled short acting β2-agonists during two weeks preceding the investigations. None of them
+used any other asthma medication than either inhaled glucocorticoids, or short acting inhaled
+β2-agonists, or both, and the dose regimen did not change during the study. Inhaled β2-agonists
+31
+were withheld for at least five hours before each challenge. The prechallenge FEV1  was 74% of
+predicted value in two and over 80% in all other cases.
+Ethical considerations
+All participants gave their informed consent. The respective local Ethics Committees approved
+the studies.
+STATISTICAL ANALYSIS
+The statistical analysis was performed with the Statistica 4.0 software package (Stat Soft Inc.,
+Tulsa, USA) (I), the SAS System 6.11 software package (SAS Institute Inc., Cary, NC, USA)
+(II, III, V) and the StatView 5 software package (SAS Institute Inc, Cary, NC, USA) (IV).
+Chi-square-test was used to analyse differences between groups. Linear regression was used to
+correlate two continuous variables and logistic and multiple linear regression for multiple vari-
+ables. Logistic regression analysis was performed in order to estimate adjusted odds ratios when
+taking into account several variables. Odds ratios with 95% confidence intervals (CI) were de-
+termined. Log-transformation was performed to achieve a normal distribution of S-ECP and S-
+IgE. S-ECP values are presented as geometric mean (+SD). A p-value <0.05 was regarded as
+statistically significant. In paper V, after logarithmic transformation of PD20 values, paired t-test
+was used to compare measurements obtained with the two challenge methods. Linear regression
+was used to calculate transition equations. A measure of slope was calculated by regressing
+percentage fall in FEV1 on log10 (dose). In order to satisfy the assumptions of standard statisti-
+cal analyses, i.e. normality and homogeneity of variance, the regression coefficient was trans-
+formed. The term “slope” is used for the following transformed log slope: 100/(regression coef-
+ficient + 10). A p-value <0.05 was regarded as statistically significant.
+32
+RESULTS
+Paper I
+Asthmatic symptoms were less prevalent in Tartu (4.6% vs. 6.8%), as were attacks of asthma
+(1.9% vs. 3.3%), current asthma medication (0.7% vs. 4.9%), and allergic rhinitis (17.8% vs.
+22.2%). The prevalence of  current wheeze was higher and wheeze with breathlessness lower in
+Tartu than in Uppsala, while the prevalence of wheeze without a cold was similar. In Tartu, but
+not in Uppsala, wheezing and wheeze without a cold were more common among men than
+among women. Nocturnal respiratory symptoms (wakening with chest tightness or being woken
+by an attack of breathlessness or an attack of cough) were more prevalent in Tartu (p<0.001),
+especially among women. The prevalence of nocturnal symptoms also increased with age
+(p<0.05) in Tartu, but not in Uppsala. Age was inversely related to allergic rhinitis in Uppsala
+but not in Tartu. Current smoking was an invariable risk factor for all respiratory symptoms,
+except for attacks of asthma, both in Tartu and Uppsala. The prevalence of current smoking was
+higher in Tartu compared to Uppsala (45.9% vs. 33.8%). Allowing for age, sex, current smok-
+ing and self reported allergic rhinitis did not change the differences in symptom prevalence
+between the centres. 
+Paper II
+The prevalence of atopy was 19% in Tartu and 32% in Uppsala. The major allergen in Tartu
+was house dust mite (10%) , while in Uppsala it was pollen (grass 18% and birch 15%). The
+prevalence of sensitisation to pollen was twice as low (11.5 vs. 23.2%) and the prevalence of
+pollen associated asthma symptoms was four times lower (1.7 vs. 6.8) in Tartu than in Uppsala,
+while sensitisation to pollen was an equally large risk factor for asthma in both centres. 
+Risk factors were estimated for nine outcome variables: three different conditions, i.e. atopic
+sensitisation, allergy associated symptoms of asthma and allergy associated symptoms of  rhi-
+noconjunctivitis, in association with three different allergens: mite, pets and pollen. Risk factors
+were different for different sensitises and some differences in them could be revealed between
+the two centres. For atopic sensitisation the risk factors were mainly demographic or genetic by
+nature, or associated with infant environment. Male gender and allergic heredity were most of-
+ten associated with outcome variables, both in Tartu and Uppsala. Age was inversely related to
+cat and pollen associated symptoms of rhinoconjunctivitis in Uppsala. Pet in infancy was in-
+versely associated with pollen atopy in Uppsala, while no association with atopic sensitisation
+and pet ownership in childhood could be revealed in Tartu. Current exposures had some oppo-
+33
+site effects on sensitisation, thus cat ownership was a risk factor for sensitisation to cat in Tartu,
+whereas pet ownership was inversely related to atopic sensitisation to pollen in Uppsala.
+Working as a manager, legislative official or an administrator was inversely related to sensiti-
+sation to pollen in Tartu, and was associated with an increased prevalence of IgE antibodies
+against cat in Uppsala. Additional current exposures as risk factors could be revealed for aller-
+gic respiratory symptoms associated with indoor allergens but not for pollen. In Tartu, use of
+open fire in the household tended to be a risk factor both for symptoms of asthma and allergic
+rhinitis associated with sensitisation to cat or mite. The age of the dwelling had an opposite ef-
+fect on allergic respiratory symptoms in the two centres. In Tartu, living in house built after
+1971, and in Uppsala, before 1971, increased the risk for symptoms. 
+The examined risk factors, however, did not explain the difference in prevalence between the
+centres, thus after controlling for several risk factors, living in Uppsala was still associated with
+OR of 2.1 for pollen atopy, 2.4  for pollen asthma and 5.4 for pollen ARC.
+Paper III
+The prevalence of BHR was higher in Tartu regardless how BHR was defined. Using the cut-
+off point 1.5 mg the prevalence of BHR was 19% in Tartu and 11% in Uppsala (p<0.001).
+Bronchial responsiveness estimated by mean slope was 7.2 and 7.8, respectively (p<0.001).
+Female gender, sensitisation to cat, current smoking, and visible mould in the home during the
+last 12 months were independent risk factors for BHR in Tartu. In Uppsala, BHR was signifi-
+cantly associated with total  IgE levels, current smoking, and  exposure to environmental to-
+bacco smoke. In Tartu, the prevalence of BHR among current smokers was significantly higher
+only compared to lifelong non-smokers who were not exposed to ETS, while in Uppsala the
+prevalence of BHR was higher among passive smokers than among individuals not exposed to
+ETS. The prevalence of current asthma in subjects with BHR was 7% in Tartu and 23% in
+Uppsala. None of several other environmental factors, e.g., use of gas and open fire, age of the
+dwelling, water damage, childhood environmental factors like parental smoking, number of
+siblings and severe respiratory infection before five years of age or  social class were signifi-
+cantly associated with BHR in the univariate analyses. When the two populations were com-
+bined in one multiple regression model, living in Tartu was an independent risk factor for BHR
+(OR 1.8; 95% CI 1.15-3.0).
+Paper IV
+The median S-ECP value was 8.0 µg/l in the random sample which was considerably lower
+than in an investigation with identical design in Uppsala 32. The geometric mean of S-ECP was
+34
+higher in subjects with, than without atopy (10.2. vs. 8.9 µg/l, p<0.01) and in subjects with
+bronchial hyperresponsiveness (BHR) than in subjects without BHR (9.9 vs. 8.0 µg/l, p<0.01).
+The levels correlated weakly to forced expiratory volume in one second (FEV1) (r=0.13,
+p<0.01) and were not independently correlated with respiratory symptoms, asthma or FEV1 af-
+ter adjusting for BHR, IgE, sensitisation and smoking. The specificity and sensitivity of a S-
+ECP value above the interquartile range (12.0 µg/l) for atopy were 32% and 80% respectively,
+for BHR 30% and 80%, for self reported asthma 63% and 97% and for wheeze 36% and 76%.
+Paper V
+The provocative dose of methacholine producing a 20% fall in forced expiratory volume in one
+second (PD20) was lower when determined by Spira than with the Mefar dosimeter. Transition
+equations calculated by linear regression analysis were: PD20mefar = exp10[0.897 +
+0.678(logPD20spira)] and PD20spira = exp10[0.759 + 0.559 (log PD20mefar)].The slopes were
+calculated by regressing the percentage fall in FEV1 on log10 (dose) and transformed as slope =
+100/(regression coefficient + 10). The mean slope (95% CI) for Spira was 3.1 (2.6-3.7) and for
+Mefar 4.4 (3.6-5.1) (P < 0.005). Regression equations calculated by linear regression analysis
+were: slope(mefar) = 2.126 + 0.712 slope(spira) and slope(spira) = 1.551 + 0.365 slope(mefar).
+35
+DISCUSSION
+The postal questionnaire study (paper I) showed high prevalence of respiratory symptoms in-
+cluding wheeze, but low prevalence of diagnosed asthma and asthma treatment in Tartu com-
+pared to Uppsala. As the prevalence of asthma like symptoms, i.e. having wheeze with breath-
+lessness while not having a cold, was also low in Tartu, it seemed likely that the relatively low
+prevalence of asthma in Tartu is real. Results of the clinical phase of the study confirmed that
+the prevalence of atopic sensitisation and respiratory allergies (paper II) as well as the levels of
+serum ECP (paper IV) were low in Tartu, concordant to the notion of low prevalence of asthma.
+The high prevalence of  BHR in Tartu concorded with the high prevalence of wheeze and noc-
+turnal symptoms (paper III). The prevalence of current asthma in subjects with BHR was only
+7% in Tartu but 23% in Uppsala. Furthermore, the association between BHR and atopic sensiti-
+sation was statistically significant only in Uppsala, indicating that atopy is less associated to
+BHR in Tartu than in Uppsala. 
+S-ECP was elevated in subjects with atopy and BHR, but the levels were not related to asthma
+symptoms or lung function when other asthma related variables were controlled for. It is, how-
+ever, not surprising that after controlling for the effect of atopy and BHR, S-ECP no longer re-
+mains associated with asthma symptoms and self reported asthma, as atopy, elevated S-ECP,
+and BHR may share the same pathway to asthma: atopic sensitisation being the prerequisite to
+allergic inflammation, the latter marked by elevated S-ECP. Activation of eosinophils in its turn
+can result in increased BHR. 
+The difference in the prevalence of asthma like symptoms between Tartu and Uppsala was
+smaller than the difference in the prevalence of diagnosed asthma and even more so, asthma
+treatment. Hence, we have suggested that the low prevalence of self reported asthma in Tartu
+may partly be the reflection of low awareness of the disease in the society. The awareness of
+allergic diseases in Tartu seemed to be lower than in Uppsala, based on the results of the clini-
+cal phase of  the study as well, as the difference in the prevalence of  pollen associated respira-
+tory symptoms, especially hay fever, was larger than the difference in the prevalence of  sensiti-
+sation to pollen. Alternatively, there may be some unknown factors in Tartu that decrease the
+risk of expression of symptoms in allergen sensitised subjects.
+Our results are in line with previous comparative studies between countries with affluent mar-
+ket economy and previous socialist countries, revealing low prevalence of allergies and asthma
+36
+in the latter both among children 52,57,59-61 and adults 62,63. However, in contrast to previous
+comparisons of adult populations in East and West Germany, respiratory symptoms as well as 
+BHR were high among Estonian adults. While generally the prevalence of BHR parallels that of
+self reported asthma and wheeze 45,51 the prevalence of BHR was also high among Estonian
+children 66. It has recently been suggested  that bronchial challenge  might provide more valid
+information than questionnaires in epidemiological studies of asthma, when comparing popula-
+tions which do not share the same language, culture, health care system, or perception and la-
+belling of asthma symptoms 21. Our results indicate that the validity of BHR as a marker of
+asthma may be low when target populations differ in regard to other possible causes of BHR,
+e.g. differences in environmental pollution and ETS. Thus, a method that is valid within a par-
+ticular population may not be the most appropriate one for regional or international compari-
+sons of asthma. 
+As shown in the figure 3, the prevalence estimates of asthma depend on what operational defi-
+nition is used and what measurement techniques are employed. Disease prevalence per se is,
+however, important mainly from an economical point of view, to enable the planning of the
+health care. 
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+(%)
+Self reported
+asthma
+Asthma
+symptoms
+Wheeze +
+BHR
+Figure 3. Prevalence of self reported asthma, wheeze with breathlesness
+without cold and current wheeze with BHR among young Estonian adults.
+37
+Age was inversely related to self reported allergic rhinitis in Uppsala but there was no similar
+trend in Tartu. Age was inversely related to cat and pollen associated symptoms of rhino-
+conjunctivitis  and there was also a tendency towards an inverse relationship between age and
+atopy in Uppsala but not in Tartu. Analysis of the data from three Swedish centres participating
+in ECRHS revealed this trend to be statistically significant 125. This result supports the sugges-
+tion that the increasing prevalence of allergic diseases among children and young adults in
+Western Europe is caused by a cohort effect, the causes of which possibly date back to changes
+beginning in the mid 1950s 210. However, the prevalence of atopic sensitisation among adults in
+Tartu was much higher than in a prevalence study in children 58, while in Sweden the preva-
+lence was similar in children and in adults 52, indicating that expression of atopic sensitisation
+can occur later in life. Resampling of the 9-11-year schoolchildren in Leipzig four years after
+the German unification showed significant increase in the prevalence of atopy compared to the
+study conducted four years earlier 69. These children were born about three years before unifi-
+cation and were therefore exposed to western living conditions only after the third birthday.
+Thus, factors operating very early in life may be particularly important for maturation of the
+immune system, whereas the development of atopic sensitisation may also be affected by envi-
+ronmental factors occurring beyond infancy.
+A definition of high specificity, like doctor diagnosed asthma, should preferably be used, in es-
+timating risk factors 5. We could not use self reported asthma as an outcome, as there were only
+eight subjects with diagnosed asthma in Estonia in a random sample and additional 13 came
+from the enriched sample. The dependent variables we have used in risk factor analyses com-
+prise respiratory symptoms, in the postal questionnaire data and BHR, atopic sensitisation and
+allergic respiratory symptoms from the clinical part of the study. For atopy and respiratory al-
+lergies nine outcome variables were used: atopic sensitisation to three different allergens: mite,
+pets and pollen, and allergy associated symptoms of asthma, and allergy associated symptoms
+of  rhinoconjunctivitis associated with the same different allergens.
+Women had more nocturnal symptoms than men in Tartu, while the prevalence of wheeze was
+higher among men. However, after controlling for current smoking, no gender difference in
+wheeze remained. The gender difference in reported night symptoms can be explained by
+higher BHR among women in Tartu. In analyses of the clinical phase of the study, female gen-
+der was a risk factor for BHR in Tartu after controlling for baseline lung function and other
+variables. This is in accordance with previous reports 83,84. In an analysis of Leynaert et al. of
+38
+the French ECRHS data set greater bronchial responsiveness was observed in women than in
+men after adjusting for several variables for airway calibre and lung size as well as for body
+mass index 90. In that study BHR in women was more related to smoking than in men. Thus, the
+excess of BHR in women may be related to a greater susceptibility to tobacco smoke. Women
+have been found to be more susceptible than men also to other environmental factors, as the use
+of gas for cooking is associated with respiratory symptoms suggestive of airway obstruction in
+women but not in men 91-93. Men were more often sensitised to common allergens and, corre-
+spondingly, tended also to have more respiratory allergies. 
+Current smoking was a significant risk factor for BHR and for all respiratory symptoms, except
+for attacks of asthma, both in Tartu and Uppsala but not for atopic sensitisation and allergic
+respiratory symptoms. This is in concordance with many previous studies 75,77,84,84,100,114-116. 
+ETS was associated with a four-fold increased BHR in Uppsala, but was not significantly asso-
+ciated with BHR in Tartu. This was in contrast to the results of a cross sectional study involving
+2600 schoolchildren (10-12 years) from  Estonia, Poland and Sweden where maternal smoking
+was related to respiratory symptoms only in Estonia and Poland 59. In the current study, subjects
+were classified as exposed to ETS if they reported exposure to ETS on most days or nights
+during the last 12 months. As smoking is not restricted in public places in Estonia unlike in
+Sweden, our questionnaire may underestimate the true exposure to ETS in Tartu. An associa-
+tion between exposure to tobacco smoke and sensitisation to mite but not to other allergens has
+been observed previously 124. We found an association between maternal smoking in childhood
+with sensitisation to mite, and mite associated symptoms of asthma in Tartu.
+An association between atopic sensitisation and BHR has been found in many stud-
+ies 77,106,116,211. Cat was the allergen most strongly related to BHR in Tartu. Pet ownership, both
+in infancy and at the time of the study, was inversely associated with atopic sensitisation, espe-
+cially to pollen, and correspondingly also to pollen associated respiratory symptoms in Uppsala,
+while in Tartu current cat ownership was a risk factor for cat atopy. The inverse association of
+respiratory symptoms with current pet ownership in Uppsala can be explained by selection bias,
+i.e. sensitised individuals were less likely to keep pets, while in Tartu the awareness of pets as a
+risk factor for allergic diseases is probably lower. Pet ownership in childhood has, however,
+been found to be inversely related with atopic sensitisation, allergic rhinitis and asthma in later
+life also in other studies 109,113. These findings have been explained by avoidance of pet keeping
+39
+by parents of atopic children, induced tolerance caused by the bigger allergic load in those
+having pets, but also as a marker of difference in lifestyle. We did not find a similar association
+in Tartu, furthermore, pet in infancy was a risk factor for mite associated symptoms of asthma.
+All these findings together are in favour of the explanation that pet ownership can be  con-
+founded by some other lifestyle aspects in some societies, while in other societies, like in Tartu,
+it does not serve as a marker of way of life.
+Half of the population both in Tartu and Uppsala live in buildings built after the 1960s. The age
+of the home did not affect the concentration of house dust mites in one study where the asso-
+ciation between the dwelling conditions and prevalence of house dust mites were analysed 212,
+while higher humidity and poor ventilation have  been associated with high concentrations of
+house dust mites 213,214. Energy saving measures during the last 20 years have changed the in-
+door climate in Sweden. The higher prevalence of mite associated symptoms of respiratory al-
+lergy in Uppsala among people living in older buildings may indicate that additional insulation
+of older houses, rather than using modern tight constructions and new building materials, could
+be responsible for mite associated respiratory symptoms. The energy crisis in the early 1970s
+did not have a major impact on the building standards in the Soviet Union as energy continued
+to be very cheap. Most of the houses built in Tartu after 1970 are standard 5-9-floor blocks of
+flats that are centrally heated and do not have mechanical ventilation systems. In Tartu living in
+houses built more recently tended to increase the risk of respiratory symptoms associated with
+indoor allergens. Allergen levels are similar, however, in older and more recently built houses,
+except for house dust mite, that was found in slightly higher concentrations in houses older than
+25 years in Tartu 215.
+Domestic gas use is the only indoor risk factor related to air quality that  with some consistency
+has been found to be associated with BHR among adults 91-93. Home dampness is, however, a
+recognised risk factor for respiratory symptoms in children 216-218. Visible mould can be consid-
+ered an indirect marker of humidity and bad ventilation. The association of BHR and visible
+mould indicates that indoor air quality has an impact on BHR in Tartu.
+The low prevalence of atopy among the office workers in Tartu may appear surprising. The so-
+cial structure in Estonia during the Soviet time did not resemble that of countries with market
+economy, however, since manual workers were often more well off than people with a higher
+education, i.e. university graduates. The observation does, therefore, not contradict suggestions
+40
+of an association between a high standard of living and an increased risk for atopic disease.
+This was also the case in Uppsala where allergy to cat was particularly common among those
+working as managers, legislative officials or administrators.
+Allowing for measured exposures in multiple logistic regression analysis did not explain most
+of the differences in the prevalence. After controlling for several risk factors, living in Tartu
+was still associated with lower risk for atopy, symptoms of asthma and rhinoconjunctivitis, but
+with higher risk of nocturnal respiratory symptoms, wheezing and BHR. This indicates that
+other, not measured risk factors play the major role. The climate, vegetation and pollen seasons
+are similar in the two towns. As the levels of major indoor allergens are also similar in the two
+regions 212,215, the differences in prevalence cannot be explained by differences in exposure to
+allergens. No data on outdoor air pollution in Tartu are available from the beginning of the
+1990s. As there is no major industry neither in Tartu nor in Uppsala, the main air pollution
+comes from vehicles. The difference in gasoline used in Tartu and Uppsala at the beginning of
+the 1990s may have resulted in differences in outdoor pollution between the two towns. The
+differences in air pollution can hardly be responsible for the differences we found between
+these two populations, however. Differences in lifestyle, that likely form the base of the differ-
+ences in atopic sensitisation and allergies, are difficult to distract into measurable components.
+It is likely that asthma prevalence has increased because of something that is lacking in the
+modern environment, rather than through the positive reactions to some toxic factor. 
+Man is exposed to the environment mainly via lungs and gut, the organs with the biggest total
+surface area. The exposure is therefore mainly dependant on what we breathe and what we eat
+and probably also, on whom we live with. In fact, there are more bacteria in man’s gut than
+there are cells in the human organism. This assembly is in constant change and one of the im-
+portant communication lines between micro organisms and mammals is the immune system of
+the latter. Recent reports from studies in children indicate that roots in the increased prevalence
+of atopy and asthma may lie in the changed microflora of the gut 200,201,219.
+Methodological implications
+The methodological implications of the study are, that dose-response curves should be validated
+and transition equations calculated when different methods for measuring bronchial reactivity
+to inhaled agents are compared. This is true even while using apparently similar well-
+standardised dosimeter methods. If objective markers are used in asthma epidemiological stud-
+ies, it is beneficial to encompass markers of cellular activity, like serum ECP, in addition to
+41
+physiological parameters, like BHR, to better describe the study subjects, especially when the
+populations compared differ in risk factors for those markers. As far as asthma remains poorly
+defined in epidemiological studies, postal questionnaires seem to be inexpensive and reliable
+tools in estimating the prevalence of the disease. However, in addition to self reported asthma,
+asthma related symptom complex rather than wheeze alone should be reported when studying
+populations with differences in the prevalence of other respiratory diseases and awareness of
+asthma.
+Internal validity
+The response rate in the questionnaire phase of the study was reasonably high in both centres,
+but slightly lower in Tartu than in Uppsala. Women responded more often than men both in
+Tartu and Uppsala. Current smoking was more common among the late responders than among
+early responders. Twenty-five percent of the non-responders in Uppsala were randomly chosen
+for a telephone interview 75. The prevalence of symptoms was similar among those who could
+be reached and those who had answered the questionnaire. A similar analysis was not feasible
+in Tartu, because of the low number of private telephones.
+The proportion of symptomatic persons selected to the second phase of the study was higher in
+Tartu than in Uppsala despite the lower prevalence of symptoms suggestive of asthma in the
+mailed questionnaire. This depended on the selection criteria, which in addition to attacks of
+asthma and current asthma medication comprised the symptom “woken by attack of  breath-
+lessness”. The prevalence of this symptom was high in Tartu. The participation rate in the sec-
+ond phase of the ECRHS was lower in Tartu than in Uppsala. In Tartu, persons with self re-
+ported nasal allergies and symptoms suggestive of asthma appeared to be more willing to par-
+ticipate in the second phase of the study. This selection bias would however tend to overesti-
+mate the prevalence of allergy in Tartu, lowering the differences we have revealed between the
+two centres. Participants in the clinical phase of the study who had respiratory symptoms
+tended not to participate in BHR testing in Tartu, while the opposite was true in Uppsala. This
+selection bias would not significantly alter our findings on the prevalence of BHR in the two
+centres, as the prevalence of BHR was higher in Tartu. Despite our attempt to overcome the dif-
+ferences in the methods used in BHR testing by using the transition equations, obtained in a
+separate study (paper V), the possibility for a differential misclassification of BHR still re-
+mains. The probable result of this misclassification would be that milder BHR has been labelled
+in Tartu. This could dilute the effect but not affect our results in differences in risk factors.
+42
+External validity
+As the study was conducted only in one centre in Estonia, a question can be raised on the exter-
+nal validity of the results. Large differences between centres in one country were revealed in the
+central analyses of the ECRHS data for respiratory symptoms as well as for BHR and atopic
+sensitisation, indicating that estimations of prevalence rates of a whole country, based on meas-
+urements of prevalence in one specific area should be interpreted with caution 220. Our results
+have, however, in this respect been validated by a similar study in the age group 15-64 years,
+conducted in three areas in Estonia: the capital of the country, Tallinn, an agricultural island in
+the Baltic See, Saaremaa, and a heavily industrialised town located at the Russian border,
+Narva. In concordance to ECRHS in Tartu, the prevalence of wheeze in the last 12 months was
+high: among men 22,7% in Tallinn, 23,4% in Saaremaa and 26,4% in Narva and 19,7%, 19,3%
+and 21,5% respectively among women. The prevalence of physician diagnosed asthma was
+2.0% with minor differences between centres 221. 
+Future aspects
+As asthma prevalence in a population reflects both asthma incidence and the average duration
+of the condition, it is important to know the persistence of symptoms, the incidence of new
+cases and remissions and to study the factors that associate with incidence and remissions. Two
+currently ongoing projects, ECRHS II and Respiratory Health in Northern Europe (RHINE),
+that follow up different sub samples of  ECRHS, have been designed to find answers to these
+questions.
+43
+CONCLUSIONS 
+1. Symptoms of asthma and hay fever were less common in Estonia than in Sweden, while
+respiratory symptoms in general were more common in Estonia. The differences in the
+prevalence of symptoms that were likely to be caused by allergy, diminished with age, in-
+dicating a probable cohort effect, the causes of which possibly date back to changes begin-
+ning in the mid 1950s. The prevalence of nocturnal respiratory symptoms increased with
+age in Tartu but not in Uppsala. Current smoking was a dominant risk factor for all respi-
+ratory symptoms, except attacks of asthma, both in Tartu and Uppsala (I).
+2. The prevalence of BHR was higher and the prevalence of atopic sensitisation lower among
+young adults in Estonia, compared to Sweden. The biggest difference was in the prevalence
+of cat and pollen atopy. There was some difference between risk factors for BHR and atopy
+between Tartu and Uppsala, mostly of social and environmental origin. Theses differences,
+however, could not explain the differences in prevalence for most outcome variables. The
+low prevalence of hay fever and asthma in Tartu seemed to be partly explained by a lack of
+awareness of  atopy and allergic diseases in the Estonian society (II-III).
+3. In this Estonian population sample S-ECP was elevated in subjects with either BHR or at-
+opy, but the levels were not related with asthma symptoms or lung function when other
+asthma related variables were controlled for. Our results indicate that the level of eosino-
+phil activation is low in a population with a low prevalence of atopy, even when bronchial
+hyperresponsiveness is common (IV).
+4. The estimated cumulative dose causing a 20% fall in FEV1 was smaller and the decline of
+FEV1 /log(dose) curve steeper, using the Spira, compared to Mefar protocol. The dose re-
+sponse of  lung function to inhaled agents, even while using apparently similar well stan-
+dardised dosimeter methods, should be validated and transition equations calculated before
+comparing the results (V).
+44
+ACKNOWLEDGEMENTS
+Without the contribution and help of many people, this thesis would never have been accom-
+plished. I would like to express my sincere gratitude and appreciation to all who have helped
+and not complained, in particular to:
+Christer Janson, my supervisor, for his guidance, inspiring discussions, kind support in pro-
+viding excellent working conditions, and friendship.
+Bengt Björkstén, my supervisor, whose guidance and constructive criticism of the writings
+have been of remarkable value, for patience, and for convincing me that research must be fun.
+Peet-Henn Kingisepp, my first supervisor, who put me on the path that ended with this work,
+for never failing interest in the progress of the project.
+Gunnar Boman, co-author, for encouragement, practical advises and many useful discussions.
+Eythor Björnsson and Hans Hedenström, co-authors for valuable discussions and helpful ad-
+vice.
+Alar Haukanõmm, for constant support and friendship.
+Jaak Kiviloog, for establishing important contacts, and for continuous enthusiasm over the
+years.
+Eva Otter, Karin Kanarik, Ingrid Leppik and Astrid Valdmann, the research-nurses for
+their devotion to the work and contribution to the study.
+Kerstin Stenudd-Caselunghe, for excellent secretarial help and language revision of thesis.
+My current and previous colleagues and staff in Tartu Lung Clinic for their assistance in giving
+me leave of absence for my many journeys to Uppsala, and all friendly people welcoming me in
+Uppsala Lung Clinic.
+All the participants in the study who accepted going through all the investigations and did not
+hesitate to give their blood.
+My family, for making the effort worthwhile.
+45
+REFERENCES
+1 Sears MR. The definition and diagnosis of asthma. Allergy 1993; 48: 12-6.
+2 International consensus report on diagnosis and management of asthma. Allergy 1992; 47: 1-5.
+3 Global Initiative for Asthma (GINA) (1995). Global strategy for asthma management and prevention.
+NHLBI/WHO Workshop Report, Washington, DC: National Insitute of Health, 1995.
+4 de Marco R, Cerveri I, Bugiani M, Ferrari M, Verlato G. An undetected burden of asthma in Italy: the rela-
+tionship between clinical and epidemiological diagnosis of asthma. Eur Respir J 1998; 11: 599-605.
+5 Pershagen G. Challenges in epidemiologic allergy research. Allergy 1997; 52: 1045-9.
+6 Sunyer J, Basagana X, Burney P, Anto JM. International assessment of the internal consistency of respira-
+tory symptoms. European Community Respiratory Health Study (ECRHS). Am J Respir Crit Care Med
+2000; 162: 930-5.
+7 Fuso L, De Rosa M, Corbo GM, Valente S, Forastiere F, Agabiti N, Pistelli R. Repeatability of the ISAAC
+video questionnaire and its accuracy against a clinical diagnosis of asthma. Respir Med 2000; 94: 397-403.
+8 Anonymus. Worldwide variations in the prevalence of asthma symptoms: the International Study of Asthma
+and Allergies in Childhood (ISAAC). Eur Respir J 1998; 12: 315-35.
+9 Anto JM. Methods to assess and quantify BHR (bronchial hyperresponsiveness) in epidemiological studies.
+Clin Exp Allergy 1998; 28 Suppl 1: 13-4.
+10 Smith L, McFadden Jr ER. Bronchial hyperreactivity revisited. Annals of Allergy, Asthma, & Immunology
+1995; 74: 454-69.
+11 Chinn S, Burney PG, Britton JR, Tattersfield AE, Higgins BG. Comparison of PD20 with two alternative
+measures of response to histamine challenge in epidemiological studies. Eur Respir J 1993; 6: 670-9.
+12 Knox AJ, Wisniewski A, Cooper S, Tattersfield AE. A comparison of the Yan and a dosimeter method for
+methacholine challenge in experienced and inexperienced subjects. Eur Respir J 1991; 4: 497-502.
+13 Siersted HC, Walker CM, O'Shaughnessy AD, Willan AR, Wiecek EM, Sears, MR. Comparison of two
+standardized methods of methacholine inhalation challenge in young adults. Eur Respir J 2000; 15: 181-4.
+14 Toelle BG, Peat JK, Salome CM, Crane J, McMillan D, Dermand J, D'Souza W, Woolcock AJ. Comparison
+of two epidemiological protocols for measuring airway responsiveness and allergic sensitivity in adults.
+Eur Respir J 1994; 7: 1798-804.
+15 Ludviksdottir D, Janson C, Björnsson E, Stalenheim G, Boman G, Hedenström H, Venge P, Gudbjornsson
+B, Valtysdottir S. Different airway responsiveness profiles in atopic asthma, nonatopic asthma, and Sjo-
+gren's syndrome. BHR Study Group. Bronchial hyperresponsiveness. Allergy 2000; 55: 259-65.
+16 van den Berge M, Meijer RJ, Kerstjens HA, de Reus DM, Koeter GH, Kauffman HF, Postma DS. PC20
+Adenosine 5'-Monophoshpate is more closely associated with airway inflammation in asthma than PC20
+methacholine. Am J Respir Crit Care Med 2001; 163: 1546-50.
+17 Townley RG, Ryo UY, Kolotkin BM, Kang B. Bronchial sensitivity to methacholine in current and former
+asthmatic and allergic rhinitis patients and control subjects. J Allergy Clin Immunol 1975; 56: 429-42.
+18 Toelle BG, Peat JK, Salome CM, Mellis CM, Woolcock AJ. Toward a definition of asthma for epidemio-
+logy. Am Rev Respir Dis 1992; 146: 633-7.
+19 Jenkins MA, Clarke JR, Carlin JB, Robertson CF, Hopper JL, Dalton MF, Holst DP, Choi K, Giles GG.
+Validation of questionnaire and bronchial hyperresponsiveness against respiratory physician assessment in
+the diagnosis of asthma. Int J Epidemiol 1996; 25: 609-16.
+46
+20 Pekkanen J, Pearce N. Defining asthma in epidemiological studies. Eur Respir J 1999; 14: 951-7.
+21 Pearce N, Beasley R, Pekkanen J. Role of bronchial responsiveness testing in asthma prevalence surveys.
+Thorax 2000; 55: 352-4.
+22 Pearce N, Pekkanen J, Beasley R. How much asthma is really attributable to atopy? Thorax 1999; 54: 268-
+72.
+23 Pearce N, Beasley R, Burgess C, Crane J. Asthma epidemiology. Principles and methods. Oxford University
+Press, Oxford, 1998.
+24 Kauffmann F, Neukirch F, Annesi I, Korobaeff M, Dore MF, Lellouch J. Relation of perceived nasal and
+bronchial hyperresponsiveness to FEV1, basophil counts, and methacholine response. Thorax 1988; 43:
+456-61.
+25 Annema JT, Sparrow D, O'Connor GT, Rijcken B, Koeter GH, Postma DS, Weiss ST. Chronic respiratory
+symptoms and airway responsiveness to methacholine are associated with eosinophilia in older men: the
+Normative Aging Study. Eur Respir J 1995; 8: 62-9.
+26 Burrows B, Lebowitz MD, Barbee RA, Cline MG. Findings before diagnoses of asthma among the elderly
+in a longitudinal study of a general population sample. J Allergy Clin Immunol 1991; 88: 870-7.
+27 Mensinga TT, Schouten JP, Rijcken B, Weiss ST, Speizer, FE, van der LR. The relationship of eosinophilia
+and positive skin test reactivity to respiratory symptom prevalence in a community-based population study.
+J Allergy Clin Immunol 1990; 86: 99-107.
+28 Ulrik CS. Eosinophils and pulmonary function: an epidemiologic study of adolescents and young adults.
+Ann Allergy Asthma Immunol 1998; 80: 487-93.
+29 Bousquet J, Corrigan CJ, Venge P. Peripheral blood markers: evaluation of inflammation in asthma. Eur
+Respir J 1998; 26: 42S-8S.
+30 Venge P. Monitoring of asthma inflammation by serum measurements of eosinophil cationic protein (ECP).
+A new clinical approach to asthma management. Respir Med 1995; 89: 1-2.
+31 Dahl R. Monitoring bronchial asthma in the blood. Allergy 1993; 48: 77-80.
+32 Björnsson E, Janson C, Håkansson L, Enander I, Venge P, Boman G. Serum eosinophil cationic protein in
+relation to bronchial asthma in a young Swedish population. Allergy 1994; 49: 730-6.
+33 Björnsson E, Janson C, Håkansson L, Enander I, Venge P, Boman G. Eosinophil peroxidase: a new serum
+marker of atopy and bronchial hyper-responsiveness. Respir Med 1996; 90: 39-46.
+34 Burr ML, Butland BK, King S, Vaughan-Williams E. Changes in asthma prevalence: two surveys 15 years
+apart. Arch  Dis Child 1989; 64: 1452-6.
+35 Aberg N. Asthma and allergic rhinitis in Swedish conscripts. Clinl Exp Allergy 1989; 19: 59-63.
+36 Robertson CF, Heycock E, Bishop J, Nolan T, Olinsky A, Phelan PD. Prevalence of asthma in Melbourne
+schoolchildren: changes over 26 years. BMJ 1991; 302: 1116-8.
+37 Burney PG, Chinn S, Rona RJ. Has the prevalence of asthma increased in children? Evidence from the na-
+tional study of health and growth 1973-86. BMJ 1990; 300: 1306-10.
+38 Lundback, B. Asthma, chronic bronchitis and respiratory symptoms: prevalence and important determina-
+tions. The Obstructive Lung Disease in Northern Sweden Study I.  1993. Umea University Medical Disser-
+tations No 387. 
+39 Hansen EF, Rappeport Y, Vestbo J, Lange P. Increase in prevalence and severity of asthma in young adults
+in Copenhagen. Thorax 2000; 55: 833-6.
+47
+40 Beasley R, Crane J, Lai CK, Pearce N. Prevalence and etiology of asthma. J Allergy Clin Immunol 2000;
+105: S466-S597.
+41 European Community Respiratory Health Survey. Protocol for the European Community Respiratory Health
+Survey, 1993.
+42 Burney PG, Luczynska C, Chinn S, Jarvis D. The European Community Respiratory Health Survey. Eur
+Respir J 1994; 7: 954-60.
+43 Asher MI, Keil U, Anderson HR, Beasley R, Crane J, Martinez F, Mitchell EA, Pearce N, Sibbald B, Stew-
+art AW. International Study of Asthma and Allergies in Childhood (ISAAC): rationale and methods. Eur
+Respir J 1995; 8: 483-91.
+44 European Community Respiratory Health Survey. Variations in the prevalence of respiratory symptoms,
+self-reported asthma attacks, and use of asthma medication in the European Community Respiratory Health
+Survey (ECRHS). Eur Respir J 1996; 9: 687-95.
+45 Chinn S, Burney P, Jarvis D, Luczynska C. Variation in bronchial responsiveness in the European Commu-
+nity Respiratory Health Survey (ECRHS). Eur Respir J 1997; 10: 2495-501.
+46 Burney P, Malmberg E, Chinn S, Jarvis D, Luczynska C, Lai E. The distribution of total and specific serum
+IgE in the European Community Respiratory Health Survey. J All Clin Immunol 1997; 99: 314-22.
+47 Janson C, Chinn S, Jarvis D, Burney P. Physician-diagnosed asthma and drug utilization in the European
+Community Respiratory Health Survey. Eur Respir J 1997; 10: 1795-802.
+48 Burney P, Luczynska C, Chinn S, Jarvis D, Lai E. Variations in the prevalence of respiratory symptoms,
+self-reported asthma attacks, and use of asthma medication in the European Community Respiratory Health
+Survey (ECRHS). Eur Respir J 1996; 9: 687-95.
+49 Asher MI, Weiland SK. The International Study of Asthma and Allergies in Childhood (ISAAC). ISAAC
+Steeriing Committee. Clin Exp Allergy 1998; 28 Suppl 5: 52-66.
+50 Björkstén B, Dumitrascu D, Foucard T, Khetsuriani N, Khaitov R, Leja M, Lis G, Pekkanen J, Priftanji A,
+Riikjärv MA. Prevalence of childhood asthma, rhinitis and eczema in Scandinavia and Eastern Europe. Eur
+Respir J 1998; 12: 432-7.
+51 Pearce N, Sunyer J, Cheng S, Chinn S, Björkstén B, Burr M, Keil U, Anderson HR, Burney P. Comparison
+of asthma prevalence in the ISAAC and the ECRHS. ISAAC Steering Committee and the European Com-
+munity Respiratory Health Survey. International Study of Asthma and Allergies in Childhood. Eur Respir J
+2000; 16: 420-6.
+52 Bråbäck L, Breborowicz A, Dreborg S, Knutsson A, Pieklik H, Björkstén B. Atopic sensitization and respi-
+ratory symptoms among Polish and Swedish school children. Clin Exp Allergy 1994; 24: 826-35.
+53 Van Niekerk CH, Weinberg EG, Shore SC, Heese HV, Van Schalkwyk J. Prevalence of asthma: a com-
+parative study of urban and rural Xhosa children. Clin Allergy 1979; 9: 319-4.
+54 Yemaneberhan H, Bekele Z, Venn A, Lewis S, Parry E, Britton J. Prevalence of wheeze and asthma and re-
+lation to atopy in urban and rural Ethiopia. Lancet 1997; 350: 85-90.
+55 Kilpelainen M, Terho EO, Helenius H, Koskenvuo M. Farm environment in childhood prevents the devel-
+opment of allergies. Clin Exp Allergy 2000; 30: 201-8.
+56 von Mutius E, Fritzsch C, Weiland SK, Roll G, Magnussen H. Prevalence of asthma and allergic disorders
+among children in united Germany: a descriptive comparison. BMJ 1992; 305: 1395-9.
+57 von Mutius E, Martinez FD, Fritzsch C, Nicolai T, Roell G, Thiemann HH. Prevalence of asthma and atopy
+in two areas of West and East Germany. Am J Respir Crit Care Med 1994; 149: 358-64.
+48
+58 Riikjärv MA, Julge K, Vasar M, Bråbäck L, Knutsson A, Björkstén B. The prevalence of atopic sensitiza-
+tion and respiratory symptoms among Estonian schoolchildren. Clin Exp Allergy 1995; 25: 1198-204.
+59 Bråbäck L, Breborowicz A, Julge K, Knutsson A, Riikjärv, MA, Vasar M, Björkstén B. Risk factors for res-
+piratory symptoms and atopic sensitisation in the Baltic area. Arch Dis Child 1995; 72: 487-93.
+60 Schafer T, Vieluf D, Behrendt H, Kramer U, Ring J. Atopic eczema and other manifestations of atopy: re-
+sults of a study in East and West Germany. Allergy 1996; 51: 532-9.
+61 Duhme H, Weiland SK, Rudolph P, Wienke A, Kramer A, Keil U. Asthma and allergies among children in
+West and East Germany: a comparison between Munster and Greifswald using the ISAAC phase I protocol.
+International Study of Asthma and Allergies in Childhood. Eur Respir J 1998; 11: 840-7.
+62 Nowak D, Heinrich J, Jorres R, Wassmer G, Berger J, Beck E, Boczor S, Claussen M, Wichmann HE,
+Magnussen H. Prevalence of respiratory symptoms, bronchial hyperresponsiveness and atopy among adults:
+west and east Germany. Eur Respir J 1996; 9: 2541-52.
+63 Nicolai T, Bellach B, Mutius EV, Thefeld W, Hoffmeister H. Increased prevalence of sensitization against
+aeroallergens in adults in West compared with East Germany. Clin Exp Allergy 1997; 27: 886-92.
+64 Heinrich J, Nowak D, Wassmer G, Jorres R, Wjst M, Berger J, Magnussen, H, Wichmann HE. Age-
+dependent differences in the prevalence of allergic rhinitis and atopic sensitization between an eastern and a
+western German city. Allergy 1998; 53: 89-93.
+65 Weiland SK, von Mutius E, Hirsch T, Duhme H, Fritzsch C, Werner B, Husing A, Stender M, Renz H, Le-
+upold W, Keil U. Prevalence of respiratory and atopic disorders among children in the East and West of
+Germany five years after unification. Eur Respir J 1999; 14: 862-70.
+66 Vasar M, Bråbäck L, Julge K, Knutsson A, Riikjärv MA, Björkstén B. Prevalence of bronchial hyperreac-
+tivity as determined by several methods among Estonian schoolchildren. Ped Allergy Immunol 1996; 7: 141-
+6.
+67 Hirsch T. Indoor allergen exposure in west and East Germany: a cause for different prevalences of asthma
+and atopy? Rev Environ Health 1999; 14: 159-68.
+68 Kramer U, Behrendt H, Dolgner R, Ranft U, Ring J, Willer H, Schlipkoter, HW. Airway diseases and aller-
+gies in East and West German children during the first 5 years after reunification: time trends and the impact
+of sulphur dioxide and total suspended particles. Int J Epidemiol 1999; 28: 865-73.
+69 von Mutius E, Weiland SK, Fritzsch C, Duhme H, Keil U. Increasing prevalence of hay fever and atopy
+among children in Leipzig, East Germany. Lancet 1998; 351: 862-6.
+70 Heinrich J, Richter K, Magnussen H, Wichmann HE. Is the prevalence of atopic diseases in East and West
+Germany already converging? Eur J Epidemiol 1998; 14: 239-45.
+71 Richter K, Heinrich J, Jorres RA, Magnussen H, Wichmann HE. Trends in bronchial hyperresponsiveness,
+respiratory symptoms and lung function among adults: West and East Germany. INGA Study Group. Indoor
+Factors and Genetics in Asthma. Respir Med 2000; 94: 668-77.
+72 Riikjärv MA, Annus T, Bråbäck L, Rahu K, Björkstén B. Similar prevalence of respiratory symptoms and
+atopy in Estonian schoolchildren with changing lifestyle over 4 yrs. Eur Respir J 2000; 16: 86-90.
+73 Jarvis D, Lai E, Luczynska C, Chinn S, Burney P. Prevalence of asthma and asthma-like symptoms in
+young adults living in three east Anglian towns. Br J Gen Pract 1994; 44: 493-7.
+74 Neukirch F, Pin I, Knani J, Henry C, Pison C, Liard R, Romazzini S, Bousquet J. Prevalence of asthma and
+asthma-like symptoms in three French cities. Respir Med 1995; 89: 685-92.
+75 Björnsson E, Plaschke P, Norrman E, Janson C, Lundback B, Rosenhall A, Lindholm N, Rosenhall L, Ber-
+glund E, Boman G. Symptoms related to asthma and chronic bronchitis in three areas of Sweden
+49
+Serum eosinophil cationic protein in relation to bronchial asthma in a young Swedish population. Eur Respir
+J 1994; 7: 2146-53.
+76 Abramson M, Kutin J, Czarny D, Walters EH. The prevalence of asthma and respiratory symptoms among
+young adults: is it increasing in Australia? J Asthma 1996; 33: 189-96.
+77 Burney PG, Britton JR, Chinn S, Tattersfield AE, Papacosta AO, Kelson MC, Anderson F, Corfield DR.
+Descriptive epidemiology of bronchial reactivity in an adult population: results from a community study.
+Thorax 1987; 42: 38-44.
+78 Chinn, S. and Sunyer, J. Bronchial hyperresponsiveness. Annesi-Maesano, I., Gulsvik, A., and Viegi, G.
+eds. Eur Respir Mon 2000; 15: 199-215. 2000. 
+79 Yunginger JW, Reed CE, O'Connell EJ, Melton LJ, III, O'Fallon WM, Silverstein MD. A community-based
+study of the epidemiology of asthma. Incidence rates, 1964-1983. Am Rev Respir Dis 1992; 146: 888-94.
+80 Papageorgiou N, Gaga M, Marossis C, Reppas C, Avarlis P, Kyriakou M, Tsipra S, Zeibecoglou K, Tra-
+copoulos G. Prevalence of asthma and asthma-like symptoms in Athens, Greece. Respir Med 1997; 91: 83-
+8.
+81 Sunyer J, Anto JM, Kogevinas M, Barcelo MA, Soriano JB, Tobias A, Muniozguren N, Martinez-Moratalla
+J, Payo F, Maldonado JA. Risk factors for asthma in young adults. Spanish Group of the European Commu-
+nity Respiratory Health Survey. Eur Resp Jl 1997; 10: 2490-4.
+82 de Marco R, Locatelli F, Sunyer J, Burney P. Differences in incidence of reported asthma related to age in
+men and women. A retrospective analysis of the data of the European Respiratory Health Survey. Am J Res-
+pir Crit Care Med 2000; 162: 68-74.
+83 Paoletti P, Carrozzi L, Viegi G, Modena P, Ballerin L, Di Pede F, Grado, L, Baldacci S, Pedreschi M, Vel-
+lutini M. Distribution of bronchial responsiveness in a general population: effect of sex, age, smoking, and
+level of pulmonary function. Am J Respir Crit Care Med 1995; 151: 1770-7.
+84 Norrman E, Plaschke P, Björnsson E, Rosenhall L, Lundback B, Jansson C, Lindholm N, Boman G. Preva-
+lence of bronchial hyper-responsiveness in the southern, central and northern parts of Sweden. Respir Med
+1998; 92: 480-7.
+85 Wassmer G, Jorres RA, Heinrich J, Wjst M, Reitmeir P, Wichmann HE. The association between baseline
+lung function and bronchial responsiveness to methacholine. Eur J Med Research 1997; 2: 47-54.
+86 Kauffmann, F. and Becklake, M. R. Sex and gender. Annesi-Maesano, I., Gulsvik, A., and Viegi, G. eds.
+Eur Respir Mon 2000; 15: 288-304. 
+87 Troisi RJ, Speizer FE, Willett WC, Trichopoulos D, Rosner B. Menopause, postmenopausal estrogen prepa-
+rations, and the risk of adult-onset asthma. A prospective cohort study. Am J Respir Crit Care Med 1995;
+152: 1183-8.
+88 Agarwal AK, Shah A. Menstrual-linked asthma. J Asthma 1997; 34: 539-45.
+89 Chandler MH, Schuldheisz S, Phillips BA, Muse KN. Premenstrual asthma: the effect of estrogen on
+symptoms, pulmonary function, and beta 2-receptors. Pharmacotherapy 1997; 17: 224-34.
+90 Leynaert B, Bousquet J, Henry C, Liard R, Neukirch F. Is bronchial hyperresponsiveness more frequent in
+women than in men? A population-based study. Am J Respir Crit Care Med 1997; 156: 1413-20.
+91 Jarvis D, Chinn S, Luczynska C, Burney P. Association of respiratory symptoms and lung function in young
+adults with use of domestic gas appliances. Lancet 1996; 347: 426-31.
+92 Jarvis D, Chinn S, Sterne J, Luczynska, C, Burney P. The association of respiratory symptoms and lung
+function with the use of gas for cooking. European Community Respiratory Health Survey. Eur Respir J
+1998; 11: 651-8.
+50
+93 Jarvis D. Gas cooking and respiratory disease. Thorax 1999; 54: 1054.
+94 von Mutius E, Nicolai T. Familial aggregation of asthma in a South Bavarian population. Am J Respir Crit
+Care Med 1996; 153: 1266-72.
+95 Koppleman GH, Los H, Postma DS. Genetic and environmental in asthma: the answer of twin stdudies. Eur
+Respir J 1999; 13: 2-4.
+96 Skadhauge LR, Christensen K, Kyvik KO, Sigsgaard T. Genetic and environmental infulence on asthma: a
+population-based study on 11,688 Danish twin pairs. Eur Respir J 1999; 13: 8-14.
+97 Harris JR, Magnus P, Samuelsen SO, Tambs K. No evidence for effects of family environment on asthma.
+A retrospective study of Norwegian twins. Am J Respir Crit Care Med 1997; 156: 43-9.
+98 Duffy DL, Mitchell CA, Martin NG. Genetic and environmental risk factors for asthma: a cotwin-control
+study. Am J Respir Crit Care Med 1998; 157: 840-5.
+99 Chowgule RW, Shyte V, Parmar J, Bhosale A, Khandagale M, Phalnikar S, Gupta P. Prevalence of Respi-
+ratory Symptoms, Bronchial Hyperreactivity, and Asthma in a Megacity . Results of the European Commu-
+nity Respiratory Health Survey in Mumbai (Bombay). Am J Respir Crit Care Med 1998; 158: 547-54.
+100 Wieringa MH, Weyler JJ, Van Bastelaer FJ, Nelen VJ, Van Sprundel MP, Vermeire PA. Higher asthma oc-
+currence in an urban than a suburban area: role of house dust mite skin allergy. Eur Respir J 1997; 10:
+1460-6.
+101 Abramson M, Kutin JJ, Raven J, Lanigan A, Czarny D, Walters EH. Risk factors for asthma among young
+adults in Melbourne, Australia. Respirology 1996; 1: 291-7.
+102 Huovinen E, Kaprio J, Laitinen LA, Koskenvuo M. Social predictors of adult asthma: a co-twin case-control
+study. Thorax 2001; 56: 234-6.
+103 Peat JK, Toelle BG, Gray EJ, Haby MM, Belousova E, Mellis CM, Woolcock, AJ. Prevalence and severity
+of childhood asthma and allergic sensitisation in seven climatic regions of New South Wales. Med J Aust
+1995; 163: 22-6.
+104 Peat JK, Haby M, Spijker J, Berry G, Woolcock AJ. Prevalence of asthma in adults in Busselton, Western
+Australia. BMJ 1992; 305: 1326-9.
+105 Plaschke P, Janson C, Norrman E, Björnsson E, Ellbjar S, Jarvholm B. Association between atopic sensiti-
+zation and asthma and bronchial hyperresponsiveness in swedish adults: pets, and not mites, are the most
+important allergens. J Allergy Clin Immunol 1999; 104: 58-65.
+106 Chinn S, Burney P, Sunyer J, Jarvis D, Luczynska C. Sensitization to individual allergens and bronchial re-
+sponsiveness in the ECRHS. European Community Respiratory Health Survey. Eur Respir J 1999; 14: 876-
+84.
+107 European Community Respiratory Health Survey - Italy. Determinants of bronchial responsiveness in the
+European Community Respiratory Health Survey in Italy: evidence of an independent role of atopy, total se-
+rum IgE levels, and asthma symptoms. Allergy 1998; 53: 673-81.
+108 Sunyer J, Anto JM, Castellsague J, Soriano JB, Roca J. Total serum IgE is associated with asthma inde-
+pendently of specific IgE levels. The Spanish Group of the European Study of Asthma. Eur Respir J 1996;
+9: 1880-4.
+109 Roost HP, Kunzli N, Schindler C, Jarvis D, Chinn S, Perruchoud AP, Ackermann-Liebrich U, Burney P,
+Wuthrich B. Role of current and childhood exposure to cat and atopic sensitization. European Community
+Respiratory Health Survey. J Allergy Clin Immunol 1999; 104: 941-7.
+110 Plaschke P, Janson C, Balder B, Lowhagen O, Jarvholm B. Adult asthmatics sensitized to cats and dogs:
+symptoms, severity, and bronchial hyperresponsiveness in patients with furred animals at home and patients
+without these animals. Allergy 1999; 54: 843-50.
+51
+111 Gelber LE, Seltzer LH, Bouzoukis JK, Pollart SM, Chapman MD, Platts-Mills TA. Sensitization and expo-
+sure to indoor allergens as risk factors for asthma among patients presenting to hospital. Am Rev Respir Dis
+1993; 147: 573-8.
+112 Hesselmar B, Aberg N, Aberg B, Eriksson B, Björkstén B. Does early exposure to cat or dog protect against
+later allergy development? Clin Exp Allergy 1999; 29: 611-7.
+113 Svanes C, Jarvis D, Chinn S, Burney P. Childhood environment and adult atopy: results from the European
+Community Respiratory Health Survey. J Allergy Clin Immunol 1999; 103: 415-20.
+114 Lindstrom M, Kotaniemi J, Jonsson E, Lundback B. Smoking, respiratory symptoms, and diseases : a com-
+parative study between northern Sweden and northern Finland: report from the FinEsS study. Chest 2001;
+119: 852-61.
+115 Vesterinen E, Kaprio J, Koskenvuo M. Prospective study of asthma in relation to smoking habits among
+14,729 adults. Thorax 1988; 43: 534-9.
+116 Peat JK, Salome CM, Woolcock AJ. Factors associated with bronchial hyperresponsiveness in Australian
+adults and children. Eur Respir J 1992; 5: 921-9.
+117 Toren K, Hermansson BA. Incidence rate of adult-onset asthma in relation to age, sex, atopy and smoking: a
+Swedish population-based study of 15813 adults. Int J Tubercul Lung Dis 1999; 3: 192-7.
+118 Ronmark E, Lundback B, Jonsson E, Jonsson AC, Lindstrom, M, Sandstrom T. Incidence of asthma in
+adults--report from the Obstructive Lung Disease in Northern Sweden Study. Allergy 1997; 52: 1071-8.
+119 Althuis MD, Sexton M, Prybylski D. Cigarette smoking and asthma symptom severity among adult asth-
+matics. J Asthma 1999; 36: 257-64.
+120 Gulsvik A. Prevalence and manifestations of obstructive lung disease in the city of Oslo. Scand J Respir Dis
+1979; 60: 286-96.
+121 Higgins MW, Keller JB, Metzner HL. Smoking, socioeconomic status, and chronic respiratory disease. Am
+Rev Respir Dis 1977; 116: 403-10.
+122 Plaschke PP, Janson C, Norrman E, Björnsson E, Ellbjar S, Jarvholm B. Onset and remission of allergic rhi-
+nitis and asthma and the relationship with atopic sensitization and smoking.  Am J Respir Crit Care Med
+2000; 162: 920-4.
+123 Sunyer J, Anto JM, Kogevinas M, Soriano JB, Tobias A, Munoz A. Smoking and bronchial responsiveness
+in nonatopic and atopic young adults. Spanish Group of the European Study of Asthma. Thorax 1997; 52:
+235-8.
+124 Jarvis D, Luczynska C, Chinn S, Burney P. The association of age, gender and smoking with total IgE and
+specific IgE. Clin Exp Allergy 1995; 25: 1083-91.
+125 Plaschke P, Janson C, Norrman E, Björnsson E, Lundback B, Lindholm N, Rosenhall L, Jarvholm B, Bo-
+man, G. Skin prick tests and specific IgE in adults from three different areas of Sweden. Allergy 1996; 51:
+461-72.
+126 Kerkhof M, Droste JH, de Monchy JG, Schouten JP, Rijcken B. Distribution of total serum IgE and specific
+IgE to common aeroallergens by sex and age, and their relationship to each other in a random sample of the
+Dutch general population aged 20-70 years. Dutch ECRHS Group, European Community Respiratory
+Health Study. Allergy 1996; 51: 770-6.
+127 Slama, K. Active Smoking. Annesi-Maesano, I., Gulsvik, A., and Viegi, G. eds. Eur Respir Mon 2000; 15:
+305-321
+128 Jaakkola, M. S. Environmental tobacco smoke and respiratory diseases. Annesi-Maesano, I., Gulsvik, A.,
+and Viegi, G. eds. Eur Respir Mon 2000; 15: 322-383.
+52
+129 Cook DG, Strachan DP. Health effects of passive smoking-10: Summary of effects of parental smoking on
+the respiratory health of children and implications for research. Thorax 1999; 54: 357-66.
+130 Greer JR, Abbey DE, Burchette RJ. Asthma related to occupational and ambient air pollutants in nonsmok-
+ers. J Occup Med 1993; 35: 909-15.
+131 Hu FB, Persky V, Flay BR, Richardson J. An epidemiological study of asthma prevalence and related fac-
+tors among young adults. J Asthma 1997; 34: 67-76.
+132 Janson C, Chinn S, Jarvis D, Zock JP, Toren K, Burney P. Effect of passive smoking on respiratory symp-
+toms, bronchial responsiveness, lung function and total serum IgE in the European Community Respiratory
+Health Survey. Lancet 2001; in press.
+133 Leuenberger P, Schwartz J, Ackermann-Liebrich U. Passive smoking exposure in adults and chronic respi-
+ratory symptoms (SPALDIA Study). Am J Respir Crit Care Med 1994; 150: 1222-8.
+134 Ng TP, Hui KP, Tan WC. Respiratory symptoms and lung function effects of domestic exposure to tobacco
+smoke and cooking by gas in non-smoking women in Singapore. J Epidemiol Community Health  1993; 47:
+454-9.
+135 Thorn J, Brisman J, Toren K. Adult-onset asthma is associated with self-reported mold of environmental to-
+bacco smoke exposures in the home. Allergy 2001; 56: 287-92.
+136 Jindal SK, Gupta D, Singh A. Indices of morbidity and control of asthma in adult patients exposed to envi-
+ronmental tobacco smoke. Chest 1994; 106: 746-9.
+137 Coultas DB. Health effects of passive smoking. 8. Passive smoking and risk of adult asthma and COPD: an
+update. Thorax 1998; 53: 381-7.
+138 Brunekreef B. Damp housing and adult respiratory symptoms. Allergy 1992; 47: 498-502.
+139 Kilpelainen M, Terho EO, Helenius H, Koskenvuo K. Home dampness, current allergic diseases, and respi-
+ratory infections among young adults. Thorax 2001; 56: 462-7.
+140 Williamson IJ, Martin CJ, McGill G, Monie RD, Fennerty AG. Damp housing and asthma: a case-control
+study. Thorax 1997; 52: 229-34.
+141 Norback D, Björnsson E, Janson C, Palmgren U, Boman G. Current asthma and biochemical signs of in-
+flammation in relation to building dampness in dwellings. Int J  Tubercul  Lung Dis 1999; 3: 368-76.
+142 Nicolai T, Illi S, von Mutius E. Effect of dampness at home in childhood on bronchial hyperreactivity in
+adolescence. Thorax 1998; 53: 1035-40.
+143 Norback D, Björnsson E, Janson C, Widstrom J, Boman G. Asthmatic symptoms and volatile organic com-
+pounds, formaldehyde, and carbon dioxide in dwellings. Occup Environ Med  1995; 52: 388-95.
+144 Wieslander G, Norback D, Björnsson E, Janson C, Boman G. Asthma and the indoor environment: the sig-
+nificance of emission of formaldehyde and volatile organic compounds from newly painted indoor surfaces.
+Int  Arch Occup Environ Health 1997; 69: 115-24.
+145 Björnsson E, Norback D, Janson C, Widstrom J, Palmgren, U, Strom G, Boman G. Asthmatic symptoms
+and indoor levels of micro-organisms and house dust mites. Clin Exp Allergy 1995; 25: 423-31.
+146 Koenig JQ. Air pollution and asthma. J Allergy Clin Immunol 1999; 104: 717-2.
+147 Sunyer J, Spix C, Quenel P, Ponce-de-Leon A, Ponka A, Barumandzadeh T, Touloumi G, Bacharova L,
+Wojtyniak B, Vonk J, Bisanti L, Schwartz J, Katsouyanni K. Urban air pollution and emergency admissions
+for asthma in four European cities: the APHEA Project. Thorax 1997; 52: 760-5.
+148 von Mutius E. The environmental predictors of allergic disease. J Allergy Clin Immunol 2000; 105: 9-19.
+53
+149 Heederik, D. Epidemiology of occupational respiratory diseases and risk factors. Annesi-Maesano, I.,
+Gulsvik, A., and Viegi, G. eds. Eur Respir Mon 2000; 15: 429-447.
+150 Blanc PD, Toren K. How much adult asthma can be attributed to occupational factors? Am J Med 1999;
+107: 580-7.
+151 Kogevinas M, Anto JM, Sunyer J, Tobias A, Kromhout H, Burney P. Occupational asthma in Europe and
+other industrialised areas: a population-based study. European Community Respiratory Health Survey Study
+Group. ancet 1999; 353: 1750-4.
+152 Kogevinas M, Anto JM, Soriano JB, Tobias A, Burney P. The risk of asthma attributable to occupational
+exposures. A population-based study in Spain. Spanish Group of the European Asthma Study. Am J Respi
+Crit Care Med 1996; 154: 137-43.
+153 Fishwick D, Pearce N, D'Souza W, Lewis S, Town I, Armstrong R, Kogevinas M, Crane J. Occupational
+asthma in New Zealanders: a population based study. Occup Environ Med 1997; 54: 301-6.
+154 Heinrich J, Popescu MA, Wjst M, Goldstein IF, Wichmann HE. Atopy in children and parental social class.
+Am J Public Health 1998; 88: 1319-24.
+155 Shaheen SO, Sterne JA, Montgomery SM, Azima H. Birth weight, body mass index and asthma in young
+adults. Thorax 1999; 54: 396-402.
+156 Lewis S, Richards D, Bynner J, Butler N, Britton J. Prospective study of risk factors for early and persistent
+wheezing in childhood. Eur Respir J 1995; 8: 349-56.
+157 Mielck A, Reitmeir P, Wjst M. Severity of childhood asthma by socioeconomic status. Int J Epidemiol
+1996; 25: 388-93.
+158 Weiss ST. Parasites and asthma/allergy: what is the relationship? J Allergy Clin Immunol 2000; 105: 205-
+10.
+159 Wickens K, Pearce N, Crane J, Beasley R. Antibiotic use in early childhood and the development of asthma.
+Clin Exp Allergy 1999; 29: 766-71.
+160 Strachan DP. Hay fever, hygiene, and household size. BMJ 1989; 299: 1259-60.
+161 Matricardi PM, Franzinelli F, Franco A, Caprio G, Murru F, Cioffi D, Ferrigno L, Palermo A, Ciccarelli N,
+Rosmini F. Sibship size, birth order, and atopy in 11,371 Italian young men. J Allergy Clin Immunol 1998;
+101: 439-44.
+162 von Mutius E, Martinez FD, Fritzsch C, Nicolai T, Reitmeir P, Thiemann HH. Skin test reactivity and num-
+ber of siblings. BMJ 1994; 308: 692-5.
+163 Jarvis D, Chinn S, Luczynska C, Burney P. The association of family size with atopy and atopic disease.
+Clin Exp Allergy 1997; 27: 240-5.
+164 Chinn S, Jarvis D, Luczynska C, Burney P. Individual allergens as risk factors for bronchial responsiveness
+in young adults. Thorax 1998; 53: 662-7.
+165 Kramer U, Heinrich J, Wjst M, Wichmann HE. Age of entry to day nursery and allergy in later childhood.
+Lancet 1999; 353: 450-4.
+166 Wickens KL, Crane J, Kemp TJ, Lewis SJ, D'Souza WJ, Sawyer GM, Stone, ML, Tohill SJ, Kennedy JC,
+Slater TM, Pearce NE. Family size, infections, and asthma prevalence in New Zealand children. Epidemio-
+logy 1999; 10: 699-705.
+167 Prescott SL, Macaubas C, Smallacombe TB, Holt BJ, Sly PD, Holt PG. Development of allergen-specific T-
+cell memory in atopic and normal children. Lancet 1999; 353: 196-200.
+54
+168 Holt PG, Sly PD, Björkstén B. Atopic versus infectious diseases in childhood: a question of balance? Ped
+Allergy Immunol 1997; 8: 53-8.
+169 Martinez FD. Role of viral infections in the inception of asthma and allergies during childhood: could they
+be protective? Thorax 1994; 49: 1189-91.
+170 Shaheen SO, Aaby P, Hall AJ, Barker DJP, Heyes CB, Shiell AW. Measles and atopy in Guinea-Bissau.
+Lancet 1996; 347: 1792-6.
+171 Bodner C, Anderson WJ, Reid TS, Godden DJ. Childhood exposure to infection and risk of adult onset
+wheeze and atopy. Thorax 2000; 55: 383-7.
+172 Matricardi PM, Rosmini F, Ferrigno L, Nisini R, Rapicetta M, Chionne P, Stroffolini T, Pasquini P,
+D'Amelio R. Cross sectional retrospective study of prevalence of atopy among Italian military students with
+antibodies against hepatitis A virus. BMJ 1997; 314: 999-1003.
+173 Matricardi PM, Rosmini F, Riondino S, Fortini M, Ferrigno L, Rapicetta M, Bonini S. Exposure to food-
+borne and orofecal microbes versus airborne viruses in relation to atopy and allergic asthma: epidemiologi-
+cal study. BMJ 2000; 320: 412-7.
+174 Shirakawa T, Enomoto T, Shimazu S, Hopkin JM. The inverse association between tuberculin responses
+and atopic disorder. Science 1997; 275: 77-9.
+175 Omenaas E, Jentoft HF, Vollmer WM, Buist AS, Gulsvik A. Absence of relationship between tuberculin re-
+activity and atopy in BCG vaccinated young adults. Thorax 2000; 55: 454-8.
+176 Strannegard IL, Larsson LO, Wennergren G, Strannegard O. Prevalence of allergy in children in relation to
+prior BCG vaccination and infection with atypical mycobacteria. Allergy 1998; 53: 249-54.
+177 Alm JS, Lilja G, Pershagen G, Scheynius A. Early BCG vaccination and development of atopy. Lancet
+1997; 350: 400-3.
+178 von Mutius E, Pearce N, Beasley R, Cheng S, von Ehrenstein O, Björkstén B, Weiland S. International pat-
+terns of tuberculosis and the prevalence of symptoms of asthma, rhinitis, and eczema. Thorax 2000; 55:
+449-53.
+179 von Hertzen L, Klaukka T, Mattila H, Haahtela T. Mycobacterium tuberculosis infection and the subsequent
+development of asthma and allergic conditions. J Allergy Clin Immunol 1999; 104: 1211-4.
+180 Björkstén B. The environment and sensitisation to allergens in early childhood. Ped Allergy Immunol 1997;
+8: 32-9.
+181 Nicholson KG, Kent J, Ireland DC. Respiratory viruses and exacerbations of asthma in adults. BMJ 1993;
+307: 982-6.
+182 Micillo E, Bianco A, D'Auria D, Mazzarella G. Respiratory infections and asthma. Allergy 2000; 55: 42-5.
+183 Sigurs N, Bjarnason R, Sigurbergsson F, Kjellman B. Respiratory syncytial virus bronchiolitis in infancy is
+an important risk factor for asthma and allergy at age 7. Am J Respir Crit Care Med 2000; 161: 1501-7.
+184 Stein RT, Sherrill D, Morgan WJ, Holberg CJ, Halonen M, Taussig LM, Wright AL, Martinez FD. Respi-
+ratory syncytial virus in early life and risk of wheeze and allergy by age 13 years. Lancet 1999; 354: 541-5.
+185 Björnsson E, Hjelm E, Janson C, Fridell E, Boman G. Serology of respiratory viruses in relation to asthma
+and bronchial hyperresponsiveness. Uppsala J Med Sci 1996; 101: 159-68.
+186 Björnsson E, Hjelm E, Janson C, Fridell E, Boman G. Serology of chlamydia in relation to asthma and
+bronchial hyperresponsiveness. Scand J Infect Dis 1996; 28: 63-9.
+55
+187 Ferrari M, Poli A, Olivieri M, Tardivo S, Biasin C, Balestreri F, Dal, Molin G, Lo C, V, Campello C. Sero-
+prevalence of Chlamydia pneumoniae antibodies in a young adult population sample living in Verona.
+European Community Respiratory Health Survey (ECRHS) Verona. Infection 2000; 28: 38-41.
+188 Seaton, A., Godden, D. J., and Russell, G. Diet. Annesi-Maesano, I., Gulsvik, A., and Viegi, G. eds. Eur
+Respir Mon 2000; 15: 412-428. 
+189 Burney P. A diet rich in sodium may potentiate asthma. Epidemiologic evidence for a new hypothesis.
+Chest 1987; 91: 143S-8S.
+190 Horrobin DF. Low prevalences of coronary heart disease (CHD), psoriasis, asthma and rheumatoid arthritis
+in Eskimos: are they caused by high dietary intake of eicosapentaenoic acid (EPA), a genetic variation of es-
+sential fatty acid (EFA) metabolism or a combination of both? Med Hypotheses 1987; 22: 421-8.
+191 Black PN, Sharpe S. Dietary fat and asthma: is there a connection? Eur Respir J 1997; 10: 6-12.
+192 Bolte G, Frye C, Hoelscher B, Meyer I, Wjst M, Heinrich J. Margarine consumption and allergy in children.
+Am J Respir Crit Care Med 2001; 163: 277-9.
+193 Dunder T, Kuikka L, Turtinen J, Rasanen M, Uhari M. Diet, serum fatty acids, and atopic disease in child-
+hood. Allergy 2001; 56: 425-8.
+194 Heinrich J, Hölscher B, Bolte G, Winkler G. Allergic sesnitization and diet: ecological analysis in selected
+European cities. Eur Respir J 2001; 17: 395-402.
+195 Hodge L, Salome CM, Peat JK, Haby MM, Xuan W, Woolcock AJ. Consumption of oily fish and childhood
+asthma risk. Med J Aust 1996; 164: 137-40.
+196 Fluge O, Omenaas E, Eide GE, Gulsvik A. Fish consumption and respiratory symptoms among young
+adults in a Norwegian community. Eur Respir J 1998; 12: 336-40.
+197 Troisi RJ, Willett WC, Weiss ST, Trichopoulos D, Rosner B, Speizer FE. A prospective study of diet and
+adult-onset asthma. Am J Respir Crit Care Med 1995; 151: 1401-8.
+198 Nagakura T, Matsuda S, Shichijyo K, Sugimoto H, Hata K. Dietary supplementation with fish oil rish in n-3
+polyunsaturated fatty acids in children with bronchial asthma. Eur Respir J 2000; 16: 861-5.
+199 Schwartz J. Role of polyunsaturated fatty acids in lung disease. Am J Clin Nutr 2000; 71: 393S-6S.
+200 Björkstén B, Naaber P, Sepp E, Mikelsaar M. The intestinal microflora in allergic Estonian and Swedish 2-
+year-old children. Clin Exp Allergy 1999; 29: 342-6.
+201 Sepp E, Julge K, Vasar M, Naaber P, Björkstén B, Mikelsaar M. Intestinal microflora of Estonian and
+Swedish infants. Acta Paediatr 1997; 86: 956-61.
+202 Chen Y, Dales R, Krewski D. Leisure-time energy expenditure in asthmatics and non-asthmatics. Respir
+Med 2001; 95: 13-8.
+203 Stenius-Aarniala B, Poussa T, Kvarnstrom J, Gronlund EL, Ylikahri M, Mustajoki P. Immediate and long
+term effects of weight reduction in obese people with asthma: randomised controlled study. BMJ 2000; 320:
+827-32.
+204 Kiivet RA, Bergman U, Rootslane L, Rago L, Sjoqvist F. Drug use in Estonia in 1994-1995: a follow-up
+from 1989 and comparison with two Nordic countries. Eur J Clin Pharmacol 1998; 54: 119-24.
+205 Burney P, Chinn S. Developing a new questionnaire for measuring the prevalence and distribution of
+asthma. Chest 1987; 91: 79S-83S.
+206 Burney PG, Laitinen LA, Perdrizet S, Huckauf H, Tattersfield AE, Chinn S, Poisson N, Heeren A, Britton
+JR, Jones T. Validity and repeatability of the IUATLD (1984) Bronchial Symptoms Questionnaire: an inter-
+national comparison. Eur Respir J 1989; 2: 940-5.
+56
+207 European Community for Coal and Steel. Standardization of lung function tests. Clin Respir Phys 1983; 19
+(Suppl. 5): 22-7.
+208 Nieminen MM, Lahdensuo A, Kellomaeki L, Karvonen J, Muittari A. Methacholine bronchial challenge
+using a dosimeter with controlled tidal breathing. Thorax 1988; 43: 896-900.
+209 Balzano G, Delli C, I, Gallo C, Cocco G, Melillo G. Intrasubject between-day variability of PD20 metha-
+choline assessed by the dosimeter inhalation test. Chest 1989; 95: 1239-43.
+210 Björkstén B. Risk factors in early childhood for the development of atopic diseases. Allergy 1994; 49: 400-
+7.
+211 Paoletti P, Viegi G, Carrozzi L. Bronchial hyperresponsiveness, genetic predisposition and environmental
+factors: the importance of epidemiological research. Eur Respir J 1992; 5: 910-2.
+212 Munir AK, Einarsson R, Kjellman NI, Björkstén B. Mite (Der p 1, Der f 1) and cat (Fel d 1) allergens in the
+homes of babies with a family history of allergy. Allergy 1993; 48: 158-63.
+213 Korsgaard J. House-dust mites and absolute indoor humidity. Allergy 1983; 38: 85-92.
+214 Munir AK, Björkstén B, Einarsson R, Ekstrand-Tobin A, Moller C, Warner A, Kjellman NI. Mite allergens
+in relation to home conditions and sensitization of asthmatic children from three climatic regions.  Allergy
+1995; 50: 55-64.
+215 Julge K, Munir AK, Vasar M, Björkstén B. Indoor allergen levels and other environmental risk factors for
+sensitization in Estonian homes. Allergy 1998; 53: 388-93.
+216 Nafstad P, Oie L, Mehl R, Gaarder MP, Lodrup-Carlsen KC, Botten G, Magnus P, Jaakkola JJK. Residen-
+tial dampness problems and symptoms and signs of bronchial obstruction in young Norwegian children. Am
+J Respir Crit Care Med 1998; 157: 410-4.
+217 Andrae S, Axelson O, Björkstén B, Fredriksson M, Kjellman NI. Symptoms of bronchial hyperreactivity
+and asthma in relation to environmental factors. Arch Dis Child 1988; 63: 473-8.
+218 Strachan DP. Damp housing and childhood asthma: validation of reporting of symptoms. BMJ 1988; 297:
+1223-6.
+219 Strachan DP. Family size, infection and atopy: the first decade of the "hygiene hypothesis". Thorax 2000;
+55: S2-S10.
+220 Wieringa MH, Weyler JJ, Nelen VJ, Van Hoof KJ, Van Bastelaer FJ, Van, Sprundel MP, Vermeire PA.
+Prevalence of respiratory symptoms: marked differences within a small geographical area. Int J Epidemiol
+1998; 27: 630-5.
+221 Meren M, Jannus-Pruljan L, Loit H-M, Põlluste J, Jönsson E, Kiviloog J, Lundback B. Asthma, chronic
+bronchitis and respiratory symptoms among adults in Estonia according to a postal questionnaire. Respir
+Med 2001; in press.

@@ -72,9 +72,7 @@
         <module>yadda-keywords</module>
         <module>yadda-solr</module>
         <module>yadda-process-tutorial</module>
-        <!--
         <module>yadda-external-apis</module>
-        -->
         <module>yadda-user-ldap</module>
         <module>yaddaweb-lite</module>
         <module>yadda-watchdog</module>

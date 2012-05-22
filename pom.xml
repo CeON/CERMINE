@@ -4,37 +4,20 @@
 
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda</artifactId>
-    <version>4-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>YADDA modules parent pom</name>
+    <version>4-SNAPSHOT</version>
+    <name>YADDA System</name>
     <url>http://yaddainfo.icm.edu.pl</url>
-    <inceptionYear>2002</inceptionYear>
+
+    <parent>
+        <groupId>pl.edu.icm.yadda</groupId>
+        <artifactId>yadda-parent</artifactId>
+        <version>4-SNAPSHOT</version>
+        <relativePath>yadda-parent/pom.xml</relativePath>
+    </parent>
     
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>http://ci.ceon.pl/</url>
-    </ciManagement>
-    
-    <scm>
-        <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</connection>
-        <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</developerConnection>
-    </scm>
-
-    <organization>
-        <name>ICM, Warsaw University</name>
-        <url>http://www.icm.edu.pl/</url>
-    </organization>
-
-    <licenses>
-        <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
-        </license>
-    </licenses>
-
     <modules>
+        <module>yadda-parent</module>
         <module>yadda-analysis-utils</module>
         <module>yadda-common</module>
         <module>yadda-testing</module>
@@ -89,170 +72,5 @@
         <module>yadda-aas2-integration-tests</module>
         <module>DeskLight</module>
     </modules>
-
-    <dependencyManagement>
-      <dependencies>
-        <dependency>
-          <groupId>commons-dbcp</groupId>
-          <artifactId>commons-dbcp</artifactId>
-          <version>1.2.2</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-aop</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-beans</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-context</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-core</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-tx</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-jdbc</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-web</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-webmvc</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-test</artifactId>
-        	<version>2.5.6.SEC02</version>
-        	<scope>test</scope>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-context-support</artifactId>
-        	<version>2.5.6.SEC02</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.slf4j</groupId>
-        	<artifactId>slf4j-api</artifactId>
-        	<version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.6.1</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.6.4</version>
-        </dependency>
-        <dependency>
-		<groupId>xerces</groupId>
-		<artifactId>xercesImpl</artifactId>
-		<version>2.9.1</version>
-		<type>jar</type>
-        </dependency>
-      </dependencies>
-    </dependencyManagement>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
-                        <encoding>UTF-8</encoding>
-                        <showDeprecation>true</showDeprecation>
-                        <showWarnings>true</showWarnings>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>analyze</id>
-                        <goals><goal>analyze-only</goal></goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-              <artifactId>maven-release-plugin</artifactId>
-              <configuration>
-                  <tagBase>svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/tags/${project.artifactId}</tagBase>
-              </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-    <repositories>
-        <repository>
-            <id>yadda</id>
-            <name>Yadda project repository</name>
-            <url>http://maven.icm.edu.pl/artifactory/repo</url>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>yadda-snapshots</id>
-            <name>YADDA snapshots</name>
-            <url>http://maven.icm.edu.pl/artifactory/yadda-snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>yadda-releases</id>
-            <name>YADDA releases</name>
-            <url>http://maven.icm.edu.pl/artifactory/yadda-releases</url>
-        </repository>
-    </distributionManagement>
 
 </project>

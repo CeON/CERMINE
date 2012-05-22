@@ -10,7 +10,7 @@
       <groupId>pl.edu.icm.yadda</groupId>
       <artifactId>yadda</artifactId>
       <version>1.0-SNAPSHOT</version>
-      <relativePath>../pom.xml</relativePath>
+      <relativePath>../yadda-parent/pom.xml</relativePath>
     </parent>
 
     <build>

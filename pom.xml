@@ -5,14 +5,34 @@
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda</artifactId>
     <packaging>pom</packaging>
-    <version>4-SNAPSHOT</version>
+    <version>4-beta</version>
     <name>YADDA System</name>
     <url>http://yaddainfo.icm.edu.pl</url>
+    <inceptionYear>2002</inceptionYear>
+    
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>http://ci.ceon.pl/</url>
+    </ciManagement>
+    
+    <organization>
+        <name>ICM, Warsaw University</name>
+        <url>http://www.icm.edu.pl/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <parent>
         <groupId>pl.edu.icm.yadda</groupId>
         <artifactId>yadda-parent</artifactId>
-        <version>4-SNAPSHOT</version>
+        <version>4-beta</version>
         <relativePath>yadda-parent/pom.xml</relativePath>
     </parent>
     
@@ -83,5 +103,21 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>yadda-snapshots</id>
+            <name>YADDA snapshots</name>
+            <url>http://maven.icm.edu.pl/artifactory/yadda-snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>yadda-releases</id>
+            <name>YADDA releases</name>
+            <url>http://maven.icm.edu.pl/artifactory/yadda-releases</url>
+        </repository>
+    </distributionManagement>
+
 
 </project>

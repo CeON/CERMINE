@@ -4,35 +4,15 @@
 
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda-parent</artifactId>
-    <version>4-SNAPSHOT</version>
+    <version>4-beta</version>
     <packaging>pom</packaging>
     <name>YADDA modules parent pom</name>
-    <url>http://yaddainfo.icm.edu.pl</url>
-    <inceptionYear>2002</inceptionYear>
-    
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>http://ci.ceon.pl/</url>
-    </ciManagement>
-    
+
     <scm>
-        <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</connection>
-        <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</developerConnection>
+        <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/tags/yadda/yadda-4-beta</connection>
+        <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/tags/yadda/yadda-4-beta</developerConnection>
     </scm>
 
-    <organization>
-        <name>ICM, Warsaw University</name>
-        <url>http://www.icm.edu.pl/</url>
-    </organization>
-
-    <licenses>
-        <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
-        </license>
-    </licenses>
 
     <dependencyManagement>
       <dependencies>
@@ -183,20 +163,5 @@
             <url>http://maven.icm.edu.pl/artifactory/repo</url>
         </repository>
     </repositories>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>yadda-snapshots</id>
-            <name>YADDA snapshots</name>
-            <url>http://maven.icm.edu.pl/artifactory/yadda-snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>yadda-releases</id>
-            <name>YADDA releases</name>
-            <url>http://maven.icm.edu.pl/artifactory/yadda-releases</url>
-        </repository>
-    </distributionManagement>
 
 </project>

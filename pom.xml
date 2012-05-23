@@ -5,14 +5,14 @@
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda</artifactId>
     <packaging>pom</packaging>
-    <version>4-beta</version>
+    <version>4-SNAPSHOT</version>
     <name>YADDA System</name>
     <url>http://yaddainfo.icm.edu.pl</url>
 
     <parent>
         <groupId>pl.edu.icm.yadda</groupId>
         <artifactId>yadda-parent</artifactId>
-        <version>4-beta</version>
+        <version>4-SNAPSHOT</version>
         <relativePath>yadda-parent/pom.xml</relativePath>
     </parent>
     

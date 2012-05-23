@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.edu.icm.yadda</groupId>
-        <artifactId>yadda</artifactId>
+        <artifactId>yadda-parent</artifactId>
         <version>4-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../yadda-parent/pom.xml</relativePath>
     </parent>
 
     <groupId>pl.edu.icm.yadda</groupId>

@@ -8,10 +8,12 @@
     <packaging>pom</packaging>
     <name>YADDA modules parent pom</name>
 
+    <!--
     <scm>
         <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/tags/yadda/yadda-4-beta</connection>
         <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/tags/yadda/yadda-4-beta</developerConnection>
     </scm>
+    -->
 
 
     <dependencyManagement>

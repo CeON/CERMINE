@@ -3,22 +3,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.edu.icm.yadda</groupId>
-        <artifactId>yadda-parent</artifactId>
-        <version>4-SNAPSHOT</version>
-        <relativePath>../yadda-parent/pom.xml</relativePath>
+        <artifactId>yadda</artifactId>
+        <version>4-beta</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda-analysis-api</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0-beta</version>
     <name>YADDA Analysis (API)</name>
 
     <dependencies>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>yadda-analysis-utils</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.1.0-beta</version>
         </dependency>
 
         <dependency>

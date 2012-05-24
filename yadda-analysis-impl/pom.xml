@@ -4,41 +4,41 @@
     <parent>
         <groupId>pl.edu.icm.yadda</groupId>
         <artifactId>yadda</artifactId>
-        <version>4-beta</version>
+        <version>4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda-analysis-impl</artifactId>
     <packaging>jar</packaging>
-    <version>0.2.0-beta</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>YADDA Analysis (implementation)</name>
 
     <dependencies>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>bwmeta-core</artifactId>
-            <version>2.4.0-beta</version>
+            <version>2.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>yadda-analysis-api</artifactId>
-            <version>1.1.0-beta</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>yadda-analysis-utils</artifactId>
-            <version>1.1.0-beta</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>yadda-process-api</artifactId>
-            <version>0.1.0-beta</version>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>yadda-services2</artifactId>
-            <version>2.11.0-beta</version>
+            <version>2.11.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -67,7 +67,7 @@
         <dependency> <!-- FIXME usunac jak najszybciej -->
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>bwmeta-import</artifactId>
-            <version>1.10.0-beta</version>
+            <version>1.10.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -78,7 +78,7 @@
         <dependency> <!-- FIXME usunac jak najszybciej -->
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>yadda-common</artifactId>
-            <version>3.1.0-beta</version>
+            <version>3.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.openrdf.sesame</groupId>
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>bwmeta-process-nodes</artifactId>
-            <version>0.2.0-beta</version>
+            <version>0.2.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     

@@ -4,21 +4,21 @@
     <parent>
         <groupId>pl.edu.icm.yadda</groupId>
         <artifactId>yadda</artifactId>
-        <version>4-beta</version>
+        <version>4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda-analysis-api</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.0-beta</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>YADDA Analysis (API)</name>
 
     <dependencies>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>yadda-analysis-utils</artifactId>
-            <version>1.1.0-beta</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

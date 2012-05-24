@@ -5,7 +5,7 @@
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda</artifactId>
     <packaging>pom</packaging>
-    <version>4-beta</version>
+    <version>4-SNAPSHOT</version>
 
     <name>YADDA System</name>
     <url>http://yaddainfo.icm.edu.pl</url>
@@ -31,8 +31,8 @@
     </ciManagement>
     
     <scm>
-        <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/tags/yadda/yadda-4-beta</connection>
-        <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/tags/yadda/yadda-4-beta</developerConnection>
+        <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</connection>
+        <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</developerConnection>
     </scm>
 
     <distributionManagement>

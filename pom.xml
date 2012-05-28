@@ -5,7 +5,7 @@
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda</artifactId>
     <packaging>pom</packaging>
-    <version>4-SNAPSHOT</version>
+    <version>1.8.0-SNAPSHOT</version>
 
     <name>YADDA System</name>
     <url>http://yaddainfo.icm.edu.pl</url>

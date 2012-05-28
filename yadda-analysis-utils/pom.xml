@@ -4,14 +4,14 @@
     <parent>
         <groupId>pl.edu.icm.yadda</groupId>
         <artifactId>yadda</artifactId>
-        <version>4-SNAPSHOT</version>
+        <version>1.8.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>pl.edu.icm.yadda</groupId>
     <artifactId>yadda-analysis-utils</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <name>YADDA Analysis (light utilities)</name>
 
     <dependencies>

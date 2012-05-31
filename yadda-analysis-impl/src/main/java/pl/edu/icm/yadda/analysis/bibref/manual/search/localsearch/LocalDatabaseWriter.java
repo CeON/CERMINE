@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import pl.edu.icm.yadda.analysis.bibref.manual.AuthorSimpleMetadataSupernormalized;
 import pl.edu.icm.yadda.tools.bibref.model.AuthorSimpleMetadata;
 import pl.edu.icm.yadda.tools.bibref.model.DocSimpleMetadata;
 
@@ -14,7 +15,7 @@ import pl.edu.icm.yadda.tools.bibref.model.DocSimpleMetadata;
  * Writes documents metadata to the database.
  * 
  * @author Mateusz Fedoryszak (m.fedoryszak@icm.edu.pl)
- *
+ * 
  */
 public class LocalDatabaseWriter implements DatabaseWriter {
     private Connection connection = null;
@@ -37,8 +38,10 @@ public class LocalDatabaseWriter implements DatabaseWriter {
     @Override
     public void writeToDatabase(DocSimpleMetadata metadata) throws SQLException {
         final String sql = "INSERT INTO publications(id, bibref_source, bibref_position, journal_name, journal_hash, volume, issue, date_published_year, def_name)"
-                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        final String authorSql = "INSERT INTO authors(publication_id, author_coauthor_normalized, author_coauthor_surname) VALUES(?, ?, ?)";
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String authorSql = "INSERT INTO"
+                + " authors(publication_id, author_coauthor_normalized, author_coauthor_surname, author_coauthor_last_surname_part, author_coauthor_supernormalized)"
+                + " VALUES(?, ?, ?, ?, ?)";
         PreparedStatement statement = null;
         PreparedStatement authorStatement = null;
         try {
@@ -55,10 +58,13 @@ public class LocalDatabaseWriter implements DatabaseWriter {
             statement.setString(9, metadata.getTitle());
             statement.execute();
 
-            for (AuthorSimpleMetadata author : metadata.getAuthors()) {
+            for (AuthorSimpleMetadata authorInner : metadata.getAuthors()) {
+                AuthorSimpleMetadataSupernormalized author = new AuthorSimpleMetadataSupernormalized(authorInner);
                 authorStatement.setString(1, metadata.getDocId());
                 authorStatement.setString(2, author.getNormalized());
                 authorStatement.setString(3, author.getSurname());
+                authorStatement.setString(4, author.getLastSurnamePart());
+                authorStatement.setString(5, author.getSupernormalized());
                 authorStatement.execute();
             }
             connection.commit();

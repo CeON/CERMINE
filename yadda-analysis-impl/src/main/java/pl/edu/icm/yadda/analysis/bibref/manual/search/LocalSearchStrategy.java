@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import pl.edu.icm.yadda.analysis.bibref.manual.AuthorSimpleMetadataSupernormalized;
+import pl.edu.icm.yadda.analysis.bibref.manual.MyIndexFields;
 import pl.edu.icm.yadda.client.indexing.IndexFields;
 import pl.edu.icm.yadda.service.search.searching.ResultField;
 import pl.edu.icm.yadda.service.search.searching.SearchResult;
@@ -88,13 +90,19 @@ public class LocalSearchStrategy implements SearchStrategy {
                 authorStatement.setString(1, rs.getString("id"));
                 ResultSet authorRs = authorStatement.executeQuery();
                 List<String> surnames = new ArrayList<String>();
+                List<String> lastSurnamesParts = new ArrayList<String>();
                 List<String> normalized = new ArrayList<String>();
+                List<String> supernormalized = new ArrayList<String>();
                 while (authorRs.next()) {
                     surnames.add(authorRs.getString("author_coauthor_surname"));
+                    lastSurnamesParts.add(authorRs.getString("author_coauthor_last_surname_part"));
                     normalized.add(authorRs.getString("author_coauthor_normalized"));
+                    supernormalized.add(authorRs.getString("author_coauthor_supernormalized"));
                 }
                 fields.add(new ResultField(IndexFields.F_AUTHOR_COAUTHOR_SURNAME, surnames.toArray(new String[surnames.size()]), null));
+                fields.add(new ResultField(MyIndexFields.F_AUTHOR_COAUTHOR_LAST_SURNAME_PART, lastSurnamesParts.toArray(new String[lastSurnamesParts.size()]), null));
                 fields.add(new ResultField(IndexFields.F_AUTHOR_COAUTHOR_NORMALIZED, normalized.toArray(new String[normalized.size()]), null));
+                fields.add(new ResultField(MyIndexFields.F_AUTHOR_COAUTHOR_SUPERNORMALIZED, supernormalized.toArray(new String[supernormalized.size()]), null));
                 result.setFields(fields);
                 results.add(result);
             } catch (SQLException e) {
@@ -110,7 +118,8 @@ public class LocalSearchStrategy implements SearchStrategy {
      * @throws SQLException
      */
     private PreparedStatement prepareAuthorStatement(Connection connection) throws SQLException {
-        final String authorSql = "SELECT author_coauthor_surname, author_coauthor_normalized FROM authors WHERE publication_id = ?";
+        final String authorSql = "SELECT author_coauthor_surname, author_coauthor_normalized, author_coauthor_last_surname_part, author_coauthor_supernormalized" 
+                + " FROM authors WHERE publication_id = ?";
         PreparedStatement authorStatement = connection.prepareStatement(authorSql);
         return authorStatement;
     }
@@ -129,13 +138,14 @@ public class LocalSearchStrategy implements SearchStrategy {
         int counter = 0;
         Map<Integer, String> params = new HashMap<Integer, String>();
         params.put(++counter, metadata.getYear());
-        if (filterJournal) {
+        if (filterJournal && metadata.getJournal() != null) {
             sql += " AND journal_hash = ?";
             params.put(++counter, metadata.getJournalHash());
         }
-        for (AuthorSimpleMetadata author : metadata.getAuthors()) {
-            sql += " AND EXISTS(SELECT 1 FROM authors WHERE publication_id = publications.id AND author_coauthor_surname = ?)";
-            params.put(++counter, author.getSurname());
+        for (AuthorSimpleMetadata authorInner : metadata.getAuthors()) {
+            AuthorSimpleMetadataSupernormalized author = new AuthorSimpleMetadataSupernormalized(authorInner); 
+            sql += " AND EXISTS(SELECT 1 FROM authors WHERE publication_id = publications.id AND author_coauthor_last_surname_part = ?)";
+            params.put(++counter, author.getLastSurnamePart());
         }
         PreparedStatement statement = connection.prepareStatement(sql);
         for (Entry<Integer, String> e : params.entrySet()) {

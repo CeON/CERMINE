@@ -161,12 +161,12 @@ public class MetadataBibReferenceMatcher implements BibReferenceMatcher {
     }
 
     private boolean matchesMetadata(SimpleMetadata metadata, SearchResult searchResult) {
-        List<String> authors = getAllValues(searchResult, IndexFields.F_AUTHOR_COAUTHOR_NORMALIZED);
+        List<String> authors = getAllValues(searchResult, MyIndexFields.F_AUTHOR_COAUTHOR_SUPERNORMALIZED);
         if (authors == null || authors.size() != metadata.getAuthors().size()) {
             return false;
         }
         for (AuthorSimpleMetadata author : metadata.getAuthors()) {
-            if (!authors.contains(author.getNormalized())) {
+            if (!authors.contains(new AuthorSimpleMetadataSupernormalized(author).getSupernormalized())) {
                 return false;
             }
         }

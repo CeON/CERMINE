@@ -398,7 +398,7 @@
             <dependency>                 
                 <groupId>pl.edu.icm.yadda</groupId>                 
                 <artifactId>bwmeta-import</artifactId>                 
-                <version>1.10.0-SNAPSHOT</version>             
+                <version>${yadda.version}</version>             
             </dependency>
             <dependency>                 
                 <groupId>pl.edu.icm.yadda</groupId>                 

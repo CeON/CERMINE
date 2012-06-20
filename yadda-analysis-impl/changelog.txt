@@ -1,3 +1,5 @@
+==VERSION: 1.10.0-RC1==
+
 ==VERSION: 0.1.2==
 * unspecified changes, nothing to see here
 

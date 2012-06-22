@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.yadda.analysis.bibref.extraction.model.BxDocumentBibReferences;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureCalculator;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 
 /**

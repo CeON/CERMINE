@@ -3,7 +3,7 @@ package pl.edu.icm.yadda.analysis.bibref.parsing.features;
 import java.util.List;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureCalculator;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 
 /**
  *

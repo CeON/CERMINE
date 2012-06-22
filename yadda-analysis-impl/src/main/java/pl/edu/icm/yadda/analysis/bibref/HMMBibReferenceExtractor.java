@@ -7,11 +7,11 @@ import java.util.List;
 import pl.edu.icm.yadda.analysis.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.yadda.analysis.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.yadda.analysis.bibref.extraction.tools.BibRefExtractionUtils;
-import pl.edu.icm.yadda.analysis.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.hmm.HMMStorage;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVector;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 

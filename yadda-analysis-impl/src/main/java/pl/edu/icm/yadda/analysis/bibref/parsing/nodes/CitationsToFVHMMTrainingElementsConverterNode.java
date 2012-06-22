@@ -6,10 +6,10 @@ import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.yadda.analysis.bibref.parsing.tools.CitationUtils;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVector;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.hmm.training.HMMTrainingElement;
-import pl.edu.icm.yadda.analysis.hmm.training.SimpleHMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.SimpleHMMTrainingElement;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
 import pl.edu.icm.yadda.process.node.IProcessingNode;
 

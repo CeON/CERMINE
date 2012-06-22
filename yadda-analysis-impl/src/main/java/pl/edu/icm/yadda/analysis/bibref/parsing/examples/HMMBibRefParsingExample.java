@@ -14,15 +14,15 @@ import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.features.*;
 import pl.edu.icm.yadda.analysis.bibref.parsing.nodes.CitationsFromNLMExtractorNode;
 import pl.edu.icm.yadda.analysis.bibref.parsing.nodes.CitationsToFVHMMTrainingElementsConverterNode;
-import pl.edu.icm.yadda.analysis.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.hmm.HMMServiceImpl;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureCalculator;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVector;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.hmm.features.SimpleFeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.yadda.analysis.hmm.probability.HMMProbabilityInfoFactory;
-import pl.edu.icm.yadda.analysis.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 
 /**
  * HMM-based bibliographic reference parsing example.

@@ -1,5 +1,5 @@
-<pl.edu.icm.yadda.analysis.hmm.probability.SimpleHMMProbabilityInfo>
-  <initialProbability class="pl.edu.icm.yadda.analysis.hmm.probability.SimpleHMMInitialProbability">
+<pl.edu.icm.yadda.analysis.classification.hmm.probability.SimpleHMMProbabilityInfo>
+  <initialProbability class="pl.edu.icm.yadda.analysis.classification.hmm.probability.SimpleHMMInitialProbability">
     <probability>
       <eventCount>
         <entry>
@@ -34,7 +34,7 @@
       <totalCount>2318</totalCount>
     </probability>
   </initialProbability>
-  <transitionProbability class="pl.edu.icm.yadda.analysis.hmm.probability.SimpleHMMTransitionProbability">
+  <transitionProbability class="pl.edu.icm.yadda.analysis.classification.hmm.probability.SimpleHMMTransitionProbability">
     <probability>
       <entry>
         <pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel>PUBLISHER_NAME_FIRST</pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel>
@@ -1338,8 +1338,8 @@
       </entry>
     </probability>
   </transitionProbability>
-  <emissionProbability class="pl.edu.icm.yadda.analysis.hmm.probability.DecisionTreeHMMEmissionProbability">
-    <decisionTree class="pl.edu.icm.yadda.analysis.hmm.probability.decisiontree.SimpleDecisionTree">
+  <emissionProbability class="pl.edu.icm.yadda.analysis.classification.hmm.probability.DecisionTreeHMMEmissionProbability">
+    <decisionTree class="pl.edu.icm.yadda.analysis.classification.hmm.probability.decisiontree.SimpleDecisionTree">
       <left>
         <left>
           <left>
@@ -13123,4 +13123,4 @@
       <featureCut>0.0</featureCut>
     </decisionTree>
   </emissionProbability>
-</pl.edu.icm.yadda.analysis.hmm.probability.SimpleHMMProbabilityInfo>
+</pl.edu.icm.yadda.analysis.classification.hmm.probability.SimpleHMMProbabilityInfo>

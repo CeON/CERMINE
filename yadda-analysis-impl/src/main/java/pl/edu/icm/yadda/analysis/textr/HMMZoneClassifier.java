@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import pl.edu.icm.yadda.analysis.AnalysisException;
-import pl.edu.icm.yadda.analysis.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.hmm.HMMStorage;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVector;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
-import pl.edu.icm.yadda.analysis.zone.classification.tools.ZoneClassificationUtils;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
 
 /**
  * Hidden Markov Models-based zone classifier.

@@ -4,7 +4,7 @@ import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import java.util.Arrays;
 import java.util.List;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureCalculator;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 /**
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)

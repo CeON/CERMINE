@@ -10,11 +10,11 @@ import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.yadda.analysis.bibref.parsing.tools.CitationUtils;
-import pl.edu.icm.yadda.analysis.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.hmm.HMMStorage;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVector;
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 
 /**
  * Hidden Markov Models-based citation parser.

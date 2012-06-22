@@ -1,11 +1,11 @@
 package pl.edu.icm.yadda.analysis.bibref.parsing.nodes;
 
-import pl.edu.icm.yadda.analysis.hmm.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.yadda.analysis.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
-import pl.edu.icm.yadda.analysis.hmm.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
 import org.junit.Test;
 import static org.junit.Assert.*;

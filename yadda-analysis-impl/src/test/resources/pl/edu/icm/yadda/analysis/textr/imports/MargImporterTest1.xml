@@ -5,7 +5,7 @@
 	<PageType Value = "Journal"/>
 	<PageNumber Value = "7"/>
 	<PageColumns Value = "unknown"/>
-	<PageNext Value = "unknown"/>
+	<PageNext Value = ""/>
 	<PageZones Value = "unknown"/>
 	<Language Codeset = "UTF-8" Script = "unknown" Type = "English"/>
 	<Font Size = "unknown" Spacing = "unknown" Style = "unknown" Type = "unknown"/>

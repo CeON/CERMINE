@@ -8,24 +8,52 @@ import java.util.List;
 /**
  * Models a single line of text containing words.
  */
-public class BxLine implements Serializable {
+public class BxLine extends BxObject implements Serializable, Indexable, Printable {
 
     private static final long serialVersionUID = 917352034911588106L;
 
-    /** line's bounding box */
-    private BxBounds bounds;
-
     /** list of line's words */
     private final List<BxWord> words = new ArrayList<BxWord>();
+    private String lineId;
+    private String nextLineId;
+    private BxLine nextLine;
 
-    public BxBounds getBounds() {
-        return bounds;
-    }
-
+    @Override
     public BxLine setBounds(BxBounds bounds) {
-        this.bounds = bounds;
-        return this;
+    	super.setBounds(bounds);
+    	return this;
     }
+
+	public String getId() {
+		return this.lineId;
+	}
+
+	public String getNextId() {
+		return this.nextLineId;
+	}
+
+	public Indexable setId(String id) {
+		this.lineId = id;
+		return this;
+	}
+
+	public Indexable setNextId(String nextId) {
+		this.nextLineId = nextId;
+		return this;
+	}
+
+	public Indexable getNext() {
+		return this.nextLine;
+	}
+	
+	public boolean hasNext() {
+		return getNext() != null;
+	}
+
+	public Indexable setNext(Indexable elem) {
+		this.nextLine = (BxLine) elem;
+		return this;
+	}   
 
     public List<BxWord> getWords() {
         return words;
@@ -48,6 +76,7 @@ public class BxLine implements Serializable {
         return this;
     }
 
+    @Override
     public String toText() {
 
         StringBuilder sb = new StringBuilder();

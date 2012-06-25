@@ -40,7 +40,7 @@ public final class BxBounds implements Serializable {
         this.width = width;
         this.height = height;
     }
-
+    
     public double getX() {
         return x;
     }

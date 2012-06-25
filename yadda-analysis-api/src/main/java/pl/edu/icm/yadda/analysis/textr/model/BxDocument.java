@@ -15,6 +15,8 @@ public final class BxDocument implements Serializable {
     /** list of document's pages */
     private final List<BxPage> pages = new ArrayList<BxPage>();
 
+    private int curPageNumber = 0;
+    
     public List<BxPage> getPages() {
         return pages;
     }
@@ -24,6 +26,12 @@ public final class BxDocument implements Serializable {
             throw new NullPointerException();
         }
         this.pages.clear();
+   /*     for(BxPage page: pages) {
+        	page.setId(this.curPageNumber++);
+        	page.setNextId(this.curPageNumber);
+        	this.pages.add(page);
+        }
+        this.pages.get(this.pages.size()-1).setId(null); */
         this.pages.addAll(pages);
         return this;
     }
@@ -32,6 +40,7 @@ public final class BxDocument implements Serializable {
         if (page == null) {
             throw new NullPointerException();
         }
+        page.setId(Integer.toString(this.curPageNumber++));
         this.pages.add(page);
         return this;
     }
@@ -39,7 +48,7 @@ public final class BxDocument implements Serializable {
     public String toText() {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
-        for (BxPage w : pages) {
+        for (Printable w : pages) {
             if (!first) {
                 sb.append("\n");
             }
@@ -47,5 +56,41 @@ public final class BxDocument implements Serializable {
             sb.append(w.toText());
         }
         return sb.toString();
+    }
+    
+    public List<BxPage> asPages() {
+    	return this.getPages();
+    }
+    
+    public List<BxZone> asZones() {
+    	List<BxZone> ret = new ArrayList<BxZone>();
+    	for(BxPage page: asPages()) {
+    		ret.addAll(page.getZones());
+    	}
+    	return ret; 
+    }
+    
+    public List<BxLine> asLines() {
+    	List<BxLine> ret = new ArrayList<BxLine>();
+    	for(BxZone zone: asZones()) {
+    		ret.addAll(zone.getLines());
+    	}
+    	return ret;
+    }
+    
+    public List<BxWord> asWords() {
+    	List<BxWord> ret = new ArrayList<BxWord>();
+    	for(BxLine line: asLines()) {
+    		ret.addAll(line.getWords());
+    	}
+    	return ret;
+    }
+    
+    public List<BxChunk> asChunks() {
+    	List<BxChunk> ret = new ArrayList<BxChunk>();
+    	for(BxWord word: asWords()) {
+    		ret.addAll(word.getChunks());
+    	}
+    	return ret;
     }
 }

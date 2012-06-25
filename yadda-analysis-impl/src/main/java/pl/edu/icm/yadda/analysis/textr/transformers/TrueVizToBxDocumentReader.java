@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.xml.parsers.ParserConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +19,14 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
 import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
+import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxWord;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
+import pl.edu.icm.yadda.analysis.textr.model.Indexable;
 import pl.edu.icm.yadda.analysis.textr.tools.BxBoundsBuilder;
-import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
 import pl.edu.icm.yadda.metadata.transformers.IMetadataReader;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
@@ -33,10 +37,12 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  *
  * @author kura
  * @author krusek
+ * @author pszostek
  */
 public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
     
     private static final Logger log = LoggerFactory.getLogger(TrueVizToBxDocumentReader.class);
+    private boolean areIdsSet = true;
 
     @Override
     public MetadataFormat getSourceFormat() {
@@ -66,7 +72,9 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
                     pages.add(parsePageNode(pageElement));
                 }
             }
-
+            setIdsAndLinkPages(pages);
+            if(areIdsSet)
+            	linkOtherElements(pages);
             return pages;
         } catch (IOException ex) {
             throw new TransformationException(ex);
@@ -76,6 +84,56 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
             throw new TransformationException(ex);
         }
     }
+
+	private <A extends Indexable> void linkGenericImpl(List<A> list) {
+		Map<String, A> indicesMap = new HashMap<String, A>();
+		for (A elem : list)
+			indicesMap.put(elem.getId(), elem);
+		for (A elem : list) {
+			String nextId = elem.getNextId();
+			if (nextId.equals(new String("-1"))) { /* there is no next element */
+				elem.setNext(null);
+			} else {
+				A next = indicesMap.get(nextId);
+				if (next == null)
+					throw new RuntimeException("No matching element found for \"" + nextId + "\"");
+				elem.setNext(next);
+			}
+		}
+	}
+	
+    /* assumes that nextIds are set for all objects */
+	private void linkOtherElements(List<BxPage> pages) {
+		BxDocument temp = new BxDocument();
+		temp.setPages(pages);
+		linkGenericImpl(temp.asZones());
+		linkGenericImpl(temp.asLines());
+		linkGenericImpl(temp.asWords());
+		linkGenericImpl(temp.asChunks());
+	}
+
+	private void setIdsAndLinkPages(List<BxPage> pages) {
+		boolean arePageIdsSet = true;
+		for(BxPage page: pages) {
+			if(page.getNextId() == null || page.getId() == null) {
+				arePageIdsSet = false;
+				break;	
+			}
+		}
+		if(arePageIdsSet) { /* Page IDs were set in the input file */
+			linkGenericImpl(pages);
+		} else { /* Page IDs were not set. We have to do it on our own */
+			Integer pageIdx;
+			for(pageIdx=0; pageIdx < pages.size()-1; ++pageIdx) {
+				pages.get(pageIdx).setId(Integer.toString(pageIdx))
+								  .setNextId(Integer.toString(pageIdx+1))
+								  .setNext(pages.get(pageIdx+1));
+			}
+			pages.get(pageIdx).setId(Integer.toString(pageIdx))
+							  .setNextId("-1")
+							  .setNext(null);
+		}
+	}
 
     private ArrayList<Element> getChildren(String name, Element el) {
          ArrayList<Element> list=new ArrayList<Element>();
@@ -92,8 +150,26 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         return list;
     }
 
-
-
+    /** Function for obtaining value for optional children (that can appear in the XML,
+     * but doesn't have to).
+     * 
+     * @param name is a name of the node
+     * @param el is the root node for the child
+     * @return value of the child, if present and not empty. Otherwise equals to null
+     */
+	private String getOptionalChildValue(String name, Element el) {
+		List<Element> children = getChildren(name, el);
+		if(children.size() != 0) {
+			String val = children.get(0).getAttribute("Value");
+			if(val.equals(new String("")))
+				return null;
+			else
+				return val;
+		} else {
+			return null;
+		}
+		
+	}
 
     private BxBounds parseElementContainingVertexes(Element el) {
         ArrayList<Element> vs = getChildren("Vertex",el);
@@ -115,7 +191,15 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         if (!(getChildren("GT_Text",charE).isEmpty())) {
             text = getChildren("GT_Text",charE).get(0).getAttribute("Value");
         }
-        return new BxChunk(bou, text);
+        
+        BxChunk chunk = new BxChunk(bou, text);
+        chunk.setId(getOptionalChildValue("CharacterId", charE));
+    	chunk.setNextId(getOptionalChildValue("CharacterNext", charE));
+    	
+    	if(areIdsSet && (chunk.getId() == null || chunk.getNextId() == null))
+    		areIdsSet = false;
+    	
+        return chunk;
     }
 
     private BxWord parseWordElement(Element wordE) {
@@ -124,6 +208,12 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
             word.setBounds(parseElementContainingVertexes(getChildren("WordCorners",wordE).get(0)));
         }
 
+        word.setId(getOptionalChildValue("WordId", wordE));
+    	word.setNextId(getOptionalChildValue("WordNext", wordE));
+    	
+    	if(areIdsSet && (word.getId() == null || word.getNextId() == null))
+    		areIdsSet = false;
+    	
         List<Element> e = getChildren("Character",wordE);
         for (Element caE : e) {
             BxChunk ch = parseCharacterElement(caE);
@@ -137,6 +227,13 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
          if (!(getChildren("LineCorners",lineE).isEmpty()))  {
             line.setBounds(parseElementContainingVertexes(getChildren("LineCorners",lineE).get(0)));
         }
+         
+        line.setId(getOptionalChildValue("LineId", lineE));
+     	line.setNextId(getOptionalChildValue("LineNext", lineE));
+
+    	if(areIdsSet && (line.getId() == null || line.getNextId() == null))
+    		areIdsSet = false;
+
         List<Element> e = getChildren("Word",lineE);
         for (Element we : e) {
             BxWord wo = parseWordElement(we);
@@ -166,7 +263,7 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         }
     }
 
-    private BxZone parseZoneNode(Element zoneE) {
+	private BxZone parseZoneNode(Element zoneE) {
         BxZone zone = new BxZone();
         if (!getChildren("Classification",zoneE).isEmpty()) {
             zone.setLabel(parseClassification(getChildren("Classification",zoneE).get(0)));
@@ -174,6 +271,13 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         if (!getChildren("ZoneCorners",zoneE).isEmpty()) {
             zone.setBounds(parseElementContainingVertexes(getChildren("ZoneCorners",zoneE).get(0)));
         }
+
+        zone.setId(getOptionalChildValue("ZoneId", zoneE));
+    	zone.setNextId(getOptionalChildValue("ZoneNext", zoneE));
+
+    	if(areIdsSet && (zone.getId() == null || zone.getNextId() == null))
+    		areIdsSet = false;
+
         List<Element> e = getChildren("Line",zoneE);
         for (Element lin : e) {
             BxLine li = parseLineElement(lin);
@@ -184,15 +288,20 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
     }
 
     private BxPage parsePageNode(Element elem) {
-        BxPage page = new BxPage();
-
+    	BxPage page = new BxPage();
+    	page.setId(getOptionalChildValue("PageId", elem));
+        page.setNextId(getOptionalChildValue("PageNext", elem));
+    	
+        if(areIdsSet && (page.getId() == null || page.getNextId() == null))
+    		areIdsSet = false;
+        
         List<Element> e = getChildren("Zone", elem);
         for (Element zo : e) {
             BxZone zon = parseZoneNode(zo);
             page.addZone(zon);
         }
         BxBoundsBuilder.setBounds(page);
-        BxModelUtils.sortZonesYX(page);
+       // BxModelUtils.sortZonesYX(page);
         
         return page;
     }

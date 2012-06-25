@@ -58,7 +58,15 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
         node.setAttribute("Value", value);
         parent.appendChild(node);
     }
-
+    
+    private void appendPropertyIfNotNull(Document doc, Element parent, String name, String value) {
+        if(value == null) {
+        	appendProperty(doc, parent, name, "");
+        } else {
+        	appendProperty(doc, parent, name, value);
+        }
+    }
+    
     private void appendVertex(Document doc, Element parent, double x, double y) {
         Element node = doc.createElement("Vertex");
         node.setAttribute("x", FORMAT.format(x));
@@ -80,18 +88,18 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
 
     private void appendCharacter(Document doc, Element parent, BxChunk chunk) {
         Element node = doc.createElement("Character");
-        appendProperty(doc, node, "CharacterID", "");
+        appendPropertyIfNotNull(doc, node, "CharacterID", chunk.getId());
         appendBounds(doc, node, "CharacterCorners", chunk.getBounds());
-        appendProperty(doc, node, "CharacterNext", "");
+        appendPropertyIfNotNull(doc, node, "CharacterNext", chunk.getNextId());
         appendProperty(doc, node, "GT_Text", chunk.getText());
         parent.appendChild(node);
     }
 
     private void appendWord(Document doc, Element parent, BxWord word) {
         Element node = doc.createElement("Word");
-        appendProperty(doc, node, "WordID", "");
+        appendPropertyIfNotNull(doc, node, "WordID", word.getId());
         appendBounds(doc, node, "WordCorners", word.getBounds());
-        appendProperty(doc, node, "WordNext", "");
+        appendPropertyIfNotNull(doc, node, "WordNext", word.getNextId());
         appendProperty(doc, node, "WordNumChars", "");
         for (BxChunk chunk: word.getChunks()) {
             appendCharacter(doc, node, chunk);
@@ -101,9 +109,9 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
 
     private void appendLine(Document doc, Element parent, BxLine line) {
         Element node = doc.createElement("Line");
-        appendProperty(doc, node, "LineID", "");
+        appendPropertyIfNotNull(doc, node, "LineID", line.getId());
         appendBounds(doc, node, "LineCorners", line.getBounds());
-        appendProperty(doc, node, "LineNext", "");
+        appendPropertyIfNotNull(doc, node, "LineNext", line.getNextId());
         appendProperty(doc, node, "LineNumChars", "");
         for (BxWord word: line.getWords()) {
             appendWord(doc, node, word);
@@ -120,9 +128,9 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
 
     private void appendZone(Document doc, Element parent, BxZone zone) {
         Element node = doc.createElement("Zone");
-        appendProperty(doc, node, "ZoneID", "");
+        appendPropertyIfNotNull(doc, node, "ZoneID", zone.getId());
         appendBounds(doc, node, "ZoneCorners", zone.getBounds());
-        appendProperty(doc, node, "ZoneNext", "");
+        appendPropertyIfNotNull(doc, node, "ZoneNext", zone.getNextId());
         Element insetsNode = doc.createElement("ZoneInsets");
         insetsNode.setAttribute("Top", "");
         insetsNode.setAttribute("Bottom", "");
@@ -141,11 +149,11 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
 
     private void appendPage(Document doc, Element parent, BxPage page) {
         Element node = doc.createElement("Page");
-        appendProperty(doc, node, "PageID", "");
+        appendPropertyIfNotNull(doc, node, "PageId", page.getId());
         appendProperty(doc, node, "PageType", "");
         appendProperty(doc, node, "PageNumber", "");
         appendProperty(doc, node, "PageColumns", "");
-        appendProperty(doc, node, "PageNext", "");
+        appendPropertyIfNotNull(doc, node, "PageNext", page.getNextId());
         appendProperty(doc, node, "PageZones", "");
         for (BxZone zone: page.getZones()) {
             appendZone(doc, node, zone);

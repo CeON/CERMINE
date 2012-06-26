@@ -42,8 +42,8 @@
     </ciManagement>
     
     <scm>
-        <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</connection>
-        <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/trunk</developerConnection>
+        <connection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/branches/1.10.0</connection>
+        <developerConnection>scm:svn:svn+ssh://bwnsvn.icm.edu.pl/srv/svn/BWN2/projects/dir/branches/1.10.0</developerConnection>
     </scm>
 
     <distributionManagement>

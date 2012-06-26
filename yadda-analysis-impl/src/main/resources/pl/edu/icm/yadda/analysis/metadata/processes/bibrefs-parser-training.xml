@@ -53,12 +53,12 @@
 
     <!-- 4a. calculate initial probability -->
     <proc:processor input-channel="channel2" output-channel="channel5">
-        <bean class="pl.edu.icm.yadda.analysis.hmm.process.nodes.SimpleInitialProbabilityCalculatorNode" />
+        <bean class="pl.edu.icm.yadda.analysis.classification.hmm.process.nodes.SimpleInitialProbabilityCalculatorNode" />
     </proc:processor>
 
     <!-- 5a. store initial probability -->
     <proc:writer packageSize="20" channel="channel5">
-        <bean class="pl.edu.icm.yadda.analysis.hmm.process.nodes.InitialProbabilityWriterNode">
+        <bean class="pl.edu.icm.yadda.analysis.classification.hmm.process.nodes.InitialProbabilityWriterNode">
             <property name="hmmStorage" ref="hmmStorage" />
             <property name="hmmId" value="referenceparsing" />
         </bean>
@@ -66,12 +66,12 @@
 
     <!-- 4b. calculate transition probability -->
     <proc:processor input-channel="channel3" output-channel="channel6">
-        <bean class="pl.edu.icm.yadda.analysis.hmm.process.nodes.SimpleTransitionProbabilityCalculatorNode" />
+        <bean class="pl.edu.icm.yadda.analysis.classification.hmm.process.nodes.SimpleTransitionProbabilityCalculatorNode" />
     </proc:processor>
 
     <!-- 5b. store transition probability -->
     <proc:writer packageSize="20" channel="channel6">
-        <bean class="pl.edu.icm.yadda.analysis.hmm.process.nodes.TransitionProbabilityWriterNode">
+        <bean class="pl.edu.icm.yadda.analysis.classification.hmm.process.nodes.TransitionProbabilityWriterNode">
             <property name="hmmStorage" ref="hmmStorage" />
             <property name="hmmId" value="referenceparsing" />
         </bean>
@@ -79,7 +79,7 @@
 
     <!-- 4c. construct a decision tree -->
     <proc:processor input-channel="channel4" output-channel="channel7">
-        <bean class="pl.edu.icm.yadda.analysis.hmm.process.nodes.DecisionTreeEmissionProbabilityCalculatorNode" >
+        <bean class="pl.edu.icm.yadda.analysis.classification.hmm.process.nodes.DecisionTreeEmissionProbabilityCalculatorNode" >
             <property name="featureVectorBuilder" ref="refsFeatureVectorBuilder" />
             <property name="zeroProbabilityValue" value="1.0e-7" />
         </bean>
@@ -87,7 +87,7 @@
 
     <!-- 5c. store decision tree -->
     <proc:writer packageSize="20" channel="channel7">
-        <bean class="pl.edu.icm.yadda.analysis.hmm.process.nodes.EmissionProbabilityWriterNode">
+        <bean class="pl.edu.icm.yadda.analysis.classification.hmm.process.nodes.EmissionProbabilityWriterNode">
             <property name="hmmStorage" ref="hmmStorage" />
             <property name="hmmId" value="referenceparsing" />
         </bean>
@@ -95,7 +95,7 @@
 
     <!-- beans -->
     <bean id="filesFromFolderIteratorBuilder"
-		class="pl.edu.icm.yadda.analysis.hmm.process.source.AllFilesFromFolderIteratorBuilder">
+		class="pl.edu.icm.yadda.analysis.classification.hmm.process.source.AllFilesFromFolderIteratorBuilder">
         <property name="extensions" value="xml" />
     </bean>
 

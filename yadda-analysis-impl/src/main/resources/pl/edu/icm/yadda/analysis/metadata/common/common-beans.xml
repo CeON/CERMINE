@@ -6,47 +6,47 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
-    <bean id="hmmService" class="pl.edu.icm.yadda.analysis.hmm.HMMServiceImpl" />
+    <bean id="hmmService" class="pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl" />
 
-    <bean id="hmmStorage" class="pl.edu.icm.yadda.analysis.hmm.XMLHMMStorage" />
+    <bean id="hmmStorage" class="pl.edu.icm.yadda.analysis.classification.hmm.XMLHMMStorage" />
 
     <bean id="zoneFeatureVectorBuilder"
-            class="pl.edu.icm.yadda.analysis.hmm.features.SimpleFeatureVectorBuilder">
+            class="pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder">
         <property name="featureCalculators">
             <list>
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.AbstractFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.AffiliationFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.AuthorFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.BibinfoFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.CorrespondenceFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.DatesFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.DigitRelativeCountFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.EditorFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.HeightRelativeFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.KeywordsFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.LicenseFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.LineCountFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.LineHeightMaxMeanFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.LineHeightMeanFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.PageNumberFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.ProportionsFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.PunctuationRelativeCountFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.ReferencesFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.ReferencesTitleFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.TypeFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.UppercaseCountFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.UppercaseWordCountFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.WidthRelativeFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.WordCountFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.XPositionRelativeFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.YearFeature" />
-                <bean class="pl.edu.icm.yadda.analysis.zone.classification.features.YPositionRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AbstractFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AffiliationFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AuthorFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.BibinfoFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.CorrespondenceFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DatesFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DigitRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.EditorFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.HeightRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.KeywordsFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LicenseFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineHeightMaxMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineHeightMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.PageNumberFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.ProportionsFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.PunctuationRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.ReferencesFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.ReferencesTitleFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.TypeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.UppercaseCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.UppercaseWordCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WidthRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WordCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.XPositionRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YearFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YPositionRelativeFeature" />
             </list>
         </property>
     </bean>
 
     <bean id="refsFeatureVectorBuilder"
-            class="pl.edu.icm.yadda.analysis.hmm.features.SimpleFeatureVectorBuilder">
+            class="pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder">
         <property name="featureCalculators">
             <list>
                 <bean class="pl.edu.icm.yadda.analysis.bibref.parsing.features.StartingNumberFeature" />
@@ -87,7 +87,7 @@
     </bean>
 
     <bean id="refsExtrFeatureVectorBuilder"
-            class="pl.edu.icm.yadda.analysis.hmm.features.SimpleFeatureVectorBuilder">
+            class="pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder">
         <property name="featureCalculators">
             <list>
                 <bean class="pl.edu.icm.yadda.analysis.bibref.extraction.features.EndFeature" />

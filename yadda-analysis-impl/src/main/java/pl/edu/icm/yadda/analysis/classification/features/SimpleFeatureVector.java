@@ -2,6 +2,7 @@ package pl.edu.icm.yadda.analysis.classification.features;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Simple feature vector.
@@ -23,6 +24,11 @@ public class SimpleFeatureVector implements FeatureVector {
     @Override
     public void addFeature(String name, double calculateFeatureValue) {
         features.put(name, calculateFeatureValue);
+    }
+
+    @Override
+    public Set<String> getFeatureNames() {
+        return features.keySet();
     }
 
 }

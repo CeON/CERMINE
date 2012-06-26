@@ -1,5 +1,7 @@
 package pl.edu.icm.yadda.analysis.classification.features;
 
+import java.util.Set;
+
 /**
  * Feature vector interface.
  *
@@ -23,4 +25,10 @@ public interface FeatureVector {
      */
     void addFeature(String name, double featureValue);
 
+    /**
+     * Return a set of used feature names.
+     * 
+     * @return feature names set
+     */
+    Set<String> getFeatureNames();
 }

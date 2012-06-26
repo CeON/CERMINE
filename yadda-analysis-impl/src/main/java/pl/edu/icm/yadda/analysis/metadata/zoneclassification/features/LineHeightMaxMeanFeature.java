@@ -11,7 +11,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  */
 public class LineHeightMaxMeanFeature implements FeatureCalculator<BxZone, BxPage> {
 
-    private static String featureName = "LineHeightMeanRelative";
+    private static String featureName = "LineHeightMaxMeanRelative";
 
     @Override
     public String getFeatureName() {

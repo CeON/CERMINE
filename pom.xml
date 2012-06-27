@@ -12,7 +12,7 @@
     <inceptionYear>2002</inceptionYear>
      
     <properties>
-        <yadda.version>1.10.0-RC3</yadda.version>
+        <yadda.version>1.10.0-SNAPSHOT</yadda.version>
         <!--
         <bwmeta-core.version>2.5.0-SNAPSHOT</bwmeta-core.version>
         <yadda-common.version>3.2.0-SNAPSHOT</yadda-common.version>

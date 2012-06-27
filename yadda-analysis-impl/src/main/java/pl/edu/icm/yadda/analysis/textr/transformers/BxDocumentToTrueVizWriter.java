@@ -149,7 +149,7 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
 
     private void appendPage(Document doc, Element parent, BxPage page) {
         Element node = doc.createElement("Page");
-        appendPropertyIfNotNull(doc, node, "PageId", page.getId());
+        appendPropertyIfNotNull(doc, node, "PageID", page.getId());
         appendProperty(doc, node, "PageType", "");
         appendProperty(doc, node, "PageNumber", "");
         appendProperty(doc, node, "PageColumns", "");

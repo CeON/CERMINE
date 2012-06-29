@@ -26,7 +26,6 @@ public class SimpleFeatureVector implements FeatureVector {
         features.put(name, calculateFeatureValue);
     }
 
-    @Override
     public Set<String> getFeatureNames() {
         return features.keySet();
     }

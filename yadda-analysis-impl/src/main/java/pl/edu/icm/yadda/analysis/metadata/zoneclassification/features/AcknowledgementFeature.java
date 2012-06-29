@@ -22,14 +22,12 @@ public class AcknowledgementFeature implements
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         String[] keywords = {"acknowledgement", "acknowledgements", "acknowledgment", "acknowledgments", };
 
-        int count = 0;
         for (String keyword : keywords) {
             if (zone.toText().toLowerCase().contains(keyword)) {
-                count++;
+            	return 1;
             }
         }
-
-        return count;
+        return 0;
     }
 
 }

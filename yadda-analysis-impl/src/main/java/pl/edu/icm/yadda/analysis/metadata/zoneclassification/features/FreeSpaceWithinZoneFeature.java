@@ -11,7 +11,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class FreeSpaceFeature implements FeatureCalculator<BxZone, BxPage> {
+public class FreeSpaceWithinZoneFeature implements FeatureCalculator<BxZone, BxPage> {
 
 	private static String featureName = "FreeSpace";
 

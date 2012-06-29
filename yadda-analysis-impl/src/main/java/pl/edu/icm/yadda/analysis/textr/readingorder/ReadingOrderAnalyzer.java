@@ -111,7 +111,11 @@ public class ReadingOrderAnalyzer {
 		setIdsGenericImpl(doc.asWords());
 		setIdsGenericImpl(doc.asChunks());
 	}
-	
+	private String s(String string) {
+		if(string.length() <= 10)
+			return string;
+		return string.substring(0, 10);
+	}
 	/** Builds a binary tree of zones and groups of zones from a list of unordered zones.
 	 * This is done in hierarchical clustering by joining two least distant nodes. Distance
 	 * is calculated in the distance() method.
@@ -137,10 +141,24 @@ public class ReadingOrderAnalyzer {
 						distElem.obj1, distElem.obj2));
 				continue;
 			}
-				
-	//	    System.out.println("(" + distElem.obj1.getX() + ", " + distElem.obj1.getY() + ", " + distElem.obj1.getWidth() + ", " + distElem.obj1.getHeight() + ")" 
-	//				+ " + (" + distElem.obj2.getX() + ", " + distElem.obj2.getY() + ", " + distElem.obj2.getWidth() + ", " + distElem.obj2.getHeight() + ") " +distElem.dist);
-			
+		
+		// !!!! Code below is used for debugging purposes
+
+		/*	String obj1Content = null; 
+			try {
+				obj1Content = ((BxZone)distElem.obj1).toText();
+			} catch (Exception e) {
+				obj1Content = "";
+			}
+			String obj2Content = null; 
+			try {
+				obj2Content = ((BxZone)distElem.obj2).toText();
+			} catch (Exception e) {
+				obj2Content = "";
+			}
+		    System.out.println("(" + distElem.obj1.getX() + ", " + distElem.obj1.getY() + ", " + (int)distElem.obj1.getWidth() + ", " + (int)distElem.obj1.getHeight() + ": "+ s(obj1Content)+"["+obj1Content.length()+"])" 
+				+ " + (" + distElem.obj2.getX() + ", " + distElem.obj2.getY() + ", " + (int)distElem.obj2.getWidth() + ", " + (int)distElem.obj2.getHeight() + ": "+ s(obj2Content)+"["+obj2Content.length()+"]) " +distElem.dist);
+			*/
 			BxZoneGroup newGroup = new BxZoneGroup(distElem.obj1, distElem.obj2);
 			plane.remove(distElem.obj1).remove(distElem.obj2);
 			dists = removeDistElementsContainingObject(dists, distElem.obj1);
@@ -166,6 +184,26 @@ public class ReadingOrderAnalyzer {
 		return ret;
 	}
 
+/*	private void sortTree(BxZoneGroup tree) {
+		if(tree.getLeftChild() != null && tree.getRightChild() != null) {
+			double leftChildDist = distFromRoot(tree.getLeftChild());
+			double rightChildDist = distFromRoot(tree.getRightChild());
+			if(rightChildDist < leftChildDist) {
+				// swap
+				BxObject tmp = tree.getLeftChild();
+				tree.setLeftChild(tree.getRightChild());
+				tree.setRightChild(tmp);
+			}
+			if(tree.getLeftChild() instanceof BxZoneGroup) {
+				sortGroupedZones((BxZoneGroup)tree.getLeftChild());
+			}
+			if(tree.getRightChild() instanceof BxZoneGroup) {
+				sortGroupedZones((BxZoneGroup)tree.getRightChild());
+			}
+		}
+	}
+	*/
+	
 	/** Swaps children of BxZoneGroup if necessary. A group with smaller sort factor
 	 * is placed to the left (leftChild). An object with greater sort factor is placed
 	 * on the right (rightChild). This plays an important role when traversing the tree
@@ -190,6 +228,11 @@ public class ReadingOrderAnalyzer {
 			sortGroupedZones((BxZoneGroup) rightChild);
 	}
 	
+	private Double distFromRoot(BxObject obj) {
+		/* euclidean distance from (0,0) */
+		return Math.sqrt(3*(obj.getX()+obj.getWidth()/2)*(obj.getX()+obj.getWidth()/2)+obj.getY()*obj.getY());
+	}
+	
 	/** Key function for sorting in sortGroupedZones(). Allows to order
 	 * two objects joined together in a logical order.
 	 * 
@@ -198,11 +241,12 @@ public class ReadingOrderAnalyzer {
 	 */
 	private Double sortPrecedence(BxObject obj) {
 		/* black magic below */
-		return  (1 + BOXES_FLOW) //constant
-				* (2 * obj.getY() + obj.getHeight()) // y0 + y1
+	/*	return  (1 + BOXES_FLOW) //constant
+				* (2 * obj.getY() )//+ obj.getHeight()) // y0 + y1
 				+ (1 - BOXES_FLOW) //constant
 				* (obj.getX()) // x0
-				; 
+				;  */
+		return distFromRoot(obj); 
 	}
 	
 	/**
@@ -230,7 +274,15 @@ public class ReadingOrderAnalyzer {
 		Double y1 = Math.max(obj1.getY() + obj1.getHeight(),
 				obj2.getY() + obj2.getHeight());
 		Double dist = ((x1 - x0) * (y1 - y0) - obj1.getArea() - obj2.getArea());
-		return dist;
+		
+		Double obj1CenterX = obj1.getX()+obj1.getWidth()/2;
+		Double obj1CenterY = obj1.getY()+obj1.getHeight()/2;
+		Double obj2CenterX = obj2.getX()+obj2.getWidth()/2;
+		Double obj2CenterY = obj2.getY()+obj2.getHeight()/2;
+		
+		Double obj1obj2VectorCosineAbs = Math.abs((obj2CenterX-obj1CenterX)/Math.sqrt((obj2CenterX-obj1CenterX)*(obj2CenterX-obj1CenterX)+(obj2CenterY-obj1CenterY)*(obj2CenterY-obj1CenterY))); 
+		final Double MAGIC_COEFF = 0.5;
+		return dist*(MAGIC_COEFF+obj1obj2VectorCosineAbs);
 	}
 
 	public static void main(String[] args) throws TransformationException, IOException {
@@ -238,7 +290,7 @@ public class ReadingOrderAnalyzer {
 	//	String filename = "10255834.xml";
 	//	String filename = "11781238.xml";
 	//	String filename = "1748717X.xml";
-		String filename = "09629351.xml";
+		String filename = "06.xml";
 		String path = "/pl/edu/icm/yadda/analysis/logicstr/train/";
 		String inFile = path + filename;
 		InputStream is = ReadingOrderAnalyzer.class.getResourceAsStream(inFile);
@@ -255,7 +307,7 @@ public class ReadingOrderAnalyzer {
 
 		for (BxPage page : sortedDoc.getPages()) {
 			for (BxZone zone : page.getZones()) {
-				System.out.println("("+zone.getX()+", "+zone.getY()+", "+zone.getWidth()+", "+zone.getHeight()+")");
+				System.out.format("(X=%5.2f, Y=%5.2f, W=%5.2f, H=%5.2f)\n", zone.getX(), zone.getY(), zone.getWidth(), zone.getHeight());
 				System.out.println(zone.toText() + "\n");
 			}
 		}

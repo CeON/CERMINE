@@ -1,5 +1,7 @@
 package pl.edu.icm.yadda.analysis.classification.features;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +30,18 @@ public class SimpleFeatureVector implements FeatureVector {
 
     public Set<String> getFeatureNames() {
         return features.keySet();
+    }
+    
+    public String dump() {
+    	String ret = "";
+    	Set<String> keysSet = features.keySet();
+    	ArrayList<String> keys = new ArrayList<String>(keysSet);
+    	Collections.sort(keys);
+    	for(String name: keys) {
+    		String shortName = (name.length() > 18 ? name.substring(0, 18) : name);
+    		ret += String.format("%18s: %5.2f\n", shortName, features.get(name));
+    	}
+    	return ret;
     }
 
 }

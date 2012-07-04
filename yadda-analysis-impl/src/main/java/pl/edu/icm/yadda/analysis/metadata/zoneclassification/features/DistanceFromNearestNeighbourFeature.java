@@ -17,7 +17,7 @@ public class DistanceFromNearestNeighbourFeature implements
 		return featureName;
 	}
 
-	private Double euclideanDist(Double x0, Double y0, Double x1, Double y1) {
+	private static Double euclideanDist(Double x0, Double y0, Double x1, Double y1) {
 		return Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 	}
 
@@ -56,7 +56,7 @@ public class DistanceFromNearestNeighbourFeature implements
 					oct = 2; // 6;
 				else
 					oct = 3; // 7;
-			} else if (ox + ow <= cw) {
+			} else if (ox + ow <= cx) {
 				if (cy + ch <= oy)
 					oct = 6;
 				else if (oy + oh <= cy)
@@ -65,8 +65,10 @@ public class DistanceFromNearestNeighbourFeature implements
 					oct = 7;
 			} else if (cy + ch <= oy) {
 				oct = 5;
-			} else { // if(oy + oh <= cy) {
+			} else if(oy + oh <= cy) {
 				oct = 1;
+			} else { //two zones
+				continue;
 			}
 			// determine distance based on octant
 			switch (oct) {
@@ -97,8 +99,14 @@ public class DistanceFromNearestNeighbourFeature implements
 			default:
 				dist = Double.MAX_VALUE;
 			}
-			minDist = Math.min(minDist, dist);
+			//minDist = Math.min(minDist, dist);
+			if(dist < minDist) {
+				minDist = dist;
+			}
 		}
-		return minDist;
+		if(minDist == Double.MAX_VALUE)
+			return 0.0;
+		else
+			return minDist;
 	}
 };

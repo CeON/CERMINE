@@ -13,7 +13,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 public class VerticalProminenceFeature implements
 		FeatureCalculator<BxZone, BxPage> {
 
-	private static String featureName = "RelativeProminence";
+	private static String featureName = "VerticalProminence";
 
 	@Override
 	public String getFeatureName() {
@@ -41,7 +41,7 @@ public class VerticalProminenceFeature implements
 			} else {
 				return 0.0;
 			}
-		} else if(thisZoneIdx == page.getZones().size()-1) { //given zone is the last one ine the set - there is none after it
+		} else if(thisZoneIdx == page.getZones().size()-1) { //given zone is the last one in the set - there is none after it
 			BxZone prevZone = zones.get(thisZoneIdx-1);
 			BxZone thisZone = zones.get(thisZoneIdx);
 			if(prevZone.getY() < thisZone.getY()) {

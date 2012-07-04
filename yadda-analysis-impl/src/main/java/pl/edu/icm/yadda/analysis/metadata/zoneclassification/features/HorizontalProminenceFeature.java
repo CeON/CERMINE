@@ -11,7 +11,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 public class HorizontalProminenceFeature implements
 		FeatureCalculator<BxZone, BxPage> {
 
-    private static String featureName = "RelativeHorizontalProminence";
+    private static String featureName = "HorizontalProminence";
 
 	@Override
 	public String getFeatureName() {

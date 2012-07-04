@@ -11,7 +11,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class WhitepaceCountFeature implements FeatureCalculator<BxZone, BxPage> {
+public class WhitespaceCountFeature implements FeatureCalculator<BxZone, BxPage> {
     private static String featureName = "WhitespaceCount";
 
     @Override

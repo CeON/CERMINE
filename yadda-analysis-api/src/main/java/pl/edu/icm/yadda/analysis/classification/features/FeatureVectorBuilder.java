@@ -9,18 +9,18 @@ import java.util.Set;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  *
- * @param <S> Type of objects for whom features' values can be calculated.
- * @param <T> Type of additional context objects that can be used
+ * @param <X> Type of objects for whom features' values can be calculated.
+ * @param <Y> Type of additional context objects that can be used
  * for calculation.
  */
-public interface FeatureVectorBuilder<S, T> {
+public interface FeatureVectorBuilder<X, Y> {
 
     /**
      * Sets feature calculators used for building feature vectors.
      *
      * @param featureCalculators A collection of feature calculators.
      */
-    void setFeatureCalculators(Collection<FeatureCalculator<S, T>> featureCalculators);
+    void setFeatureCalculators(Collection<FeatureCalculator<X, Y>> featureCalculators);
 
     /**
      * Returns calculated feature vector.
@@ -29,7 +29,7 @@ public interface FeatureVectorBuilder<S, T> {
      * @param context Context object
      * @return Calculated feature vector.
      */
-    FeatureVector getFeatureVector(S object, T context);
+    FeatureVector getFeatureVector(X object, Y context);
 
     /**
      * Returns the names of features that are part of calculated feature vector.

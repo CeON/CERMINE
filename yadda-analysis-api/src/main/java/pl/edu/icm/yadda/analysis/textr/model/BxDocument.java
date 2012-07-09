@@ -58,10 +58,19 @@ public final class BxDocument implements Serializable {
         return sb.toString();
     }
     
+    /**
+     * 
+     * @return a list of constituent pages. The list keeps the order used in the original file
+     */
     public List<BxPage> asPages() {
     	return this.getPages();
     }
     
+    /**
+     * 
+     * @return a list of constituent zones. The list holds the logical reading-order if 
+     * a ReadingOrderResolver was run on the original document.
+     */
     public List<BxZone> asZones() {
     	List<BxZone> ret = new ArrayList<BxZone>();
     	for(BxPage page: asPages()) {
@@ -70,6 +79,11 @@ public final class BxDocument implements Serializable {
     	return ret; 
     }
     
+    /**
+     * 
+     * @return a list of constituent text lines. The list holds the logical reading-order if 
+     * a ReadingOrderResolver was run on the original document.
+     */
     public List<BxLine> asLines() {
     	List<BxLine> ret = new ArrayList<BxLine>();
     	for(BxZone zone: asZones()) {
@@ -78,6 +92,11 @@ public final class BxDocument implements Serializable {
     	return ret;
     }
     
+    /**
+     * 
+     * @return a list of constituent words. The list holds the logical reading-order if 
+     * a ReadingOrderResolver was run on the original document.
+     */
     public List<BxWord> asWords() {
     	List<BxWord> ret = new ArrayList<BxWord>();
     	for(BxLine line: asLines()) {
@@ -86,6 +105,11 @@ public final class BxDocument implements Serializable {
     	return ret;
     }
     
+    /**
+     * 
+     * @return a list of constituent letters. The list holds the logical reading-order if 
+     * a ReadingOrderResolver was run on the original document.
+     */
     public List<BxChunk> asChunks() {
     	List<BxChunk> ret = new ArrayList<BxChunk>();
     	for(BxWord word: asWords()) {

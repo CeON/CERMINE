@@ -98,7 +98,7 @@ class DocumentPlane {
 	/** Checks if there is any object placed between obj1 and obj2 */
 	public boolean anyObjectsBetween(BxObject obj1, BxObject obj2) {
 		List<BxObject> objs = findObjectsBetween(obj1, obj2);
-		return objs.isEmpty();
+		return !(objs.isEmpty());
 	}
 
 	/** Adds object to the plane */

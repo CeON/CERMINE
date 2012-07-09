@@ -9,7 +9,7 @@ import java.util.List;
  * Models a single zone of a page. A zone contains either lines of text
  * or a list of chunks, that haven't been grouped into lines yet.
  */
-public final class BxZone extends BxObject implements Serializable, Indexable, Printable {
+public final class BxZone extends BxObject implements Serializable, Indexable<BxZone>, Printable {
 
     private static final long serialVersionUID = -7331944901471939127L;
 
@@ -19,6 +19,7 @@ public final class BxZone extends BxObject implements Serializable, Indexable, P
     private String nextZoneId;
     /** next zone in the linked list. Stored in a logical reading order */
     private BxZone nextZone;
+    private BxZone prevZone;
     /** zone's label */
     private BxZoneLabel label;
     /** list of zone's lines (if the zone is segmented) */
@@ -27,33 +28,58 @@ public final class BxZone extends BxObject implements Serializable, Indexable, P
     /** list of zone's text chunks (if the zone is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
     
+    @Override
     public String getId() {
 		return zoneId;
 	}
 
-	public Indexable setId(String zoneId) {
+    @Override
+	public BxZone setId(String zoneId) {
 		this.zoneId = zoneId;
 		return this;
 	}
 
+    @Override
 	public String getNextId() {
 		return nextZoneId;
 	}
 
-	public Indexable setNextId(String nextZoneId) {
+    @Override
+	public BxZone setNextId(String nextZoneId) {
 		this.nextZoneId = nextZoneId;
 		return this;
 	}
 
-	public Indexable getNext() {
+    @Override
+	public BxZone getNext() {
 		return this.nextZone;
 	}
 	
-	public Indexable setNext(Indexable nextZone) {
+    @Override
+	public BxZone setNext(BxZone nextZone) {
+    	assert nextZone instanceof BxZone;
 		this.nextZone = (BxZone)nextZone;
 		return this;
 	}
 	
+    @Override
+	public boolean hasPrev() {
+		return getPrev() != null;
+	}
+
+    @Override
+	public BxZone getPrev() {
+		return this.prevZone;
+	}
+	
+    @Override
+	public BxZone setPrev(BxZone prevZone) {
+    	assert prevZone instanceof BxZone;
+		this.prevZone = (BxZone)prevZone;
+		return this;
+	}
+	
+    @Override
 	public boolean hasNext() {
 		return getNext() != null;
 	}

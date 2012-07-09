@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
@@ -88,14 +89,35 @@ public class ReadingOrderAnalyzer {
 	 * interface.
 	 * @param list is a list of Indexable objects
 	 */
-	private <A extends Indexable> void setIdsGenericImpl(List<A> list) {
-		Integer index = 0;
-		for(A elem: list) {
-			elem.setId(Integer.toString(index));
-			++index;
-			elem.setNextId(Integer.toString(index));
+	private <A extends Indexable<A>> void setIdsGenericImpl(List<A> list) {
+		if(list.size() == 1) {
+			A elem = list.get(0);
+			elem.setNext(null);
+			elem.setPrev(null);
+			elem.setId("0");
+			elem.setNextId("-1");
+			return;
 		}
-		list.get(list.size()-1).setNextId("-1");
+		/* list.size() > 1 */
+		
+		//unroll the loop for the first and last element
+		A firstElem = list.get(0);
+		firstElem.setId("0");
+		firstElem.setNextId("1");
+		firstElem.setNext(list.get(1));
+		firstElem.setPrev(null);
+		for(Integer idx = 1; idx < list.size()-1; ++idx) {
+			A elem = list.get(idx);
+			elem.setId(Integer.toString(idx));
+			elem.setNextId(Integer.toString(idx+1));
+			elem.setNext(list.get(idx+1));
+			elem.setPrev(list.get(idx-1));
+		}
+		A lastElem = list.get(list.size()-1);
+		lastElem.setId(Integer.toString(list.size()-1));
+		lastElem.setNextId("-1");
+		lastElem.setNext(null);
+		lastElem.setPrev(list.get(list.size()-2));
 	}
 	
 	/** Function for setting up indices and reference for the linked list.
@@ -124,7 +146,7 @@ public class ReadingOrderAnalyzer {
 	 */
 	private BxZoneGroup groupZonesHierarchically(List<BxZone> zones) {
 		/* Distance tuples are stored sorted by ascending distance value */
-		PriorityQueue<DistElem<BxObject>> dists = new PriorityQueue<DistElem<BxObject>>();
+		List<DistElem<BxObject>> dists = new ArrayList<DistElem<BxObject>>();
 		for (int idx1 = 0; idx1 < zones.size(); ++idx1)
 			for (int idx2 = idx1 + 1; idx2 < zones.size(); ++idx2) {
 				BxZone zone1 = zones.get(idx1);
@@ -132,13 +154,13 @@ public class ReadingOrderAnalyzer {
 				dists. add(new DistElem<BxObject>(false, distance(zone1, zone2),
 						zone1, zone2));
 			}
+		Collections.sort(dists);
 		DocumentPlane plane = new DocumentPlane(zones, GRIDSIZE);
 		while (!dists.isEmpty()) {
-			DistElem<BxObject> distElem = dists.poll();
-			if (distElem.c == false
-					&& plane.anyObjectsBetween(distElem.obj1, distElem.obj2)) {
-				dists.add(new DistElem<BxObject>(true, distElem.dist,
-						distElem.obj1, distElem.obj2));
+			DistElem<BxObject> distElem = dists.get(0);
+			dists.remove(0);
+			if (distElem.c == false && plane.anyObjectsBetween(distElem.obj1, distElem.obj2)) {
+				dists.add(new DistElem<BxObject>(true, distElem.dist, distElem.obj1, distElem.obj2));
 				continue;
 			}
 		
@@ -167,24 +189,25 @@ public class ReadingOrderAnalyzer {
 				dists.add(new DistElem<BxObject>(false, distance(other,
 						newGroup), newGroup, other));
 			}
+			Collections.sort(dists);
 			plane.add(newGroup);
 		}
-	//	System.out.println("");
+  //    System.out.println("");
 		assert plane.getObjects().size() == 1 : "There should be one object left at the plane after grouping";
 		return (BxZoneGroup) plane.getObjects().get(0);
 	}
 
 	/** Removes all distance tuples containing obj */
-	private PriorityQueue<DistElem<BxObject> > removeDistElementsContainingObject(Collection<DistElem<BxObject>> list, BxObject obj) {
-		PriorityQueue<DistElem<BxObject> > ret = new PriorityQueue<DistElem<BxObject> >();
+	private List<DistElem<BxObject> > removeDistElementsContainingObject(Collection<DistElem<BxObject>> list, BxObject obj) {
+		List<DistElem<BxObject> > ret = new ArrayList<DistElem<BxObject> >();
 		for (DistElem<BxObject> distElem : list) {
 			if (distElem.obj1 != obj && distElem.obj2 != obj)
 				ret.add(distElem);
 		}
 		return ret;
 	}
-
-/*	private void sortTree(BxZoneGroup tree) {
+/*
+	private void sortTree(BxZoneGroup tree) {
 		if(tree.getLeftChild() != null && tree.getRightChild() != null) {
 			double leftChildDist = distFromRoot(tree.getLeftChild());
 			double rightChildDist = distFromRoot(tree.getRightChild());
@@ -228,11 +251,6 @@ public class ReadingOrderAnalyzer {
 			sortGroupedZones((BxZoneGroup) rightChild);
 	}
 	
-	private Double distFromRoot(BxObject obj) {
-		/* euclidean distance from (0,0) */
-		return Math.sqrt(3*(obj.getX()+obj.getWidth()/2)*(obj.getX()+obj.getWidth()/2)+obj.getY()*obj.getY());
-	}
-	
 	/** Key function for sorting in sortGroupedZones(). Allows to order
 	 * two objects joined together in a logical order.
 	 * 
@@ -240,13 +258,8 @@ public class ReadingOrderAnalyzer {
 	 * @return value based on object's physical properties
 	 */
 	private Double sortPrecedence(BxObject obj) {
-		/* black magic below */
-	/*	return  (1 + BOXES_FLOW) //constant
-				* (2 * obj.getY() )//+ obj.getHeight()) // y0 + y1
-				+ (1 - BOXES_FLOW) //constant
-				* (obj.getX()) // x0
-				;  */
-		return distFromRoot(obj); 
+		/* para-euclidean distance from (0,0) */
+		return Math.sqrt((obj.getX()+obj.getWidth()/2)*(obj.getX()+obj.getWidth()/2)+obj.getY()*obj.getY());
 	}
 	
 	/**
@@ -290,9 +303,10 @@ public class ReadingOrderAnalyzer {
 	//	String filename = "10255834.xml";
 	//	String filename = "11781238.xml";
 	//	String filename = "1748717X.xml";
-		String filename = "06.xml";
+		String filename = "02.xml";
 		String path = "/pl/edu/icm/yadda/analysis/logicstr/train/";
-		String inFile = path + filename;
+	//	String inFile = path + filename;
+		String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
 		InputStream is = ReadingOrderAnalyzer.class.getResourceAsStream(inFile);
 		InputStreamReader isr = new InputStreamReader(is);
 

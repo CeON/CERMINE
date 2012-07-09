@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  * 
  */
-public final class BxChunk extends BxObject implements Serializable, Indexable {
+public final class BxChunk extends BxObject implements Serializable, Indexable<BxChunk>{
 
     private static final long serialVersionUID = -6911268485662874663L;
 
@@ -17,39 +17,64 @@ public final class BxChunk extends BxObject implements Serializable, Indexable {
     private String chunkId;
     private String nextChunkId;
     private BxChunk nextChunk;
+    private BxChunk prevChunk;
     
     public BxChunk(BxBounds bounds, String text) {
         this.bounds = bounds;
         this.text = text;
     }
-
+    
+    @Override
 	public String getId() {
 		return this.chunkId;
 	}
 
+    @Override
 	public String getNextId() {
 		return this.nextChunkId;
 	}
 
-	public Indexable setId(String id) {
+    @Override
+	public BxChunk setId(String id) {
 		this.chunkId = id;
 		return this;
 	}
 
-	public Indexable setNextId(String nextId) {
+    @Override
+	public BxChunk setNextId(String nextId) {
 		this.nextChunkId = nextId;
 		return this;
 	}
 
-	public Indexable getNext() {
+	public BxChunk getPrev() {
+		return this.prevChunk;
+	}
+
+    @Override
+	public BxChunk setPrev(BxChunk elem) {
+    //	assert elem instanceof BxChunk;
+		this.prevChunk = (BxChunk) elem;
+		return this;
+	}   
+	
+    @Override
+	public boolean hasPrev() {
+		return getPrev() != null;
+	}
+
+    @Override
+	public BxChunk getNext() {
 		return this.nextChunk;
 	}
 
-	public Indexable setNext(Indexable elem) {
+    @Override
+	public BxChunk setNext(BxChunk elem) {
+    //	assert elem instanceof BxChunk;
 		this.nextChunk = (BxChunk) elem;
 		return this;
 	}   
 	
+    @Override
 	public boolean hasNext() {
 		return getNext() != null;
 	}

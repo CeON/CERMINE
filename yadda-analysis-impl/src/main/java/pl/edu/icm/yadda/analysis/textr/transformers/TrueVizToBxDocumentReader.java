@@ -85,7 +85,11 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         }
     }
 
-	private <A extends Indexable> void linkGenericImpl(List<A> list) {
+    /** A generic function for linking objects together (setting *Next and *Prev)
+     * It is a assumed, that all Id's and NextId's are set before. 
+     * @param list is a list of elements to be connected 
+     */
+	private <A extends Indexable<A>> void linkGenericImpl(List<A> list) {
 		Map<String, A> indicesMap = new HashMap<String, A>();
 		for (A elem : list)
 			indicesMap.put(elem.getId(), elem);
@@ -97,7 +101,10 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
 				A next = indicesMap.get(nextId);
 				if (next == null)
 					throw new RuntimeException("No matching element found for \"" + nextId + "\"");
+				//link with the next element
 				elem.setNext(next);
+				//link with the previous element
+				next.setPrev(elem);
 			}
 		}
 	}
@@ -113,6 +120,16 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
 	}
 
 	private void setIdsAndLinkPages(List<BxPage> pages) {
+		if(pages.size() == 0)
+			return;
+		if(pages.size() == 1) {
+			BxPage page = pages.get(0);
+			page.setId("0");
+			page.setNextId("-1");
+			page.setNext(null);
+			page.setPrev(null);
+			return;
+		}
 		boolean arePageIdsSet = true;
 		for(BxPage page: pages) {
 			if(page.getNextId() == null || page.getId() == null) {
@@ -123,15 +140,14 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
 		if(arePageIdsSet) { /* Page IDs were set in the input file */
 			linkGenericImpl(pages);
 		} else { /* Page IDs were not set. We have to do it on our own */
-			Integer pageIdx;
-			for(pageIdx=0; pageIdx < pages.size()-1; ++pageIdx) {
-				pages.get(pageIdx).setId(Integer.toString(pageIdx))
-								  .setNextId(Integer.toString(pageIdx+1))
-								  .setNext(pages.get(pageIdx+1));
+			Integer idx;
+			for(idx = 0; idx < pages.size()-1; ++idx) {
+				pages.get(idx).setId(Integer.toString(idx));
+				pages.get(idx).setNextId(Integer.toString(idx+1));
 			}
-			pages.get(pageIdx).setId(Integer.toString(pageIdx))
-							  .setNextId("-1")
-							  .setNext(null);
+			pages.get(pages.size()-1).setId(Integer.toString(idx));
+			pages.get(pages.size()-1).setNextId("-1");
+			linkGenericImpl(pages);
 		}
 	}
 

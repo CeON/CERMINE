@@ -1,7 +1,7 @@
 package pl.edu.icm.yadda.analysis.textr.model;
 
 /**
- * Common class for all Bx classes having physical properties (this is to say
+ * Common class for all Bx* classes having physical properties (this is to say
  * BxBounds).
  * 
  * @author Pawel Szostek (p.szostek@icm.edu.pl)

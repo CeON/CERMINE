@@ -9,7 +9,7 @@ import java.util.List;
  * Models a single page of a document. A page is either segmented (divided into zones)
  * or not segmented (containing a list of chunks that haven't been grouped into zones yet).
  */
-public final class BxPage extends BxObject implements Serializable, Indexable, Printable {
+public final class BxPage extends BxObject implements Serializable, Indexable<BxPage>, Printable {
 
     private static final long serialVersionUID = 8981043716257046347L;
 
@@ -21,6 +21,7 @@ public final class BxPage extends BxObject implements Serializable, Indexable, P
 
     /** next page in the linked list of pages. Stored in the logical reading order */
     private BxPage nextPage;
+    private BxPage prevPage;
     
     /** list of page's zones (if the page is segmented) */
     private final List<BxZone> zones = new ArrayList<BxZone>();
@@ -34,35 +35,60 @@ public final class BxPage extends BxObject implements Serializable, Indexable, P
     	return this;
     }
     
-    public Indexable setId(String pageId) {
+    @Override
+    public BxPage setId(String pageId) {
     	this.pageId = pageId;
     	return this;
     }
     
+    @Override
     public String getId() {
     	return this.pageId;
     }
     
-    public Indexable setNextId(String nextPageId) {
+    @Override
+    public BxPage setNextId(String nextPageId) {
     	this.nextPageId = nextPageId;
     	return this;
     }
     
+    @Override
     public String getNextId() {
     	return this.nextPageId;
     }
 
-    public Indexable setNext(Indexable nextPage) {
+    @Override
+    public BxPage setNext(BxPage nextPage) {
+    	assert nextPage instanceof BxPage;
     	this.nextPage = (BxPage)nextPage;
     	return this;
     }
-    
-    public Indexable getNext() {
+
+    @Override
+    public BxPage getNext() {
     	return this.nextPage;
     }
-	
+
+    @Override
 	public boolean hasNext() {
 		return getNext() != null;
+	}    
+
+    @Override
+    public BxPage setPrev(BxPage prevPage) {
+    	assert prevPage instanceof BxPage;
+    	this.prevPage = (BxPage)prevPage;
+    	return this;
+    }
+
+    @Override
+    public BxPage getPrev() {
+    	return this.prevPage;
+    }
+
+    @Override
+	public boolean hasPrev() {
+		return getPrev() != null;
 	}
 
     public List<BxZone> getZones() {

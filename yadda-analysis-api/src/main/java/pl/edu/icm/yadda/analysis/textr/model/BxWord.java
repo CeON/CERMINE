@@ -58,7 +58,6 @@ public class BxWord extends BxObject implements Serializable, Indexable<BxWord>,
 
 	@Override
 	public BxWord setNext(BxWord elem) {
-		assert elem instanceof BxWord;
 		this.nextWord = (BxWord) elem;
 		return this;
 	}

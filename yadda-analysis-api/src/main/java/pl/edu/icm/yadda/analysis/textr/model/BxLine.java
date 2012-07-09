@@ -59,7 +59,6 @@ public class BxLine extends BxObject implements Serializable, Indexable<BxLine>,
 
 	@Override
 	public BxLine setPrev(BxLine elem) {
-		assert elem instanceof BxLine;
 		this.prevLine = (BxLine) elem;
 		return this;
 	}
@@ -76,7 +75,6 @@ public class BxLine extends BxObject implements Serializable, Indexable<BxLine>,
 
 	@Override
 	public BxLine setNext(BxLine elem) {
-		assert elem instanceof BxLine;
 		this.nextLine = (BxLine) elem;
 		return this;
 	}   

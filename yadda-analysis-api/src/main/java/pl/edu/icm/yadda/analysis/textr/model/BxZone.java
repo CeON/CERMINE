@@ -57,7 +57,6 @@ public final class BxZone extends BxObject implements Serializable, Indexable<Bx
 	
     @Override
 	public BxZone setNext(BxZone nextZone) {
-    	assert nextZone instanceof BxZone;
 		this.nextZone = (BxZone)nextZone;
 		return this;
 	}
@@ -74,7 +73,6 @@ public final class BxZone extends BxObject implements Serializable, Indexable<Bx
 	
     @Override
 	public BxZone setPrev(BxZone prevZone) {
-    	assert prevZone instanceof BxZone;
 		this.prevZone = (BxZone)prevZone;
 		return this;
 	}

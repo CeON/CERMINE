@@ -59,7 +59,7 @@ public final class BxPage extends BxObject implements Serializable, Indexable<Bx
 
     @Override
     public BxPage setNext(BxPage nextPage) {
-    	assert nextPage instanceof BxPage;
+    //	assert nextPage instanceof BxPage;
     	this.nextPage = (BxPage)nextPage;
     	return this;
     }
@@ -76,7 +76,7 @@ public final class BxPage extends BxObject implements Serializable, Indexable<Bx
 
     @Override
     public BxPage setPrev(BxPage prevPage) {
-    	assert prevPage instanceof BxPage;
+   	//	assert prevPage instanceof BxPage;
     	this.prevPage = (BxPage)prevPage;
     	return this;
     }

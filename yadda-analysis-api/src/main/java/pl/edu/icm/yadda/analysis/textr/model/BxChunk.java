@@ -52,7 +52,6 @@ public final class BxChunk extends BxObject implements Serializable, Indexable<B
 
     @Override
 	public BxChunk setPrev(BxChunk elem) {
-    //	assert elem instanceof BxChunk;
 		this.prevChunk = (BxChunk) elem;
 		return this;
 	}   
@@ -69,7 +68,6 @@ public final class BxChunk extends BxObject implements Serializable, Indexable<B
 
     @Override
 	public BxChunk setNext(BxChunk elem) {
-    //	assert elem instanceof BxChunk;
 		this.nextChunk = (BxChunk) elem;
 		return this;
 	}   

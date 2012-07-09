@@ -26,6 +26,12 @@ public interface FeatureVector {
     void addFeature(String name, double featureValue);
 
     /**
+     * Dumps content of a feature vector to a string
+     * @return string of feature values in a human readable form 
+     */
+    String dump();
+
+    /**
      * Return a set of used feature names.
      * 
      * @return feature names set

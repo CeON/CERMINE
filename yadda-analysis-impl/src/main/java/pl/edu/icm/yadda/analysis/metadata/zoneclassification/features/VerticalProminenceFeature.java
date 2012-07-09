@@ -23,7 +23,7 @@ public class VerticalProminenceFeature implements
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {		
 		if(page.getZones().size() == 1)
-			return 0.0; //there is only one zone - no prominence can be measures
+			return 0.0; //there is only one zone - no prominence can be measured
 		List<BxZone> zones = page.getZones();
 		Integer thisZoneIdx = null;
 		for(Integer zoneIdx = 0; zoneIdx < page.getZones().size(); ++zoneIdx) {
@@ -53,9 +53,9 @@ public class VerticalProminenceFeature implements
 			BxZone prevZone = zones.get(thisZoneIdx-1);
 			BxZone thisZone = zones.get(thisZoneIdx);
 			BxZone nextZone = zones.get(thisZoneIdx+1);
-			if(prevZone.getY() < thisZone.getY()) { //check if previous zone lies in the same column
-				if(thisZone.getY() < nextZone.getY()) { //check if next zone lies in the same column
-					return nextZone.getY()-(prevZone.getY()+prevZone.getHeight());
+			if(prevZone.getY() < thisZone.getY()) { //previous zone lies in the same column
+				if(thisZone.getY() < nextZone.getY()) { //next zone lies in the same column
+					return nextZone.getY()-(prevZone.getY()+prevZone.getHeight())-zone.getHeight();
 				} else {
 					return thisZone.getY()-(prevZone.getY()+prevZone.getHeight());
 				}

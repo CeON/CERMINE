@@ -65,7 +65,7 @@
         <repository>
             <id>yadda</id>
             <name>Yadda project repository</name>
-            <url>http://maven.icm.edu.pl/artifactory/repo</url>
+            <url>http://maven.icm.edu.pl/artifactory/maven-2_3-repos</url>
         </repository>
     </repositories>
 

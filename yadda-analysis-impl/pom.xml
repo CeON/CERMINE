@@ -112,6 +112,7 @@
     </dependencies>
     
     
+    <!--
     <repositories>
         <repository>
             <id>yadda</id>
@@ -119,6 +120,7 @@
             <url>http://maven.icm.edu.pl/artifactory/repo</url>
         </repository>
     </repositories>
+    -->
 
     <!--
   <scm>

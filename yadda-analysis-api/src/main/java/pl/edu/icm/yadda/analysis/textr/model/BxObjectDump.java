@@ -12,10 +12,10 @@ package pl.edu.icm.yadda.analysis.textr.model;
 public class BxObjectDump {
 	static Integer INDENT_WIDTH = 4;
 	public String dump(BxDocument doc) {
-		return dump(doc, -1, 0, false, true);
+		return dump(doc, -1, 0, false, 10);
 	}
 	
-	public String dump(BxDocument doc, Integer levels, Integer indent, Boolean dumpReference, Boolean dumpContent) {
+	public String dump(BxDocument doc, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0; i<indent*INDENT_WIDTH; ++i)
 			stringBuilder.append(" ");
@@ -29,12 +29,12 @@ public class BxObjectDump {
 		if(levels != 0) {
 			--levels;
 			for(BxPage page: doc.getPages())
-				stringBuilder.append(dump(page, levels, indent+1, dumpReference, dumpContent));
+				stringBuilder.append(dump(page, levels, indent+1, dumpReference, contentLength));
 		}
 		return stringBuilder.toString();
 	}
 	
-	public String dump(BxPage page, Integer levels, Integer indent, Boolean dumpReference, Boolean dumpContent) {
+	public String dump(BxPage page, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0; i<indent*INDENT_WIDTH; ++i)
 			stringBuilder.append(" ");
@@ -49,35 +49,37 @@ public class BxObjectDump {
 			stringBuilder.append(" @")
 						 .append(cutOutReference(page.toString()));
 		}
-		if(dumpContent) {
-			stringBuilder.append(dumpContentBriefly(page));
-		}
-		stringBuilder.append("\n");
+		stringBuilder.append(dumpContentBriefly(page, contentLength))
+					 .append("\n");
 		
 		if(levels != 0) {
 			--levels;
 			for(BxZone zone: page.getZones())
-				stringBuilder.append(dump(zone, levels, indent+1, dumpReference, dumpContent));
+				stringBuilder.append(dump(zone, levels, indent+1, dumpReference, contentLength));
 		}
 		return stringBuilder.toString();
 	}
 	
 	private String brief(String text) {
-		if(text.length() < 10)
+		if(text.length() < 100)
 			return text;
 		else
-			return text.substring(0, 10) + "...";
+			return text.substring(0, 100) + "...";
 	}
 	
-	private <A extends Printable> String dumpContentBriefly(A obj) {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(" [")
-		 			 .append(brief(obj.toText()))
-		 			 .append("]");
-		return stringBuilder.toString();
+	private <A extends Printable> String dumpContentBriefly(A obj, Integer contentLength) {
+		if(contentLength > 0) {
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append(" [")
+			 			 .append(brief(obj.toText()))
+			 			 .append("]");
+			return stringBuilder.toString();
+		} else {
+			return new String("");
+		}
 	}
 	
-	public String dump(BxZone zone, Integer levels, Integer indent, Boolean dumpReference, Boolean dumpContent) {
+	public String dump(BxZone zone, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0; i<indent*INDENT_WIDTH; ++i)
 			stringBuilder.append(" ");
@@ -88,24 +90,27 @@ public class BxObjectDump {
 			stringBuilder.append("");
 		}
 		stringBuilder.append(")");
+		if(zone.getLabel() != null) {
+			stringBuilder.append("[")
+						 .append(zone.getLabel())
+						 .append("]");
+		}
 		if(dumpReference) {
 			stringBuilder.append("@")
 						 .append(cutOutReference(zone.toString()));
 		}
-		if(dumpContent) {
-			stringBuilder.append(dumpContentBriefly(zone));
-		}
-		stringBuilder.append("\n");
+		stringBuilder.append(dumpContentBriefly(zone, contentLength))
+					 .append("\n");
 		
 		if(levels != 0) {
 			--levels;
 			for(BxLine line: zone.getLines())
-				stringBuilder.append(dump(line, levels, indent+1, dumpReference, dumpContent));
+				stringBuilder.append(dump(line, levels, indent+1, dumpReference, contentLength));
 		}
 		return stringBuilder.toString();
 	}
 	
-	public String dump(BxLine line, Integer levels, Integer indent, Boolean dumpReference, Boolean dumpContent) {
+	public String dump(BxLine line, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0; i<indent*INDENT_WIDTH; ++i)
 			stringBuilder.append(" ");
@@ -120,20 +125,18 @@ public class BxObjectDump {
 			stringBuilder.append(" @")
 						 .append(cutOutReference(line.toString()));
 		}
-		if(dumpContent) {
-			stringBuilder.append(dumpContentBriefly(line));
-		}
+		stringBuilder.append(dumpContentBriefly(line, contentLength));
 		stringBuilder.append("\n");
 		
 		if(levels != 0) {
 			--levels;
 			for(BxWord word: line.getWords())
-				stringBuilder.append(dump(word, levels, indent+1, dumpReference, dumpContent));
+				stringBuilder.append(dump(word, levels, indent+1, dumpReference, contentLength));
 		}
 		return stringBuilder.toString();
 	}
 	
-	public String dump(BxWord word, Integer levels, Integer indent, Boolean dumpReference, Boolean dumpContent) {
+	public String dump(BxWord word, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0; i<indent*INDENT_WIDTH; ++i)
 			stringBuilder.append(" ");
@@ -148,10 +151,8 @@ public class BxObjectDump {
 			stringBuilder.append("@")
 						 .append(cutOutReference(word.toString()));
 		}
-		if(dumpContent) {
-			stringBuilder.append(dumpContentBriefly(word));
-		}
-		stringBuilder.append("\n");
+		stringBuilder.append(dumpContentBriefly(word, contentLength))
+					 .append("\n");
 		return stringBuilder.toString();
 	}
 	

@@ -1,5 +1,7 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.process.nodes;
 
+import java.util.List;
+
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMTransitionProbability;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.SimpleHMMTransitionProbability;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
@@ -9,15 +11,16 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
 /**
  * Simple Hidden Markov Model transition probability calculator node.
  *
+ * @param <A> a label type
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class SimpleTransitionProbabilityCalculatorNode<S,T>
-        implements IProcessingNode<HMMTrainingElement<S,T>[], HMMTransitionProbability<S>> {
+public class SimpleTransitionProbabilityCalculatorNode<S>
+        implements IProcessingNode<List<HMMTrainingElement<S>>, HMMTransitionProbability<S>> {
 
     private double zeroProbabilityValue = 0.0;
 
     @Override
-    public HMMTransitionProbability<S> process(HMMTrainingElement<S,T>[] input, ProcessContext ctx) throws Exception {
+    public HMMTransitionProbability<S> process(List<HMMTrainingElement<S>> input, ProcessContext ctx) throws Exception {
         return new SimpleHMMTransitionProbability<S>(input, zeroProbabilityValue);
     }
 

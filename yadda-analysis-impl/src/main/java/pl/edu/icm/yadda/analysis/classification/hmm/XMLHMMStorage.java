@@ -26,40 +26,40 @@ public class XMLHMMStorage implements HMMStorage {
     private static final String hmmProbabilitiesFile = "hmm-probabilities.xml";
 
     @Override
-    public synchronized <S,T> void storeInitialProbability(String hmmId, HMMInitialProbability<S> probability)
+    public synchronized <S> void storeInitialProbability(String hmmId, HMMInitialProbability<S> probability)
             throws IOException {
-        HMMProbabilityInfo<S,T> hmmProbability = getProbabilityInfo(hmmId);
+        HMMProbabilityInfo<S> hmmProbability = getProbabilityInfo(hmmId);
         if (hmmProbability == null) {
-            hmmProbability = new SimpleHMMProbabilityInfo<S,T>();
+            hmmProbability = new SimpleHMMProbabilityInfo<S>();
         }
         hmmProbability.setInitialProbability(probability);
         storeProbabilityInfo(hmmId, hmmProbability);
     }
 
     @Override
-    public synchronized <S,T> void storeTransitionProbability(String hmmId, HMMTransitionProbability<S> probability)
+    public synchronized <S> void storeTransitionProbability(String hmmId, HMMTransitionProbability<S> probability)
             throws IOException {
-        HMMProbabilityInfo<S,T> hmmProbability = getProbabilityInfo(hmmId);
+        HMMProbabilityInfo<S> hmmProbability = getProbabilityInfo(hmmId);
         if (hmmProbability == null) {
-            hmmProbability = new SimpleHMMProbabilityInfo<S,T>();
+            hmmProbability = new SimpleHMMProbabilityInfo<S>();
         }
         hmmProbability.setTransitionProbability(probability);
         storeProbabilityInfo(hmmId, hmmProbability);
     }
 
     @Override
-    public synchronized <S,T> void storeEmissionProbability(String hmmId, HMMEmissionProbability<S,T> probability)
+    public synchronized <S> void storeEmissionProbability(String hmmId, HMMEmissionProbability<S> probability)
             throws IOException {
-        HMMProbabilityInfo<S,T> hmmProbability = getProbabilityInfo(hmmId);
+        HMMProbabilityInfo<S> hmmProbability = getProbabilityInfo(hmmId);
         if (hmmProbability == null) {
-            hmmProbability = new SimpleHMMProbabilityInfo<S,T>();
+            hmmProbability = new SimpleHMMProbabilityInfo<S>();
         }
         hmmProbability.setEmissionProbability(probability);
         storeProbabilityInfo(hmmId, hmmProbability);
     }
 
     @Override
-    public <S,T> HMMProbabilityInfo<S,T> getProbabilityInfo(String hmmId) throws IOException {
+    public <S> HMMProbabilityInfo<S> getProbabilityInfo(String hmmId) throws IOException {
         String filePath = directory + File.separator + hmmId + File.separator + hmmProbabilitiesFile;
         InputStream is = null;
 
@@ -68,7 +68,7 @@ public class XMLHMMStorage implements HMMStorage {
             XStream xstream = new XStream();
             Object object = xstream.fromXML(is);
             if (object instanceof HMMProbabilityInfo) {
-                return (HMMProbabilityInfo<S,T>) object;
+                return (HMMProbabilityInfo) object;
             }
             return null;
         } catch (FileNotFoundException ex) {
@@ -80,7 +80,7 @@ public class XMLHMMStorage implements HMMStorage {
         }
     }
 
-    private <S,T> void storeProbabilityInfo(String hmmId, HMMProbabilityInfo<S,T> hmmProbability) throws IOException {
+    private <S,T> void storeProbabilityInfo(String hmmId, HMMProbabilityInfo<S> hmmProbability) throws IOException {
         String filePath = directory + File.separator + hmmId + File.separator + hmmProbabilitiesFile;
         File hmmFile = new File(filePath);
         if (!hmmFile.exists()) {

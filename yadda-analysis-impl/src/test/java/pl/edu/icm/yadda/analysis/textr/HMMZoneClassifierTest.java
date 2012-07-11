@@ -49,8 +49,8 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
         XStream xstream = new XStream();
-        HMMProbabilityInfo<BxZoneLabel, FeatureVector> hmmProbabilities
-                = (HMMProbabilityInfo<BxZoneLabel, FeatureVector>) xstream.fromXML(is);
+        HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
+                = (HMMProbabilityInfo<BxZoneLabel>) xstream.fromXML(is);
 
         FeatureVectorBuilder<BxZone, BxPage> vBuilder = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
         vBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(

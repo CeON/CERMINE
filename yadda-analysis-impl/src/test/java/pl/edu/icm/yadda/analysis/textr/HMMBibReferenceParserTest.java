@@ -47,11 +47,11 @@ public class HMMBibReferenceParserTest {
     public void setUp() {
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
         XStream xstream = new XStream();
-        HMMProbabilityInfo<CitationTokenLabel, FeatureVector> hmmProbabilities =
-                (HMMProbabilityInfo<CitationTokenLabel, FeatureVector>) xstream.fromXML(is);
-        
+        HMMProbabilityInfo<CitationTokenLabel> hmmProbabilities = 
+            (HMMProbabilityInfo<CitationTokenLabel>) xstream.fromXML(is);
+
         FeatureVectorBuilder<CitationToken, Citation> vectorBuilder =
-                new SimpleFeatureVectorBuilder<CitationToken, Citation>();
+        		new SimpleFeatureVectorBuilder<CitationToken, Citation>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<CitationToken, Citation>>asList(
                 new DigitRelativeCountFeature(),
                 new IsAllDigitsFeature(),

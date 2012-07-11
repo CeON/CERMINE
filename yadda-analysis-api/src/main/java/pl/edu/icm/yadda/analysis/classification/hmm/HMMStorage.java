@@ -18,42 +18,38 @@ public interface HMMStorage {
      * Stores HMM initial probability.
      *
      * @param <S> A type of labels.
-     * @param <T> A type of observations.
      * @param hmmId HMM id.
      * @param probability Probability object to store.
      * @throws IOException
      */
-    <S,T> void storeInitialProbability(String hmmId, HMMInitialProbability<S> probability) throws IOException;
+    <S> void storeInitialProbability(String hmmId, HMMInitialProbability<S> probability) throws IOException;
 
     /**
      * Stores HMM transition probability.
      *
      * @param <S> A type of labels.
-     * @param <T> A type of observations.
      * @param hmmId HMM id.
      * @param probability Probability object to store.
      * @throws IOException
      */
-    <S,T> void storeTransitionProbability(String hmmId, HMMTransitionProbability<S> probability) throws IOException;
+    <S> void storeTransitionProbability(String hmmId, HMMTransitionProbability<S> probability) throws IOException;
 
     /**
      * Stores HMM emission probability.
      *
      * @param <S> A type of labels.
-     * @param <T> A type of observations.
      * @param hmmId HMM id.
      * @param probability Probability object to store.
      * @throws IOException
      */
-    <S,T> void storeEmissionProbability(String hmmId, HMMEmissionProbability<S,T> probability) throws IOException;
+    <S> void storeEmissionProbability(String hmmId, HMMEmissionProbability<S> probability) throws IOException;
 
     /**
      * Fetches stored probability information object.
      *
      * @param <S> A type of labels.
-     * @param <T> A type of observations.
      * @param hmmId HMM id.
      * @return Stored probability object.
      */
-    <S,T> HMMProbabilityInfo<S,T> getProbabilityInfo(String hmmId) throws IOException;
+    <S> HMMProbabilityInfo<S> getProbabilityInfo(String hmmId) throws IOException;
 }

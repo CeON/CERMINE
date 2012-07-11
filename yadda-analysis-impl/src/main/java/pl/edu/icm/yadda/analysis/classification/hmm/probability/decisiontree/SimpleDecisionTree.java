@@ -31,12 +31,12 @@ public class SimpleDecisionTree<T> implements DecisionTree<T> {
     }
 
     @Override
-    public SimpleDecisionTree getLeft() {
+    public SimpleDecisionTree<T> getLeft() {
         return left;
     }
 
     @Override
-    public SimpleDecisionTree getRight() {
+    public SimpleDecisionTree<T> getRight() {
         return right;
     }
 

@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 
 /**
@@ -17,7 +19,7 @@ public class HMMServiceImpl implements HMMService {
     /**
      * Viterbi algorithm implementation. The method calculates the most
      * probable states of a sequence of objects based on a sequence of messages
-     * emited by them. The method uses HMM probabilities (initial, transition
+     * emitted by them. The method uses HMM probabilities (initial, transition
      * and emission) extracted previously from a training set.
      *
      * Probabilities information used by the algorithm are:
@@ -26,19 +28,17 @@ public class HMMServiceImpl implements HMMService {
      * - transition probability (tp) - for every state pair s1, s2 tp(s1, s2) 
      * is the probability that state s2 follows s1 in object sequence,
      * - emission probability (ep) - for a state s and message m ep(s, m) is 
-     * the probability that on object in state s emited message m.
+     * the probability that on object in state s emitted message m.
      *
      * @param <S> A type of states (labels).
-     * @param <T> A type of emitted messages.
      * @param probabilityInfo HMM's probability information object.
      * @param states A collection of all possible states.
-     * @param messages A sequence of messages emited by objects.
+     * @param messages A sequence of messages emitted by objects.
      * @return A sequence of the most probable object states, the order is the
      * same as in messages list.
      */
     @Override
-    public <S,T> List<S> viterbiMostProbableStates(HMMProbabilityInfo<S,T> probabilityInfo, Collection<S> states,
-                                                 List<T> messages) {
+    public <S> List<S> viterbiMostProbableStates(HMMProbabilityInfo<S> probabilityInfo, Collection<S> states, List<FeatureVector> messages) {
 
         /* A matrix that keeps track of the most probable state paths and their 
          probabilities. viterbiMatrix(i, s) is a matrix node that stores three

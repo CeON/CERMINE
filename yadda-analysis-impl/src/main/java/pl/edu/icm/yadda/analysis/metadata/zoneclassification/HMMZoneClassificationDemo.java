@@ -4,11 +4,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
+
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
-import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
@@ -85,10 +85,10 @@ public class HMMZoneClassificationDemo {
         
         BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);
-        HMMTrainingElement<BxZoneLabel, FeatureVector>[] trainingElements = node.process(new BxDocument[] {document}, null);
+        List<HMMTrainingElement<BxZoneLabel>> trainingElements = node.process(new BxDocument[] {document}, null);
 
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
-        HMMProbabilityInfo<BxZoneLabel, FeatureVector> hmmProbabilities
+        HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
                 = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, vectorBuilder);
 
 

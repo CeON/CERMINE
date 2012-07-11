@@ -6,25 +6,23 @@ import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
  * Decision tree node interface.
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
- * @param <T> A type of labels.
+ * @param <S> A type of labels.
  */
-public interface DecisionTree<T> {
+public interface DecisionTree<S> {
 
     /**
      * Gets left child of the node.
      *
-     * @param <T> A type of labels.
      * @return Left child of the node.
      */
-    <T> DecisionTree<T> getLeft();
+    DecisionTree<S> getLeft();
 
     /**
      * Gets right child of the node.
      *
-     * @param <T> A type of labels.
      * @return Right child of the node.
      */
-    <T> DecisionTree<T> getRight();
+    DecisionTree<S> getRight();
 
     /**
      * Checks whether the node is a leaf.
@@ -58,6 +56,6 @@ public interface DecisionTree<T> {
      * @param label The label.
      * @return The amount of training elements.
      */
-    int getLabelCount(T label);
+    int getLabelCount(S label);
 
 }

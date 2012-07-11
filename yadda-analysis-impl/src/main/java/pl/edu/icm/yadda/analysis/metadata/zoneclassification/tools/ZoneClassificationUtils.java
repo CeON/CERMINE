@@ -17,7 +17,11 @@ import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
 public class ZoneClassificationUtils {
 
     public static void sortZones(BxDocument document, double tolerance) {
-		ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
+   //     for (BxPage page : document.getPages()) {
+   //         BxModelUtils.sortZonesRecursively(page);
+   //         BxModelUtils.sortZonesYX(page, tolerance);
+    //    }	
+    	ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
 		BxDocument sortedDoc = roa.setReadingOrder(document);
 		document = sortedDoc;
     }

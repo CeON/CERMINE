@@ -19,23 +19,23 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class BibRefLinesToFVHMMTrainingElementsConverterNode
-        implements IProcessingNode<BxDocumentBibReferences[], HMMTrainingElement<BibReferenceLineLabel, FeatureVector>[]> {
+        implements IProcessingNode<BxDocumentBibReferences[], HMMTrainingElement<BibReferenceLineLabel>[]> {
 
     private FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder;
 
     @Override
-    public HMMTrainingElement<BibReferenceLineLabel, FeatureVector>[] process(BxDocumentBibReferences[] input, ProcessContext ctx)
+    public HMMTrainingElement<BibReferenceLineLabel>[] process(BxDocumentBibReferences[] input, ProcessContext ctx)
             throws Exception {
 
-        List<HMMTrainingElement<BibReferenceLineLabel, FeatureVector>> trainingList =
-                new ArrayList<HMMTrainingElement<BibReferenceLineLabel, FeatureVector>>();
+        List<HMMTrainingElement<BibReferenceLineLabel>> trainingList =
+                new ArrayList<HMMTrainingElement<BibReferenceLineLabel>>();
 
         for (BxDocumentBibReferences refs : input) {
-            SimpleHMMTrainingElement prevToken = null;
+            SimpleHMMTrainingElement<BibReferenceLineLabel> prevToken = null;
             for (BxLine line : refs.getLines()) {
                 FeatureVector featureVector = featureVectorBuilder.getFeatureVector(line, refs);
-                SimpleHMMTrainingElement<BibReferenceLineLabel, FeatureVector> element =
-                        new SimpleHMMTrainingElement(featureVector, refs.getLabel(line), prevToken == null);
+                SimpleHMMTrainingElement<BibReferenceLineLabel> element =
+                        new SimpleHMMTrainingElement<BibReferenceLineLabel>(featureVector, refs.getLabel(line), prevToken == null);
                 trainingList.add(element);
                 if (prevToken != null) {
                     prevToken.setNextLabel(refs.getLabel(line));
@@ -47,7 +47,7 @@ public class BibRefLinesToFVHMMTrainingElementsConverterNode
         return trainingList.toArray(new HMMTrainingElement[]{});
     }
 
-    public void setFeatureVectorBuilder(FeatureVectorBuilder featureVectorBuilder) {
+    public void setFeatureVectorBuilder(FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {
         this.featureVectorBuilder = featureVectorBuilder;
     }
 

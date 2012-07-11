@@ -17,12 +17,12 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.edu.icm.yadda.analysis.AnalysisException;
 
 import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
+import pl.edu.icm.yadda.analysis.textr.model.BxObjectDump;
 import pl.edu.icm.yadda.analysis.textr.tools.DocumentFlattener;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
@@ -90,7 +90,7 @@ public abstract class AbstractDocumentProcessorTest {
                 ZipEntry zipEntry = (ZipEntry) entries.nextElement();
                 if (zipEntry.getName().endsWith(xmlFilenameSuffix)) {
                     String parent = new File(zipEntry.getName()).getParent();
-
+                //    System.out.println(zipEntry.getName());
                     if (dirSamplesCount.containsKey(parent)) {
                         dirSamplesCount.put(parent, dirSamplesCount.get(parent) + 1);
                     } else {
@@ -138,8 +138,14 @@ public abstract class AbstractDocumentProcessorTest {
         if (endProcessFlattener != null) {
             endProcessFlattener.flatten(expectedDoc);
         }
-
-        return compareDocuments(testDoc, expectedDoc);
+        
+        //BxObjectDump dump = new BxObjectDump();
+        //System.out.println("--------------------");
+        //System.out.println(dump.dump(testDoc, 2, 2, false, true));
+        //System.out.println(dump.dump(expectedDoc, 2, 2, false, true));
+        boolean ret =  compareDocuments(testDoc, expectedDoc);
+        //System.out.println(ret);
+        return ret;
     }
     
 }

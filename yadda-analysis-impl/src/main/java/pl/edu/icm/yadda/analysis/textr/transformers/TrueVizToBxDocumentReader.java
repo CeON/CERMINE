@@ -73,8 +73,10 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
                 }
             }
             setIdsAndLinkPages(pages);
-            if(areIdsSet)
+            if(areIdsSet) {
             	linkOtherElements(pages);
+            	System.out.println("ARE_SET");
+            }
             return pages;
         } catch (IOException ex) {
             throw new TransformationException(ex);

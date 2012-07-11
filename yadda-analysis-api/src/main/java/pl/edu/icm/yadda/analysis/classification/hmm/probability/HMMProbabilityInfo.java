@@ -1,13 +1,14 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.probability;
 
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+
 /**
  * Hidden Markov Model's probability information.
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  * @param <S> A type of labels.
- * @param <T> A type of observations.
  */
-public interface HMMProbabilityInfo<S,T> {
+public interface HMMProbabilityInfo<S> {
 
     /**
      * Sets HMM's initial probability.
@@ -28,7 +29,7 @@ public interface HMMProbabilityInfo<S,T> {
      *
      * @param emissionProbability HMM's emission probability
      */
-    void setEmissionProbability(HMMEmissionProbability<S,T> emissionProbability);
+    void setEmissionProbability(HMMEmissionProbability<S> emissionProbability);
 
     /**
      * Gets HMM's initial probability (the probability that the first object in
@@ -57,5 +58,5 @@ public interface HMMProbabilityInfo<S,T> {
      * @param observation Emitted message.
      * @return HMM's emission probability.
      */
-    double getEmissionProbability(S label, T observation);
+    double getEmissionProbability(S label, FeatureVector observation);
 }

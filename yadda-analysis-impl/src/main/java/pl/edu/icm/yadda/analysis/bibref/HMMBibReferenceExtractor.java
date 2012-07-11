@@ -17,13 +17,13 @@ import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 
 /**
  * HMM-based bibliographic reference extractor.
- *
+ * 
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class HMMBibReferenceExtractor implements BibReferenceExtractor {
 
     private HMMService hmmService;
-    private HMMProbabilityInfo<BibReferenceLineLabel, FeatureVector> labelProbabilities;
+    private HMMProbabilityInfo<BibReferenceLineLabel> labelProbabilities;
     private FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder;
 
     public HMMBibReferenceExtractor(HMMService hmmService, HMMStorage hmmStorage, String hmmId,
@@ -33,20 +33,20 @@ public class HMMBibReferenceExtractor implements BibReferenceExtractor {
         this.labelProbabilities = hmmStorage.getProbabilityInfo(hmmId);
     }
 
-    public HMMBibReferenceExtractor(HMMService hmmService, HMMProbabilityInfo<BibReferenceLineLabel,
-            FeatureVector> labelProbabilities, FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {
+    public HMMBibReferenceExtractor(HMMService hmmService, HMMProbabilityInfo<BibReferenceLineLabel> labelProbabilities,
+            FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {
         this.hmmService = hmmService;
         this.labelProbabilities = labelProbabilities;
         this.featureVectorBuilder = featureVectorBuilder;
     }
-    
+
     @Override
     public String[] extractBibReferences(BxDocument document) {
         BxDocumentBibReferences documentReferences = BibRefExtractionUtils.extractBibRefLines(document);
 
         List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
         for (BxLine line : documentReferences.getLines()) {
-            featureVectors.add(featureVectorBuilder.getFeatureVector(line, documentReferences));
+            featureVectors.add(featureVectorBuilder.getFeatureVector(line,documentReferences));
         }
 
         List<BibReferenceLineLabel> labels = hmmService.viterbiMostProbableStates(labelProbabilities,
@@ -63,7 +63,7 @@ public class HMMBibReferenceExtractor implements BibReferenceExtractor {
         this.hmmService = hmmService;
     }
 
-    public void setLabelProbabilities(HMMProbabilityInfo<BibReferenceLineLabel, FeatureVector> labelProbabilities) {
+    public void setLabelProbabilities(HMMProbabilityInfo<BibReferenceLineLabel> labelProbabilities) {
         this.labelProbabilities = labelProbabilities;
     }
 

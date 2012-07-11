@@ -6,11 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Collection;
 
 import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.analysis.textr.readingorder.BxZoneGroup;
@@ -180,7 +179,7 @@ public class ReadingOrderAnalyzer {
 			}
 		    System.out.println("(" + distElem.obj1.getX() + ", " + distElem.obj1.getY() + ", " + (int)distElem.obj1.getWidth() + ", " + (int)distElem.obj1.getHeight() + ": "+ s(obj1Content)+"["+obj1Content.length()+"])" 
 				+ " + (" + distElem.obj2.getX() + ", " + distElem.obj2.getY() + ", " + (int)distElem.obj2.getWidth() + ", " + (int)distElem.obj2.getHeight() + ": "+ s(obj2Content)+"["+obj2Content.length()+"]) " +distElem.dist);
-			*/
+		 	*/
 			BxZoneGroup newGroup = new BxZoneGroup(distElem.obj1, distElem.obj2);
 			plane.remove(distElem.obj1).remove(distElem.obj2);
 			dists = removeDistElementsContainingObject(dists, distElem.obj1);
@@ -236,9 +235,10 @@ public class ReadingOrderAnalyzer {
 	private void sortGroupedZones(BxZoneGroup group) {
 		BxObject leftChild = group.getLeftChild();
 		BxObject rightChild = group.getRightChild();
-		Double leftChildSortPrecedence = sortPrecedence(leftChild);
-		Double rightChildSortPrecedence = sortPrecedence(rightChild);
-		if (leftChildSortPrecedence < rightChildSortPrecedence) {
+	//	Double leftChildSortPrecedence = sortPrecedence(leftChild);
+	//	Double rightChildSortPrecedence = sortPrecedence(rightChild);
+	//	if (leftChildSortPrecedence < rightChildSortPrecedence) {
+		if(!shouldBeSwapped(leftChild, rightChild)) {
 			// the order is fine, don't do anything
 		} else {
 			// swap
@@ -251,6 +251,48 @@ public class ReadingOrderAnalyzer {
 			sortGroupedZones((BxZoneGroup) rightChild);
 	}
 	
+	private Boolean shouldBeSwapped(BxObject first, BxObject second) {
+		Double cx, cy, cw, ch, ox, oy, ow, oh;
+		cx = first.getBounds().getX();
+		cy = first.getBounds().getY();
+		cw = first.getBounds().getWidth();
+		ch = first.getBounds().getHeight();
+
+		ox = second.getBounds().getX();
+		oy = second.getBounds().getY();
+		ow = second.getBounds().getWidth();
+		oh = second.getBounds().getHeight();
+
+		// Determine Octant
+		//
+		// 0 | 1 | 2
+		// __|___|__
+		// 7 | 9 | 3   First is placed in 9th square
+		// __|___|__
+		// 6 | 5 | 4
+
+		if (cx + cw <= ox) {
+			if (cy + ch <= oy)
+				return false; //4
+			else if (cy >= oy + oh)
+				 return false;// 2;
+			else
+				return false; // 3;
+		} else if (ox + ow <= cx) {
+			if (cy + ch <= oy)
+				return true; //6
+			else if (oy + oh <= cy)
+				return true; //0
+			else
+				return true; //7
+		} else if (cy + ch <= oy) {
+			return false; //5
+		} else if(oy + oh <= cy) {
+			return true; //1
+		} else { //two zones
+			return false;
+		}
+	}
 	/** Key function for sorting in sortGroupedZones(). Allows to order
 	 * two objects joined together in a logical order.
 	 * 
@@ -258,7 +300,6 @@ public class ReadingOrderAnalyzer {
 	 * @return value based on object's physical properties
 	 */
 	private Double sortPrecedence(BxObject obj) {
-		/* para-euclidean distance from (0,0) */
 		return Math.sqrt((obj.getX()+obj.getWidth()/2)*(obj.getX()+obj.getWidth()/2)+obj.getY()*obj.getY());
 	}
 	
@@ -303,10 +344,11 @@ public class ReadingOrderAnalyzer {
 	//	String filename = "10255834.xml";
 	//	String filename = "11781238.xml";
 	//	String filename = "1748717X.xml";
-		String filename = "02.xml";
+		String filename = "06.xml";
 		String path = "/pl/edu/icm/yadda/analysis/logicstr/train/";
-	//	String inFile = path + filename;
-		String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
+		String inFile = path + filename;
+	//	String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
+	//	String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/004.xml";
 		InputStream is = ReadingOrderAnalyzer.class.getResourceAsStream(inFile);
 		InputStreamReader isr = new InputStreamReader(is);
 

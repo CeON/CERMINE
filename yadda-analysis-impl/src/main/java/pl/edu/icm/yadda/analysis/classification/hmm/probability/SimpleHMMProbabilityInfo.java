@@ -1,21 +1,23 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.probability;
 
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+
 /**
- * Simple Hidden Markov Model probability information implementation.
+ * Simple Hidden Markov Model probability information container class implementation.
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class SimpleHMMProbabilityInfo<S,T> implements HMMProbabilityInfo<S,T> {
+public class SimpleHMMProbabilityInfo<S> implements HMMProbabilityInfo<S> {
 
     private HMMInitialProbability<S> initialProbability;
     private HMMTransitionProbability<S> transitionProbability;
-    private HMMEmissionProbability<S,T> emissionProbability;
+    private HMMEmissionProbability<S> emissionProbability;
 
     public SimpleHMMProbabilityInfo() {
     }
 
     public SimpleHMMProbabilityInfo(HMMInitialProbability<S> initialProbability,
-            HMMTransitionProbability<S> transitionProbability, HMMEmissionProbability<S,T> decisionTree) {
+            HMMTransitionProbability<S> transitionProbability, HMMEmissionProbability<S> decisionTree) {
         this.initialProbability = initialProbability;
         this.transitionProbability = transitionProbability;
         this.emissionProbability = decisionTree;
@@ -32,7 +34,7 @@ public class SimpleHMMProbabilityInfo<S,T> implements HMMProbabilityInfo<S,T> {
     }
 
     @Override
-    public void setEmissionProbability(HMMEmissionProbability<S,T> emissionProbability) {
+    public void setEmissionProbability(HMMEmissionProbability<S> emissionProbability) {
         this.emissionProbability = emissionProbability;
     }
 
@@ -47,7 +49,7 @@ public class SimpleHMMProbabilityInfo<S,T> implements HMMProbabilityInfo<S,T> {
     }
 
     @Override
-    public double getEmissionProbability(S label, T observation) {
+    public double getEmissionProbability(S label, FeatureVector observation) {
         return emissionProbability.getProbability(label, observation);
     }
 

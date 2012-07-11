@@ -5,6 +5,7 @@ import pl.edu.icm.yadda.analysis.textr.*;
 import java.io.File;
 import java.net.URL;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import pl.edu.icm.yadda.analysis.bibref.BibEntry;
@@ -101,11 +102,14 @@ public class HMMBibRefParsingExample {
 
         CitationsToFVHMMTrainingElementsConverterNode citationsToHMMTEsNode = new CitationsToFVHMMTrainingElementsConverterNode();
         citationsToHMMTEsNode.setFeatureVectorBuilder(vectorBuilder);
-        HMMTrainingElement<CitationTokenLabel, FeatureVector>[] trainingElements = citationsToHMMTEsNode.process(citations, null);
+        HMMTrainingElement<CitationTokenLabel>[] trainingElements = citationsToHMMTEsNode.process(citations, null);
 
-        // 3. HMM training. The resulting probabilities object should be serialized for further usage
-        HMMProbabilityInfo<CitationTokenLabel, FeatureVector> hmmProbabilities
-                = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, vectorBuilder);
+		// 3. HMM training. The resulting probabilities object should be
+		// serialized for further usage
+		HMMProbabilityInfo<CitationTokenLabel> hmmProbabilities = HMMProbabilityInfoFactory
+				.getFVHMMProbability(
+						new ArrayList<HMMTrainingElement<CitationTokenLabel>>(
+								Arrays.asList(trainingElements)), vectorBuilder);
 
         // 4. create an HMM service instance
         HMMService hmmService = new HMMServiceImpl();

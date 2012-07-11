@@ -1,7 +1,7 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.probability;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.decisiontree.DecisionTree;
@@ -14,33 +14,31 @@ import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class DecisionTreeHMMEmissionProbability<S> implements HMMEmissionProbability<S,FeatureVector> {
+public class DecisionTreeHMMEmissionProbability<S extends Comparable<S>> implements HMMEmissionProbability<S> {
 
     private DecisionTree<S> decisionTree;
 
     private double zeroProbabilityValue;
 
-    public DecisionTreeHMMEmissionProbability(HMMTrainingElement<S,FeatureVector>[] trainingElements,
+    public DecisionTreeHMMEmissionProbability(List<HMMTrainingElement<S>> trainingElements,
                                               Set<String> featureNames) {
         this(trainingElements, featureNames, 0.0);
     }
 
-    public DecisionTreeHMMEmissionProbability(HMMTrainingElement<S,FeatureVector>[] trainingElements,
-                                              Set<String> featureNames, int decisionTreeExpand) {
+    public DecisionTreeHMMEmissionProbability(List<HMMTrainingElement<S>> trainingElements, Set<String> featureNames, int decisionTreeExpand) {
         this(trainingElements, featureNames, decisionTreeExpand, 0.0);
     }
 
-    public DecisionTreeHMMEmissionProbability(HMMTrainingElement<S,FeatureVector>[] trainingElements,
+    public DecisionTreeHMMEmissionProbability(List<HMMTrainingElement<S>> trainingElements,
                                               Set<String> featureNames, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
-        decisionTree = DecisionTreeBuilder.buildDecisionTree(new HashSet(Arrays.asList(trainingElements)), featureNames);
+        decisionTree = DecisionTreeBuilder.buildDecisionTree(new HashSet<HMMTrainingElement<S>>(trainingElements), featureNames);
     }
 
-    public DecisionTreeHMMEmissionProbability(HMMTrainingElement<S,FeatureVector>[] trainingElements,
+    public DecisionTreeHMMEmissionProbability(List<HMMTrainingElement<S>> trainingElements,
                                               Set<String> featureNames, int decisionTreeExpand, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
-        decisionTree = DecisionTreeBuilder.buildDecisionTree(new HashSet(Arrays.asList(trainingElements)), featureNames,
-                                                             decisionTreeExpand);
+        decisionTree = DecisionTreeBuilder.buildDecisionTree(new HashSet<HMMTrainingElement<S>>(trainingElements), featureNames, decisionTreeExpand);
     }
 
     @Override

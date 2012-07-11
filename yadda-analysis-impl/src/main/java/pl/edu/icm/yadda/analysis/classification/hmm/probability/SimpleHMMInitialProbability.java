@@ -1,11 +1,14 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.probability;
 
+import java.util.List;
+
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.textr.tools.ProbabilityDistribution;
 
 /**
  * Simple Hidden Markov Model initial probability implementation.
  *
+ * @param <S> A label type 
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class SimpleHMMInitialProbability<S> implements HMMInitialProbability<S> {
@@ -14,14 +17,14 @@ public class SimpleHMMInitialProbability<S> implements HMMInitialProbability<S> 
 
     private double zeroProbabilityValue;
 
-    public SimpleHMMInitialProbability(HMMTrainingElement<S,?>[] trainingElements) {
+    public SimpleHMMInitialProbability(List<HMMTrainingElement<S>> trainingElements) {
         this(trainingElements, 0.0);
     }
 
-    public SimpleHMMInitialProbability(HMMTrainingElement<S,?>[] trainingElements, double zeroProbabilityValue) {
+    public SimpleHMMInitialProbability(List<HMMTrainingElement<S>> trainingElements, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         probability = new ProbabilityDistribution<S>();
-        for (HMMTrainingElement<S,?> element : trainingElements) {
+        for (HMMTrainingElement<S> element : trainingElements) {
             if (element.isFirst()) {
                 probability.addEvent(element.getLabel());
             }

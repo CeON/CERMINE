@@ -14,7 +14,6 @@ import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
 
 /**
@@ -25,7 +24,7 @@ import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassific
 public class HMMZoneClassifier implements ZoneClassifier {
 
     private HMMService hmmService;
-    private HMMProbabilityInfo<BxZoneLabel, FeatureVector> labelProbabilities;
+    private HMMProbabilityInfo<BxZoneLabel> labelProbabilities;
     private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
 
     private double zoneSortTolerance = 5.0;
@@ -37,7 +36,7 @@ public class HMMZoneClassifier implements ZoneClassifier {
         this.labelProbabilities = hmmStorage.getProbabilityInfo(hmmId);
     }
 
-    public HMMZoneClassifier(HMMService hmmService, HMMProbabilityInfo<BxZoneLabel, FeatureVector> labelProbabilities,
+    public HMMZoneClassifier(HMMService hmmService, HMMProbabilityInfo<BxZoneLabel> labelProbabilities,
             FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) {
         this.hmmService = hmmService;
         this.labelProbabilities = labelProbabilities;
@@ -82,7 +81,7 @@ public class HMMZoneClassifier implements ZoneClassifier {
         this.hmmService = hmmService;
     }
 
-    public void setLabelProbabilities(HMMProbabilityInfo<BxZoneLabel, FeatureVector> labelProbabilities) {
+    public void setLabelProbabilities(HMMProbabilityInfo<BxZoneLabel> labelProbabilities) {
         this.labelProbabilities = labelProbabilities;
     }
 

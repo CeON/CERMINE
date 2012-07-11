@@ -1,6 +1,7 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.process.nodes;
 
-import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import java.util.List;
+
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.DecisionTreeHMMEmissionProbability;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMEmissionProbability;
@@ -12,10 +13,11 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  * Hidden Markov Model emission probability calculator node. The resulting
  * emission probability is based on a decision tree.
  *
+ * @param <S> a label type
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class DecisionTreeEmissionProbabilityCalculatorNode<T>
-        implements IProcessingNode<HMMTrainingElement<T,FeatureVector>[], HMMEmissionProbability<T,FeatureVector>> {
+public class DecisionTreeEmissionProbabilityCalculatorNode<S>
+        implements IProcessingNode<List<HMMTrainingElement<S>>, HMMEmissionProbability<S>> {
 
     private FeatureVectorBuilder featureVectorBuilder;
 
@@ -24,7 +26,7 @@ public class DecisionTreeEmissionProbabilityCalculatorNode<T>
     private double zeroProbabilityValue = 0.0;
 
     @Override
-    public HMMEmissionProbability<T,FeatureVector> process(HMMTrainingElement<T,FeatureVector>[] input, 
+    public HMMEmissionProbability<S> process(List<HMMTrainingElement<S>> input, 
             ProcessContext ctx) throws Exception {
         return new DecisionTreeHMMEmissionProbability(input, featureVectorBuilder.getFeatureNames(), 
                                                       decisionTreeExpand, zeroProbabilityValue);

@@ -1,31 +1,35 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.probability;
 
-import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import java.util.List;
+
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 
 /**
- *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class HMMProbabilityInfoFactory {
 
-    public static <S> HMMProbabilityInfo<S,FeatureVector> getFVHMMProbability(HMMTrainingElement<S,FeatureVector>[] trainingElements,
-            FeatureVectorBuilder vectorBuilder) throws Exception {
+	/**
+	 * 
+	 * @param <S> a label type 
+	 */
+    public static <S extends Comparable<S>, X, Y> HMMProbabilityInfo<S> getFVHMMProbability(List<HMMTrainingElement<S>> trainingElements,
+            FeatureVectorBuilder<X, Y> vectorBuilder) throws Exception {
         return getFVHMMProbability(trainingElements, vectorBuilder, 0.0);
     }
 
-    public static <S> HMMProbabilityInfo<S,FeatureVector> getFVHMMProbability(HMMTrainingElement<S,FeatureVector>[] trainingElements,
-            FeatureVectorBuilder vectorBuilder, double smoothing) throws Exception {
-        HMMProbabilityInfo<S,FeatureVector> hmmProbabilities = new SimpleHMMProbabilityInfo<S,FeatureVector>();
+    public static <S extends Comparable<S>, X, Y> HMMProbabilityInfo<S> getFVHMMProbability(List<HMMTrainingElement<S>> trainingElements,
+            FeatureVectorBuilder<X,Y> vectorBuilder, double smoothing) throws Exception {
+        HMMProbabilityInfo<S> hmmProbabilities = new SimpleHMMProbabilityInfo<S>();
 
-        HMMInitialProbability initialProbability = new SimpleHMMInitialProbability<S>(trainingElements, smoothing);
+        HMMInitialProbability<S> initialProbability = new SimpleHMMInitialProbability<S>(trainingElements, smoothing);
         hmmProbabilities.setInitialProbability(initialProbability);
 
-        HMMTransitionProbability transitionProbability = new SimpleHMMTransitionProbability<S>(trainingElements, smoothing);
+        HMMTransitionProbability<S> transitionProbability = new SimpleHMMTransitionProbability<S>(trainingElements, smoothing);
         hmmProbabilities.setTransitionProbability(transitionProbability);
 
-        HMMEmissionProbability emissionProbability = new DecisionTreeHMMEmissionProbability(
+        HMMEmissionProbability<S> emissionProbability = new DecisionTreeHMMEmissionProbability<S>(
                 trainingElements, vectorBuilder.getFeatureNames(), smoothing);
         hmmProbabilities.setEmissionProbability(emissionProbability);
 

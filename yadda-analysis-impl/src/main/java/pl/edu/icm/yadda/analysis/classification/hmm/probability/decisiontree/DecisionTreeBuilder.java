@@ -25,13 +25,13 @@ public class DecisionTreeBuilder {
     /**
      * Builds a decision tree from a training set.
      *
-     * @param <T> A type of element decisions (labels).
+     * @param <S> A type of element decisions (labels).
      * @param trainingSet A set of training elements.
      * @param attributes A set of feature names that can be used.
      * @return Root of the built decision tree.
      */
-    public static <T extends Comparable> DecisionTree<T> buildDecisionTree(
-            Set<HMMTrainingElement<T,FeatureVector>> trainingSet, Set<String> attributes) {
+    public static <S extends Comparable<S>> DecisionTree<S> buildDecisionTree(
+            Set<HMMTrainingElement<S>> trainingSet, Set<String> attributes) {
         return DecisionTreeBuilder.buildDecisionTree(trainingSet, attributes, stopExpanding);
     }
 
@@ -39,53 +39,53 @@ public class DecisionTreeBuilder {
      * Builds a decision tree from a training set with a given stopExpanding
      * parameter.
      *
-     * @param <T> A type of element decisions (labels).
+     * @param <S> A type of element decisions (labels).
      * @param trainingSet A set of training elements.
      * @param attributes A set of feature names that can be used.
      * @param stopExpanding stopExpanding parameter.
      * @return Root of the built decision tree.
      */
-    public static <T extends Comparable> SimpleDecisionTree<T> buildDecisionTree(
-            Set<HMMTrainingElement<T,FeatureVector>> trainingSet, Set<String> attributes, int stopExpanding) {
+    public static <S extends Comparable<S>> SimpleDecisionTree<S> buildDecisionTree(
+            Set<HMMTrainingElement<S>> trainingSet, Set<String> attributes, int stopExpanding) {
         return constructNode(trainingSet, attributes, stopExpanding);
     }
 
     /**
      * Constructs a decision tree node from a training set.
      *
-     * @param <T> A type of element decisions (labels).
+     * @param <S> A type of element decisions (labels).
      * @param trainingSet A set of training elements.
      * @param attributes A set of attributes (feature vector indexes) thet can 
      * stil be used in decisions.
      * @param stopExpanding stopExpanding parameter.
      * @return Constructed node.
      */
-    private static <T extends Comparable> SimpleDecisionTree<T> constructNode(
-            Set<HMMTrainingElement<T, FeatureVector>> trainingSet, Set<String> attributes, int stopExpanding) {
+    private static <S extends Comparable<S>> SimpleDecisionTree<S> constructNode(
+            Set<HMMTrainingElement<S>> trainingSet, Set<String> attributes, int stopExpanding) {
         if (trainingSet.isEmpty()) {
             return null;
         }
 
-        ProbabilityDistribution<T> probDistribution = new ProbabilityDistribution<T>();
-        for (HMMTrainingElement<T,FeatureVector> element : trainingSet) {
+        ProbabilityDistribution<S> probDistribution = new ProbabilityDistribution<S>();
+        for (HMMTrainingElement<S> element : trainingSet) {
             probDistribution.addEvent(element.getLabel());
         }
         if (probDistribution.getEvents().size() == 1 || attributes.isEmpty() || trainingSet.size() < stopExpanding) {
-            return new SimpleDecisionTree<T>(probDistribution);
+            return new SimpleDecisionTree<S>(probDistribution);
         }
 
         NodeDecision decision = chooseDecision(trainingSet, attributes);
         if (decision == null) {
-            return new SimpleDecisionTree<T>(probDistribution);
+            return new SimpleDecisionTree<S>(probDistribution);
         }
 
         Set<String> newAttributes = new HashSet<String>(attributes);
         newAttributes.remove(decision.testedFeature);
 
-        Set<HMMTrainingElement<T,FeatureVector>> leftElements = new HashSet<HMMTrainingElement<T,FeatureVector>>();
-        Set<HMMTrainingElement<T,FeatureVector>> rightElements = new HashSet<HMMTrainingElement<T,FeatureVector>>();
+        Set<HMMTrainingElement<S>> leftElements = new HashSet<HMMTrainingElement<S>>();
+        Set<HMMTrainingElement<S>> rightElements = new HashSet<HMMTrainingElement<S>>();
 
-        for (HMMTrainingElement<T,FeatureVector> element : trainingSet) {
+        for (HMMTrainingElement<S> element : trainingSet) {
             if (decision.isLeft(element.getObservation())) {
                 leftElements.add(element);
             } else {
@@ -93,39 +93,39 @@ public class DecisionTreeBuilder {
             }
         }
 
-        SimpleDecisionTree<T> leftNode = constructNode(leftElements, newAttributes, stopExpanding);
-        SimpleDecisionTree<T> rightNode = constructNode(rightElements, newAttributes, stopExpanding);
+        SimpleDecisionTree<S> leftNode = constructNode(leftElements, newAttributes, stopExpanding);
+        SimpleDecisionTree<S> rightNode = constructNode(rightElements, newAttributes, stopExpanding);
 
-        return new SimpleDecisionTree(probDistribution, leftNode, rightNode, decision.testedFeature, decision.cut);
+        return new SimpleDecisionTree<S>(probDistribution, leftNode, rightNode, decision.testedFeature, decision.cut);
     }
 
     /**
      * Chooses the best decision (feature vector index and cut) for given
      * training set.
      *
-     * @param <T> A type of element decisions (labels).
+     * @param <S> A type of element decisions (labels).
      * @param trainingSet A set of training elements.
      * @param attributes A set of attributes (feature vector indexes) thet can
      * stil be use in decisions.
      * @return The best decision.
      */
-    private static <T extends Comparable> NodeDecision chooseDecision(
-            Set<HMMTrainingElement<T,FeatureVector>> trainingSet, Set<String> attributes) {
+    private static <S extends Comparable<S>> NodeDecision chooseDecision(
+            Set<HMMTrainingElement<S>> trainingSet, Set<String> attributes) {
         String bestAttribute = null;
         double bestCut = -1;
         double bestEntropyGain = 0;
 
-        List<HMMTrainingElement<T,FeatureVector>> trainingList =
-                new ArrayList<HMMTrainingElement<T,FeatureVector>>(trainingSet);
+        List<HMMTrainingElement<S>> trainingList =
+                new ArrayList<HMMTrainingElement<S>>(trainingSet);
 
         for (String attribute : attributes) {
             final String sortAttribute = attribute;
-            Collections.sort(trainingList, new Comparator() {
+            Collections.sort(trainingList, new Comparator<HMMTrainingElement<S>>() {
 
                 @Override
-                public int compare(Object t, Object t1) {
-                    HMMTrainingElement<T,FeatureVector> te1 = (HMMTrainingElement<T,FeatureVector>) t;
-                    HMMTrainingElement<T,FeatureVector> te2 = (HMMTrainingElement<T,FeatureVector>) t1;
+                public int compare(HMMTrainingElement<S> t,  HMMTrainingElement<S> t1) {
+                    HMMTrainingElement<S> te1 = (HMMTrainingElement<S>) t;
+                    HMMTrainingElement<S> te2 = (HMMTrainingElement<S>) t1;
                     int ret = Double.compare(te1.getObservation().getFeature(sortAttribute),
                             te2.getObservation().getFeature(sortAttribute));
                     if (ret == 0) {
@@ -135,19 +135,19 @@ public class DecisionTreeBuilder {
                 }
             });
 
-            ProbabilityDistribution<T> leftLabelsProb = new ProbabilityDistribution<T>();
-            ProbabilityDistribution<T> rightLabelsProb = new ProbabilityDistribution<T>();
-            for (HMMTrainingElement<T,FeatureVector> element : trainingList) {
+            ProbabilityDistribution<S> leftLabelsProb = new ProbabilityDistribution<S>();
+            ProbabilityDistribution<S> rightLabelsProb = new ProbabilityDistribution<S>();
+            for (HMMTrainingElement<S> element : trainingList) {
                 rightLabelsProb.addEvent(element.getLabel());
             }
 
             int leftCount = 0;
             for (int i = 0; i < trainingList.size() - 1; i++) {
 
-                HMMTrainingElement<T,FeatureVector> trainingElement1 = trainingList.get(i);
-                HMMTrainingElement<T,FeatureVector> trainingElement2 = trainingList.get(i + 1);
-                T label1 = trainingElement1.getLabel();
-                T label2 = trainingElement2.getLabel();
+                HMMTrainingElement<S> trainingElement1 = trainingList.get(i);
+                HMMTrainingElement<S> trainingElement2 = trainingList.get(i + 1);
+                S label1 = trainingElement1.getLabel();
+                S label2 = trainingElement2.getLabel();
 
                 if (leftCount <= i) {
                     double feature = trainingList.get(leftCount).getObservation().getFeature(attribute);

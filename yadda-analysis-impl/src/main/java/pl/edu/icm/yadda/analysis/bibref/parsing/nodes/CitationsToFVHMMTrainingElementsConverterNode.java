@@ -20,22 +20,22 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class CitationsToFVHMMTrainingElementsConverterNode
-        implements IProcessingNode<Citation[], HMMTrainingElement<CitationTokenLabel, FeatureVector>[]> {
+        implements IProcessingNode<Citation[], HMMTrainingElement<CitationTokenLabel>[]> {
 
-    private FeatureVectorBuilder featureVectorBuilder;
+    private FeatureVectorBuilder<CitationToken, Citation> featureVectorBuilder;
 
     @Override
-    public HMMTrainingElement<CitationTokenLabel, FeatureVector>[] process(Citation[] input, ProcessContext ctx)
+    public HMMTrainingElement<CitationTokenLabel>[] process(Citation[] input, ProcessContext ctx)
             throws Exception {
-        List<HMMTrainingElement<CitationTokenLabel, FeatureVector>> trainingList =
-                new ArrayList<HMMTrainingElement<CitationTokenLabel, FeatureVector>>();
+        List<HMMTrainingElement<CitationTokenLabel>> trainingList =
+                new ArrayList<HMMTrainingElement<CitationTokenLabel>>();
         for (Citation citation : input) {
             CitationUtils.addHMMLabels(citation);
-            SimpleHMMTrainingElement<CitationTokenLabel, FeatureVector> prevToken = null;
+            SimpleHMMTrainingElement<CitationTokenLabel> prevToken = null;
             for (CitationToken token : citation.getTokens()) {
                 FeatureVector featureVector = featureVectorBuilder.getFeatureVector(token, citation);
-                SimpleHMMTrainingElement<CitationTokenLabel, FeatureVector> element =
-                        new SimpleHMMTrainingElement(featureVector, token.getLabel(), prevToken == null);
+                SimpleHMMTrainingElement<CitationTokenLabel> element =
+                        new SimpleHMMTrainingElement<CitationTokenLabel>(featureVector, token.getLabel(), prevToken == null);
                 trainingList.add(element);
                 if (prevToken != null) {
                     prevToken.setNextLabel(token.getLabel());
@@ -46,7 +46,7 @@ public class CitationsToFVHMMTrainingElementsConverterNode
         return trainingList.toArray(new HMMTrainingElement[]{});
     }
 
-    public void setFeatureVectorBuilder(FeatureVectorBuilder featureVectorBuilder) {
+    public void setFeatureVectorBuilder(FeatureVectorBuilder<CitationToken, Citation> featureVectorBuilder) {
         this.featureVectorBuilder = featureVectorBuilder;
     }
 }

@@ -2,6 +2,8 @@ package pl.edu.icm.yadda.analysis.classification.hmm;
 
 import java.util.Collection;
 import java.util.List;
+
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 
 /**
@@ -17,14 +19,13 @@ public interface HMMService {
      * Viterbi algorithm.
      *
      * @param <S> A type of hidden labels
-     * @param <T> A type of observations
      * @param probabilityInfo HMM probability information.
      * @param states A collection of all possible states.
      * @param observations A sequence of messages emited by objects.
      * @return A sequence of the most probable object states, the order is the
      * same as in the message list.
      */
-    <S,T> List<S> viterbiMostProbableStates(HMMProbabilityInfo<S,T> probabilityInfo, Collection<S> states,
-                                            List<T> observations);
+    <S> List<S> viterbiMostProbableStates(HMMProbabilityInfo<S> probabilityInfo, Collection<S> states,
+                                            List<FeatureVector> observations);
 
 }

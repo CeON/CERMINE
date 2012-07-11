@@ -1,5 +1,7 @@
 package pl.edu.icm.yadda.analysis.classification.hmm.training;
 
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+
 /**
  * Hidden Markov Model's training element interface.
  *
@@ -7,14 +9,14 @@ package pl.edu.icm.yadda.analysis.classification.hmm.training;
  * @param <S> Type of labels of objects.
  * @param <T> Type of observations.
  */
-public interface HMMTrainingElement<S,T> {
+public interface HMMTrainingElement<S> {
 
     /**
      * Gets observation emitted by an element.
      *
      * @return Object's observation.
      */
-    T getObservation();
+    FeatureVector getObservation();
 
     /**
      * Checks whether an element is first in the HMM's sequence.

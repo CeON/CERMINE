@@ -8,18 +8,19 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
 
 /**
  * Simple Hidden Markov Model emission probability calculator node.
- *
+ * 
+ * @param <S> a labal type
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class SimpleEmissionProbabilityCalculatorNode<S,T>
-        implements IProcessingNode<HMMTrainingElement<S,T>[], HMMEmissionProbability<S,T>> {
+public class SimpleEmissionProbabilityCalculatorNode<S>
+        implements IProcessingNode<HMMTrainingElement<S>[], HMMEmissionProbability<S>> {
 
     private double zeroProbabilityValue = 0.0;
 
     @Override
-    public HMMEmissionProbability<S,T> process(HMMTrainingElement<S,T>[] input, ProcessContext ctx)
+    public HMMEmissionProbability<S> process(HMMTrainingElement<S>[] input, ProcessContext ctx)
             throws Exception {
-        return new SimpleHMMEmissionProbability(input, zeroProbabilityValue);
+        return new SimpleHMMEmissionProbability<S>(input, zeroProbabilityValue);
     }
 
     public void setZeroProbabilityValue(double zeroProbabilityValue) {

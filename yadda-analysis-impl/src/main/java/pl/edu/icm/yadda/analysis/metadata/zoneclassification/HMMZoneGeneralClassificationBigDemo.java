@@ -152,20 +152,17 @@ public class HMMZoneGeneralClassificationBigDemo {
         // 1.5. open test file
         BxDocument testDocument = getTestFile();
         
-        System.out.println("zz");
         // 2. import and generate training set based on sequences and vector of features
         List<BxDocument> documents = getDocumentsFromZip(hmmTrainingFile);
         List<BxZone> allZones = new ArrayList<BxZone>();
         for(BxDocument doc: documents)
         	allZones.addAll(doc.asZones());
 
-        System.out.println("yy");
         BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);
         List<HMMTrainingElement<BxZoneLabel>> unconvertedTrainingElements = node.process(documents, null);
         List<HMMTrainingElement<BxZoneGeneralLabel>> trainingElements = new ArrayList<HMMTrainingElement<BxZoneGeneralLabel>>(unconvertedTrainingElements.size());
        
-        System.out.println("xxx");
         BxZoneLabelDetailedToGeneralMapper mapper = new BxZoneLabelDetailedToGeneralMapper();
         
         SimpleHMMTrainingElement<BxZoneGeneralLabel> prev = null;
@@ -177,11 +174,6 @@ public class HMMZoneGeneralClassificationBigDemo {
         	trainingElements.add(convertedElem);
         	prev = convertedElem;
         }
-    /*    for(int i=0; i<trainingElements.size(); ++i) {
-        	System.out.println(allZones.get(i).toText());
-        	System.out.println(trainingElements.get(i).getObservation().dump());
-        	System.out.println();
-        }*/
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
         HMMProbabilityInfo<BxZoneGeneralLabel> hmmProbabilities
                 = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, vectorBuilder);

@@ -14,7 +14,7 @@ public class VerticalProminenceFeature implements
 		FeatureCalculator<BxZone, BxPage> {
 
 	private static String featureName = "VerticalProminence";
-
+	private static Double ZONE_EPSILON = 1.0;
 	@Override
 	public String getFeatureName() {
 		return featureName;
@@ -24,46 +24,42 @@ public class VerticalProminenceFeature implements
 	public double calculateFeatureValue(BxZone zone, BxPage page) {		
 		if(page.getZones().size() == 1)
 			return 0.0; //there is only one zone - no prominence can be measured
-		List<BxZone> zones = page.getZones();
-		Integer thisZoneIdx = null;
-		for(Integer zoneIdx = 0; zoneIdx < page.getZones().size(); ++zoneIdx) {
-			if(page.getZones().get(zoneIdx) == zone) {
-				thisZoneIdx = zoneIdx;
-				break;
-			}
-		}
-		assert thisZoneIdx != null : "Given zone not found in the context";
-		if(thisZoneIdx == 0) { //given zone is the first one in the set - there is none before it
-			BxZone nextZone = zones.get(1);
-			BxZone thisZone = zones.get(0);
-			if(thisZone.getY() < nextZone.getY()) {
-				return nextZone.getY()-(thisZone.getY()+thisZone.getHeight());
-			} else {
-				return 0.0;
-			}
-		} else if(thisZoneIdx == page.getZones().size()-1) { //given zone is the last one in the set - there is none after it
-			BxZone prevZone = zones.get(thisZoneIdx-1);
-			BxZone thisZone = zones.get(thisZoneIdx);
-			if(prevZone.getY() < thisZone.getY()) {
-				return thisZone.getY()-(prevZone.getY()+prevZone.getHeight());
-			} else {
-				return 0.0;
-			}
-		} else { //there is a zone before and after the given one
-			BxZone prevZone = zones.get(thisZoneIdx-1);
-			BxZone thisZone = zones.get(thisZoneIdx);
-			BxZone nextZone = zones.get(thisZoneIdx+1);
-			if(prevZone.getY() < thisZone.getY()) { //previous zone lies in the same column
-				if(thisZone.getY() < nextZone.getY()) { //next zone lies in the same column
-					return nextZone.getY()-(prevZone.getY()+prevZone.getHeight())-zone.getHeight();
+		BxZone prevZone = zone.getPrev();
+		BxZone nextZone = zone.getNext();
+		while(true) {
+			if(prevZone == null) { //given zone is the first one in the set - there is none before it
+				if(nextZone == null) {
+					return page.getHeight() - zone.getHeight();
+				} else if(nextZone.getY() - (zone.getY() + zone.getHeight()) > ZONE_EPSILON) {
+					return nextZone.getY() - (zone.getY() + zone.getHeight());
 				} else {
-					return thisZone.getY()-(prevZone.getY()+prevZone.getHeight());
+					nextZone = nextZone.getNext();
+					continue;
 				}
-			} else {
-				if(thisZone.getY() < nextZone.getY()) {
-					return thisZone.getY()-(prevZone.getY()+prevZone.getHeight());
-				} else { //neither previous zone nor next zone lies in natural geometrical order
-					return 0.0; //say there is no prominence in this case
+			} else if(nextZone == null) { //given zone is the last one in the set - there is none after it
+				if(zone.getY() - (prevZone.getY() + prevZone.getHeight()) > ZONE_EPSILON) {
+					return zone.getY() - (prevZone.getY()+prevZone.getHeight());
+				} else {
+					 prevZone = prevZone.getPrev();
+					 continue;
+				}
+			} else { //there is a zone before and after the given one
+				if(zone.getY() - (prevZone.getY() + prevZone.getHeight()) > ZONE_EPSILON) { //previous zone lies in the same column
+					if(nextZone.getY() - (zone.getY() + zone.getHeight()) > ZONE_EPSILON) { //next zone lies in the same column
+						return nextZone.getY() - (prevZone.getY()+prevZone.getHeight()) - zone.getHeight();
+					} else {
+						nextZone = nextZone.getNext();
+						continue;
+					}
+				} else {
+					if(nextZone.getY() - (zone.getY() + zone.getHeight()) > ZONE_EPSILON) {
+						prevZone = prevZone.getPrev();
+						continue;
+					} else { //neither previous zone nor next zone lies in natural geometrical order
+						prevZone = prevZone.getPrev();
+						nextZone = nextZone.getNext();
+						continue;
+					}
 				}
 			}
 		}

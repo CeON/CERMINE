@@ -8,10 +8,10 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 
-public class HorizontalProminenceFeature implements
+public class HorizontalRelativeProminenceFeature implements
 		FeatureCalculator<BxZone, BxPage> {
 
-    private static String featureName = "HorizontalProminence";
+    private static String featureName = "HorizontalRelativeProminence";
 
 	@Override
 	public String getFeatureName() {
@@ -20,20 +20,18 @@ public class HorizontalProminenceFeature implements
 	
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {		
-		Double leftBorder = Double.MAX_VALUE;
-		Double rightBorder = Double.MIN_VALUE;
-		for(BxZone z: page.getZones()) {
-			leftBorder = Math.min(leftBorder, z.getBounds().getX());
-			rightBorder = Math.max(rightBorder, z.getBounds().getY());
-		}
-		assert leftBorder != Double.MAX_VALUE;
-		assert rightBorder != Double.MIN_VALUE;
-	
-		Double leftProminence = leftBorder;
-		Double rightProminence = rightBorder;
+		Double leftProminence = zone.getX();
+		Double rightProminence = page.getWidth() - (zone.getX() + zone.getWidth());
+		
+		Integer minOct = null;
+		BxZone minZone;
 		
 		for(BxZone otherZone: page.getZones()) {
+			if(otherZone == zone)
+				continue;
 			Double cx, cy, cw, ch, ox, oy, ow, oh;
+			Double newLeftProminence, newRightProminence;
+			
 			cx = zone.getBounds().getX();
 			cy = zone.getBounds().getY();
 			cw = zone.getBounds().getWidth();
@@ -60,7 +58,7 @@ public class HorizontalProminenceFeature implements
 					oct = 2; 
 				else
 					oct = 3; 
-			} else if (ox + ow <= cw) {
+			} else if (ox + ow <= cx) {
 				if (cy + ch <= oy)
 					oct = 6;
 				else if (oy + oh <= cy)
@@ -76,11 +74,19 @@ public class HorizontalProminenceFeature implements
 			if(oct != 7 && oct != 3)
 				continue;
 			if(oct == 7) {
-				leftProminence = Math.min(leftProminence, cx-(ox+ow));
+				newLeftProminence = Math.min(leftProminence, cx-(ox+ow));
+				if(newLeftProminence != leftProminence) {
+					leftProminence = newLeftProminence;
+					minOct = oct;
+				}
 			} else { //oct == 3
-				rightProminence = Math.min(rightProminence, ox-(cx+cw));
+				newRightProminence = Math.min(rightProminence, ox-(cx+cw));
+				if(newRightProminence != rightProminence) {
+					rightProminence = newRightProminence;
+					minOct = oct;
+				}
 			}
 		}
-		return rightProminence + leftProminence;
+		return (rightProminence + leftProminence + zone.getWidth())/page.getWidth();
 	}
 };

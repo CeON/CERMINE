@@ -12,28 +12,20 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  */
 
 public class WhitespaceCountFeature implements FeatureCalculator<BxZone, BxPage> {
-    private static String featureName = "WhitespaceCount";
+	private static String featureName = "WhitespaceCount";
 
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+	@Override
+	public String getFeatureName() {
+		return featureName;
+	}
 
-    @Override
-    public double calculateFeatureValue(BxZone zone, BxPage page) {
-        Integer spaceCount = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
-                    char[] charArray = chunk.getText().toCharArray();
-                    for (char letter: charArray) {
-                        if (Character.isWhitespace(letter)) {
-                            ++spaceCount;
-                        }
-                    }
-                }
-            }
-        }
-        return spaceCount.doubleValue();
-    }
+	@Override
+	public double calculateFeatureValue(BxZone zone, BxPage page) {
+		Integer spaceCount = 0;
+		for(Character c: zone.toText().toCharArray())
+			if (Character.isWhitespace(c)) {
+				++spaceCount;
+			}
+		return new Double(spaceCount);
+	}
 }

@@ -17,19 +17,7 @@ public class WhitespaceRelativeCountFeature implements FeatureCalculator<BxZone,
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        Integer spaceCount = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
-                    char[] charArray = chunk.getText().toCharArray();
-                    for (char letter: charArray) {
-                        if (Character.isWhitespace(letter)) {
-                            ++spaceCount;
-                        }
-                    }
-                }
-            }
-        }
-        return (spaceCount.doubleValue()) / (zone.toText().length());
+    	double spaceCount = new WhitespaceCountFeature().calculateFeatureValue(zone, page);
+        return -Math.log(spaceCount / (zone.toText().length()) + Double.MIN_VALUE);
     }
 }

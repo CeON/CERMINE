@@ -41,8 +41,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  */
 public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
     
-    private static final Logger log = LoggerFactory.getLogger(TrueVizToBxDocumentReader.class);
-    private boolean areIdsSet = true;
+    private boolean areIdsSet;
 
     @Override
     public MetadataFormat getSourceFormat() {
@@ -62,6 +61,7 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
     @Override
     public List<BxPage> read(Reader reader, Object... hints) throws TransformationException {
         try {
+        	areIdsSet = true;
             Document doc = TrueVizUtils.newDocumentBuilder().parse(new InputSource(reader));
             List<BxPage> pages = new ArrayList<BxPage>();
 
@@ -75,7 +75,11 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
             setIdsAndLinkPages(pages);
             if(areIdsSet) {
             	linkOtherElements(pages);
-            	System.out.println("ARE_SET");
+            	for(BxPage page: pages)
+            		page.setSorted(true);
+            } else {
+            	for(BxPage page: pages)
+            		page.setSorted(false);
             }
             return pages;
         } catch (IOException ex) {

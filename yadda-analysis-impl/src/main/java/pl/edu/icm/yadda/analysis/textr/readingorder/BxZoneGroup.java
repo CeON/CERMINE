@@ -11,7 +11,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
 * 
 */
 
-class BxZoneGroup extends BxObject {
+class BxZoneGroup extends BxObject<BxZoneGroup> {
 	private BxObject leftChild;
 	private BxObject rightChild;
 
@@ -30,6 +30,16 @@ class BxZoneGroup extends BxObject {
     	setBounds(zone.getBounds());
     }
 
+    @Override
+    public Boolean isSorted() {
+    	return null;
+    }
+    
+    @Override
+    public void setSorted(Boolean d) {
+    	//pass
+    }
+    
     public BxZoneGroup setBounds(BxBounds bounds) {
     	super.setBounds(bounds);
     	return this;

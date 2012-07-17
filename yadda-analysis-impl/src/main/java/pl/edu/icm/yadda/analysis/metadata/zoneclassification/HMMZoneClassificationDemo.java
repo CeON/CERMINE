@@ -84,14 +84,8 @@ public class HMMZoneClassificationDemo {
         
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument document = new BxDocument().setPages(reader.read(isr));
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
-                System.out.println();
-                System.out.println(zone.toText());
-                System.out.println("["+zone.getLabel()+"]");
-            }
-        }
         List<BxDocument> documents = new ArrayList<BxDocument>(1);
+        documents.add(document);
         
         BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);

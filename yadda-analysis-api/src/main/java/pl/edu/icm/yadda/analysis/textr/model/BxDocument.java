@@ -16,7 +16,7 @@ public final class BxDocument implements Serializable {
     private final List<BxPage> pages = new ArrayList<BxPage>();
 
     private int curPageNumber = 0;
-    
+
     public List<BxPage> getPages() {
         return pages;
     }
@@ -26,12 +26,6 @@ public final class BxDocument implements Serializable {
             throw new NullPointerException();
         }
         this.pages.clear();
-   /*     for(BxPage page: pages) {
-        	page.setId(this.curPageNumber++);
-        	page.setNextId(this.curPageNumber);
-        	this.pages.add(page);
-        }
-        this.pages.get(this.pages.size()-1).setId(null); */
         this.pages.addAll(pages);
         return this;
     }

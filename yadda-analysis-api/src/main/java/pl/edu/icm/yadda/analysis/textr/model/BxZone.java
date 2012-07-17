@@ -9,17 +9,10 @@ import java.util.List;
  * Models a single zone of a page. A zone contains either lines of text
  * or a list of chunks, that haven't been grouped into lines yet.
  */
-public final class BxZone extends BxObject implements Serializable, Indexable<BxZone>, Printable {
+public final class BxZone extends BxObject<BxZone> implements Serializable, Printable {
 
     private static final long serialVersionUID = -7331944901471939127L;
 
-    /** zone's id taken from the TrueViz format */
-    private String zoneId;
-    /** id of the next zone taken from the TrueViz format */
-    private String nextZoneId;
-    /** next zone in the linked list. Stored in a logical reading order */
-    private BxZone nextZone;
-    private BxZone prevZone;
     /** zone's label */
     private BxZoneLabel label;
     /** list of zone's lines (if the zone is segmented) */
@@ -27,60 +20,24 @@ public final class BxZone extends BxObject implements Serializable, Indexable<Bx
 
     /** list of zone's text chunks (if the zone is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
-    
-    @Override
-    public String getId() {
-		return zoneId;
-	}
+
 
     @Override
-	public BxZone setId(String zoneId) {
-		this.zoneId = zoneId;
-		return this;
-	}
+    public Boolean isSorted() {
+    	if(!isSorted)
+    		return false;
+    	for(BxLine line: lines)
+    		if(!line.isSorted())
+    			return false;
+    	return true;
+    }
 
     @Override
-	public String getNextId() {
-		return nextZoneId;
-	}
-
-    @Override
-	public BxZone setNextId(String nextZoneId) {
-		this.nextZoneId = nextZoneId;
-		return this;
-	}
-
-    @Override
-	public BxZone getNext() {
-		return this.nextZone;
-	}
-	
-    @Override
-	public BxZone setNext(BxZone nextZone) {
-		this.nextZone = (BxZone)nextZone;
-		return this;
-	}
-	
-    @Override
-	public boolean hasPrev() {
-		return getPrev() != null;
-	}
-
-    @Override
-	public BxZone getPrev() {
-		return this.prevZone;
-	}
-	
-    @Override
-	public BxZone setPrev(BxZone prevZone) {
-		this.prevZone = (BxZone)prevZone;
-		return this;
-	}
-	
-    @Override
-	public boolean hasNext() {
-		return getNext() != null;
-	}
+    public void setSorted(Boolean isSorted) {
+    	this.isSorted = isSorted;
+    	for(BxLine line: lines)
+    		line.setSorted(isSorted);
+    }
 
 	public BxZoneLabel getLabel() {
         return label;
@@ -95,12 +52,6 @@ public final class BxZone extends BxObject implements Serializable, Indexable<Bx
         return lines;
     }
     
-    @Override
-    public BxZone setBounds(BxBounds bounds) {
-    	super.setBounds(bounds);
-    	return this;
-    }
-
     public BxZone setLines(Collection<BxLine> lines) {
         if (lines == null) {
             throw new NullPointerException();

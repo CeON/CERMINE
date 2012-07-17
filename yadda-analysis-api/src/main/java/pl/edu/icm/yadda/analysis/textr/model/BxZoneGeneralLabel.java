@@ -14,5 +14,6 @@ public enum BxZoneGeneralLabel {
 	/** Document's references. */
 	REFERENCES,
 	/** Other stuff left in the document. */
-	OTHER
+	OTHER,
+	ABSTRACT
 }

@@ -8,76 +8,35 @@ import java.util.List;
 /**
  * Models a single line of text containing words.
  */
-public class BxLine extends BxObject implements Serializable, Indexable<BxLine>, Printable {
+public class BxLine extends BxObject<BxLine> implements Serializable, Printable {
 
     private static final long serialVersionUID = 917352034911588106L;
 
     /** list of line's words */
     private final List<BxWord> words = new ArrayList<BxWord>();
-    private String lineId;
-    private String nextLineId;
-    private BxLine nextLine;
-    private BxLine prevLine;
+
+    @Override
+    public Boolean isSorted() {
+    	if(!isSorted)
+    		return false;
+    	for(BxWord word: words)
+    		if(!word.isSorted())
+    			return false;
+    	return true;
+    }
+
+    @Override
+    public void setSorted(Boolean isSorted) {
+    	this.isSorted = isSorted;
+    	for(BxWord word:words)
+    		word.setSorted(isSorted);
+    }
 
     @Override
     public BxLine setBounds(BxBounds bounds) {
     	super.setBounds(bounds);
     	return this;
     }
-
-    @Override
-	public String getId() {
-		return this.lineId;
-	}
-
-	@Override
-	public String getNextId() {
-		return this.nextLineId;
-	}
-
-	@Override
-	public BxLine setId(String id) {
-		this.lineId = id;
-		return this;
-	}
-
-	@Override
-	public BxLine setNextId(String nextId) {
-		this.nextLineId = nextId;
-		return this;
-	}
-
-	@Override
-	public BxLine getPrev() {
-		return this.prevLine;
-	}
-	
-	@Override
-	public boolean hasPrev() {
-		return getPrev() != null;
-	}
-
-	@Override
-	public BxLine setPrev(BxLine elem) {
-		this.prevLine = (BxLine) elem;
-		return this;
-	}
-
-	@Override
-	public BxLine getNext() {
-		return this.nextLine;
-	}
-	
-	@Override
-	public boolean hasNext() {
-		return getNext() != null;
-	}
-
-	@Override
-	public BxLine setNext(BxLine elem) {
-		this.nextLine = (BxLine) elem;
-		return this;
-	}   
 
     public List<BxWord> getWords() {
         return words;

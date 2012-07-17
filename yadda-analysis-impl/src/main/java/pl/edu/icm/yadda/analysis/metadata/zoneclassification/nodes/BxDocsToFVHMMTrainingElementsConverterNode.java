@@ -22,7 +22,7 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class BxDocsToFVHMMTrainingElementsConverterNode
-        implements IProcessingNode<BxDocument[], List<HMMTrainingElement<BxZoneLabel>>> {
+        implements IProcessingNode<List<BxDocument>, List<HMMTrainingElement<BxZoneLabel>>> {
 
     private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
 
@@ -31,10 +31,10 @@ public class BxDocsToFVHMMTrainingElementsConverterNode
     private double zoneSortTolerance = 5.0;
 
     @Override
-    public List<HMMTrainingElement<BxZoneLabel>> process(BxDocument[] input, ProcessContext ctx)
+    public List<HMMTrainingElement<BxZoneLabel>> process(List<BxDocument> input, ProcessContext ctx)
             throws Exception {
         List<HMMTrainingElement<BxZoneLabel>> trainingList =
-                new ArrayList<HMMTrainingElement<BxZoneLabel>>();
+                new ArrayList<HMMTrainingElement<BxZoneLabel>>(input.size());
         for (BxDocument doc : input) {
             ZoneClassificationUtils.correctPagesBounds(doc);
             ZoneClassificationUtils.sortZones(doc, zoneSortTolerance);

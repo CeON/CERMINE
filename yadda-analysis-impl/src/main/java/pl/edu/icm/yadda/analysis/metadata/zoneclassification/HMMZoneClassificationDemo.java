@@ -3,10 +3,12 @@ package pl.edu.icm.yadda.analysis.metadata.zoneclassification;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
@@ -82,11 +84,18 @@ public class HMMZoneClassificationDemo {
         
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument document = new BxDocument().setPages(reader.read(isr));
+        for (BxPage page : document.getPages()) {
+            for (BxZone zone : page.getZones()) {
+                System.out.println();
+                System.out.println(zone.toText());
+                System.out.println("["+zone.getLabel()+"]");
+            }
+        }
+        List<BxDocument> documents = new ArrayList<BxDocument>(1);
         
         BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);
-        List<HMMTrainingElement<BxZoneLabel>> trainingElements = node.process(new BxDocument[] {document}, null);
-
+        List<HMMTrainingElement<BxZoneLabel>> trainingElements = node.process(documents, null);
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
                 = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, vectorBuilder);
@@ -100,7 +109,9 @@ public class HMMZoneClassificationDemo {
         
         for (BxPage page : document.getPages()) {
             for (BxZone zone : page.getZones()) {
-                System.out.println(zone.getLabel());
+                System.out.println();
+                System.out.println(zone.toText());
+                System.out.println("["+zone.getLabel()+"]");
             }
         }
     }

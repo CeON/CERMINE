@@ -22,8 +22,10 @@ public class BxZoneLabelDetailedToGeneralMapper {
 	Map<BxZoneGeneralLabel, BxZoneLabel[]> mapping;
 	public BxZoneLabelDetailedToGeneralMapper() {
 		mapping = new HashMap<BxZoneGeneralLabel, BxZoneLabel[]>();
+		mapping.put(BxZoneGeneralLabel.ABSTRACT, new BxZoneLabel[] {
+				BxZoneLabel.ABSTRACT
+		});
 		mapping.put(BxZoneGeneralLabel.METADATA, new BxZoneLabel[] {
-				BxZoneLabel.ABSTRACT,
 				BxZoneLabel.AFFILIATION,
 				BxZoneLabel.AUTHOR,
 				BxZoneLabel.BIB_INFO,
@@ -32,7 +34,6 @@ public class BxZoneLabelDetailedToGeneralMapper {
 				BxZoneLabel.DATES,
 				BxZoneLabel.EDITOR,
 				BxZoneLabel.KEYWORDS,
-				BxZoneLabel.REFERENCES,
 				BxZoneLabel.TITLE,
 				BxZoneLabel.TYPE
 		});
@@ -51,7 +52,7 @@ public class BxZoneLabelDetailedToGeneralMapper {
 				BxZoneLabel.FOOTER,
 				BxZoneLabel.HEADER,
 				BxZoneLabel.PAGE_NUMBER,
-				BxZoneLabel.UNKNOWN,
+				BxZoneLabel.UNKNOWN
 		});
 
 		mapping.put(BxZoneGeneralLabel.REFERENCES, new BxZoneLabel[] {

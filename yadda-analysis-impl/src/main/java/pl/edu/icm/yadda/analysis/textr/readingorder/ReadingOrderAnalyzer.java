@@ -75,12 +75,20 @@ public class ReadingOrderAnalyzer {
 	 * @return a list of ordered zones
 	 */
 	private List<BxZone> reorderZones(List<BxZone> unorderedZones) {
-		BxZoneGroup bxZonesTree = groupZonesHierarchically(unorderedZones);
-		sortGroupedZones(bxZonesTree);
-		TreeToListConverter treeConverter = new TreeToListConverter();
-		List<BxZone> orderedZones = treeConverter.convertToList(bxZonesTree);
-		assert unorderedZones.size() == orderedZones.size();
-		return orderedZones;
+		if(unorderedZones.size() == 0) {
+			return new ArrayList<BxZone>();
+		} else if(unorderedZones.size() == 1) {
+			List<BxZone> ret = new ArrayList<BxZone>(1);
+			ret.add(unorderedZones.get(0));
+			return ret;
+		} else {
+			BxZoneGroup bxZonesTree = groupZonesHierarchically(unorderedZones);
+			sortGroupedZones(bxZonesTree);
+			TreeToListConverter treeConverter = new TreeToListConverter();
+			List<BxZone> orderedZones = treeConverter.convertToList(bxZonesTree);
+			assert unorderedZones.size() == orderedZones.size();
+			return orderedZones;
+		}
 	}
 	
 	/** Generic function for setting IDs and creating a linked list by filling references.
@@ -127,10 +135,14 @@ public class ReadingOrderAnalyzer {
 	 */
 	private void setIdsAndLinkTogether(BxDocument doc) {
 		setIdsGenericImpl(doc.asPages());
-		setIdsGenericImpl(doc.asZones());
-		setIdsGenericImpl(doc.asLines());
-		setIdsGenericImpl(doc.asWords());
-		setIdsGenericImpl(doc.asChunks());
+		for(BxPage page: doc.asPages()) {
+			if(!page.isSorted()) {
+				setIdsGenericImpl(doc.asZones());
+				setIdsGenericImpl(doc.asLines());
+				setIdsGenericImpl(doc.asWords());
+				setIdsGenericImpl(doc.asChunks());
+			}
+		}
 	}
 	private String s(String string) {
 		if(string.length() <= 10)
@@ -144,7 +156,9 @@ public class ReadingOrderAnalyzer {
 	 * @return root of the zones clustered in a tree
 	 */
 	private BxZoneGroup groupZonesHierarchically(List<BxZone> zones) {
-		/* Distance tuples are stored sorted by ascending distance value */
+		/* Distance tuples are stored sorted by ascending distance value */ 
+		if(zones.size() == 1)
+			return new BxZoneGroup(zones.get(0), null);
 		List<DistElem<BxObject>> dists = new ArrayList<DistElem<BxObject>>();
 		for (int idx1 = 0; idx1 < zones.size(); ++idx1)
 			for (int idx2 = idx1 + 1; idx2 < zones.size(); ++idx2) {

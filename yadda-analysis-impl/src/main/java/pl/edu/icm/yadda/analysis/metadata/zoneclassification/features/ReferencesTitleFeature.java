@@ -10,7 +10,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  */
 public class ReferencesTitleFeature implements FeatureCalculator<BxZone, BxPage> {
 
-    private static String featureName = "UReferences";
+    private static String featureName = "ReferencesTitle";
 
     @Override
     public String getFeatureName() {

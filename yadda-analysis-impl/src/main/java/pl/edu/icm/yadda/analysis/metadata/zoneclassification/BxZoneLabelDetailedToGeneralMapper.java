@@ -39,16 +39,16 @@ public class BxZoneLabelDetailedToGeneralMapper {
 		});
 
 		mapping.put(BxZoneGeneralLabel.BODY, new BxZoneLabel[] {
-				BxZoneLabel.BODY,
+				BxZoneLabel.BODY
+		});
+
+		mapping.put(BxZoneGeneralLabel.OTHER, new BxZoneLabel[] {
 				BxZoneLabel.EQUATION,
 				BxZoneLabel.EQUATION_LABEL,
 				BxZoneLabel.FIGURE,
 				BxZoneLabel.FIGURE_CAPTION,
 				BxZoneLabel.TABLE,
-				BxZoneLabel.TABLE_CAPTION
-		});
-
-		mapping.put(BxZoneGeneralLabel.OTHER, new BxZoneLabel[] {
+				BxZoneLabel.TABLE_CAPTION,
 				BxZoneLabel.FOOTER,
 				BxZoneLabel.HEADER,
 				BxZoneLabel.PAGE_NUMBER,

@@ -37,4 +37,6 @@ public interface FeatureVector {
      * @return feature names set
      */
     Set<String> getFeatureNames();
+    
+    Integer size();
 }

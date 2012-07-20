@@ -24,7 +24,7 @@ public class ReferencesFeature implements FeatureCalculator<BxZone, BxPage> {
         int refDigits = 0;
         int refIndents = 0;
         for (BxLine line : zone.getLines()) {
-            if (Pattern.matches("^\\[\\d+\\].*", line.toText()) || Pattern.matches("^\\d+.*", line.toText())) {
+            if (Pattern.matches("^\\[\\d+\\].*", line.toText()) || Pattern.matches("^\\d+\\..*", line.toText())) {
                 refDigits++;
             }
             if (zone.getBounds().getX() + 8 < line.getBounds().getX()) {

@@ -10,7 +10,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  */
 public class PunctuationRelativeCountFeature implements FeatureCalculator<BxZone, BxPage> {
 
-    private static String featureName = "ZReferences";
+    private static String featureName = "PunctuationRelativeCount";
 
     @Override
     public String getFeatureName() {

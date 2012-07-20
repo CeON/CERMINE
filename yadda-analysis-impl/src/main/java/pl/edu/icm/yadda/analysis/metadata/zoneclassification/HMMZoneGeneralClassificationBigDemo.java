@@ -47,10 +47,11 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 public class HMMZoneGeneralClassificationBigDemo {
 
 	protected static final String hmmTrainingFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/xmls.zip";
-//	private static final String hmmTestFile = "/pl/edu/icm/yadda/analysis/logicstr/train/01.xml";
-	private static final String hmmTestFile = "/pl/edu/icm/yadda/analysis/logicstr/train/02.xml";
+//	private static final String hmmTestFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/004.xml";
+//	private static final String hmmTestFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
+	private static final String hmmTestFile = "/pl/edu/icm/yadda/analysis/logicstr/train/01.xml";
 
-	private static BxDocument getTestFile() throws TransformationException {
+	public static BxDocument getTestFile() throws TransformationException {
         InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);
         InputStreamReader isr = new InputStreamReader(is);
         
@@ -60,7 +61,7 @@ public class HMMZoneGeneralClassificationBigDemo {
         return testDocument;
 	}
 
-	private static List<BxDocument> getDocumentsFromZip(String file)
+	 public static List<BxDocument> getDocumentsFromZip(String file)
 			throws ZipException, IOException, URISyntaxException, ParserConfigurationException, SAXException, AnalysisException, TransformationException {
 		List<BxDocument> documents = new ArrayList<BxDocument>();
 
@@ -86,35 +87,41 @@ public class HMMZoneGeneralClassificationBigDemo {
                 new SimpleFeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
         		new AbstractFeature(),
-        		new FigureFeature(),
-        		new IsFirstPageFeature(),
-        		new IsLastPageFeature(),
+        		new AcknowledgementFeature(),
+        		new AffiliationFeature(),
+                new AtCountFeature(),
+                new AtRelativeCountFeature(),
+                new AuthorFeature(),
+                new BibinfoFeature(),
         		new BracketRelativeCount(),
         		new BracketedLineRelativeCount(),
-        		new EmptySpaceRelativeFeature(),
-        		new IsHighestOnThePageFeature(),
-        		new IsLowestOnThePageFeature(),
+                new CharCountFeature(),
+                new CharCountRelativeFeature(),
+                new CommaCountFeature(),
+                new CommaRelativeCountFeature(),
         		new CuePhrasesCountFeature(),
         		new CuePhrasesRelativeCountFeature(),
-        	//	new WordLengthMeanFeature(),
-        		new WordLengthMedianFeature(),
-        	//	new WhitespaceCountFeature(),
-        	//	new WhitespaceRelativeCountFeature(),
-        	//	new VerticalProminenceFeature(),
-        	//	new HorizontalRelativeProminenceFeature(),
-        	//	new IsFontBiggerThanNeighboursFeature(),
-        	//	new DistanceFromNearestNeighbourFeature(),
-        		new AcknowledgementFeature(),
-        	//	new FontHeightMeanFeature(),
-                new ProportionsFeature(),
+        		new DatesFeature(),
+                new DigitCountFeature(),
+                new DigitRelativeCountFeature(),
+        		new DistanceFromNearestNeighbourFeature(),
+        		new DotCountFeature(),
+        		new DotRelativeCountFeature(),
+        		new EmptySpaceRelativeFeature(),
+        		new FontHeightMeanFeature(),
+        		new FigureFeature(),
+        		new FreeSpaceWithinZoneFeature(),
                 new HeightFeature(),
-                new WidthFeature(),
-               new XPositionFeature(),
-                new YPositionFeature(),
                 new HeightRelativeFeature(),
-                new WidthRelativeFeature(),
-                new XPositionRelativeFeature(),
-                new YPositionRelativeFeature(),
+        		new HorizontalRelativeProminenceFeature(),
+        		new IsFirstPageFeature(),
+        		new IsFontBiggerThanNeighboursFeature(),
+        		new IsHighestOnThePageFeature(),
+        		new IsLastPageFeature(),
+        		new IsLowestOnThePageFeature(),
+        		new IsFontBiggerThanNeighboursFeature(),
+        		new IsItemizeFeature(),
+                new KeywordsFeature(),
                 new LineCountFeature(),
                 new LineRelativeCountFeature(),
                 new LineHeightMeanFeature(),
@@ -122,31 +129,34 @@ public class HMMZoneGeneralClassificationBigDemo {
                 new LineXPositionMeanFeature(),
                 new LineXPositionDiffFeature(),
                 new LineXWidthPositionDiffFeature(),
-                new WordCountFeature(),
-                new WordCountRelativeFeature(),
-                new CharCountFeature(),
-                new CharCountRelativeFeature(),
-                new DigitCountFeature(),
-                new DigitRelativeCountFeature(),
                 new LetterCountFeature(),
                 new LetterRelativeCountFeature(),
                 new LowercaseCountFeature(),
                 new LowercaseRelativeCountFeature(),
+                new PageNumberFeature(),
+                new ProportionsFeature(),
+                new PunctuationRelativeCountFeature(),
+         //       new ReferencesFeature(),
+                new StartsWithDigitFeature(),
                 new UppercaseCountFeature(),
                 new UppercaseRelativeCountFeature(),
                 new UppercaseWordCountFeature(),
                 new UppercaseWordRelativeCountFeature(),
-                new AtCountFeature(),
-                new AtRelativeCountFeature(),
-                new CommaCountFeature(),
-                new CommaRelativeCountFeature(),
-                new DotCountFeature(),
-                new DotRelativeCountFeature(),
-                new PageNumberFeature(),
-                new YearFeature(),
-                new PunctuationRelativeCountFeature()
-        		,              new KeywordsFeature()
-        		, new WordWidthMeanFeature()
+        		new VerticalProminenceFeature(),
+                new WidthFeature(),
+                new WordCountFeature(),
+                new WordCountRelativeFeature(),
+        		new WordWidthMeanFeature(),
+        		new WordLengthMeanFeature(),
+        		new WordLengthMedianFeature(),
+        		new WhitespaceCountFeature(),
+        		new WhitespaceRelativeCountFeature(),
+                new WidthRelativeFeature(),
+                new XPositionFeature(),
+                new XPositionRelativeFeature(),
+                new YPositionFeature(),
+                new YPositionRelativeFeature(),
+                new YearFeature()
                 ));
 
         // 1.5. open test file
@@ -160,6 +170,15 @@ public class HMMZoneGeneralClassificationBigDemo {
 
         BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);
+       
+        List<BxDocument> testList = new ArrayList<BxDocument>();
+        testList.add(testDocument);
+        List<HMMTrainingElement<BxZoneLabel>> testElement = node.process(testList, null);
+        for(int i=0; i<testElement.size(); ++i) {
+        	System.out.println(testDocument.asZones().get(i).toText());
+        	System.out.println(testElement.get(i).getObservation().dump());
+        }
+        
         List<HMMTrainingElement<BxZoneLabel>> unconvertedTrainingElements = node.process(documents, null);
         List<HMMTrainingElement<BxZoneGeneralLabel>> trainingElements = new ArrayList<HMMTrainingElement<BxZoneGeneralLabel>>(unconvertedTrainingElements.size());
        

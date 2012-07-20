@@ -11,7 +11,7 @@ public class CuePhrasesCountFeature implements
 		FeatureCalculator<BxZone, BxPage> {
 
 	private static String featureName = "CuePhrasesCount";
-	private static String[] cuePhrases = { "therefore", "therein", "hereby",
+	private static String[] cuePhrases = {"although", "therefore", "therein", "hereby",
 			"nevertheless", "to this end", "however", "moreover", "nonetheless" };
 
 	@Override

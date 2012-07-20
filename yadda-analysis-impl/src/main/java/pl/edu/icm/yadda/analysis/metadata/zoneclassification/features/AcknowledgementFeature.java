@@ -20,7 +20,7 @@ public class AcknowledgementFeature implements
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        String[] keywords = {"acknowledge"};
+        String[] keywords = {"acknowledge", "acknowledgement", "acknowledgment"};
 
         for (String keyword : keywords) {
             if (zone.toText().toLowerCase().contains(keyword)) {

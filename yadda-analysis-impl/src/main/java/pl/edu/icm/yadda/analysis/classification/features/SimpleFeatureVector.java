@@ -32,6 +32,7 @@ public class SimpleFeatureVector implements FeatureVector {
         return features.keySet();
     }
     
+    @Override
     public String dump() {
     	String ret = "";
     	Set<String> keysSet = features.keySet();
@@ -44,4 +45,9 @@ public class SimpleFeatureVector implements FeatureVector {
     	return ret;
     }
 
+    @Override
+    public Integer size() {
+    	return features.size();
+    }
+    
 }

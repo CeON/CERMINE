@@ -5,7 +5,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 
 public class IsLastPageFeature implements FeatureCalculator<BxZone, BxPage> {
-	private static String featureName = "IsPage";
+	private static String featureName = "IsLastPage";
 
 	@Override
 	public String getFeatureName() {

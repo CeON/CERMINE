@@ -13,7 +13,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  */
 public class YearFeature implements FeatureCalculator<BxZone, BxPage> {
 
-    private static String featureName = "U1References";
+    private static String featureName = "Year";
 
     @Override
     public String getFeatureName() {

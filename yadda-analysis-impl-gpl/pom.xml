@@ -184,11 +184,13 @@
             <id>mvnrepo</id>
             <url>http://mvnrepository.com/artifact/</url>
         </repository>
+        <!--
         <repository>
             <id>yadda</id>
             <name>YADDA project repository</name>
             <url>http://maven.icm.edu.pl/artifactory/repo</url>
         </repository>
+        -->
     </repositories>
     -->
 </project>

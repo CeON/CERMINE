@@ -56,26 +56,36 @@ public class YToBibEntryTransformer implements IMetadataModelConverter<YExportab
                    
                     String pages = yElementJournalStructure.getCurrent().getPosition();
                     bibEntry.setField(BibEntry.FIELD_PAGES, pages);
-                    
-                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_PUBLISHER).getOneName()!=null){
-                    String publisher = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_PUBLISHER).getOneName().getText();
-                    bibEntry.setField(BibEntry.FIELD_PUBLISHER, publisher);
+
+                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_PUBLISHER)!=null){
+                        if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_PUBLISHER).getOneName()!=null){
+                            String publisher = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_PUBLISHER).getOneName().getText();
+                            bibEntry.setField(BibEntry.FIELD_PUBLISHER, publisher);
+                        }
                     }
-                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_JOURNAL).getOneName()!=null){
-                    String journal = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_JOURNAL).getOneName().getText();
-                    bibEntry.setField(BibEntry.FIELD_JOURNAL, journal);
+                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_JOURNAL)!=null){
+                        if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_JOURNAL).getOneName()!=null){
+                            String journal = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_JOURNAL).getOneName().getText();
+                            bibEntry.setField(BibEntry.FIELD_JOURNAL, journal);
+                        }
                     }
-                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_VOLUME).getOneName()!=null){
-                    String volume = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_VOLUME).getOneName().getText();
-                    bibEntry.setField(BibEntry.FIELD_VOLUME, volume);
+                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_VOLUME)!=null){
+                        if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_VOLUME).getOneName()!=null){
+                            String volume = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_VOLUME).getOneName().getText();
+                            bibEntry.setField(BibEntry.FIELD_VOLUME, volume);
+                        }
                     }
-                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_ISSUE).getOneName()!=null){
-                    String number = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_ISSUE).getOneName().getText();
-                    bibEntry.setField(BibEntry.FIELD_NUMBER, number);
+                    if (yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_ISSUE) != null){
+                        if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_ISSUE).getOneName()!=null){
+                            String number = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_ISSUE).getOneName().getText();
+                            bibEntry.setField(BibEntry.FIELD_NUMBER, number);
+                        }
                     }
-                    if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_YEAR).getOneName()!=null){
-                    String year = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_YEAR).getOneName().getText();
-                    bibEntry.setField(BibEntry.FIELD_YEAR, year);
+                    if (yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_YEAR) != null){
+                        if(yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_YEAR).getOneName()!=null){
+                            String year = yElementJournalStructure.getAncestor(YConstants.EXT_LEVEL_JOURNAL_YEAR).getOneName().getText();
+                            bibEntry.setField(BibEntry.FIELD_YEAR, year);
+                        }
                     }
                 }
             }

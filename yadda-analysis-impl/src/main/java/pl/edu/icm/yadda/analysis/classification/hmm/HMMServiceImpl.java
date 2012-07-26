@@ -1,11 +1,6 @@
 package pl.edu.icm.yadda.analysis.classification.hmm;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 
@@ -39,7 +34,7 @@ public class HMMServiceImpl implements HMMService {
      */
     @Override
     public <S> List<S> viterbiMostProbableStates(HMMProbabilityInfo<S> probabilityInfo, Collection<S> states, List<FeatureVector> messages) {
-
+        
         /* A matrix that keeps track of the most probable state paths and their 
          probabilities. viterbiMatrix(i, s) is a matrix node that stores three
          pieces of information:
@@ -97,7 +92,7 @@ public class HMMServiceImpl implements HMMService {
                 MatrixNode<S> node = new MatrixNode<S>(maxProbability * emissionProbability, state, bestPrevNode);
                 probabilities.put(state, node);
             }
-
+            
             /*
              * It is important to keep positive probability values in the 
              * Viterbi matrix, no matter how small. If the HMM sequence is long
@@ -124,7 +119,12 @@ public class HMMServiceImpl implements HMMService {
                     probabilities.get(state).probability *= Math.pow(10, exponent);
                 }
             }
-
+            if (Math.log10(max) < -100 && Math.log10(min) < -100) {
+                for (S state : states) {
+                    probabilities.get(state).probability *= Math.pow(10, 10);
+                }
+            }
+                
             viterbiMatrix.put(i, probabilities);
         }
 

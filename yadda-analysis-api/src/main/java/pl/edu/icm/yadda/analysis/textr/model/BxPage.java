@@ -21,7 +21,7 @@ public final class BxPage extends BxObject<BxPage> implements Serializable, Prin
 
     @Override
     public Boolean isSorted() {
-    	if(!isSorted)
+    	if(isSorted == null || !isSorted)
     		return false;
     	for(BxZone zone: zones)
     		if(!zone.isSorted())

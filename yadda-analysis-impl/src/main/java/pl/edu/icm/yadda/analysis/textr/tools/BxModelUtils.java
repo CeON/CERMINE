@@ -4,13 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
-import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxWord;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 
 /**
  *
@@ -126,6 +120,7 @@ public class BxModelUtils {
      */
     public static BxWord deepClone(BxWord word) {
         BxWord copy = new BxWord().setBounds(word.getBounds());
+        copy.setSorted(word.isSorted());
         for (BxChunk chunk : word.getChunks()) {
             copy.addChunks(chunk);
         }
@@ -140,6 +135,7 @@ public class BxModelUtils {
      */
     public static BxLine deepClone(BxLine line) {
         BxLine copy = new BxLine().setBounds(line.getBounds());
+        copy.setSorted(line.isSorted());
         for (BxWord word : line.getWords()) {
             copy.addWord(deepClone(word));
         }
@@ -154,6 +150,7 @@ public class BxModelUtils {
      */
     public static BxZone deepClone(BxZone zone) {
         BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(zone.getBounds());
+        copy.setSorted(zone.isSorted());
         for (BxLine line : zone.getLines()) {
             copy.addLine(deepClone(line));
         }
@@ -171,6 +168,7 @@ public class BxModelUtils {
      */
     public static BxPage deepClone(BxPage page) {
         BxPage copy = new BxPage().setBounds(page.getBounds());
+        copy.setSorted(page.isSorted());
         for (BxZone zone : page.getZones()) {
             copy.addZone(deepClone(zone));
         }

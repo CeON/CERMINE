@@ -1,16 +1,16 @@
 package pl.edu.icm.yadda.analysis.textr.transformers;
 
-import org.xml.sax.InputSource;
 import java.io.StringReader;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathConstants;
-import pl.edu.icm.yadda.analysis.textr.model.*;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
-import org.w3c.dom.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 
 /**
  *
@@ -56,7 +56,7 @@ public class BxDocumentToTrueVizWriterTest {
 
         BxZone z = new BxZone();
         z.setBounds(new BxBounds(10, 20, 30, 45));
-        z.setLabel(BxZoneLabel.AUTHOR);
+        z.setLabel(BxZoneLabel.MET_AUTHOR);
         z.addLine(l);
 
         BxPage p = new BxPage();
@@ -64,14 +64,14 @@ public class BxDocumentToTrueVizWriterTest {
         p.addZone(z);
 
         BxPage p2 = new BxPage();
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.ABSTRACT));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.AFFILIATION));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.AUTHOR));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.BODY));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.FOOTER));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.HEADER));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.TITLE));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.UNKNOWN));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_ABSTRACT));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_AFFILIATION));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_AUTHOR));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.GEN_BODY));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.OTH_FOOTER));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.OTH_HEADER));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_TITLE));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.OTH_UNKNOWN));
         p2.addZone(new BxZone());
 
         BxDocument doc = new BxDocument();

@@ -19,7 +19,7 @@ public class PagesEnhancer extends AbstractPatternEnhancer {
 
     public PagesEnhancer() {
         super(PATTERN);
-        setSearchedZoneLabels(BxZoneLabel.BIB_INFO);
+        setSearchedZoneLabels(BxZoneLabel.MET_BIB_INFO);
     }
 
     @Override

@@ -4,18 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import pl.edu.icm.yadda.analysis.AnalysisException;
-import pl.edu.icm.yadda.analysis.bibref.BibEntry;
-import pl.edu.icm.yadda.analysis.bibref.BibReferenceParser;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.yadda.analysis.bibref.parsing.tools.CitationUtils;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
@@ -28,6 +21,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZoneGeneralLabel;
  * 
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
+@Deprecated
 public class HMMZoneGeneralClassifier {
 
     private HMMService hmmService;
@@ -59,7 +53,6 @@ public class HMMZoneGeneralClassifier {
 
     public List<BxZoneGeneralLabel> classifyZones(BxDocument document) throws AnalysisException {
         ZoneClassificationUtils.correctPagesBounds(document);
-        ZoneClassificationUtils.sortZones(document, zoneSortTolerance);
 
         List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
         for (BxPage page : document.getPages()) {

@@ -17,25 +17,12 @@
             http://yadda.icm.edu.pl/schema/processing/yadda-process.xsd">
 
     <import resource="classpath:pl/edu/icm/yadda/analysis/metadata/common/services.xml"/>
-
-    <bean id="evaluator" class="pl.edu.icm.yadda.analysis.metadata.evaluation.SegmentationEvaluator">
-        <property name="ignoredLabels">
-            <set value-type="pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel">
-                <value>BODY_TABLE</value>
-                <value>BODY_FIGURE</value>
-                <value>BODY_EQUATION</value>
-                <value>BODY_TABLE_CAPTION</value>
-                <value>BODY_FIGURE_CAPTION</value>
-                <value>BODY_EQUATION_LABEL</value>
-            </set>
-        </property>
-        
-<!--        <property name="labels">
-            <set>
-                <value>TITLE</value>
-            </set>
-        </property>-->
-        <property name="pageSegmenter" ref="pageSegmenter"/>
-    </bean>
     
+    <bean id="evaluator" class="pl.edu.icm.yadda.analysis.metadata.evaluation.ClassificationEvaluator">
+        <property name="zoneClassifier" ref="initialZoneClassifier"/>
+        <property name="labelMap">
+            <bean class="pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel" factory-method="getLabelToGeneralMap"/>
+        </property>
+    </bean>
+
 </beans>

@@ -15,7 +15,7 @@ public class VolumeEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile("\\b(?:volume|vol\\.?)[\\s:-]\\s*(\\d+)",
             Pattern.CASE_INSENSITIVE);
-    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.BIB_INFO);
+    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     public VolumeEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);

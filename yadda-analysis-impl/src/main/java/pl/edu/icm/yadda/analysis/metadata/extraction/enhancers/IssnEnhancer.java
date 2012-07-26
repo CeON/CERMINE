@@ -18,7 +18,7 @@ public class IssnEnhancer extends AbstractPatternEnhancer {
     private static final Pattern PATTERN = Pattern.compile(
             "\\bISSN:?\\s*(\\d{4}[-\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212]\\d{3}[\\dX])\\b",
             Pattern.CASE_INSENSITIVE);
-    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.BIB_INFO);
+    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     public IssnEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);

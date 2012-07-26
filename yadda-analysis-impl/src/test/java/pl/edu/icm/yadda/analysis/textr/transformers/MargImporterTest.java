@@ -1,21 +1,15 @@
-
-
 package pl.edu.icm.yadda.analysis.textr.transformers;
 
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
-import java.io.InputStreamReader;
-import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import javax.xml.parsers.ParserConfigurationException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import static org.junit.Assert.*;
+import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *
@@ -35,7 +29,7 @@ public class MargImporterTest {
        boolean rightSize=false;
        for (BxZone zone:page.getZones()) {
           if (zone.getLabel()!=null) {
-           if (zone.getLabel().equals(BxZoneLabel.AUTHOR)) {
+           if (zone.getLabel().equals(BxZoneLabel.MET_AUTHOR)) {
                contains=true;
                System.out.println(zone.toText());
                // takie cos na toplevelu                 Howard M. Schachter,* Ba' Pham,* Jim King,tt  Stephanie Langford,* David Moher*$

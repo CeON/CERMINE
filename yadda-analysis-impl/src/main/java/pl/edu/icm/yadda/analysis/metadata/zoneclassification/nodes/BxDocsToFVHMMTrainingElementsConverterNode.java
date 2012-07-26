@@ -7,11 +7,11 @@ import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.SimpleHMMTrainingElement;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
 import pl.edu.icm.yadda.process.node.IProcessingNode;
 
@@ -37,7 +37,7 @@ public class BxDocsToFVHMMTrainingElementsConverterNode
                 new ArrayList<HMMTrainingElement<BxZoneLabel>>(input.size());
         for (BxDocument doc : input) {
             ZoneClassificationUtils.correctPagesBounds(doc);
-            ZoneClassificationUtils.sortZones(doc, zoneSortTolerance);
+
             if (labelMap != null) {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }

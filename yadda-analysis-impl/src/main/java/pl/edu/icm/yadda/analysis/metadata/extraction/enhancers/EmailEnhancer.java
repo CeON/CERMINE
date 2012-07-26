@@ -17,7 +17,7 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
     private static final Pattern PATTERN = Pattern.compile("\\S+@\\S+");
     
     public EmailEnhancer() {
-        this.setSearchedZoneLabels(BxZoneLabel.CORRESPONDENCE, BxZoneLabel.AFFILIATION);
+        this.setSearchedZoneLabels(BxZoneLabel.MET_CORRESPONDENCE, BxZoneLabel.MET_AFFILIATION);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
     private BibReferenceParser<BibEntry> referenceParser;
 
     public CiteAsEnhancer() {
-        setSearchedZoneLabels(BxZoneLabel.BIB_INFO);
+        setSearchedZoneLabels(BxZoneLabel.MET_BIB_INFO);
     }
 
     public void setReferenceParser(BibReferenceParser<BibEntry> referenceParser) {

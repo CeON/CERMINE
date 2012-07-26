@@ -1,20 +1,18 @@
 package pl.edu.icm.yadda.analysis.textr.model;
 
 /**
- * Represents a zone's function on a page.
  * 
- * @author Pawel Szostek (p.szostek@icm.edu.pl)
- * 
+ * @author Dominika Tkaczyk
  */
-@Deprecated
-public enum BxZoneGeneralLabel {
+public enum BxZoneLabelCategory {
+    /** General labels. */
+    CAT_GENERAL,
     /** Document's metadata. */
-	METADATA,
+	CAT_METADATA,
 	/** Document's body. */
-	BODY,
+	CAT_BODY,
 	/** Document's references. */
-	REFERENCES,
+	CAT_REFERENCES,
 	/** Other stuff left in the document. */
-	OTHER,
-	ABSTRACT
+	CAT_OTHER,
 }

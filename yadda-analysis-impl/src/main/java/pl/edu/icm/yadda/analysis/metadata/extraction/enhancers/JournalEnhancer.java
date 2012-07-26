@@ -14,7 +14,7 @@ import pl.edu.icm.yadda.bwmeta.model.YElement;
 public class JournalEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile("[^,;]*journal[^,;-]*", Pattern.CASE_INSENSITIVE);
-    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.BIB_INFO);
+    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     public JournalEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);

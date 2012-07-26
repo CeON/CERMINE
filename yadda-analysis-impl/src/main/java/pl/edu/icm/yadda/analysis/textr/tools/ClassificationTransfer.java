@@ -1,17 +1,7 @@
 package pl.edu.icm.yadda.analysis.textr.tools;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxWord;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
+import java.util.*;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 
 /**
  *
@@ -52,7 +42,7 @@ public class ClassificationTransfer {
         }
 
         for (BxZone zone : source.getZones()) {
-            if (zone.getLabel() == null || zone.getLabel() == BxZoneLabel.UNKNOWN) {
+            if (zone.getLabel() == null || zone.getLabel() == BxZoneLabel.OTH_UNKNOWN) {
                 continue;
             }
             for (BxLine line : zone.getLines()) {
@@ -92,7 +82,7 @@ public class ClassificationTransfer {
         }
 
         BxZoneLabel findBest() {
-            BxZoneLabel best = BxZoneLabel.UNKNOWN;
+            BxZoneLabel best = BxZoneLabel.OTH_UNKNOWN;
             int bestHits = 0;
             for (Map.Entry<BxZoneLabel, Integer> entry : hits.entrySet()) {
                 if (entry.getValue() > bestHits) {

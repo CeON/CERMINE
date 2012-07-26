@@ -16,7 +16,7 @@ import pl.edu.icm.yadda.bwmeta.model.YElement;
 public class YearEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile("(\\d\\d\\d\\d)");
-    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.BIB_INFO);
+    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     public YearEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);

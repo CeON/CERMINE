@@ -1,20 +1,8 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
-import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxWord;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
@@ -31,7 +19,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
     private final Set<String> headers = new HashSet<String>();
 
     public AffiliationGeometricEnhancer() {
-        setSearchedZoneLabels(BxZoneLabel.AFFILIATION);
+        setSearchedZoneLabels(BxZoneLabel.MET_AFFILIATION);
     }
 
     public void setHeaders(Collection<String> headers) {

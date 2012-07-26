@@ -18,7 +18,7 @@ public class HindawiCornerInfoEnhancer extends AbstractPatternEnhancer {
 
     public HindawiCornerInfoEnhancer() {
         super(PATTERN);
-        setSearchedZoneLabels(BxZoneLabel.BIB_INFO);
+        setSearchedZoneLabels(BxZoneLabel.MET_BIB_INFO);
         setSearchedFirstPageOnly(true);
     }
 

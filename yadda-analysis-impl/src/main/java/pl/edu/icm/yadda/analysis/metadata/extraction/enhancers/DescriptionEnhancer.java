@@ -21,7 +21,7 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
     private static final Pattern PREFIX = Pattern.compile("^Abstract[-:\\.]?", Pattern.CASE_INSENSITIVE);
 
     public DescriptionEnhancer() {
-        setSearchedZoneLabels(EnumSet.of(BxZoneLabel.ABSTRACT));
+        setSearchedZoneLabels(EnumSet.of(BxZoneLabel.MET_ABSTRACT));
         setSearchedFirstPageOnly(true);
     }
 

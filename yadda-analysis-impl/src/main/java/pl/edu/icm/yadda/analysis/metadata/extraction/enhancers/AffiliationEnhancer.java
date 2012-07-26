@@ -17,7 +17,7 @@ import pl.edu.icm.yadda.bwmeta.model.YElement;
 public class AffiliationEnhancer extends AbstractSimpleEnhancer {
 
     public AffiliationEnhancer() {
-        setSearchedZoneLabels(BxZoneLabel.AFFILIATION);
+        setSearchedZoneLabels(BxZoneLabel.MET_AFFILIATION);
     }
 
     @Override

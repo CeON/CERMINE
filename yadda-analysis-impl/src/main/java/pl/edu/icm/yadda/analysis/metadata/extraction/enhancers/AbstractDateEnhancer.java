@@ -33,7 +33,7 @@ abstract public class AbstractDateEnhancer extends AbstractPatternEnhancer {
 
     public AbstractDateEnhancer(EnhancedField field, String type, String nameRegex) {
         super(createPattern(nameRegex));
-        setSearchedZoneLabels(BxZoneLabel.DATES);
+        setSearchedZoneLabels(BxZoneLabel.MET_DATES);
         this.field = field;
         this.dateType = type;
     }

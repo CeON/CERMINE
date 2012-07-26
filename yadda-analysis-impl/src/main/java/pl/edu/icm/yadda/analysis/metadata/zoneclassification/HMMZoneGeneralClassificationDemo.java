@@ -1,27 +1,10 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
@@ -34,11 +17,7 @@ import pl.edu.icm.yadda.analysis.classification.hmm.training.SimpleHMMTrainingEl
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
 import pl.edu.icm.yadda.analysis.textr.HMMZoneGeneralClassifier;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneGeneralLabel;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
@@ -46,6 +25,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  *
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
+@Deprecated
 public class HMMZoneGeneralClassificationDemo {
 
     protected static final String hmmTestFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
@@ -114,7 +94,7 @@ public class HMMZoneGeneralClassificationDemo {
                 ));
 
         // 2. import and generate training set based on sequences and vector of features
-        InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);
+        InputStream is = HMMZoneGeneralClassificationDemo.class.getResourceAsStream(hmmTestFile);
         InputStreamReader isr = new InputStreamReader(is);
         
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();

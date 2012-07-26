@@ -1,11 +1,6 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
@@ -20,7 +15,7 @@ import pl.edu.icm.yadda.bwmeta.model.YName;
 public class TitleEnhancer extends AbstractSimpleEnhancer {
 
     public TitleEnhancer() {
-        setSearchedZoneLabels(BxZoneLabel.TITLE);
+        setSearchedZoneLabels(BxZoneLabel.MET_TITLE);
         setSearchedFirstPageOnly(true);
     }
 

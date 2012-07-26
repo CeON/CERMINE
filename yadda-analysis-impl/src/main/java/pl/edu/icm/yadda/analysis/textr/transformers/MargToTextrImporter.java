@@ -3,10 +3,7 @@ package pl.edu.icm.yadda.analysis.textr.transformers;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import javax.activation.UnsupportedDataTypeException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.slf4j.Logger;
@@ -17,14 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
-import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxWord;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.metadata.transformers.IMetadataReader;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
@@ -41,6 +31,16 @@ public class MargToTextrImporter implements IMetadataReader<BxPage> {
     private static final Logger log = LoggerFactory.getLogger(MargToTextrImporter.class);
 
     public static int STANDART_DOCUMENT_HEIGHT=3299;
+    
+    public static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
+    static {
+        zoneLabelMap.put("abstract",    BxZoneLabel.MET_ABSTRACT);
+        zoneLabelMap.put("affiliation", BxZoneLabel.MET_AFFILIATION);
+        zoneLabelMap.put("author",      BxZoneLabel.MET_AUTHOR);
+        zoneLabelMap.put("title",       BxZoneLabel.MET_TITLE);
+        zoneLabelMap.put("footer",      BxZoneLabel.OTH_FOOTER);
+        zoneLabelMap.put("header",      BxZoneLabel.OTH_HEADER);
+    }
 
     @Override
     public MetadataFormat getSourceFormat() {
@@ -253,30 +253,10 @@ public class MargToTextrImporter implements IMetadataReader<BxPage> {
         if (val == null) {
             return null;
         }
-        if (val.equalsIgnoreCase("Abstract")) {
-            return BxZoneLabel.ABSTRACT;
+        if (zoneLabelMap.containsKey(val.toLowerCase())) {
+            return zoneLabelMap.get(val.toLowerCase());
         }
-        if (val.equalsIgnoreCase("Affiliation")) {
-            return BxZoneLabel.AFFILIATION;
-        }
-        if (val.equalsIgnoreCase("Author")) {
-            return BxZoneLabel.AUTHOR;
-        }
-        /*
-        Body is not described in marg
-        if (val.equalsIgnoreCase("Abstract")) {
-        return BxZoneLabel.BODY;
-        }*/
-        if (val.equalsIgnoreCase("Footer")) {
-            return BxZoneLabel.FOOTER;
-        }
-        if (val.equalsIgnoreCase("Header")) {
-            return BxZoneLabel.HEADER;
-        }
-        if (val.equalsIgnoreCase("Title")) {
-            return BxZoneLabel.TITLE;
-        }
-        return BxZoneLabel.UNKNOWN;
+        return BxZoneLabel.OTH_UNKNOWN;
     }
 
     private BxZone parseZoneNode(Element zoneE) {

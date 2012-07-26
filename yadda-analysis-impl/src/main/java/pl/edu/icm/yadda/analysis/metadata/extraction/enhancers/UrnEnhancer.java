@@ -18,7 +18,7 @@ public class UrnEnhancer extends AbstractPatternEnhancer {
             Pattern.CASE_INSENSITIVE);
 
     public UrnEnhancer() {
-        super(PATTERN, EnumSet.of(BxZoneLabel.BIB_INFO));
+        super(PATTERN, EnumSet.of(BxZoneLabel.MET_BIB_INFO));
     }
 
     @Override

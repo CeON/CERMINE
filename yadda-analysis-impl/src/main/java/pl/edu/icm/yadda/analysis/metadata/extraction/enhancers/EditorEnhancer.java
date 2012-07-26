@@ -22,7 +22,7 @@ public class EditorEnhancer extends AbstractSimpleEnhancer {
             Pattern.CASE_INSENSITIVE);
     
     public EditorEnhancer() {
-        setSearchedZoneLabels(BxZoneLabel.EDITOR);
+        setSearchedZoneLabels(BxZoneLabel.MET_EDITOR);
     }
 
     @Override

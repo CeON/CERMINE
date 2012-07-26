@@ -2,13 +2,9 @@ package pl.edu.icm.yadda.analysis.bibref.extraction.tools;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.yadda.analysis.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.yadda.analysis.bibref.extraction.model.BibReferenceLineLabel;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
+import pl.edu.icm.yadda.analysis.bibref.extraction.model.BxDocumentBibReferences;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
 
 /**
@@ -30,7 +26,7 @@ public class BibRefExtractionUtils {
         for (BxPage page : document.getPages()) {
             BxModelUtils.sortZonesXY(page, 5);
             for (BxZone zone : page.getZones()) {
-                if (zone.getLabel().equals(BxZoneLabel.REFERENCES)) {
+                if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_REFERENCES)) {
                     BxModelUtils.sortZoneRecursively(zone);
                     lines.addZone(zone);
                 }

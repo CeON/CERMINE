@@ -49,12 +49,12 @@
             	<property name="featureVectorBuilder" ref="zoneFeatureVectorBuilder" />
                 <property name="labelMap">
                     <map>
-                        <entry key="EQUATION" value="BODY"/>
-                        <entry key="EQUATION_LABEL" value="BODY"/>
-                        <entry key="FIGURE" value="BODY"/>
-                        <entry key="FIGURE_CAPTION" value="BODY"/>
-                        <entry key="TABLE" value="BODY"/>
-                        <entry key="TABLE_CAPTION" value="BODY"/>
+                        <entry key="BODY_EQUATION" value="GEN_BODY"/>
+                        <entry key="BODY_EQUATION_LABEL" value="GEN_BODY"/>
+                        <entry key="BODY_FIGURE" value="GEN_BODY"/>
+                        <entry key="BODY_FIGURE_CAPTION" value="GEN_BODY"/>
+                        <entry key="BODY_TABLE" value="GEN_BODY"/>
+                        <entry key="BODY_TABLE_CAPTION" value="GEN_BODY"/>
                     </map>
                 </property>
             </bean>

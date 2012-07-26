@@ -20,7 +20,7 @@ public class KeywordsEnhancer extends AbstractSimpleEnhancer {
     private static final Pattern PREFIX = Pattern.compile("^key\\s?words[:-]?", Pattern.CASE_INSENSITIVE);
 
     public KeywordsEnhancer() {
-        setSearchedZoneLabels(EnumSet.of(BxZoneLabel.KEYWORDS));
+        setSearchedZoneLabels(EnumSet.of(BxZoneLabel.MET_KEYWORDS));
         setSearchedFirstPageOnly(true);
     }
 

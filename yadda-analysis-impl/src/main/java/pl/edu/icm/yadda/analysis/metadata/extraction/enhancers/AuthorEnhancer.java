@@ -24,7 +24,7 @@ import pl.edu.icm.yadda.bwmeta.model.YName;
 public class AuthorEnhancer extends AbstractSimpleEnhancer {
 
     public AuthorEnhancer() {
-        setSearchedZoneLabels(EnumSet.of(BxZoneLabel.AUTHOR));
+        setSearchedZoneLabels(EnumSet.of(BxZoneLabel.MET_AUTHOR));
     }
 
     private static void putAuthor(YElement element, String author, List<String> refs) {

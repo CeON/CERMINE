@@ -1,14 +1,6 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
@@ -26,7 +18,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
     private final Set<String> types = new HashSet<String>();
 
     public TitleMergedWithTypeEnhancer() {
-        setSearchedZoneLabels(BxZoneLabel.TITLE);
+        setSearchedZoneLabels(BxZoneLabel.MET_TITLE);
         setSearchedFirstPageOnly(true);
     }
 

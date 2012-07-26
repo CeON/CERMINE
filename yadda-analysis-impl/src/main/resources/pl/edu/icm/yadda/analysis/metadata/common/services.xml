@@ -41,6 +41,13 @@
         <property name="maxLineSizeScale" value="Infinity"/>
     </bean>
 
+    <bean id="initialZoneClassifier" class="pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier">
+        <constructor-arg index="0" ref="hmmService" />
+        <constructor-arg index="1" ref="hmmStorage" />
+        <constructor-arg index="2" value="initialzoneclassification" />
+        <constructor-arg index="3" ref="initialZoneFeatureVectorBuilder" />
+    </bean>
+
     <bean id="zoneClassifier" class="pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier">
         <constructor-arg index="0" ref="hmmService" />
         <constructor-arg index="1" ref="hmmStorage" />
@@ -118,8 +125,8 @@
                 <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.DoiEnhancer">
                     <property name="searchedZoneLabels">
                         <set>
-                            <value>BIB_INFO</value>
-                            <value>HEADER</value>
+                            <value>MET_BIB_INFO</value>
+                            <value>OTH_HEADER</value>
                         </set>
                     </property>
                 </bean>

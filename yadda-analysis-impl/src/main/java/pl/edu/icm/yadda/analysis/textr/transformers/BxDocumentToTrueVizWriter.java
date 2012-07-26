@@ -4,9 +4,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
+import java.util.*;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -16,12 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
-import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxWord;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.metadata.transformers.IMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
@@ -43,6 +36,37 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
 
     private static final DecimalFormat FORMAT = new DecimalFormat("0.000", new DecimalFormatSymbols(Locale.US));
 
+    public static final Map<BxZoneLabel, String> zoneLabelMap = new HashMap<BxZoneLabel, String>();
+    static {
+        zoneLabelMap.put(BxZoneLabel.GEN_METADATA,          "bib_info");
+        zoneLabelMap.put(BxZoneLabel.GEN_BODY,              "body");
+        zoneLabelMap.put(BxZoneLabel.GEN_REFERENCES,        "references");
+        zoneLabelMap.put(BxZoneLabel.GEN_OTHER,             "other");
+        zoneLabelMap.put(BxZoneLabel.MET_ABSTRACT,          "abstract");
+        zoneLabelMap.put(BxZoneLabel.MET_AFFILIATION,       "affiliation");
+        zoneLabelMap.put(BxZoneLabel.MET_AUTHOR,            "author");
+        zoneLabelMap.put(BxZoneLabel.MET_BIB_INFO,          "bib_info");
+        zoneLabelMap.put(BxZoneLabel.MET_CORRESPONDENCE,    "correspondence");
+        zoneLabelMap.put(BxZoneLabel.MET_DATES,             "dates");
+        zoneLabelMap.put(BxZoneLabel.MET_EDITOR,            "editor");
+        zoneLabelMap.put(BxZoneLabel.MET_KEYWORDS,          "keywords");
+        zoneLabelMap.put(BxZoneLabel.MET_TITLE,             "title");
+        zoneLabelMap.put(BxZoneLabel.MET_TYPE,              "type");
+        zoneLabelMap.put(BxZoneLabel.BODY_CONTENT,          "body");
+        zoneLabelMap.put(BxZoneLabel.BODY_EQUATION,         "equation");
+        zoneLabelMap.put(BxZoneLabel.BODY_EQUATION_LABEL,   "equation_label");
+        zoneLabelMap.put(BxZoneLabel.BODY_FIGURE,           "figure");
+        zoneLabelMap.put(BxZoneLabel.BODY_FIGURE_CAPTION,   "figure_caption");
+        zoneLabelMap.put(BxZoneLabel.BODY_HEADER,           "body");
+        zoneLabelMap.put(BxZoneLabel.BODY_TABLE,            "table");
+        zoneLabelMap.put(BxZoneLabel.BODY_TABLE_CAPTION,    "table_caption");
+        zoneLabelMap.put(BxZoneLabel.OTH_COPYRIGHT,         "copyright");
+        zoneLabelMap.put(BxZoneLabel.OTH_HEADER,            "header");
+        zoneLabelMap.put(BxZoneLabel.OTH_FOOTER,            "footer");
+        zoneLabelMap.put(BxZoneLabel.OTH_PAGE_NUMBER,       "page_number");
+        zoneLabelMap.put(BxZoneLabel.OTH_UNKNOWN ,          "unknown");
+    }
+    
     @Override
     public MetadataModel<BxPage> getSourceModel() {
         return BxDocumentTransformers.MODEL;
@@ -139,7 +163,11 @@ public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
         node.appendChild(insetsNode);
         appendProperty(doc, node, "ZoneLines", "");
         if (zone.getLabel() != null) {
-            appendClassification(doc, node, zone.getLabel().toString(), "");
+            if (zoneLabelMap.containsKey(zone.getLabel())) {
+                appendClassification(doc, node, zoneLabelMap.get(zone.getLabel()), "");
+            } else {
+                appendClassification(doc, node, zone.getLabel().toString(), "");
+            }
         }
         for (BxLine line: zone.getLines()) {
             appendLine(doc, node, line);

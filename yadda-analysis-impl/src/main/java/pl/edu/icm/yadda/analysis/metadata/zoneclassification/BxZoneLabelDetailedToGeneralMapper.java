@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneGeneralLabel;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 
+@Deprecated
 public class BxZoneLabelDetailedToGeneralMapper {
 	public static class BxZoneLabelMappingError extends Exception {
         private static final long serialVersionUID = 68027091130335L;
@@ -23,40 +23,40 @@ public class BxZoneLabelDetailedToGeneralMapper {
 	public BxZoneLabelDetailedToGeneralMapper() {
 		mapping = new HashMap<BxZoneGeneralLabel, BxZoneLabel[]>();
 		mapping.put(BxZoneGeneralLabel.ABSTRACT, new BxZoneLabel[] {
-				BxZoneLabel.ABSTRACT
+				BxZoneLabel.MET_ABSTRACT
 		});
 		mapping.put(BxZoneGeneralLabel.METADATA, new BxZoneLabel[] {
-				BxZoneLabel.AFFILIATION,
-				BxZoneLabel.AUTHOR,
-				BxZoneLabel.BIB_INFO,
-				BxZoneLabel.COPYRIGHT,
-				BxZoneLabel.CORRESPONDENCE,
-				BxZoneLabel.DATES,
-				BxZoneLabel.EDITOR,
-				BxZoneLabel.KEYWORDS,
-				BxZoneLabel.TITLE,
-				BxZoneLabel.TYPE
+				BxZoneLabel.MET_AFFILIATION,
+				BxZoneLabel.MET_AUTHOR,
+				BxZoneLabel.MET_BIB_INFO,
+				BxZoneLabel.OTH_COPYRIGHT,
+				BxZoneLabel.MET_CORRESPONDENCE,
+				BxZoneLabel.MET_DATES,
+				BxZoneLabel.MET_EDITOR,
+				BxZoneLabel.MET_KEYWORDS,
+				BxZoneLabel.MET_TITLE,
+				BxZoneLabel.MET_TYPE
 		});
 
 		mapping.put(BxZoneGeneralLabel.BODY, new BxZoneLabel[] {
-				BxZoneLabel.BODY
+				BxZoneLabel.GEN_BODY
 		});
 
 		mapping.put(BxZoneGeneralLabel.OTHER, new BxZoneLabel[] {
-				BxZoneLabel.EQUATION,
-				BxZoneLabel.EQUATION_LABEL,
-				BxZoneLabel.FIGURE,
-				BxZoneLabel.FIGURE_CAPTION,
-				BxZoneLabel.TABLE,
-				BxZoneLabel.TABLE_CAPTION,
-				BxZoneLabel.FOOTER,
-				BxZoneLabel.HEADER,
-				BxZoneLabel.PAGE_NUMBER,
-				BxZoneLabel.UNKNOWN
+				BxZoneLabel.BODY_EQUATION,
+				BxZoneLabel.BODY_EQUATION_LABEL,
+				BxZoneLabel.BODY_FIGURE,
+				BxZoneLabel.BODY_FIGURE_CAPTION,
+				BxZoneLabel.BODY_TABLE,
+				BxZoneLabel.BODY_TABLE_CAPTION,
+				BxZoneLabel.OTH_FOOTER,
+				BxZoneLabel.OTH_HEADER,
+				BxZoneLabel.OTH_PAGE_NUMBER,
+				BxZoneLabel.OTH_UNKNOWN
 		});
 
 		mapping.put(BxZoneGeneralLabel.REFERENCES, new BxZoneLabel[] {
-				BxZoneLabel.REFERENCES
+				BxZoneLabel.GEN_REFERENCES
 		});
 	}
 	

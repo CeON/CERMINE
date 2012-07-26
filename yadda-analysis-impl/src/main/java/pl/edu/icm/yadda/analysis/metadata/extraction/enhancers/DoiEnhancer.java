@@ -16,7 +16,7 @@ import pl.edu.icm.yadda.bwmeta.model.YId;
 public class DoiEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile("\\bdoi:\\s*(10\\.\\d{4}/\\S+)");
-    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.BIB_INFO);
+    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     public DoiEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);

@@ -16,7 +16,7 @@ public class ArticleIdEnhancer extends AbstractPatternEnhancer {
     private static final Pattern PATTERN = Pattern.compile("\\barticle id[:-]? (\\d+)", Pattern.CASE_INSENSITIVE);
     
     public ArticleIdEnhancer() {
-        super(PATTERN, EnumSet.of(BxZoneLabel.BIB_INFO));
+        super(PATTERN, EnumSet.of(BxZoneLabel.MET_BIB_INFO));
     }
 
     @Override

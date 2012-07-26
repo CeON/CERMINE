@@ -16,7 +16,7 @@ public class PublisherEnhancer extends AbstractPatternEnhancer {
     private static final Pattern PATTERN = Pattern.compile(
             "\\bpublisher[\\s:-]\\s*(.+)",
             Pattern.CASE_INSENSITIVE);
-    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.BIB_INFO);
+    private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     public PublisherEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);

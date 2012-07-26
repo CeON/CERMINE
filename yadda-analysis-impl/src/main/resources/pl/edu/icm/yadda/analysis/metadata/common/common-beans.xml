@@ -44,6 +44,85 @@
             </list>
         </property>
     </bean>
+    
+    <bean id="initialZoneFeatureVectorBuilder"
+            class="pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder">
+        <property name="featureCalculators">
+            <list>
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AbstractFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AcknowledgementFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AffiliationFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AtCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AtRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.AuthorFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.BibinfoFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.BracketRelativeCount" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.BracketedLineRelativeCount" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.CharCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.CharCountRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.CommaCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.CommaRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.CuePhrasesCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.CuePhrasesRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DatesFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DigitCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DigitRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DistanceFromNearestNeighbourFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DotCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.DotRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.EmptySpaceRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.FontHeightMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.FigureFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.FreeSpaceWithinZoneFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.HeightFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.HeightRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.HorizontalRelativeProminenceFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.IsFirstPageFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.IsFontBiggerThanNeighboursFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.IsHighestOnThePageFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.IsLastPageFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.IsLowestOnThePageFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.IsItemizeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.KeywordsFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineHeightMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineWidthMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineXPositionMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineXPositionDiffFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LineXWidthPositionDiffFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LetterCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LetterRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LowercaseCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.LowercaseRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.PageNumberFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.ProportionsFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.PunctuationRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.ReferencesFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.ReferencesTitleFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.StartsWithDigitFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.UppercaseCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.UppercaseRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.UppercaseWordCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.UppercaseWordRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.VerticalProminenceFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WidthFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WordCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WordCountRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WordWidthMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WordLengthMeanFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WordLengthMedianFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WhitespaceCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WhitespaceRelativeCountFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.WidthRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.XPositionFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.XPositionRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YPositionFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YPositionRelativeFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YearFeature" />
+             </list>
+        </property>
+    </bean>
 
     <bean id="refsFeatureVectorBuilder"
             class="pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder">

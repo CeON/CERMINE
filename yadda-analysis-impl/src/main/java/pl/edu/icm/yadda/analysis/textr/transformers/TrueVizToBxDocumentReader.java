@@ -7,25 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.xml.parsers.ParserConfigurationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
-import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxWord;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.analysis.textr.model.Indexable;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.analysis.textr.tools.BxBoundsBuilder;
 import pl.edu.icm.yadda.metadata.transformers.IMetadataReader;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
@@ -43,6 +32,33 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
     
     private boolean areIdsSet;
 
+    public static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
+    static {
+        zoneLabelMap.put("abstract",        BxZoneLabel.MET_ABSTRACT);
+        zoneLabelMap.put("affiliation",     BxZoneLabel.MET_AFFILIATION);
+        zoneLabelMap.put("author",          BxZoneLabel.MET_AUTHOR);
+        zoneLabelMap.put("bib_info",        BxZoneLabel.MET_BIB_INFO);
+        zoneLabelMap.put("body",            BxZoneLabel.GEN_BODY);
+        zoneLabelMap.put("copyright",       BxZoneLabel.OTH_COPYRIGHT);
+        zoneLabelMap.put("correspondence",  BxZoneLabel.MET_CORRESPONDENCE);
+        zoneLabelMap.put("dates",           BxZoneLabel.MET_DATES);
+        zoneLabelMap.put("editor",          BxZoneLabel.MET_EDITOR);
+        zoneLabelMap.put("equation",        BxZoneLabel.BODY_EQUATION);
+        zoneLabelMap.put("equation_label",  BxZoneLabel.BODY_EQUATION_LABEL);
+        zoneLabelMap.put("figure",          BxZoneLabel.BODY_FIGURE);
+        zoneLabelMap.put("figure_caption",  BxZoneLabel.BODY_FIGURE_CAPTION);
+        zoneLabelMap.put("footer",          BxZoneLabel.OTH_FOOTER);
+        zoneLabelMap.put("header",          BxZoneLabel.OTH_HEADER);
+        zoneLabelMap.put("keywords",        BxZoneLabel.MET_KEYWORDS);
+        zoneLabelMap.put("page_number",     BxZoneLabel.OTH_PAGE_NUMBER);
+        zoneLabelMap.put("references",      BxZoneLabel.GEN_REFERENCES);
+        zoneLabelMap.put("table",           BxZoneLabel.BODY_TABLE);
+        zoneLabelMap.put("table_caption",   BxZoneLabel.BODY_TABLE_CAPTION);
+        zoneLabelMap.put("title",           BxZoneLabel.MET_TITLE);
+        zoneLabelMap.put("type",            BxZoneLabel.MET_TYPE);
+        zoneLabelMap.put("other",           BxZoneLabel.OTH_UNKNOWN);
+    }
+    
     @Override
     public MetadataFormat getSourceFormat() {
         return TrueVizUtils.TRUEVIZ_FORMAT;
@@ -278,10 +294,13 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         if (val == null) {
             return null;
         }
+        if (zoneLabelMap.containsKey(val.toLowerCase())) {
+            return zoneLabelMap.get(val.toLowerCase());
+        }
         try {
             return BxZoneLabel.valueOf(val.toUpperCase());
         } catch (IllegalArgumentException ex) {
-            return BxZoneLabel.UNKNOWN;
+            return BxZoneLabel.OTH_UNKNOWN;
         }
     }
 

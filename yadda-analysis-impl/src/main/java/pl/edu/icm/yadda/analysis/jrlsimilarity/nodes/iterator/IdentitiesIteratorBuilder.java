@@ -46,8 +46,6 @@ public class IdentitiesIteratorBuilder implements ISourceIteratorBuilder<Identit
 
 			@Override
 			public void clean() {
-				// TODO Auto-generated method stub
-				
 			}
 		};
 		

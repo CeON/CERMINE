@@ -65,7 +65,6 @@ public class MixFileIteratorBuilder implements
 	
 		@Override
 		public void clean() {
-//			throw new NotImplementedException();
 		}
 	}
 

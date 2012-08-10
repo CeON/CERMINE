@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
+
 /**
  *
  * @author krusek

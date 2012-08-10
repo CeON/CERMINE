@@ -81,6 +81,11 @@ public class SegmentationEvaluator extends AbstractBxModelEvaluator<Segmentation
     }
 
     @Override
+    protected void printItemResults(BxPage expected, BxPage actual, int idx, Results results) {
+    	printItemResults(idx, results);
+    }
+    
+    @Override
     protected void printItemResults(int pageIndex, Results results) {
         Formatter formatter = new Formatter(System.out, Locale.US);
         formatter.format(" | %8d |", pageIndex + 1);

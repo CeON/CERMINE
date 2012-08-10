@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.util.regex.Pattern;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.AbstractEvaluator.Documents;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.AbstractEvaluator.Results;
+import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 
 /**
  * Abstract evaluator used for implementation of evaluators that requires single
@@ -31,6 +32,14 @@ abstract public class AbstractSingleInputEvaluator<L, P, R extends Results<R>> e
     protected abstract P prepareExpectedDocument(L document) throws Exception;
 
     protected abstract P prepareActualDocument(L document) throws Exception;
+
+	protected Documents<P> getDocuments(P loadedDocument) throws Exception {
+        P expectedDocument = null;
+        P actualDocument = null;
+        expectedDocument = prepareExpectedDocument((L)loadedDocument);
+        actualDocument = prepareActualDocument((L)loadedDocument);
+        return new Documents<P>(expectedDocument, actualDocument);
+	}
 
     @Override
     protected Documents<P> getDocuments(String directory, String filename) throws Exception {

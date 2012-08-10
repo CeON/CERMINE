@@ -22,6 +22,8 @@ import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuil
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
+import pl.edu.icm.yadda.analysis.classification.hmm.tools.DocumentsExtractor;
+import pl.edu.icm.yadda.analysis.classification.hmm.tools.ZipExtractor;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
@@ -53,32 +55,6 @@ public class HMMZoneGeneralClassificationBigDemo {
         BxDocument testDocument = new BxDocument().setPages(pages);
         return testDocument;
 	}
-
-	 public static List<BxDocument> getDocumentsFromZip(String file)
-			throws ZipException, IOException, URISyntaxException, ParserConfigurationException, SAXException, AnalysisException, TransformationException {
-		List<BxDocument> documents = new ArrayList<BxDocument>();
-
-        ZipFile zipFile = new ZipFile(new File(file.getClass().getResource(file).toURI()));
-		TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
-		Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        int i = 0;
-		while (entries.hasMoreElements()) {
-			ZipEntry zipEntry = (ZipEntry) entries.nextElement();
-            if (i == 82) {
-                i++;
-                break;    
-            }
-			if (zipEntry.getName().endsWith("xml")) {
-                i++;
-				List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry)));
-				BxDocument newDoc = new BxDocument();
-				newDoc.setPages(pages);
-				documents.add(newDoc);
-			}
-		}
-		return documents;
-	}
-
   
     public static void main(String[] args) throws TransformationException, Exception {
         
@@ -159,21 +135,21 @@ public class HMMZoneGeneralClassificationBigDemo {
                 new YearFeature()
                 ));
 
-        // 1.2 reading order resolver and labels flattener (changes specific labels to general ones)
-        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
+        // 1.2 labels flattener (changes specific labels to general ones)
         DocumentFlattener flattener = new InitiallyClassifiedZonesFlattener();
         
         // 1.3 open test file
         BxDocument testDocument = getTestFile();
         List<BxDocument> testList = new ArrayList<BxDocument>();
-        testList.add(ror.resolve(testDocument));
+        testList.add(testDocument);
                 
         // 2.1 import training documents
-        List<BxDocument> documents = getDocumentsFromZip(hmmTrainingFile);
+        DocumentsExtractor extractor = new ZipExtractor(hmmTrainingFile);
+        List<BxDocument> documents = extractor.getDocuments();
         List<BxDocument> trainingList = new ArrayList<BxDocument>();
         for (BxDocument doc : documents) {
             flattener.flatten(doc);
-            trainingList.add(ror.resolve(doc));
+            trainingList.add(doc);
         }
         
         // 2.2 generate training set based on sequences and vector of features

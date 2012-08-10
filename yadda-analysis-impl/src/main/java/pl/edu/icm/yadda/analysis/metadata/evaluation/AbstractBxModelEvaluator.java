@@ -4,7 +4,11 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.regex.Pattern;
+
+import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.AbstractEvaluator.Results;
+import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
+import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
@@ -19,6 +23,7 @@ public abstract class AbstractBxModelEvaluator<R extends Results<R>>
         extends AbstractItemSingleInputEvaluator<BxDocument, BxDocument, BxPage, R> {
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
+    private final ReadingOrderResolver resolver = new HierarchicalReadingOrderResolver();
 
     @Override
     protected Pattern getFilenamePattern() {
@@ -37,7 +42,8 @@ public abstract class AbstractBxModelEvaluator<R extends Results<R>>
     }
     
     @Override
-    protected BxDocument prepareExpectedDocument(BxDocument document) {
+    protected BxDocument prepareExpectedDocument(BxDocument document) throws AnalysisException {
+    	resolver.resolve(document);
         return document;
     }
     
@@ -58,12 +64,5 @@ public abstract class AbstractBxModelEvaluator<R extends Results<R>>
     @Override
     protected Iterator<BxPage> iterateItems(BxDocument document) {
         return document.getPages().iterator();
-    }
-
-    abstract protected void printItemResults(int itemIndex, R results);
-
-    @Override
-    protected void printItemResults(BxPage expected, BxPage actual, int itemIndex, R results) {
-        printItemResults(itemIndex, results);
     }
 }

@@ -171,6 +171,11 @@ public class ReferenceParsingEvaluator extends AbstractItemSingleInputEvaluator<
         System.out.println(actual.getText());
         System.out.println();
     }
+    
+    @Override
+    protected void printItemResults(int idx, Results results) {
+    	
+    }
 
     @Override
     protected void printDocumentResults(Results results) {

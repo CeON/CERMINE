@@ -18,6 +18,7 @@ abstract public class AbstractItemSingleInputEvaluator<L, P, I, R extends Result
     protected abstract R compareItems(I expected, I actual);
 
     abstract protected void printItemResults(I expected, I actual, int itemIndex, R results);
+    abstract protected void printItemResults(int pageIndex, R results);
 
     @Override
     protected R compareDocuments(P expected, P actual) {

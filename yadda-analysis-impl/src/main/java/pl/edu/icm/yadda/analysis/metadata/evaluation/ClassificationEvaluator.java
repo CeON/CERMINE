@@ -46,9 +46,18 @@ public class ClassificationEvaluator extends AbstractBxModelEvaluator<Classifica
     protected void flattenDocument(BxDocument document) {
         flattener.flatten(document);
     }
+    
+    public void setFlattener(DocumentFlattener flattener) {
+    	this.flattener = flattener;
+    }
+    
+    public DocumentFlattener getFlattener() {
+    	return this.flattener;
+    }
 
     @Override
     protected BxDocument processDocument(BxDocument document) throws Exception {
+    	
         this.zoneClassifier.classifyZones(document);
         return document;
     }
@@ -69,6 +78,22 @@ public class ClassificationEvaluator extends AbstractBxModelEvaluator<Classifica
             }
         }
         return pageResults;
+        /*
+        List<BxZone> expectedZones = expected.getZones();
+        List<BxZone> actualZones = actual.getZones();
+
+        Results pageResults = newResults();
+
+        assert expected.getZones().size() == actual.getZones().size();
+        
+        for(int idx=0; idx < expected.getZones().size(); ++idx) {
+        	BxZoneLabel expectedLabel = expectedZones.get(idx).getLabel();
+        	BxZoneLabel actualLabel = actualZones.get(idx).getLabel();
+        	
+        	pageResults.addOneZoneResult(expectedLabel, actualLabel);
+        }
+        	
+        return pageResults;*/
     }
 
     @Override
@@ -77,7 +102,25 @@ public class ClassificationEvaluator extends AbstractBxModelEvaluator<Classifica
     }
 
     @Override
-    protected void printItemResults(int pageIndex, Results results) {
+    protected void printItemResults(int index, ClassificationEvaluator.Results results) {
+    	
+    }
+    
+    @Override
+    protected void printItemResults(BxPage expected, BxPage actual, int itemIndex, ClassificationEvaluator.Results results) {
+    	List<BxZone> expectedZones = expected.getZones();
+    	List<BxZone> actualZones = actual.getZones();
+    	for(int i=0; i < expectedZones.size(); ++i) {
+    		BxZone expectedZone = expectedZones.get(i);
+    		BxZone actualZone = actualZones.get(i);
+    		if(expectedZone.getLabel() != actualZone.getLabel()) {
+    			System.out.println("Expected " + expectedZone.getLabel() + ", got " + actualZone.getLabel());
+    		} else {
+    			System.out.println("Expected and got " + expectedZone.getLabel());
+    		}
+   			System.out.println(expectedZone.toText() + "\n");
+    		
+    	}
     }
 
     @Override
@@ -95,11 +138,11 @@ public class ClassificationEvaluator extends AbstractBxModelEvaluator<Classifica
 
     public static class Results implements AbstractBxModelEvaluator.Results<Results> {
 
-        private Map<BxZoneLabel, BxZoneLabel> labelMap;
-        private int nbOfZoneTypes = BxZoneLabel.values().length;
-        private Integer[][] classificationMatrix = new Integer[nbOfZoneTypes][nbOfZoneTypes];
-        private int goodRecognitions = 0;
-        private int badRecognitions = 0;
+        protected Map<BxZoneLabel, BxZoneLabel> labelMap;
+        protected int nbOfZoneTypes = BxZoneLabel.values().length;
+        protected Integer[][] classificationMatrix = new Integer[nbOfZoneTypes][nbOfZoneTypes];
+        protected int goodRecognitions = 0;
+        protected int badRecognitions = 0;
 
         public Results(Map<BxZoneLabel, BxZoneLabel> labelMap) {
             this.labelMap = labelMap;

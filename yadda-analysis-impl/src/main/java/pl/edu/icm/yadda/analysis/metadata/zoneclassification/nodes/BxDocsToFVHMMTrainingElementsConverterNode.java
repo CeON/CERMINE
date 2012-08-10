@@ -8,6 +8,8 @@ import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.SimpleHMMTrainingElement;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
+import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
+import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
@@ -35,8 +37,11 @@ public class BxDocsToFVHMMTrainingElementsConverterNode
             throws Exception {
         List<HMMTrainingElement<BxZoneLabel>> trainingList =
                 new ArrayList<HMMTrainingElement<BxZoneLabel>>(input.size());
+        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
+        
         for (BxDocument doc : input) {
             ZoneClassificationUtils.correctPagesBounds(doc);
+            doc = ror.resolve(doc);
 
             if (labelMap != null) {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);

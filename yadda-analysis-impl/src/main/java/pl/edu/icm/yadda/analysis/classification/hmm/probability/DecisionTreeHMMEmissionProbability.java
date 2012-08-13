@@ -41,6 +41,10 @@ public class DecisionTreeHMMEmissionProbability<S extends Comparable<S>> impleme
         decisionTree = DecisionTreeBuilder.buildDecisionTree(new HashSet<HMMTrainingElement<S>>(trainingElements), featureNames, decisionTreeExpand);
     }
 
+    public DecisionTree<S> getDecisionTree() {
+    	return this.decisionTree;
+    }
+    
     @Override
     public double getProbability(S label, FeatureVector featureVector) {
         DecisionTree<S> node = decisionTree;

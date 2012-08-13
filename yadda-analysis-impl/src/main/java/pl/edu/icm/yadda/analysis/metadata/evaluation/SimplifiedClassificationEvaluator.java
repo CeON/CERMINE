@@ -225,7 +225,7 @@ public class SimplifiedClassificationEvaluator extends ClassificationEvaluator
 					documentsPair = getDocuments(testDocument);
 				} catch(Exception e) {
 					e.printStackTrace();
-					throw new RuntimeException("Unable to process test document " + testDocument);
+					throw new RuntimeException("Unable to process test document: " + testDocument);
 				}
 				if (documentsPair == null) {
 					throw new NullPointerException();

@@ -14,10 +14,20 @@ public final class BxDocument implements Serializable {
 
     /** list of document's pages */
     private final List<BxPage> pages = new ArrayList<BxPage>();
+    
+    private String filename = null;
 
     private int curPageNumber = 0;
 
-    public List<BxPage> getPages() {
+    public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public List<BxPage> getPages() {
         return pages;
     }
 

@@ -115,11 +115,8 @@ public class ClassificationEvaluator extends AbstractBxModelEvaluator<Classifica
     		BxZone actualZone = actualZones.get(i);
     		if(expectedZone.getLabel() != actualZone.getLabel()) {
     			System.out.println("Expected " + expectedZone.getLabel() + ", got " + actualZone.getLabel());
-    		} else {
-    			System.out.println("Expected and got " + expectedZone.getLabel());
+    			System.out.println(expectedZone.toText() + "\n");
     		}
-   			System.out.println(expectedZone.toText() + "\n");
-    		
     	}
     }
 

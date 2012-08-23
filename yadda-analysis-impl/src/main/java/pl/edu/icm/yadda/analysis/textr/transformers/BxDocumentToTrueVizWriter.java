@@ -22,6 +22,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxWord;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
+import pl.edu.icm.yadda.metadata.transformers.AbstractMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.IMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
@@ -32,7 +33,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  *
  * @author krusek
  */
-public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
+public class BxDocumentToTrueVizWriter extends AbstractMetadataWriter<BxPage> implements IMetadataWriter<BxPage> {
 
     private static final Properties OUTPUT_PROPERTIES = new Properties();
 

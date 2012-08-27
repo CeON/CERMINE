@@ -72,6 +72,9 @@ public enum BxZoneLabel {
     /** Content header. */
     BODY_HEADER         (BxZoneLabelCategory.CAT_BODY),
     
+    /** Label for tables, figures and equations */
+    BODY_JUNK           (BxZoneLabelCategory.CAT_BODY),
+    
     /** Table */
     BODY_TABLE          (BxZoneLabelCategory.CAT_BODY),
     

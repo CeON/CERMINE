@@ -4,8 +4,9 @@ package pl.edu.icm.yadda.analysis.classification.clustering;
  *
  * @author Dominika Tkaczyk
  */
-public class SingleLinkageClusterizer {
+public class SingleLinkageClusterizer implements Clusterizer {
     
+    @Override
     public int[] clusterize(double distanceMatrix[][], double maxDistance) {
         int[] clusters = new int[distanceMatrix.length];
         for (int i = 0; i < clusters.length; i++) {

@@ -8,8 +8,9 @@ import java.util.Set;
  *
  * @author Dominika Tkaczyk
  */
-public class CompleteLinkageClusterizer {
+public class CompleteLinkageClusterizer implements Clusterizer {
     
+    @Override
     public int[] clusterize(double distanceMatrix[][], double maxDistance) {
         Set<Set<Integer>> clusters = new HashSet<Set<Integer>>();
         for (int i = 0; i < distanceMatrix.length; i++) {

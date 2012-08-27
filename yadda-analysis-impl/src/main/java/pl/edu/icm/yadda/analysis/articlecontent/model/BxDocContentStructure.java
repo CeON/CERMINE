@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
+import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 
 /**
  *
@@ -17,9 +19,9 @@ public class BxDocContentStructure {
     private Map<BxLine, BxDocContentPart> parts = new HashMap<BxLine, BxDocContentPart>();
 
     
-    public void addFirstHeaderLine(BxLine headerLine, FeatureVector featureVector) {
+    public void addFirstHeaderLine(BxPage page, BxLine headerLine) {
         firstHeaderLines.add(headerLine);
-        parts.put(headerLine, new BxDocContentPart(headerLine, featureVector));
+        parts.put(headerLine, new BxDocContentPart(page, headerLine));
     }
 
     public void addContentLine(BxLine headerLine, BxLine contentLine) {
@@ -28,11 +30,11 @@ public class BxDocContentStructure {
         }
     }
 
-    public FeatureVector[] getFirstHeaderFeatureVectors() {
+    public FeatureVector[] getFirstHeaderFeatureVectors(FeatureVectorBuilder builder) {
         FeatureVector[] fvs = new FeatureVector[parts.size()];
         int i = 0;
         for (BxLine header : firstHeaderLines) {
-            fvs[i] = parts.get(header).getFirstHeaderFeatureVector();
+            fvs[i] = parts.get(header).getFirstHeaderFeatureVector(builder);
             i++;
         }
         return fvs;
@@ -77,9 +79,10 @@ public class BxDocContentStructure {
     public static class BxDocContentPart {
         
         private int levelId;
+        
+        private BxPage page;
 
         private BxLine firstHeaderLine;
-        private FeatureVector firstHeaderFeatureVector;
         private List<BxLine> headerLines = new ArrayList<BxLine>();
         private String cleanHeaderText;
 
@@ -87,9 +90,9 @@ public class BxDocContentStructure {
         private List<String> cleanContentTexts = new ArrayList<String>();
 
         
-        public BxDocContentPart(BxLine firstHeaderLine, FeatureVector headerFeatureVector) {
+        public BxDocContentPart(BxPage page, BxLine firstHeaderLine) {
+            this.page = page;
             this.firstHeaderLine = firstHeaderLine;
-            this.firstHeaderFeatureVector = headerFeatureVector;
             this.headerLines.add(firstHeaderLine);
         }
 
@@ -109,12 +112,8 @@ public class BxDocContentStructure {
             this.firstHeaderLine = firstHeaderLine;
         }
 
-        public FeatureVector getFirstHeaderFeatureVector() {
-            return firstHeaderFeatureVector;
-        }
-
-        public void setFirstHeaderFeatureVector(FeatureVector firstHeaderFeatureVector) {
-            this.firstHeaderFeatureVector = firstHeaderFeatureVector;
+        public FeatureVector getFirstHeaderFeatureVector(FeatureVectorBuilder builder) {
+            return builder.getFeatureVector(firstHeaderLine, page);
         }
 
         public List<String> getCleanContentTexts() {

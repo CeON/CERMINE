@@ -22,6 +22,27 @@ public class ContentCleaner {
 
     public void cleanupContent(BxDocContentStructure contentStructure) {
         for (BxDocContentPart contentPart : contentStructure.getParts()) {
+            
+            List<BxLine> headerLines = contentPart.getHeaderLines();
+            String headerText = "";
+            for (BxLine headerLine : headerLines) {
+                String lineText = headerLine.toText();
+                if (lineText.endsWith("-")) {
+                    lineText = lineText.substring(0, lineText.length()-1);
+                    if (lineText.lastIndexOf(" ") < 0) {
+                        headerText += lineText;
+                    } else {
+                        headerText += lineText.substring(0, lineText.lastIndexOf(" "));
+                        headerText += " ";
+                        headerText += lineText.substring(lineText.lastIndexOf(" ")+1);
+                    }
+                } else {
+                    headerText += lineText;
+                    headerText += " ";
+                }
+            }
+            contentPart.setCleanHeaderText(cleanLigatures(headerText.trim()));
+            
             List<BxLine> contentLines = contentPart.getContentLines();
             List<String> contentTexts = new ArrayList<String>();
             

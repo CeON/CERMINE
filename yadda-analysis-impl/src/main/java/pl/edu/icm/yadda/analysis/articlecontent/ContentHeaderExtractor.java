@@ -5,6 +5,8 @@ import java.util.List;
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.articlecontent.model.BxDocContentStructure;
 import pl.edu.icm.yadda.analysis.articlecontent.model.DocumentContentStructure;
+import pl.edu.icm.yadda.analysis.classification.clustering.FeatureVectorClusterizer;
+import pl.edu.icm.yadda.analysis.classification.clustering.SingleLinkageClusterizer;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.knn.classifier.KnnClassifier;
@@ -17,7 +19,7 @@ import pl.edu.icm.yadda.analysis.textr.model.*;
  *
  * @author Dominika Tkaczyk
  */
-public class ContentHeaderMarker {
+public class ContentHeaderExtractor {
 
     /**
      * The number of nearest training samples used for line classification.
@@ -45,8 +47,12 @@ public class ContentHeaderMarker {
     
     private int minHeaderLineScore = 1;
     
+    private double maxHeaderLevelDistance = 1;
+    
         
-    public BxDocContentStructure extractHeaders(KnnModel<BxZoneLabel> model, FeatureVectorBuilder<BxLine, BxPage> vectorBuilder, 
+    public BxDocContentStructure extractHeaders(KnnModel<BxZoneLabel> model, 
+            FeatureVectorBuilder<BxLine, BxPage> classVectorBuilder, 
+            FeatureVectorBuilder<BxLine, BxPage> clustVectorBuilder,
             BxDocument document) throws AnalysisException {
         
         KnnClassifier<BxZoneLabel> classifier = new KnnClassifier<BxZoneLabel>();
@@ -57,7 +63,7 @@ public class ContentHeaderMarker {
             for (BxZone zone : page.getZones()) {
                 if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT)) {
                     for (BxLine line : zone.getLines()) {
-                        FeatureVector featureVector = vectorBuilder.getFeatureVector(line, page);
+                        FeatureVector featureVector = classVectorBuilder.getFeatureVector(line, page);
                         
                         BxZoneLabel label = classifier.classify(model, new FeatureVectorEuclideanMetric(), featureVector, knnVoters);
                         if (label.equals(BxZoneLabel.BODY_HEADER)) {
@@ -72,6 +78,7 @@ public class ContentHeaderMarker {
         }
         
         completeLines(contentStructure);
+        setLevelIds(contentStructure, clustVectorBuilder);
         
         return contentStructure;
     }
@@ -110,6 +117,14 @@ public class ContentHeaderMarker {
         return model;
     }
 
+    private void setLevelIds(BxDocContentStructure contentStructure, FeatureVectorBuilder<BxLine, BxPage> clustVectorBuilder) {
+        FeatureVectorClusterizer clusterizer = new FeatureVectorClusterizer();
+        clusterizer.setClusterizer(new SingleLinkageClusterizer());
+        int[] clusters = clusterizer.clusterize(contentStructure.getFirstHeaderFeatureVectors(clustVectorBuilder), 
+                clustVectorBuilder, new FeatureVectorEuclideanMetric(), maxHeaderLevelDistance, true);
+        contentStructure.setHeaderLevelIds(clusters);
+    }
+    
     private void completeLines(BxDocContentStructure contentStructure) {
         for (BxLine headerLine : contentStructure.getFirstHeaderLines()) {
             int added = 0;

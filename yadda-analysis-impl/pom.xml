@@ -12,7 +12,24 @@
     <packaging>jar</packaging>
     <name>YADDA Analysis (implementation)</name>
 
+    <repositories>
+	<repository>
+	   <id>sourceforge.net</id>
+	   <url>http://spantus.sourceforge.net/maven/global/</url>
+	</repository>
+    </repositories>
+
     <dependencies>
+	<dependency>
+	    <groupId>tw.edu.ntu.csie</groupId>
+	    <artifactId>libsvm</artifactId>
+	    <version>3.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>net.sourceforge</groupId>
+	    <artifactId>javaml</artifactId>
+	    <version>0.1.5</version>
+	</dependency>
         <dependency>
             <groupId>pl.edu.icm.yadda</groupId>
             <artifactId>bwmeta-core</artifactId>

@@ -9,6 +9,7 @@ import java.util.Set;
  */
 public interface FeatureVector {
 
+	Double[] getFeatures();
     /**
      * Returns a single feature value.
      *
@@ -17,6 +18,7 @@ public interface FeatureVector {
      */
     double getFeature(String name);
 
+    void setFeature(String name, Double value) throws RuntimeException;
     /**
      * Adds a feature value to the vector.
      *

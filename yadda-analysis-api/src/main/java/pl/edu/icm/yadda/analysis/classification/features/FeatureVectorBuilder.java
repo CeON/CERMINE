@@ -38,4 +38,6 @@ public interface FeatureVectorBuilder<X, Y> {
      */
     Set<String> getFeatureNames();
 
+    int size();
+
 }

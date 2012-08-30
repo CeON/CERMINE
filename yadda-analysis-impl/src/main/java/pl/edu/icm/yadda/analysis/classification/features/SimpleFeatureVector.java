@@ -49,5 +49,17 @@ public class SimpleFeatureVector implements FeatureVector {
     public Integer size() {
     	return features.size();
     }
-    
+
+	@Override
+	public Double[] getFeatures() {
+		Double[] ret = new Double[features.size()];
+		return features.values().toArray(ret);
+	}
+
+	@Override
+	public void setFeature(String name, Double value) throws RuntimeException {
+		if(!features.containsKey(name))
+			throw new RuntimeException("Bad feature name: " + name);
+		features.put(name, value);
+	}
 }

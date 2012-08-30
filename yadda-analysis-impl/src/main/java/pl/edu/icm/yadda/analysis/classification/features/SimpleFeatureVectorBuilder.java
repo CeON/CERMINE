@@ -35,5 +35,10 @@ public class SimpleFeatureVectorBuilder<S, T> implements FeatureVectorBuilder<S,
     public Set<String> getFeatureNames() {
         return featureCalculators.keySet();
     }
+    
+    @Override
+    public int size() {
+    	return featureCalculators.size();
+    }
 
 }

@@ -45,7 +45,7 @@ public class SpaceBetweenLinesFeature implements FeatureCalculator<BxLine, BxDoc
             return 1;
         }
         
-        return (lineSpace > minSpace * 1.3) ? 1 : 0;
+        return (lineSpace > minSpace * 1.2) ? 1 : 0;
     }
     
 }

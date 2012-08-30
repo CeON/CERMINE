@@ -2,6 +2,7 @@ package pl.edu.icm.yadda.analysis.textr.model;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -169,4 +170,10 @@ public enum BxZoneLabel {
         return labelToGeneral;        
     }
     
+    public static Map<BxZoneLabel, BxZoneLabel> getIdentityMap() {
+    	Map<BxZoneLabel, BxZoneLabel> ret = new HashMap<BxZoneLabel, BxZoneLabel>();
+    	for (BxZoneLabel label : BxZoneLabel.values()) 
+    		ret.put(label, label);
+    	return ret;
+    }
 }

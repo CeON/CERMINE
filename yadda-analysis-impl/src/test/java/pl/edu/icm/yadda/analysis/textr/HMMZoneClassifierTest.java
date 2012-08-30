@@ -24,7 +24,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.analysis.textr.tools.UnclassifiedZonesFlattener;
+import pl.edu.icm.yadda.analysis.textr.tools.UnclassifiedZonesPreprocessor;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
@@ -46,7 +46,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
     @Before
     public void setUp() {
-        this.startProcessFlattener = new UnclassifiedZonesFlattener();
+        this.startProcessFlattener = new UnclassifiedZonesPreprocessor();
 
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
         XStream xstream = new XStream();

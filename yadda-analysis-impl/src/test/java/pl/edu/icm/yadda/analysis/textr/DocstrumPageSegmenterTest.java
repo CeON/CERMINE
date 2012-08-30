@@ -32,7 +32,7 @@ public class DocstrumPageSegmenterTest {
     public void testSegmentPages() throws TransformationException, AnalysisException {
         Reader reader = new InputStreamReader(getResource("DocstrumPageSegmenter01.xml"));
         BxDocument inDoc = new BxDocument().setPages(new MargToTextrImporter().read(reader));
-        new UnsegmentedPagesFlattener().flatten(inDoc);
+        new UnsegmentedPagesFlattener().process(inDoc);
         BxDocument outDoc = new DocstrumPageSegmenter().segmentPages(inDoc);
 
         // Check whether zones are correctly detected

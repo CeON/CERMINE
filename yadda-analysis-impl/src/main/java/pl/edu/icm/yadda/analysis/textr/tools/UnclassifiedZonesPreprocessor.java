@@ -9,10 +9,10 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class UnclassifiedZonesFlattener implements DocumentFlattener {
+public class UnclassifiedZonesPreprocessor implements DocumentPreprocessor {
 
     @Override
-    public void flatten(BxDocument document) {
+    public void process(BxDocument document) {
         for (BxPage page: document.getPages()) {
             for (BxZone zone: page.getZones()) {
                 zone.setLabel(BxZoneLabel.OTH_UNKNOWN);

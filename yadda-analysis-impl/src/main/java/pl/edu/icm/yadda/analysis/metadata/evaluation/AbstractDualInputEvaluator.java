@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import pl.edu.icm.yadda.analysis.metadata.evaluation.AbstractEvaluator.Documents;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.AbstractEvaluator.Results;
 
 /**

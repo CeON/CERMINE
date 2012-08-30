@@ -1,13 +1,21 @@
 package pl.edu.icm.yadda.analysis.metadata.evaluation;
 
+import java.io.Reader;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Formatter;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
+
+import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.PageSegmenter;
+import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
@@ -17,22 +25,36 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
 import pl.edu.icm.yadda.analysis.textr.tools.UnsegmentedPagesFlattener;
+import pl.edu.icm.yadda.analysis.textr.transformers.BxDocumentToTrueVizWriter;
+import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
 
 /**
  *
  * @author krusek
  */
-public class SegmentationEvaluator extends AbstractBxModelEvaluator<SegmentationEvaluator.Results> {
+public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocument, BxDocument, BxPage, SegmentationEvaluator.Results> {
 
     private static final String DEFAULT_CONFIGURATION_PATH =
             "pl/edu/icm/yadda/analysis/metadata/evaluation/segmentation-configuration.xml";
 
+    private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
+    
     private PageSegmenter pageSegmenter;
 
     private final Set<BxZoneLabel> ignoredLabels = EnumSet.noneOf(BxZoneLabel.class);
 
     private UnsegmentedPagesFlattener flattener = new UnsegmentedPagesFlattener();
 
+	private final ReadingOrderResolver resolver = new HierarchicalReadingOrderResolver();
+
+	private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+
+	private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+
+	protected Pattern getFilenamePattern() {
+		return FILENAME_PATTERN;
+	}
+	
     public void setPageSegmenter(PageSegmenter pageSegmenter) {
         this.pageSegmenter = pageSegmenter;
     }
@@ -48,12 +70,12 @@ public class SegmentationEvaluator extends AbstractBxModelEvaluator<Segmentation
     }
     
     @Override
-    protected void flattenDocument(BxDocument document) {
-        flattener.flatten(document);
+    protected void preprocessDocument(BxDocument document) {
+        flattener.process(document);
     }
 
     @Override
-    protected BxDocument processDocument(BxDocument document) throws Exception {
+    protected BxDocument processDocument(BxDocument document) throws AnalysisException {
         return pageSegmenter.segmentPages(document);
     }
 
@@ -85,7 +107,6 @@ public class SegmentationEvaluator extends AbstractBxModelEvaluator<Segmentation
     	printItemResults(idx, results);
     }
     
-    @Override
     protected void printItemResults(int pageIndex, Results results) {
         Formatter formatter = new Formatter(System.out, Locale.US);
         formatter.format(" | %8d |", pageIndex + 1);
@@ -176,7 +197,6 @@ public class SegmentationEvaluator extends AbstractBxModelEvaluator<Segmentation
                 }
                 results.all++;
             }
-            
         }
 
         return results;
@@ -217,7 +237,36 @@ public class SegmentationEvaluator extends AbstractBxModelEvaluator<Segmentation
         return results;
     }
 
-    public static class Results implements AbstractBxModelEvaluator.Results<Results> {
+	@Override
+	protected BxDocument prepareActualDocument(BxDocument document) throws Exception {
+	    document = BxModelUtils.deepClone(document);
+	    preprocessDocument(document);
+	    return processDocument(document);
+	}
+
+	@Override
+	protected BxDocument prepareExpectedDocument(BxDocument document)
+			throws AnalysisException {
+				resolver.resolve(document);
+			    return document;
+			}
+
+	@Override
+	protected BxDocument readDocument(Reader input) throws Exception {
+	    return new BxDocument().setPages(reader.read(input));
+	}
+
+	@Override
+	protected void writeDocument(BxDocument document, Writer output) throws Exception {
+	    writer.write(output, document.getPages());
+	}
+
+	@Override
+	protected Iterator<BxPage> iterateItems(BxDocument document) {
+	    return document.getPages().iterator();
+	}
+
+	public static class Results implements AbstractEvaluator.Results<Results> {
         private LevelResults zoneLevel = new LevelResults();
         private LevelResults lineLevel = new LevelResults();
         private LevelResults wordLevel = new LevelResults();

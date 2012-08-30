@@ -10,10 +10,10 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class UnsegmentedZonesFlattener implements DocumentFlattener {
+public class UnsegmentedZonesFlattener implements DocumentPreprocessor {
 
     @Override
-    public void flatten(BxDocument document) {
+    public void process(BxDocument document) {
         for (BxPage page: document.getPages()) {
             for (BxZone zone: page.getZones()) {
                 for (BxLine line: zone.getLines()) {

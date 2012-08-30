@@ -58,7 +58,7 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
         System.out.println();
     }
 
-    protected void printFinalResults(R results) {}
+    protected abstract void printFinalResults(R results);
 
     abstract protected R compareDocuments(P expected, P actual);
 

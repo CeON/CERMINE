@@ -23,7 +23,7 @@ import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxObjectDump;
-import pl.edu.icm.yadda.analysis.textr.tools.DocumentFlattener;
+import pl.edu.icm.yadda.analysis.textr.tools.DocumentPreprocessor;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
@@ -34,8 +34,8 @@ public abstract class AbstractDocumentProcessorTest {
 
     private static String xmlFilenameSuffix = ".xml";
 
-    protected DocumentFlattener startProcessFlattener;
-    protected DocumentFlattener endProcessFlattener;
+    protected DocumentPreprocessor startProcessFlattener;
+    protected DocumentPreprocessor endProcessFlattener;
 
 
     protected abstract boolean compareDocuments(BxDocument testDoc, BxDocument expectedDoc);
@@ -131,12 +131,12 @@ public abstract class AbstractDocumentProcessorTest {
     private boolean checkDocument(BxDocument testDoc, BxDocument expectedDoc)
             throws IOException, ParserConfigurationException, SAXException, AnalysisException {
         if (startProcessFlattener != null) {
-            startProcessFlattener.flatten(testDoc);
+            startProcessFlattener.process(testDoc);
         }
         testDoc = process(testDoc);
 
         if (endProcessFlattener != null) {
-            endProcessFlattener.flatten(expectedDoc);
+            endProcessFlattener.process(expectedDoc);
         }
         
         //BxObjectDump dump = new BxObjectDump();

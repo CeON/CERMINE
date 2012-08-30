@@ -2,10 +2,11 @@ package pl.edu.icm.yadda.analysis.metadata.evaluation;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.Iterator;
 import java.util.regex.Pattern;
-import pl.edu.icm.yadda.analysis.metadata.evaluation.AbstractEvaluator.Documents;
+
+import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.AbstractEvaluator.Results;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 
 /**
  * Abstract evaluator used for implementation of evaluators that requires single
@@ -14,12 +15,12 @@ import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
  *
  * @author krusek
  */
-abstract public class AbstractSingleInputEvaluator<L, P, R extends Results<R>> extends AbstractEvaluator<P, R> {
+abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>> extends AbstractEvaluator<P, R> {
 
-    abstract protected Pattern getFilenamePattern();
 
     abstract protected L readDocument(Reader input) throws Exception;
 
+    protected abstract Pattern getFilenamePattern();
     protected L readDocument(String path) throws Exception {
         Reader input = new FileReader(path);
         try {
@@ -28,11 +29,15 @@ abstract public class AbstractSingleInputEvaluator<L, P, R extends Results<R>> e
             input.close();
         }
     }
-    
+
+    protected abstract P processDocument(L document) throws AnalysisException;
+
+    protected abstract void preprocessDocument(L document);
+
     protected abstract P prepareExpectedDocument(L document) throws Exception;
 
     protected abstract P prepareActualDocument(L document) throws Exception;
-
+    
 	protected Documents<P> getDocuments(P loadedDocument) throws Exception {
         P expectedDocument = null;
         P actualDocument = null;
@@ -53,4 +58,30 @@ abstract public class AbstractSingleInputEvaluator<L, P, R extends Results<R>> e
             return null;
         }
     }
+
+	protected abstract Iterator<I> iterateItems(P document);
+
+	protected abstract R compareItems(I expected, I actual);
+
+	@Override
+	protected R compareDocuments(P expected, P actual) {
+	    R summary = newResults();
+	
+	    Iterator<I> expectedItems = iterateItems(expected);
+	    Iterator<I> actualItems = iterateItems(actual);
+	    int i = 0;
+	    while(expectedItems.hasNext() && actualItems.hasNext()) {
+	        I expectedItem = expectedItems.next();
+	        I actualItem = actualItems.next();
+	        R results = compareItems(expectedItem, actualItem);
+	        if (detail == Detail.FULL) {
+	            printItemResults(expectedItem, actualItem, i, results);
+	        }
+	        summary.add(results);
+	        i++;
+	    }
+	    return summary;
+	}    
+	abstract protected void printItemResults(I expected, I actual, int itemIndex, R results);
+
 }

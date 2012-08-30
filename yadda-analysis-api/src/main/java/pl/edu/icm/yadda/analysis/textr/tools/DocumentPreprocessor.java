@@ -6,7 +6,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public interface DocumentFlattener {
+public interface DocumentPreprocessor{
 
-    public void flatten(BxDocument document);
+    public void process(BxDocument document);
 }

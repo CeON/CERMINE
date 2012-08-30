@@ -42,7 +42,7 @@ public class MetadataExtractionEvaluator extends AbstractDualInputEvaluator<YEle
             "pl/edu/icm/yadda/analysis/metadata/evaluation/metadataExtraction-configuration.xml";
     private MetadataExtractor<YElement> metadataExtractor;
 
-    public void setMetadataExtractor(MetadataExtractor metadataExtractor) {
+    public void setMetadataExtractor(MetadataExtractor<YElement> metadataExtractor) {
         this.metadataExtractor = metadataExtractor;
     }
 
@@ -198,7 +198,7 @@ public class MetadataExtractionEvaluator extends AbstractDualInputEvaluator<YEle
         int failedCount = 0;
         int redundCount = 0;
 
-        Set<T> tSet = new HashSet(actual);
+        Set<T> tSet = new HashSet<T>(actual);
 
         for (T item : expected) {
             if (tSet.remove(item)) {

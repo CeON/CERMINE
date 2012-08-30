@@ -14,6 +14,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.bibref.BibEntry;
 import pl.edu.icm.yadda.analysis.bibref.BibEntryToYTransformer;
 import pl.edu.icm.yadda.analysis.bibref.BibReferenceParser;
@@ -30,7 +32,7 @@ import pl.edu.icm.yadda.metadata.transformers.IMetadataWriter;
  * @author acz
  * @author krusek
  */
-public class ReferenceParsingEvaluator extends AbstractItemSingleInputEvaluator<List<YExportable>, List<BibEntry>, BibEntry, ReferenceParsingEvaluator.Results> {
+public class ReferenceParsingEvaluator extends AbstractSingleInputEvaluator<List<YExportable>, List<BibEntry>, BibEntry, ReferenceParsingEvaluator.Results> {
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
     private static final String DEFAULT_CONFIGURATION_PATH =
@@ -83,7 +85,7 @@ public class ReferenceParsingEvaluator extends AbstractItemSingleInputEvaluator<
         yWriter.write(output, yDocument);
     }
     private YToBibEntryTransformer yToBibEntry = new YToBibEntryTransformer();
-
+    
     @Override
     protected List<BibEntry> prepareExpectedDocument(List<YExportable> document) throws Exception {
         List<BibEntry> entries = new ArrayList<BibEntry>(document.size());
@@ -171,11 +173,6 @@ public class ReferenceParsingEvaluator extends AbstractItemSingleInputEvaluator<
         System.out.println(actual.getText());
         System.out.println();
     }
-    
-    @Override
-    protected void printItemResults(int idx, Results results) {
-    	
-    }
 
     @Override
     protected void printDocumentResults(Results results) {
@@ -188,7 +185,21 @@ public class ReferenceParsingEvaluator extends AbstractItemSingleInputEvaluator<
         results.printTotalSummary();
     }
 
-    public static class Results implements AbstractEvaluator.Results<Results> {
+    @Override
+    protected List<BibEntry> processDocument(List<YExportable> document)
+    		throws AnalysisException {
+    	try {
+    		return prepareExpectedDocument(document);
+    	} catch(Exception e) {
+    		return null;
+    	}
+	}
+
+	@Override
+	protected void preprocessDocument(List<YExportable> document) {
+	}
+
+	public static class Results implements AbstractEvaluator.Results<Results> {
 
         private static final int MAX_KEY_LENGTH = 10;
         private static final int MAX_RQ_LENGTH = 16;
@@ -430,4 +441,5 @@ public class ReferenceParsingEvaluator extends AbstractItemSingleInputEvaluator<
             return false;
         }
     }
+
 }

@@ -31,8 +31,8 @@ import pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.analysis.textr.tools.DocumentFlattener;
-import pl.edu.icm.yadda.analysis.textr.tools.InitiallyClassifiedZonesFlattener;
+import pl.edu.icm.yadda.analysis.textr.tools.DocumentPreprocessor;
+import pl.edu.icm.yadda.analysis.textr.tools.InitiallyClassifiedZonesPreprocessor;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
@@ -75,7 +75,7 @@ public class HMMZoneGeneralClassificationBigDemo {
                 new CharCountRelativeFeature(),
                 new CommaCountFeature(),
                 new CommaRelativeCountFeature(),
-        		new CuePhrasesCountFeature(),
+        		new ContainsCuePhrasesFeature(),
         		new CuePhrasesRelativeCountFeature(),
         		new DatesFeature(),
                 new DigitCountFeature(),
@@ -108,7 +108,7 @@ public class HMMZoneGeneralClassificationBigDemo {
                 new LetterRelativeCountFeature(),
                 new LowercaseCountFeature(),
                 new LowercaseRelativeCountFeature(),
-                new PageNumberFeature(),
+                new ContainsPageNumberFeature(),
                 new ProportionsFeature(),
                 new PunctuationRelativeCountFeature(),
                 new ReferencesFeature(),
@@ -126,7 +126,7 @@ public class HMMZoneGeneralClassificationBigDemo {
         		new WordLengthMeanFeature(),
         		new WordLengthMedianFeature(),
         		new WhitespaceCountFeature(),
-        		new WhitespaceRelativeCountFeature(),
+        		new WhitespaceRelativeCountLogFeature(),
                 new WidthRelativeFeature(),
                 new XPositionFeature(),
                 new XPositionRelativeFeature(),
@@ -136,7 +136,7 @@ public class HMMZoneGeneralClassificationBigDemo {
                 ));
 
         // 1.2 labels flattener (changes specific labels to general ones)
-        DocumentFlattener flattener = new InitiallyClassifiedZonesFlattener();
+        DocumentPreprocessor flattener = new InitiallyClassifiedZonesPreprocessor();
         
         // 1.3 open test file
         BxDocument testDocument = getTestFile();
@@ -148,7 +148,7 @@ public class HMMZoneGeneralClassificationBigDemo {
         List<BxDocument> documents = extractor.getDocuments();
         List<BxDocument> trainingList = new ArrayList<BxDocument>();
         for (BxDocument doc : documents) {
-            flattener.flatten(doc);
+            flattener.process(doc);
             trainingList.add(doc);
         }
         

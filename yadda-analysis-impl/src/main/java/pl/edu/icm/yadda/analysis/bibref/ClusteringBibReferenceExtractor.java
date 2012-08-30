@@ -2,8 +2,6 @@ package pl.edu.icm.yadda.analysis.bibref;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.yadda.analysis.bibref.extraction.tools.BibRefExtractionUtils;

@@ -179,6 +179,19 @@
              </list>
         </property>
     </bean>
+    
+    <bean id="clustRefsExtrFeatureVectorBuilder"
+            class="pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder">
+        <property name="featureCalculators">
+            <list>
+                <bean class="pl.edu.icm.yadda.analysis.bibref.extraction.features.PrevEndsWithDotFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.bibref.extraction.features.RelativeLengthFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.bibref.extraction.features.RelativeStartTresholdFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.bibref.extraction.features.SpaceBetweenLinesFeature" />
+                <bean class="pl.edu.icm.yadda.analysis.bibref.extraction.features.StartsWithNumberFeature" />
+             </list>
+        </property>
+    </bean>
 
     <bean id="xstream" class="com.thoughtworks.xstream.XStream"/>
 </beans>

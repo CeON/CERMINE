@@ -43,9 +43,10 @@
 
     <bean id="initialZoneClassifier" class="pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier">
         <constructor-arg index="0" ref="hmmService" />
-        <!--constructor-arg index="1" ref="hmmStorage" />
-        <constructor-arg index="2" value="initialzoneclassification" /-->
-        <constructor-arg index="1">
+        <constructor-arg index="1" ref="hmmStorage" />
+        <constructor-arg index="2" value="initialzoneclassification" />
+        <constructor-arg index="3" ref="initialZoneFeatureVectorBuilder" />
+        <!--constructor-arg index="1">
             <bean id="probabilityInfo" factory-bean="xstream" factory-method="fromXML">
                 <constructor-arg>
                     <bean class="java.io.FileReader">
@@ -54,7 +55,7 @@
                 </constructor-arg>
             </bean>
         </constructor-arg>
-        <constructor-arg index="2" ref="initialZoneFeatureVectorBuilder" />
+        <constructor-arg index="2" ref="initialZoneFeatureVectorBuilder" /-->
     </bean>
     <bean id="xstream" class="com.thoughtworks.xstream.XStream"/>
     
@@ -70,6 +71,10 @@
         <constructor-arg index="1" ref="hmmStorage" />
         <constructor-arg index="2" value="referenceextraction" />
         <constructor-arg index="3" ref="refsExtrFeatureVectorBuilder" />
+    </bean>
+    
+    <bean id="clustReferenceExtractor" class="pl.edu.icm.yadda.analysis.bibref.ClusteringBibReferenceExtractor">
+        <constructor-arg ref="clustRefsExtrFeatureVectorBuilder" />
     </bean>
 
     <bean id="referenceParser" class="pl.edu.icm.yadda.analysis.textr.HMMBibReferenceParser">

@@ -2,10 +2,12 @@ package pl.edu.icm.yadda.analysis.bibref.extraction.tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.yadda.analysis.bibref.extraction.model.BxDocumentBibReferences;
+import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
+import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
 
 /**
  * Bibliographic reference extraction utility class.
@@ -20,14 +22,15 @@ public class BibRefExtractionUtils {
      * @param document A document
      * @return an object holding references' lines and zones
      */
-    public static BxDocumentBibReferences extractBibRefLines(BxDocument document) {
+    public static BxDocumentBibReferences extractBibRefLines(BxDocument document) throws AnalysisException {
         BxDocumentBibReferences lines = new BxDocumentBibReferences();
 
+        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
+        document = ror.resolve(document);
+        
         for (BxPage page : document.getPages()) {
-            BxModelUtils.sortZonesXY(page, 5);
             for (BxZone zone : page.getZones()) {
                 if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_REFERENCES)) {
-                    BxModelUtils.sortZoneRecursively(zone);
                     lines.addZone(zone);
                 }
             }
@@ -44,7 +47,7 @@ public class BibRefExtractionUtils {
      * @param references A list of document's references
      * @return an object holding extracted zones and tagged lines
      */
-    public static BxDocumentBibReferences extractBibRefLines(BxDocument document, List<String> references) {
+    public static BxDocumentBibReferences extractBibRefLines(BxDocument document, List<String> references) throws AnalysisException {
         BxDocumentBibReferences refLines = extractBibRefLines(document);
         List<BxLine> lines = refLines.getLines();
 

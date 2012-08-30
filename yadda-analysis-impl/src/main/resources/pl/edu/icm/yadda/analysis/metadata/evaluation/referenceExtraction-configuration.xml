@@ -19,7 +19,7 @@
     <import resource="classpath:pl/edu/icm/yadda/analysis/metadata/common/services.xml"/>
 
     <bean id="evaluator" class="pl.edu.icm.yadda.analysis.metadata.evaluation.ReferenceExtractionEvaluator">
-        <property name="referenceExtractor" ref="referenceExtractor"/>
+        <property name="referenceExtractor" ref="clustReferenceExtractor"/>
     </bean>
 
 </beans>

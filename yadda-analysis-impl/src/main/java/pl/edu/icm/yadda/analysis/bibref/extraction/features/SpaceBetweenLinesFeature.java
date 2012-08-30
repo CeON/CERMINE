@@ -20,6 +20,7 @@ public class SpaceBetweenLinesFeature implements FeatureCalculator<BxLine, BxDoc
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {
         double minSpace = Double.POSITIVE_INFINITY;
+        double maxSpace = Double.NEGATIVE_INFINITY;
         double lineSpace = 0;
         BxLine prevLine = null;
         for (BxLine line : refs.getLines()) {
@@ -29,6 +30,9 @@ public class SpaceBetweenLinesFeature implements FeatureCalculator<BxLine, BxDoc
                     if (minSpace > difference) {
                         minSpace = difference;
                     }
+                    if (maxSpace < difference) {
+                        maxSpace = difference;
+                    }
                     if (line.equals(refLine)) {
                         lineSpace = difference;
                     }
@@ -36,8 +40,12 @@ public class SpaceBetweenLinesFeature implements FeatureCalculator<BxLine, BxDoc
             }
             prevLine = line;
         }
-
-        return (lineSpace > minSpace * 1.5) ? 1 : 0;
+        
+        if (refs.getLines().indexOf(refLine) == 0 && maxSpace > minSpace * 1.2) {
+            return 1;
+        }
+        
+        return (lineSpace > minSpace * 1.3) ? 1 : 0;
     }
     
 }

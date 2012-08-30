@@ -1,5 +1,6 @@
 package pl.edu.icm.yadda.analysis.bibref;
 
+import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 
 /**
@@ -9,5 +10,5 @@ import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
  */
 public interface BibReferenceExtractor {
 
-    public String[] extractBibReferences(BxDocument document);
+    public String[] extractBibReferences(BxDocument document) throws AnalysisException;
 }

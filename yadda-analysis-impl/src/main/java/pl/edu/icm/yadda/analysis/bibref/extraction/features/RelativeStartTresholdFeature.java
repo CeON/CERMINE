@@ -10,7 +10,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxLine;
  */
 public class RelativeStartTresholdFeature implements FeatureCalculator<BxLine, BxDocumentBibReferences> {
 
-    private static String featureName = "RelativeStart";
+    private static String featureName = "RelativeStartTreshold";
 
     @Override
     public String getFeatureName() {

@@ -21,14 +21,12 @@ public class KeywordsFeature implements FeatureCalculator<BxZone, BxPage> {
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         String[] keywords = {"keywords", "key words"};
 
-        int count = 0;
         for (String keyword : keywords) {
             if (zone.toText().toLowerCase().startsWith(keyword)) {
-                count++;
+            	return 1.0;
             }
         }
-
-        return count;
+        return 0.0;
     }
 
 }

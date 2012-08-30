@@ -16,7 +16,11 @@ public class EmptySpaceRelativeFeature implements FeatureCalculator<BxZone, BxPa
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {	
 		FeatureCalculator<BxZone, BxPage> emptySpaceCalc = new EmptySpaceFeature(); 
-		double emptySpace = emptySpaceCalc.calculateFeatureValue(zone, page);
-		return emptySpace/zone.getArea();
+		if(zone.getArea() < 0.0005) {
+			return 0.0;
+		} else {
+			double emptySpace = emptySpaceCalc.calculateFeatureValue(zone, page);
+			return emptySpace/zone.getArea();
+		}
 	}
 }

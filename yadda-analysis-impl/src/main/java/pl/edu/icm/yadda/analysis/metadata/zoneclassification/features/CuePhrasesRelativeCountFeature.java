@@ -15,7 +15,7 @@ public class CuePhrasesRelativeCountFeature implements FeatureCalculator<BxZone,
 	
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {	
-		FeatureCalculator<BxZone, BxPage> cuePhrasesCalc = new CuePhrasesCountFeature();
+		FeatureCalculator<BxZone, BxPage> cuePhrasesCalc = new ContainsCuePhrasesFeature();
 		FeatureCalculator<BxZone, BxPage> wordsCalc = new WordCountFeature();
 		double cuePhrasesCountValue = cuePhrasesCalc.calculateFeatureValue(zone, page);
 		double wordCountValue = wordsCalc.calculateFeatureValue(zone, page);

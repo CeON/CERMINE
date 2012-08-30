@@ -87,6 +87,10 @@ public class HorizontalRelativeProminenceFeature implements
 				}
 			}
 		}
-		return (rightProminence + leftProminence + zone.getWidth())/page.getWidth();
+		Double ret = (rightProminence + leftProminence + zone.getWidth())/page.getWidth();
+		if(ret >= 0.0)
+			return ret;
+		else
+			return 0.0;
 	}
 };

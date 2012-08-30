@@ -21,7 +21,11 @@ public class ProportionsFeature implements FeatureCalculator<BxZone, BxPage> {
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         BxBounds bounds = zone.getBounds();
-        return bounds.getHeight() / bounds.getWidth();
+        if(bounds.getWidth() < 0.00005) {
+        	return 0.0;
+        } else {
+        	return bounds.getHeight() / bounds.getWidth();
+        }
     }
 
 }

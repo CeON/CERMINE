@@ -7,7 +7,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxWord;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 
-public class CuePhrasesCountFeature implements
+public class ContainsCuePhrasesFeature implements
 		FeatureCalculator<BxZone, BxPage> {
 
 	private static String featureName = "CuePhrasesCount";
@@ -21,23 +21,15 @@ public class CuePhrasesCountFeature implements
 
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		StringBuilder contentBuilder = new StringBuilder();
-		for(BxLine line: zone.getLines()) {
-			for(BxWord word: line.getWords()) {
-				for(BxChunk chunk: word.getChunks()) {
-					contentBuilder.append(chunk.getText());
-				}
-				contentBuilder.append(" ");
-			}
-		}
-		Integer count = 0;
-		String contentString = contentBuilder.toString();
+		String zoneText = zone.toText().toLowerCase();
+		int count = 0;
+		
 		for(String cuePhrase: cuePhrases) {
-			while(contentString.contains(cuePhrase)) {
-				contentString = contentString.replaceFirst(cuePhrase, "");
-				++count;
-			}
+			if(!zoneText.contains(cuePhrase))
+				continue;
+			else
+				return 1.0;
 		}
-		return (double) count; 
+		return 0.0;
 	}
 }

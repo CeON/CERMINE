@@ -18,8 +18,30 @@ public class IsItemizeFeature implements FeatureCalculator<BxZone, BxPage> {
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
 		String text = zone.toText();
-		Pattern itemizePattern = Pattern.compile("^\\d+\\..*|(IX|IV|V?I{0,3})(\\.)?\\s.*|\\p{Upper}\\..*|\\p{Lower}\\).*");
-		Matcher matcher = itemizePattern.matcher(text);
-		return matcher.matches() ? 1.0 : 0.0;
+
+		String itemizeString = "";
+		itemizeString += "|^\\d+\\.\\d+\\.\\s+\\p{Upper}.+";
+		itemizeString += "|^\\d+\\.\\s+\\p{Upper}.+";
+		//pattern += "|^(IX|IV|V?I{0,3})(\\.)?\\s*\\p{Upper}.+";
+		itemizeString += "|^\\p{Upper}\\.\\s[^\\.]+";
+		itemizeString += "|^\\p{Lower}\\)\\s+.+";
+		Pattern itemizePattern = Pattern.compile(itemizeString);
+
+		String subpointsString = "";
+		subpointsString += "^\\d\\.\\d\\.\\s+\\p{Upper}.+";
+		subpointsString += "|^\\d\\.\\d\\.\\d\\.\\s+\\p{Upper}.+";
+		Pattern subpointsPattern = Pattern.compile(subpointsString, Pattern.DOTALL); //for multiline matching
+
+		Matcher matcher1 = itemizePattern.matcher(text);
+		Matcher matcher2 = subpointsPattern.matcher(text);
+
+/*		if(matcher1.matches() || matcher2.matches()) {
+			System.out.println("++++");
+			System.out.println(zone.toText());
+		} else {
+			System.out.println("----");
+			System.out.println(zone.toText());
+		}*/
+		return (matcher1.matches() || matcher2.matches()) ? 1.0 : 0.0;
 	}
 }

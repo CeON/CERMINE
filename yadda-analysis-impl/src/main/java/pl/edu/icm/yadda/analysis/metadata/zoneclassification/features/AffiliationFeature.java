@@ -31,7 +31,7 @@ public class AffiliationFeature implements FeatureCalculator<BxZone, BxPage> {
                 count++;
             }
         }
-
+/*
         for (BxLine line : zone.getLines()) {
             for (BxWord word : line.getWords()) {
                 for (BxChunk chunk : word.getChunks()) {
@@ -48,7 +48,7 @@ public class AffiliationFeature implements FeatureCalculator<BxZone, BxPage> {
                 }
             }
         }
-
+*/
         return count;
     }
 

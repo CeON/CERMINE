@@ -7,8 +7,8 @@ import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxWord;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 
-public class WhitespaceRelativeCountFeature implements FeatureCalculator<BxZone, BxPage> {
-    private static String featureName = "WhitespaceRelativeCount";
+public class WhitespaceRelativeCountLogFeature implements FeatureCalculator<BxZone, BxPage> {
+    private static String featureName = "WhitespaceRelativeCountLog";
 
     @Override
     public String getFeatureName() {

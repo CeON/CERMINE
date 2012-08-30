@@ -26,14 +26,11 @@ public class WordLengthMedianFeature implements
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {
-		List<Integer> wordLengths = new ArrayList<Integer>();
-		for(BxLine line: object.getLines())
-			for(BxWord word: line.getWords()) {
-				Integer curLength = 0;
-				for(BxChunk chunk: word.getChunks())
-					curLength += chunk.getText().length();
-				wordLengths.add(curLength);
-			}
+		String text = object.toText();
+		String[] words = text.split("\\s");
+		List<Integer> wordLengths = new ArrayList<Integer>(words.length);
+		for(String word: words)
+			wordLengths.add(word.length());
 		Collections.sort(wordLengths);
 		return wordLengths.get(wordLengths.size()/2);
 	}

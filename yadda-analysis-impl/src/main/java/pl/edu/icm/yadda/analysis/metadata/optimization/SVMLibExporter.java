@@ -14,6 +14,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 
 public class SVMLibExporter {
 	public static void toLibSVM(List<HMMTrainingElement<BxZoneLabel>> trainingElements, String filePath)

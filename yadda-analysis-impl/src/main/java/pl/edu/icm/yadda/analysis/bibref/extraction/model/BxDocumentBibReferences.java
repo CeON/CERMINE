@@ -25,15 +25,12 @@ public class BxDocumentBibReferences {
 
     public void addZone(BxZone zone) {
         for (BxLine line : zone.getLines()) {
-            if (line.toText().length() < 30 && zone.getLines().indexOf(line) == 0 
-                    && line.toText().toLowerCase().replaceAll("[^a-z]", "").startsWith("refer")) {
+            String normalized = line.toText().toLowerCase().replaceAll("[^a-z]", "");
+            if (line.toText().length() < 30 && zone.getLines().indexOf(line) == 0 && 
+                    (normalized.startsWith("refer") || normalized.startsWith("biblio") || normalized.startsWith("heimildask"))) {
                 continue;
             }
-            if (line.toText().length() < 30 && zone.getLines().indexOf(line) == 0 
-                    && line.toText().toLowerCase().replaceAll("[^a-z]", "").startsWith("biblio")) {
-                continue;
-            }
-           
+                   
             lines.add(line);
             lineZones.put(line, zone);
         }

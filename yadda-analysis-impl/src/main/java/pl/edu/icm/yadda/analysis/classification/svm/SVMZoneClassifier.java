@@ -18,57 +18,14 @@ import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 
-//import net.sf.javaml.core.Dataset;
-//import net.sf.javaml.core.DefaultDataset;
-//import net.sf.javaml.core.DenseInstance;
-//import net.sf.javaml.core.Instance;
-//import libsvm.LibSVM;
+import net.sf.javaml.core.Dataset;
+import net.sf.javaml.core.DefaultDataset;
+import net.sf.javaml.core.DenseInstance;
+import net.sf.javaml.core.Instance;
+import libsvm.LibSVM;
 import libsvm.svm_parameter;
 
 public class SVMZoneClassifier implements ZoneClassifier {
-	static interface Dataset {
-		void add(Instance i);
-		Instance get(Integer i);
-		int size();
-	};
-	static class DefaultDataset implements Dataset {
-		public void add(Instance i) {};
-		public Instance get(Integer i) {return null;}
-		@Override
-		public int size() {
-			// TODO Auto-generated method stub
-			return 0;
-		};
-	};
-	static interface Instance {
-	};
-	static class DenseInstance implements Instance{
-		public DenseInstance(double[] array, Object obj) {};
-		public DenseInstance(double[] array) {};
-	};
-	static class LibSVM {
-
-		public void setParameters(svm_parameter param) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void buildClassifier(Dataset data) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public double[] getWeights() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		public Object classify(Instance instance) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
-	}
 	final static svm_parameter defaultParameter = new svm_parameter();		
 	static {
 		// default values

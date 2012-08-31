@@ -9,36 +9,36 @@ import java.util.Set;
  */
 public interface FeatureVector {
 
-	Double[] getFeatures();
+	public Double[] getFeatures();
     /**
      * Returns a single feature value.
      *
      * @param name The name of a single feature.
      * @return Feature value.
      */
-    double getFeature(String name);
+    public double getFeature(String name);
 
-    void setFeature(String name, Double value) throws RuntimeException;
+    public void setFeature(String name, Double value) throws RuntimeException;
     /**
      * Adds a feature value to the vector.
      *
      * @param name Feature name.
      * @param featureValue Feature value.
      */
-    void addFeature(String name, double featureValue);
+    public void addFeature(String name, double featureValue);
 
     /**
      * Dumps content of a feature vector to a string
      * @return string of feature values in a human readable form 
      */
-    String dump();
+    public String dump();
 
     /**
      * Return a set of used feature names.
      * 
      * @return feature names set
      */
-    Set<String> getFeatureNames();
+    public Set<String> getFeatureNames();
     
-    Integer size();
+    public Integer size();
 }

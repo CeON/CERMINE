@@ -1,6 +1,4 @@
-==VERSION: 1.10.0-RC5==
-
-==VERSION: 1.10.0-RC1==
+==VERSION: 1.10.0==
 
 ==VERSION: 1.0.3==
 * #3965 dropping iText dependency from non-GPL modules

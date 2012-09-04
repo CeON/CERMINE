@@ -6,7 +6,7 @@ import java.io.InputStream;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.edu.icm.yadda.analysis.textr.GlyphExtractor;
+import pl.edu.icm.yadda.analysis.textr.CharacterExtractor;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
 import pl.edu.icm.yadda.process.model.EnrichedPayload;
@@ -21,14 +21,14 @@ public class GlyphExtractorNode implements IProcessingNode<EnrichedPayload<File>
 
     private static final Logger log = LoggerFactory.getLogger(GlyphExtractorNode.class);
 
-    private GlyphExtractor glyphExtractor;
+    private CharacterExtractor characterExtractor;
 
     @Override
     public EnrichedPayload<BxDocument> process(EnrichedPayload<File> input, ProcessContext ctx) throws Exception {
 
         InputStream is = new FileInputStream(input.getObject());
         try {
-            BxDocument doc = glyphExtractor.extractGlyphs(is);
+            BxDocument doc = characterExtractor.extractCharacters(is);
             String id = FilenameUtils.getBaseName(input.getObject().getName());
             log.info("Glyphs extracted from " + id);
             return new EnrichedPayload(id, doc, input.getCollections(), input.getLicenses());
@@ -37,8 +37,8 @@ public class GlyphExtractorNode implements IProcessingNode<EnrichedPayload<File>
         }
     }
 
-    public void setGlyphExtractor(GlyphExtractor glyphExtractor) {
-        this.glyphExtractor = glyphExtractor;
+    public void setGlyphExtractor(CharacterExtractor glyphExtractor) {
+        this.characterExtractor = glyphExtractor;
     }
 
 }

@@ -1,28 +1,26 @@
 package pl.edu.icm.yadda.analysis.textr;
 
 import com.thoughtworks.xstream.XStream;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 import pl.edu.icm.yadda.analysis.bibref.BibEntry;
 import pl.edu.icm.yadda.analysis.bibref.BibEntryToYTransformer;
+import pl.edu.icm.yadda.analysis.bibref.HMMBibReferenceParser;
 import pl.edu.icm.yadda.analysis.bibref.YToBibEntryTransformer;
-
+import pl.edu.icm.yadda.analysis.bibref.parsing.features.*;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
-import pl.edu.icm.yadda.analysis.bibref.parsing.features.*;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
-import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.bwmeta.model.YElement;
 import pl.edu.icm.yadda.bwmeta.model.YExportable;

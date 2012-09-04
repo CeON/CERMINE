@@ -28,7 +28,7 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
     
     
 	@Override
-	public void classifyZones(BxDocument document) throws AnalysisException 
+	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{
 		List<Map<BxZoneLabel, Integer>> votesForZones = new ArrayList<Map<BxZoneLabel, Integer>>(document.asZones().size());
 		for(Integer zoneIdx=0; zoneIdx < document.asZones().size(); ++zoneIdx) {
@@ -52,6 +52,8 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
 		for(BxZone zone: document.asZones()) {
 			assert zoneLabels.contains(zone.getLabel());
 		}
+        
+        return document;
 	}
 
 

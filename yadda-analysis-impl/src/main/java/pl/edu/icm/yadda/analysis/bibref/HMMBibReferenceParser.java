@@ -1,19 +1,17 @@
-package pl.edu.icm.yadda.analysis.textr;
+package pl.edu.icm.yadda.analysis.bibref;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import pl.edu.icm.yadda.analysis.bibref.BibEntry;
-import pl.edu.icm.yadda.analysis.bibref.BibReferenceParser;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.yadda.analysis.bibref.parsing.tools.CitationUtils;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 
 /**

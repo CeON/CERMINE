@@ -1,7 +1,7 @@
 package pl.edu.icm.yadda.analysis.metadata.process.nodes;
 
 import pl.edu.icm.yadda.analysis.bibref.BibReferenceExtractor;
-import pl.edu.icm.yadda.analysis.textr.MetadataExtractor;
+import pl.edu.icm.yadda.analysis.metadata.MetadataExtractor;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.bwmeta.model.YConstants;
 import pl.edu.icm.yadda.bwmeta.model.YElement;

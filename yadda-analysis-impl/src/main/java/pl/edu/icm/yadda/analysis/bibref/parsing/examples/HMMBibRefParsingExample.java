@@ -1,26 +1,23 @@
 package pl.edu.icm.yadda.analysis.bibref.parsing.examples;
 
-import java.net.URISyntaxException;
-import pl.edu.icm.yadda.analysis.textr.*;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import pl.edu.icm.yadda.analysis.bibref.BibEntry;
-
+import pl.edu.icm.yadda.analysis.bibref.HMMBibReferenceParser;
+import pl.edu.icm.yadda.analysis.bibref.parsing.features.*;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
-import pl.edu.icm.yadda.analysis.bibref.parsing.features.*;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.yadda.analysis.bibref.parsing.nodes.CitationsFromNLMExtractorNode;
 import pl.edu.icm.yadda.analysis.bibref.parsing.nodes.CitationsToFVHMMTrainingElementsConverterNode;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
-import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;

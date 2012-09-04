@@ -4,7 +4,7 @@ import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 
 /**
- * Bibliographic reference extractor interface.
+ * Extracting individual references strings from zones labelled as REFERENCES. 
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */

@@ -177,7 +177,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	}
 	
 	@Override
-	public void classifyZones(BxDocument document) throws AnalysisException 
+	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{       
 		for (BxPage page : document.getPages()) {
 			for (BxZone zone : page.getZones()) {
@@ -193,6 +193,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 				zone.setLabel(predictedClassValue);
 			}
 		}
+        return document;
 	} 
 
 	public double[] getWeights() {

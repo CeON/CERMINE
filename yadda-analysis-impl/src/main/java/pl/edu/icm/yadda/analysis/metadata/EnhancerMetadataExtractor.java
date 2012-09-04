@@ -1,4 +1,4 @@
-package pl.edu.icm.yadda.analysis.metadata.extraction;
+package pl.edu.icm.yadda.analysis.metadata;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -7,12 +7,12 @@ import java.util.Set;
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.EnhancedField;
 import pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.Enhancer;
-import pl.edu.icm.yadda.analysis.textr.MetadataExtractor;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.tools.BxModelUtils;
 import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
+ * Extracting metadata from labelled zones. 
  *
  * @author krusek
  */

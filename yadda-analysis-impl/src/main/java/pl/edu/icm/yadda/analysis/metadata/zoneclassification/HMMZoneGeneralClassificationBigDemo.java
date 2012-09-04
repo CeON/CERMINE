@@ -1,20 +1,11 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification;
 
 import com.thoughtworks.xstream.XStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
@@ -27,10 +18,12 @@ import pl.edu.icm.yadda.analysis.classification.hmm.tools.ZipExtractor;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
-import pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier;
-import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
-import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
-import pl.edu.icm.yadda.analysis.textr.model.*;
+import pl.edu.icm.yadda.analysis.textr.HMMInitialZoneClassifier;
+import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;
+import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
+import pl.edu.icm.yadda.analysis.textr.model.BxPage;
+import pl.edu.icm.yadda.analysis.textr.model.BxZone;
+import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 import pl.edu.icm.yadda.analysis.textr.tools.DocumentPreprocessor;
 import pl.edu.icm.yadda.analysis.textr.tools.InitiallyClassifiedZonesPreprocessor;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
@@ -45,6 +38,7 @@ public class HMMZoneGeneralClassificationBigDemo {
 
 	protected static final String hmmTrainingFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/xmls.zip";
 	private static final String hmmTestFile = "/pl/edu/icm/yadda/analysis//metadata/zoneclassification/09629351.xml";
+    private static final String hmmTrainingDir = "/home/domin/metadata-extraction-files/zones/newtrain/";
     
 	public static BxDocument getTestFile() throws TransformationException, AnalysisException {
         InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);
@@ -55,7 +49,7 @@ public class HMMZoneGeneralClassificationBigDemo {
         BxDocument testDocument = new BxDocument().setPages(pages);
         return testDocument;
 	}
-  
+
     public static void main(String[] args) throws TransformationException, Exception {
         
         // 1.1 construct vector of features builder
@@ -165,8 +159,7 @@ public class HMMZoneGeneralClassificationBigDemo {
         System.out.println(xs.toXML(hmmProbabilities));
         
         // 4. zone classifier instance
-        HMMZoneClassifier zoneClassifier = new HMMZoneClassifier(new HMMServiceImpl(), hmmProbabilities, 
-                BxZoneLabel.valuesOfCategory(BxZoneLabelCategory.CAT_GENERAL), vectorBuilder);
+        ZoneClassifier zoneClassifier = new HMMInitialZoneClassifier(new HMMServiceImpl(), hmmProbabilities, vectorBuilder);
 
         // 5. find the most probable labels for HMM objects
         zoneClassifier.classifyZones(testDocument);

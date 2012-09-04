@@ -1,19 +1,14 @@
 package pl.edu.icm.yadda.analysis.metadata.evaluation;
 
 import java.util.List;
-
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMZoneClassifier;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
-import pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabelCategory;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 
 /*
  *  @author Pawel Szostek (p.szostek@icm.edu.pl)

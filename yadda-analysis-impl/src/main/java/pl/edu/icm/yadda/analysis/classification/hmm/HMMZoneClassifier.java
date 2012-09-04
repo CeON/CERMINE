@@ -1,4 +1,4 @@
-package pl.edu.icm.yadda.analysis.textr;
+package pl.edu.icm.yadda.analysis.classification.hmm;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,10 +6,11 @@ import java.util.List;
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMStorage;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
+import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
+import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
+import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.model.*;
 
 /**
@@ -54,7 +55,7 @@ public class HMMZoneClassifier implements ZoneClassifier {
      * @throws AnalysisException analysis exception
      */
     @Override
-    public void classifyZones(BxDocument document) throws AnalysisException {
+    public BxDocument classifyZones(BxDocument document) throws AnalysisException {
         ZoneClassificationUtils.correctPagesBounds(document);
         
         ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
@@ -77,6 +78,8 @@ public class HMMZoneClassifier implements ZoneClassifier {
                 i++;
             }
         }
+        
+        return document;
     }
 
     public void setFeatureVectorBuilder(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) {

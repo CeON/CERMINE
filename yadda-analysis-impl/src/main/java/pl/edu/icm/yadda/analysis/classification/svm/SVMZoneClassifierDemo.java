@@ -30,7 +30,7 @@ import pl.edu.icm.yadda.analysis.classification.hmm.tools.ZipExtractor;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
-import pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier;
+import pl.edu.icm.yadda.analysis.classification.hmm.HMMZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;

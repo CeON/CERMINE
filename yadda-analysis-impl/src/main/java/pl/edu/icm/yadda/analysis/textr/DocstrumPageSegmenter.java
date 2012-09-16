@@ -273,10 +273,12 @@ public class DocstrumPageSegmenter implements PageSegmenter {
      * equal to the number of nearest-neighbors per component.
      */
     private void findNeighbors(Component[] components) throws AnalysisException {
+        if (components.length == 0) {
+            return;
+        }
+        int pageNeighborCount = neighborCount;
         if (components.length <= neighborCount) {
-            // FIXME add support for this case
-            // limit neighborCount to components.length - 1 ?
-            throw new AnalysisException("Too few components.");
+            pageNeighborCount = components.length - 1;
         }
 
         for (int i = 0; i < components.length; i++) {
@@ -300,12 +302,12 @@ public class DocstrumPageSegmenter implements PageSegmenter {
                     newCandidatesFound = true;
                 }
                 
-                if (newCandidatesFound && candidates.size() >= neighborCount) {
+                if (newCandidatesFound && candidates.size() >= pageNeighborCount) {
                     Collections.sort(candidates, NeighborDistanceComparator.getInstance());
-                    dist = candidates.get(neighborCount - 1).getDistance();
+                    dist = candidates.get(pageNeighborCount - 1).getDistance();
                 }
             }
-            candidates.subList(neighborCount, candidates.size()).clear();
+            candidates.subList(pageNeighborCount, candidates.size()).clear();
             components[i].setNeighbors(candidates);
         }
     }

@@ -1,17 +1,17 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification.malletDemo;
 
-import cc.mallet.pipe.CharSequence2TokenSequence;
-import cc.mallet.pipe.FeatureSequence2FeatureVector;
-import cc.mallet.pipe.Input2CharSequence;
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.SerialPipes;
-import cc.mallet.pipe.Target2Label;
-import cc.mallet.pipe.TokenSequence2FeatureSequence;
-import cc.mallet.pipe.TokenSequenceLowercase;
-import cc.mallet.pipe.TokenSequenceRemoveStopwords;
-import cc.mallet.pipe.iterator.CsvIterator;
-import cc.mallet.types.InstanceList;
-import java.io.File;
+//import cc.mallet.pipe.CharSequence2TokenSequence;
+//import cc.mallet.pipe.FeatureSequence2FeatureVector;
+//import cc.mallet.pipe.Input2CharSequence;
+//import cc.mallet.pipe.Pipe;
+//import cc.mallet.pipe.SerialPipes;
+//import cc.mallet.pipe.Target2Label;
+//import cc.mallet.pipe.TokenSequence2FeatureSequence;
+//import cc.mallet.pipe.TokenSequenceLowercase;
+//import cc.mallet.pipe.TokenSequenceRemoveStopwords;
+//import cc.mallet.pipe.iterator.CsvIterator;
+//import cc.mallet.types.InstanceList;
+//import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * @author Krzysztof Werys
  */
 class MalletDataImporter {
-    
+  /*  
     Pipe pipe;
 
     public MalletDataImporter() {
@@ -96,5 +96,5 @@ class MalletDataImporter {
         return instances;
     } 
  
-    
+    */
 }

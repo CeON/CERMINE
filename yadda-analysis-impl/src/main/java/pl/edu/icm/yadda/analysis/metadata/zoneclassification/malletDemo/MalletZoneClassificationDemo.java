@@ -1,6 +1,6 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification.malletDemo;
 
-import cc.mallet.classify.MaxEntTrainer;
+//import cc.mallet.classify.MaxEntTrainer;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -26,10 +26,10 @@ public class MalletZoneClassificationDemo {
     
   
         // 1. Set the trainer and the classification algorithm (e.g. MaxEnt, NaiveBayes, C45, DecisionTree, ...)
-        MalletTrainer trainer = new MalletTrainer(new MaxEntTrainer());
+//        MalletTrainer trainer = new MalletTrainer(new MaxEntTrainer());
         
         // 2. Train our classifier by giving a directory with training files in XML
-        trainer.trainClassifier(trainingDataDirectory);
+//        trainer.trainClassifier(trainingDataDirectory);
         
         // It is also possible to pass a file in Mallet format but first convert from XML
         // Uncomment the lines below.
@@ -39,7 +39,7 @@ public class MalletZoneClassificationDemo {
 //        trainer.trainClassifier(trainingDataInMalletFormat);
         
         // save a trained classifier
-        trainer.saveClassifier(new File("/home/werys/Pulpit/classificator"));
+//        trainer.saveClassifier(new File("/home/werys/Pulpit/classificator"));
         
         // convert training file from XML to mallet format and save it on disk
         XMLToMalletFormatConverter converter = new XMLToMalletFormatConverter();
@@ -47,17 +47,17 @@ public class MalletZoneClassificationDemo {
         converter.convertFile(testingData);
         
         // 3. Build classifier.
-        MalletClassifier classifier = new MalletClassifier(trainer);
+//        MalletClassifier classifier = new MalletClassifier(trainer);
         
         // 4. And classify a file in XML
-        BxDocument classifiedDocument = classifier.classify(testingData);
+//        BxDocument classifiedDocument = classifier.classify(testingData);
         
         // get some info about the classification
-        classifier.evaluate(testingData);
+//        classifier.evaluate(testingData);
         
         // display result of the classification in readable format
-        List<String> classifiedMetadataLabels = classifier.classifyAndGetLabels(testingData);
-        printResultOfClassification(testingData, classifiedMetadataLabels);
+//        List<String> classifiedMetadataLabels = classifier.classifyAndGetLabels(testingData);
+//        printResultOfClassification(testingData, classifiedMetadataLabels);
          
     }
      

@@ -1,8 +1,8 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification.malletDemo;
 
-import cc.mallet.classify.Classifier;
-import cc.mallet.classify.ClassifierTrainer;
-import cc.mallet.types.InstanceList;
+//import cc.mallet.classify.Classifier;
+//import cc.mallet.classify.ClassifierTrainer;
+//import cc.mallet.types.InstanceList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,8 +18,8 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  */
 public class MalletTrainer {
     
-    private ClassifierTrainer classifierTrainer;
-    private Classifier classifier;
+//    private ClassifierTrainer classifierTrainer;
+//    private Classifier classifier;
     
     private static String directoryForTemporaryFiles = Utils.getPathOfResource("/pl/edu/icm/yadda/analysis/metadata/zoneclassification/trainingdata/");
 
@@ -29,9 +29,9 @@ public class MalletTrainer {
      * JavaDoc API http://mallet.cs.umass.edu/api/ for the cc.mallet.classify 
      * package to see the complete current list of Trainer classes.
      */
-    public MalletTrainer(ClassifierTrainer classifierTrainer){
-        this.classifierTrainer = classifierTrainer;
-    }
+//    public MalletTrainer(ClassifierTrainer classifierTrainer){
+ //       this.classifierTrainer = classifierTrainer;
+  //  }
     
     /**
      * @param dataInMalletFormat: file after conversion from XML. Use 
@@ -40,8 +40,8 @@ public class MalletTrainer {
     public void trainClassifier(File dataInMalletFormat) throws FileNotFoundException {
         
         MalletDataImporter importer = new MalletDataImporter();
-        InstanceList trainingInstances = importer.readFile(dataInMalletFormat);
-        classifier = classifierTrainer.train(trainingInstances);
+    //    InstanceList trainingInstances = importer.readFile(dataInMalletFormat);
+      //  classifier = classifierTrainer.train(trainingInstances);
     }
     
     /**
@@ -64,7 +64,7 @@ public class MalletTrainer {
         //  Mallet is through Java serialization. Here we                                                  
         //  write the classifier object to the specified file.                                             
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream (serializedFile));
-        oos.writeObject (classifier);
+      //  oos.writeObject (classifier);
         oos.close();
     }
     
@@ -78,16 +78,16 @@ public class MalletTrainer {
         //  for repeated use is through Java serialization.                                                
         // Here we load a serialized classifier from a file.                                               
 
-        Classifier loadedClassifier;
+        //Classifier loadedClassifier;
 
-        ObjectInputStream ois = new ObjectInputStream (new FileInputStream (serializedFile));
-        loadedClassifier = (Classifier) ois.readObject();
-        ois.close();
+//        ObjectInputStream ois = new ObjectInputStream (new FileInputStream (serializedFile));
+  //      loadedClassifier = (Classifier) ois.readObject();
+    //    ois.close();
 
-        this.classifier = loadedClassifier;
+      //  this.classifier = loadedClassifier;
     }
     
-    public Classifier getClassifier() {
-        return classifier;
-    }
+//    public Classifier getClassifier() {
+  //      return classifier;
+    //}
 }

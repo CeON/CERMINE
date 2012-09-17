@@ -1,12 +1,12 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification.malletDemo;
-
+/*
 import cc.mallet.classify.Classifier;
 import cc.mallet.classify.Trial;
 import cc.mallet.pipe.iterator.CsvIterator;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Label;
-import cc.mallet.types.Labeling;
+import cc.mallet.types.Labeling;*/
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,7 +24,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  * @author Krzysztof Werys
  */
 public class MalletClassifier {
-    
+    /*
     private Classifier classifier;
     
     XMLToMalletFormatConverter converter;
@@ -178,5 +178,5 @@ public class MalletClassifier {
         }
     }
     
-
+*/
 }

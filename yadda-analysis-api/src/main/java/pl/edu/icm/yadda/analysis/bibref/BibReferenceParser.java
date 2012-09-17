@@ -1,5 +1,7 @@
 package pl.edu.icm.yadda.analysis.bibref;
 
+import pl.edu.icm.yadda.analysis.AnalysisException;
+
 /**
  * Bibliographic reference parser.
  * 
@@ -16,6 +18,6 @@ public interface BibReferenceParser<T> {
 	 * @return Parsed reference, or <code>null</code>
 	 * if the specified text couldn't be parsed.
 	 */
-	public T parseBibReference(String text);
+	public T parseBibReference(String text) throws AnalysisException;
 
 }

@@ -24,11 +24,11 @@ public class IsPagesTextFeature implements FeatureCalculator<CitationToken, Cita
         int index = context.getTokens().indexOf(object);
         List<CitationToken> tokens = context.getTokens();
 
-        if (text.equals("p") || text.equals("pp")) {
+        if (text.equals("p") || text.equals("pp") || text.equals("pages")) {
             return 1;
         }
-        if (index - 1 >= 0 && text.equals(".")
-                && (tokens.get(index - 1).getText().equals("p") || tokens.get(index - 1).getText().equals("pp"))) {
+        if (index - 1 >= 0 && text.equals(".") && (tokens.get(index - 1).getText().equals("p") 
+                || tokens.get(index - 1).getText().equals("pp") || tokens.get(index - 1).getText().equals("pages"))) {
             return 1;
         }
         return 0;

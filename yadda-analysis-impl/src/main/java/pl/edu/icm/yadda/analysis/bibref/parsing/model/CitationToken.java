@@ -20,7 +20,7 @@ public class CitationToken {
     }
 
     public CitationToken(String text, int startIndex, int endIndex) {
-        this(text, startIndex, endIndex, null);
+        this(text, startIndex, endIndex, CitationTokenLabel.TEXT);
     }
 
     public CitationTokenLabel getLabel() {

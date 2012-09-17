@@ -1,16 +1,7 @@
 package pl.edu.icm.yadda.analysis.bibref.parsing.tools;
 
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -18,6 +9,9 @@ import org.jdom.Text;
 import org.jdom.filter.Filter;
 import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 
 /**
  * Citation extractor from NLM xml-s.
@@ -84,7 +78,7 @@ public class NlmCitationExtractor {
             if (content instanceof Text) {
                 String contentText = ((Text) content).getText();
                 if (!contentText.matches("^[\\s]*$")) {
-                    for (CitationToken token : CitationUtils.tokenizeCitation(contentText)) {
+                    for (CitationToken token : CitationUtils.stringToCitation(contentText).getTokens()) {
                         token.setStartIndex(token.getStartIndex() + citation.getText().length());
                         token.setEndIndex(token.getEndIndex() + citation.getText().length());
                         token.setLabel(TAGS_LABEL_MAP.get(KEY_TEXT));
@@ -98,7 +92,7 @@ public class NlmCitationExtractor {
                 Element contentElement = (Element) content;
                 String contentElementName = contentElement.getName();
                 if (TAGS_LABEL_MAP.containsKey(contentElementName)) {
-                    for (CitationToken token : CitationUtils.tokenizeCitation(contentElement.getValue())) {
+                    for (CitationToken token : CitationUtils.stringToCitation(contentElement.getValue()).getTokens()) {
                         token.setStartIndex(token.getStartIndex() + citation.getText().length());
                         token.setEndIndex(token.getEndIndex() + citation.getText().length());
                         token.setLabel(TAGS_LABEL_MAP.get(contentElementName));

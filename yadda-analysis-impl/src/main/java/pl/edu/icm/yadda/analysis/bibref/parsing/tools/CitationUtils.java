@@ -1,13 +1,15 @@
 package pl.edu.icm.yadda.analysis.bibref.parsing.tools;
 
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
-import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.yadda.analysis.bibref.BibEntry;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
+import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
+import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 
 /**
  * Citation utility class.
@@ -31,14 +33,9 @@ public class CitationUtils {
         TO_BIBENTRY.put(CitationTokenLabel.VOLUME,          BibEntry.FIELD_VOLUME);
         TO_BIBENTRY.put(CitationTokenLabel.YEAR,            BibEntry.FIELD_YEAR);
         TO_BIBENTRY.put(CitationTokenLabel.ISSUE,           BibEntry.FIELD_NUMBER);
-        /*
-        TO_BIBENTRY.put(CitationTokenLabel.CONF,            BibEntry.FIELD_ABSTRACT);
-        TO_BIBENTRY.put(CitationTokenLabel.SC,              BibEntry.FIELD_ABSTRACT);
-        TO_BIBENTRY.put(CitationTokenLabel.VOLUME_SERIES,   BibEntry.FIELD_ABSTRACT);
-         */
     }
 
-    public static List<CitationToken> tokenizeCitation(String citation) {
+    public static Citation stringToCitation(String citation) {
         List<CitationToken> tokenList = new ArrayList<CitationToken>();
 
         String text = citation;
@@ -59,7 +56,7 @@ public class CitationUtils {
             actIndex += end;
         }
 
-        return tokenList;
+        return new Citation(citation, tokenList);
     }
 
     public static void addHMMLabels(Citation citation) {
@@ -110,7 +107,7 @@ public class CitationUtils {
         }
     }
 
-    public static BibEntry convertToBibref(Citation citation) {
+    public static BibEntry citationToBibref(Citation citation) {
         List<CitationToken> tokens = new ArrayList<CitationToken>();
         CitationToken token = null;
         for (CitationToken actToken : citation.getTokens()) {
@@ -125,7 +122,6 @@ public class CitationUtils {
                 } else {
                     if (token != null) {
                         tokens.add(token);
-                        token = null;
                     }
                     token = new CitationToken(actToken.getText(), actToken.getStartIndex(), actToken.getEndIndex(),
                             actToken.getLabel());
@@ -198,5 +194,73 @@ public class CitationUtils {
         }
 
         return bibEntry;
+    }
+    
+    public static List<String> citationToMalletInputFormat(Citation citation) {
+        List<String> trainingExamples = new ArrayList<String>();
+        
+        FeatureVectorBuilder vectorBuilder = FeatureList.vectorBuilder;
+        
+        List<CitationToken> tokens = citation.getTokens();
+        List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
+        for (CitationToken token : tokens) {
+            FeatureVector featureVector = vectorBuilder.getFeatureVector(token, citation);
+            if (token.getText().matches("^[a-zA-Z]+$")) {
+                featureVector.addFeature(token.getText().toLowerCase(), 1);
+            }
+            featureVectors.add(featureVector);
+        }
+        
+        for (int i = 0; i < tokens.size(); i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            
+            stringBuilder.append(tokens.get(i).getLabel());
+            stringBuilder.append(" ---- ");
+               
+            if (i >= 2) {
+                for (String n : featureVectors.get(i-2).getFeatureNames()) {
+                    if (featureVectors.get(i-2).getFeature(n) > Double.MIN_VALUE) {
+                        stringBuilder.append(n);
+                        stringBuilder.append("@-2 ");
+                    }
+                }
+            }
+            if (i >= 1) {
+                for (String n : featureVectors.get(i-1).getFeatureNames()) {
+                    if (featureVectors.get(i-1).getFeature(n) > Double.MIN_VALUE) {
+                        stringBuilder.append(n);
+                        stringBuilder.append("@-1 ");
+                    }
+                }
+            }
+            for (String n : featureVectors.get(i).getFeatureNames()) {
+                if (featureVectors.get(i).getFeature(n) > Double.MIN_VALUE) {
+                    stringBuilder.append(n);
+                    stringBuilder.append(" ");
+                }
+            }
+            if (i < featureVectors.size()-1) {
+                for (String n : featureVectors.get(i+1).getFeatureNames()) {
+                    if (featureVectors.get(i+1).getFeature(n) > Double.MIN_VALUE) {
+                        stringBuilder.append(n);
+                        stringBuilder.append("@1 ");
+                    }
+                }
+            }
+            if (i < featureVectors.size()-2) {
+                for (String n : featureVectors.get(i+2).getFeatureNames()) {
+                    if (featureVectors.get(i+2).getFeature(n) > Double.MIN_VALUE) {
+                        stringBuilder.append(n);
+                        stringBuilder.append("@2 ");
+                    }
+                }
+            }
+            while (stringBuilder.length() > 0 && Character.isWhitespace(stringBuilder.charAt(stringBuilder.length() - 1))) {
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            }
+            trainingExamples.add(stringBuilder.toString());
+        }
+        
+        return trainingExamples; 
     }
 }

@@ -44,8 +44,8 @@ public class HMMBibReferenceParser implements BibReferenceParser<BibEntry> {
 
 	@Override
 	public BibEntry parseBibReference(String text) {
-		List<CitationToken> tokens = CitationUtils.tokenizeCitation(text);
-		Citation citation = new Citation(text, tokens);
+		Citation citation = CitationUtils.stringToCitation(text);
+        List<CitationToken> tokens = citation.getTokens();
 
 		List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
 		for (CitationToken token : tokens) {
@@ -61,7 +61,7 @@ public class HMMBibReferenceParser implements BibReferenceParser<BibEntry> {
 		}
 
 		CitationUtils.removeHMMLabels(citation);
-		return CitationUtils.convertToBibref(citation);
+		return CitationUtils.citationToBibref(citation);
 	}
 
 	public void setFeatureVectorBuilder(

@@ -3,6 +3,7 @@ package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.bibref.BibEntry;
 import pl.edu.icm.yadda.analysis.bibref.BibReferenceParser;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
@@ -37,7 +38,12 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
             for (BxZone zone : filterZones(page)) {
                 Matcher matcher = PATTERN.matcher(zone.toText());
                 if (matcher.find()) {
-                    BibEntry bibEntry = referenceParser.parseBibReference(matcher.group(1));
+                    BibEntry bibEntry;
+                    try {
+                        bibEntry = referenceParser.parseBibReference(matcher.group(1));
+                    } catch (AnalysisException ex) {
+                        return;
+                    }
                     if (!enhancedFields.contains(EnhancedField.JOURNAL)) {
                         String value = bibEntry.getFirstFieldValue(BibEntry.FIELD_JOURNAL);
                         if (value != null) {

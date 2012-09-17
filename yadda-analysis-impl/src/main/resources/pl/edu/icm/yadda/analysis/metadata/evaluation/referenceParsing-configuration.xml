@@ -16,10 +16,10 @@
             http://yadda.icm.edu.pl/schema/processing
             http://yadda.icm.edu.pl/schema/processing/yadda-process.xsd">
 
-    <import resource="classpath:pl/edu/icm/yadda/analysis/metadata/common/services.xml"/>
+    <!--import resource="classpath:pl/edu/icm/yadda/analysis/metadata/common/services.xml"/-->
     
     <bean id="evaluator" class="pl.edu.icm.yadda.analysis.metadata.evaluation.ReferenceParsingEvaluator">
-        <property name="referenceParser" ref="referenceParser"/>
+        <property name="referenceParser" ref="crfReferenceParser"/>
         <property name="minOverlap"><value>1</value></property>
         <property name="ignoredFieldKeys">
             <list>
@@ -28,5 +28,9 @@
             </list>
         </property>
     </bean>
+    
+    <bean id="crfReferenceParser" class="pl.edu.icm.yadda.analysis.bibref.CRFBibReferenceParser">
+        <property name="modelFile" value="/home/domin/acrf.ser.gz" />
+     </bean>
 
 </beans>

@@ -8,14 +8,14 @@ import pl.edu.icm.yadda.metadata.transformers.IMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
-
+import pl.edu.icm.yadda.metadata.transformers.AbstractMetadataWriter;
 /**
  * Writer of BibEntry model to BibTeX format.
  * @author estocka
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  *
  */
-public class BibEntryToBibTeXTransformer implements IMetadataWriter<BibEntry> {
+public class BibEntryToBibTeXTransformer extends AbstractMetadataWriter implements IMetadataWriter<BibEntry> {
 
 	@Override
 	public MetadataModel<BibEntry> getSourceModel() {

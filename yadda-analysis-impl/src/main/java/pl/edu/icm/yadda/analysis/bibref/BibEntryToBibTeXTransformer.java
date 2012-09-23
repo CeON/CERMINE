@@ -4,18 +4,18 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import pl.edu.icm.yadda.metadata.transformers.AbstractMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.IMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
-import pl.edu.icm.yadda.metadata.transformers.AbstractMetadataWriter;
 /**
  * Writer of BibEntry model to BibTeX format.
  * @author estocka
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  *
  */
-public class BibEntryToBibTeXTransformer extends AbstractMetadataWriter implements IMetadataWriter<BibEntry> {
+public class BibEntryToBibTeXTransformer extends AbstractMetadataWriter<BibEntry> implements IMetadataWriter<BibEntry> {
 
 	@Override
 	public MetadataModel<BibEntry> getSourceModel() {

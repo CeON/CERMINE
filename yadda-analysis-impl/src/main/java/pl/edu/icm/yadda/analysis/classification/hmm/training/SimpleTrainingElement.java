@@ -44,5 +44,11 @@ public class SimpleTrainingElement<S> implements TrainingElement<S> {
     public S getNextLabel() {
         return nextLabel;
     }
+    
+    @Override
+    public SimpleTrainingElement<S> clone() {
+    	SimpleTrainingElement<S> ret = new SimpleTrainingElement<S>(observation.clone(), label, first);
+    	return ret;
+    }
 
 }

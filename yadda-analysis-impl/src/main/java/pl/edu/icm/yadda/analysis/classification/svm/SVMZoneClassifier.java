@@ -36,7 +36,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 
 public class SVMZoneClassifier implements ZoneClassifier {
-	final static svm_parameter defaultParameter = new svm_parameter();		
+	final protected static svm_parameter defaultParameter = new svm_parameter();		
 	static {
 		// default values
 		defaultParameter.svm_type = svm_parameter.C_SVC;
@@ -55,9 +55,9 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		defaultParameter.weight_label = new int[0];
 		defaultParameter.weight = new double[0];
 	}
-	private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
-	private FeatureVectorScaler scaler;
-	private String[] features;
+	protected FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
+	protected FeatureVectorScaler scaler;
+	protected String[] features;
 	
 	private svm_parameter param;
 	private svm_problem problem;
@@ -78,7 +78,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		param = getDefaultParam();
 	}
 	
-	private static svm_parameter clone(svm_parameter param) {
+	protected static svm_parameter clone(svm_parameter param) {
 		svm_parameter ret = new svm_parameter();
 		// default values
 		ret.svm_type = param.svm_type;
@@ -114,6 +114,12 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		model = libsvm.svm.svm_train(problem, param);
 	}
 	
+	BxZoneLabel predictZoneLabel(BxZone zone) {
+		svm_node[] instance = buildDatasetForClassification(zone);
+		double predictedVal = svm.svm_predict(model, instance);
+		return BxZoneLabel.values()[(int)predictedVal];
+	}
+	
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{       
@@ -126,7 +132,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		return document;
 	}
 
-	private svm_problem buildDatasetForTraining(List<TrainingElement<BxZoneLabel>> trainingElements)
+	protected svm_problem buildDatasetForTraining(List<TrainingElement<BxZoneLabel>> trainingElements)
 	{
 		svm_problem problem = new svm_problem();
 		problem.l = trainingElements.size();
@@ -151,7 +157,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		return problem;
 	}
 	
-	private svm_node[] buildDatasetForClassification(BxZone zone)
+	protected svm_node[] buildDatasetForClassification(BxZone zone)
 	{
 		svm_node[] ret = new svm_node[featureVectorBuilder.getFeatureNames().size()];
 		FeatureVector scaledFV = scaler.scaleFeatureVector(featureVectorBuilder.getFeatureVector(zone, zone.getContext()));

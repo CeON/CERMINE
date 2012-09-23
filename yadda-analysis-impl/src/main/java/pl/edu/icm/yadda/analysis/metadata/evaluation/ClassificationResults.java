@@ -5,56 +5,21 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 
 public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults>
 {
-	private static class LabelPair {
-		public BxZoneLabel l1, l2;
-		public LabelPair(BxZoneLabel l1, BxZoneLabel l2) {
-			this.l1 = l1;
-			this.l2 = l2;
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			ClassificationResults.LabelPair other = (ClassificationResults.LabelPair) obj;
-			if (l1 != other.l1)
-				return false;
-			if (l2 != other.l2)
-				return false;
-			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((l1 == null) ? 0 : l1.hashCode());
-			result = prime * result + ((l2 == null) ? 0 : l2.hashCode());
-			return result;
-		}
-		@Override
-		public String toString() {
-			return "("+ l1 + ", " + l2 + ")";
-		}
-	}
-	
-    protected Set<BxZoneLabel> possibleLabels;
+	protected Set<BxZoneLabel> possibleLabels;
     protected int nbOfZoneTypes = BxZoneLabel.values().length;
-    protected Map<ClassificationResults.LabelPair, Integer> classificationMatrix;
+    protected Map<LabelPair, Integer> classificationMatrix;
     protected int goodRecognitions = 0;
     protected int badRecognitions = 0;
 
     public ClassificationResults()
     {
     	possibleLabels = new HashSet<BxZoneLabel>();
-    	classificationMatrix = new HashMap<ClassificationResults.LabelPair, Integer>();
+    	classificationMatrix = new HashMap<LabelPair, Integer>();
     }
 
     private void addPossibleLabel(BxZoneLabel lab) {
@@ -79,7 +44,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     	addPossibleLabel(label1);
     	addPossibleLabel(label2);
     	
-    	ClassificationResults.LabelPair coord = new LabelPair(label1, label2); 
+    	LabelPair coord = new LabelPair(label1, label2); 
         classificationMatrix.put(coord, classificationMatrix.get(coord)+1);
         if (label1.equals(label2)) {
             goodRecognitions++;
@@ -94,7 +59,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     		addPossibleLabel(possibleLabel);
         for (BxZoneLabel label1 : results.possibleLabels) {
             for (BxZoneLabel label2 : results.possibleLabels) {
-            	ClassificationResults.LabelPair coord = new LabelPair(label1, label2); 
+            	LabelPair coord = new LabelPair(label1, label2); 
             	classificationMatrix.put(coord, classificationMatrix.get(coord) + results.classificationMatrix.get(coord));
             }
         }
@@ -147,7 +112,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
             oneLine.append(new String(new char[maxLabelLength - labelLengths.get(label1)]).replace('\0', ' '));
             oneLine.append(" |");
             for (BxZoneLabel label2 : possibleLabels) {
-            	ClassificationResults.LabelPair coord = new LabelPair(label1, label2);
+            	LabelPair coord = new LabelPair(label1, label2);
                 String nbRecognitions = classificationMatrix.get(coord).toString();
                 oneLine.append(" ").append(nbRecognitions);
                 oneLine.append(new String(new char[Math.max(0, labelLengths.get(label2) - nbRecognitions.length() + 1)]).replace('\0', ' '));
@@ -193,7 +158,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
             int labelGoodRecognitions = 0;
             int labelAllRecognitions = 0;
             for (BxZoneLabel label2 : possibleLabels) {
-            	ClassificationResults.LabelPair coord = new LabelPair(label1, label2);
+            	LabelPair coord = new LabelPair(label1, label2);
                 if (label1.equals(label2)) {
                     labelGoodRecognitions += classificationMatrix.get(coord);
                 }

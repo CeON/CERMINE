@@ -17,6 +17,7 @@ import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.classification.svm.SVMZoneClassifier;
+import pl.edu.icm.yadda.analysis.classification.tools.ClassificationUtils;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.OversamplingSelector;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.SampleFilter;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.SampleSelector;
@@ -190,7 +191,7 @@ public class SVMMetadataClassificationEvaluator extends
 		}
 		
 		List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised = EvaluationUtils.getTrainingElements(trainingDocuments, featureVectorBuilder);
-		EvaluationUtils.filterElements(trainingElementsUnrevised, BxZoneLabelCategory.CAT_METADATA);
+		trainingElementsUnrevised = ClassificationUtils.filterElements(trainingElementsUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
 		double inequalityFactor = 1.5;
 		

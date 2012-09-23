@@ -30,6 +30,7 @@ public interface TrainingElement<S> {
      * @return The label.
      */
     S getLabel();
+    
 
     /**
      * Gets the label of the following element, or null if the element is the
@@ -38,5 +39,7 @@ public interface TrainingElement<S> {
      * @return The label of the following element.
      */
     S getNextLabel();
+    
+    public TrainingElement<S> clone();
 
 }

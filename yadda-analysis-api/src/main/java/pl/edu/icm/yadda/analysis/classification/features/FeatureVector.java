@@ -41,4 +41,6 @@ public interface FeatureVector {
     public Set<String> getFeatureNames();
     
     public Integer size();
+    
+    public FeatureVector clone();
 }

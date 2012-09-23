@@ -15,6 +15,7 @@ import org.apache.commons.cli.ParseException;
 
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
+import pl.edu.icm.yadda.analysis.classification.tools.ClassificationUtils;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.CrossvalidatingZoneClassificationEvaluator;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.EvaluationUtils;
 import pl.edu.icm.yadda.analysis.metadata.evaluation.SVMMetadataClassificationEvaluator;
@@ -118,7 +119,7 @@ public class LibSVMExporter {
         } catch(Exception e) {
 			throw new RuntimeException("Unable to process the delivered training documents!");
 		}
-        EvaluationUtils.filterElements(trainingElements, category);
+        trainingElements = ClassificationUtils.filterElements(trainingElements, category);
         trainingElements = selector.pickElements(trainingElements);
         toLibSVM(trainingElements, "zone_classification.dat");
 	}

@@ -62,4 +62,14 @@ public class SimpleFeatureVector implements FeatureVector {
 			throw new RuntimeException("Bad feature name: " + name);
 		features.put(name, value);
 	}
+	
+	@Override
+	public SimpleFeatureVector clone() {
+		SimpleFeatureVector ret = new SimpleFeatureVector();
+		for(String feature: features.keySet()) {
+			ret.features.put(new String(feature), new Double(features.get(feature)));
+		}
+		return ret;
+	}
+	
 }

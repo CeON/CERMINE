@@ -13,7 +13,6 @@ import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabelCategory;
 import pl.edu.icm.yadda.analysis.textr.tools.DocumentPreprocessor;
 
 public class EvaluationUtils {
@@ -44,19 +43,6 @@ public class EvaluationUtils {
 		return evaluationDocuments;
 	}
     
-	public static void filterElements(List<TrainingElement<BxZoneLabel>> elements, BxZoneLabelCategory category)
-	{
-		if(category == BxZoneLabelCategory.CAT_ALL)
-			return;
-
-		List<TrainingElement<BxZoneLabel>> toBeRemoved = new ArrayList<TrainingElement<BxZoneLabel>>(); 
-		
-		for(TrainingElement<BxZoneLabel> elem: elements)
-			if(elem.getLabel().getCategory() != category)
-				toBeRemoved.add(elem);
-		elements.removeAll(toBeRemoved);
-	}
-	
 	public static List<TrainingElement<BxZoneLabel>> getTrainingElements(BxDocument trainingDocument, FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) {
 		List<BxDocument> dummyList = new ArrayList<BxDocument>(1);
 		dummyList.add(trainingDocument);

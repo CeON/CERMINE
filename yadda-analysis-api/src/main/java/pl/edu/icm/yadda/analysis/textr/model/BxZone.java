@@ -9,7 +9,7 @@ import java.util.List;
  * Models a single zone of a page. A zone contains either lines of text
  * or a list of chunks, that haven't been grouped into lines yet.
  */
-public final class BxZone extends BxObject<BxZone> implements Serializable, Printable {
+public final class BxZone extends BxObject<BxZone, BxPage> implements Serializable, Printable {
 
     private static final long serialVersionUID = -7331944901471939127L;
 
@@ -20,6 +20,8 @@ public final class BxZone extends BxObject<BxZone> implements Serializable, Prin
 
     /** list of zone's text chunks (if the zone is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
+    
+    private BxPage contextPage;
 
 
     @Override

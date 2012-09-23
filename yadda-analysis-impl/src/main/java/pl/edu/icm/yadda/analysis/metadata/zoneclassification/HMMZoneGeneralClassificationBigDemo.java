@@ -13,11 +13,11 @@ import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuil
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
-import pl.edu.icm.yadda.analysis.classification.hmm.tools.DocumentsExtractor;
-import pl.edu.icm.yadda.analysis.classification.hmm.tools.ZipExtractor;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
+import pl.edu.icm.yadda.analysis.classification.tools.DocumentsExtractor;
+import pl.edu.icm.yadda.analysis.classification.tools.ZipExtractor;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
 import pl.edu.icm.yadda.analysis.textr.HMMInitialZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
@@ -71,7 +71,7 @@ public class HMMZoneGeneralClassificationBigDemo {
                 new CommaRelativeCountFeature(),
         		new ContainsCuePhrasesFeature(),
         		new CuePhrasesRelativeCountFeature(),
-        		new DatesFeature(),
+        		new DateFeature(),
                 new DigitCountFeature(),
                 new DigitRelativeCountFeature(),
         		new DistanceFromNearestNeighbourFeature(),
@@ -147,9 +147,9 @@ public class HMMZoneGeneralClassificationBigDemo {
         }
         
         // 2.2 generate training set based on sequences and vector of features
-        BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
+        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);
-        List<HMMTrainingElement<BxZoneLabel>> trainingElements = node.process(documents, null);
+        List<TrainingElement<BxZoneLabel>> trainingElements = node.process(documents, null);
 
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities

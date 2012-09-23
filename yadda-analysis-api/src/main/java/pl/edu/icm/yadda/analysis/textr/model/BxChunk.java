@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  * 
  */
-public final class BxChunk extends BxObject<BxChunk> implements Serializable {
+public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializable {
 
     private static final long serialVersionUID = -6911268485662874663L;
 

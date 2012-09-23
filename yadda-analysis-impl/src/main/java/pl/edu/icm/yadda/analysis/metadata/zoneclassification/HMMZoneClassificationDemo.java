@@ -12,9 +12,10 @@ import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMZoneClassifier;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
+import pl.edu.icm.yadda.analysis.classification.tools.FileExtractor;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
@@ -76,17 +77,15 @@ public class HMMZoneClassificationDemo {
                 ));
 
         // 2. import and generate training set based on sequences and vector of features
-        InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);
-        InputStreamReader isr = new InputStreamReader(is);
-        
-        TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument document = new BxDocument().setPages(reader.read(isr));
+		InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);
+		FileExtractor fe = new FileExtractor(is);
+		BxDocument document = fe.getDocument();
         List<BxDocument> documents = new ArrayList<BxDocument>(1);
         documents.add(document);
         
-        BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
+        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);
-        List<HMMTrainingElement<BxZoneLabel>> trainingElements = node.process(documents, null);
+        List<TrainingElement<BxZoneLabel>> trainingElements = node.process(documents, null);
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
                 = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, vectorBuilder);

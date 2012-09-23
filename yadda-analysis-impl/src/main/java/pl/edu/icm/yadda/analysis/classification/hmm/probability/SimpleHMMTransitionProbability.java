@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.textr.tools.ProbabilityDistribution;
 
 /**
@@ -18,14 +18,14 @@ public class SimpleHMMTransitionProbability<S> implements HMMTransitionProbabili
 
     private double zeroProbabilityValue;
 
-    public SimpleHMMTransitionProbability(List<HMMTrainingElement<S>> trainingElements) {
+    public SimpleHMMTransitionProbability(List<TrainingElement<S>> trainingElements) {
         this(trainingElements, 0.0);
     }
 
-    public SimpleHMMTransitionProbability(List<HMMTrainingElement<S>> trainingElements, double zeroProbabilityValue) {
+    public SimpleHMMTransitionProbability(List<TrainingElement<S>> trainingElements, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         probability = new HashMap<S, ProbabilityDistribution<S>>();
-        for (HMMTrainingElement<S> element : trainingElements) {
+        for (TrainingElement<S> element : trainingElements) {
             if (element.getNextLabel() != null) {
                 if (!probability.containsKey(element.getLabel())) {
                     probability.put(element.getLabel(), new ProbabilityDistribution<S>());

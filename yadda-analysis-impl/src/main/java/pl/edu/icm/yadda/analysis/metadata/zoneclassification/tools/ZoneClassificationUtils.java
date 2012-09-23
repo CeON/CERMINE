@@ -13,6 +13,15 @@ import pl.edu.icm.yadda.analysis.textr.tools.BxBoundsBuilder;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class ZoneClassificationUtils {
+	private static String[] conjunctions = {"and", "or", "for", "or", "nor"};
+
+	public static Boolean isConjunction(String word) {
+		for(String conjunction: conjunctions) {
+			if(conjunction.equalsIgnoreCase(word))
+				return true;
+		}
+		return false;
+	}
 
     public static void mapZoneLabels(BxDocument document, Map<BxZoneLabel, BxZoneLabel> labelMap) {
         for (BxPage page : document.getPages()) {

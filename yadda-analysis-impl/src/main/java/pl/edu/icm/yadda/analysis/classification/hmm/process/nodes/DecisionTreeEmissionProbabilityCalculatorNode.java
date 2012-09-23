@@ -5,7 +5,7 @@ import java.util.List;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.DecisionTreeHMMEmissionProbability;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMEmissionProbability;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
 import pl.edu.icm.yadda.process.node.IProcessingNode;
 
@@ -17,7 +17,7 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class DecisionTreeEmissionProbabilityCalculatorNode<S>
-        implements IProcessingNode<List<HMMTrainingElement<S>>, HMMEmissionProbability<S>> {
+        implements IProcessingNode<List<TrainingElement<S>>, HMMEmissionProbability<S>> {
 
     private FeatureVectorBuilder featureVectorBuilder;
 
@@ -26,7 +26,7 @@ public class DecisionTreeEmissionProbabilityCalculatorNode<S>
     private double zeroProbabilityValue = 0.0;
 
     @Override
-    public HMMEmissionProbability<S> process(List<HMMTrainingElement<S>> input, 
+    public HMMEmissionProbability<S> process(List<TrainingElement<S>> input, 
             ProcessContext ctx) throws Exception {
         return new DecisionTreeHMMEmissionProbability(input, featureVectorBuilder.getFeatureNames(), 
                                                       decisionTreeExpand, zeroProbabilityValue);

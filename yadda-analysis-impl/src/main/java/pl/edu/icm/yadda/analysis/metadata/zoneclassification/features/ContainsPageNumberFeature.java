@@ -23,9 +23,7 @@ public class ContainsPageNumberFeature implements FeatureCalculator<BxZone, BxPa
         if (zone.getLines().size() > 1) {
             return 0;
         }
-        if (Pattern.matches("^\\d+$", zone.toText())
-                || Pattern.matches("^Page.*$", zone.toText())
-                || Pattern.matches("^page.*$", zone.toText())) {
+        if (Pattern.matches("^\\d+$|^Page\\s+.*$|^page\\s+.*$", zone.toText())) {
             return 1;
         }
         return 0;

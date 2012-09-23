@@ -24,6 +24,7 @@ public class DistanceFromNearestNeighbourFeature implements
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
 		Double minDist = Double.MAX_VALUE;
+		
 		for (BxZone otherZone : page.getZones()) {
 			if (otherZone == zone)
 				continue;

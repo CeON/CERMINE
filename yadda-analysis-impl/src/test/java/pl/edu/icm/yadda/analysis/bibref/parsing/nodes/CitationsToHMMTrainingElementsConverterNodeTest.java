@@ -2,7 +2,7 @@ package pl.edu.icm.yadda.analysis.bibref.parsing.nodes;
 
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
@@ -15,14 +15,14 @@ import static org.junit.Assert.*;
  */
 public class CitationsToHMMTrainingElementsConverterNodeTest {
 
-    private HMMTrainingElement<CitationTokenLabel>[] process(Citation[] input) throws Exception {
+    private TrainingElement<CitationTokenLabel>[] process(Citation[] input) throws Exception {
         ProcessContext context = new ProcessContext("1");
         CitationsToFVHMMTrainingElementsConverterNode node = new CitationsToFVHMMTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(new SimpleFeatureVectorBuilder());
         return node.process(input, context);
     }
 
-    private HMMTrainingElement<CitationTokenLabel>[] process(Citation input) throws Exception {
+    private TrainingElement<CitationTokenLabel>[] process(Citation input) throws Exception {
         return process(new Citation[]{input});
     }
 
@@ -43,12 +43,12 @@ public class CitationsToHMMTrainingElementsConverterNodeTest {
         input.addToken(new CitationToken("text10", 75, 81, CitationTokenLabel.TEXT));
         input.addToken(new CitationToken("text11", 82, 88, CitationTokenLabel.TEXT));
 
-        HMMTrainingElement<CitationTokenLabel>[] output = process(input);
+        TrainingElement<CitationTokenLabel>[] output = process(input);
         
         assertEquals(11, output.length);
 
-        HMMTrainingElement<CitationTokenLabel> prevElement = null;
-        for (HMMTrainingElement<CitationTokenLabel> element : output) {
+        TrainingElement<CitationTokenLabel> prevElement = null;
+        for (TrainingElement<CitationTokenLabel> element : output) {
             assertEquals(prevElement == null, element.isFirst());
             if (prevElement != null) {
                 assertEquals(element.getLabel(), prevElement.getNextLabel());
@@ -87,7 +87,7 @@ public class CitationsToHMMTrainingElementsConverterNodeTest {
         input[3].addToken(new CitationToken("b", 2, 3, CitationTokenLabel.ARTICLE_TITLE));
         input[3].addToken(new CitationToken("c", 4, 5, CitationTokenLabel.ARTICLE_TITLE));
 
-        HMMTrainingElement<CitationTokenLabel>[] output = process(input);
+        TrainingElement<CitationTokenLabel>[] output = process(input);
 
         assertTrue(output[0].isFirst());
         assertTrue(output[1].isFirst());

@@ -10,7 +10,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 public class ContainsCuePhrasesFeature implements
 		FeatureCalculator<BxZone, BxPage> {
 
-	private static String featureName = "CuePhrasesCount";
+	private static String featureName = "ContainsCuePhrases";
 	private static String[] cuePhrases = {"although", "therefore", "therein", "hereby",
 			"nevertheless", "to this end", "however", "moreover", "nonetheless" };
 

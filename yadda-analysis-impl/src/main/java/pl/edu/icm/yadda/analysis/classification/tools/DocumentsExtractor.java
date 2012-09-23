@@ -1,4 +1,4 @@
-package pl.edu.icm.yadda.analysis.classification.hmm.tools;
+package pl.edu.icm.yadda.analysis.classification.tools;
 
 import java.util.List;
 

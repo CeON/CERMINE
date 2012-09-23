@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.SimpleHMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.SimpleTrainingElement;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.ZoneClassificationUtils;
 import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
@@ -23,8 +23,8 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class BxDocsToFVHMMTrainingElementsConverterNode
-        implements IProcessingNode<List<BxDocument>, List<HMMTrainingElement<BxZoneLabel>>> {
+public class BxDocsToTrainingElementsConverterNode
+        implements IProcessingNode<List<BxDocument>, List<TrainingElement<BxZoneLabel>>> {
 
     private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
 
@@ -33,10 +33,10 @@ public class BxDocsToFVHMMTrainingElementsConverterNode
     private double zoneSortTolerance = 5.0;
 
     @Override
-    public List<HMMTrainingElement<BxZoneLabel>> process(List<BxDocument> input, ProcessContext ctx)
+    public List<TrainingElement<BxZoneLabel>> process(List<BxDocument> input, ProcessContext ctx)
             throws Exception {
-        List<HMMTrainingElement<BxZoneLabel>> trainingList =
-                new ArrayList<HMMTrainingElement<BxZoneLabel>>(input.size());
+        List<TrainingElement<BxZoneLabel>> trainingList =
+                new ArrayList<TrainingElement<BxZoneLabel>>(input.size());
         ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
         
         for (BxDocument doc : input) {
@@ -47,12 +47,12 @@ public class BxDocsToFVHMMTrainingElementsConverterNode
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }
 
-            SimpleHMMTrainingElement<BxZoneLabel> prev = null;
+            SimpleTrainingElement<BxZoneLabel> prev = null;
             for (BxPage page : doc.getPages()) {
                 for (BxZone zone : page.getZones()) {
                     FeatureVector featureVector = featureVectorBuilder.getFeatureVector(zone, page);
-                    SimpleHMMTrainingElement<BxZoneLabel> element =
-                            new SimpleHMMTrainingElement<BxZoneLabel>(featureVector, zone.getLabel(), prev == null);
+                    SimpleTrainingElement<BxZoneLabel> element =
+                            new SimpleTrainingElement<BxZoneLabel>(featureVector, zone.getLabel(), prev == null);
                     trainingList.add(element);
 
                     if (prev != null) {

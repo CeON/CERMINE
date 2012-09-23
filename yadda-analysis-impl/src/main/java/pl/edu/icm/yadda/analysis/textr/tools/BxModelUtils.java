@@ -1,9 +1,15 @@
 package pl.edu.icm.yadda.analysis.textr.tools;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
+import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.model.*;
 
 /**
@@ -11,7 +17,16 @@ import pl.edu.icm.yadda.analysis.textr.model.*;
  * @author krusek
  */
 public class BxModelUtils {
-
+	public static void setReadingOrder(BxDocument document){
+		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
+		try {
+			document = ror.resolve(document);
+		} catch(AnalysisException e) {
+			System.out.println(e.getCause());
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
     public static void sortZonesYX(BxPage page, final double tolerance) {
         Collections.sort(page.getZones(), new Comparator<BxZone>() {
 
@@ -122,7 +137,9 @@ public class BxModelUtils {
         BxWord copy = new BxWord().setBounds(word.getBounds());
         copy.setSorted(word.isSorted());
         for (BxChunk chunk : word.getChunks()) {
-            copy.addChunks(chunk);
+        	BxChunk copiedChunk = deepClone(chunk);
+        	copiedChunk.setContext(copy);
+        	copy.addChunks(chunk);
         }
         return copy;
     }
@@ -137,22 +154,33 @@ public class BxModelUtils {
         BxLine copy = new BxLine().setBounds(line.getBounds());
         copy.setSorted(line.isSorted());
         for (BxWord word : line.getWords()) {
-            copy.addWord(deepClone(word));
+        	BxWord copiedWord = deepClone(word);
+        	copiedWord.setContext(copy);
+            copy.addWord(copiedWord);
         }
         return copy;
     }
 
+    public static BxChunk deepClone(BxChunk chunk) {
+    	BxChunk copy = new BxChunk(chunk.getBounds(), chunk.getText());
+    	copy.setSorted(chunk.isSorted());
+    	return copy;
+    }
+    
     /**
      * Creates a deep copy of the zone.
      *
      * @param zone
      * @return
      */
+
     public static BxZone deepClone(BxZone zone) {
         BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(zone.getBounds());
         copy.setSorted(zone.isSorted());
         for (BxLine line : zone.getLines()) {
-            copy.addLine(deepClone(line));
+        	BxLine copiedLine = deepClone(line);
+        	copiedLine.setContext(copy);
+            copy.addLine(copiedLine);
         }
         for (BxChunk chunk : zone.getChunks()) {
             copy.addChunk(chunk);
@@ -170,7 +198,9 @@ public class BxModelUtils {
         BxPage copy = new BxPage().setBounds(page.getBounds());
         copy.setSorted(page.isSorted());
         for (BxZone zone : page.getZones()) {
-            copy.addZone(deepClone(zone));
+        	BxZone copiedZone = deepClone(zone);
+        	copiedZone.setContext(copy);
+            copy.addZone(copiedZone);
         }
         for (BxChunk chunk : page.getChunks()) {
             copy.addChunk(chunk);
@@ -186,10 +216,21 @@ public class BxModelUtils {
      */
     public static BxDocument deepClone(BxDocument document) {
         BxDocument copy = new BxDocument();
+        copy.setFilename(new String(document.getFilename()));
         for (BxPage page : document.getPages()) {
-            copy.addPage(deepClone(page));
+        	BxPage copiedPage = deepClone(page);
+        	copiedPage.setContext(copy);
+            copy.addPage(copiedPage);
         }
         return copy;
+    }
+
+    public static List<BxDocument> deepClone(List<BxDocument> documents) {
+    	List<BxDocument> copy = new ArrayList<BxDocument>(documents.size());
+    	for(BxDocument doc: documents) {
+    		copy.add(deepClone(doc));
+    	}
+    	return copy;
     }
 
     /**

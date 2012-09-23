@@ -1,4 +1,4 @@
-package pl.edu.icm.yadda.analysis.classification.hmm.tools;
+package pl.edu.icm.yadda.analysis.classification.tools;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +51,9 @@ public class ZipExtractor implements DocumentsExtractor {
 			if (zipEntry.getName().endsWith("xml")) {
 				List<BxPage> pages = tvReader.read(new InputStreamReader(
 						zipFile.getInputStream(zipEntry)));
-				
 				BxDocument newDoc = new BxDocument();
+				for(BxPage page: pages)
+					page.setContext(newDoc);
 				newDoc.setFilename(zipEntry.getName());
 				newDoc.setPages(pages);
 				

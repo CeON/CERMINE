@@ -1,4 +1,4 @@
-package pl.edu.icm.yadda.analysis.classification.hmm.tools;
+package pl.edu.icm.yadda.analysis.classification.tools;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,6 +56,8 @@ public class DirExtractor implements DocumentsExtractor
     			InputStream is = new FileInputStream(dirPath + filename);
     			List<BxPage> pages = tvReader.read(new InputStreamReader(is));
     			BxDocument newDoc = new BxDocument();
+				for(BxPage page: pages)
+					page.setContext(newDoc);
     			
     			newDoc.setFilename(filename);
     			newDoc.setPages(pages);

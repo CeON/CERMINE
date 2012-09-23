@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Models a single line of text containing words.
  */
-public class BxLine extends BxObject<BxLine> implements Serializable, Printable {
+public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Printable {
 
     private static final long serialVersionUID = 917352034911588106L;
 

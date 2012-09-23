@@ -1,5 +1,7 @@
 package pl.edu.icm.yadda.analysis.metadata;
 
+import java.io.IOException;
+
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
@@ -28,5 +30,17 @@ public class HMMMetadataZoneClassifier implements ZoneClassifier {
     public BxDocument classifyZones(BxDocument document) throws AnalysisException {
         return hmmZoneClassifier.classifyZones(document);
     }
+
+	@Override
+	public void loadModel(String modelPath) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveModel(String modelPath) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

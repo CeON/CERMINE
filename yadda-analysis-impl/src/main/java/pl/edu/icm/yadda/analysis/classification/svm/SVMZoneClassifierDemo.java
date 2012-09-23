@@ -25,11 +25,11 @@ import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuil
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
-import pl.edu.icm.yadda.analysis.classification.hmm.tools.DocumentsExtractor;
-import pl.edu.icm.yadda.analysis.classification.hmm.tools.ZipExtractor;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
+import pl.edu.icm.yadda.analysis.classification.tools.DocumentsExtractor;
+import pl.edu.icm.yadda.analysis.classification.tools.ZipExtractor;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToFVHMMTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
 import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
@@ -79,7 +79,7 @@ public class SVMZoneClassifierDemo {
                 new CommaRelativeCountFeature(),
         		new ContainsCuePhrasesFeature(),
         		new CuePhrasesRelativeCountFeature(),
-        		new DatesFeature(),
+        		new DateFeature(),
                 new DigitCountFeature(),
                 new DigitRelativeCountFeature(),
         		new DistanceFromNearestNeighbourFeature(),
@@ -151,10 +151,10 @@ public class SVMZoneClassifierDemo {
         BxDocument testDocument = trainingList.get(testDocIdx);
 
         /* generate training set based on sequences and vector of features */
-        BxDocsToFVHMMTrainingElementsConverterNode node = new BxDocsToFVHMMTrainingElementsConverterNode();
+        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
         node.setFeatureVectorBuilder(vectorBuilder);
         node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-        List<HMMTrainingElement<BxZoneLabel>> trainingElementsUnrevised = node.process(trainingList, null);
+        List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised = node.process(trainingList, null);
         
         Map<BxZoneLabel, Integer> labelCount = new HashMap<BxZoneLabel, Integer>();
         labelCount.put(BxZoneLabel.GEN_BODY, 0);
@@ -162,7 +162,7 @@ public class SVMZoneClassifierDemo {
         labelCount.put(BxZoneLabel.GEN_OTHER, 0);
         labelCount.put(BxZoneLabel.GEN_REFERENCES, 0);
         
-        for(HMMTrainingElement<BxZoneLabel> elem: trainingElementsUnrevised) {
+        for(TrainingElement<BxZoneLabel> elem: trainingElementsUnrevised) {
         	labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel())+1);
         }
         
@@ -177,9 +177,9 @@ public class SVMZoneClassifierDemo {
         labelCount.put(BxZoneLabel.GEN_METADATA, 0);
         labelCount.put(BxZoneLabel.GEN_OTHER, 0);
         labelCount.put(BxZoneLabel.GEN_REFERENCES, 0);
-        List<HMMTrainingElement<BxZoneLabel>> trainingElements = new ArrayList<HMMTrainingElement<BxZoneLabel>>();
+        List<TrainingElement<BxZoneLabel>> trainingElements = new ArrayList<TrainingElement<BxZoneLabel>>();
         
-        for(HMMTrainingElement<BxZoneLabel> elem: trainingElementsUnrevised) {
+        for(TrainingElement<BxZoneLabel> elem: trainingElementsUnrevised) {
         	if(labelCount.get(elem.getLabel()) < max*1.3) {
         		trainingElements.add(elem);
         		labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel())+1);
@@ -190,10 +190,10 @@ public class SVMZoneClassifierDemo {
 
         List<BxDocument> testList = new ArrayList<BxDocument>(1);
         testList.add(testDocument);
-        List<HMMTrainingElement<BxZoneLabel>> testElement = node.process(testList, null);
+        List<TrainingElement<BxZoneLabel>> testElement = node.process(testList, null);
 
         /* build a classifier */
-        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(BxZoneLabel.valuesOfCategory(BxZoneLabelCategory.CAT_GENERAL), vectorBuilder);
+        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(vectorBuilder);
         zoneClassifier.buildClassifier(trainingElements);
         
         /* classify zones from the test file */

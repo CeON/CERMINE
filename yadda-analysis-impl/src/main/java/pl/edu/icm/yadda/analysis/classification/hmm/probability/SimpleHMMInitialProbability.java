@@ -2,7 +2,7 @@ package pl.edu.icm.yadda.analysis.classification.hmm.probability;
 
 import java.util.List;
 
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.textr.tools.ProbabilityDistribution;
 
 /**
@@ -17,14 +17,14 @@ public class SimpleHMMInitialProbability<S> implements HMMInitialProbability<S> 
 
     private double zeroProbabilityValue;
 
-    public SimpleHMMInitialProbability(List<HMMTrainingElement<S>> trainingElements) {
+    public SimpleHMMInitialProbability(List<TrainingElement<S>> trainingElements) {
         this(trainingElements, 0.0);
     }
 
-    public SimpleHMMInitialProbability(List<HMMTrainingElement<S>> trainingElements, double zeroProbabilityValue) {
+    public SimpleHMMInitialProbability(List<TrainingElement<S>> trainingElements, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         probability = new ProbabilityDistribution<S>();
-        for (HMMTrainingElement<S> element : trainingElements) {
+        for (TrainingElement<S> element : trainingElements) {
             if (element.isFirst()) {
                 probability.addEvent(element.getLabel());
             }

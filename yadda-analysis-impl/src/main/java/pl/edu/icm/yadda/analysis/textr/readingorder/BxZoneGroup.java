@@ -11,7 +11,7 @@ import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
 * 
 */
 
-class BxZoneGroup extends BxObject<BxZoneGroup> {
+class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
 	private BxObject leftChild;
 	private BxObject rightChild;
 

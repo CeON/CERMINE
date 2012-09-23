@@ -37,14 +37,6 @@ abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>
     protected abstract P prepareExpectedDocument(L document) throws Exception;
 
     protected abstract P prepareActualDocument(L document) throws Exception;
-    
-	protected Documents<P> getDocuments(P loadedDocument) throws Exception {
-        P expectedDocument = null;
-        P actualDocument = null;
-        expectedDocument = prepareExpectedDocument((L)loadedDocument);
-        actualDocument = prepareActualDocument((L)loadedDocument);
-        return new Documents<P>(expectedDocument, actualDocument);
-	}
 
     @Override
     protected Documents<P> getDocuments(String directory, String filename) throws Exception {

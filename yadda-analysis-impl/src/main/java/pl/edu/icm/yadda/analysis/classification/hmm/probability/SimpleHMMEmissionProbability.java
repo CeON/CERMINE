@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.textr.tools.ProbabilityDistribution;
 
 /**
@@ -19,14 +19,14 @@ public class SimpleHMMEmissionProbability<S> implements HMMEmissionProbability<S
 
     private double zeroProbabilityValue;
 
-    public SimpleHMMEmissionProbability(HMMTrainingElement<S>[] trainingElements) {
+    public SimpleHMMEmissionProbability(TrainingElement<S>[] trainingElements) {
         this(trainingElements, 0.0);
     }
 
-    public SimpleHMMEmissionProbability(HMMTrainingElement<S>[] trainingElements, double zeroProbabilityValue) {
+    public SimpleHMMEmissionProbability(TrainingElement<S>[] trainingElements, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         probability = new HashMap<S, ProbabilityDistribution<FeatureVector>>();
-        for (HMMTrainingElement<S> element : trainingElements) {
+        for (TrainingElement<S> element : trainingElements) {
 
             if (!probability.containsKey(element.getLabel())) {
                 probability.put(element.getLabel(), new ProbabilityDistribution<FeatureVector>());

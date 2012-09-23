@@ -38,7 +38,7 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         zoneLabelMap.put("affiliation",     BxZoneLabel.MET_AFFILIATION);
         zoneLabelMap.put("author",          BxZoneLabel.MET_AUTHOR);
         zoneLabelMap.put("bib_info",        BxZoneLabel.MET_BIB_INFO);
-        zoneLabelMap.put("body",            BxZoneLabel.GEN_BODY);
+        zoneLabelMap.put("body",            BxZoneLabel.BODY_CONTENT);
         zoneLabelMap.put("copyright",       BxZoneLabel.OTH_COPYRIGHT);
         zoneLabelMap.put("correspondence",  BxZoneLabel.MET_CORRESPONDENCE);
         zoneLabelMap.put("dates",           BxZoneLabel.MET_DATES);
@@ -51,12 +51,12 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         zoneLabelMap.put("header",          BxZoneLabel.OTH_HEADER);
         zoneLabelMap.put("keywords",        BxZoneLabel.MET_KEYWORDS);
         zoneLabelMap.put("page_number",     BxZoneLabel.OTH_PAGE_NUMBER);
-        zoneLabelMap.put("references",      BxZoneLabel.GEN_REFERENCES);
+        zoneLabelMap.put("references",      BxZoneLabel.REFERENCES);
         zoneLabelMap.put("table",           BxZoneLabel.BODY_TABLE);
         zoneLabelMap.put("table_caption",   BxZoneLabel.BODY_TABLE_CAPTION);
         zoneLabelMap.put("title",           BxZoneLabel.MET_TITLE);
         zoneLabelMap.put("type",            BxZoneLabel.MET_TYPE);
-        zoneLabelMap.put("other",           BxZoneLabel.OTH_UNKNOWN);
+        zoneLabelMap.put("unknown",         BxZoneLabel.OTH_UNKNOWN);
     }
     
     @Override
@@ -85,7 +85,8 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
                 pages.add(parsePageNode(doc.getDocumentElement()));
             } else if ("Document".equalsIgnoreCase(doc.getDocumentElement().getTagName())) {
                 for (Element pageElement : getChildren("Page", doc.getDocumentElement())) {
-                    pages.add(parsePageNode(pageElement));
+                	BxPage page = parsePageNode(pageElement);
+                    pages.add(page);
                 }
             }
             setIdsAndLinkPages(pages);
@@ -255,6 +256,7 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         List<Element> e = getChildren("Character",wordE);
         for (Element caE : e) {
             BxChunk ch = parseCharacterElement(caE);
+            ch.setContext(word);
             word.addChunks(ch);
         }
         return word;
@@ -275,6 +277,7 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         List<Element> e = getChildren("Word",lineE);
         for (Element we : e) {
             BxWord wo = parseWordElement(we);
+            wo.setContext(line);
             line.addWord(wo);
         }
         return line;
@@ -294,13 +297,11 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         if (val == null) {
             return null;
         }
+        
         if (zoneLabelMap.containsKey(val.toLowerCase())) {
             return zoneLabelMap.get(val.toLowerCase());
-        }
-        try {
-            return BxZoneLabel.valueOf(val.toUpperCase());
-        } catch (IllegalArgumentException ex) {
-            return BxZoneLabel.OTH_UNKNOWN;
+        } else {
+        	throw new IllegalArgumentException("Illegal class value in input file: " + val);
         }
     }
 
@@ -322,6 +323,7 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         List<Element> e = getChildren("Line",zoneE);
         for (Element lin : e) {
             BxLine li = parseLineElement(lin);
+            li.setContext(zone);
             zone.addLine(li);
         }
         return zone;
@@ -339,10 +341,10 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         List<Element> e = getChildren("Zone", elem);
         for (Element zo : e) {
             BxZone zon = parseZoneNode(zo);
+            zon.setContext(page);
             page.addZone(zon);
         }
         BxBoundsBuilder.setBounds(page);
-       // BxModelUtils.sortZonesYX(page);
         
         return page;
     }

@@ -2,7 +2,7 @@ package pl.edu.icm.yadda.analysis.classification.hmm.process.nodes;
 
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMEmissionProbability;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.SimpleHMMEmissionProbability;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
 import pl.edu.icm.yadda.process.node.IProcessingNode;
 
@@ -13,12 +13,12 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class SimpleEmissionProbabilityCalculatorNode<S>
-        implements IProcessingNode<HMMTrainingElement<S>[], HMMEmissionProbability<S>> {
+        implements IProcessingNode<TrainingElement<S>[], HMMEmissionProbability<S>> {
 
     private double zeroProbabilityValue = 0.0;
 
     @Override
-    public HMMEmissionProbability<S> process(HMMTrainingElement<S>[] input, ProcessContext ctx)
+    public HMMEmissionProbability<S> process(TrainingElement<S>[] input, ProcessContext ctx)
             throws Exception {
         return new SimpleHMMEmissionProbability<S>(input, zeroProbabilityValue);
     }

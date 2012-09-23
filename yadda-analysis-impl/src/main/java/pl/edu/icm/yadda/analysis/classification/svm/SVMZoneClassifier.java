@@ -1,29 +1,39 @@
 package pl.edu.icm.yadda.analysis.classification.svm;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
+import libsvm.svm;
+import libsvm.svm_model;
+import libsvm.svm_node;
+import libsvm.svm_parameter;
+import libsvm.svm_problem;
+
+import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.lang.ArrayUtils;
 
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVector;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
+import pl.edu.icm.yadda.analysis.classification.tools.FeatureLimits;
+import pl.edu.icm.yadda.analysis.classification.tools.FeatureVectorScaler;
+import pl.edu.icm.yadda.analysis.classification.tools.LinearScaling;
 import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-
-import net.sf.javaml.core.Dataset;
-import net.sf.javaml.core.DefaultDataset;
-import net.sf.javaml.core.DenseInstance;
-import net.sf.javaml.core.Instance;
-import libsvm.LibSVM;
-import libsvm.svm_parameter;
 
 public class SVMZoneClassifier implements ZoneClassifier {
 	final static svm_parameter defaultParameter = new svm_parameter();		
@@ -31,7 +41,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		// default values
 		defaultParameter.svm_type = svm_parameter.C_SVC;
 		defaultParameter.C = 2048;
-		defaultParameter.kernel_type = svm_parameter.LINEAR;
+		defaultParameter.kernel_type = svm_parameter.POLY;
 		defaultParameter.degree = 3;
 		defaultParameter.gamma = 128; // 1/k
 		defaultParameter.coef0 = 0.5;
@@ -46,179 +56,231 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		defaultParameter.weight = new double[0];
 	}
 	private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
-	private final LibSVM svm = new LibSVM();
-	private FeatureLimits[] limits;
+	private FeatureVectorScaler scaler;
 	private String[] features;
 	
+	private svm_parameter param;
+	private svm_problem problem;
+	private svm_model model;
 	
-	public SVMZoneClassifier(List<BxZoneLabel> zoneLabels, FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) 
+	
+	public SVMZoneClassifier(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) 
 	{
 		//discard zoneLabels;
 		this.featureVectorBuilder = featureVectorBuilder;
-		limits = new FeatureLimits[featureVectorBuilder.size()];
-
-		//set default limits to: max = -inf, min = +inf
-		for(int idx=0; idx<featureVectorBuilder.size(); ++idx) {
-			limits[idx] = new FeatureLimits(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY);
-		}		
+		Integer dimensions = featureVectorBuilder.size();
 		
-		svm_parameter param = getDefaultParam();
-		svm.setParameters(param);
+		Double scaledLowerBound = 0.0;
+		Double scaledUpperBound = 1.0;
+		scaler = new FeatureVectorScaler(dimensions, scaledLowerBound, scaledUpperBound);
+		scaler.setStrategy(new LinearScaling());
+		
+		param = getDefaultParam();
 	}
 	
-	public LibSVM getSVM() {
-		return svm;
-	}
-	
-	public svm_parameter getDefaultParam() {
-		svm_parameter param = new svm_parameter();
+	private static svm_parameter clone(svm_parameter param) {
+		svm_parameter ret = new svm_parameter();
 		// default values
-		param.svm_type = defaultParameter.svm_type;
-		param.C = defaultParameter.C;
-		param.kernel_type = defaultParameter.kernel_type;
-		param.degree = defaultParameter.degree;
-		param.gamma = defaultParameter.gamma; // 1/k
-		param.coef0 = defaultParameter.coef0;
-		param.nu = defaultParameter.nu;
-		param.cache_size = defaultParameter.cache_size;
-		param.eps = defaultParameter.eps;
-		param.p = defaultParameter.p;
-		param.shrinking = defaultParameter.shrinking;
-		param.probability = defaultParameter.probability;
-		param.nr_weight = defaultParameter.nr_weight;
-		param.weight_label = defaultParameter.weight_label;
-		param.weight = defaultParameter.weight;
-		return param;
+		ret.svm_type = param.svm_type;
+		ret.C = param.C;
+		ret.kernel_type = param.kernel_type;
+		ret.degree = param.degree;
+		ret.gamma = param.gamma; // 1/k
+		ret.coef0 = param.coef0;
+		ret.nu = param.nu;
+		ret.cache_size = param.cache_size;
+		ret.eps = param.eps;
+		ret.p = param.p;
+		ret.shrinking = param.shrinking;
+		ret.probability = param.probability;
+		ret.nr_weight = param.nr_weight;
+		ret.weight_label = param.weight_label;
+		ret.weight = param.weight;
+		return ret;
 	}
 	
-	private void setFeatureLimits(List<HMMTrainingElement<BxZoneLabel>> trainingElements) 
-	{
-		for(HMMTrainingElement<BxZoneLabel> trainingElem: trainingElements) {
-			FeatureVector fv = trainingElem.getObservation();
-			Set<String> names = fv.getFeatureNames();
-			
-			int featureIdx = 0;
-			for(String name: names) {
-				double val = fv.getFeature(name);
-				if(val > limits[featureIdx].max) {
-					limits[featureIdx].setMax(val);
-				}
-				if(val < limits[featureIdx].min){
-					limits[featureIdx].setMin(val);
-				}
-				++featureIdx;
-			}
-		}
-		for(FeatureLimits limit: limits) {
-			assert limit.getMin() != Double.MAX_VALUE;
-			assert limit.getMax() != Double.MIN_VALUE;
-		}
+	public static svm_parameter getDefaultParam() {
+		return clone(defaultParameter);
 	}
 	
-	public void buildClassifier(List<HMMTrainingElement<BxZoneLabel>> trainingElements) 
+	public void buildClassifier(List<TrainingElement<BxZoneLabel>> trainingElements) 
 	{
 		assert trainingElements.size() > 0;
 		if(features == null) {
 			features = (String[])trainingElements.get(0).getObservation().getFeatureNames().toArray(new String[1]);
 		}
-		setFeatureLimits(trainingElements);
-		Dataset data = buildDatasetForTraining(trainingElements);
-		svm.buildClassifier(data);
-	}
-	
-	private FeatureVector scaleFeatureVector(FeatureVector fv)
-	{
-		final double EPS = 0.00001;
-		FeatureVector newVector = new SimpleFeatureVector();
-
-		int featureIdx = 0;
-		for(String name: fv.getFeatureNames()) {
-			//scaling function: y = a*x+b
-			// 0 = a*v_min + b
-			// 1 = a*v_max + b
-			if(Math.abs(limits[featureIdx].getMax()-limits[featureIdx].getMin()) < EPS) {
-				newVector.addFeature(name, 1.0);
-			} else {
-				Double featureValue = fv.getFeature(name);
-				Double a = 1/(limits[featureIdx].getMax()-limits[featureIdx].getMin());
-				Double b = -a*limits[featureIdx].getMin();
-				
-				featureValue = a*featureValue+b; 
-				newVector.addFeature(name, featureValue);
-			}
-			++featureIdx;
-		}
-		return newVector;
-	}
-	
-	private Dataset buildDatasetForTraining(List<HMMTrainingElement<BxZoneLabel>> trainingElements)
-	{
-		Dataset data = new DefaultDataset();
-		for(HMMTrainingElement<BxZoneLabel> trainingElem : trainingElements) {
-			FeatureVector fv = scaleFeatureVector(trainingElem.getObservation());
-			System.out.println("Training label: " + trainingElem.getLabel());
-			Instance dataInstance = new DenseInstance(ArrayUtils.toPrimitive(fv.getFeatures()), trainingElem.getLabel());
-			data.add(dataInstance);
-		}
-		assert data.size() == trainingElements.size();
-		return data;
-	}
-	
-	private Dataset buildDatasetForClassification(List<FeatureVector> featureVectors)
-	{
-		Dataset data = new DefaultDataset();
-		for(FeatureVector fv: featureVectors) {
-			FeatureVector newVector = scaleFeatureVector(fv);
-			Instance dataInstance = new DenseInstance(ArrayUtils.toPrimitive(newVector.getFeatures()));
-			data.add(dataInstance);
-		}
-		assert data.size() == featureVectors.size();
-		return data;
+		scaler.setFeatureLimits(trainingElements);
+		problem = buildDatasetForTraining(trainingElements);
+		model = libsvm.svm.svm_train(problem, param);
 	}
 	
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{       
-		for (BxPage page : document.getPages()) {
-			for (BxZone zone : page.getZones()) {
-				List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
-				featureVectors.add(featureVectorBuilder.getFeatureVector(zone, page));
-				
-				Dataset unclassifiedData = buildDatasetForClassification(featureVectors);
-
-				Instance instance = unclassifiedData.get(0);
-				Object o = svm.classify(instance);
-				BxZoneLabel predictedClassValue = (BxZoneLabel)o; 
-
-				zone.setLabel(predictedClassValue);
-			}
+		for (BxZone zone: document.asZones()) {
+			svm_node[] instance = buildDatasetForClassification(zone);
+			double predictedVal = svm.svm_predict(model, instance);
+			System.out.println("predictedVal " + predictedVal + " " + BxZoneLabel.values()[(int)predictedVal/100] + " (" + zone.getLabel() + ")");
+			zone.setLabel(BxZoneLabel.values()[(int)predictedVal/100]);
 		}
-        return document;
-	} 
+		return document;
+	}
+
+	private svm_problem buildDatasetForTraining(List<TrainingElement<BxZoneLabel>> trainingElements)
+	{
+		svm_problem problem = new svm_problem();
+		problem.l = trainingElements.size();
+		problem.x = new svm_node[problem.l][trainingElements.get(0).getObservation().size()];
+		problem.y = new double[trainingElements.size()];
+		
+		Integer elemIdx = 0;
+		for(TrainingElement<BxZoneLabel> trainingElem : trainingElements) {
+			FeatureVector scaledFV = scaler.scaleFeatureVector(trainingElem.getObservation());
+			Integer featureIdx = 0;
+			for(Double val: scaledFV.getFeatures()) {
+				svm_node cur = new svm_node();
+				cur.index = featureIdx;
+				cur.value = val;
+				problem.x[elemIdx][featureIdx] = cur;
+				++featureIdx;
+			}
+			problem.y[elemIdx] = trainingElem.getLabel().ordinal()*100;
+			System.out.println("?? " + trainingElem.getLabel().ordinal()*100 + " (" + trainingElem.getLabel() + ")");
+			++elemIdx;
+		}
+		return problem;
+	}
+	
+	private svm_node[] buildDatasetForClassification(BxZone zone)
+	{
+		svm_node[] ret = new svm_node[featureVectorBuilder.getFeatureNames().size()];
+		FeatureVector scaledFV = scaler.scaleFeatureVector(featureVectorBuilder.getFeatureVector(zone, zone.getContext()));
+		
+		Integer featureIdx = 0;
+		for(Double val: scaledFV.getFeatures()) {
+			svm_node cur = new svm_node();
+			cur.index = featureIdx;
+			cur.value = val;
+			ret[featureIdx] = cur;
+			++featureIdx;
+		}
+		return ret;
+	}
 
 	public double[] getWeights() {
-		return svm.getWeights();
+		double[][] coef = model.sv_coef;
+
+		double[][] prob = new double[model.SV.length][featureVectorBuilder.size()];
+		for (int i = 0; i < model.SV.length; i++) {
+			for (int j = 0; j < model.SV[i].length; j++) {
+				prob[i][j] = model.SV[i][j].value;
+			}
+		}
+		double w_list[][][] = new double[model.nr_class][model.nr_class - 1][model.SV[0].length];
+		System.out.println(model.nr_class);
+
+		for (int i = 0; i < model.SV[0].length; ++i) {
+			for (int j = 0; j < model.nr_class - 1; ++j) {
+				int index = 0;
+				int end = 0;
+				double acc;
+				for (int k = 0; k < model.nr_class; ++k) {
+					acc = 0.0;
+					index += (k == 0) ? 0 : model.nSV[k - 1];
+					end = index + model.nSV[k];
+					for (int m = index; m < end; ++m) {
+						acc += coef[j][m] * prob[m][i];
+					}
+					w_list[k][j][i] = acc;
+				}
+			}
+		}
+
+		double[] weights = new double[model.SV[0].length];
+		for (int i = 0; i < model.nr_class - 1; ++i) {
+			for (int j = i + 1, k = i; j < model.nr_class; ++j, ++k) {
+				for (int m = 0; m < model.SV[0].length; ++m) {
+					weights[m] = (w_list[i][k][m] + w_list[j][i][m]);
+
+				}
+			}
+		}
+		return weights;
 	}
 
-	private static class FeatureLimits 
+	@Override
+	public void loadModel(String modelPath) throws IOException
 	{
-		public FeatureLimits(Double minValue, Double maxValue) {
-			min = minValue;
-			max = maxValue;
+		BufferedReader rangeFile = new BufferedReader(new FileReader(modelPath + ".range"));
+		Double feature_min, feature_max;
+		Integer idx;
+		if(rangeFile.read() == 'x') {
+			rangeFile.readLine();		// pass the '\n' after 'x'
+			StringTokenizer st = new StringTokenizer(rangeFile.readLine());
+			Double scaledLowerBound = Double.parseDouble(st.nextToken());
+			Double scaledUpperBound = Double.parseDouble(st.nextToken());
+			if(scaledLowerBound != 0 || scaledUpperBound != 1) {
+				throw new RuntimeException("Feature lower bound and upper bound must"
+						+ "be set in range file to resepctively 0 and 1");
+			}
+			String restore_line = null;
+			List<FeatureLimits> limits = new ArrayList<FeatureLimits>();
+			while((restore_line = rangeFile.readLine())!=null)
+			{
+				StringTokenizer st2 = new StringTokenizer(restore_line);
+				idx = Integer.parseInt(st2.nextToken());
+				feature_min = Double.parseDouble(st2.nextToken());
+				feature_max = Double.parseDouble(st2.nextToken());
+				FeatureLimits newLimit = new FeatureLimits(feature_min, feature_max);
+				limits.add(newLimit);
+			}
+			scaler = new FeatureVectorScaler(limits.size(), scaledLowerBound, scaledUpperBound);
+		} else {
+			throw new RuntimeException("y scaling not supported");
 		}
-		public double getMin() {
-			return min;
-		}
-		public void setMin(double min) {
-			this.min = min;
-		}
-		public double getMax() {
-			return max;
-		}
-		public void setMax(double max) {
-			this.max = max;
-		}
-		private double min;
-		private double max;
+		rangeFile.close();
+		svm.svm_load_model(modelPath);
 	}
+
+	@Override
+	public void saveModel(String modelPath) throws IOException
+	{
+		Formatter formatter = new Formatter(new StringBuilder());
+		BufferedWriter fp_save;
+		fp_save = new BufferedWriter(new FileWriter(modelPath + ".range"));
+		
+		Double lower = 0.0;
+		Double upper = 1.0;
+
+		formatter.format("x\n");
+		formatter.format("%.16g %.16g\n", lower, upper);
+		for(Integer i=0 ; i<featureVectorBuilder.size() ; ++i) {
+			formatter.format("%d %.16g %.16g\n", i, scaler.getLimits()[i].getMin(), scaler.getLimits()[i].getMax());
+		}
+		
+		fp_save.write(formatter.toString());
+		fp_save.close();
+		
+		svm.svm_save_model(modelPath, model);
+	}
+	
+	public void printWeigths(FeatureVectorBuilder<BxZone, BxPage> vectorBuilder)
+	{
+		Set<String> fnames = featureVectorBuilder.getFeatureNames();
+		Iterator<String> namesIt = fnames.iterator();
+		Iterator<Double> valueIt = (Iterator<Double>)new ArrayIterator(getWeights());
+
+		assert fnames.size() == getWeights().length;
+		
+        while(namesIt.hasNext() && valueIt.hasNext()) {
+        	String name = namesIt.next();
+        	Double val = valueIt.next();
+        	System.out.println(name + " " + val);
+        }
+	}
+
+	public void setParameter(svm_parameter param) {
+		this.param = param;
+	}
+
 }

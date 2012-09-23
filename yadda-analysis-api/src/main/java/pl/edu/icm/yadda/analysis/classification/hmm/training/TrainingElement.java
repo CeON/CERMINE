@@ -3,13 +3,12 @@ package pl.edu.icm.yadda.analysis.classification.hmm.training;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVector;
 
 /**
- * Hidden Markov Model's training element interface.
+ * Training element interface for object classification.
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  * @param <S> Type of labels of objects.
- * @param <T> Type of observations.
  */
-public interface HMMTrainingElement<S> {
+public interface TrainingElement<S> {
 
     /**
      * Gets observation emitted by an element.
@@ -19,7 +18,7 @@ public interface HMMTrainingElement<S> {
     FeatureVector getObservation();
 
     /**
-     * Checks whether an element is first in the HMM's sequence.
+     * Checks whether an element is first in the sequence.
      *
      * @return true if element is first, false otherwise
      */
@@ -34,7 +33,7 @@ public interface HMMTrainingElement<S> {
 
     /**
      * Gets the label of the following element, or null if the element is the
-     * last in the HMM's sequence.
+     * last in the sequence.
      *
      * @return The label of the following element.
      */

@@ -15,7 +15,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.metadata.transformers.AbstractMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.IMetadataWriter;
 import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
@@ -26,7 +25,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  *
  * @author krusek
  */
-public class BxDocumentToTrueVizWriter extends AbstractMetadataWriter<BxPage> implements IMetadataWriter<BxPage> {
+public class BxDocumentToTrueVizWriter implements IMetadataWriter<BxPage> {
 
     private static final Properties OUTPUT_PROPERTIES = new Properties();
 

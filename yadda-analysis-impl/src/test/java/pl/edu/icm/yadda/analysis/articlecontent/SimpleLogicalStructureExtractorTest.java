@@ -15,6 +15,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import pl.edu.icm.yadda.analysis.AnalysisException;
 import pl.edu.icm.yadda.analysis.articlecontent.features.line.*;
@@ -32,6 +33,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  *
  * @author Dominika Tkaczyk
  */
+@Ignore
 public class SimpleLogicalStructureExtractorTest {
     
     String dir = "/pl/edu/icm/yadda/analysis/articlecontent/";
@@ -201,6 +203,7 @@ public class SimpleLogicalStructureExtractorTest {
                 InputStream xis = zipFile.getInputStream(ze);
                 InputStreamReader xisr = new InputStreamReader(xis);
                 TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+                System.out.println(ze.getName());
                 List<BxPage> pages = reader.read(xisr);
                 documents.add(roa.setReadingOrder(new BxDocument().setPages(pages)));
             }

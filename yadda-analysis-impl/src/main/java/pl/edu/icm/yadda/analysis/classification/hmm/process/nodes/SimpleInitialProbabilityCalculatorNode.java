@@ -4,7 +4,7 @@ import java.util.List;
 
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMInitialProbability;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.SimpleHMMInitialProbability;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.process.ctx.ProcessContext;
 import pl.edu.icm.yadda.process.node.IProcessingNode;
 
@@ -15,12 +15,12 @@ import pl.edu.icm.yadda.process.node.IProcessingNode;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class SimpleInitialProbabilityCalculatorNode<S>
-        implements IProcessingNode<List<HMMTrainingElement<S>>, HMMInitialProbability<S>> {
+        implements IProcessingNode<List<TrainingElement<S>>, HMMInitialProbability<S>> {
 
     private double zeroProbabilityValue = 0.0;
 
     @Override
-    public HMMInitialProbability<S> process(List<HMMTrainingElement<S>> input, ProcessContext ctx) throws Exception {
+    public HMMInitialProbability<S> process(List<TrainingElement<S>> input, ProcessContext ctx) throws Exception {
         return new SimpleHMMInitialProbability<S>(input, zeroProbabilityValue);
     }
 

@@ -29,7 +29,7 @@ public class IsLowestOnThePageFeature implements FeatureCalculator<BxZone, BxPag
 		List<BxZone> zones = new ArrayList<BxZone>(page.getZones());
 		Collections.sort(zones, new yCoordinateComparator());
 		BxZone lastZone = zones.get(zones.size()-1);
-		final double IDENT_TRESHOLD = 1.0;
+		final double IDENT_TRESHOLD = 10.0;
 		if(zone == lastZone)
 			return 1.0;
 		else

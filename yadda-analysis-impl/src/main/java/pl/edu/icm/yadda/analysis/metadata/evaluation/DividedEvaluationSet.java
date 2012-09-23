@@ -1,54 +1,61 @@
 package pl.edu.icm.yadda.analysis.metadata.evaluation;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 
 class DividedEvaluationSet
 {
-	List<BxDocument> trainingSet;
-	List<BxDocument> testSet;
+	public DividedEvaluationSet(List<BxDocument> trainingDocuments, List<BxDocument> testDocuments) {
+		this.trainingDocuments = trainingDocuments;
+		this.testDocuments = testDocuments;
+	}
 
-	public DividedEvaluationSet(List<BxDocument> trainingSet, List<BxDocument> testSet) {
-		this.trainingSet = trainingSet;
-		this.testSet = testSet;
+	List<BxDocument> trainingDocuments;
+	List<BxDocument> testDocuments;
+
+	public List<BxDocument> getTrainingDocuments() {
+		return trainingDocuments;
 	}
-	public List<BxDocument> getTrainingSet() {
-		return trainingSet;
+
+	public List<BxDocument> getTestDocuments() {
+		return testDocuments;
 	}
-	public List<BxDocument> getTestSet() {
-		return testSet;
-	}
-	
-	public static DividedEvaluationSet build(List<BxDocument> documents, Double ratio)
+
+	public static List<DividedEvaluationSet> build(List<BxDocument> documents, Integer foldness)
 	{
-		Integer numberOfTrainingDocs = (int)Math.ceil((documents.size()*ratio)/(1+ratio));
-		// based on the equations:
-		// size(training) / size(test) = ratio
-		// size(training) + size(test) = size(documents)
-		
-		List<Integer> trainingIndices = new ArrayList<Integer>(numberOfTrainingDocs);
-		Random randomGenerator = new Random();
-		
-		while(trainingIndices.size() < (documents.size()*ratio)/(1+ratio)) {
-			Integer randomInt = randomGenerator.nextInt(documents.size());
-			if(!trainingIndices.contains(randomInt)) {
-				trainingIndices.add(randomInt);
+		List<BxDocument> shuffledDocs = new ArrayList<BxDocument>(documents.size());
+		shuffledDocs.addAll(documents);
+		Collections.shuffle(shuffledDocs);
+		List<List<BxDocument>> dividedDocs = new ArrayList<List<BxDocument>>(foldness);
+
+		for(Integer fold=0; fold < foldness; ++fold) {
+			Integer docsPerSet = shuffledDocs.size() / (foldness-fold);
+			dividedDocs.add(new ArrayList<BxDocument>());
+			for(Integer idx=0; idx < docsPerSet; ++idx) {
+				dividedDocs.get(dividedDocs.size()-1).add(shuffledDocs.get(0));
+				shuffledDocs.remove(0);
 			}
 		}
-		
-		List<BxDocument> trainingDocs = new ArrayList<BxDocument>(numberOfTrainingDocs);
-		List<BxDocument> testDocs = new ArrayList<BxDocument>(documents.size()-numberOfTrainingDocs);
-		
-		for(Integer index=0; index<documents.size(); ++index) {
-			if(trainingIndices.contains(index)) {
-				trainingDocs.add(documents.get(index));
-			} else {
-				testDocs.add(documents.get(index));
+
+		List<DividedEvaluationSet> ret = new ArrayList<DividedEvaluationSet>(foldness);
+
+		for(Integer fold=0; fold<foldness; ++fold) {
+			List<BxDocument> trainingDocuments = new ArrayList<BxDocument>();
+			List<BxDocument> testDocuments = new ArrayList<BxDocument>();
+			for(Integer setIdx=0; setIdx<foldness; ++setIdx) {
+				if(setIdx == fold)
+					testDocuments.addAll(dividedDocs.get(setIdx));
+				else
+					trainingDocuments.addAll(dividedDocs.get(setIdx));
 			}
+			ret.add(new DividedEvaluationSet(trainingDocuments, testDocuments));
 		}
-		return new DividedEvaluationSet(trainingDocs, testDocs);
+		return ret;
 	}
 }

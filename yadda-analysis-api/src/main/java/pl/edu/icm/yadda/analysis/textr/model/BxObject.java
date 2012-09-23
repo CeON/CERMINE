@@ -5,13 +5,13 @@ package pl.edu.icm.yadda.analysis.textr.model;
  * BxBounds).
  * 
  * @param <S> the actual type
- * @param <T> "lower" type e.g. BxZone for BxPage
+ * @param <T> context type (e.g. BxPage for BxZone)
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @date 05.2012
  * 
  */
 
-public abstract class BxObject <S> implements Indexable<S> {
+public abstract class BxObject <S, T> implements Indexable<S> {
 
     /** zone's bounding box */
     protected BxBounds bounds;
@@ -25,8 +25,18 @@ public abstract class BxObject <S> implements Indexable<S> {
     protected S nextObj;
     protected S prevObj;
 
+    protected T context;
+    
     protected Boolean isSorted;
 
+    public void setContext(T context) {
+    	this.context = context;
+    }
+    
+    public T getContext() {
+    	return context;
+    }
+    
     @Override
     public void setId(String objId) {
     	this.objId = objId;

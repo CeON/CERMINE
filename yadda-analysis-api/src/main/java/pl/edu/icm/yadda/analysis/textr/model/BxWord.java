@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Models a word containing text chunks.
  */
-public class BxWord extends BxObject<BxWord> implements Serializable,Printable {
+public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Printable {
 
     private static final long serialVersionUID = 2704689342968933369L;
 

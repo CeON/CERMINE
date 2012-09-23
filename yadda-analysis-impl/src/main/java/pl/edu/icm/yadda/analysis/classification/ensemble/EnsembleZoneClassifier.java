@@ -1,5 +1,6 @@
 package pl.edu.icm.yadda.analysis.classification.ensemble;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +26,7 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
     	this.wrongClassificationCosts = wrongClassificationCosts;
     	this.zoneLabels = zoneLabels;
     }
-    
-    
+
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{
@@ -39,7 +39,12 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
 		}
 
 		for(ZoneClassifier classifier: classifiers) {
-			classifier.classifyZones(document);
+			try {
+				classifier.classifyZones(document);
+			} catch (AnalysisException e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
 			for(Integer zoneIdx=0; zoneIdx < votesForZones.size(); ++zoneIdx) {
 				BxZoneLabel curZoneLabel = document.asZones().get(zoneIdx).getLabel();
 				Integer votesUntilNow = votesForZones.get(zoneIdx).get(curZoneLabel);
@@ -47,7 +52,7 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
 			}
 		}
 		
-		chooseBestLabels(document, votesForZones);
+		chooseBestLabels(document.asZones(), votesForZones);
 			
 		for(BxZone zone: document.asZones()) {
 			assert zoneLabels.contains(zone.getLabel());
@@ -55,11 +60,10 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
         
         return document;
 	}
-
-
-	private void chooseBestLabels(BxDocument document, List<Map<BxZoneLabel, Integer>> votesForZones) {
+    
+	private void chooseBestLabels(List<BxZone> zones, List<Map<BxZoneLabel, Integer>> votesForZones) {
 		//iterate over all the zones
-		for(Integer zoneIdx=0; zoneIdx < document.asZones().size(); ++zoneIdx) {
+		for(Integer zoneIdx=0; zoneIdx < zones.size(); ++zoneIdx) {
 			Integer bestLabelIdx = -1;
 			Double bestLabelVote = Double.NEGATIVE_INFINITY;
 			
@@ -78,8 +82,26 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
 			assert bestLabelIdx != -1 && bestLabelVote != Double.NEGATIVE_INFINITY;
 			BxZoneLabel chosenLabel = zoneLabels.get(bestLabelIdx);
 			//assign the best label to the current zone
-			document.asZones().get(zoneIdx).setLabel(chosenLabel);
+			zones.get(zoneIdx).setLabel(chosenLabel);
 		}
 	}
+
+	private void chooseBestLabels(BxDocument document, List<Map<BxZoneLabel, Integer>> votesForZones) {
+		chooseBestLabels(document.asZones(), votesForZones);
+	}
+
+
+	@Override
+	public void loadModel(String modelPath) throws IOException {
+		
+	}
+
+
+	@Override
+	public void saveModel(String modelPath) throws IOException {
+		
+	}
+
+
 
 }

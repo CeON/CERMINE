@@ -9,7 +9,7 @@ import java.util.List;
  * Models a single page of a document. A page is either segmented (divided into zones)
  * or not segmented (containing a list of chunks that haven't been grouped into zones yet).
  */
-public final class BxPage extends BxObject<BxPage> implements Serializable, Printable {
+public final class BxPage extends BxObject<BxPage, BxDocument> implements Serializable, Printable {
 
     private static final long serialVersionUID = 8981043716257046347L;
     

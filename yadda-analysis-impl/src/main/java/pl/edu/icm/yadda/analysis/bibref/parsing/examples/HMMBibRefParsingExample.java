@@ -20,7 +20,7 @@ import pl.edu.icm.yadda.analysis.classification.hmm.HMMService;
 import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
-import pl.edu.icm.yadda.analysis.classification.hmm.training.HMMTrainingElement;
+import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 
 /**
  * HMM-based bibliographic reference parsing example.
@@ -99,13 +99,13 @@ public class HMMBibRefParsingExample {
 
         CitationsToFVHMMTrainingElementsConverterNode citationsToHMMTEsNode = new CitationsToFVHMMTrainingElementsConverterNode();
         citationsToHMMTEsNode.setFeatureVectorBuilder(vectorBuilder);
-        HMMTrainingElement<CitationTokenLabel>[] trainingElements = citationsToHMMTEsNode.process(citations, null);
+        TrainingElement<CitationTokenLabel>[] trainingElements = citationsToHMMTEsNode.process(citations, null);
 
 		// 3. HMM training. The resulting probabilities object should be
 		// serialized for further usage
 		HMMProbabilityInfo<CitationTokenLabel> hmmProbabilities = HMMProbabilityInfoFactory
 				.getFVHMMProbability(
-						new ArrayList<HMMTrainingElement<CitationTokenLabel>>(
+						new ArrayList<TrainingElement<CitationTokenLabel>>(
 								Arrays.asList(trainingElements)), vectorBuilder);
 
         // 4. create an HMM service instance

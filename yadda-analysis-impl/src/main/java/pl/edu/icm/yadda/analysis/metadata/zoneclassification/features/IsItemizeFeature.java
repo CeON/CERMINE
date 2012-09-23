@@ -35,13 +35,13 @@ public class IsItemizeFeature implements FeatureCalculator<BxZone, BxPage> {
 		Matcher matcher1 = itemizePattern.matcher(text);
 		Matcher matcher2 = subpointsPattern.matcher(text);
 
-/*		if(matcher1.matches() || matcher2.matches()) {
+	/*	if(matcher1.matches() || matcher2.matches()) {
 			System.out.println("++++");
 			System.out.println(zone.toText());
 		} else {
 			System.out.println("----");
 			System.out.println(zone.toText());
-		}*/
+		} */
 		return (matcher1.matches() || matcher2.matches()) ? 1.0 : 0.0;
 	}
 }

@@ -18,20 +18,20 @@ public enum BxZoneLabel {
     /** Document's metadata. */
 	GEN_METADATA        (BxZoneLabelCategory.CAT_GENERAL),
 	/** Document's body. */
-	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL),
 	/** Document's references. */
 	GEN_REFERENCES      (BxZoneLabelCategory.CAT_GENERAL),
 	/** Other stuff left in the document. */
 	GEN_OTHER           (BxZoneLabelCategory.CAT_GENERAL),
 
+    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA),
     /** Document's abstract. */
     MET_ABSTRACT        (BxZoneLabelCategory.CAT_METADATA),
     
     /** Authors' Affiliations. */
     MET_AFFILIATION     (BxZoneLabelCategory.CAT_METADATA),
     
+	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL),
     /** Authors' names. */
-    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA),
     
     /** A zone containing bibliographic information, such as journal, volume, year, doi, etc. */
     MET_BIB_INFO        (BxZoneLabelCategory.CAT_METADATA),
@@ -94,7 +94,9 @@ public enum BxZoneLabel {
     OTH_PAGE_NUMBER     (BxZoneLabelCategory.CAT_OTHER),
     
     /** Undetermined zone. */
-    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_OTHER);
+    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_OTHER),
+    
+    REFERENCES (BxZoneLabelCategory.CAT_REFERENCES);
          
     private final BxZoneLabelCategory category;
     
@@ -167,7 +169,7 @@ public enum BxZoneLabel {
     }
     
     public static Map<BxZoneLabel, BxZoneLabel> getLabelToGeneralMap() {
-        return labelToGeneral;        
+        return labelToGeneral;
     }
     
     public static Map<BxZoneLabel, BxZoneLabel> getIdentityMap() {

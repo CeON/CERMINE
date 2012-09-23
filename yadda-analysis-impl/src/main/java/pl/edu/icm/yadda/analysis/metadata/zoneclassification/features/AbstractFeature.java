@@ -19,7 +19,7 @@ public class AbstractFeature implements FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        String[] keywords = {"abstract"
+        String[] keywords = {"abstract", "keywords", "key words"
         		//, "background", "methods", "results", "conclusions", "purpose", "trial", "discussion", "summary", "conclusion"
                              };
 

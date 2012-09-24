@@ -4,9 +4,9 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -26,12 +26,12 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, YElement metadata) {
+    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
         Matcher matcher = PATTERN.matcher(zone.toText());
         boolean ret = false;
         while (matcher.find()) {
             String email = matcher.group().replaceFirst("[;\\.,]$", "");
-            metadata.addAttribute("email", email);
+            Enhancers.addEmail(metadata, email);
             ret = true;
         }
         return ret;

@@ -11,7 +11,7 @@ import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityIn
 import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.SampleSelector;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.yadda.analysis.textr.model.*;
 
 /*
@@ -25,13 +25,13 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 	{
 		System.out.println("HMM");
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
-        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
+        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         node.setFeatureVectorBuilder(featureVectorBuilder);
         node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
         
         List<TrainingElement<BxZoneLabel>> trainingElements;
         try {
-        	trainingElements = node.process(trainingDocuments, null);
+        	trainingElements = node.process(trainingDocuments);
         } catch(Exception e) {
 			throw new RuntimeException("Unable to process the delivered training documents!");
 		}

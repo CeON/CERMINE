@@ -24,7 +24,7 @@ import pl.edu.icm.yadda.analysis.metadata.sampleselection.SillyUndersamplingSele
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.UndersamplingSelector;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.OversamplingSelector;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.SampleSelector;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
@@ -37,13 +37,13 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 	protected SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments)
 	{
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
-        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
+        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         node.setFeatureVectorBuilder(featureVectorBuilder);
         node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
         
         List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised;
         try {
-        	trainingElementsUnrevised = node.process(trainingDocuments, null);
+        	trainingElementsUnrevised = node.process(trainingDocuments);
         } catch(Exception e) {
         	System.out.println(e.getCause());
         	e.printStackTrace();

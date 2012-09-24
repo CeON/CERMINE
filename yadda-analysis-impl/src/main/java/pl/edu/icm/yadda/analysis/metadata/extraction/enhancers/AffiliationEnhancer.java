@@ -4,11 +4,10 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YAffiliation;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -24,16 +23,16 @@ public class AffiliationEnhancer extends AbstractSimpleEnhancer {
     protected Set<EnhancedField> getEnhancedFields() {
         return EnumSet.of(EnhancedField.AFFILIATION);
     }
-
+/*
     private static void putAffiliation(YElement element, String text, String ref) {
         text = text.replaceFirst(" and$", "").replaceFirst("\\S+@.*$", "").replaceFirst("[Ee]mails?:.*$", "");
         text = text.replaceFirst("[Ee]-[Mm]ails?:.*$", "").trim().replaceFirst("[\\.,;]$", "");
         YAffiliation affiliation = new YAffiliation(Enhancers.affiliationIdFromIndex(ref), text);
         element.addAffiliation(affiliation);
     }
-
+*/
     @Override
-    protected boolean enhanceMetadata(BxZone zone, YElement metadata) {
+    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
         Pattern junkPattern = Pattern.compile("^\\s*(\\*|†)");
         Pattern refPattern = Pattern.compile("^\\s*(\\d+)\\s*");
         String ref = null;
@@ -45,12 +44,12 @@ public class AffiliationEnhancer extends AbstractSimpleEnhancer {
             Matcher matcher = refPattern.matcher(text);
             if (junkPattern.matcher(text).find()) {
                 if (!isJunk && fullText != null) {
-                    putAffiliation(metadata, fullText, ref);
+//                    putAffiliation(metadata, fullText, ref);
                 }
                 isJunk = true;
             } else if (matcher.find() && Integer.parseInt(matcher.group(1)) == expectedIndex) {
                 if (!isJunk && fullText != null) {
-                    putAffiliation(metadata, fullText, ref);
+//                    putAffiliation(metadata, fullText, ref);
                 }
                 ref = matcher.group(1);
                 fullText = text.substring(matcher.end());
@@ -65,7 +64,7 @@ public class AffiliationEnhancer extends AbstractSimpleEnhancer {
             }
         }
         if (fullText != null) {
-            putAffiliation(metadata, fullText, ref);
+//            putAffiliation(metadata, fullText, ref);
         }
         return true;
     }

@@ -1,11 +1,10 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
 import java.util.*;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
-import pl.edu.icm.yadda.bwmeta.model.YName;
 
 /**
  * Merged title enhancer.
@@ -25,13 +24,13 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, YElement metadata) {
-        metadata.addName(new YName(zone.toText().replaceAll("\n", " ")));
+    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
+        Enhancers.setTitle(metadata, zone.toText().replaceAll("\n", " "));
         return true;
     }
 
     @Override
-    protected boolean enhanceMetadata(BxPage page, YElement metadata) {
+    protected boolean enhanceMetadata(BxPage page, Element metadata) {
         List<BxZone> titleZones = new ArrayList<BxZone>();
         for (BxZone zone : filterZones(page)) {
             titleZones.add(zone);

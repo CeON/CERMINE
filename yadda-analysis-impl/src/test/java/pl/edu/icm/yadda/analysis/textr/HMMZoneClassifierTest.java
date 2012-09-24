@@ -12,6 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
@@ -25,7 +26,6 @@ import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 import pl.edu.icm.yadda.analysis.textr.tools.UnclassifiedZonesPreprocessor;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *

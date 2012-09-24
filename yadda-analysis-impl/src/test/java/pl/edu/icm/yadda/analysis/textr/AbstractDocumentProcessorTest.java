@@ -1,30 +1,22 @@
 package pl.edu.icm.yadda.analysis.textr;
 
 import java.io.File;
-import java.net.URISyntaxException;
-import java.util.zip.ZipException;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URISyntaxException;
+import java.util.*;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.xml.parsers.ParserConfigurationException;
+import static org.junit.Assert.assertTrue;
 import org.xml.sax.SAXException;
 import pl.edu.icm.yadda.analysis.AnalysisException;
-
-import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxObjectDump;
 import pl.edu.icm.yadda.analysis.textr.tools.DocumentPreprocessor;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
+import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
 
 /**
  *

@@ -14,11 +14,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.metadata.transformers.IMetadataReader;
-import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
-import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  * Reads BxDocument model pages from Marg format.
@@ -26,7 +23,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  * @author kura
  * @author krusek
  */
-public class MargToTextrImporter implements IMetadataReader<BxPage> {
+public class MargToTextrImporter {
     
     private static final Logger log = LoggerFactory.getLogger(MargToTextrImporter.class);
 
@@ -42,22 +39,11 @@ public class MargToTextrImporter implements IMetadataReader<BxPage> {
         zoneLabelMap.put("header",      BxZoneLabel.OTH_HEADER);
     }
 
-    @Override
-    public MetadataFormat getSourceFormat() {
-        return TrueVizUtils.MARG_FORMAT;
-    }
 
-    @Override
-    public MetadataModel<BxPage> getTargetModel() {
-        return BxDocumentTransformers.MODEL;
-    }
-
-    @Override
     public List<BxPage> read(String string, Object... hints) throws TransformationException {
         return read(new StringReader(string), hints);
     }
 
-    @Override
     public List<BxPage> read(Reader reader, Object... hints) throws TransformationException {
         List<BxPage> pages = new ArrayList<BxPage>();
         try {

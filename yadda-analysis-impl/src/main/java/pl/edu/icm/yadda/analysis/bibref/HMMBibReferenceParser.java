@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import pl.edu.icm.yadda.analysis.bibref.model.BibEntry;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;

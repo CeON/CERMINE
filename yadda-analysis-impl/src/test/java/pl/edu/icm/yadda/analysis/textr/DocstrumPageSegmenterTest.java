@@ -9,6 +9,7 @@ import java.util.List;
 import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
 import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
@@ -16,7 +17,6 @@ import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxWord;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.tools.UnsegmentedPagesFlattener;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *

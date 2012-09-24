@@ -3,14 +3,8 @@ package pl.edu.icm.yadda.analysis.metadata.zoneclassification.malletDemo;
 //import cc.mallet.classify.Classifier;
 //import cc.mallet.classify.ClassifierTrainer;
 //import cc.mallet.types.InstanceList;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
+import java.io.*;
+import pl.edu.icm.yadda.analysis.TransformationException;
 
 /**
  *

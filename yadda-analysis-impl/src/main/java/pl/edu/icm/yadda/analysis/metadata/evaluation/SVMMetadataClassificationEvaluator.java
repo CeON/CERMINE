@@ -100,7 +100,7 @@ import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.XPositionR
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YPositionFeature;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YPositionRelativeFeature;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.YearFeature;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;

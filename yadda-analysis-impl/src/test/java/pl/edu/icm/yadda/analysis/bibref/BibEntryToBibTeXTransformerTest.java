@@ -2,13 +2,10 @@ package pl.edu.icm.yadda.analysis.bibref;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
+import static org.junit.Assert.assertEquals;
+import org.junit.*;
+import pl.edu.icm.yadda.analysis.TransformationException;
+import pl.edu.icm.yadda.analysis.bibref.model.BibEntry;
 
 /**
  *

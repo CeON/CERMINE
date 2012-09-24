@@ -8,7 +8,7 @@ import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.classification.tools.DirExtractor;
 import pl.edu.icm.yadda.analysis.classification.tools.DocumentsExtractor;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
@@ -50,13 +50,13 @@ public class EvaluationUtils {
 	}
 	
 	public static List<TrainingElement<BxZoneLabel>> getTrainingElements(List<BxDocument> trainingDocuments, FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) { 
-		BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
+		BxDocsToHMMConverter node = new BxDocsToHMMConverter();
 		node.setLabelMap(null);
 
 		node.setFeatureVectorBuilder(featureVectorBuilder);
 		List<TrainingElement<BxZoneLabel>> trainingElements = null;
 		try {
-			trainingElements = node.process(trainingDocuments, null);
+			trainingElements = node.process(trainingDocuments);
 		} catch (Exception e) {
 			System.out.println(e.getCause());
 			e.printStackTrace();

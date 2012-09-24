@@ -4,8 +4,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -27,8 +27,8 @@ public class VolumeEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, YElement metadata) {
-        Enhancers.addVolume(metadata, result.group(1));
+    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
+        Enhancers.setVolume(metadata, result.group(1));
         return true;
     }
 }

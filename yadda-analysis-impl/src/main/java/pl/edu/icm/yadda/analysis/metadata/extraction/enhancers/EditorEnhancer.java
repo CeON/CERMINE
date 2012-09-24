@@ -4,12 +4,9 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
-import pl.edu.icm.yadda.bwmeta.model.YContributor;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
-import pl.edu.icm.yadda.bwmeta.model.YName;
 
 /**
  *
@@ -30,20 +27,14 @@ public class EditorEnhancer extends AbstractSimpleEnhancer {
         return EnumSet.of(EnhancedField.EDITOR);
     }
     
-    private static void putEditor(YElement element, String editor) {
-        YName name = new YName().setType(YConstants.NM_CANONICAL).setText(editor);
-        YContributor contributor = new YContributor().setRole(YConstants.CR_EDITOR).addName(name);
-        element.addContributor(contributor);
-    }
-
     @Override
-    protected boolean enhanceMetadata(BxZone zone, YElement metadata) {
+    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
         String text = zone.toText();
         Matcher matcher = PREFIX_PATTERN.matcher(text);
         if (matcher.find()) {
             text = text.substring(matcher.end()).trim();
         }
-        putEditor(metadata, text);
+        Enhancers.addEditor(metadata, text);
         return true;
     }
 }

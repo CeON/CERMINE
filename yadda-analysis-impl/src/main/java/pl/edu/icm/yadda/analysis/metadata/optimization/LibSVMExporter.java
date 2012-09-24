@@ -24,7 +24,7 @@ import pl.edu.icm.yadda.analysis.metadata.sampleselection.NormalSelector;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.OversamplingSelector;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.SampleSelector;
 import pl.edu.icm.yadda.analysis.metadata.sampleselection.UndersamplingSelector;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
@@ -81,7 +81,7 @@ public class LibSVMExporter {
         List<TrainingElement<BxZoneLabel>> trainingElements;
 		
 		CrossvalidatingZoneClassificationEvaluator evaluator;
-		BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
+		BxDocsToHMMConverter node = new BxDocsToHMMConverter();
 		BxZoneLabelCategory category;
 
 		if (line.hasOption("initial"))
@@ -115,7 +115,7 @@ public class LibSVMExporter {
 		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = evaluator.getFeatureVectorBuilder();
         node.setFeatureVectorBuilder(vectorBuilder);
         try {
-        	trainingElements = node.process(evaluationDocs, null);
+        	trainingElements = node.process(evaluationDocs);
         } catch(Exception e) {
 			throw new RuntimeException("Unable to process the delivered training documents!");
 		}

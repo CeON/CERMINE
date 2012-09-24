@@ -4,9 +4,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YDate;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -29,13 +28,11 @@ abstract public class AbstractDateEnhancer extends AbstractPatternEnhancer {
         "december|dec\\."};
 
     private EnhancedField field;
-    private String dateType;
 
-    public AbstractDateEnhancer(EnhancedField field, String type, String nameRegex) {
+    public AbstractDateEnhancer(EnhancedField field, String nameRegex) {
         super(createPattern(nameRegex));
         setSearchedZoneLabels(BxZoneLabel.MET_DATES);
         this.field = field;
-        this.dateType = type;
     }
 
     @Override
@@ -44,20 +41,24 @@ abstract public class AbstractDateEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, YElement metadata) {
-        YDate date = new YDate().setType(dateType);
-        date.setDay(Integer.parseInt(result.group(2)));
+    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
+        //YDate date = new YDate().setType(dateType);
+        
+        //date.setDay(Integer.parseInt(result.group(2)));
+        String day = result.group(2);
+        String month = null;
         for (int i = 0; i < 12; i++) {
             if (result.group(i + 3) != null) {
-                date.setMonth(i + 1);
+                month = String.valueOf(i + 1);
                 break;
             }
         }
-        date.setYear(Integer.parseInt(result.group(15)));
-        date.setText(result.group(1));
-        metadata.addDate(date);
+        String year = result.group(15);
+        enhanceMetadata(metadata, day, month, year);
         return true;
     }
+    
+    protected abstract void enhanceMetadata(Element metadata, String day, String month, String year);
 
     private static Pattern createPattern(String nameRegex) {
         String regex = "\\b"+nameRegex+"[\\s:-]\\s*((\\d{1,2})\\s+(?:";

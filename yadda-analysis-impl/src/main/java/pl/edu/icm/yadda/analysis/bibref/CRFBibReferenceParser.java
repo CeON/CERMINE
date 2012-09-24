@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import org.apache.commons.lang.StringUtils;
 import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.bibref.model.BibEntry;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.yadda.analysis.bibref.parsing.tools.CitationUtils;

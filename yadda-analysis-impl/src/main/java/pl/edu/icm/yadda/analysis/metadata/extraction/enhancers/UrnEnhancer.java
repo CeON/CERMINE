@@ -4,9 +4,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
-import pl.edu.icm.yadda.bwmeta.model.YId;
 
 /**
  *
@@ -22,9 +21,9 @@ public class UrnEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, YElement metadata) {
+    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
         // FIXME: Scheme for urn?
-        metadata.addId(new YId("urn", result.group(1)));
+        Enhancers.addArticleId(metadata, "urn", result.group(1));
         return true;
     }
 

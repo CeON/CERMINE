@@ -1,6 +1,6 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
+import org.jdom.Element;
 
 /**
  *
@@ -9,6 +9,11 @@ import pl.edu.icm.yadda.bwmeta.model.YConstants;
 public class PublishedDateEnhancer extends AbstractDateEnhancer {
 
     public PublishedDateEnhancer() {
-        super(EnhancedField.PUBLISHED_DATE, YConstants.DT_PUBLISHED, "published");
+        super(EnhancedField.PUBLISHED_DATE, "published");
+    }
+
+    @Override
+    protected void enhanceMetadata(Element metadata, String day, String month, String year) {
+        Enhancers.setPublishedDate(metadata, day, month, year);
     }
 }

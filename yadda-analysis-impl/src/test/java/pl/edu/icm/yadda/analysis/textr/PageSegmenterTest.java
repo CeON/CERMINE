@@ -9,12 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.tools.UnsegmentedPagesFlattener;
 import pl.edu.icm.yadda.analysis.textr.tools.UnsegmentedZonesFlattener;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *

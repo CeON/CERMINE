@@ -14,19 +14,15 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.metadata.transformers.AbstractMetadataWriter;
-import pl.edu.icm.yadda.metadata.transformers.IMetadataWriter;
-import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
-import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  * Writes BxDocument model pages to TrueViz format.
  *
  * @author krusek
  */
-public class BxDocumentToTrueVizWriter extends AbstractMetadataWriter<BxPage> implements IMetadataWriter<BxPage> {
+public class BxDocumentToTrueVizWriter {
 
     private static final Properties OUTPUT_PROPERTIES = new Properties();
 
@@ -68,16 +64,6 @@ public class BxDocumentToTrueVizWriter extends AbstractMetadataWriter<BxPage> im
         zoneLabelMap.put(BxZoneLabel.OTH_UNKNOWN ,          "unknown");
     }
     
-    @Override
-    public MetadataModel<BxPage> getSourceModel() {
-        return BxDocumentTransformers.MODEL;
-    }
-
-    @Override
-    public MetadataFormat getTargetFormat() {
-        return TrueVizUtils.TRUEVIZ_FORMAT;
-    }
-
     private void appendProperty(Document doc, Element parent, String name, String value) {
         Element node = doc.createElement(name);
         node.setAttribute("Value", value);
@@ -241,14 +227,12 @@ public class BxDocumentToTrueVizWriter extends AbstractMetadataWriter<BxPage> im
         return doc;
     }
 
-    @Override
     public String write(List<BxPage> objects, Object... hints) throws TransformationException {
         StringWriter sw = new StringWriter();
         write(sw, objects, hints);
         return sw.toString();
     }
 
-    @Override
     public void write(Writer writer, List<BxPage> objects, Object... hints) throws TransformationException {
         try {
             Document doc = createDocument(objects);

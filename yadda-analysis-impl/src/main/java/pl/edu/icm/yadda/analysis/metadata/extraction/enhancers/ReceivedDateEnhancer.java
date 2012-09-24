@@ -1,6 +1,6 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
+import org.jdom.Element;
 
 /**
  *
@@ -9,6 +9,11 @@ import pl.edu.icm.yadda.bwmeta.model.YConstants;
 public class ReceivedDateEnhancer extends AbstractDateEnhancer {
 
     public ReceivedDateEnhancer() {
-        super(EnhancedField.RECEIVED_DATE, YConstants.DT_RECEIVED, "received");
+        super(EnhancedField.RECEIVED_DATE, "received");
+    }
+
+    @Override
+    protected void enhanceMetadata(Element metadata, String day, String month, String year) {
+        Enhancers.setReceivedDate(metadata, day, month, year);
     }
 }

@@ -1,12 +1,10 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification.malletDemo;
 
 //import cc.mallet.classify.MaxEntTrainer;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  * 

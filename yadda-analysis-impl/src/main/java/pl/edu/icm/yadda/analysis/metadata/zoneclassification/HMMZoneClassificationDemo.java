@@ -1,10 +1,10 @@
 package pl.edu.icm.yadda.analysis.metadata.zoneclassification;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
@@ -15,13 +15,11 @@ import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityIn
 import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.classification.tools.FileExtractor;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *
@@ -83,9 +81,9 @@ public class HMMZoneClassificationDemo {
         List<BxDocument> documents = new ArrayList<BxDocument>(1);
         documents.add(document);
         
-        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
+        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         node.setFeatureVectorBuilder(vectorBuilder);
-        List<TrainingElement<BxZoneLabel>> trainingElements = node.process(documents, null);
+        List<TrainingElement<BxZoneLabel>> trainingElements = node.process(documents);
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
                 = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, vectorBuilder);

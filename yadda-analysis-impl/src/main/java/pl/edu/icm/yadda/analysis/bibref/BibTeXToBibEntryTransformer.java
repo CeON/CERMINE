@@ -5,13 +5,9 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.LoggerFactory;
-
-import pl.edu.icm.yadda.metadata.transformers.IMetadataReader;
-import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
-import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
+import pl.edu.icm.yadda.analysis.TransformationException;
+import pl.edu.icm.yadda.analysis.bibref.model.BibEntry;
 
 /**
  * Reader of BibTeX format to BibEntry model.
@@ -19,24 +15,13 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  *
  */
-public class BibTeXToBibEntryTransformer implements IMetadataReader<BibEntry> {
+public class BibTeXToBibEntryTransformer {
 
-    @Override
-    public MetadataFormat getSourceFormat() {
-        return BibRefTransformers.BibTeX;
-    }
 
-    @Override
-    public MetadataModel<BibEntry> getTargetModel() {
-        return BibRefTransformers.BibEntry;
-    }
-
-    @Override
     public List<BibEntry> read(String string, Object... hints) throws TransformationException {
         return read(new StringReader(string), hints);
     }
 
-    @Override
     public List<BibEntry> read(Reader reader, Object... hints) throws TransformationException {
 
         List<BibEntry> bibEntryList = new ArrayList<BibEntry>();

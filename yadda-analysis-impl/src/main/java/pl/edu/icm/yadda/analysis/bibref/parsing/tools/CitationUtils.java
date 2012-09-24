@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import pl.edu.icm.yadda.analysis.bibref.BibEntry;
+import pl.edu.icm.yadda.analysis.bibref.model.BibEntry;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;

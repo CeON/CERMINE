@@ -4,10 +4,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
-import pl.edu.icm.yadda.bwmeta.model.YId;
 
 /**
  *
@@ -28,8 +26,8 @@ public class DoiEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, YElement metadata) {
-        metadata.addId(new YId(YConstants.EXT_SCHEME_DOI, result.group(1)));
+    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
+        Enhancers.addArticleId(metadata, "doi", result.group(1));
         return true;
     }
 }

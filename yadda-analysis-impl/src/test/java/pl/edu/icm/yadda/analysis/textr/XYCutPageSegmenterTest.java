@@ -3,33 +3,18 @@ package pl.edu.icm.yadda.analysis.textr;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 import javax.xml.parsers.ParserConfigurationException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
-//import org.apache.commons.math.*;
-//import org.apache.commons.math.stat.Frequency;
-//import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
-import org.xml.sax.InputSource;
+import org.junit.*;
 import org.xml.sax.SAXException;
-import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
-import pl.edu.icm.yadda.analysis.textr.model.BxBounds;
-import pl.edu.icm.yadda.analysis.textr.model.BxChunk;
-import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
-import pl.edu.icm.yadda.analysis.textr.model.BxLine;
-import pl.edu.icm.yadda.analysis.textr.model.BxPage;
-import pl.edu.icm.yadda.analysis.textr.model.BxWord;
-import pl.edu.icm.yadda.analysis.textr.model.BxZone;
+import pl.edu.icm.yadda.analysis.TransformationException;
+import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.analysis.textr.tools.Direction;
 import pl.edu.icm.yadda.analysis.textr.tools.Range;
 import pl.edu.icm.yadda.analysis.textr.tools.Valley;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
+import pl.edu.icm.yadda.analysis.textr.transformers.MargToTextrImporter;
 
 /**
  *

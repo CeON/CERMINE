@@ -4,10 +4,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
-import pl.edu.icm.yadda.bwmeta.model.YDate;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -28,13 +26,13 @@ public class YearEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, YElement metadata) {
+    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
         for (int i = 1; i <= result.groupCount(); i++) {
             String year = result.group(i);
             try {
                 int y = Integer.parseInt(year);
                 if (y >= 1900 && y < 2020) {
-                    metadata.addDate(new YDate().setType(YConstants.DT_PUBLISHED).setYear(y).setText(year));
+                    Enhancers.setYear(metadata, year);
                     return true;
                 }
             } catch (NumberFormatException e) {}

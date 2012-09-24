@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -29,10 +29,10 @@ abstract public class AbstractPatternEnhancer extends AbstractSimpleEnhancer {
         this.pattern = pattern;
     }
 
-    protected abstract boolean enhanceMetadata(MatchResult result, YElement metadata);
+    protected abstract boolean enhanceMetadata(MatchResult result, Element metadata);
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, YElement metadata) {
+    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
         Matcher matcher = pattern.matcher(zone.toText());
         while (matcher.find()) {
             if(enhanceMetadata(matcher.toMatchResult(), metadata)) {

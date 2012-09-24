@@ -4,8 +4,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -25,8 +25,8 @@ public class ArticleIdEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, YElement metadata) {
-        metadata.addAttribute("ArticleID", result.group(1));
+    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
+        Enhancers.addArticleId(metadata, "hindawi-id", result.group(1));
         return true;
     }
 }

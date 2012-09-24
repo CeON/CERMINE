@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
@@ -17,7 +18,7 @@ import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.classification.tools.DocumentsExtractor;
 import pl.edu.icm.yadda.analysis.classification.tools.ZipExtractor;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.yadda.analysis.textr.HMMInitialZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
@@ -27,7 +28,6 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 import pl.edu.icm.yadda.analysis.textr.tools.DocumentPreprocessor;
 import pl.edu.icm.yadda.analysis.textr.tools.InitiallyClassifiedZonesPreprocessor;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *
@@ -147,9 +147,9 @@ public class HMMZoneGeneralClassificationBigDemo {
         }
         
         // 2.2 generate training set based on sequences and vector of features
-        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
+        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         node.setFeatureVectorBuilder(vectorBuilder);
-        List<TrainingElement<BxZoneLabel>> trainingElements = node.process(documents, null);
+        List<TrainingElement<BxZoneLabel>> trainingElements = node.process(documents);
 
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities

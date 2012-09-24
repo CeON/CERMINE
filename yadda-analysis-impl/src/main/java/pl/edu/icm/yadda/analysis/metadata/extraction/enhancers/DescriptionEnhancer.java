@@ -4,13 +4,11 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
-import pl.edu.icm.yadda.bwmeta.model.YDescription;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -31,7 +29,7 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, YElement metadata) {
+    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
         String text = "";
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
@@ -52,7 +50,7 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
             if (matcher.find()) {
                 text = text.substring(matcher.end()).trim();
             }
-            metadata.addDescription(new YDescription().setType(YConstants.DS_ABSTRACT).setText(text));
+            Enhancers.setAbstract(metadata, text);
             return true;
         }
         return false;

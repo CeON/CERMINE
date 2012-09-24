@@ -14,12 +14,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.analysis.textr.tools.BxBoundsBuilder;
-import pl.edu.icm.yadda.metadata.transformers.IMetadataReader;
-import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
-import pl.edu.icm.yadda.metadata.transformers.MetadataModel;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  * Reads BxDocument model pages from TrueViz format.
@@ -28,7 +25,7 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
  * @author krusek
  * @author pszostek
  */
-public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
+public class TrueVizToBxDocumentReader {
     
     private boolean areIdsSet;
 
@@ -58,23 +55,12 @@ public class TrueVizToBxDocumentReader implements IMetadataReader<BxPage> {
         zoneLabelMap.put("type",            BxZoneLabel.MET_TYPE);
         zoneLabelMap.put("unknown",         BxZoneLabel.OTH_UNKNOWN);
     }
-    
-    @Override
-    public MetadataFormat getSourceFormat() {
-        return TrueVizUtils.TRUEVIZ_FORMAT;
-    }
 
-    @Override
-    public MetadataModel<BxPage> getTargetModel() {
-        return BxDocumentTransformers.MODEL;
-    }
 
-    @Override
     public List<BxPage> read(String string, Object... hints) throws TransformationException {
         return read(new StringReader(string), hints);
     }
 
-    @Override
     public List<BxPage> read(Reader reader, Object... hints) throws TransformationException {
         try {
         	areIdsSet = true;

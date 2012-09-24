@@ -1,29 +1,12 @@
 package pl.edu.icm.yadda.analysis.classification.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import pl.edu.icm.yadda.analysis.AnalysisException;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.HMMZoneClassificationDemo;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 public class DirExtractor implements DocumentsExtractor
 {

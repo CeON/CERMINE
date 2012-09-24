@@ -1,44 +1,23 @@
 package pl.edu.icm.yadda.analysis.classification.svm;
 
-import com.thoughtworks.xstream.XStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
+import java.util.*;
 import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMServiceImpl;
-import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.yadda.analysis.classification.hmm.probability.HMMProbabilityInfoFactory;
 import pl.edu.icm.yadda.analysis.classification.hmm.training.TrainingElement;
 import pl.edu.icm.yadda.analysis.classification.tools.DocumentsExtractor;
 import pl.edu.icm.yadda.analysis.classification.tools.ZipExtractor;
 import pl.edu.icm.yadda.analysis.metadata.zoneclassification.features.*;
-import pl.edu.icm.yadda.analysis.metadata.zoneclassification.nodes.BxDocsToTrainingElementsConverterNode;
-import pl.edu.icm.yadda.analysis.classification.hmm.HMMZoneClassifier;
-import pl.edu.icm.yadda.analysis.textr.HierarchicalReadingOrderResolver;
-import pl.edu.icm.yadda.analysis.textr.ReadingOrderResolver;
-import pl.edu.icm.yadda.analysis.textr.ZoneClassifier;
-import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.analysis.textr.tools.DocumentPreprocessor;
-import pl.edu.icm.yadda.analysis.textr.tools.InitiallyClassifiedZonesPreprocessor;
+import pl.edu.icm.yadda.analysis.metadata.zoneclassification.tools.BxDocsToHMMConverter;
+import pl.edu.icm.yadda.analysis.textr.model.BxDocument;
+import pl.edu.icm.yadda.analysis.textr.model.BxPage;
+import pl.edu.icm.yadda.analysis.textr.model.BxZone;
+import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *
@@ -151,10 +130,10 @@ public class SVMZoneClassifierDemo {
         BxDocument testDocument = trainingList.get(testDocIdx);
 
         /* generate training set based on sequences and vector of features */
-        BxDocsToTrainingElementsConverterNode node = new BxDocsToTrainingElementsConverterNode();
+        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         node.setFeatureVectorBuilder(vectorBuilder);
         node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-        List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised = node.process(trainingList, null);
+        List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised = node.process(trainingList);
         
         Map<BxZoneLabel, Integer> labelCount = new HashMap<BxZoneLabel, Integer>();
         labelCount.put(BxZoneLabel.GEN_BODY, 0);
@@ -190,7 +169,7 @@ public class SVMZoneClassifierDemo {
 
         List<BxDocument> testList = new ArrayList<BxDocument>(1);
         testList.add(testDocument);
-        List<TrainingElement<BxZoneLabel>> testElement = node.process(testList, null);
+        List<TrainingElement<BxZoneLabel>> testElement = node.process(testList);
 
         /* build a classifier */
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(vectorBuilder);

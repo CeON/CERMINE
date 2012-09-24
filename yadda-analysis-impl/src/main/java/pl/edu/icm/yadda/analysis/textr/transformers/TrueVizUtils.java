@@ -6,7 +6,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
 
 /**
  * Contains utility methods/formats for manipulating TrueViz/Marg documents.
@@ -14,9 +13,6 @@ import pl.edu.icm.yadda.metadata.transformers.MetadataFormat;
  * @author krusek
  */
 public class TrueVizUtils {
-
-    public static final MetadataFormat MARG_FORMAT = new MetadataFormat("Marg", "1.0");
-    public static final MetadataFormat TRUEVIZ_FORMAT = new MetadataFormat("TrueViz", "1.0");
 
     private static final String TRUEVIZ_DTD = "pl/edu/icm/yadda/analysis/textr/imports/Trueviz.dtd";
 

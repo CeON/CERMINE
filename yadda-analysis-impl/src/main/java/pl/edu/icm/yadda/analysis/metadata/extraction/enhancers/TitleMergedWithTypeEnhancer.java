@@ -1,12 +1,12 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
+import com.google.common.collect.Sets;
 import java.util.*;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxLine;
 import pl.edu.icm.yadda.analysis.textr.model.BxPage;
 import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
-import pl.edu.icm.yadda.bwmeta.model.YName;
 
 /**
  *
@@ -15,7 +15,19 @@ import pl.edu.icm.yadda.bwmeta.model.YName;
 public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
 
     // All type strings are lowercase to provide case-insensitive matching
-    private final Set<String> types = new HashSet<String>();
+    private Set<String> types = Sets.newHashSet(
+            "case report", 
+            "case study", 
+            "clinical study", 
+            "debate", 
+            "editorial",
+            "methodology", 
+            "research", 
+            "research article", 
+            "review article", 
+            "study", 
+            "study protocol"
+            );
 
     public TitleMergedWithTypeEnhancer() {
         setSearchedZoneLabels(BxZoneLabel.MET_TITLE);
@@ -35,7 +47,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, YElement metadata) {
+    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
         if (zone.getLines().size() < 2) {
             return false;
         } else {
@@ -46,7 +58,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
                 while (iterator.hasNext()) {
                     text += " " + iterator.next().toText();
                 }
-                metadata.addName(new YName(text));
+                Enhancers.setTitle(metadata, text);
                 return true;
             } else {
                 return false;
@@ -55,7 +67,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxPage page, YElement metadata) {
+    protected boolean enhanceMetadata(BxPage page, Element metadata) {
         List<BxZone> titleZones = new ArrayList<BxZone>();
         for (BxZone zone : filterZones(page)) {
             titleZones.add(zone);

@@ -1,15 +1,12 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.BxZoneLabel;
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
-import pl.edu.icm.yadda.bwmeta.model.YContributor;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -30,15 +27,10 @@ public class JournalVolumeIssueWithAuthorEnhancer extends AbstractPatternEnhance
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, YElement metadata) {
+    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
         String journal = result.group(1);
 
-        List<String> authors = new ArrayList<String>();
-        for (YContributor contributor : metadata.getContributors()) {
-            if (contributor.getRole().equals(YConstants.CR_AUTHOR)) {
-                authors.add(contributor.getOneName().getText());
-            }
-        }
+        List<String> authors = Enhancers.getAuthorNames(metadata);
 
         if (authors.size() == 1) {
             journal = removeFirst(journal, authors.get(0));
@@ -52,9 +44,9 @@ public class JournalVolumeIssueWithAuthorEnhancer extends AbstractPatternEnhance
             journal = journal.replaceFirst("^.*et al\\.", "").trim();
         }
 
-        Enhancers.addJournal(metadata, journal);
-        Enhancers.addVolume(metadata, result.group(2));
-        Enhancers.addIssue(metadata, result.group(3));
+        Enhancers.setJournal(metadata, journal);
+        Enhancers.setVolume(metadata, result.group(2));
+        Enhancers.setIssue(metadata, result.group(3));
         
         return true;
     }

@@ -1,9 +1,10 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
+import com.google.common.collect.Sets;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.jdom.Element;
 import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.bwmeta.model.YElement;
 
 /**
  *
@@ -16,7 +17,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
             Pattern.CASE_INSENSITIVE);
     private static final double EPSILON = 1e-3;
 
-    private final Set<String> headers = new HashSet<String>();
+    private final Set<String> headers = Sets.newHashSet("author affiliations", "author details");
 
     public AffiliationGeometricEnhancer() {
         setSearchedZoneLabels(BxZoneLabel.MET_AFFILIATION);
@@ -35,7 +36,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, YElement metadata) {
+    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
         boolean enhanced = false;
         for (BxPage page : filterPages(document)) {
             Processor processor = new Processor();
@@ -81,11 +82,12 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                     text = text.replaceFirst("[Cc]orresponding [Aa]uthor.*$", "");
                     text = text.replaceFirst(" and$", "").replaceFirst("\\S+@.*$", "").replaceFirst("[Ee]mails?:.*$", "");
                     text = text.replaceFirst("[Ee]-[Mm]ails?:.*$", "").trim().replaceFirst("[\\.,;]$", "");
-                    Enhancers.getOrCreateAffiliationByRef(metadata, entry.getKey()).setText(text);
+                    Enhancers.setAffiliation(metadata, entry.getKey(), text);
                     enhanced = true;
                 }
             }
         }
+        Enhancers.cleanAffiliations(metadata);
         return enhanced;
     }
 

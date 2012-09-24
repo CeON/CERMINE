@@ -1,18 +1,19 @@
 package pl.edu.icm.yadda.analysis.bibref.parsing.examples;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import pl.edu.icm.yadda.analysis.bibref.BibEntry;
+import java.util.Set;
+import org.xml.sax.InputSource;
 import pl.edu.icm.yadda.analysis.bibref.HMMBibReferenceParser;
+import pl.edu.icm.yadda.analysis.bibref.model.BibEntry;
 import pl.edu.icm.yadda.analysis.bibref.parsing.features.*;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.Citation;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationToken;
 import pl.edu.icm.yadda.analysis.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.yadda.analysis.bibref.parsing.nodes.CitationsFromNLMExtractorNode;
-import pl.edu.icm.yadda.analysis.bibref.parsing.nodes.CitationsToFVHMMTrainingElementsConverterNode;
+import pl.edu.icm.yadda.analysis.bibref.parsing.tools.CitationsToHMMConverter;
+import pl.edu.icm.yadda.analysis.bibref.parsing.tools.NlmCitationExtractor;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.yadda.analysis.classification.features.SimpleFeatureVectorBuilder;
@@ -94,12 +95,11 @@ public class HMMBibRefParsingExample {
         // 2. import and generate training set based on sequences and vector of features
         URL u = HMMBibRefParsingExample.class.getResource(hmmTrainFile);
 
-        CitationsFromNLMExtractorNode citationsExtractorNode = new CitationsFromNLMExtractorNode();
-        Citation[] citations = citationsExtractorNode.process(new File[] {new File(u.toURI())}, null);
-
-        CitationsToFVHMMTrainingElementsConverterNode citationsToHMMTEsNode = new CitationsToFVHMMTrainingElementsConverterNode();
+        Set<Citation> citations = NlmCitationExtractor.extractCitations(new InputSource(u.openStream()));
+        
+        CitationsToHMMConverter citationsToHMMTEsNode = new CitationsToHMMConverter();
         citationsToHMMTEsNode.setFeatureVectorBuilder(vectorBuilder);
-        TrainingElement<CitationTokenLabel>[] trainingElements = citationsToHMMTEsNode.process(citations, null);
+        TrainingElement<CitationTokenLabel>[] trainingElements = citationsToHMMTEsNode.process(citations);
 
 		// 3. HMM training. The resulting probabilities object should be
 		// serialized for further usage

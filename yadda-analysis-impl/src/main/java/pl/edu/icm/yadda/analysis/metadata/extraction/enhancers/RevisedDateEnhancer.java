@@ -1,6 +1,6 @@
 package pl.edu.icm.yadda.analysis.metadata.extraction.enhancers;
 
-import pl.edu.icm.yadda.bwmeta.model.YConstants;
+import org.jdom.Element;
 
 /**
  *
@@ -9,6 +9,11 @@ import pl.edu.icm.yadda.bwmeta.model.YConstants;
 public class RevisedDateEnhancer extends AbstractDateEnhancer {
 
     public RevisedDateEnhancer() {
-        super(EnhancedField.REVISED_DATE, YConstants.DT_REVISED, "revised");
+        super(EnhancedField.REVISED_DATE, "revised");
+    }
+
+    @Override
+    protected void enhanceMetadata(Element metadata, String day, String month, String year) {
+        Enhancers.setRevisedDate(metadata, day, month, year);
     }
 }

@@ -10,8 +10,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.textr.model.*;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 
 /**

@@ -13,6 +13,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import pl.edu.icm.yadda.analysis.AnalysisException;
+import pl.edu.icm.yadda.analysis.TransformationException;
 import pl.edu.icm.yadda.analysis.articlecontent.features.line.*;
 import pl.edu.icm.yadda.analysis.articlecontent.model.DocumentContentStructure;
 import pl.edu.icm.yadda.analysis.classification.features.FeatureCalculator;
@@ -22,7 +23,6 @@ import pl.edu.icm.yadda.analysis.classification.knn.model.KnnModel;
 import pl.edu.icm.yadda.analysis.textr.model.*;
 import pl.edu.icm.yadda.analysis.textr.readingorder.ReadingOrderAnalyzer;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
 /**
  *

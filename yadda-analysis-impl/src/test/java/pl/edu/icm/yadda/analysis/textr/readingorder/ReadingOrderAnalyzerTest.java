@@ -16,6 +16,16 @@ import pl.edu.icm.yadda.analysis.textr.model.BxZone;
 import pl.edu.icm.yadda.analysis.textr.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 /**
  * 
@@ -26,7 +36,33 @@ import pl.edu.icm.yadda.metadata.transformers.TransformationException;
 public class ReadingOrderAnalyzerTest {
 	static final private String PATH = "/pl/edu/icm/yadda/analysis/textr/";
 	static final private String[] TEST_FILENAMES = {"13191004.xml", "09629351.xml", "10255834.xml", "11781238.xml", "1748717X.xml"};
-	
+ 	static final private String ZIP_FILE_NAME = "roa_test.zip";	
+	static private zipFile;
+	static {
+		URL url = filename.getClass().getResources(PATH+ZIP_FILE_NAME);
+                URI uri = url.toURI();
+                File file = new File(uri);
+		this.zipFile = new ZipFile(file);
+	}
+
+	private BxDocument getDocumentFromZip(String filename) {
+		TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
+		Enumeration<? extends ZipEntry> entries = zipFile.entries();
+		while (entries.hasMoreElements()) {
+			ZipEntry zipEntry = (ZipEntry) entries.nextElement();
+			if (zipEntry.getName().equals(filename)) {
+				List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry)));
+				BxDocument newDoc = new BxDocument();
+				for(BxPage page: pages)
+					page.setContext(newDoc);
+				newDoc.setFilename(zipEntry.getName());
+				newDoc.setPages(pages);		
+				return newDoc;
+			}
+		}
+		return null;
+	}
+
 	private Boolean areDocumentsEqual(BxDocument doc1, BxDocument doc2) {
 		if(doc1.getPages().size() != doc2.getPages().size())
 			return false;
@@ -51,26 +87,11 @@ public class ReadingOrderAnalyzerTest {
 		return true;
 	}
 	
-	
-	private BxDocument getDocumentFromFile(String filename) throws TransformationException {
-		InputStream is = ReadingOrderAnalyzerTest.class.getResourceAsStream(PATH + filename);
-		InputStreamReader isr = new InputStreamReader(is);
-
-		TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-		BxDocument doc = new BxDocument().setPages(reader.read(isr));
-		try {
-		isr.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return doc;
-	}
-	
 	@Test
 	public void testSetReadingOrder() throws TransformationException {
 		for(String filename: TEST_FILENAMES) {
-			BxDocument doc = getDocumentFromFile(filename);
-			BxDocument modelOrderedDoc = getDocumentFromFile(filename + ".out");
+			BxDocument doc = getDocumentFromZip(filename);
+			BxDocument modelOrderedDoc = getDocumentFromZip(filename + ".out");
 	
 			ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
 			BxDocument orderedDoc = roa.setReadingOrder(doc);
@@ -82,7 +103,7 @@ public class ReadingOrderAnalyzerTest {
 	@Test
 	public void testConstantElementsNumber() throws TransformationException {
 		for(String filename: TEST_FILENAMES) {
-			BxDocument doc = getDocumentFromFile(filename);
+			BxDocument doc = getDocumentFromZip(filename);
 			
 			ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
 			BxDocument orderedDoc = roa.setReadingOrder(doc);

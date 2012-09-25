@@ -31,6 +31,7 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
 	@Override
 	public BxDocument classifyZones(BxDocument document)	throws AnalysisException {
 		for(BxZone zone: document.asZones()) {
+			
 		}
 		return document;
 	}
@@ -57,15 +58,18 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
 		
 		for(final BxZoneLabel lab: possibleLabels) {
 			SVMZoneClassifier clas = new SVMZoneClassifier(featureVectorBuilder);
-			List<TrainingElement<BxZoneLabel>> thisLabelElements = new ArrayList<TrainingElement<BxZoneLabel>>() {{
+			List<TrainingElement<BxZoneLabel>> convertedElements = new ArrayList<TrainingElement<BxZoneLabel>>() {{
 				for(TrainingElement<BxZoneLabel> elem: trainingElements) {
 					TrainingElement<BxZoneLabel> toBeAdded = elem.clone();
-					//TODO: change label to be one of two
-					add(elem.clone());
+					if(toBeAdded.getLabel() != lab)
+						toBeAdded.setLabel(BxZoneLabel.OTH_UNKNOWN);
+					add(toBeAdded);
 				}
 			}};
-			//TODO:...
+			clas.buildClassifier(convertedElements);
+			classifiers.put(lab, clas);
 		}
+		definitiveClassifier.buildClassifier(trainingElements);
 	}
 	
 	@Override

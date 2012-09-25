@@ -1,6 +1,5 @@
 package pl.edu.icm.coansys.metaextr.metadata;
 
-import pl.edu.icm.coansys.metaextr.metadata.MetadataExtractor;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;

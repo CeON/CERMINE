@@ -1,3 +1,5 @@
+package pl.edu.icm.coansys.metaextr.textr;
+
 //package pl.edu.icm.yadda.analysis.textr;
 //
 //import com.itextpdf.text.Rectangle;

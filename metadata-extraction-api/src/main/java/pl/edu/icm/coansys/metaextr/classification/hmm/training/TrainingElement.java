@@ -30,7 +30,6 @@ public interface TrainingElement<S> {
      *
      * @return The label.
      */
-	void setLabel(BxZoneLabel label);
     S getLabel();
     
 

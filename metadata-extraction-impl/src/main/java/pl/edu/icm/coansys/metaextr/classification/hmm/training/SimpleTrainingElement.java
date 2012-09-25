@@ -2,6 +2,7 @@ package pl.edu.icm.coansys.metaextr.classification.hmm.training;
 
 import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
 
 /**
  * Simple classifier training element implementation.

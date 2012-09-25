@@ -86,6 +86,7 @@ public abstract class BxObject <S, T> implements Indexable<S> {
 	public boolean hasPrev() {
 		return getPrev() != null;
 	}
+
     public Double getArea() {
     	return (bounds.getHeight() * bounds.getWidth());
     }

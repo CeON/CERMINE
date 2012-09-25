@@ -126,8 +126,8 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		for (BxZone zone: document.asZones()) {
 			svm_node[] instance = buildDatasetForClassification(zone);
 			double predictedVal = svm.svm_predict(model, instance);
-			System.out.println("predictedVal " + predictedVal + " " + BxZoneLabel.values()[(int)predictedVal/100] + " (" + zone.getLabel() + ")");
-			zone.setLabel(BxZoneLabel.values()[(int)predictedVal/100]);
+			System.out.println("predictedVal " + predictedVal + " " + BxZoneLabel.values()[(int)predictedVal] + " (is " + zone.getLabel() + ")");
+			zone.setLabel(BxZoneLabel.values()[(int)predictedVal]);
 		}
 		return document;
 	}
@@ -150,8 +150,8 @@ public class SVMZoneClassifier implements ZoneClassifier {
 				problem.x[elemIdx][featureIdx] = cur;
 				++featureIdx;
 			}
-			problem.y[elemIdx] = trainingElem.getLabel().ordinal()*100;
-			System.out.println("?? " + trainingElem.getLabel().ordinal()*100 + " (" + trainingElem.getLabel() + ")");
+			problem.y[elemIdx] = trainingElem.getLabel().ordinal();
+			System.out.println("training " + trainingElem.getLabel().ordinal() + " (" + trainingElem.getLabel() + ")");
 			++elemIdx;
 		}
 		return problem;

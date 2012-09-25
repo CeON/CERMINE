@@ -72,10 +72,8 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 
         zoneClassifier.buildClassifier(trainingElements);
         zoneClassifier.printWeigths(featureVectorBuilder);
+        
         Set<String> fnames = featureVectorBuilder.getFeatureNames();
-        Iterator<String> namesIt = fnames.iterator();
-        Iterator<Double> valueIt = (Iterator<Double>)new ArrayIterator(zoneClassifier.getWeights());
-
         assert fnames.size() == zoneClassifier.getWeights().length;
 
 		return zoneClassifier;

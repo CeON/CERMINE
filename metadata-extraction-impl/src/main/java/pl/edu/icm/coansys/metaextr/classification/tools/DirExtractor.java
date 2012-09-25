@@ -15,6 +15,9 @@ public class DirExtractor implements DocumentsExtractor
 	public DirExtractor(String path)
 	{
 		this.directory = new File(path);
+		if(!directory.exists() || !directory.isDirectory()) {
+			throw new RuntimeException("Source directory for documents doesn't exist: " + path);
+		}
 	}
 	
 	public DirExtractor(File directory)

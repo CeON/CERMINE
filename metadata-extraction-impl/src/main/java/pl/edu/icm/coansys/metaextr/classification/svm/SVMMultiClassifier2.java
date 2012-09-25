@@ -7,13 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Ignore;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.classification.tools.ClassificationUtils;
-import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
 import pl.edu.icm.coansys.metaextr.textr.model.BxZone;

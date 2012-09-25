@@ -28,13 +28,11 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
     @Override
     protected boolean enhanceMetadata(BxZone zone, Element metadata) {
         Matcher matcher = PATTERN.matcher(zone.toText());
-        boolean ret = false;
         while (matcher.find()) {
             String email = matcher.group().replaceFirst("[;\\.,]$", "");
             Enhancers.addEmail(metadata, email);
-            ret = true;
         }
-        return ret;
+        return false;
     }
        
 }

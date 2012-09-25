@@ -1,16 +1,10 @@
 package pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers;
 
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
-import pl.edu.icm.coansys.metaextr.textr.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.model.BxWord;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
 import com.google.common.collect.Sets;
 import java.util.*;
 import java.util.regex.Pattern;
 import org.jdom.Element;
+import pl.edu.icm.coansys.metaextr.textr.model.*;
 
 /**
  *
@@ -23,7 +17,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
             Pattern.CASE_INSENSITIVE);
     private static final double EPSILON = 1e-3;
 
-    private final Set<String> headers = Sets.newHashSet("author affiliations", "author details");
+    private final Set<String> headers = Sets.newHashSet("author affiliations", "author details", "affiliations");
 
     public AffiliationGeometricEnhancer() {
         setSearchedZoneLabels(BxZoneLabel.MET_AFFILIATION);
@@ -51,7 +45,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                 for (BxLine line : zone.getLines()) {
                     if (firstLine) {
                         firstLine = false;
-                        if (headers.contains(line.toText().toLowerCase())) {
+                        if (headers.contains(line.toText().toLowerCase().replaceAll("[^0-9a-zA-Z]", ""))) {
                             continue;
                         }
                     }

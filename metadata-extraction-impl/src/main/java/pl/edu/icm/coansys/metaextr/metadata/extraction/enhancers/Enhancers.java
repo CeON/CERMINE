@@ -104,7 +104,7 @@ public class Enhancers {
         
         for (Element element : getElements(metadata, path)) {
             List children = element.getChildren("aff");
-            if (children.isEmpty() && (id == null || id.isEmpty()) && "author".equals(element.getAttributeValue("contrib-type"))) {
+            if ((id == null || id.isEmpty()) && "author".equals(element.getAttributeValue("contrib-type"))) {
                 Element aff = new Element("aff");
                 aff.setText(affiliation);
                 element.addContent(aff);

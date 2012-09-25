@@ -66,7 +66,7 @@ public class ContentHeaderExtractor {
         BxLine lastHeaderLine = null;
         for (BxPage page : document.getPages()) {
             for (BxZone zone : page.getZones()) {
-                if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT)) {
+                if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT) || zone.getLabel().equals(BxZoneLabel.BODY_JUNK)) {
                     for (BxLine line : zone.getLines()) {
                         FeatureVector featureVector = classVectorBuilder.getFeatureVector(line, page);
                         
@@ -74,7 +74,7 @@ public class ContentHeaderExtractor {
                         if (label.equals(BxZoneLabel.BODY_HEADER)) {
                             contentStructure.addFirstHeaderLine(page, line);
                             lastHeaderLine = line;
-                        } else {
+                        } else if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT)) {
                             contentStructure.addContentLine(lastHeaderLine, line);
                         }
                     }

@@ -1,6 +1,7 @@
 package pl.edu.icm.coansys.metaextr.classification.hmm.training;
 
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
 
 /**
  * Training element interface for object classification.
@@ -29,6 +30,7 @@ public interface TrainingElement<S> {
      *
      * @return The label.
      */
+	void setLabel(BxZoneLabel label);
     S getLabel();
     
 
@@ -39,7 +41,7 @@ public interface TrainingElement<S> {
      * @return The label of the following element.
      */
     S getNextLabel();
-    
     public TrainingElement<S> clone();
+
 
 }

@@ -1,20 +1,12 @@
 package pl.edu.icm.coansys.metaextr.textr.readingorder;
 
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
-import pl.edu.icm.coansys.metaextr.textr.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.textr.model.Indexable;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxObjectDump;
-import pl.edu.icm.coansys.metaextr.textr.model.BxWord;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxObject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.textr.model.*;
 import pl.edu.icm.coansys.metaextr.textr.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.coansys.metaextr.textr.transformers.TrueVizToBxDocumentReader;
 
@@ -137,7 +129,7 @@ public class ReadingOrderAnalyzer {
 	private void setIdsAndLinkTogether(BxDocument doc) {
 		setIdsGenericImpl(doc.asPages());
 		for(BxPage page: doc.asPages()) {
-			if(!page.isSorted()) {
+			if(!page.isSorted() && !page.getZones().isEmpty()) {
 				setIdsGenericImpl(doc.asZones());
 				setIdsGenericImpl(doc.asLines());
 				setIdsGenericImpl(doc.asWords());

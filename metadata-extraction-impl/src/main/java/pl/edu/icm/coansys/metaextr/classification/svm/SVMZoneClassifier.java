@@ -245,7 +245,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 			throw new RuntimeException("y scaling not supported");
 		}
 		rangeFile.close();
-		svm.svm_load_model(modelPath);
+		model = svm.svm_load_model(modelPath);
 	}
 
 	@Override

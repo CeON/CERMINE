@@ -17,21 +17,24 @@ public enum BxZoneLabel {
     
     /** Document's metadata. */
 	GEN_METADATA        (BxZoneLabelCategory.CAT_GENERAL),
+	
 	/** Document's body. */
+	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL),
+	
 	/** Document's references. */
 	GEN_REFERENCES      (BxZoneLabelCategory.CAT_GENERAL),
+	
 	/** Other stuff left in the document. */
 	GEN_OTHER           (BxZoneLabelCategory.CAT_GENERAL),
 
-    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA),
     /** Document's abstract. */
     MET_ABSTRACT        (BxZoneLabelCategory.CAT_METADATA),
     
     /** Authors' Affiliations. */
     MET_AFFILIATION     (BxZoneLabelCategory.CAT_METADATA),
     
-	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL),
     /** Authors' names. */
+    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA),
     
     /** A zone containing bibliographic information, such as journal, volume, year, doi, etc. */
     MET_BIB_INFO        (BxZoneLabelCategory.CAT_METADATA),
@@ -53,7 +56,6 @@ public enum BxZoneLabel {
 
     /** Document's type */
     MET_TYPE            (BxZoneLabelCategory.CAT_METADATA),
-    
     
     /** Document's body. */
     BODY_CONTENT        (BxZoneLabelCategory.CAT_BODY),
@@ -81,7 +83,6 @@ public enum BxZoneLabel {
     
     /** Table's caption */
     BODY_TABLE_CAPTION  (BxZoneLabelCategory.CAT_BODY),
-    
     
     /** Document's copyright or license */
     OTH_COPYRIGHT       (BxZoneLabelCategory.CAT_OTHER),

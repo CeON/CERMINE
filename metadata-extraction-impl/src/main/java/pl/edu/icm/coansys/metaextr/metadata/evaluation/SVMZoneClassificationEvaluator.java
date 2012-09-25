@@ -64,9 +64,12 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
 		svm_parameter param = SVMZoneClassifier.getDefaultParam();
 		param.svm_type = svm_parameter.C_SVC;
-		param.gamma = 32;
+//		param.gamma = 32;
+//		param.C = 4.0;
+//		param.degree = 3;
+		param.gamma = 0.176776695297;
 		param.C = 4.0;
-		param.degree = 3;
+		param.degree = 2;
 		param.kernel_type = svm_parameter.POLY;
 		zoneClassifier.setParameter(param);
 

@@ -53,4 +53,9 @@ public class SimpleTrainingElement<S> implements TrainingElement<S> {
     	return ret;
     }
 
+	@Override
+	public void setLabel(S label) {
+		this.label = label;
+	}
+
 }

@@ -31,6 +31,7 @@ public interface TrainingElement<S> {
      * @return The label.
      */
     S getLabel();
+    public void setLabel(S label);
     
 
     /**

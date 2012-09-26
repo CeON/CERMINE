@@ -132,7 +132,7 @@ public class XYCutPageSegmenterTest {
     @Test
     public void xyCutSegmentationTest() throws IOException,
             ParserConfigurationException, SAXException, TransformationException {
-        BxPage page = new MargToTextrImporter().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/yadda/analysis/textr/001.xml"))).get(0);
+        BxPage page = new MargToTextrImporter().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/001.xml"))).get(0);
         System.out.println(page.getZones().size());
         List<BxChunk> chunksList = new ArrayList<BxChunk>();
 

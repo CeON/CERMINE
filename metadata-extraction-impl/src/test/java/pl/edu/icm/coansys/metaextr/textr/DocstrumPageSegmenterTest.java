@@ -26,7 +26,7 @@ import pl.edu.icm.coansys.metaextr.textr.tools.UnsegmentedPagesFlattener;
 public class DocstrumPageSegmenterTest {
 
     private InputStream getResource(String name) {
-        return this.getClass().getResourceAsStream("/pl/edu/icm/yadda/analysis/textr/" + name);
+        return this.getClass().getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/" + name);
     }
 
     @Test

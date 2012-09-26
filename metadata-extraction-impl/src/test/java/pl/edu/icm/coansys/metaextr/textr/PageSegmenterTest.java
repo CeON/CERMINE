@@ -25,8 +25,8 @@ public class PageSegmenterTest extends AbstractDocumentProcessorTest {
 
     protected static double testSuccessPercentage = 0;
     protected static double boundsTolerance = 20;
-    protected static String[] testResources = {"/pl/edu/icm/yadda/analysis/textr/001.xml"};
-    protected static String[] zipResources = {"/pl/edu/icm/yadda/analysis/textr/marg.zip"};
+    protected static String[] testResources = {"/pl/edu/icm/coansys/metaextr/textr/001.xml"};
+    protected static String[] zipResources = {"/pl/edu/icm/coansys/metaextr/textr/marg.zip"};
 
     @Before
     public void setUp() {

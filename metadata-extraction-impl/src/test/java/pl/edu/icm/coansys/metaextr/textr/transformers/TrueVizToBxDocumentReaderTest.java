@@ -30,7 +30,7 @@ import pl.edu.icm.coansys.metaextr.TransformationException;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 public class TrueVizToBxDocumentReaderTest {
-	static String PATH = "/pl/edu/icm/yadda/analysis/textr/";
+	static String PATH = "/pl/edu/icm/coansys/metaextr/textr/";
 
     public TrueVizToBxDocumentReaderTest() {
     }
@@ -38,7 +38,7 @@ public class TrueVizToBxDocumentReaderTest {
     @Test
     public void testImporter() throws IOException,  ParserConfigurationException, SAXException,
             TransformationException {
-       BxPage page=new TrueVizToBxDocumentReader().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/yadda/analysis/textr/imports/MargImporterTest1.xml"))).get(0);
+       BxPage page=new TrueVizToBxDocumentReader().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/imports/MargImporterTest1.xml"))).get(0);
        boolean contains=false;
        boolean rightText=false;
        boolean rightSize=false;
@@ -139,7 +139,7 @@ public class TrueVizToBxDocumentReaderTest {
     
     @Test
     public void testHeight() throws IOException,  ParserConfigurationException, SAXException, TransformationException {
-       BxPage page=new MargToTextrImporter().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/yadda/analysis/textr/006.xml"))).get(0);
+       BxPage page=new MargToTextrImporter().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/006.xml"))).get(0);
 
        for (BxZone zone:page.getZones()) {
            assertTrue("Zero heigh zone: "+zone.toText()+" : "+zone.getLabel().name(),zone.getBounds().getHeight()>0);

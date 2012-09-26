@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
  */
 public class TrueVizUtils {
 
-    private static final String TRUEVIZ_DTD = "pl/edu/icm/yadda/analysis/textr/imports/Trueviz.dtd";
+    private static final String TRUEVIZ_DTD = "pl/edu/icm/coansys/metaextr/textr/imports/Trueviz.dtd";
 
     /**
      * Returns new document builder for creating/parsing TrueViz/Marg documents.

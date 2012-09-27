@@ -140,7 +140,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 	private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
     
 	//sample launch: -fold 5 /path/to/your/xml/catalog
-	public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator) throws ParseException
+	public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator) throws ParseException, RuntimeException, AnalysisException
 	{
 		Options options = new Options();
 		options.addOption("compact", false, "do not print results for pages");
@@ -185,9 +185,9 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 		}
 	}
 
-	public void run(String inDir, String outDir) throws RuntimeException
+	public void run(String inDir, String outDir) throws RuntimeException, AnalysisException
 	{
-		List<BxDocument> evaluationDocuments = EvaluationUtils.getEvaluationDocuments(inDir);
+		List<BxDocument> evaluationDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
 		ClassificationResults summary = newResults();
 
         List<DividedEvaluationSet> fileSets = DividedEvaluationSet.build(BxModelUtils.deepClone(evaluationDocuments), foldness);
@@ -205,6 +205,8 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 
 			for (BxDocument testDocument: testDocuments) {
 				BxDocument processedDocument = BxModelUtils.deepClone(testDocument);
+				for(BxZone zone: processedDocument.asZones())
+					zone.setLabel(null);
 				ClassificationResults documentResults = newResults();
 
 				if (detail != Detail.MINIMAL) {
@@ -380,7 +382,5 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         results.printShortSummary();
     }
 
-    protected abstract ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments);
-
-	abstract protected SampleSelector<BxZoneLabel> getSampleFilter();
+    protected abstract ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws AnalysisException;
 }

@@ -1,5 +1,10 @@
 package pl.edu.icm.coansys.metaextr.textr;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
@@ -81,32 +86,17 @@ import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.XPositio
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.YPositionFeature;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.YPositionRelativeFeature;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.YearFeature;
-import pl.edu.icm.coansys.metaextr.textr.ZoneClassifier;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
 import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
 
-/**
- * Classifying zones as: METADATA, BODY, REFERENCES, OTHER. 
- * 
- * @author Pawel Szostek (p.szostek@icm.edu.pl)
- */
-public class SVMInitialZoneClassifier extends SVMZoneClassifier {
-	
-	public SVMInitialZoneClassifier(String modelPath) {
+public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
+
+	public SVMMetadataZoneClassifier(String modelPath) throws IOException {
 		super(getFeatureVectorBuilder());
-		try {
-			loadModel(modelPath);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		loadModel(modelPath);
 	}
+
 	
 	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder()
 	{
@@ -193,15 +183,23 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
                 ));
         return vectorBuilder;
 	}
-	
-	public static void main(String[] args) throws AnalysisException {
+
+	public static void main(String[] args) throws AnalysisException, IOException {
 		// args[0] path to the model like "/path/to/my/model_file
 		// args[1] path to xml directory
 		
-		ZoneClassifier classifier = new SVMInitialZoneClassifier(args[0]);
+		ZoneClassifier classifier = new SVMMetadataZoneClassifier(args[0]);
 		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[1]);
 		for(BxDocument doc: docs) {
 			classifier.classifyZones(doc);
+			// Attention!
+			// All the zones will be classified using one of labels from metadata category
+			// For a correct operation the zones should be filtered.
+			// Possible SVMZoneClassifier.predictZoneLabel(BxZone zone) may be employed.
+			// For instance:
+			// for(BxZone zone: doc.asZones())
+			//     if(zone.getLabel().getCategory() == BxZoneLabelCategory.CAT_METADATA)
+			//         zone.setLabel(classifier.predictZoneLabel(zone));
 			for(BxZone zone: doc.asZones()) {
 				System.out.println("****** " + zone.getLabel());
 				System.out.println(zone.toText());

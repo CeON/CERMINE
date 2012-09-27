@@ -12,6 +12,7 @@ import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.collections.iterators.ArrayIterator;
 
+import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
@@ -214,22 +215,8 @@ public class SVMMetadataClassificationEvaluator extends
 		return zoneClassifier;
 	}
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMMetadataClassificationEvaluator());
-	}
-
-	@Override
-	protected SampleSelector<BxZoneLabel> getSampleFilter() {
-		return new SampleSelector<BxZoneLabel>() {
-			@Override
-			public List<TrainingElement<BxZoneLabel>> pickElements(List<TrainingElement<BxZoneLabel>> inputElements) {
-				List<TrainingElement<BxZoneLabel>> ret = new ArrayList<TrainingElement<BxZoneLabel>>();
-				for(TrainingElement<BxZoneLabel> elem: inputElements)
-					if(elem.getLabel().getCategory() == BxZoneLabelCategory.CAT_METADATA)
-						ret.add(elem);
-				return ret;
-			}
-		};
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
 import pl.edu.icm.coansys.metaextr.textr.tools.DocumentPreprocessor;
 
 public class EvaluationUtils {
-    public static List<BxDocument> getEvaluationDocuments(String inputDirPath)
+    public static List<BxDocument> getDocumentsFromPath(String inputDirPath)
 	{
 		if (inputDirPath == null) {
 			throw new NullPointerException("Input directory must not be null.");
@@ -34,12 +34,6 @@ public class EvaluationUtils {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to get evaluation documents from the indicated location! Got exception: " + e);
 		}
-		/*
-		for(BxDocument doc: evaluationDocuments) {
-				for(BxZone zone: doc.asZones()) {
-				System.out.println(";; " + zone.getLabel());
-			}
-		}*/
 		return evaluationDocuments;
 	}
     

@@ -1,5 +1,6 @@
 package pl.edu.icm.coansys.metaextr.metadata.evaluation;
 
+import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
 import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
 import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabelCategory;
@@ -55,21 +56,8 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 		return zoneClassifier;
 	}
 	
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new HMMZoneClassificationEvaluator());
-	}
-
-	@Override
-	protected SampleSelector<BxZoneLabel> getSampleFilter() {
-		return new SampleSelector<BxZoneLabel>() {
-			@Override
-			public List<TrainingElement<BxZoneLabel>> pickElements(
-					List<TrainingElement<BxZoneLabel>> inputElements) {
-				List<TrainingElement<BxZoneLabel>> ret = new ArrayList<TrainingElement<BxZoneLabel>>();
-				ret.addAll(inputElements);
-				return ret;
-			}
-		};
 	}
 
 	@Override

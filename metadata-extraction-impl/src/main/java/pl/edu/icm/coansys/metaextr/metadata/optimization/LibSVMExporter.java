@@ -19,7 +19,7 @@ import pl.edu.icm.coansys.metaextr.classification.tools.ClassificationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.CrossvalidatingZoneClassificationEvaluator;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.EvaluationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.SVMMetadataClassificationEvaluator;
-import pl.edu.icm.coansys.metaextr.metadata.evaluation.SVMZoneClassificationEvaluator;
+import pl.edu.icm.coansys.metaextr.metadata.evaluation.SVMInitialZoneClassificationEvaluator;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.NormalSelector;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.OversamplingSelector;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.SampleSelector;
@@ -77,7 +77,7 @@ public class LibSVMExporter {
 			formatter.printHelp(args[0] + " [-options] input-directory", options);
 		}
 		String inputDirPath = line.getArgs()[0];
-		List<BxDocument> evaluationDocs = EvaluationUtils.getEvaluationDocuments(inputDirPath);
+		List<BxDocument> evaluationDocs = EvaluationUtils.getDocumentsFromPath(inputDirPath);
         List<TrainingElement<BxZoneLabel>> trainingElements;
 		
 		CrossvalidatingZoneClassificationEvaluator evaluator;
@@ -86,7 +86,7 @@ public class LibSVMExporter {
 
 		if (line.hasOption("initial"))
 		{
-			evaluator = new SVMZoneClassificationEvaluator();
+			evaluator = new SVMInitialZoneClassificationEvaluator();
 			node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
 			category = BxZoneLabelCategory.CAT_GENERAL;
 		} else { //line.hasOption("meta")) 

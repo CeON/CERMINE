@@ -76,6 +76,8 @@ import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.AuthorNa
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.LineXWidthPositionDiffFeature;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.StartsWithHeaderFeature;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.IsLongestOnThePageFeature;
+
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Arrays;
@@ -140,7 +142,8 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 	private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
     
 	//sample launch: -fold 5 /path/to/your/xml/catalog
-	public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator) throws ParseException, RuntimeException, AnalysisException
+	public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator)
+			throws ParseException, RuntimeException, AnalysisException, IOException
 	{
 		Options options = new Options();
 		options.addOption("compact", false, "do not print results for pages");
@@ -185,7 +188,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 		}
 	}
 
-	public void run(String inDir, String outDir) throws RuntimeException, AnalysisException
+	public void run(String inDir, String outDir) throws RuntimeException, AnalysisException, IOException
 	{
 		List<BxDocument> evaluationDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
 		ClassificationResults summary = newResults();
@@ -382,5 +385,5 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         results.printShortSummary();
     }
 
-    protected abstract ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws AnalysisException;
+    protected abstract ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws AnalysisException, IOException;
 }

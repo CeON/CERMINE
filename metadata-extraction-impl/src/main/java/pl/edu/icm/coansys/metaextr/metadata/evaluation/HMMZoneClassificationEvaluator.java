@@ -6,6 +6,8 @@ import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
 import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabelCategory;
 import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
 import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.cli.ParseException;
@@ -56,7 +58,7 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 		return zoneClassifier;
 	}
 	
-	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException {
+	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException, IOException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new HMMZoneClassificationEvaluator());
 	}
 

@@ -34,17 +34,4 @@ public class HMMMetadataZoneClassifier implements ZoneClassifier {
     public BxDocument classifyZones(BxDocument document) throws AnalysisException {
         return hmmZoneClassifier.classifyZones(document);
     }
-
-	@Override
-	public void loadModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void saveModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

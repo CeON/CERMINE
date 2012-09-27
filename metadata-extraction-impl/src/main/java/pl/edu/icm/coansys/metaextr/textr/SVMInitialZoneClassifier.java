@@ -82,7 +82,10 @@ import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.YPositio
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.YPositionRelativeFeature;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.YearFeature;
 import pl.edu.icm.coansys.metaextr.textr.ZoneClassifier;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -98,10 +101,10 @@ import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	
-	public SVMInitialZoneClassifier(String modelPath) {
+	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) {
 		super(getFeatureVectorBuilder());
 		try {
-			loadModel(modelPath);
+			loadModel(modelFile, rangeFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -195,11 +198,18 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	}
 	
 	public static void main(String[] args) throws AnalysisException {
-		// args[0] path to the model like "/path/to/my/model_file
-		// args[1] path to xml directory
+		// args[0] path to xml directory
+		InputStreamReader modelISR = new InputStreamReader(args.getClass()
+				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_initial_classifier"));
+		BufferedReader modelFile = new BufferedReader(modelISR);
 		
-		ZoneClassifier classifier = new SVMInitialZoneClassifier(args[0]);
-		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[1]);
+		InputStreamReader rangeISR = new InputStreamReader(args.getClass()
+				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_initial_classifier.range"));
+		BufferedReader rangeFile = new BufferedReader(rangeISR);
+		
+		SVMZoneClassifier classifier = new SVMInitialZoneClassifier(modelFile, rangeFile);
+		
+		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[0]);
 		for(BxDocument doc: docs) {
 			classifier.classifyZones(doc);
 			for(BxZone zone: doc.asZones()) {

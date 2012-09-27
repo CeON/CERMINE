@@ -65,11 +65,13 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 
         zoneClassifier.buildClassifier(trainingElements);
 		zoneClassifier.setParameter(param);
+//        zoneClassifier.loadModel(modelPath, rangeFilePath);
         zoneClassifier.printWeigths(featureVectorBuilder);
 		return zoneClassifier;
 	}
 
-	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException {
+	public static void main(String[] args) 
+			throws ParseException, RuntimeException, AnalysisException, IOException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialZoneClassificationEvaluator());
 	}
 

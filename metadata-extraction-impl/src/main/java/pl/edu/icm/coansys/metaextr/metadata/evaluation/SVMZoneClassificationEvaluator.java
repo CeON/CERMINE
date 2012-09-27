@@ -1,5 +1,6 @@
 package pl.edu.icm.coansys.metaextr.metadata.evaluation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -47,6 +48,7 @@ public class SVMZoneClassificationEvaluator extends
 				zone.setLabel(BxZoneLabel.GEN_BODY);
 			else if(zone.getLabel().getCategory() == BxZoneLabelCategory.CAT_REFERENCES)
 				zone.setLabel(BxZoneLabel.GEN_REFERENCES);
+			//else leave it as it is
 	}
 
 	@Override
@@ -187,7 +189,8 @@ public class SVMZoneClassificationEvaluator extends
         return classifier;
 	}
 
-	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException {
+	public static void main(String[] args)
+			throws ParseException, RuntimeException, AnalysisException, IOException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMZoneClassificationEvaluator());
 	}
 }

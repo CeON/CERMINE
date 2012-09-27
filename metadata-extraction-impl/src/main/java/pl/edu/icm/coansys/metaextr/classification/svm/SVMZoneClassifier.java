@@ -214,10 +214,8 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		return weights;
 	}
 
-	@Override
-	public void loadModel(String modelPath) throws IOException
+	public void loadModel(BufferedReader modelFile, BufferedReader rangeFile) throws IOException
 	{
-		BufferedReader rangeFile = new BufferedReader(new FileReader(modelPath + ".range"));
 		Double feature_min, feature_max;
 		Integer idx;
 		if(rangeFile.read() == 'x') {
@@ -247,10 +245,9 @@ public class SVMZoneClassifier implements ZoneClassifier {
 			throw new RuntimeException("y scaling not supported");
 		}
 		rangeFile.close();
-		model = svm.svm_load_model(modelPath);
+		model = svm.svm_load_model(modelFile);
 	}
 
-	@Override
 	public void saveModel(String modelPath) throws IOException
 	{
 		Formatter formatter = new Formatter(new StringBuilder());

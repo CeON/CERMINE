@@ -1,6 +1,8 @@
 package pl.edu.icm.coansys.metaextr.textr;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -92,9 +94,9 @@ import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
 
 public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 
-	public SVMMetadataZoneClassifier(String modelPath) throws IOException {
+	public SVMMetadataZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws IOException {
 		super(getFeatureVectorBuilder());
-		loadModel(modelPath);
+		loadModel(modelFile, rangeFile);
 	}
 
 	
@@ -185,10 +187,17 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 	}
 
 	public static void main(String[] args) throws AnalysisException, IOException {
-		// args[0] path to the model like "/path/to/my/model_file
-		// args[1] path to xml directory
+		// args[0] path to the directory containing XML files
+		InputStreamReader modelISR = new InputStreamReader(args.getClass()
+				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_metadata_classifier"));
+		BufferedReader modelFile = new BufferedReader(modelISR);
 		
-		ZoneClassifier classifier = new SVMMetadataZoneClassifier(args[0]);
+		InputStreamReader rangeISR = new InputStreamReader(args.getClass()
+				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_metadata_classifier.range"));
+		BufferedReader rangeFile = new BufferedReader(rangeISR);
+		
+		SVMZoneClassifier classifier = new SVMMetadataZoneClassifier(modelFile, rangeFile);
+		
 		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[1]);
 		for(BxDocument doc: docs) {
 			classifier.classifyZones(doc);

@@ -28,16 +28,6 @@ public class PipelineClassifier implements ZoneClassifier {
 		return ret;
 	}
 
-	@Override
-	public void loadModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void saveModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-	}
-
 	public static abstract class PickyClassifier implements ZoneClassifier {
 		SVMZoneClassifier classifier;
 		
@@ -56,12 +46,5 @@ public class PipelineClassifier implements ZoneClassifier {
 					zone.setLabel(classifier.predictZoneLabel(zone));
 			return document;
 		}
-
-		@Override
-		public void loadModel(String modelPath) throws IOException { }
-
-		@Override
-		public void saveModel(String modelPath) throws IOException { }
-		
 	}
 }

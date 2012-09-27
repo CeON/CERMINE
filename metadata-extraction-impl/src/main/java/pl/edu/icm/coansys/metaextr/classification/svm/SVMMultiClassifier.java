@@ -104,16 +104,4 @@ public class SVMMultiClassifier extends SVMZoneClassifier {
 				classifierMatrix.put(coord, clas);
 			}
 	}
-	
-	@Override
-	public void loadModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void saveModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-	}
-
 }

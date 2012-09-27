@@ -17,7 +17,4 @@ import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
 public interface ZoneClassifier {
 
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException;
-//	public void classifyZones(List<BxZone> elements);
-	public void loadModel(String modelPath) throws IOException;
-	public void saveModel(String modelPath) throws IOException;
 }

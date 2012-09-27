@@ -89,19 +89,4 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
 	private void chooseBestLabels(BxDocument document, List<Map<BxZoneLabel, Integer>> votesForZones) {
 		chooseBestLabels(document.asZones(), votesForZones);
 	}
-
-
-	@Override
-	public void loadModel(String modelPath) throws IOException {
-		
-	}
-
-
-	@Override
-	public void saveModel(String modelPath) throws IOException {
-		
-	}
-
-
-
 }

@@ -98,16 +98,4 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
 		//build a classifier for ultimate recognition
 		ultimateClassifier.buildClassifier(trainingElements);
 	}
-	
-	@Override
-	public void loadModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void saveModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-	}
-
 }

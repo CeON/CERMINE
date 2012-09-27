@@ -1,5 +1,6 @@
 package pl.edu.icm.coansys.metaextr.metadata.evaluation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -179,7 +180,7 @@ public class SVMMetadataClassificationEvaluator extends
 	}
 	
 	@Override
-	protected SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) {
+	protected SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException {
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
 		
 		Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
@@ -210,12 +211,14 @@ public class SVMMetadataClassificationEvaluator extends
 		zoneClassifier.setParameter(param);
 
 		zoneClassifier.buildClassifier(trainingElements);
+		zoneClassifier.saveModel("metadata_classifier");
 		zoneClassifier.printWeigths(featureVectorBuilder);
 
 		return zoneClassifier;
 	}
 
-	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException {
+	public static void main(String[] args) 
+			throws ParseException, RuntimeException, AnalysisException, IOException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMMetadataClassificationEvaluator());
 	}
 

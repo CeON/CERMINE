@@ -22,7 +22,6 @@ import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
 public class HMMInitialZoneClassifier implements ZoneClassifier {
 
     private HMMZoneClassifier hmmZoneClassifier;
-    
 
     public HMMInitialZoneClassifier(HMMService hmmService, HMMProbabilityInfo<BxZoneLabel> labelProbabilities,
             FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) {
@@ -33,17 +32,4 @@ public class HMMInitialZoneClassifier implements ZoneClassifier {
     public BxDocument classifyZones(BxDocument document) throws AnalysisException {
         return hmmZoneClassifier.classifyZones(document);
     }
-
-	@Override
-	public void loadModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void saveModel(String modelPath) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

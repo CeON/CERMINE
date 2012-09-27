@@ -1,6 +1,6 @@
-package pl.edu.icm.coansys.metaextr.bibref;
+package pl.edu.icm.coansys.metaextr.bibref.transformers;
 
-import pl.edu.icm.coansys.metaextr.bibref.BibTeXToBibEntryTransformer;
+import pl.edu.icm.coansys.metaextr.bibref.transformers.BibTeXToBibEntryTransformer;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;

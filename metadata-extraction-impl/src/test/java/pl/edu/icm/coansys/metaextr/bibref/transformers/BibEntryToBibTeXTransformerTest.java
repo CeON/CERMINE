@@ -1,6 +1,6 @@
-package pl.edu.icm.coansys.metaextr.bibref;
+package pl.edu.icm.coansys.metaextr.bibref.transformers;
 
-import pl.edu.icm.coansys.metaextr.bibref.BibEntryToBibTeXTransformer;
+import pl.edu.icm.coansys.metaextr.bibref.transformers.BibEntryToBibTeXTransformer;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;

@@ -1,15 +1,18 @@
 package pl.edu.icm.coansys.metaextr.bibref;
 
-import pl.edu.icm.coansys.metaextr.bibref.BibReferenceExtractor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.bibref.extraction.features.*;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.tools.BibRefExtractionUtils;
 import pl.edu.icm.coansys.metaextr.classification.clustering.CompleteLinkageClusterizer;
 import pl.edu.icm.coansys.metaextr.classification.clustering.FeatureVectorClusterizer;
+import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.classification.metrics.FeatureVectorEuclideanMetric;
 import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
@@ -21,13 +24,18 @@ import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
  */
 public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
 
-    private FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder;
-    
     private double maxDistance = 1.2;
-
- 
-    public ClusteringBibReferenceExtractor(FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {
-        this.featureVectorBuilder = featureVectorBuilder;
+    
+    private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder =
+                new SimpleFeatureVectorBuilder<BxLine, BxDocumentBibReferences>();
+    static {
+        featureVectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxDocumentBibReferences>>asList(
+                new PrevEndsWithDotFeature(),
+                new RelativeLengthFeature(),
+                new RelativeStartTresholdFeature(),
+                new SpaceBetweenLinesFeature(),
+                new StartsWithNumberFeature()
+                ));
     }
 
     @Override
@@ -65,10 +73,6 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
         }
             
         return references.toArray(new String[]{});
-    }
-
-    public void setFeatureVectorBuilder(FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {
-        this.featureVectorBuilder = featureVectorBuilder;
     }
 
     public void setMaxDistance(double maxDistance) {

@@ -21,9 +21,6 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     /** list of zone's text chunks (if the zone is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
     
-    private BxPage contextPage;
-
-
     @Override
     public Boolean isSorted() {
     	if(!isSorted)

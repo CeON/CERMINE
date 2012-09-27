@@ -28,6 +28,13 @@ public class BxDocsToHMMConverter {
 
     private Map<BxZoneLabel, BxZoneLabel> labelMap;
 
+    public BxDocsToHMMConverter() {}
+
+    public BxDocsToHMMConverter(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder, Map<BxZoneLabel, BxZoneLabel> labelMap) {
+    	this.featureVectorBuilder = featureVectorBuilder;
+    	this.labelMap = labelMap;
+    }
+    
     public List<TrainingElement<BxZoneLabel>> process(List<BxDocument> documents) throws AnalysisException {
         List<TrainingElement<BxZoneLabel>> trainingList =
                 new ArrayList<TrainingElement<BxZoneLabel>>(documents.size());

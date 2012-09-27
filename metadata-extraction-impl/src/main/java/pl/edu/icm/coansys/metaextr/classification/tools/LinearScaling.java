@@ -29,6 +29,7 @@ public class LinearScaling implements ScalingStrategy {
 				Double b = scaledLowerBound-a*limits[featureIdx].getMin();
 				
 				featureValue = a*featureValue+b; 
+				assert featureValue != Double.NaN;
 				newVector.addFeature(name, featureValue);
 			}
 			++featureIdx;

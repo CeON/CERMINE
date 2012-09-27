@@ -109,12 +109,12 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		if(features == null) {
 			features = (String[])trainingElements.get(0).getObservation().getFeatureNames().toArray(new String[1]);
 		}
-		scaler.setFeatureLimits(trainingElements);
+		scaler.calculateFeatureLimits(trainingElements);
 		problem = buildDatasetForTraining(trainingElements);
 		model = libsvm.svm.svm_train(problem, param);
 	}
 	
-	BxZoneLabel predictZoneLabel(BxZone zone) {
+	public BxZoneLabel predictZoneLabel(BxZone zone) {
 		svm_node[] instance = buildDatasetForClassification(zone);
 		double predictedVal = svm.svm_predict(model, instance);
 		return BxZoneLabel.values()[(int)predictedVal];
@@ -241,6 +241,8 @@ public class SVMZoneClassifier implements ZoneClassifier {
 				limits.add(newLimit);
 			}
 			scaler = new FeatureVectorScaler(limits.size(), scaledLowerBound, scaledUpperBound);
+			scaler.setStrategy(new LinearScaling());
+			scaler.setFeatureLimits(limits);
 		} else {
 			throw new RuntimeException("y scaling not supported");
 		}

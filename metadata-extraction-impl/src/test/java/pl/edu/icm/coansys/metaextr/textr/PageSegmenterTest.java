@@ -26,7 +26,7 @@ public class PageSegmenterTest extends AbstractDocumentProcessorTest {
     protected static double testSuccessPercentage = 0;
     protected static double boundsTolerance = 20;
     protected static String[] testResources = {"/pl/edu/icm/coansys/metaextr/textr/001.xml"};
-    protected static String[] zipResources = {"/pl/edu/icm/coansys/metaextr/textr/marg.zip"};
+    protected static String[] zipResources = {"/pl/edu/icm/coansys/metaextr/textr/margSmallSample.zip"};
 
     @Before
     public void setUp() {
@@ -39,7 +39,7 @@ public class PageSegmenterTest extends AbstractDocumentProcessorTest {
         testFiles(Arrays.asList(testResources), testSuccessPercentage);
     }
 
-    //@Test
+    @Test
     public void xyCutSampleFilesFromZipTest() throws IOException, ParserConfigurationException, SAXException,
             URISyntaxException, ZipException, AnalysisException, TransformationException {
         testSampleFilesFromZip(Arrays.asList(zipResources), testSuccessPercentage);

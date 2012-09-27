@@ -2,6 +2,7 @@ package pl.edu.icm.coansys.metaextr.metadata.optimization;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.security.InvalidParameterException;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
@@ -89,13 +90,15 @@ public class LibSVMExporter {
 			evaluator = new SVMInitialZoneClassificationEvaluator();
 			node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
 			category = BxZoneLabelCategory.CAT_GENERAL;
-		} else { //line.hasOption("meta")) 
+		} else if(line.hasOption("meta")) {
 			evaluator = new SVMMetadataClassificationEvaluator();
 			category = BxZoneLabelCategory.CAT_METADATA;
 			for(BxDocument doc: evaluationDocs)
 				for(BxZone zone: doc.asZones())
 					if(zone.getLabel().getCategory() != BxZoneLabelCategory.CAT_METADATA)
 						zone.setLabel(zone.getLabel().getGeneralLabel());
+		} else {
+			throw new InvalidParameterException("Extraction purpose not specified!");
 		}
 		
 		SampleSelector<BxZoneLabel> selector = null;

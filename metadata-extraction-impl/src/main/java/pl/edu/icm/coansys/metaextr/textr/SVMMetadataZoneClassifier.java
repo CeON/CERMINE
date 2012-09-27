@@ -198,7 +198,7 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 		
 		SVMZoneClassifier classifier = new SVMMetadataZoneClassifier(modelFile, rangeFile);
 		
-		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[1]);
+		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[0]);
 		for(BxDocument doc: docs) {
 			classifier.classifyZones(doc);
 			// Attention!

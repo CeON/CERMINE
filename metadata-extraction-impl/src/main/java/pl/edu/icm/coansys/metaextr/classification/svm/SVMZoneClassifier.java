@@ -24,11 +24,12 @@ import org.apache.commons.lang.ArrayUtils;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVector;
 import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
 import pl.edu.icm.coansys.metaextr.classification.tools.FeatureLimits;
 import pl.edu.icm.coansys.metaextr.classification.tools.FeatureVectorScaler;
 import pl.edu.icm.coansys.metaextr.classification.tools.LinearScaling;
+import pl.edu.icm.coansys.metaextr.textr.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.textr.ReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.textr.ZoneClassifier;
 import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
@@ -123,6 +124,9 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{       
+        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
+        document = ror.resolve(document);
+        
 		for (BxZone zone: document.asZones()) {
 			svm_node[] instance = buildDatasetForClassification(zone);
 			double predictedVal = svm.svm_predict(model, instance);

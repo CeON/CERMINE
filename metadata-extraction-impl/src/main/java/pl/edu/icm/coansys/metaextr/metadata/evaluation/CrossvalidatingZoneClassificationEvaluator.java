@@ -204,7 +204,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 			
 			ClassificationResults iterationResults = newResults();
 			
-			ZoneClassifier zoneClassifier = getZoneClassifier(trainingDocuments);
+			ZoneClassifier zoneClassifier = getZoneClassifier(BxModelUtils.deepClone(trainingDocuments));
 
 			for (BxDocument testDocument: testDocuments) {
 				BxDocument processedDocument = BxModelUtils.deepClone(testDocument);
@@ -222,6 +222,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 					System.exit(1);
 				}
 				preprocessDocumentForEvaluation(testDocument);
+				BxModelUtils.setReadingOrder(testDocument);
 				documentResults = compareDocuments(testDocument, processedDocument);
 				if (detail != Detail.MINIMAL) {
 					printDocumentResults(documentResults);

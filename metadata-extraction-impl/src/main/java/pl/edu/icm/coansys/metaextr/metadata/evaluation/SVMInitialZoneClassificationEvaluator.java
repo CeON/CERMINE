@@ -28,13 +28,13 @@ import pl.edu.icm.coansys.metaextr.structure.tools.InitiallyClassifiedZonesPrepr
 
 public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator{ 
 	@Override
-	protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments)
+	protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException
 	{
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
-		for(BxDocument doc: trainingDocuments)
-			for(BxZone zone: doc.asZones())
-				if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER)
-					zone.setLabel(BxZoneLabel.GEN_BODY);
+//		for(BxDocument doc: trainingDocuments)
+//			for(BxZone zone: doc.asZones())
+//				if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER)
+//					zone.setLabel(BxZoneLabel.GEN_BODY);
 		
         BxDocsToHMMConverter node = new BxDocsToHMMConverter(featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
         
@@ -63,9 +63,8 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 		param.degree = 4;
 		param.kernel_type = svm_parameter.POLY;
 
-        zoneClassifier.buildClassifier(trainingElements);
 		zoneClassifier.setParameter(param);
-//        zoneClassifier.loadModel(modelPath, rangeFilePath);
+        zoneClassifier.buildClassifier(trainingElements);
         zoneClassifier.printWeigths(featureVectorBuilder);
 		return zoneClassifier;
 	}
@@ -88,9 +87,9 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 	@Override
 	protected void preprocessDocumentForEvaluation(BxDocument doc) {
 		for(BxZone zone: doc.asZones()) {
-			if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER)
-				zone.setLabel(BxZoneLabel.GEN_BODY);
-			else
+//			if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER)
+//				zone.setLabel(BxZoneLabel.GEN_BODY);
+//			else
 				zone.setLabel(zone.getLabel().getGeneralLabel());
 		}
 	}

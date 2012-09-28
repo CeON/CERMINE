@@ -72,8 +72,8 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
     protected static final double testSuccessPercentage = 90;
 
-    protected static final String hmmProbabilitiesFile = "/pl/edu/icm/yadda/analysis/textr/hmmZoneProbabilities.xml";
-    protected static final String[] zipResources = {"/pl/edu/icm/yadda/analysis/textr/margSmallSample.zip"};
+    protected static final String hmmProbabilitiesFile = "pl/edu/icm/coansys/metaextr/textr/hmmZoneProbabilities.xml";
+    protected static final String[] zipResources = {"pl/edu/icm/coansys/metaextr/textr/margSmallSample.zip"};
 
     private HMMService hmmService = new HMMServiceImpl();
     private ZoneClassifier zoneClassifier;
@@ -133,10 +133,10 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
         zoneClassifier = new HMMZoneClassifier(hmmService, hmmProbabilities, vBuilder);
     }
-    @Ignore("XMLe zawarte w margSmallExample.zip sa nie dokonca prawidlowe." +
-    		"Po zmianie reading orderu, RO w plikach wzoracowych i przetwarzanych" +
-    		"jest inny. W moim odczuciu kolejnosc ustalana przez nowy RO jest" +
-    		"lepsza ")
+//    @Ignore("XMLe zawarte w margSmallExample.zip sa nie dokonca prawidlowe." +
+//    		"Po zmianie reading orderu, RO w plikach wzoracowych i przetwarzanych" +
+//    		"jest inny. W moim odczuciu kolejnosc ustalana przez nowy RO jest" +
+//    		"lepsza ")
     @Test
     public void hmmZonesClassifierTest() throws URISyntaxException, ZipException, IOException, 
             ParserConfigurationException, SAXException, AnalysisException, TransformationException {

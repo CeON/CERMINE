@@ -1,7 +1,7 @@
 package pl.edu.icm.coansys.metaextr.metadata;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 
 /**
  * Extracting metadata from labelled zones. 

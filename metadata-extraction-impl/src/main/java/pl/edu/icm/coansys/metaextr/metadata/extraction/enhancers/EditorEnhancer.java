@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom.Element;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 /**
  *

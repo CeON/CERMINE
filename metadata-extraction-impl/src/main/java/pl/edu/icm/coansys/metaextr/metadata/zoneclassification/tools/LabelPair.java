@@ -1,6 +1,6 @@
 package pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools;
 
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 public class LabelPair {
 	public BxZoneLabel l1, l2;

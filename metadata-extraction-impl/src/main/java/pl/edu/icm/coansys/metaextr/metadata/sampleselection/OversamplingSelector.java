@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 
 
 public class OversamplingSelector<S> implements SampleSelector<S> {

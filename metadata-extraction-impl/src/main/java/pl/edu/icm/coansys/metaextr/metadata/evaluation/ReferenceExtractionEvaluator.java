@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import pl.edu.icm.coansys.metaextr.bibref.BibReferenceExtractor;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.transformers.TrueVizToBxDocumentReader;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  *

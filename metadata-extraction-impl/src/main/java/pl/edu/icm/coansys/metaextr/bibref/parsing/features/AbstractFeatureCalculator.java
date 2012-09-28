@@ -3,9 +3,9 @@ package pl.edu.icm.coansys.metaextr.bibref.parsing.features;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 
 public abstract class AbstractFeatureCalculator<S,T> implements FeatureCalculator<S, T> {
 	@Override

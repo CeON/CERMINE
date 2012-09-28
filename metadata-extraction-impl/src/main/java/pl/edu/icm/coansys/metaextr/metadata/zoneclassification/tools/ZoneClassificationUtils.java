@@ -1,11 +1,11 @@
 package pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools;
 
 import java.util.Map;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.tools.BxBoundsBuilder;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxBoundsBuilder;
 
 /**
  * Zone classification utility class.

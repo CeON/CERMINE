@@ -8,7 +8,7 @@ import org.jdom.Element;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.EnhancedField;
 import pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.Enhancer;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 
 /**
  * Extracting metadata from labelled zones. 

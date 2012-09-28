@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 
 /**
  *

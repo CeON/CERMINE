@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.LabelPair;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults>
 {

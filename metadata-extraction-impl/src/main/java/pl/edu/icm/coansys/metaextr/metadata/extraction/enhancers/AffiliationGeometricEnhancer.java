@@ -1,10 +1,16 @@
 package pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers;
 
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
+import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 import com.google.common.collect.Sets;
 import java.util.*;
 import java.util.regex.Pattern;
 import org.jdom.Element;
-import pl.edu.icm.coansys.metaextr.textr.model.*;
 
 /**
  *

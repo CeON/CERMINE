@@ -6,10 +6,10 @@ import java.util.Set;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.Citation;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationToken;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.SimpleTrainingElement;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.SimpleTrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 
 /**
  * Citations to HMM training elements converter node. The observations emitted

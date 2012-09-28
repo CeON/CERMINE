@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 
 /**
  * Stores BxDocument's bibliographic references lines with their labels.

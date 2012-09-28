@@ -40,15 +40,15 @@ import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.Lowercas
 import java.io.*;
 import java.util.Arrays;
 import pl.edu.icm.coansys.metaextr.TransformationException;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.transformers.TrueVizToBxDocumentReader;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  * Converts XML to Mallet format. The result of a conversion will be one txt file

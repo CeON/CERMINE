@@ -94,24 +94,24 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.SampleSelector;
-import pl.edu.icm.coansys.metaextr.textr.HierarchicalReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.textr.ReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.textr.ZoneClassifier;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.tools.BxModelUtils;
-import pl.edu.icm.coansys.metaextr.textr.tools.DocumentPreprocessor;
-import pl.edu.icm.coansys.metaextr.textr.tools.InitiallyClassifiedZonesPreprocessor;
-import pl.edu.icm.coansys.metaextr.textr.tools.UnclassifiedZonesPreprocessor;
-import pl.edu.icm.coansys.metaextr.textr.transformers.BxDocumentToTrueVizWriter;
-import pl.edu.icm.coansys.metaextr.textr.transformers.TrueVizToBxDocumentReader;
+import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
+import pl.edu.icm.coansys.metaextr.structure.tools.DocumentPreprocessor;
+import pl.edu.icm.coansys.metaextr.structure.tools.InitiallyClassifiedZonesPreprocessor;
+import pl.edu.icm.coansys.metaextr.structure.tools.UnclassifiedZonesPreprocessor;
+import pl.edu.icm.coansys.metaextr.structure.transformers.BxDocumentToTrueVizWriter;
+import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  * Class for performing cross-validating classifier performance in

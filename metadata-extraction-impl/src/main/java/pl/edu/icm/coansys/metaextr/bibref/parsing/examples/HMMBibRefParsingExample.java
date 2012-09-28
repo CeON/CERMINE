@@ -60,14 +60,14 @@ import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationToken;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.tools.CitationsToHMMConverter;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.tools.NlmCitationExtractor;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.hmm.HMMService;
-import pl.edu.icm.coansys.metaextr.classification.hmm.HMMServiceImpl;
-import pl.edu.icm.coansys.metaextr.classification.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.coansys.metaextr.classification.hmm.probability.HMMProbabilityInfoFactory;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMService;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMServiceImpl;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfoFactory;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 
 /**
  * HMM-based bibliographic reference parsing example.

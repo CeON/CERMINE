@@ -42,20 +42,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import pl.edu.icm.coansys.metaextr.TransformationException;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.hmm.HMMServiceImpl;
-import pl.edu.icm.coansys.metaextr.classification.hmm.HMMZoneClassifier;
-import pl.edu.icm.coansys.metaextr.classification.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.coansys.metaextr.classification.hmm.probability.HMMProbabilityInfoFactory;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.classification.tools.FileExtractor;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMServiceImpl;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMZoneClassifier;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfoFactory;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.tools.FileExtractor;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 /**
  *

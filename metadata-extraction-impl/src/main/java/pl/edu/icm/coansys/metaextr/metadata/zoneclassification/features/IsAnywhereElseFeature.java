@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.icm.coansys.metaextr.bibref.parsing.features.AbstractFeatureCalculator;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 
 public class IsAnywhereElseFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 

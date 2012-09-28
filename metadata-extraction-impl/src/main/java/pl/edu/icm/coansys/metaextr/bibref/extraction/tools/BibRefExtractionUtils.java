@@ -1,17 +1,17 @@
 package pl.edu.icm.coansys.metaextr.bibref.extraction.tools;
 
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabelCategory;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import java.util.ArrayList;
 import java.util.List;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
-import pl.edu.icm.coansys.metaextr.textr.HierarchicalReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.textr.ReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
 
 /**
  * Bibliographic reference extraction utility class.

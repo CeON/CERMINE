@@ -10,21 +10,21 @@ import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.classification.svm.SVMZoneClassifier;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.svm.SVMZoneClassifier;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.SillyUndersamplingSelector;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.UndersamplingSelector;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.OversamplingSelector;
 import pl.edu.icm.coansys.metaextr.metadata.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
-import pl.edu.icm.coansys.metaextr.textr.ZoneClassifier;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabelCategory;
-import pl.edu.icm.coansys.metaextr.textr.tools.InitiallyClassifiedZonesPreprocessor;
+import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
+import pl.edu.icm.coansys.metaextr.structure.tools.InitiallyClassifiedZonesPreprocessor;
 
 public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator{ 
 	@Override

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 public class UndersamplingSelector<S> implements SampleSelector<S> {
 	private Double inequalityFactor;

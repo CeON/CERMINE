@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 
 public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
 	private List<S> zoneLabels;

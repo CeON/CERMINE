@@ -4,16 +4,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.classification.tools.DirExtractor;
-import pl.edu.icm.coansys.metaextr.classification.tools.DocumentsExtractor;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.tools.DirExtractor;
+import pl.edu.icm.coansys.metaextr.tools.classification.tools.DocumentsExtractor;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.tools.DocumentPreprocessor;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.tools.DocumentPreprocessor;
 
 public class EvaluationUtils {
     public static List<BxDocument> getDocumentsFromPath(String inputDirPath)

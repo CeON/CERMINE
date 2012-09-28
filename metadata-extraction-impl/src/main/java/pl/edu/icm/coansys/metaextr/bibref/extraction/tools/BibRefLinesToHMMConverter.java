@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.SimpleTrainingElement;
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.SimpleTrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 
 /**
  * Bibliographic references' lines to HMM training elements converter node.

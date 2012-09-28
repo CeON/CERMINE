@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 
 class DividedEvaluationSet
 {

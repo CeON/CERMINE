@@ -1,8 +1,8 @@
 package pl.edu.icm.coansys.metaextr.bibref.extraction.features;
 
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 
 /**
  *

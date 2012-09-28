@@ -3,10 +3,10 @@ package pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers;
 import com.google.common.collect.Sets;
 import java.util.*;
 import org.jdom.Element;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 /**
  *

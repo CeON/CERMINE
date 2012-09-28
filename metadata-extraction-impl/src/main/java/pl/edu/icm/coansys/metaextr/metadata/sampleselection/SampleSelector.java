@@ -2,7 +2,7 @@ package pl.edu.icm.coansys.metaextr.metadata.sampleselection;
 
 import java.util.List;
 
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 
 /**
  * Interface for picking samples according to a certain strategy from the

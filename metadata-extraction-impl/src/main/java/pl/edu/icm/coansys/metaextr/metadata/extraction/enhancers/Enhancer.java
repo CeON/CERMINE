@@ -2,7 +2,7 @@ package pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers;
 
 import java.util.Set;
 import org.jdom.Element;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 
 /**
  *

@@ -3,9 +3,9 @@ package pl.edu.icm.coansys.metaextr.metadata.sampleselection;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.icm.coansys.metaextr.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabelCategory;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
 
 public class SampleFilter implements SampleSelector<BxZoneLabel> {
 	BxZoneLabelCategory category;

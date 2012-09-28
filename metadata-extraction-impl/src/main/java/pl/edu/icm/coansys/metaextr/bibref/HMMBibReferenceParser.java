@@ -10,11 +10,11 @@ import pl.edu.icm.coansys.metaextr.bibref.parsing.model.Citation;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationToken;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.tools.CitationUtils;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.hmm.HMMService;
-import pl.edu.icm.coansys.metaextr.classification.hmm.HMMStorage;
-import pl.edu.icm.coansys.metaextr.classification.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMService;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMStorage;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
 
 /**
  * Hidden Markov Models-based citation parser.

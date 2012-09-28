@@ -7,15 +7,15 @@ import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.features.*;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.tools.BibRefExtractionUtils;
-import pl.edu.icm.coansys.metaextr.classification.clustering.CompleteLinkageClusterizer;
-import pl.edu.icm.coansys.metaextr.classification.clustering.FeatureVectorClusterizer;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.features.SimpleFeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.classification.metrics.FeatureVectorEuclideanMetric;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
+import pl.edu.icm.coansys.metaextr.tools.classification.clustering.CompleteLinkageClusterizer;
+import pl.edu.icm.coansys.metaextr.tools.classification.clustering.FeatureVectorClusterizer;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.metrics.FeatureVectorEuclideanMetric;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 
 /**
  * Clustering-based bibliographic reference extractor.

@@ -13,20 +13,20 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.textr.HierarchicalReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.textr.PageSegmenter;
-import pl.edu.icm.coansys.metaextr.textr.ReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.textr.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.textr.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.textr.model.BxLine;
-import pl.edu.icm.coansys.metaextr.textr.model.BxPage;
-import pl.edu.icm.coansys.metaextr.textr.model.BxWord;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZone;
-import pl.edu.icm.coansys.metaextr.textr.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.textr.tools.BxModelUtils;
-import pl.edu.icm.coansys.metaextr.textr.tools.UnsegmentedPagesFlattener;
-import pl.edu.icm.coansys.metaextr.textr.transformers.BxDocumentToTrueVizWriter;
-import pl.edu.icm.coansys.metaextr.textr.transformers.TrueVizToBxDocumentReader;
+import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.PageSegmenter;
+import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
+import pl.edu.icm.coansys.metaextr.structure.tools.UnsegmentedPagesFlattener;
+import pl.edu.icm.coansys.metaextr.structure.transformers.BxDocumentToTrueVizWriter;
+import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  *

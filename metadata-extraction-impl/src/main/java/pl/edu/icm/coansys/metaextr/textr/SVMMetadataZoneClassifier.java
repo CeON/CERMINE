@@ -103,6 +103,18 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 		loadModel(modelFile, rangeFile);
 	}
 
+	public SVMMetadataZoneClassifier(String modelFilePath, String rangeFilePath) throws IOException {
+		super(getFeatureVectorBuilder());
+		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
+				.getResourceAsStream(modelFilePath));
+		BufferedReader modelFile = new BufferedReader(modelISR);
+		
+		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
+				.getResourceAsStream(rangeFilePath));
+		BufferedReader rangeFile = new BufferedReader(rangeISR);
+		loadModel(modelFile, rangeFile);
+	}
+
 	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
 		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
 		vectorBuilder.setFeatureCalculators(Arrays
@@ -170,11 +182,11 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 
 	public static void main(String[] args) throws AnalysisException, IOException {
 		// args[0] path to the directory containing XML files
-		InputStreamReader modelISR = new InputStreamReader(args.getClass()
+		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_metadata_classifier"));
 		BufferedReader modelFile = new BufferedReader(modelISR);
 		
-		InputStreamReader rangeISR = new InputStreamReader(args.getClass()
+		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_metadata_classifier.range"));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
 		

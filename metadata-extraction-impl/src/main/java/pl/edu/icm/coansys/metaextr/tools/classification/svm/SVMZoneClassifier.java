@@ -41,10 +41,10 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	static {
 		// default values
 		defaultParameter.svm_type = svm_parameter.C_SVC;
-		defaultParameter.C = 2048;
+		defaultParameter.C = 8;
 		defaultParameter.kernel_type = svm_parameter.POLY;
 		defaultParameter.degree = 3;
-		defaultParameter.gamma = 128; // 1/k
+		defaultParameter.gamma = 1.0/8.0; // 1/k
 		defaultParameter.coef0 = 0.5;
 		defaultParameter.nu = 0.5;
 		defaultParameter.cache_size = 100;

@@ -2,39 +2,23 @@ package pl.edu.icm.coansys.metaextr.tools.classification.svm;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import libsvm.svm;
-import libsvm.svm_model;
-import libsvm.svm_node;
-import libsvm.svm_parameter;
-import libsvm.svm_problem;
-
+import java.util.*;
+import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
-import org.apache.commons.lang.ArrayUtils;
-
 import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.FeatureLimits;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.FeatureVectorScaler;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.LinearScaling;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 public class SVMZoneClassifier implements ZoneClassifier {
 	final protected static svm_parameter defaultParameter = new svm_parameter();		
@@ -124,13 +108,15 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{       
-        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-        document = ror.resolve(document);
-        
-		for (BxZone zone: document.asZones()) {
+        for (BxPage page : document.getPages()) {
+            for (BxZone zone : page.getZones()) {
+                zone.setContext(page);
+            }
+        }
+    	for (BxZone zone: document.asZones()) {
 			svm_node[] instance = buildDatasetForClassification(zone);
 			double predictedVal = svm.svm_predict(model, instance);
-			System.out.println("predictedVal " + predictedVal + " " + BxZoneLabel.values()[(int)predictedVal] + " (is " + zone.getLabel() + ")");
+//			System.out.println("predictedVal " + predictedVal + " " + BxZoneLabel.values()[(int)predictedVal] + " (is " + zone.getLabel() + ")");
 			zone.setLabel(BxZoneLabel.values()[(int)predictedVal]);
 		}
 		return document;

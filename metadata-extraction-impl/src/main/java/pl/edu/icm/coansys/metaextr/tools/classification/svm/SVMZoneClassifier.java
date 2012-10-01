@@ -127,12 +127,6 @@ public class SVMZoneClassifier implements ZoneClassifier {
         ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
         document = ror.resolve(document);
         
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
-                zone.setContext(page);
-            }
-        }
-        
 		for (BxZone zone: document.asZones()) {
 			svm_node[] instance = buildDatasetForClassification(zone);
 			double predictedVal = svm.svm_predict(model, instance);

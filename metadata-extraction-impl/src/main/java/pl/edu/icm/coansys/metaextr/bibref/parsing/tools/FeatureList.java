@@ -47,7 +47,7 @@ import pl.edu.icm.coansys.metaextr.bibref.parsing.model.Citation;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationToken;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 
 /**
  *

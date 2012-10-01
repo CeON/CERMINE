@@ -96,7 +96,7 @@ import org.apache.commons.cli.ParseException;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;

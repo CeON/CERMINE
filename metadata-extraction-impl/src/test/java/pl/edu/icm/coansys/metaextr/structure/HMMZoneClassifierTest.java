@@ -54,7 +54,7 @@ import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.TransformationException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMService;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMZoneClassifier;

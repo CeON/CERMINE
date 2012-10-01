@@ -43,7 +43,7 @@ import pl.edu.icm.coansys.metaextr.TransformationException;
 import pl.edu.icm.coansys.metaextr.content.model.DocumentContentStructure;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnModel;
 import pl.edu.icm.coansys.metaextr.structure.readingorder.ReadingOrderAnalyzer;
 import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;

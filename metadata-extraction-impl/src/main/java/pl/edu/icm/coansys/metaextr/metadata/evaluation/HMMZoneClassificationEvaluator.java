@@ -18,7 +18,7 @@ import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMZoneClassifier;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfoFactory;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.metadata.sampleselection.SampleSelector;
+import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 
 /*

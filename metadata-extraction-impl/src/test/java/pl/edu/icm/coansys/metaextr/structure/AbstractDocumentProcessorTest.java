@@ -16,7 +16,7 @@ import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.tools.DocumentPreprocessor;
-import pl.edu.icm.coansys.metaextr.structure.transformers.MargToTextrImporter;
+import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  *
@@ -104,16 +104,15 @@ public abstract class AbstractDocumentProcessorTest {
     private void testCollection(List<Reader> testReaders, List<Reader> expectedReaders, double percentage)
             throws IOException, ParserConfigurationException, SAXException, AnalysisException, TransformationException {
         int passed = 0;
-        MargToTextrImporter reader = new MargToTextrImporter();
+        TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         for (int i = 0; i < testReaders.size(); i++) {
             BxDocument testDoc = new BxDocument().setPages(reader.read(testReaders.get(i)));
             BxDocument expectedDoc = new BxDocument().setPages(reader.read(expectedReaders.get(i)));
-
+            
             if (checkDocument(testDoc, expectedDoc)) {
                 passed++;
             }
         }
-        System.out.println(passed + " of " + testReaders.size() + " files passed the test.");
 
         if (!testReaders.isEmpty()) {
             assertTrue((double) passed * 100.0f / (double) testReaders.size() >= percentage);

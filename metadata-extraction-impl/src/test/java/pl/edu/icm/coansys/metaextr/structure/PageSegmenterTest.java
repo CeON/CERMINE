@@ -62,6 +62,7 @@ public class PageSegmenterTest extends AbstractDocumentProcessorTest {
             BxPage expectedPage = expectedDoc.getPages().get(i);
 
             if (!testPage.getChunks().isEmpty() || !expectedPage.getChunks().isEmpty()) {
+            	System.out.println("Chunk is empty!");
                 return false;
             }
 

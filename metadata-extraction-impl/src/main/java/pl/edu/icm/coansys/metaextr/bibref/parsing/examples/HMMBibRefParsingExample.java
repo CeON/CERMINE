@@ -62,7 +62,7 @@ import pl.edu.icm.coansys.metaextr.bibref.parsing.tools.CitationsToHMMConverter;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.tools.NlmCitationExtractor;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMService;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;

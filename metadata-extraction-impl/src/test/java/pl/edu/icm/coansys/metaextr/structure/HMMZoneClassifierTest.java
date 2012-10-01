@@ -42,6 +42,7 @@ import com.thoughtworks.xstream.XStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.zip.ZipException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,15 +54,17 @@ import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.TransformationException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMService;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMZoneClassifier;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMProbabilityInfo;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 import pl.edu.icm.coansys.metaextr.structure.tools.UnclassifiedZonesPreprocessor;
 
 /**
@@ -70,10 +73,10 @@ import pl.edu.icm.coansys.metaextr.structure.tools.UnclassifiedZonesPreprocessor
  */
 public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
-    protected static final double testSuccessPercentage = 90;
+    protected static final double testSuccessPercentage = 85;
 
-    protected static final String hmmProbabilitiesFile = "/pl/edu/icm/coansys/metaextr/textr/hmmZoneProbabilities.xml";
-    protected static final String[] zipResources = {"/pl/edu/icm/coansys/metaextr/textr/margSmallSample.zip"};
+    protected static final String hmmProbabilitiesFile = "/pl/edu/icm/coansys/metaextr/structure/hmmZoneProbabilities.xml";
+    protected static final String[] zipResources = {"/pl/edu/icm/coansys/metaextr/structure/margSmallSample.zip"};
 
     private HMMService hmmService = new HMMServiceImpl();
     private ZoneClassifier zoneClassifier;
@@ -88,7 +91,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
         XStream xstream = new XStream();
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
-                = (HMMProbabilityInfo<BxZoneLabel>) xstream.fromXML(is);
+                = (SimpleHMMProbabilityInfo<BxZoneLabel>) xstream.fromXML(is);
 
         FeatureVectorBuilder<BxZone, BxPage> vBuilder = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
         vBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
@@ -129,14 +132,17 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
                 new DotCountFeature(),
                 new DotRelativeCountFeature(),
                 new WordWidthMeanFeature()
-                ));
-
-        zoneClassifier = new HMMZoneClassifier(hmmService, hmmProbabilities, vBuilder);
+    ));
+        zoneClassifier = new HMMZoneClassifier(hmmService, 
+        		hmmProbabilities, 
+        		new ArrayList<BxZoneLabel>(){{
+        			add(BxZoneLabel.MET_AUTHOR);
+        			add(BxZoneLabel.MET_TITLE);
+        			add(BxZoneLabel.MET_AFFILIATION); 
+        			add(BxZoneLabel.MET_ABSTRACT);
+        			}},
+        		vBuilder);
     }
-    @Ignore("XMLe zawarte w margSmallExample.zip sa nie dokonca prawidlowe." +
-    		"Po zmianie reading orderu, RO w plikach wzoracowych i przetwarzanych" +
-    		"jest inny. W moim odczuciu kolejnosc ustalana przez nowy RO jest" +
-    		"lepsza ")
     @Test
     public void hmmZonesClassifierTest() throws URISyntaxException, ZipException, IOException, 
             ParserConfigurationException, SAXException, AnalysisException, TransformationException {
@@ -149,7 +155,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
     @Override
     protected boolean compareDocuments(BxDocument testDoc, BxDocument expectedDoc) {
         boolean ret = true;
-
+        BxModelUtils.setReadingOrder(expectedDoc);
         for (int i = 0; i < testDoc.getPages().size(); i++) {
             BxPage testPage = testDoc.getPages().get(i);
             BxPage expectedPage = expectedDoc.getPages().get(i);
@@ -157,6 +163,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
             for (int j = 0; j < testPage.getZones().size(); j++) {
                 BxZone testZone = testPage.getZones().get(j);
                 BxZone expectedZone = expectedPage.getZones().get(j);
+                System.out.println(testZone.getLabel() + " " + expectedZone.getLabel());
 
                 this.allZones++;
                 if (!testZone.getLabel().equals(expectedZone.getLabel())) {

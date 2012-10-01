@@ -9,7 +9,7 @@ import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.content.model.BxDocContentStructure;
 import pl.edu.icm.coansys.metaextr.content.model.DocumentContentStructure;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.knn.model.KnnModel;
+import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnModel;
 
 /**
  *

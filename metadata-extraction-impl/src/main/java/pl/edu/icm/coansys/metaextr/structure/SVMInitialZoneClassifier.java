@@ -2,7 +2,7 @@ package pl.edu.icm.coansys.metaextr.structure;
 
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.svm.SVMZoneClassifier;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.EvaluationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.AffiliationFeature;

@@ -1,10 +1,9 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.tools;
+package pl.edu.icm.coansys.metaextr.tools.classification.general;
 
 import java.util.List;
 import java.util.Set;
 
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 

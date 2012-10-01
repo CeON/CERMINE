@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.DirExtractor;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.DocumentsExtractor;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.DirExtractor;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.DocumentsExtractor;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;

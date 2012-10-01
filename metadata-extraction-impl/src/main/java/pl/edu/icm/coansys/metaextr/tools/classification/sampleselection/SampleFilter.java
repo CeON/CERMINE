@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr.metadata.sampleselection;
+package pl.edu.icm.coansys.metaextr.tools.classification.sampleselection;
 
 import java.util.ArrayList;
 import java.util.List;

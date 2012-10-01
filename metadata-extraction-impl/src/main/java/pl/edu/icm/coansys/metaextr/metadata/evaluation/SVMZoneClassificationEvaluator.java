@@ -11,12 +11,12 @@ import org.apache.commons.cli.ParseException;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.PipelineClassifier;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.PipelineClassifier.PickyClassifier;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.OversamplingSelector;
+import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.tools.classification.svm.SVMZoneClassifier;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.PipelineClassifier;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.PipelineClassifier.PickyClassifier;
-import pl.edu.icm.coansys.metaextr.metadata.sampleselection.OversamplingSelector;
-import pl.edu.icm.coansys.metaextr.metadata.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;

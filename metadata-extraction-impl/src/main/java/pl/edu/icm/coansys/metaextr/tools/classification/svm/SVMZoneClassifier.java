@@ -24,10 +24,10 @@ import org.apache.commons.lang.ArrayUtils;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.FeatureLimits;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.FeatureVectorScaler;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.LinearScaling;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.FeatureLimits;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.FeatureVectorScaler;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.LinearScaling;
 import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
@@ -41,10 +41,10 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	static {
 		// default values
 		defaultParameter.svm_type = svm_parameter.C_SVC;
-		defaultParameter.C = 2048;
+		defaultParameter.C = 8;
 		defaultParameter.kernel_type = svm_parameter.POLY;
 		defaultParameter.degree = 3;
-		defaultParameter.gamma = 128; // 1/k
+		defaultParameter.gamma = 1.0/8.0; // 1/k
 		defaultParameter.coef0 = 0.5;
 		defaultParameter.nu = 0.5;
 		defaultParameter.cache_size = 100;

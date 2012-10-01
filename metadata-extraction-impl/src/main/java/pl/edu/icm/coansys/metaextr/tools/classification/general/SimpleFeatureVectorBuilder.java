@@ -1,8 +1,7 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.features;
+package pl.edu.icm.coansys.metaextr.tools.classification.general;
 
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.SimpleFeatureVector;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

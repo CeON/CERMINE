@@ -1,23 +1,16 @@
 package pl.edu.icm.coansys.metaextr.structure;
 
-import pl.edu.icm.coansys.metaextr.structure.DocstrumPageSegmenter;
 import java.io.InputStream;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.structure.transformers.MargToTextrImporter;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
+import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.TransformationException;
-import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
-import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
 import pl.edu.icm.coansys.metaextr.structure.tools.UnsegmentedPagesFlattener;
+import pl.edu.icm.coansys.metaextr.structure.transformers.MargToTextrImporter;
 
 /**
  *
@@ -34,7 +27,19 @@ public class DocstrumPageSegmenterTest {
         Reader reader = new InputStreamReader(getResource("DocstrumPageSegmenter01.xml"));
         BxDocument inDoc = new BxDocument().setPages(new MargToTextrImporter().read(reader));
         new UnsegmentedPagesFlattener().process(inDoc);
-        BxDocument outDoc = new DocstrumPageSegmenter().segmentPages(inDoc);
+        
+        DocstrumPageSegmenter pageSegmenter = new DocstrumPageSegmenter();
+        pageSegmenter.setSpacingHistogramResolution(2.0);
+        pageSegmenter.setSpacingHistogramSmoothingWindowLength(10.0);
+        pageSegmenter.setSpacingHistogramSmoothingWindowStdDeviation(2.0);
+        pageSegmenter.setMaxLineSizeScale(1.5);
+        pageSegmenter.setWordDistanceMultiplier(0.5);
+        pageSegmenter.setMinHorizontalDistanceMultiplier(1.5);
+        pageSegmenter.setMaxVerticalDistanceMultiplier(1.3);
+        pageSegmenter.setMaxVerticalMergeDistanceMultiplier(0.5);
+        pageSegmenter.setComponentDistanceCharacterMultiplier(3.0);
+        
+        BxDocument outDoc = pageSegmenter.segmentPages(inDoc);
 
         // Check whether zones are correctly detected
         assertEquals(1, outDoc.getPages().size());

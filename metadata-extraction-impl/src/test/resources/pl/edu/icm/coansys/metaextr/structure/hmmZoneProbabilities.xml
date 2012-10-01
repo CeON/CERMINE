@@ -3,11 +3,11 @@
     <probability>
       <eventCount>
         <entry>
-          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>MET_AUTHOR</pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>
+          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>MET_AUTHOR</pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>
           <int>3</int>
         </entry>
         <entry>
-          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>MET_TITLE</pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>
+          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>MET_TITLE</pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>
           <int>314</int>
         </entry>
       </eventCount>
@@ -17,84 +17,84 @@
   <transitionProbability class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMTransitionProbability">
     <probability>
       <entry>
-        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>MET_AFFILIATION</pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>
-        <pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>MET_AFFILIATION</pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>
+        <pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
           <eventCount>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>2</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>MET_ABSTRACT</pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>MET_ABSTRACT</pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>
               <int>196</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>1</int>
             </entry>
           </eventCount>
           <totalCount>199</totalCount>
-        </pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        </pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
       </entry>
       <entry>
-        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
-        <pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
+        <pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
           <eventCount>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>117</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.textr.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>109</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>2</int>
             </entry>
           </eventCount>
           <totalCount>228</totalCount>
-        </pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        </pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
       </entry>
       <entry>
-        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.BxZoneLabel"/>
-        <pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
+        <pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
           <eventCount>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>200</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>114</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>3</int>
             </entry>
           </eventCount>
           <totalCount>317</totalCount>
-        </pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        </pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
       </entry>
       <entry>
-        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.BxZoneLabel"/>
-        <pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
+        <pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
           <eventCount>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>5</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>1</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>312</int>
             </entry>
           </eventCount>
           <totalCount>318</totalCount>
-        </pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution>
+        </pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution>
       </entry>
     </probability>
   </transitionProbability>
@@ -106,7 +106,7 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>421</int>
                 </entry>
               </eventCount>
@@ -118,7 +118,7 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>1</int>
                 </entry>
               </eventCount>
@@ -129,11 +129,11 @@
           <labelsProbability>
             <eventCount>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>1</int>
               </entry>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>421</int>
               </entry>
             </eventCount>
@@ -147,7 +147,7 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>103</int>
                 </entry>
               </eventCount>
@@ -159,7 +159,7 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>1</int>
                 </entry>
               </eventCount>
@@ -170,11 +170,11 @@
           <labelsProbability>
             <eventCount>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>1</int>
               </entry>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>103</int>
               </entry>
             </eventCount>
@@ -186,15 +186,15 @@
         <labelsProbability>
           <eventCount>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>1</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>422</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>103</int>
             </entry>
           </eventCount>
@@ -211,11 +211,11 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>6</int>
                     </entry>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>9</int>
                     </entry>
                   </eventCount>
@@ -228,11 +228,11 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>1</int>
                       </entry>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>4</int>
                       </entry>
                     </eventCount>
@@ -245,11 +245,11 @@
                     <labelsProbability>
                       <eventCount>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>14</int>
                         </entry>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>3</int>
                         </entry>
                       </eventCount>
@@ -262,7 +262,7 @@
                       <labelsProbability>
                         <eventCount>
                           <entry>
-                            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                             <int>248</int>
                           </entry>
                         </eventCount>
@@ -274,11 +274,11 @@
                       <labelsProbability>
                         <eventCount>
                           <entry>
-                            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                             <int>16</int>
                           </entry>
                           <entry>
-                            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                             <int>1</int>
                           </entry>
                         </eventCount>
@@ -289,11 +289,11 @@
                     <labelsProbability>
                       <eventCount>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>264</int>
                         </entry>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>1</int>
                         </entry>
                       </eventCount>
@@ -305,11 +305,11 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>278</int>
                       </entry>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>4</int>
                       </entry>
                     </eventCount>
@@ -321,11 +321,11 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>279</int>
                     </entry>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>8</int>
                     </entry>
                   </eventCount>
@@ -337,11 +337,11 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>285</int>
                   </entry>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>17</int>
                   </entry>
                 </eventCount>
@@ -356,11 +356,11 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>1</int>
                       </entry>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>5</int>
                       </entry>
                     </eventCount>
@@ -374,7 +374,7 @@
                       <labelsProbability>
                         <eventCount>
                           <entry>
-                            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                             <int>2</int>
                           </entry>
                         </eventCount>
@@ -387,7 +387,7 @@
                         <labelsProbability>
                           <eventCount>
                             <entry>
-                              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                               <int>42</int>
                             </entry>
                           </eventCount>
@@ -399,11 +399,11 @@
                         <labelsProbability>
                           <eventCount>
                             <entry>
-                              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                               <int>2</int>
                             </entry>
                             <entry>
-                              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                               <int>5</int>
                             </entry>
                           </eventCount>
@@ -414,11 +414,11 @@
                       <labelsProbability>
                         <eventCount>
                           <entry>
-                            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                             <int>2</int>
                           </entry>
                           <entry>
-                            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                             <int>47</int>
                           </entry>
                         </eventCount>
@@ -430,11 +430,11 @@
                     <labelsProbability>
                       <eventCount>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>4</int>
                         </entry>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>47</int>
                         </entry>
                       </eventCount>
@@ -447,11 +447,11 @@
                     <labelsProbability>
                       <eventCount>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>1</int>
                         </entry>
                         <entry>
-                          <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                          <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                           <int>1</int>
                         </entry>
                       </eventCount>
@@ -462,15 +462,15 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>5</int>
                       </entry>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>1</int>
                       </entry>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>47</int>
                       </entry>
                     </eventCount>
@@ -482,15 +482,15 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>5</int>
                     </entry>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>6</int>
                     </entry>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>48</int>
                     </entry>
                   </eventCount>
@@ -503,7 +503,7 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>9</int>
                     </entry>
                   </eventCount>
@@ -514,15 +514,15 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>14</int>
                   </entry>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>6</int>
                   </entry>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>48</int>
                   </entry>
                 </eventCount>
@@ -534,15 +534,15 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>299</int>
                 </entry>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>6</int>
                 </entry>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>65</int>
                 </entry>
               </eventCount>
@@ -558,7 +558,7 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>211</int>
                       </entry>
                     </eventCount>
@@ -570,11 +570,11 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>1</int>
                       </entry>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>2</int>
                       </entry>
                     </eventCount>
@@ -585,11 +585,11 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>1</int>
                     </entry>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>213</int>
                     </entry>
                   </eventCount>
@@ -602,11 +602,11 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>4</int>
                     </entry>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>20</int>
                     </entry>
                   </eventCount>
@@ -617,11 +617,11 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>5</int>
                   </entry>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>233</int>
                   </entry>
                 </eventCount>
@@ -634,7 +634,7 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>9</int>
                   </entry>
                 </eventCount>
@@ -645,11 +645,11 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>14</int>
                 </entry>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>233</int>
                 </entry>
               </eventCount>
@@ -661,15 +661,15 @@
           <labelsProbability>
             <eventCount>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>313</int>
               </entry>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>6</int>
               </entry>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>298</int>
               </entry>
             </eventCount>
@@ -684,11 +684,11 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>14</int>
                   </entry>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>16</int>
                   </entry>
                 </eventCount>
@@ -700,11 +700,11 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>5</int>
                   </entry>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>2</int>
                   </entry>
                 </eventCount>
@@ -715,19 +715,19 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>5</int>
                 </entry>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>2</int>
                 </entry>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>14</int>
                 </entry>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>16</int>
                 </entry>
               </eventCount>
@@ -741,7 +741,7 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>2</int>
                   </entry>
                 </eventCount>
@@ -754,7 +754,7 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>1</int>
                     </entry>
                   </eventCount>
@@ -767,7 +767,7 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>191</int>
                       </entry>
                     </eventCount>
@@ -779,11 +779,11 @@
                   <labelsProbability>
                     <eventCount>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>1</int>
                       </entry>
                       <entry>
-                        <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                        <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                         <int>4</int>
                       </entry>
                     </eventCount>
@@ -794,11 +794,11 @@
                 <labelsProbability>
                   <eventCount>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>1</int>
                     </entry>
                     <entry>
-                      <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                      <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                       <int>195</int>
                     </entry>
                   </eventCount>
@@ -810,11 +810,11 @@
               <labelsProbability>
                 <eventCount>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>2</int>
                   </entry>
                   <entry>
-                    <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                    <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                     <int>195</int>
                   </entry>
                 </eventCount>
@@ -826,11 +826,11 @@
             <labelsProbability>
               <eventCount>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>4</int>
                 </entry>
                 <entry>
-                  <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                  <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                   <int>195</int>
                 </entry>
               </eventCount>
@@ -842,19 +842,19 @@
           <labelsProbability>
             <eventCount>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>5</int>
               </entry>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>2</int>
               </entry>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>20</int>
               </entry>
               <entry>
-                <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+                <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
                 <int>209</int>
               </entry>
             </eventCount>
@@ -866,19 +866,19 @@
         <labelsProbability>
           <eventCount>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>318</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>2</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>318</int>
             </entry>
             <entry>
-              <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+              <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
               <int>215</int>
             </entry>
           </eventCount>
@@ -890,19 +890,19 @@
       <labelsProbability>
         <eventCount>
           <entry>
-            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
             <int>319</int>
           </entry>
           <entry>
-            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.textr.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../transitionProbability/probability/entry/pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
             <int>424</int>
           </entry>
           <entry>
-            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
             <int>318</int>
           </entry>
           <entry>
-            <pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel reference="../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.textr.structure.BxZoneLabel"/>
+            <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel reference="../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel"/>
             <int>318</int>
           </entry>
         </eventCount>
@@ -912,4 +912,4 @@
       <featureCut>0.2436046511627907</featureCut>
     </decisionTree>
   </emissionProbability>
-</pl.edu.icm.coansys.metaextr.classification.hmm.probability.SimpleHMMProbabilityInfo>
+</pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMProbabilityInfo>

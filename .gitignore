@@ -4,6 +4,9 @@
 *.ear
 *.class
 
+#vim specific
+*~
+
 # eclipse specific git ignore
 *.pydevproject
 .project

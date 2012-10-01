@@ -1,13 +1,12 @@
 package pl.edu.icm.coansys.metaextr.metadata;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import org.jdom.Element;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.EnhancedField;
-import pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.Enhancer;
+import pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.*;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 
 /**
@@ -17,7 +16,35 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
  */
 public class EnhancerMetadataExtractor implements MetadataExtractor<Element> {
 
-    private final List<Enhancer> enhancers = new ArrayList<Enhancer>();
+    private final List<Enhancer> enhancers = Arrays.<Enhancer>asList(
+                new HindawiCornerInfoEnhancer(),
+                new TitleMergedWithTypeEnhancer(),
+                new TitleEnhancer(),
+                new AuthorEnhancer(),
+                new EmailEnhancer(),
+                new DoiEnhancer(),
+                new IssnEnhancer(),
+                new UrnEnhancer(),
+                new DescriptionEnhancer(),
+                new KeywordsEnhancer(),
+                new ArticleIdEnhancer(),
+                new VolumeEnhancer(),
+                new IssueEnhancer(),
+                new JournalVolumeIssueWithAuthorEnhancer(),
+                new JournalVolumeIssueEnhancer(),
+                new JournalEnhancer(),
+                new EditorEnhancer(),
+                new AffiliationGeometricEnhancer(),
+                new ReceivedDateEnhancer(),
+                new AcceptedDateEnhancer(),
+                new PublishedDateEnhancer(),
+                new RevisedDateEnhancer(),
+                new RevisedFormDateEnhancer(),
+                new PagesEnhancer(),
+                new PagesPartialEnhancer(),
+                new CiteAsEnhancer(),
+                new YearEnhancer()
+                );
 
     public List<Enhancer> getEnhancers() {
         return enhancers;

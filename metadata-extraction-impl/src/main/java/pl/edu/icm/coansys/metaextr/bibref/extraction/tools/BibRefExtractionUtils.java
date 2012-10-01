@@ -1,17 +1,11 @@
 package pl.edu.icm.coansys.metaextr.bibref.extraction.tools;
 
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import java.util.ArrayList;
 import java.util.List;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
-import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
 
 /**
  * Bibliographic reference extraction utility class.
@@ -29,9 +23,6 @@ public class BibRefExtractionUtils {
     public static BxDocumentBibReferences extractBibRefLines(BxDocument document) throws AnalysisException {
         BxDocumentBibReferences lines = new BxDocumentBibReferences();
 
-        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-        document = ror.resolve(document);
-        
         for (BxPage page : document.getPages()) {
             for (BxZone zone : page.getZones()) {
                 if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_REFERENCES)) {

@@ -13,8 +13,8 @@ import libsvm.svm_parameter;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.ClassificationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;

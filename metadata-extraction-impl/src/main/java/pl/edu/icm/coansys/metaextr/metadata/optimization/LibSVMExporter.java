@@ -16,7 +16,6 @@ import org.apache.commons.cli.ParseException;
 
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.tools.classification.tools.ClassificationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.CrossvalidatingZoneClassificationEvaluator;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.EvaluationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.SVMMetadataClassificationEvaluator;
@@ -32,6 +31,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.ClassificationUtils;
 
 public class LibSVMExporter {
 	public static void toLibSVM(List<TrainingElement<BxZoneLabel>> trainingElements, String filePath)

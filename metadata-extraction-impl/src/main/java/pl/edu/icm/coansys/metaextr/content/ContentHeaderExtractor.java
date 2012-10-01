@@ -15,9 +15,9 @@ import pl.edu.icm.coansys.metaextr.tools.classification.clustering.FeatureVector
 import pl.edu.icm.coansys.metaextr.tools.classification.clustering.SingleLinkageClusterizer;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.knn.classifier.KnnClassifier;
-import pl.edu.icm.coansys.metaextr.tools.classification.knn.model.KnnModel;
-import pl.edu.icm.coansys.metaextr.tools.classification.knn.model.KnnTrainingSample;
+import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnClassifier;
+import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnModel;
+import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnTrainingSample;
 import pl.edu.icm.coansys.metaextr.tools.classification.metrics.FeatureVectorEuclideanMetric;
 
 /**

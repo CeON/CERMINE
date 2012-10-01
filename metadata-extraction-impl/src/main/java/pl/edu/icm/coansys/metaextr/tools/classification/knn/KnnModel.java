@@ -1,8 +1,9 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.knn.model;
+package pl.edu.icm.coansys.metaextr.tools.classification.knn;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
 
 /**
  *

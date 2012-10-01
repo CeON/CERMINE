@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.tools;
+package pl.edu.icm.coansys.metaextr.tools.classification.general;
 
 import java.util.ArrayList;
 import java.util.List;

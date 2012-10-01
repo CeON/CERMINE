@@ -1,12 +1,10 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.knn.classifier;
+package pl.edu.icm.coansys.metaextr.tools.classification.knn;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.tools.classification.knn.model.KnnModel;
-import pl.edu.icm.coansys.metaextr.tools.classification.knn.model.KnnTrainingSample;
 import pl.edu.icm.coansys.metaextr.tools.classification.metrics.FeatureVectorDistanceMetric;
 
 /**

@@ -1,20 +1,8 @@
 package pl.edu.icm.coansys.metaextr.structure;
 
-import pl.edu.icm.coansys.metaextr.structure.PageSegmenter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
-import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxBoundsBuilder;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 import pl.edu.icm.coansys.metaextr.structure.tools.DisjointSets;
@@ -48,17 +36,17 @@ public class DocstrumPageSegmenter implements PageSegmenter {
     /**
      * Spacing histogram resolution per bin.
      */
-    private double spacingHistogramResolution = 2.0;
+    private double spacingHistogramResolution = 0.5;
 
     /**
      * Spacing histogram smoothing window length.
      */
-    private double spacingHistogramSmoothingWindowLength = 10.0;
+    private double spacingHistogramSmoothingWindowLength = 2.5;
 
     /**
      * Spacing histogram gaussian smoothing window standard deviation.
      */
-    private double spacingHistogramSmoothingWindowStdDeviation = 2.0;
+    private double spacingHistogramSmoothingWindowStdDeviation = 0.5;
     
     /**
      * Maximum vertical component distance multiplier used during line
@@ -92,7 +80,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
      * Minimum horizontal distance between lines that belong to the same zone
      * is equal to the product of this value and estimated within-line spacing.
      */
-    private double minHorizontalDistanceMultiplier = 1.5;
+    private double minHorizontalDistanceMultiplier = -0.5;
 
     /**
      * Minimum vertical line distance multiplier.
@@ -108,7 +96,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
      * Maximum vertical distance between lines that belong to the same zone
      * is equal to the product of this value and estimated between-line spacing.
      */
-    private double maxVerticalDistanceMultiplier = 1.3;
+    private double maxVerticalDistanceMultiplier = 1.2;
 
     /**
      * Component distance line spacing multiplier.
@@ -130,7 +118,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
      * lineSpacing and characterSpacing are estimated between-line and
      * within-line spacing, respectively.
      */
-    private double componentDistanceCharacterMultiplier = 3.0;
+    private double componentDistanceCharacterMultiplier = 4.5;
 
     /**
      * Word distance multiplier.
@@ -138,7 +126,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
      * Maximum distance between components that belong to the same word is
      * equal to the product of this value and estimated within-line spacing.
      */
-    private double wordDistanceMultiplier = 0.5;
+    private double wordDistanceMultiplier = 0.2;
 
     /**
      * Minimum horizontal line merge distance multiplier.

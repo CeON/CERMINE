@@ -38,7 +38,7 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
     @Before
     public void setUp() throws IOException {
     	classifier = new SVMInitialZoneClassifier(getModel(), getRange());
-    	endProcessFlattener = new DocumentPreprocessor() {
+    	startProcessFlattener = new DocumentPreprocessor() {
 			@Override
 			public void process(BxDocument document) {
 				BxModelUtils.setReadingOrder(document);

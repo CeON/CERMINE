@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.util.Iterator;
 import java.util.regex.Pattern;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.evaluation.AbstractEvaluator.Results;
 
 /**

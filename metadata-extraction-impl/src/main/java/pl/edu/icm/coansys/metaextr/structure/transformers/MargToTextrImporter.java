@@ -22,7 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 
 /**
  * Reads BxDocument model pages from Marg format.

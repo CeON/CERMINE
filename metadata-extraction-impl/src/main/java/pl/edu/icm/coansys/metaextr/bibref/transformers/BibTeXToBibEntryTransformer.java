@@ -6,7 +6,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.LoggerFactory;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.bibref.model.BibEntry;
 
 /**

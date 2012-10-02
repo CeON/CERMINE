@@ -3,7 +3,7 @@ package pl.edu.icm.coansys.metaextr.bibref.transformers;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.bibref.model.BibEntry;
 /**
  * Writer of BibEntry model to BibTeX format.

@@ -16,8 +16,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
-import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 

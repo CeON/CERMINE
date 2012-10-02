@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom.Element;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.BibReferenceParser;
 import pl.edu.icm.coansys.metaextr.bibref.CRFBibReferenceParser;
 import pl.edu.icm.coansys.metaextr.bibref.model.BibEntry;

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;

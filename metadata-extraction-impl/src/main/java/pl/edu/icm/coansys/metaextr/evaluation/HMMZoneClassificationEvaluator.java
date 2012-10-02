@@ -3,7 +3,7 @@ package pl.edu.icm.coansys.metaextr.evaluation;
 import java.io.IOException;
 import java.util.List;
 import org.apache.commons.cli.ParseException;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.coansys.metaextr.structure.HMMZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.model.*;

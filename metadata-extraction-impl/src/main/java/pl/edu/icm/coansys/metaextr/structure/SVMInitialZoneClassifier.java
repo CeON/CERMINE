@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.evaluation.EvaluationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.*;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;

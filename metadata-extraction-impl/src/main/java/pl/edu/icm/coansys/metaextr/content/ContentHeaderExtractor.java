@@ -8,7 +8,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.content.model.BxDocContentStructure;
 import pl.edu.icm.coansys.metaextr.content.model.DocumentContentStructure;
 import pl.edu.icm.coansys.metaextr.tools.classification.clustering.FeatureVectorClusterizer;

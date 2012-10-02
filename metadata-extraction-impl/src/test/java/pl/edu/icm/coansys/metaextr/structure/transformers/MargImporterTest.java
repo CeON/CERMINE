@@ -7,7 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;

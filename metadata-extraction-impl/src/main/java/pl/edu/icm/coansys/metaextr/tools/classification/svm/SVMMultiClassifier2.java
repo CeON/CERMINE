@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;

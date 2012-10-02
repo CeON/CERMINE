@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 import org.junit.Test;
 
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;

@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import org.apache.commons.lang.StringUtils;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.model.BibEntry;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.Citation;
 import pl.edu.icm.coansys.metaextr.bibref.parsing.model.CitationTokenLabel;

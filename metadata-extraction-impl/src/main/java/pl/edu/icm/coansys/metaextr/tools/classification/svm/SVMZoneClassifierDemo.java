@@ -74,8 +74,8 @@ import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.LineXWid
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.DocumentsExtractor;

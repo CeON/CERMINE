@@ -6,7 +6,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnClassifier;

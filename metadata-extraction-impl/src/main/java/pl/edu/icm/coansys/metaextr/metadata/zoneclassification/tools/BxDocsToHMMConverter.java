@@ -3,7 +3,7 @@ package pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.SimpleTrainingElement;

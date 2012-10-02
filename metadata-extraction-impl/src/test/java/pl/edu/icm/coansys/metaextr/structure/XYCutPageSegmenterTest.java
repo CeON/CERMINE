@@ -17,7 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import static org.junit.Assert.*;
 import org.junit.*;
 import org.xml.sax.SAXException;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.tools.Direction;
 import pl.edu.icm.coansys.metaextr.structure.tools.Range;
 import pl.edu.icm.coansys.metaextr.structure.tools.Valley;

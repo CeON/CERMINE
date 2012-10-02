@@ -8,7 +8,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.*;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;

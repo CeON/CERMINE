@@ -4,7 +4,7 @@ package pl.edu.icm.coansys.metaextr.metadata.zoneclassification.malletDemo;
 //import cc.mallet.classify.ClassifierTrainer;
 //import cc.mallet.types.InstanceList;
 import java.io.*;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 
 /**
  *

@@ -3,7 +3,7 @@ package pl.edu.icm.coansys.metaextr.metadata.zoneclassification.malletDemo;
 //import cc.mallet.classify.MaxEntTrainer;
 import java.io.IOException;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 
 /**

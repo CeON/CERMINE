@@ -4,7 +4,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.*;
 import java.util.regex.Pattern;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.PageSegmenter;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.model.*;

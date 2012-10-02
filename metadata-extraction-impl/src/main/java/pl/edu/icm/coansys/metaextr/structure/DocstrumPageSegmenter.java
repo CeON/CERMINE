@@ -1,7 +1,7 @@
 package pl.edu.icm.coansys.metaextr.structure;
 
 import java.util.*;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.model.*;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxBoundsBuilder;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;

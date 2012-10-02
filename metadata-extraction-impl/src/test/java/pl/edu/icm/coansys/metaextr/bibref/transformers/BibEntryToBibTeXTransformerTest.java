@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.bibref.model.BibEntry;
 
 /**

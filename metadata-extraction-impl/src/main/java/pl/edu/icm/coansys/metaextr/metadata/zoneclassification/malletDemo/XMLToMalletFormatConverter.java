@@ -39,7 +39,7 @@ import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.Uppercas
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.LowercaseCountFeature;
 import java.io.*;
 import java.util.Arrays;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;

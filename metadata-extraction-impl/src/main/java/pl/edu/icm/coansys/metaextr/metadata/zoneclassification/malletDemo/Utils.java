@@ -44,7 +44,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;

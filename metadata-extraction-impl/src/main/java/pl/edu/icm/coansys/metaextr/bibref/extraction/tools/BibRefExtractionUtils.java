@@ -3,7 +3,7 @@ package pl.edu.icm.coansys.metaextr.bibref.extraction.tools;
 import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.coansys.metaextr.structure.model.*;

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.*;
 import pl.edu.icm.coansys.metaextr.structure.model.*;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;

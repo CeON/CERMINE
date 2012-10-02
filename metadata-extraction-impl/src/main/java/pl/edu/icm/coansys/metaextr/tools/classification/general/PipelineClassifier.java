@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.svm.SVMZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;

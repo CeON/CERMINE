@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import org.jdom.Element;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.*;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 

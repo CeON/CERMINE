@@ -14,8 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;

@@ -3,7 +3,7 @@ package pl.edu.icm.coansys.metaextr.bibref;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.features.*;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.tools.BibRefExtractionUtils;

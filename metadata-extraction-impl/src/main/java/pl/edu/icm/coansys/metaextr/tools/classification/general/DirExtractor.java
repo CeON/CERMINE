@@ -3,7 +3,7 @@ package pl.edu.icm.coansys.metaextr.tools.classification.general;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.coansys.metaextr.TransformationException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;

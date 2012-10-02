@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
 import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;

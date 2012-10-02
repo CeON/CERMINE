@@ -24,6 +24,23 @@ import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
  * @author krusek
  */
 public class BxModelUtils {
+	public static void setParents(BxDocument doc) {
+		for(BxPage page: doc.getPages()) {
+			for(BxZone zone: page.getZones()) {
+				for(BxLine line: zone.getLines()) {
+					for(BxWord word: line.getWords()) {
+						for(BxChunk chunk: word.getChunks())
+							chunk.setParent(word);
+						word.setParent(line);
+					}
+					line.setParent(zone);
+				}
+				zone.setParent(page);
+			}
+			page.setParent(doc);
+		}
+	}
+	
 	public static void setReadingOrder(BxDocument document){
 		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
 		try {
@@ -145,7 +162,7 @@ public class BxModelUtils {
         copy.setSorted(word.isSorted());
         for (BxChunk chunk : word.getChunks()) {
         	BxChunk copiedChunk = deepClone(chunk);
-        	copiedChunk.setContext(copy);
+        	copiedChunk.setParent(copy);
         	copy.addChunks(chunk);
         }
         return copy;
@@ -162,7 +179,7 @@ public class BxModelUtils {
         copy.setSorted(line.isSorted());
         for (BxWord word : line.getWords()) {
         	BxWord copiedWord = deepClone(word);
-        	copiedWord.setContext(copy);
+        	copiedWord.setParent(copy);
             copy.addWord(copiedWord);
         }
         return copy;
@@ -186,7 +203,7 @@ public class BxModelUtils {
         copy.setSorted(zone.isSorted());
         for (BxLine line : zone.getLines()) {
         	BxLine copiedLine = deepClone(line);
-        	copiedLine.setContext(copy);
+        	copiedLine.setParent(copy);
             copy.addLine(copiedLine);
         }
         for (BxChunk chunk : zone.getChunks()) {
@@ -206,7 +223,7 @@ public class BxModelUtils {
         copy.setSorted(page.isSorted());
         for (BxZone zone : page.getZones()) {
         	BxZone copiedZone = deepClone(zone);
-        	copiedZone.setContext(copy);
+        	copiedZone.setParent(copy);
             copy.addZone(copiedZone);
         }
         for (BxChunk chunk : page.getChunks()) {
@@ -226,7 +243,7 @@ public class BxModelUtils {
         copy.setFilename(new String(document.getFilename()));
         for (BxPage page : document.getPages()) {
         	BxPage copiedPage = deepClone(page);
-        	copiedPage.setContext(copy);
+        	copiedPage.setParent(copy);
             copy.addPage(copiedPage);
         }
         return copy;

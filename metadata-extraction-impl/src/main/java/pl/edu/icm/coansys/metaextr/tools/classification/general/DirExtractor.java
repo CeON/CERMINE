@@ -43,7 +43,7 @@ public class DirExtractor implements DocumentsExtractor
     			List<BxPage> pages = tvReader.read(new InputStreamReader(is));
     			BxDocument newDoc = new BxDocument();
 				for(BxPage page: pages)
-					page.setContext(newDoc);
+					page.setParent(newDoc);
     			
     			newDoc.setFilename(filename);
     			newDoc.setPages(pages);

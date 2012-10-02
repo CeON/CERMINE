@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -250,7 +252,7 @@ public class TrueVizToBxDocumentReader {
         List<Element> e = getChildren("Character",wordE);
         for (Element caE : e) {
             BxChunk ch = parseCharacterElement(caE);
-            ch.setContext(word);
+            ch.setParent(word);
             word.addChunks(ch);
         }
         return word;
@@ -271,7 +273,7 @@ public class TrueVizToBxDocumentReader {
         List<Element> e = getChildren("Word",lineE);
         for (Element we : e) {
             BxWord wo = parseWordElement(we);
-            wo.setContext(line);
+            wo.setParent(line);
             line.addWord(wo);
         }
         return line;
@@ -322,7 +324,7 @@ public class TrueVizToBxDocumentReader {
         List<Element> e = getChildren("Line",zoneE);
         for (Element lin : e) {
             BxLine li = parseLineElement(lin);
-            li.setContext(zone);
+            li.setParent(zone);
             zone.addLine(li);
         }
         return zone;
@@ -340,7 +342,7 @@ public class TrueVizToBxDocumentReader {
         List<Element> e = getChildren("Zone", elem);
         for (Element zo : e) {
             BxZone zon = parseZoneNode(zo);
-            zon.setContext(page);
+            zon.setParent(page);
             page.addZone(zon);
         }
         BxBoundsBuilder.setBounds(page);

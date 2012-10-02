@@ -89,6 +89,10 @@ public class MetadataGen {
             endTime("page segmentation");
             
             startTime();
+            BxModelUtils.setParents(doc);
+            endTime("setting doc's elements' parents");
+            
+            startTime();
             doc = roRes.resolve(doc);
             endTime("reading order");
             

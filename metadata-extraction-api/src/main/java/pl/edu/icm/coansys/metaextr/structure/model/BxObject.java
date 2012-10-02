@@ -25,16 +25,16 @@ public abstract class BxObject <S, T> implements Indexable<S> {
     protected S nextObj;
     protected S prevObj;
 
-    protected T context;
+    protected T parent;
     
     protected Boolean isSorted;
 
-    public void setContext(T context) {
-    	this.context = context;
+    public void setParent(T parent) {
+    	this.parent = parent;
     }
     
-    public T getContext() {
-    	return context;
+    public T getParent() {
+    	return parent;
     }
     
     @Override

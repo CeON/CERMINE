@@ -1,10 +1,10 @@
 package pl.edu.icm.coansys.metaextr.tools.classification.hmm;
 
 import java.io.IOException;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMEmissionProbability;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMInitialProbability;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMTransitionProbability;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.HMMEmissionProbability;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.HMMInitialProbability;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.HMMProbabilityInfo;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.HMMTransitionProbability;
 
 /**
  * Hidden Markov Models storage interface. The interface takes care of storing 

@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability;
+package pl.edu.icm.coansys.metaextr.tools.classification.hmm.model;
 
 /**
  * Hidden Markov Model's transition probability interface.

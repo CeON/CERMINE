@@ -295,8 +295,13 @@ public class TrueVizToBxDocumentReader {
         if (zoneLabelMap.containsKey(val.toLowerCase())) {
             return zoneLabelMap.get(val.toLowerCase());
         } else {
-        	throw new IllegalArgumentException("Illegal class value in input file: " + val);
+            try {
+                if (BxZoneLabel.valueOf(val.toUpperCase()) != null) {
+                    return BxZoneLabel.valueOf(val.toUpperCase());
+                }
+            } catch (IllegalArgumentException ex) {}
         }
+        return BxZoneLabel.OTH_UNKNOWN;
     }
 
 	private BxZone parseZoneNode(Element zoneE) {

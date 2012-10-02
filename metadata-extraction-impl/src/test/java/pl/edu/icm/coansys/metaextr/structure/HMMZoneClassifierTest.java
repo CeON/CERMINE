@@ -65,6 +65,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
+import pl.edu.icm.coansys.metaextr.structure.tools.DocumentPreprocessor;
 import pl.edu.icm.coansys.metaextr.structure.tools.UnclassifiedZonesPreprocessor;
 
 /**
@@ -86,8 +87,12 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
     @Before
     public void setUp() {
-        this.startProcessFlattener = new UnclassifiedZonesPreprocessor();
-
+    	this.startProcessFlattener = new DocumentPreprocessor() {
+			@Override
+			public void process(BxDocument document) {
+				BxModelUtils.setReadingOrder(document);
+			}
+		};
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
         XStream xstream = new XStream();
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities

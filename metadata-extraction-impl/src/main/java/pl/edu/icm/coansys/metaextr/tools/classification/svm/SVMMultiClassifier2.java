@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
@@ -15,6 +17,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 
 public class SVMMultiClassifier2 extends SVMZoneClassifier {
 	private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
@@ -22,7 +25,7 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
 	private Map<BxZoneLabel, SVMZoneClassifier> classifiers;
 	private SVMZoneClassifier ultimateClassifier;
 	
-	public SVMMultiClassifier2(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) {
+	public SVMMultiClassifier2(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder, Boolean forceReadingOrder) {
 		super(featureVectorBuilder);
 		this.featureVectorBuilder = featureVectorBuilder;
 	}
@@ -74,7 +77,7 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
 				possibleLabels.add(elem.getLabel());
 		
 		for(final BxZoneLabel lab: possibleLabels) {
-			SVMZoneClassifier clas = new SVMZoneClassifier(featureVectorBuilder);
+			SVMZoneClassifier clas = classifiers.get(lab);
 			
 			List<TrainingElement<BxZoneLabel>> convertedElements = new ArrayList<TrainingElement<BxZoneLabel>>() {{
 				Integer elemIdx = 0;
@@ -93,7 +96,6 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
 				}
 			}};
 			clas.buildClassifier(convertedElements);
-			classifiers.put(lab, clas);
 		}
 		//build a classifier for ultimate recognition
 		ultimateClassifier.buildClassifier(trainingElements);

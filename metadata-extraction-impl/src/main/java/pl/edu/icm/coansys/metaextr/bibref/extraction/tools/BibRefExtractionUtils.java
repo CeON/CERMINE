@@ -1,5 +1,6 @@
 package pl.edu.icm.coansys.metaextr.bibref.extraction.tools;
 
+import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
 import java.util.ArrayList;
 import java.util.List;
 import pl.edu.icm.coansys.metaextr.AnalysisException;

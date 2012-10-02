@@ -108,8 +108,8 @@ public class ReadingOrderAnalyzerTest {
 			BxDocument doc = getDocumentFromZip(filename);
 			BxDocument modelOrderedDoc = getDocumentFromZip(filename + ".out");
 	
-			ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
-			BxDocument orderedDoc = roa.setReadingOrder(doc);
+			HierarchicalReadingOrderResolver roa = new HierarchicalReadingOrderResolver();
+			BxDocument orderedDoc = roa.resolve(doc);
 			
 			assertTrue(areDocumentsEqual(orderedDoc, modelOrderedDoc));
 		}
@@ -120,8 +120,8 @@ public class ReadingOrderAnalyzerTest {
 		for(String filename: TEST_FILENAMES) {
 			BxDocument doc = getDocumentFromZip(filename);
 			
-			ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
-			BxDocument orderedDoc = roa.setReadingOrder(doc);
+			HierarchicalReadingOrderResolver roa = new HierarchicalReadingOrderResolver();
+			BxDocument orderedDoc = roa.resolve(doc);
 			
 			assertEquals(doc.asPages().size(),  orderedDoc.asPages().size());
 			assertEquals(doc.asZones().size(),  orderedDoc.asZones().size());

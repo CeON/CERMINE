@@ -39,7 +39,7 @@ import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculat
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnModel;
-import pl.edu.icm.coansys.metaextr.structure.readingorder.ReadingOrderAnalyzer;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
@@ -187,14 +187,14 @@ public class LogicalStructureExtractorDemo {
     
     private void fillLists(ZipFile zipFile, List<ZipEntry> entries, List<BxDocument> documents, 
             List<DocumentContentStructure> headerStructures) throws IOException, TransformationException, JDOMException {
-        ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
+        HierarchicalReadingOrderResolver roa = new HierarchicalReadingOrderResolver();
         for (ZipEntry ze : entries) {
             if (ze.getName().matches("^.*/"+sourceDir+".*$")) {
                 InputStream xis = zipFile.getInputStream(ze);
                 InputStreamReader xisr = new InputStreamReader(xis);
                 TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
                 List<BxPage> pages = reader.read(xisr);
-                documents.add(roa.setReadingOrder(new BxDocument().setPages(pages)));
+                documents.add(roa.resolve(new BxDocument().setPages(pages)));
             }
             if (ze.getName().matches("^.*/"+structureDir+".*$")) {
                 InputStream cis = zipFile.getInputStream(ze);

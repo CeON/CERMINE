@@ -60,7 +60,6 @@ public class BxDocumentToTrueVizWriter {
         zoneLabelMap.put(BxZoneLabel.BODY_EQUATION_LABEL,   "equation_label");
         zoneLabelMap.put(BxZoneLabel.BODY_FIGURE,           "figure");
         zoneLabelMap.put(BxZoneLabel.BODY_FIGURE_CAPTION,   "figure_caption");
-        zoneLabelMap.put(BxZoneLabel.BODY_HEADER,           "body");
         zoneLabelMap.put(BxZoneLabel.BODY_TABLE,            "table");
         zoneLabelMap.put(BxZoneLabel.BODY_TABLE_CAPTION,    "table_caption");
         zoneLabelMap.put(BxZoneLabel.OTH_COPYRIGHT,         "copyright");

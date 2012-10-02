@@ -7,6 +7,8 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
 
 /**

@@ -21,6 +21,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 
 public class SVMMultiClassifier extends SVMZoneClassifier {
 
@@ -95,13 +96,12 @@ public class SVMMultiClassifier extends SVMZoneClassifier {
 				if(lab2.ordinal() >= lab1.ordinal())
 					continue;
 				LabelPair coord = new LabelPair(lab1, lab2);
-				SVMZoneClassifier clas = new SVMZoneClassifier(featureVectorBuilder);
+				SVMZoneClassifier clas = classifierMatrix.get(coord);
 				List<TrainingElement<BxZoneLabel>> filteredTrainigElements = ClassificationUtils.filterElements(trainingElements, new ArrayList<BxZoneLabel>() {{
 					add(lab1);
 					add(lab2);
 				}});
 				clas.buildClassifier(filteredTrainigElements);
-				classifierMatrix.put(coord, clas);
 			}
 	}
 }

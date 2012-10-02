@@ -19,6 +19,12 @@ import pl.edu.icm.coansys.metaextr.tools.classification.general.FeatureLimits;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.FeatureVectorScaler;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.LinearScaling;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 
 public class SVMZoneClassifier implements ZoneClassifier {
 	final protected static svm_parameter defaultParameter = new svm_parameter();		
@@ -51,7 +57,6 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	
 	public SVMZoneClassifier(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) 
 	{
-		//discard zoneLabels;
 		this.featureVectorBuilder = featureVectorBuilder;
 		Integer dimensions = featureVectorBuilder.size();
 		
@@ -108,11 +113,6 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{       
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
-                zone.setContext(page);
-            }
-        }
     	for (BxZone zone: document.asZones()) {
 			svm_node[] instance = buildDatasetForClassification(zone);
 			double predictedVal = svm.svm_predict(model, instance);

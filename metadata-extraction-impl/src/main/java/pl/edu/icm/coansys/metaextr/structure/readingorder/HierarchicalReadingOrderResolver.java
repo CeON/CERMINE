@@ -1,5 +1,6 @@
 package pl.edu.icm.coansys.metaextr.structure.readingorder;
 
+import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.model.BxObject;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.Indexable;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+
+import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
@@ -27,7 +30,7 @@ import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentRea
  *
  */
 
-public class ReadingOrderAnalyzer {
+public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 
 	final static Integer GRIDSIZE = 50;
 	final static Double BOXES_FLOW = 0.5;
@@ -45,7 +48,7 @@ public class ReadingOrderAnalyzer {
 		}
 	};
 
-	public BxDocument setReadingOrder(BxDocument messyDoc) {
+	public BxDocument resolve(BxDocument messyDoc) {
 		BxDocument orderedDoc = new BxDocument();
 		List<BxPage> pages = messyDoc.getPages();
 		for (BxPage page : pages) {
@@ -364,7 +367,7 @@ public class ReadingOrderAnalyzer {
 		String inFile = path + filename;
 	//	String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
 	//	String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/004.xml";
-		InputStream is = ReadingOrderAnalyzer.class.getResourceAsStream(inFile);
+		InputStream is = HierarchicalReadingOrderResolver.class.getResourceAsStream(inFile);
 		InputStreamReader isr = new InputStreamReader(is);
 
 		TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
@@ -373,8 +376,8 @@ public class ReadingOrderAnalyzer {
 		BxObjectDump dump = new BxObjectDump();
 	//	System.out.println(dump.dump(doc));
 
-		ReadingOrderAnalyzer roa = new ReadingOrderAnalyzer();
-		BxDocument sortedDoc = roa.setReadingOrder(doc);
+		HierarchicalReadingOrderResolver roa = new HierarchicalReadingOrderResolver();
+		BxDocument sortedDoc = roa.resolve(doc);
 
 		for (BxPage page : sortedDoc.getPages()) {
 			for (BxZone zone : page.getZones()) {

@@ -99,13 +99,13 @@ import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBu
 import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.metadata.evaluation.AbstractEvaluator.Detail;
-import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 import pl.edu.icm.coansys.metaextr.structure.tools.DocumentPreprocessor;
 import pl.edu.icm.coansys.metaextr.structure.tools.InitiallyClassifiedZonesPreprocessor;
@@ -208,6 +208,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 
 			for (BxDocument testDocument: testDocuments) {
 				BxDocument processedDocument = BxModelUtils.deepClone(testDocument);
+				BxModelUtils.setReadingOrder(processedDocument);
 				for(BxZone zone: processedDocument.asZones())
 					zone.setLabel(null);
 				ClassificationResults documentResults = newResults();

@@ -211,18 +211,23 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	
 	public static void main(String[] args) throws AnalysisException {
 		// args[0] path to xml directory
+		if(args.length != 1) {
+			System.err.println("Source directory needed!");
+			System.exit(1);
+		}
 		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
-				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_initial_classifier"));
+				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/structure/svm_initial_classifier"));
 		BufferedReader modelFile = new BufferedReader(modelISR);
 		
 		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
-				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/textr/svm_initial_classifier.range"));
+				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/structure/svm_initial_classifier.range"));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
 		
 		SVMZoneClassifier classifier = new SVMInitialZoneClassifier(modelFile, rangeFile);
 		
 		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[0]);
 		for(BxDocument doc: docs) {
+			System.out.println(">> " + doc.getFilename() + " " + doc.asPages().size());
 			classifier.classifyZones(doc);
 			for(BxZone zone: doc.asZones()) {
 				System.out.println("****** " + zone.getLabel());

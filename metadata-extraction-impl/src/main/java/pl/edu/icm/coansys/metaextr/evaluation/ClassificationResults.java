@@ -1,10 +1,9 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
 

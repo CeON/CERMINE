@@ -1,12 +1,11 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.Iterator;
 import java.util.regex.Pattern;
-
 import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.metadata.evaluation.AbstractEvaluator.Results;
+import pl.edu.icm.coansys.metaextr.evaluation.AbstractEvaluator.Results;
 
 /**
  * Abstract evaluator used for implementation of evaluators that requires single

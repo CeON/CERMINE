@@ -1,12 +1,8 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 
 class DividedEvaluationSet

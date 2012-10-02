@@ -1,27 +1,13 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Formatter;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
-
 import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.PageSegmenter;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
 import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 import pl.edu.icm.coansys.metaextr.structure.tools.UnsegmentedPagesFlattener;

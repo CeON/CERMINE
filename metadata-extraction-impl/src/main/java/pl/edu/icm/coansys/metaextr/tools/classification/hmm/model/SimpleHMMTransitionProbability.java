@@ -1,12 +1,10 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability;
+package pl.edu.icm.coansys.metaextr.tools.classification.hmm.model;
 
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMTransitionProbability;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 import pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 
 /**
  * Simple Hidden Markov Model transition probability implementation.

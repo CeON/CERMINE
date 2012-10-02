@@ -1,15 +1,9 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.decisiontree;
+package pl.edu.icm.coansys.metaextr.tools.classification.hmm.model;
 
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.decisiontree.DecisionTree;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution;
 
 /**
  * Builds a decision tree using a collection of training elements.

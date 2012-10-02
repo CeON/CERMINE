@@ -1,9 +1,8 @@
 package pl.edu.icm.coansys.metaextr.tools.classification.hmm;
 
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMService;
 import java.util.*;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.HMMProbabilityInfo;
 
 /**
  * Hidden Markov Model service implementation.

@@ -6,32 +6,20 @@ import java.security.InvalidParameterException;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
+import org.apache.commons.cli.*;
+import pl.edu.icm.coansys.metaextr.evaluation.CrossvalidatingZoneClassificationEvaluator;
+import pl.edu.icm.coansys.metaextr.evaluation.EvaluationUtils;
+import pl.edu.icm.coansys.metaextr.evaluation.SVMInitialZoneClassificationEvaluator;
+import pl.edu.icm.coansys.metaextr.evaluation.SVMMetadataClassificationEvaluator;
+import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.NormalSelector;
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.UndersamplingSelector;
-import pl.edu.icm.coansys.metaextr.metadata.evaluation.CrossvalidatingZoneClassificationEvaluator;
-import pl.edu.icm.coansys.metaextr.metadata.evaluation.EvaluationUtils;
-import pl.edu.icm.coansys.metaextr.metadata.evaluation.SVMMetadataClassificationEvaluator;
-import pl.edu.icm.coansys.metaextr.metadata.evaluation.SVMInitialZoneClassificationEvaluator;
-import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.tools.classification.general.ClassificationUtils;
 
 public class LibSVMExporter {
 	public static void toLibSVM(List<TrainingElement<BxZoneLabel>> trainingElements, String filePath)

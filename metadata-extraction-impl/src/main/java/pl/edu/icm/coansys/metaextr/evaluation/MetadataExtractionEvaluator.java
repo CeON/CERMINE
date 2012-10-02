@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 //package pl.edu.icm.yadda.analysis.metadata.evaluation;
 //

@@ -1,11 +1,6 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability;
+package pl.edu.icm.coansys.metaextr.tools.classification.hmm.model;
 
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMTransitionProbability;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMInitialProbability;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMEmissionProbability;
 import java.util.List;
-
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 

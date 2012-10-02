@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr.structure;
+package pl.edu.icm.coansys.metaextr.bibref;
 
 //package pl.edu.icm.yadda.analysis.textr;
 //

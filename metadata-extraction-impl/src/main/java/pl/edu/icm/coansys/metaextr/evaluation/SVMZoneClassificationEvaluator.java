@@ -1,15 +1,15 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import libsvm.svm_parameter;
-
 import org.apache.commons.cli.ParseException;
-
 import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
+import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.PipelineClassifier;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.PipelineClassifier.PickyClassifier;
@@ -17,14 +17,6 @@ import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingEle
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.coansys.metaextr.tools.classification.svm.SVMZoneClassifier;
-import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
-import pl.edu.icm.coansys.metaextr.structure.ZoneClassifier;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 
 public class SVMZoneClassificationEvaluator extends
 		CrossvalidatingZoneClassificationEvaluator {

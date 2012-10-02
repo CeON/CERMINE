@@ -1,5 +1,5 @@
-<pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMProbabilityInfo>
-  <initialProbability class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMInitialProbability">
+<pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.SimpleHMMProbabilityInfo>
+  <initialProbability class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.SimpleHMMInitialProbability">
     <probability>
       <eventCount>
         <entry>
@@ -14,7 +14,7 @@
       <totalCount>317</totalCount>
     </probability>
   </initialProbability>
-  <transitionProbability class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMTransitionProbability">
+  <transitionProbability class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.SimpleHMMTransitionProbability">
     <probability>
       <entry>
         <pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>MET_AFFILIATION</pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel>
@@ -98,8 +98,8 @@
       </entry>
     </probability>
   </transitionProbability>
-  <emissionProbability class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.DecisionTreeHMMEmissionProbability">
-    <decisionTree class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.decisiontree.SimpleDecisionTree">
+  <emissionProbability class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.DecisionTreeHMMEmissionProbability">
+    <decisionTree class="pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.SimpleDecisionTree">
       <left>
         <left>
           <left>
@@ -912,4 +912,4 @@
       <featureCut>0.2436046511627907</featureCut>
     </decisionTree>
   </emissionProbability>
-</pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMProbabilityInfo>
+</pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.SimpleHMMProbabilityInfo>

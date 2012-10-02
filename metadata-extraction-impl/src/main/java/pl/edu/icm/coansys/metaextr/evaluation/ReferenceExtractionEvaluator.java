@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 import java.io.BufferedReader;
 import java.io.Reader;

@@ -1,25 +1,17 @@
-package pl.edu.icm.coansys.metaextr.metadata.evaluation;
-
-import pl.edu.icm.coansys.metaextr.AnalysisException;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+package pl.edu.icm.coansys.metaextr.evaluation;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.cli.ParseException;
-
+import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
+import pl.edu.icm.coansys.metaextr.structure.HMMZoneClassifier;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMServiceImpl;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMZoneClassifier;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfoFactory;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.HMMProbabilityInfo;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.HMMProbabilityInfoFactory;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.tools.classification.sampleselection.SampleSelector;
-import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 
 /*
  *  @author Pawel Szostek (p.szostek@icm.edu.pl)

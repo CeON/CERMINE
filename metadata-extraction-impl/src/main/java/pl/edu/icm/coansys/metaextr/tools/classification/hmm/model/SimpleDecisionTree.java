@@ -1,8 +1,7 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.decisiontree;
+package pl.edu.icm.coansys.metaextr.tools.classification.hmm.model;
 
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.decisiontree.DecisionTree;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 
 /**
  * Simple decision tree implementation.

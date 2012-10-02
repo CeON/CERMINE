@@ -1,19 +1,8 @@
 package pl.edu.icm.coansys.metaextr.tools.classification.hmm;
 
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.HMMStorage;
 import com.thoughtworks.xstream.XStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Writer;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMEmissionProbability;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMInitialProbability;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMProbabilityInfo;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.SimpleHMMProbabilityInfo;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMTransitionProbability;
+import java.io.*;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.model.*;
 
 /**
  * Hidden Markov Model storage implementation that stores HMM's probability

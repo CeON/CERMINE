@@ -1,12 +1,10 @@
-package pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability;
+package pl.edu.icm.coansys.metaextr.tools.classification.hmm.model;
 
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.probability.HMMEmissionProbability;
 import java.util.HashMap;
 import java.util.Map;
-
+import pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.structure.tools.ProbabilityDistribution;
 
 /**
  * Simple Hidden Markov Model emission probability implementation.

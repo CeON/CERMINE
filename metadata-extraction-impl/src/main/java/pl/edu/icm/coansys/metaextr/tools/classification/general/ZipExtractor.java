@@ -50,7 +50,7 @@ public class ZipExtractor implements DocumentsExtractor {
 						zipFile.getInputStream(zipEntry)));
 				BxDocument newDoc = new BxDocument();
 				for(BxPage page: pages)
-					page.setContext(newDoc);
+					page.setParent(newDoc);
 				newDoc.setFilename(zipEntry.getName());
 				newDoc.setPages(pages);
 				

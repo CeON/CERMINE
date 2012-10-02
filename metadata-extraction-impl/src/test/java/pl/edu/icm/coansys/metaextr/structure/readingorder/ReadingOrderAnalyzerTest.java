@@ -64,7 +64,7 @@ public class ReadingOrderAnalyzerTest {
 				List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry)));
 				BxDocument newDoc = new BxDocument();
 				for(BxPage page: pages)
-					page.setContext(newDoc);
+					page.setParent(newDoc);
 				newDoc.setFilename(zipEntry.getName());
 				newDoc.setPages(pages);		
 				return newDoc;

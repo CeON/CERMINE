@@ -346,7 +346,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 		List<BxPage> pages = reader.read(input);
 		BxDocument ret = new BxDocument();
 		for(BxPage page: pages)
-			page.setContext(ret);
+			page.setParent(ret);
 	    return ret.setPages(pages);
 	}
 	

@@ -150,7 +150,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	protected svm_node[] buildDatasetForClassification(BxZone zone)
 	{
 		svm_node[] ret = new svm_node[featureVectorBuilder.getFeatureNames().size()];
-		FeatureVector scaledFV = scaler.scaleFeatureVector(featureVectorBuilder.getFeatureVector(zone, zone.getContext()));
+		FeatureVector scaledFV = scaler.scaleFeatureVector(featureVectorBuilder.getFeatureVector(zone, zone.getParent()));
 		
 		Integer featureIdx = 0;
 		for(Double val: scaledFV.getFeatures()) {

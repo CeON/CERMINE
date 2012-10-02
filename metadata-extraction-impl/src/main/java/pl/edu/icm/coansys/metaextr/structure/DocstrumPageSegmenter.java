@@ -72,7 +72,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
      *
      * See minLineSizeScale for more information.
      */
-    private double maxLineSizeScale = 1.5;
+    private double maxLineSizeScale = 2.5;
 
     /**
      * Minimum horizontal line distance multiplier.

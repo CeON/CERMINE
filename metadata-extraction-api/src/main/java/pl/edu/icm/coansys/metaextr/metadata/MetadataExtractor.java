@@ -1,6 +1,6 @@
 package pl.edu.icm.coansys.metaextr.metadata;
 
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 
 /**

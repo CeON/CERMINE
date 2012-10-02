@@ -1,6 +1,6 @@
 package pl.edu.icm.coansys.metaextr.bibref;
 
-import pl.edu.icm.coansys.metaextr.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 
 /**
  * Bibliographic reference parser.

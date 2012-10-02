@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr;
+package pl.edu.icm.coansys.metaextr.exception;
 
 /**
  * Thrown when an unrecoverable problem occurs during analysis.

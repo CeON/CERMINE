@@ -1,4 +1,4 @@
-package pl.edu.icm.coansys.metaextr;
+package pl.edu.icm.coansys.metaextr.exception;
 
 import java.io.Serializable;
 

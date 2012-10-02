@@ -7,6 +7,8 @@ import pl.edu.icm.coansys.metaextr.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.features.*;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.coansys.metaextr.bibref.extraction.tools.BibRefExtractionUtils;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 import pl.edu.icm.coansys.metaextr.tools.classification.clustering.CompleteLinkageClusterizer;
 import pl.edu.icm.coansys.metaextr.tools.classification.clustering.FeatureVectorClusterizer;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
@@ -14,8 +16,6 @@ import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.metrics.FeatureVectorEuclideanMetric;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 
 /**
  * Clustering-based bibliographic reference extractor.
@@ -47,6 +47,10 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
         for (BxLine line : documentReferences.getLines()) {
             featureVectors.add(featureVectorBuilder.getFeatureVector(line, documentReferences));
             lines.add(line.toText());
+        }
+        
+        if (lines.isEmpty()) {
+            return new String[]{};
         }
             
         FeatureVectorClusterizer clusterizer = new FeatureVectorClusterizer();

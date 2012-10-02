@@ -11,6 +11,8 @@ import pl.edu.icm.coansys.metaextr.bibref.ClusteringBibReferenceExtractor;
 import pl.edu.icm.coansys.metaextr.bibref.model.BibEntry;
 import pl.edu.icm.coansys.metaextr.metadata.EnhancerMetadataExtractor;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 import pl.edu.icm.coansys.metaextr.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.coansys.metaextr.tools.classification.svm.SVMZoneClassifier;
 

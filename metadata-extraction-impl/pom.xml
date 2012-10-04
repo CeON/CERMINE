@@ -95,6 +95,12 @@
             <version>3.6.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

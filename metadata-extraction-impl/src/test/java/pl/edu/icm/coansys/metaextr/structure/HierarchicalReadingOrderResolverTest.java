@@ -1,21 +1,8 @@
-package pl.edu.icm.coansys.metaextr.structure.readingorder;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import org.junit.Test;
-
-import pl.edu.icm.coansys.metaextr.exception.TransformationException;
-import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
+package pl.edu.icm.coansys.metaextr.structure;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -23,6 +10,15 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
+import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
+import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
+import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
+import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  * 
@@ -30,7 +26,7 @@ import java.util.zip.ZipFile;
  *
  */
 
-public class ReadingOrderAnalyzerTest {
+public class HierarchicalReadingOrderResolverTest {
 	static final private String PATH = "/pl/edu/icm/coansys/metaextr/structure/";
 	static final private String[] TEST_FILENAMES = {"13191004.xml", "09629351.xml", "10255834.xml", "11781238.xml", "1748717X.xml"};
  	static final private String ZIP_FILE_NAME = "roa_test.zip";

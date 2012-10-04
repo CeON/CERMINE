@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.*;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 
 

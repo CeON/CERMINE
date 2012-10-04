@@ -1,26 +1,5 @@
 package pl.edu.icm.coansys.metaextr.content;
 
-import pl.edu.icm.coansys.metaextr.content.features.line.NextLineIndentationFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.RomanDigitsSchemaFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.IsHeigherThanNeighborsFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.WordsAllUppercaseFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.PrevSpaceFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.LowercaseSchemaFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.DoubleDigitSchemaFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.DigitParSchemaFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.IndentationFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.WordsUppercaseFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.LengthFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.DigitDotSchemaFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.TripleDigitSchemaFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.UppercaseSchemaFeature;
-import pl.edu.icm.coansys.metaextr.content.features.line.HeightFeature;
-import pl.edu.icm.coansys.metaextr.content.LogicalStructureExtractor;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
@@ -38,15 +17,17 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import pl.edu.icm.coansys.metaextr.content.features.line.*;
+import pl.edu.icm.coansys.metaextr.content.model.DocumentContentStructure;
 import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.exception.TransformationException;
-import pl.edu.icm.coansys.metaextr.content.model.DocumentContentStructure;
+import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
+import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnModel;
-import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  *

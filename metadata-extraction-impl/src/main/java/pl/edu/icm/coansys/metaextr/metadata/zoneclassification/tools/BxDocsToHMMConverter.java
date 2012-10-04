@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
-import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.SimpleTrainingElement;
-import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
-import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.tools.ZoneClassificationUtils;
+import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
-import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVector;
+import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.SimpleTrainingElement;
+import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingElement;
 
 /**
  * BxDocument objects to HMM training elements converter node. The observations

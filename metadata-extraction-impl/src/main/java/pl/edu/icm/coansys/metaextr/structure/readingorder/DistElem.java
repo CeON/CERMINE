@@ -7,7 +7,7 @@ package pl.edu.icm.coansys.metaextr.structure.readingorder;
 * 
 */
 
-class DistElem<E> implements Comparable<DistElem<E> >{
+public class DistElem<E> implements Comparable<DistElem<E> >{
 	boolean c;
 	double dist;
 	E obj1;

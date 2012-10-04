@@ -1,23 +1,10 @@
 package pl.edu.icm.coansys.metaextr.structure.tools;
 
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
-import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
-import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
+import pl.edu.icm.coansys.metaextr.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
 
 /**
  *
@@ -353,4 +340,75 @@ public class BxModelUtils {
                 && containing.getX() + containing.getWidth() >= contained.getX() + contained.getWidth() - tolerance
                 && containing.getY() + containing.getHeight() >= contained.getY() + contained.getHeight() - tolerance;
     }
+    
+    public static boolean areEqual(BxChunk chunk1, BxChunk chunk2) {
+        if (!chunk1.getText().equals(chunk2.getText())) {
+            return false;
+        }
+        if (!chunk1.getBounds().isSimilarTo(chunk2.getBounds(), 0.001)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean areEqual(BxWord word1, BxWord word2) {
+        if (word1.getChunks().size() != word2.getChunks().size()) {
+			return false;
+        }
+		for (int i = 0; i < word1.getChunks().size(); i++) {
+            if (!areEqual(word1.getChunks().get(i), word2.getChunks().get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean areEqual(BxLine line1, BxLine line2) {
+        if (line1.getWords().size() != line2.getWords().size()) {
+			return false;
+        }
+		for (int i = 0; i < line1.getWords().size(); i++) {
+            if (!areEqual(line1.getWords().get(i), line2.getWords().get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean areEqual(BxZone zone1, BxZone zone2) {
+        if (zone1.getLines().size() != zone2.getLines().size()) {
+			return false;
+        }
+		for (int i = 0; i < zone1.getLines().size(); i++) {
+            if (!areEqual(zone1.getLines().get(i), zone2.getLines().get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean areEqual(BxPage page1, BxPage page2) {
+        if (page1.getZones().size() != page2.getZones().size()) {
+			return false;
+            
+        }
+		for (int i = 0; i < page1.getZones().size(); i++) {
+            if (!areEqual(page1.getZones().get(i), page2.getZones().get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean areEqual(BxDocument doc1, BxDocument doc2) {
+		if (doc1.getPages().size() != doc2.getPages().size()) {
+			return false;
+        }
+        for (int i = 0; i < doc1.getPages().size(); i++) {
+            if (!areEqual(doc1.getPages().get(i), doc1.getPages().get(i))) {
+                return false;
+            }
+        }
+        return true;
+	}
 }

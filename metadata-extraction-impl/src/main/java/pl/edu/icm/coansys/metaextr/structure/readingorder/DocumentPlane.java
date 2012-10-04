@@ -1,12 +1,11 @@
 package pl.edu.icm.coansys.metaextr.structure.readingorder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-
-import pl.edu.icm.coansys.metaextr.structure.model.BxObject;
 import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
+import pl.edu.icm.coansys.metaextr.structure.model.BxObject;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 
 /**
@@ -18,7 +17,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
  * @date 05.2012
  *
  */
-class DocumentPlane {
+public class DocumentPlane {
 
 	/** List of objects on the plane. Stored in a random order */
 	private List<BxObject> objs;

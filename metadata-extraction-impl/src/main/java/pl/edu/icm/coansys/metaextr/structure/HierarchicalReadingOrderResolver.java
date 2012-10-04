@@ -1,23 +1,16 @@
-package pl.edu.icm.coansys.metaextr.structure.readingorder;
+package pl.edu.icm.coansys.metaextr.structure;
 
-import pl.edu.icm.coansys.metaextr.structure.ReadingOrderResolver;
-import pl.edu.icm.coansys.metaextr.structure.model.BxObject;
-import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
-import pl.edu.icm.coansys.metaextr.structure.model.Indexable;
-import pl.edu.icm.coansys.metaextr.structure.model.BxObjectDump;
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
-import pl.edu.icm.coansys.metaextr.structure.model.BxChunk;
-import pl.edu.icm.coansys.metaextr.structure.model.BxWord;
-import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-
-import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.exception.TransformationException;
+import pl.edu.icm.coansys.metaextr.structure.model.*;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.BxZoneGroup;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.DistElem;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.DocumentPlane;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.TreeToListConverter;
 import pl.edu.icm.coansys.metaextr.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 
@@ -176,8 +169,8 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 		while (!dists.isEmpty()) {
 			DistElem<BxObject> distElem = dists.get(0);
 			dists.remove(0);
-			if (distElem.c == false && plane.anyObjectsBetween(distElem.obj1, distElem.obj2)) {
-				dists.add(new DistElem<BxObject>(true, distElem.dist, distElem.obj1, distElem.obj2));
+			if (!distElem.isC() && plane.anyObjectsBetween(distElem.getObj1(), distElem.getObj2())) {
+				dists.add(new DistElem<BxObject>(true, distElem.getDist(), distElem.getObj1(), distElem.getObj2()));
 				continue;
 			}
 		
@@ -198,10 +191,10 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 		    System.out.println("(" + distElem.obj1.getX() + ", " + distElem.obj1.getY() + ", " + (int)distElem.obj1.getWidth() + ", " + (int)distElem.obj1.getHeight() + ": "+ s(obj1Content)+"["+obj1Content.length()+"])" 
 				+ " + (" + distElem.obj2.getX() + ", " + distElem.obj2.getY() + ", " + (int)distElem.obj2.getWidth() + ", " + (int)distElem.obj2.getHeight() + ": "+ s(obj2Content)+"["+obj2Content.length()+"]) " +distElem.dist);
 		 	*/
-			BxZoneGroup newGroup = new BxZoneGroup(distElem.obj1, distElem.obj2);
-			plane.remove(distElem.obj1).remove(distElem.obj2);
-			dists = removeDistElementsContainingObject(dists, distElem.obj1);
-			dists = removeDistElementsContainingObject(dists, distElem.obj2);
+			BxZoneGroup newGroup = new BxZoneGroup(distElem.getObj1(), distElem.getObj2());
+			plane.remove(distElem.getObj1()).remove(distElem.getObj2());
+			dists = removeDistElementsContainingObject(dists, distElem.getObj1());
+			dists = removeDistElementsContainingObject(dists, distElem.getObj2());
 			for (BxObject other : plane.getObjects()) {
 				dists.add(new DistElem<BxObject>(false, distance(other,
 						newGroup), newGroup, other));
@@ -218,7 +211,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	private List<DistElem<BxObject> > removeDistElementsContainingObject(Collection<DistElem<BxObject>> list, BxObject obj) {
 		List<DistElem<BxObject> > ret = new ArrayList<DistElem<BxObject> >();
 		for (DistElem<BxObject> distElem : list) {
-			if (distElem.obj1 != obj && distElem.obj2 != obj)
+			if (distElem.getObj1() != obj && distElem.getObj2() != obj)
 				ret.add(distElem);
 		}
 		return ret;

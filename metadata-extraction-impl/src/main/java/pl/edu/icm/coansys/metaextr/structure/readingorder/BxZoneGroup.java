@@ -1,8 +1,8 @@
 package pl.edu.icm.coansys.metaextr.structure.readingorder;
 
-import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
-import pl.edu.icm.coansys.metaextr.structure.model.BxObject;
 import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
+import pl.edu.icm.coansys.metaextr.structure.model.BxObject;
+import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 
 /** Class used for clustering BxObjects into a tree
 *
@@ -11,7 +11,7 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxBounds;
 * 
 */
 
-class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
+public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
 	private BxObject leftChild;
 	private BxObject rightChild;
 

@@ -2,10 +2,9 @@ package pl.edu.icm.coansys.metaextr.structure.readingorder;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
 
-class TreeToListConverter {
+public class TreeToListConverter {
 	public List<BxZone> convertToList(BxZoneGroup obj) {
 		List<BxZone> ret = new ArrayList<BxZone>();
 		if (obj.getLeftChild() instanceof BxZone) {

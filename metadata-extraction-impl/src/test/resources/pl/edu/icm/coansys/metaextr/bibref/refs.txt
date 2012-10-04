@@ -1,0 +1,79 @@
+1. Kudsk KA, Fabian TC, Baum S, Gold RE, Mangiante E, Voeller G: Silent deep vein thrombosis in immobilized multiple trauma patients. Am J Surg 1989, 158:515-9.
+2. Geerts WH, Code KI, Jay RM, Chen E, Szalai JP: A prospective study of venous thromboembolism after major trauma. N Engl J Med 1994, 331:1601-6.
+3. Geerts WH, Heit JA, Clagett GP, Pineo GF, Colwell CW, Anderson FA Jr, Wheeler HB: Prevention of venous thromboembolism. Chest 2001, 119(1 Suppl):132S-75S.
+4. Acosta JA, Yang JC, Winchell RJ, Simons RK, Fortlage DA, Hollingsworth- Fridlund P, Hoyt DB: Lethal injuries and time to death in a level I trauma center. J Am Coll Surg 1998, 186:528-33.
+5. O’Malley KF, Ross SE: Pulmonary embolism in major trauma patients. J Trauma 1990, 30:748-50.
+6. Rogers FB, Shackford SR, Wilson J, Ricci MA, Morris CS: Prophylactic vena cava filter insertion in severely injured trauma patients: indications and preliminary results. J Trauma 1993, 35:637-42.
+7. Meissner MH, Chandler WL, Elliott JS: Venous thromboembolism in trauma: a local manifestation of systemic hypercoagulability?. J Trauma 2003, 54:224-31.
+8. Rogers FB, Cipolle MD, Velmahos G, Rozycki G, Luchette FA: Practice management guidelines for the prevention of venous thromboembolism in trauma patients: the EAST practice management guidelines work group. J Trauma 2002, 53:142-64.
+9. Velmahos GC, Kern J, Chan LS, Odor D, Murray JA, Shekelle P: Prevention of venous thromboembolism after injury: an evidence-based report–part II: analysis of risk factors and evaluation of the role of vena caval filters. J Trauma 2000, 49:140-4.
+10. Geerts WH, Jay RM, Code KI, Chen E, Szalai JP, Saibil EA, Hamilton PA: A comparison of low-dose heparin with low-molecular-weight heparin as prophylaxis against venous thromboembolism after major trauma. N Engl J Med 1996, 335:701-7.
+11. Weitz JI: Low-molecular-weight heparins. N Engl J Med 1997, 337:688-98.
+12. Geerts WH, Pineo GF, Heit JA, Bergqvist D, Lassen MR, Colwell CW, Ray JG: Prevention of venous thromboembolism: the Seventh ACCP Conference on Antithrombotic and Thrombolytic Therapy. Chest 2004, 126(3 Suppl):338S-400S.
+13. Kurtoglu M, Yanar H, Bilsel Y, Guloglu R, Kizilirmak S, Buyukkurt D, Granit V: Venous thromboembolism prophylaxis after head and spinal trauma: intermittent pneumatic compression devices versus low molecular weight heparin. World J Surg 2004, 28:807-11.
+14. Norwood SH, McAuley CE, Berne JD, Vallina VL, Kerns DB, Grahm TW, Short K, McLarty JW: Prospective evaluation of the safety of enoxaparin prophylaxis for venous thromboembolism in patients with intracranial hemorrhagic injuries. Arch Surg 2002, 137:696-702.
+15. Cothren CC, Smith WR, Moore EE, Morgan SH: Utility of once-daily dose of low-molecular-weight heparin to prevent venous thromboembolism in multisystem trauma patients. World J Surg 2007, 31:98-104.
+16. Muntz J, Scott DA, Lloyd A, Egger M: Major bleeding rates after prophylaxis against venous thromboembolism: systematic review, meta- analysis, and cost implications. Int J Technol Assess Health Care 2004, 20:405-14.
+17. Green D, Lee MY, Lim AC, Chmiel JS, Vetter M, Pang T, Chen D, Fenton L, Yarkony GM, Meyer PR Jr: Prevention of thromboembolism after spinal cord injury using low-molecular-weight heparin. Ann Intern Med 1990, 113:571-4.
+18. Spinal Cord Injury Thomboprophylaxis Investigators: Prevention of venous thromboembolism in the acute treatment phase after spinal cord injury: a randomized, multicenter trial comparing low-dose heparin plus intermittent pneumatic compression with enoxaparin. J Trauma 2003, 54:1116-26.
+19. Ginzburg E, Cohn SM, Lopez J, Jackowski J, Brown J, Brown M, Hameed SM, Miami Deep Vein Thrombosis Study Group: Randomized clinical trial of intermittent pneumatic compression and low molecular weight heparin in trauma. Br J Surg 2003, 90:1338-44.
+20. Knudson MM, Morabito D, Paiement GD, Shackleford S: Use of low molecular weight heparin in preventing thromboembolism in trauma patients. J Trauma 1996, 41:446-59.
+21. Lindhoff-Last E, Nakov R, Misselwitz F, Breddin HK, Bauersachs R: Incidence and clinical relevance of heparin-induced antibodies in patients with deep vein thrombosis treated with unfractionated or low-molecular- weight heparin. Br J Haematol 2002, 118:1137-42.
+22. Amiral J, Bridey F, Wolf M, Boyer-Neumann C, Fressinaud E, Vissac AM, Peunaud-Debayle E, Dreyfus M, Meyer D: Antibodies to macromolecular platelet factor 4-heparin complexes in heparin-induced thrombocytopenia: a study of 44 cases. Thromb Haemost 1995, 73:21-8.
+23. Amiral J, Wolf M, Fischer A, Boyer-Neumann C, Vissac A, Meyer D: Pathogenicity of IgA and/or IgM antibodies to heparin-PF4 complexes in patients with heparin-induced thrombocytopenia. Br J Haematol 1996, 92:954-9.
+24. Warkentin TE, Roberts RS, Hirsh J, Kelton JG: An improved definition of immune heparin-induced thrombocytopenia in postoperative orthopedic patients. Arch Intern Med 2003, 163:2518-24.
+25. Bauer TL, Arepally G, Konkle BA, Mestichelli B, Shapiro SS, Cines DB, Poncz M, McNulty S, Amiral J, Hauck WW, Edie RN, Mannion JD: Prevalence of heparin-associated antibodies without thrombosis in patients undergoing cardiopulmonary bypass surgery. Circulation 1997, 95:1242-6.
+26. Lindhoff-Last E, Eichler P, Stein M, Plagemann J, Gerdsen F, Wagner R, Ehrly AM, Bauersachs R: A prospective study on the incidence and clinical relevance of heparin-induced antibodies in patients after vascular surgery. Thromb Res 2000, 97:387-93.
+27. Visentin GP, Malik M, Cyganiak KA, Aster RH: Patients treated with unfractionated heparin during open heart surgery are at high risk to form antibodies reactive with heparin:platelet factor 4 complexes. J Lab Clin Med 1996, 128:376-83.
+28. Warkentin TE, Sheppard JA, Horsewood P, Simposn PJ, Moore JC, Kelton JG: Impact of the patient population on the risk for heparin-induced thrombocytopenia. Blood 2000, 96:1703-8.
+29. Warkentin TE, Levine MN, Hirsh J, Horsewood P, Roberts RS, Gent M, Kelton JG: Heparin-induced thrombocytopenia in patients treated with low-molecular-weight heparin or unfractionated heparin. N Engl J Med 1995, 332:1330-5.
+30. Lubenow N, Hinz P, Ekkernkamp A, Greinacher A: Should patients be informed about the risk of heparin-induced thrombocytopenia before prolonged low-molecular-weight heparin thromboprophylaxis post- trauma/orthopedic surgery?. Eur J Haematol 2007, 79:187-90.
+31. Haentjens P: Thromboembolic prophylaxis in orthopaedic trauma patients: a comparison between a fixed dose and an individually adjusted dose of a low molecular weight heparin (nadroparin calcium). Injury 1996, 27:385-90.
+32. Schwarcz TH, Quick RC, Minion DJ, Kearney PA, Kwolek CJ, Endean ED: Enoxaparin treatment in high-risk trauma patients limits the utility of surveillance venous duplex scanning. J Vasc Surg 2001, 34:447-52.
+33. Agu O, Hamilton G, Baker D: Graduated compression stockings in the prevention of venous thromboembolism. Br J Surg 1999, 86:992-1004.
+34. Morris RJ, Woodcock JP: Evidence-based compression: prevention of stasis and deep vein thrombosis. Ann Surg 2004, 239:162-71.
+35. Elliott CG, Dudney TM, Egger M, Orme JF, Clemmer TP, Horn SD, Weaver L, Handrahan D, Thomas F, Merrell S, Kitterman N, Yeates S: Calf-thigh sequential pneumatic compression compared with plantar venous pneumatic compression to prevent deep-vein thrombosis after non- lower extremity trauma. J Trauma 1999, 47:25-32.
+36. Lachmann EA, Rook JL, Tunkel R, Nagler W: Complications associated with intermittent pneumatic compression. Arch Phys Med Rehabil 1992, 73:482- 5.
+37. McGrory BJ, Burke DW: Peroneal nerve palsy following intermittent sequential pneumatic compression. Orthopedics 2000, 23:1103-5.
+38. Pittman GR: Peroneal nerve palsy following sequential pneumatic compression. Jama 1989, 261:2201-2.
+39. Cohen SA, Hurt WG: Compartment syndrome associated with lithotomy position and intermittent compression stockings. Obstet Gynecol 2001, 97:832-3.
+40. Verdolin MH, Toth AS, Schroeder R: Bilateral lower extremity compartment syndromes following prolonged surgery in the low lithotomy position with serial compression stockings. Anesthesiology 2000, 92:1189-91.
+41. Comerota AJ, Katz ML, White JV: Why does prophylaxis with external pneumatic compression for deep vein thrombosis fail?. Am J Surg 1992, 164:265-8.
+42. Cornwell EE, Chang D, Velmahos G, Jindal A, Baker D, Phillips J, Bonar J, Campbell K: Compliance with sequential compression device prophylaxis in at-risk trauma patients: a prospective analysis. Am Surg 2002, 68:470-3.
+43. Haddad FS, Kerry RM, McEwen JA, Appleton L, Garbuz DS, Masri BA, Duncan CP: Unanticipated variations between expected and delivered pneumatic compression therapy after elective hip surgery: a possible source of variation in reported patient outcomes. J Arthroplasty 2001, 16:37-46.
+44. Carlin AM, Tyburski JG, Wilson RF, Steffes C: Prophylactic and therapeutic inferior vena cava filters to prevent pulmonary emboli in trauma patients. Arch Surg 2002, 137:521-7.
+45. Khansarinia S, Dennis JW, Veldenz HC, Butcher JL, Hartland L: Prophylactic Greenfield filter placement in selected high-risk trauma patients. J Vasc Surg 1995, 22:231-6.
+46. Langan EM, Miller RS, Casey WJ, Carsten CG, Graham RM, Taylor SM: Prophylactic inferior vena cava filters in trauma patients at high risk: follow-up examination and risk/benefit assessment. J Vasc Surg 1999, 30:484-88.
+47. Rodriguez JL, Lopez JM, Proctor MC, Conley JL, Gerndt SJ, Marx MV, Taheri PA: Early placement of prophylactic vena caval filters in injured patients at high risk for pulmonary embolism. J Trauma 1996, 40:797-804.
+48. Rogers FB, Shackford SR, Ricci MA, Wilson JT, Parsons S: Routine prophylactic vena cava filter insertion in severely injured trauma patients decreases the incidence of pulmonary embolism. J Am Coll Surg 1995, 180:641-7.
+49. Rogers FB, Strindberg G, Shackford SR, Osler TM, Morris CS, Ricci MA, Najarian KE, D’Astino R, Pilcher DB: Five-year follow-up of prophylactic vena cava filters in high-risk trauma patients. Arch Surg 1998, 133:406-12.
+50. Decousus H, Leizorovicz A, Parent F, Page Y, Tardy B, Girard P, Laporte S, Faivre R, Charbonnier B, Barral B, Huet Y, Simmonneau G: A clinical trial of vena caval filters in the prevention of pulmonary embolism in patients with proximal deep-vein thrombosis. Prevention du Risque d’Embolie Pulmonaire par Interruption Cave Study Group. N Engl J Med 1998, 338:409-15.
+51. Darcy MD, Smith TP, Hunter DW, Castraneda-Zuniga W, Lund G, Amplatz K: Short-term prophylaxis of pulmonary embolism by using a retrievable vena cava filter. AJR Am J Roentgenol 1986, 147:836-8.
+52. Hoff WS, Hoey BA, Wainwright GA, Reed JF, Ball DS, Ringold M, Grossman MD: Early experience with retrievable inferior vena cava filters in high-risk trauma patients. J Am Coll Surg 2004, 199:869-74.
+53. Offner PJ, Hawkes A, Madayag R, Seale F, Maines C: The role of temporary inferior vena cava filters in critically ill surgical patients. Arch Surg 2003, 138:591-5.
+54. Allen TL, Carter JL, Morris BJ, Harker CP, Stevens MH: Retrievable vena cava filters in trauma patients for high-risk prophylaxis and prevention of pulmonary embolism. Am J Surg 2005, 189:656-61.
+55. Rosenthal D, Wellons ED, Levitt AB, Shuler FW, O’Conner RE, Henderson VJ: Role of prophylactic temporary inferior vena cava filters placed at the ICU bedside under intravascular ultrasound guidance in patients with multiple trauma. J Vasc Surg 2004, 40:958-64.
+56. Streiff MB: Vena caval filters: a comprehensive review. Blood 2000, 95:3669-77.
+57. Messmer JM, Greenfield LJ: Greenfield caval filters: long-term radiographic follow-up study. Radiology 1985, 156:613-8.
+58. Athanasoulis CA, Kaufman JA, Halpern EF, Waltman AC, Geller SC, Fan CM: Inferior vena caval filters: review of a 26-year single-center clinical experience. Radiology 2000, 216:54-66.
+59. Greenfield LJ, Proctor MC, Michaels AJ, Taheri PA: Prophylactic vena caval filters in trauma: the rest of the story. J Vasc Surg 2000, 32:490-7.
+60. Patton JH Jr, Fabian TC, Croce MA, Minard G, Pritchard FE, Kudsk KA: Prophylactic Greenfield filters: acute complications and long-term follow-up. J Trauma 1996, 41:231-7.
+61. Poletti PA, Becker CD, Prina L, Rujis P, Bounameaux H, Didier D, Schneider PA, Terrier F: Long-term results of the Simon nitinol inferior vena cava filter. Eur Radiol 1998, 8:289-94.
+62. Starok MS, Common AA: Follow-up after insertion of Bird’s Nest inferior vena caval filters. Can Assoc Radiol J 1996, 47:189-94.
+63. Greenfield LJ, Cho KJ, Tauscher JR: Limitations of percutaneous insertion of Greenfield filters. J Cardiovasc Surg 1990, 31:344-50.
+64. Feezor RJ, Huber TS, Welborn MB, Schell SR: Duodenal perforation with an inferior vena cava filter: an unusual cause of abdominal pain. J Vasc Surg 2002, 35:1010-2.
+65. Putterman D, Niman D, Cohen G: Aortic pseudoaneurysm after penetration by a Simon nitinol inferior vena cava filter. J Vasc Interv Radiol 2005, 16:535-8.
+66. Goldman KA, Adelman MA: Retroperitoneal caval filter as a source of abdominal pain. Cardiovasc Surg 1994, 2:85-7.
+67. Miller CL, Wechsler RJ: CT evaluation of Kimray-Greenfield filter complications. Am J Roentgenol 1986, 147:45-50.
+68. Goldman HB, Hanna K, Dmochowski RR: Ureteral injury secondary to an inferior vena caval filter. J Urol 1996, 156:1763.
+69. Dabbagh A, Chakfe N, Kretz JG, Cemri B, Nicolini P, Fuentes C, Mettauer B, Epailly E, Muster D, Eisenmann B: Late complication of a Greenfield filter associating caudal migration and perforation of the abdominal aorta by a ruptured strut. J Vasc Surg 1995, 22:182-7.
+70. Kinney TB: Update on inferior vena cava filters. J Vasc Interv Radiol 2003, 14:425-40.
+71. Binkert CA, Bansal A, Gates JD: Inferior vena cava filter removal after 317- day implantation. J Vasc Interv Radiol 2005, 16:395-8.
+72. Asch MR: Initial experience in humans with a new retrievable inferior vena cava filter. Radiology 2002, 225:835-44.
+73. Bovyn G, Gory P, Reynaud P, Ricco JB: The Tempofilter: a multicenter study of a new temporary caval filter implantable for up to six weeks. Ann Vasc Surg 1997, 11:520-8.
+74. Millward SF, Bhargava A, Aquino J Jr, Peterson RA, Veinot JP, Bormanis J, Wells PS: Gunther Tulip filter: preliminary clinical experience with retrieval. J Vasc Interv Radiol 2000, 11:75-82.
+75. Millward SF, Bormanis J, Burbridge BE, Markman SJ, Peterson RAl: Preliminary clinical experience with the Gunther temporary inferior vena cava filter. J Vasc Interv Radiol 1994, 5:863-8.
+76. Millward SF, Oliva VL, Bell SD, Valenti DA, Rasuli P, Asch M, Hadziomerovic A, Kachura JR: Gunther Tulip Retrievable Vena Cava Filter: results from the Registry of the Canadian Interventional Radiology Association. J Vasc Interv Radiol 2001, 12:1053-8.
+77. Neuerburg JM, Gunther RW, Vorwerk D, Dondelinger RF, Jager H, LAckner KJ, Schild HH, Plant GR, Joffre FG, Schneider PA, Janssen JH: Results of a multicenter study of the retrievable Tulip Vena Cava Filter: early clinical experience. Cardiovasc Intervent Radiol 1997, 20:10-6.
+78. Wicky S, Doenz F, Meuwly JY, Portier F, Schnyder P, Denys A: Clinical experience with retrievable Gunther Tulip vena cava filters. J Endovasc Ther 2003, 10:994-1000.
+79. Kaufman JA, Kinney TB, Streiff MB, Sing RF, Proctor MC, Becker D, Cipolle M, Comerota AJ, Millward SF, Rogers FB, Sacks D, Venbrux AC: Guidelines for the use of retrievable and convertible vena cava filters: Report from the Society of Interventional Radiology multidisciplinary consensus conference. Surg Obes Relat Dis 2006, 2:200-12.

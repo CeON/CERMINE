@@ -61,9 +61,6 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
         return this;
     }
 
-    /* (non-Javadoc)
-	 * @see pl.edu.icm.yadda.analysis.textr.model.Printable#toText()
-	 */
     @Override
 	public String toText() {
         StringBuilder sb = new StringBuilder();

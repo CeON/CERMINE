@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     
-    <!--parent>
+    <parent>
         <groupId>pl.edu.icm.coansys</groupId>
-        <artifactId>coansys</artifactId>
+        <artifactId>metaextr</artifactId>
         <version>1.0-SNAPSHOT</version>
-    </parent-->
+    </parent>
     
     <groupId>pl.edu.icm.coansys</groupId>
     <version>1.0-SNAPSHOT</version>
@@ -16,7 +16,7 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-    	<dependency>
+        <dependency>
             <groupId>tw.edu.ntu.csie</groupId>
             <artifactId>libsvm</artifactId>
             <version>3.1</version>

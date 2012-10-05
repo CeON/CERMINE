@@ -1,11 +1,14 @@
 package pl.edu.icm.coansys.metaextr.structure;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
+import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.evaluation.EvaluationUtils;
 import pl.edu.icm.coansys.metaextr.metadata.zoneclassification.features.*;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
@@ -15,6 +18,8 @@ import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureCalculat
 import pl.edu.icm.coansys.metaextr.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.coansys.metaextr.tools.classification.svm.SVMZoneClassifier;
+import pl.edu.icm.coansys.metaextr.structure.readingorder.HierarchicalReadingOrderResolver;
+import pl.edu.icm.coansys.metaextr.structure.transformers.BxDocumentToTrueVizWriter;
 
 /**
  * Classifying zones as: METADATA, BODY, REFERENCES, OTHER. 
@@ -131,7 +136,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         return vectorBuilder;
 	}
 	
-	public static void main(String[] args) throws AnalysisException {
+	public static void main(String[] args) throws AnalysisException, TransformationException {
 		// args[0] path to xml directory
 		if(args.length != 1) {
 			System.err.println("Source directory needed!");
@@ -146,14 +151,23 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
 		
 		SVMZoneClassifier classifier = new SVMInitialZoneClassifier(modelFile, rangeFile);
+
+		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
+		BxDocumentToTrueVizWriter tvw = new BxDocumentToTrueVizWriter();
 		
 		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[0]);
 		for(BxDocument doc: docs) {
-			System.out.println(">> " + doc.getFilename() + " " + doc.asPages().size());
+			System.out.println(">> " + doc.getFilename());
+			ror.resolve(doc);
 			classifier.classifyZones(doc);
-			for(BxZone zone: doc.asZones()) {
-				System.out.println("****** " + zone.getLabel());
-				System.out.println(zone.toText());
+			try{
+				// Create file 
+				FileWriter fstream = new FileWriter(doc.getFilename());
+				BufferedWriter out = new BufferedWriter(fstream);
+				out.write(tvw.write(doc.getPages(), null));
+				out.close();
+			} catch (Exception e){//Catch exception if any
+				System.err.println("Error: " + e.getMessage());
 			}
 		}
 	}

@@ -33,6 +33,16 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 				   (o1.getY() == o2.getY() ? 0 : 1));
 		}
 	};
+	
+	private Boolean force;
+	
+	public HierarchicalReadingOrderResolver(Boolean force) {
+		this.force = force;
+	}
+
+	public HierarchicalReadingOrderResolver() {
+		this.force = true;
+	}
 
 	final static Comparator<BxObject> X_ASCENDING_ORDER = new Comparator<BxObject>() {
 		public int compare(BxObject o1, BxObject o2) {
@@ -94,6 +104,8 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	 * @param list is a list of Indexable objects
 	 */
 	private <A extends Indexable<A>> void setIdsGenericImpl(List<A> list) {
+		if(list.isEmpty())
+			return;
 		if(list.size() == 1) {
 			A elem = list.get(0);
 			elem.setNext(null);

@@ -89,7 +89,7 @@ public class TrueVizToBxDocumentReader {
             }
             setIdsAndLinkPages(pages);
             if(areIdsSet) {
-            	linkOtherElements(pages);
+            	linkAndReorderOtherElements(pages);
             }
             for(BxPage page: pages)
             	BxModelUtils.setParents(page);
@@ -102,7 +102,34 @@ public class TrueVizToBxDocumentReader {
             throw new TransformationException(ex);
         }
     }
-
+    protected <A extends Indexable<A>> List<A> reorderList(List<A> list) {
+    	Map<String, A> elems = new HashMap<String, A>();
+    	List<A> ordered = new ArrayList<A>(list.size());
+    	for(A elem: list)
+    		elems.put(elem.getId(), elem);
+    	
+    	A start = null;
+    	for(A elem: list)
+    		if(elem.getPrev() == null) {//first element at all
+    			start = elem;
+    			break;
+    		} else if(!elems.keySet().contains(elem.getPrev().getId())) {
+    			start = elem;
+    			break;
+    		}
+    	if(start == null)
+    		throw new RuntimeException("");
+    	do {
+    		ordered.add(start);
+    		if(!start.hasNext()) //last element at all
+    			break;
+    		start = start.getNext();
+    	} while(elems.keySet().contains(start.getId()));
+    	
+    	if(ordered.size() != list.size())
+    		throw new RuntimeException("Output list size doesn't match the input one!");
+    	return ordered;
+    }
     /** A generic function for linking objects together (setting *Next and *Prev)
      * It is a assumed, that all Id's and NextId's are set before. 
      * @param list is a list of elements to be connected 
@@ -128,13 +155,25 @@ public class TrueVizToBxDocumentReader {
 	}
 	
     /* assumes that nextIds are set for all objects */
-	private void linkOtherElements(List<BxPage> pages) {
+	private void linkAndReorderOtherElements(List<BxPage> pages) {
 		BxDocument temp = new BxDocument();
 		temp.setPages(pages);
 		linkGenericImpl(temp.asZones());
 		linkGenericImpl(temp.asLines());
 		linkGenericImpl(temp.asWords());
 		linkGenericImpl(temp.asChunks());
+		for(BxPage page: pages) {
+			for(BxZone zone: page.getZones()) {
+				for(BxLine line: zone.getLines()) {
+					for(BxWord word: line.getWords()) {
+						word.setChunks(reorderList(word.getChunks()));
+					}
+					line.setWords(reorderList(line.getWords()));
+				}
+				zone.setLines(reorderList(zone.getLines()));
+			}
+			page.setZones(reorderList(page.getZones()));
+		}
 	}
 
 	private void setIdsAndLinkPages(List<BxPage> pages) {

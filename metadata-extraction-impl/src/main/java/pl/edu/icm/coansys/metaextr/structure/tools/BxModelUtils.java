@@ -13,18 +13,22 @@ import pl.edu.icm.coansys.metaextr.structure.model.*;
 public class BxModelUtils {
 	public static void setParents(BxDocument doc) {
 		for(BxPage page: doc.getPages()) {
-			for(BxZone zone: page.getZones()) {
-				for(BxLine line: zone.getLines()) {
-					for(BxWord word: line.getWords()) {
-						for(BxChunk chunk: word.getChunks())
-							chunk.setParent(word);
-						word.setParent(line);
-					}
-					line.setParent(zone);
-				}
-				zone.setParent(page);
-			}
 			page.setParent(doc);
+			setParents(page);
+		}
+	}
+	
+	public static void setParents(BxPage page) {
+		for(BxZone zone: page.getZones()) {
+			for(BxLine line: zone.getLines()) {
+				for(BxWord word: line.getWords()) {
+					for(BxChunk chunk: word.getChunks())
+						chunk.setParent(word);
+					word.setParent(line);
+				}
+				line.setParent(zone);
+			}
+			zone.setParent(page);
 		}
 	}
 	

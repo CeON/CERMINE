@@ -3,7 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:si="http://www.springframework.org/schema/integration"
 	xmlns:stream="http://www.springframework.org/schema/integration/stream"
-	xmlns:proc="http://yadda.icm.edu.pl/schema/processing"
 	xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -12,13 +11,11 @@
             http://www.springframework.org/schema/integration
             http://www.springframework.org/schema/integration/spring-integration-1.0.xsd
             http://www.springframework.org/schema/integration/stream
-            http://www.springframework.org/schema/integration/stream/spring-integration-stream-1.0.xsd
-            http://yadda.icm.edu.pl/schema/processing
-            http://yadda.icm.edu.pl/schema/processing/yadda-process.xsd">
+            http://www.springframework.org/schema/integration/stream/spring-integration-stream-1.0.xsd">
 
-    <import resource="classpath:pl/edu/icm/yadda/analysis/metadata/common/services.xml"/>
+    <import resource="classpath:pl/edu/icm/coansys/metaextr/metadata/common/services.xml"/>
 
-    <bean id="evaluator" class="pl.edu.icm.yadda.analysis.metadata.evaluation.ClassificationEvaluator">
+    <bean id="evaluator" class="pl.edu.icm.coansys.metaextr.evaluation.ClassificationEvaluator">
         <property name="zoneClassifier" ref="zoneClassifier"/>
         <property name="labelMap">
             <map>

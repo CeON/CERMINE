@@ -21,7 +21,7 @@ import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentRea
 public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocument, BxDocument, BxPage, SegmentationEvaluator.Results> {
 
     private static final String DEFAULT_CONFIGURATION_PATH =
-            "pl/edu/icm/yadda/analysis/metadata/evaluation/segmentation-configuration.xml";
+            "pl/edu/icm/coansys/metaextr/metadata/evaluation/segmentation-configuration.xml";
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
     

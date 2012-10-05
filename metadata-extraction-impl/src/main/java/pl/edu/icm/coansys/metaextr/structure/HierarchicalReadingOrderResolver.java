@@ -364,49 +364,4 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 		return dist*(MAGIC_COEFF+obj1obj2VectorCosineAbs);
 	}
 
-	public static void main(String[] args) throws TransformationException, IOException {
-	//	String filename = "13191004.xml";
-	//	String filename = "10255834.xml";
-	//	String filename = "11781238.xml";
-	//	String filename = "1748717X.xml";
-		String filename = "06.xml";
-		String path = "/pl/edu/icm/yadda/analysis/logicstr/train/";
-		String inFile = path + filename;
-	//	String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
-	//	String inFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/004.xml";
-		InputStream is = HierarchicalReadingOrderResolver.class.getResourceAsStream(inFile);
-		InputStreamReader isr = new InputStreamReader(is);
-
-		TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-		BxDocument doc = new BxDocument().setPages(reader.read(isr));
-
-		BxObjectDump dump = new BxObjectDump();
-	//	System.out.println(dump.dump(doc));
-
-		HierarchicalReadingOrderResolver roa = new HierarchicalReadingOrderResolver();
-		BxDocument sortedDoc = roa.resolve(doc);
-
-		for (BxPage page : sortedDoc.getPages()) {
-			for (BxZone zone : page.getZones()) {
-				System.out.format("(X=%5.2f, Y=%5.2f, W=%5.2f, H=%5.2f)\n", zone.getX(), zone.getY(), zone.getWidth(), zone.getHeight());
-				System.out.println(zone.toText() + "\n");
-			}
-		}
-		
-		BxDocumentToTrueVizWriter trueVizWriter = new BxDocumentToTrueVizWriter();
-		
-		FileWriter fw = new FileWriter(filename + ".out");
-		fw.write(trueVizWriter.write(sortedDoc.getPages()));
-		fw.flush();
-		fw.close();
-		
-		fw = new FileWriter(filename + ".dump");
-		fw.write(dump.dump(sortedDoc));
-		fw.flush();
-		fw.close();
-		
-	//	System.out.println(dump.dump(sortedDoc));
-
-		isr.close();
-	}
 }

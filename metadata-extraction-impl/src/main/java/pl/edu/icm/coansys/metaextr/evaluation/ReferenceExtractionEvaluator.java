@@ -22,7 +22,7 @@ public class ReferenceExtractionEvaluator extends AbstractDualInputEvaluator<Str
     private static final String EXPECTED_FILENAME_REPLACEMENT = "$1.txt";
 
     private static final String DEFAULT_CONFIGURATION_PATH =
-            "pl/edu/icm/yadda/analysis/metadata/evaluation/referenceExtraction-configuration.xml";
+            "pl/edu/icm/coansys/metaextr/metadata/evaluation/referenceExtraction-configuration.xml";
 
     private BibReferenceExtractor referenceExtractor;
 

@@ -36,7 +36,7 @@ import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingEle
  */
 public class HMMBibRefParsingExample {
 
-    protected static final String hmmTrainFile = "/pl/edu/icm/yadda/analysis/bibref/sampleNumdamBibReferences.xml";
+    protected static final String hmmTrainFile = ".xml";
 
     public static void main(String[] args) throws URISyntaxException, Exception {
         

@@ -6,9 +6,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
-    <import resource="classpath:pl/edu/icm/yadda/analysis/metadata/common/common-beans.xml"/>
+    <import resource="classpath:pl/edu/icm/coansys/metaextr/metadata/common/common-beans.xml"/>
 
-    <bean id="pageSegmenter" class="pl.edu.icm.yadda.analysis.textr.DocstrumPageSegmenter">
+    <bean id="pageSegmenter" class="pl.edu.icm.coansys.metaextr.structure.DocstrumPageSegmenter">
         <!-- Set spacing histogram resolution to 0.5pt -->
         <property name="spacingHistogramResolution" value="0.5"/>
 
@@ -41,7 +41,7 @@
         <property name="maxLineSizeScale" value="Infinity"/>
     </bean>
 
-    <bean id="initialZoneClassifier" class="pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier">
+    <bean id="initialZoneClassifier" class="pl.edu.icm.coansys.metaextr.structure.HMMZoneClassifier">
         <constructor-arg index="0" ref="hmmService" />
         <constructor-arg index="1" ref="hmmStorage" />
         <constructor-arg index="2" value="initialzoneclassification" />
@@ -59,25 +59,25 @@
     </bean>
     <bean id="xstream" class="com.thoughtworks.xstream.XStream"/>
     
-    <bean id="zoneClassifier" class="pl.edu.icm.yadda.analysis.textr.HMMZoneClassifier">
+    <bean id="zoneClassifier" class="pl.edu.icm.coansys.metaextr.structure.HMMZoneClassifier">
         <constructor-arg index="0" ref="hmmService" />
         <constructor-arg index="1" ref="hmmStorage" />
         <constructor-arg index="2" value="zoneclassification" />
         <constructor-arg index="3" ref="zoneFeatureVectorBuilder" />
     </bean>
 
-    <bean id="referenceExtractor" class="pl.edu.icm.yadda.analysis.bibref.HMMBibReferenceExtractor">
+    <bean id="referenceExtractor" class="pl.edu.icm.coansys.metaextr.bibref.HMMBibReferenceExtractor">
         <constructor-arg index="0" ref="hmmService" />
         <constructor-arg index="1" ref="hmmStorage" />
         <constructor-arg index="2" value="referenceextraction" />
         <constructor-arg index="3" ref="refsExtrFeatureVectorBuilder" />
     </bean>
     
-    <bean id="clustReferenceExtractor" class="pl.edu.icm.yadda.analysis.bibref.ClusteringBibReferenceExtractor">
+    <bean id="clustReferenceExtractor" class="pl.edu.icm.coansys.metaextr.bibref.ClusteringBibReferenceExtractor">
         <constructor-arg ref="clustRefsExtrFeatureVectorBuilder" />
     </bean>
 
-    <bean id="referenceParser" class="pl.edu.icm.yadda.analysis.textr.HMMBibReferenceParser">
+    <bean id="referenceParser" class="pl.edu.icm.coansys.metaextr.structure.HMMBibReferenceParser">
         <constructor-arg ref="hmmService" />
         <constructor-arg ref="hmmStorage" />
         <constructor-arg value="referenceparsing" />
@@ -85,7 +85,7 @@
     </bean>
 
     <!--
-    <bean id="referenceParser" class="pl.edu.icm.yadda.analysis.textr.HMMBibReferenceParser">
+    <bean id="referenceParser" class="pl.edu.icm.coansys.metaextr.structure.HMMBibReferenceParser">
         <constructor-arg ref="hmmService" />
         <constructor-arg>
             <bean id="probabilityInfo" factory-bean="xstream" factory-method="fromXML">
@@ -101,12 +101,12 @@
     <bean id="xstream" class="com.thoughtworks.xstream.XStream"/>
     -->
 
-    <bean id="metadataExtractor" class="pl.edu.icm.yadda.analysis.metadata.extraction.EnhancerMetadataExtractor">
+    <bean id="metadataExtractor" class="pl.edu.icm.coansys.metaextr.metadata.extraction.EnhancerMetadataExtractor">
         <property name="enhancers">
             <list>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.HindawiCornerInfoEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.HindawiCornerInfoEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.TitleMergedWithTypeEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.TitleMergedWithTypeEnhancer">
                     <property name="types">
                         <set>
                             <value>Case Report</value>
@@ -123,9 +123,9 @@
                         </set>
                     </property>
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.TitleEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.TitleEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.AffiliationGeometricEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.AffiliationGeometricEnhancer">
                     <property name="headers">
                         <list>
                             <value>Author Affiliations</value>
@@ -133,11 +133,11 @@
                         </list>
                     </property>
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.AuthorEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.AuthorEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.EmailEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.EmailEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.DoiEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.DoiEnhancer">
                     <property name="searchedZoneLabels">
                         <set>
                             <value>MET_BIB_INFO</value>
@@ -145,46 +145,46 @@
                         </set>
                     </property>
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.IssnEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.IssnEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.UrnEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.UrnEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.DescriptionEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.DescriptionEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.KeywordsEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.KeywordsEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.ArticleIdEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.ArticleIdEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.VolumeEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.VolumeEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.IssueEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.IssueEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.JournalVolumeIssueWithAuthorEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.JournalVolumeIssueWithAuthorEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.JournalVolumeIssueEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.JournalVolumeIssueEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.JournalEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.JournalEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.EditorEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.EditorEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.ReceivedDateEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.ReceivedDateEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.AcceptedDateEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.AcceptedDateEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.PublishedDateEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.PublishedDateEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.RevisedDateEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.RevisedDateEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.RevisedFormDateEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.RevisedFormDateEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.PagesEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.PagesEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.PagesPartialEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.PagesPartialEnhancer">
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.CiteAsEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.CiteAsEnhancer">
                     <property name="referenceParser" ref="referenceParser"/>
                 </bean>
-                <bean class="pl.edu.icm.yadda.analysis.metadata.extraction.enhancers.YearEnhancer">
+                <bean class="pl.edu.icm.coansys.metaextr.metadata.extraction.enhancers.YearEnhancer">
                 </bean>
             </list>
         </property>

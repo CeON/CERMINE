@@ -15,7 +15,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import pl.edu.icm.coansys.metaextr.content.features.line.*;
 import pl.edu.icm.coansys.metaextr.content.model.DocumentContentStructure;
@@ -33,10 +32,9 @@ import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnModel;
  *
  * @author Dominika Tkaczyk
  */
-@Ignore
 public class SimpleLogicalStructureExtractorTest {
     
-    String dir = "/pl/edu/icm/yadda/analysis/articlecontent/";
+    String dir = "/pl/edu/icm/coansys/metaextr/content/";
 
     String testZip = "test.zip";
     String sourceDir = "source/";
@@ -183,7 +181,7 @@ public class SimpleLogicalStructureExtractorTest {
         List<ZipEntry> entries = getEntries(zipFile);
         
         for (ZipEntry ze : entries) {
-            if (ze.getName().matches("^"+modelFileName+"$")) {
+            if (ze.getName().matches("^"+modelFileName+"$") || ze.getName().matches("^.*/"+modelFileName+"$")) {
                 InputStream xis = zipFile.getInputStream(ze);
                 XStream xs = new XStream();
                 return (KnnModel<BxZoneLabel>) xs.fromXML(xis);
@@ -222,10 +220,5 @@ public class SimpleLogicalStructureExtractorTest {
             }
         }
     }
-    /*
-    public static void main(String[] args) throws IOException, TransformationException, AnalysisException, URISyntaxException, JDOMException {
-        SimpleLogicalStructureExtractorTest test = new SimpleLogicalStructureExtractorTest();
-        test.setUp();
-        test.test();
-    }*/
+
 }

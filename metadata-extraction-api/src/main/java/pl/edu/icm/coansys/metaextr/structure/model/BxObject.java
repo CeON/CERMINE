@@ -27,8 +27,6 @@ public abstract class BxObject <S, T> implements Indexable<S> {
 
     protected T parent;
     
-    protected Boolean isSorted;
-
     public void setParent(T parent) {
     	this.parent = parent;
     }

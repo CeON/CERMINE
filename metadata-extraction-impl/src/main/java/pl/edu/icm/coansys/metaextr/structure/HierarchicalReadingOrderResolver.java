@@ -133,19 +133,19 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	private void setIdsAndLinkTogether(BxDocument doc) {
 		setIdsGenericImpl(doc.asPages());
 		for(BxPage page: doc.asPages()) {
-			if(!page.isSorted() && !page.getZones().isEmpty()) {
-				setIdsGenericImpl(doc.asZones());
-				setIdsGenericImpl(doc.asLines());
-				setIdsGenericImpl(doc.asWords());
-				setIdsGenericImpl(doc.asChunks());
-			}
+			setIdsGenericImpl(doc.asZones());
+			setIdsGenericImpl(doc.asLines());
+			setIdsGenericImpl(doc.asWords());
+			setIdsGenericImpl(doc.asChunks());
 		}
 	}
+
 	private String s(String string) {
 		if(string.length() <= 10)
 			return string;
 		return string.substring(0, 10);
 	}
+
 	/** Builds a binary tree of zones and groups of zones from a list of unordered zones.
 	 * This is done in hierarchical clustering by joining two least distant nodes. Distance
 	 * is calculated in the distance() method.
@@ -304,6 +304,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 			return false;
 		}
 	}
+
 	/** Key function for sorting in sortGroupedZones(). Allows to order
 	 * two objects joined together in a logical order.
 	 * 
@@ -330,6 +331,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	 * 		   a plane      
 	 *             
 	 */
+
 	private Double distance(BxObject obj1, BxObject obj2) {
 
 		Double x0 = Math.min(obj1.getX(), obj2.getX());

@@ -21,23 +21,6 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     /** list of zone's text chunks (if the zone is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
     
-    @Override
-    public Boolean isSorted() {
-    	if(!isSorted)
-    		return false;
-    	for(BxLine line: lines)
-    		if(!line.isSorted())
-    			return false;
-    	return true;
-    }
-
-    @Override
-    public void setSorted(Boolean isSorted) {
-    	this.isSorted = isSorted;
-    	for(BxLine line: lines)
-    		line.setSorted(isSorted);
-    }
-
 	public BxZoneLabel getLabel() {
         return label;
     }

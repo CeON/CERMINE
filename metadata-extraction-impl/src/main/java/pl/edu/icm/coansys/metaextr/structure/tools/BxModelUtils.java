@@ -146,7 +146,6 @@ public class BxModelUtils {
      */
     public static BxWord deepClone(BxWord word) {
         BxWord copy = new BxWord().setBounds(word.getBounds());
-        copy.setSorted(word.isSorted());
         for (BxChunk chunk : word.getChunks()) {
         	BxChunk copiedChunk = deepClone(chunk);
         	copiedChunk.setParent(copy);
@@ -163,7 +162,6 @@ public class BxModelUtils {
      */
     public static BxLine deepClone(BxLine line) {
         BxLine copy = new BxLine().setBounds(line.getBounds());
-        copy.setSorted(line.isSorted());
         for (BxWord word : line.getWords()) {
         	BxWord copiedWord = deepClone(word);
         	copiedWord.setParent(copy);
@@ -174,7 +172,6 @@ public class BxModelUtils {
 
     public static BxChunk deepClone(BxChunk chunk) {
     	BxChunk copy = new BxChunk(chunk.getBounds(), chunk.getText());
-    	copy.setSorted(chunk.isSorted());
     	return copy;
     }
     
@@ -187,7 +184,6 @@ public class BxModelUtils {
 
     public static BxZone deepClone(BxZone zone) {
         BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(zone.getBounds());
-        copy.setSorted(zone.isSorted());
         for (BxLine line : zone.getLines()) {
         	BxLine copiedLine = deepClone(line);
         	copiedLine.setParent(copy);
@@ -207,7 +203,6 @@ public class BxModelUtils {
      */
     public static BxPage deepClone(BxPage page) {
         BxPage copy = new BxPage().setBounds(page.getBounds());
-        copy.setSorted(page.isSorted());
         for (BxZone zone : page.getZones()) {
         	BxZone copiedZone = deepClone(zone);
         	copiedZone.setParent(copy);

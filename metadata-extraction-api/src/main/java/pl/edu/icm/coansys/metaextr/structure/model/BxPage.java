@@ -19,22 +19,6 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     /** list of page's text chunks (if the page is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
 
-    @Override
-    public Boolean isSorted() {
-    	if(isSorted == null || !isSorted)
-    		return false;
-    	for(BxZone zone: zones)
-    		if(!zone.isSorted())
-    			return false;
-    	return true;
-    }
-
-    public void setSorted(Boolean isSorted) {
-    	this.isSorted = isSorted;
-    	for(BxZone zone: zones)
-    		zone.setSorted(isSorted);
-    }
-
     public List<BxZone> getZones() {
         return zones;
     }

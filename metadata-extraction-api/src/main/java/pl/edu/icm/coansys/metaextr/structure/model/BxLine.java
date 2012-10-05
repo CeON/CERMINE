@@ -16,23 +16,6 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     private final List<BxWord> words = new ArrayList<BxWord>();
 
     @Override
-    public Boolean isSorted() {
-    	if(!isSorted)
-    		return false;
-    	for(BxWord word: words)
-    		if(!word.isSorted())
-    			return false;
-    	return true;
-    }
-
-    @Override
-    public void setSorted(Boolean isSorted) {
-    	this.isSorted = isSorted;
-    	for(BxWord word:words)
-    		word.setSorted(isSorted);
-    }
-
-    @Override
     public BxLine setBounds(BxBounds bounds) {
     	super.setBounds(bounds);
     	return this;

@@ -20,7 +20,4 @@ public interface Indexable<A> {
 	public void setPrev(A elem);
 	public boolean hasPrev();
 	
-	public Boolean isSorted();
-	public void setSorted(Boolean isSorted);
-	
 }

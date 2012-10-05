@@ -15,18 +15,6 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
     /** list of word's chunks */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
 
-    @Override
-    public Boolean isSorted() {
-    	return isSorted;
-    }
-
-    @Override
-    public void setSorted(Boolean isSorted) {
-    	this.isSorted = isSorted;
-    	for(BxChunk chunk: chunks)
-    		chunk.setSorted(isSorted);
-    }
-
 	public List<BxChunk> getChunks() {
 		return chunks;
 	}

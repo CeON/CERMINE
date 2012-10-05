@@ -20,16 +20,6 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
         this.text = text;
     }
  
-    @Override
-    public Boolean isSorted() {
-    	return true;
-    }
-    
-    @Override
-    public void setSorted(Boolean isSorted) {
-    	this.isSorted = isSorted;
-    }
-
     public BxChunk withBounds(BxBounds bounds) {
         return new BxChunk(bounds, text);
     }

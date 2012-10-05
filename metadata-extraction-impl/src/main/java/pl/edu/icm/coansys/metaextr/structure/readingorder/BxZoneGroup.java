@@ -30,16 +30,6 @@ public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
     	setBounds(zone.getBounds());
     }
 
-    @Override
-    public Boolean isSorted() {
-    	return null;
-    }
-    
-    @Override
-    public void setSorted(Boolean d) {
-    	//pass
-    }
-    
     public BxZoneGroup setBounds(BxBounds bounds) {
     	super.setBounds(bounds);
     	return this;

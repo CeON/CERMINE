@@ -27,6 +27,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.edu.icm.coansys.metaextr.exception.TransformationException;
 import pl.edu.icm.coansys.metaextr.structure.tools.BxBoundsBuilder;
+import pl.edu.icm.coansys.metaextr.structure.tools.BxModelUtils;
 
 /**
  * Reads BxDocument model pages from TrueViz format.
@@ -37,6 +38,7 @@ import pl.edu.icm.coansys.metaextr.structure.tools.BxBoundsBuilder;
  */
 public class TrueVizToBxDocumentReader {
     
+	//set while parsing xml
     private boolean areIdsSet;
 
     public static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
@@ -88,12 +90,9 @@ public class TrueVizToBxDocumentReader {
             setIdsAndLinkPages(pages);
             if(areIdsSet) {
             	linkOtherElements(pages);
-            	for(BxPage page: pages)
-            		page.setSorted(true);
-            } else {
-            	for(BxPage page: pages)
-            		page.setSorted(false);
             }
+            for(BxPage page: pages)
+            	BxModelUtils.setParents(page);
             return pages;
         } catch (IOException ex) {
             throw new TransformationException(ex);

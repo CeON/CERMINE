@@ -27,7 +27,7 @@ import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingEle
  */
 public class HMMZoneClassificationDemo {
 
-    protected static final String hmmTestFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/09629351.xml";
+    protected static final String hmmTestFile = "plik.xml";
 
     public static void main(String[] args) throws TransformationException, Exception {
         

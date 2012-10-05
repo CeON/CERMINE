@@ -36,9 +36,8 @@ import pl.edu.icm.coansys.metaextr.tools.classification.hmm.training.TrainingEle
 
 public class HMMZoneGeneralClassificationBigDemo {
 
-	protected static final String hmmTrainingFile = "/pl/edu/icm/yadda/analysis/metadata/zoneclassification/xmls.zip";
-	private static final String hmmTestFile = "/pl/edu/icm/yadda/analysis//metadata/zoneclassification/09629351.xml";
-    private static final String hmmTrainingDir = "/home/domin/metadata-extraction-files/zones/newtrain/";
+	protected static final String hmmTrainingFile = "xmls.zip";
+	private static final String hmmTestFile = "/09629351.xml";
     
 	public static BxDocument getTestFile() throws TransformationException, AnalysisException {
         InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);

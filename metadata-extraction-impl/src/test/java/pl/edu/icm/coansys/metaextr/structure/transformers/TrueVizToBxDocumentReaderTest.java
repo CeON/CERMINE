@@ -1,5 +1,6 @@
 package pl.edu.icm.coansys.metaextr.structure.transformers;
 
+import java.io.File;
 import pl.edu.icm.coansys.metaextr.structure.transformers.MargToTextrImporter;
 import pl.edu.icm.coansys.metaextr.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
@@ -13,9 +14,12 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxLine;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.zip.ZipFile;
 import javax.xml.parsers.ParserConfigurationException;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -66,9 +70,11 @@ public class TrueVizToBxDocumentReaderTest {
        assertTrue(rightSize);
     }
 
-	private BxDocument getDocumentFromFile(String filename) throws TransformationException, IOException {
-		InputStream is = TrueVizToBxDocumentReaderTest.class.getResourceAsStream(PATH + filename);
-		InputStreamReader isr = new InputStreamReader(is);
+	private BxDocument getDocumentFromZipFile(String zipFilename, String filename) throws TransformationException, IOException, URISyntaxException {
+        URL url = this.getClass().getResource(PATH + zipFilename);
+        ZipFile zipFile = new ZipFile(new File(url.toURI()));
+        InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
+        InputStreamReader isr = new InputStreamReader(is);
 
 		TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
 		BxDocument doc = new BxDocument().setPages(reader.read(isr));
@@ -77,8 +83,8 @@ public class TrueVizToBxDocumentReaderTest {
 	}
 
     @Test
-    public void testAllNextsAreSet1() throws TransformationException, IOException {
-    	BxDocument orderedDoc = getDocumentFromFile("1748717X.xml.out");
+    public void testAllNextsAreSet1() throws TransformationException, IOException, URISyntaxException {
+    	BxDocument orderedDoc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
     	//walk through document's structure
     	Integer nextNulls = 0;
     	for(BxPage page: orderedDoc.asPages()) {
@@ -128,8 +134,8 @@ public class TrueVizToBxDocumentReaderTest {
     }
 
     @Test
-    public void testChainedElementsEven() throws TransformationException, IOException {
-    	BxDocument doc = getDocumentFromFile("1748717X.xml.out");
+    public void testChainedElementsEven() throws TransformationException, IOException, URISyntaxException {
+    	BxDocument doc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
     	assertEquals(countChainedElements(doc.asPages()),  new Integer(doc.asPages().size()-1));
     	assertEquals(countChainedElements(doc.asZones()),  new Integer(doc.asZones().size()-1));
     	assertEquals(countChainedElements(doc.asLines()),  new Integer(doc.asLines().size()-1));

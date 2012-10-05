@@ -30,9 +30,9 @@ import pl.edu.icm.coansys.metaextr.tools.classification.knn.KnnModel;
  */
 public class LogicalStructureExtractorDemo {
     
-    String dir = "/pl/edu/icm/yadda/analysis/articlecontent/";
+    String dir = "/pl/edu/icm/coansys/metaextr/content/";
     String trainZip = "train.zip";
-    String testZip = "test.zip";
+    String testZip = "train.zip";
     String sourceDir = "source/";
     String structureDir = "structure/";
     

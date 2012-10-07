@@ -52,7 +52,8 @@ public class MetadataGen {
         
         ClusteringBibReferenceExtractor extr = new ClusteringBibReferenceExtractor();
         
-        CRFBibReferenceParser parser = new CRFBibReferenceParser();
+        InputStream modelIS = Thread.currentThread().getClass().getResourceAsStream("/pl/edu/icm/coansys/metaextr/bibref/acrf-small.ser.gz");
+        CRFBibReferenceParser parser = new CRFBibReferenceParser(modelIS);
         
         InputStreamReader modelISR2 = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream("/pl/edu/icm/coansys/metaextr/structure/svm_metadata_classifier"));

@@ -1,6 +1,5 @@
 package pl.edu.icm.coansys.metaextr;
 
-import java.io.IOException;
 import java.io.InputStream;
 import pl.edu.icm.coansys.metaextr.bibref.BibReferenceExtractor;
 import pl.edu.icm.coansys.metaextr.bibref.BibReferenceParser;
@@ -23,10 +22,11 @@ public class PdfReferencesExtractor implements DocumentReferencesExtractor<BibEn
     
     BibReferenceParser<BibEntry> parser;
 
-    public PdfReferencesExtractor() throws IOException {
+    public PdfReferencesExtractor() throws AnalysisException {
         strExtractor = new PdfGeometricStructureExtractor();
         extractor = new ClusteringBibReferenceExtractor();
-        parser = new CRFBibReferenceParser();
+        InputStream modelFile = Thread.currentThread().getClass().getResourceAsStream("/pl/edu/icm/coansys/metaextr/bibref/acrf-small.ser.gz");
+        parser = new CRFBibReferenceParser(modelFile);
     }
     
     public BibEntry[] extractReferences(InputStream stream) throws AnalysisException {

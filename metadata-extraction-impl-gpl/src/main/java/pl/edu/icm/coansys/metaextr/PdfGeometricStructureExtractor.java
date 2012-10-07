@@ -1,7 +1,6 @@
 package pl.edu.icm.coansys.metaextr;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
@@ -25,7 +24,7 @@ public class PdfGeometricStructureExtractor implements DocumentGeometricStructur
     ZoneClassifier initialClassifier;
 
 
-    public PdfGeometricStructureExtractor() throws IOException {
+    public PdfGeometricStructureExtractor() {
         glyphExtractor = new ITextCharacterExtractor();
         pageSegmenter = new DocstrumPageSegmenter();
         roResolver = new HierarchicalReadingOrderResolver();

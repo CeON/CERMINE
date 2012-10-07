@@ -23,6 +23,44 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     
     private ACRF model;
 
+    public CRFBibReferenceParser(String modelFile) throws AnalysisException {
+        InputStream is;
+        ObjectInputStream ois = null;
+        try {
+            is = new FileInputStream(new File(modelFile));
+            ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(is)));
+            model = (ACRF)(ois.readObject());
+        } catch (ClassNotFoundException ex) {
+            throw new AnalysisException("Cannot set model!", ex);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot set model!", ex);
+        } finally {
+            try {
+                ois.close();
+            } catch (IOException ex) {
+                throw new AnalysisException("Cannot set model!", ex);
+            }
+        }
+    }
+    
+    public CRFBibReferenceParser(InputStream modelInputStream) throws AnalysisException {
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(modelInputStream)));
+            model = (ACRF)(ois.readObject());
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot set model!", ex);
+        } catch (ClassNotFoundException ex) {
+            throw new AnalysisException("Cannot set model!", ex);
+        } finally {
+            try {
+                ois.close();
+            } catch (IOException ex) {
+                throw new AnalysisException("Cannot set model!", ex);
+            }
+        }
+    }
+
     @Override
 	public BibEntry parseBibReference(String text) throws AnalysisException {
         if (model == null) {
@@ -43,26 +81,5 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
             
         return CitationUtils.citationToBibref(citation);
     }
-    
-    public void setModel(String modelFile) throws AnalysisException {
-        InputStream is;
-        try {
-            is = new FileInputStream(new File(modelFile));
-        } catch (FileNotFoundException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        }
-        setModel(is);
-    }
-    
-    public void setModel(InputStream modelInputStream) throws AnalysisException {
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(modelInputStream)));
-            model = (ACRF)(ois.readObject());
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        } catch (ClassNotFoundException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        }
-    }
-    
+  
 }

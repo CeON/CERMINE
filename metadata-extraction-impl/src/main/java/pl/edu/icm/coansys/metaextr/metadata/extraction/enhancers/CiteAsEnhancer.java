@@ -4,10 +4,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom.Element;
-import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.bibref.BibReferenceParser;
 import pl.edu.icm.coansys.metaextr.bibref.CRFBibReferenceParser;
 import pl.edu.icm.coansys.metaextr.bibref.model.BibEntry;
+import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
 import pl.edu.icm.coansys.metaextr.structure.model.BxDocument;
 import pl.edu.icm.coansys.metaextr.structure.model.BxPage;
 import pl.edu.icm.coansys.metaextr.structure.model.BxZone;
@@ -19,14 +19,19 @@ import pl.edu.icm.coansys.metaextr.structure.model.BxZoneLabel;
  */
 public class CiteAsEnhancer extends AbstractFilterEnhancer {
 
+    private static final String modelFile = "/pl/edu/icm/coansys/metaextr/bibref/acrf-small.ser.gz";
+
     private static final Pattern PATTERN = Pattern.compile(
             "Cite this article as: (.*)",
             Pattern.DOTALL);
 
-    private BibReferenceParser<BibEntry> referenceParser = new CRFBibReferenceParser();
+    private BibReferenceParser<BibEntry> referenceParser;
 
     public CiteAsEnhancer() {
         setSearchedZoneLabels(BxZoneLabel.MET_BIB_INFO);
+        try {
+            referenceParser = new CRFBibReferenceParser(this.getClass().getResourceAsStream(modelFile));
+        } catch (AnalysisException ex) {}
     }
 
     public void setReferenceParser(BibReferenceParser<BibEntry> referenceParser) {
@@ -35,6 +40,9 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
 
     @Override
     public void enhanceMetadata(BxDocument document, Element metadata, Set<EnhancedField> enhancedFields) {
+        if (referenceParser == null) {
+            return;
+        }
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
                 Matcher matcher = PATTERN.matcher(zone.toText());

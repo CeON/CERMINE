@@ -7,14 +7,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class CommaRelativeCountFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "CommaRelativeCount";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class CommaRelativeCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

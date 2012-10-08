@@ -7,7 +7,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class FreeSpaceWithinZoneFeature implements FeatureCalculator<BxZone, BxPage> {
+public class FreeSpaceWithinZoneFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	private static String featureName = "FreeSpace";
 

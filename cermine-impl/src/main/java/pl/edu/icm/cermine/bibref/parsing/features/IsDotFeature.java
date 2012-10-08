@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsDotFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsDot";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsDotFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

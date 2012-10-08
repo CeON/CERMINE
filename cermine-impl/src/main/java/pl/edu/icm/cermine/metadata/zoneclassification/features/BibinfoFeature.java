@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class BibinfoFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "Bibinfo";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class BibinfoFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

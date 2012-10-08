@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IndentationFeature implements FeatureCalculator<BxLine, BxPage> {
-
-    private static String featureName = "Indentation";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IndentationFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {

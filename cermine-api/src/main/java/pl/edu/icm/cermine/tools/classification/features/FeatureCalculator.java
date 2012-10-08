@@ -1,8 +1,7 @@
 package pl.edu.icm.cermine.tools.classification.features;
 
 /**
- * Feature calculator interface. The calculator is able to calculate
- * a single feature's value.
+ * Feature calculator is able to calculate a single feature's value.
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  *
@@ -10,7 +9,7 @@ package pl.edu.icm.cermine.tools.classification.features;
  * @param <T> Type of an additional context object that can be used
  * for calculation.
  */
-public interface FeatureCalculator<S, T> {
+public abstract class FeatureCalculator<S, T> {
 
     /**
      * Returns the name of the feature that can be calculated by the calculator.
@@ -19,7 +18,17 @@ public interface FeatureCalculator<S, T> {
      *
      * @return Feature name.
      */
-    String getFeatureName();
+    public String getFeatureName() {
+		String className = this.getClass().getName();
+		String[] classNameParts = className.split("\\.");
+		className = classNameParts[classNameParts.length-1];
+		
+		if (className.contains("Feature")) {
+			return className.replace("Feature", "");
+		} else {
+			return className;
+		}
+	}
 
     /**
      * Calculates the value of a single feature.
@@ -28,6 +37,6 @@ public interface FeatureCalculator<S, T> {
      * @param context An additional context object used for calculation.
      * @return Calculated feature value.
      */
-    double calculateFeatureValue(S object, T context);
+    public abstract double calculateFeatureValue(S object, T context);
 
 }

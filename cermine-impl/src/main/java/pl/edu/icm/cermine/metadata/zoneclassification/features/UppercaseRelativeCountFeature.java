@@ -7,14 +7,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class UppercaseRelativeCountFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "UppercaseRelativeCount";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class UppercaseRelativeCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

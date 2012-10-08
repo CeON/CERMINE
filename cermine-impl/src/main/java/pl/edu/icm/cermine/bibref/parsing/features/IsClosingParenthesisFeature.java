@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsClosingParenthesisFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsClosingParenthesis";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsClosingParenthesisFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

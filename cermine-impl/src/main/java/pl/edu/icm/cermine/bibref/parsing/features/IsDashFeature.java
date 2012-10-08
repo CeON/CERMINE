@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsDashFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsDash";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsDashFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsCityFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsCity";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsCityFeature extends FeatureCalculator<CitationToken, Citation> {
 
     private static List<String> keywords = Arrays.asList(
             "angeles", "antonio", "amsterdam", "ankara", "athens",

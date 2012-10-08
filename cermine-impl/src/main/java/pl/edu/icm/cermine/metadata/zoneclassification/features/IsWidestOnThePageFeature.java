@@ -4,12 +4,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public class IsWidestOnThePageFeature implements FeatureCalculator<BxZone, BxPage> {
-	private String featureName = "IsWidestOnThePage" ;
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class IsWidestOnThePageFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {

@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class RelativeMeanLengthFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "RelativeMeanLength";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class RelativeMeanLengthFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

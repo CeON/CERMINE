@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class DigitDotSchemaFeature implements FeatureCalculator<BxLine, BxPage> {
-
-    private static String featureName = "DigitDotSchema";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class DigitDotSchemaFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {

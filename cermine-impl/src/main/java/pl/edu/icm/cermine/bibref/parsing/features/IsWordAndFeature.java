@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsWordAndFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsWordAnd";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsWordAndFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

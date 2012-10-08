@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsDashBetweenWordsFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsDashBetweenWords";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsDashBetweenWordsFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

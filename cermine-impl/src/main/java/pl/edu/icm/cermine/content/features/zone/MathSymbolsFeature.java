@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class MathSymbolsFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "MathSymbols";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class MathSymbolsFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

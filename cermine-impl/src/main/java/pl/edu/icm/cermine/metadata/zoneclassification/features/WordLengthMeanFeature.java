@@ -7,14 +7,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class WordLengthMeanFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "WordLengthMean";
-
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class WordLengthMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {

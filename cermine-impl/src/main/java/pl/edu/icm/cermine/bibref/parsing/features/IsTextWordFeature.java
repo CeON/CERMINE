@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsTextWordFeature implements FeatureCalculator<CitationToken, Citation> {
+public class IsTextWordFeature extends FeatureCalculator<CitationToken, Citation> {
 
     private static String featureName = "IsOtherWord";
 

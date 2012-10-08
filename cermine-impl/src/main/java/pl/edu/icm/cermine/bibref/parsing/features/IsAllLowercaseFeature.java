@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsAllLowercaseFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsAllLowercase";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsAllLowercaseFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

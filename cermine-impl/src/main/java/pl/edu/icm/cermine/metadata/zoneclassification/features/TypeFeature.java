@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class TypeFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "Type";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class TypeFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

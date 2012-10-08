@@ -8,15 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class AcknowledgementFeature implements
-		FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "Acknowledgement";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class AcknowledgementFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

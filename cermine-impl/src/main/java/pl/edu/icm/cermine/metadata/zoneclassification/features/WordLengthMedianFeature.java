@@ -11,14 +11,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class WordLengthMedianFeature implements
-		FeatureCalculator<BxZone, BxPage> {
-
-	private static String featureName = "WordLengthMedian";
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class WordLengthMedianFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {

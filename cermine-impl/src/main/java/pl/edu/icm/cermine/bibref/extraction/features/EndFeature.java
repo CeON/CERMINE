@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class EndFeature implements FeatureCalculator<BxLine, BxDocumentBibReferences> {
-
-    private static String featureName = "End";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class EndFeature extends FeatureCalculator<BxLine, BxDocumentBibReferences> {
 
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {

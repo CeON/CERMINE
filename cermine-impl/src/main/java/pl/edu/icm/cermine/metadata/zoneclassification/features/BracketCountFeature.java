@@ -4,14 +4,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public class BracketCountFeature implements FeatureCalculator<BxZone, BxPage> {
-
-	private static String featureName = "BracketCount";
-	
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class BracketCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {

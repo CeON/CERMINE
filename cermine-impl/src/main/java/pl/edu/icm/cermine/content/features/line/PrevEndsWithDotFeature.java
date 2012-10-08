@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class PrevEndsWithDotFeature implements FeatureCalculator<BxLine, BxPage> {
+public class PrevEndsWithDotFeature extends FeatureCalculator<BxLine, BxPage> {
 
     private static String featureName = "PrevEndsWithDotFeature";
 

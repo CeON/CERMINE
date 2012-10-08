@@ -3,14 +3,7 @@ package pl.edu.icm.cermine.metadata.zoneclassification.features;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public class EmptySpaceFeature implements FeatureCalculator<BxZone, BxPage> {
-
-	private static String featureName = "EmptySpace";
-	
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class EmptySpaceFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {

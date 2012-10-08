@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import java.util.List;
-import pl.edu.icm.cermine.bibref.parsing.features.AbstractFeatureCalculator;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 

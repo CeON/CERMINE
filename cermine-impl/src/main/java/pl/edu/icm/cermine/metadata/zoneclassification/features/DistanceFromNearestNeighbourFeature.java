@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class DistanceFromNearestNeighbourFeature implements
-		FeatureCalculator<BxZone, BxPage> {
-	private static String featureName = "DistanceFromNearestNeighbour";
-
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class DistanceFromNearestNeighbourFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	private static Double euclideanDist(Double x0, Double y0, Double x1, Double y1) {
 		return Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));

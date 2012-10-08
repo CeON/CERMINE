@@ -11,14 +11,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class StartsWithNumberOrUppercaseFeature implements FeatureCalculator<BxLine, BxDocumentBibReferences> {
-
-    private static String featureName = "StartsWithNumberOrUppercase";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class StartsWithNumberOrUppercaseFeature extends FeatureCalculator<BxLine, BxDocumentBibReferences> {
 
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {

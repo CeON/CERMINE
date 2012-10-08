@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class WordCountRelativeFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "WordCountRelative";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class WordCountRelativeFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

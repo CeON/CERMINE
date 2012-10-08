@@ -8,13 +8,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public class StartsWithHeaderFeature implements FeatureCalculator<BxZone, BxPage> {
-	private static String featureName = "StartsWithHeader";
-	
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {

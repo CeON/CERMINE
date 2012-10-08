@@ -1,11 +1,11 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
-import pl.edu.icm.cermine.bibref.parsing.features.AbstractFeatureCalculator;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneClassificationUtils;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class FullWordsRelativeFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
+    
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {
 		String text = object.toText();

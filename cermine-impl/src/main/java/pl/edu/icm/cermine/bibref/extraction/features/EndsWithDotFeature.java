@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class EndsWithDotFeature implements FeatureCalculator<BxLine, BxDocumentBibReferences> {
-
-    private static String featureName = "EndsWithDot";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class EndsWithDotFeature extends FeatureCalculator<BxLine, BxDocumentBibReferences> {
 
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {

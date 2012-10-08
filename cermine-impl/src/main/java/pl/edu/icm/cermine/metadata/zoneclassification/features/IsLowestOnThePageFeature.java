@@ -6,13 +6,8 @@ import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-public class IsLowestOnThePageFeature implements FeatureCalculator<BxZone, BxPage>{
-    private static String featureName = "IsLowestOnThePage";
 
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
 	
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override

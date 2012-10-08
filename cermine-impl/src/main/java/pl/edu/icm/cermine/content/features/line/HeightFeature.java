@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class HeightFeature implements FeatureCalculator<BxLine, BxPage> {
-
-    private static String featureName = "Height";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class HeightFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {

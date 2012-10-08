@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsVolumeTextFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsVolumeText";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsVolumeTextFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

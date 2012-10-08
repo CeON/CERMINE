@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class PrevLineLengthFeature implements FeatureCalculator<BxLine, BxPage> {
-
-    private static String featureName = "PrevLineLength";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class PrevLineLengthFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {

@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class RelativeStartTresholdFeature implements FeatureCalculator<BxLine, BxDocumentBibReferences> {
-
-    private static String featureName = "RelativeStartTreshold";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class RelativeStartTresholdFeature extends FeatureCalculator<BxLine, BxDocumentBibReferences> {
 
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {

@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import pl.edu.icm.cermine.bibref.parsing.features.AbstractFeatureCalculator;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 
@@ -16,7 +15,7 @@ public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 			"\\d{4}[ \\.-/]\\d{2}[ \\.-/]\\d{2}",
 			"\\d{2}[ \\.-/]\\d{2}[ \\.-/]\\d{4}"
 	};
-	protected static String[] months = { "january", "febraury", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+	protected static String[] months = { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 	
 	static {
 		Integer idx=0;

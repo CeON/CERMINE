@@ -4,13 +4,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public class IsLastPageFeature implements FeatureCalculator<BxZone, BxPage> {
-	private static String featureName = "IsLastPage";
-
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class IsLastPageFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {

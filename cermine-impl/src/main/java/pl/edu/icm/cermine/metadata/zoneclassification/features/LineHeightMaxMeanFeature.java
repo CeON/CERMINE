@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class LineHeightMaxMeanFeature implements FeatureCalculator<BxZone, BxPage> {
+public class LineHeightMaxMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 
     private static String featureName = "LineHeightMaxMeanRelative";
 

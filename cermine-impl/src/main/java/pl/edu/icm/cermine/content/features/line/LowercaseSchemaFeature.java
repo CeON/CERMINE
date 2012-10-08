@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class LowercaseSchemaFeature implements FeatureCalculator<BxLine, BxPage> {
-
-    private static String featureName = "LowercaseSchema";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class LowercaseSchemaFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {

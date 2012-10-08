@@ -7,14 +7,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class FontHeightMeanFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "FontHeightMean";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class FontHeightMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsCommonPublisherWordFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsCommonPublisherWord";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsCommonPublisherWordFeature extends FeatureCalculator<CitationToken, Citation> {
 
     private static List<String> keywords = Arrays.asList(
             "academic",

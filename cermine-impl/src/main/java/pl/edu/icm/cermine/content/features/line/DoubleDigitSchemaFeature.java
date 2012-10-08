@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class DoubleDigitSchemaFeature implements FeatureCalculator<BxLine, BxPage> {
-
-    private static String featureName = "DoubleDigitSchema";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class DoubleDigitSchemaFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {

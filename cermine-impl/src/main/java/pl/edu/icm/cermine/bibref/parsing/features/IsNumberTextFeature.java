@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsNumberTextFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsNumberText";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsNumberTextFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

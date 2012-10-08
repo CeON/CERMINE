@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsCommonSurnamePartFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsCommonSurnamePart";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsCommonSurnamePartFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

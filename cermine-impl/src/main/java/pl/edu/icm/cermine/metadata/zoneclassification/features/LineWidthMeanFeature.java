@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class LineWidthMeanFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "LineWidthMean";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class LineWidthMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

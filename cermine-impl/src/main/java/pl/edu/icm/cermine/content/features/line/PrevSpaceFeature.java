@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class PrevSpaceFeature implements FeatureCalculator<BxLine, BxPage> {
+public class PrevSpaceFeature extends FeatureCalculator<BxLine, BxPage> {
 
     private static String featureName = "PrevSpaceFeature";
 

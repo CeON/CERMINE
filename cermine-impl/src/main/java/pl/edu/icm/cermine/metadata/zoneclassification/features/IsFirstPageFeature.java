@@ -8,13 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
  */
 
-public class IsFirstPageFeature implements FeatureCalculator<BxZone, BxPage> {
-	private static String featureName = "IsFirstPage";
-
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class IsFirstPageFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {

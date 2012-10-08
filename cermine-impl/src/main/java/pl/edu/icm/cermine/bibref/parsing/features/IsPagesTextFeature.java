@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsPagesTextFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsPagesText";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsPagesTextFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {

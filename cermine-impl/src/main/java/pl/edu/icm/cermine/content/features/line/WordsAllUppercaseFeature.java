@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class WordsAllUppercaseFeature implements FeatureCalculator<BxLine, BxPage> {
-
-    private static String featureName = "WordsAllUppercase";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class WordsAllUppercaseFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {

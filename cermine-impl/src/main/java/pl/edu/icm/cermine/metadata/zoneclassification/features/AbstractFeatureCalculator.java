@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.bibref.parsing.features;
+package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,19 +6,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public abstract class AbstractFeatureCalculator<S,T> implements FeatureCalculator<S, T> {
-	@Override
-	public String getFeatureName() {
-		String className = this.getClass().getName();
-		String[] classNameParts = className.split("\\.");
-		className = classNameParts[classNameParts.length-1];
-		
-		if(className.contains("Feature")) {
-			return className.replace("Feature", "");
-		} else {
-			return className;
-		}
-	}
+public abstract class AbstractFeatureCalculator<S,T> extends FeatureCalculator<S, T> {
 	
 	protected static List<BxPage> getOtherPages(BxPage page) {
 		List<BxPage> pages = new ArrayList<BxPage>();

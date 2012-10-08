@@ -8,15 +8,9 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 
-public class VerticalProminenceFeature implements
-		FeatureCalculator<BxZone, BxPage> {
+public class VerticalProminenceFeature extends FeatureCalculator<BxZone, BxPage> {
 
-	private static String featureName = "VerticalProminence";
 	private static Double ZONE_EPSILON = 1.0;
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
 	
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {		

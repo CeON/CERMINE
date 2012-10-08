@@ -8,14 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class YPositionFeature implements FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "YPosition";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class YPositionFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

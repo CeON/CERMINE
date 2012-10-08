@@ -7,13 +7,8 @@ import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-public class IsHighestOnThePageFeature implements FeatureCalculator<BxZone, BxPage>{
-    private static String featureName = "IsHighestOnThePage";
 
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
 	
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override

@@ -9,14 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsCommonSourceWordFeature implements FeatureCalculator<CitationToken, Citation> {
-
-    private static String featureName = "IsCommonSourceWord";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class IsCommonSourceWordFeature extends FeatureCalculator<CitationToken, Citation> {
 
     private static List<String> keywords = Arrays.asList(
             "acad", "acta", "algebra", "amer", "anal", "ann", "annales", "annals", "appl",

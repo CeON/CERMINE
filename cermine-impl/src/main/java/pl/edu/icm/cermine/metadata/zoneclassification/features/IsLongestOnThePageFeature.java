@@ -4,12 +4,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public class IsLongestOnThePageFeature implements FeatureCalculator<BxZone, BxPage> {
-	private String featureName = "IsLongestOnThePage";
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+public class IsLongestOnThePageFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {

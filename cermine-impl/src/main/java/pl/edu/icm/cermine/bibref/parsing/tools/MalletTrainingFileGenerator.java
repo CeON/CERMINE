@@ -14,7 +14,7 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
  */
 public class MalletTrainingFileGenerator {
     
-    private static String nlmDir = "/home/domin/metadata-extraction-files/parsing/train-orig/";
+    private static String nlmDir = "/tmp/train/";
     private static String outFile = "/tmp/crf-train.txt";
     private static int minCount = 10;
 

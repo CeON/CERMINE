@@ -27,7 +27,7 @@
     </bean>
     
     <bean id="crfReferenceParser" class="pl.edu.icm.cermine.bibref.CRFBibReferenceParser">
-        <property name="modelFile" value="/home/domin/acrf.ser.gz" />
+        <property name="modelFile" value="/tmp/acrf.ser.gz" />
      </bean>
 
 </beans>

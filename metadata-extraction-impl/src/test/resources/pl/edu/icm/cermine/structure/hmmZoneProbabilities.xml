@@ -1,0 +1,915 @@
+<pl.edu.icm.cermine.tools.classification.hmm.model.SimpleHMMProbabilityInfo>
+  <initialProbability class="pl.edu.icm.cermine.tools.classification.hmm.model.SimpleHMMInitialProbability">
+    <probability>
+      <eventCount>
+        <entry>
+          <pl.edu.icm.cermine.structure.model.BxZoneLabel>MET_AUTHOR</pl.edu.icm.cermine.structure.model.BxZoneLabel>
+          <int>3</int>
+        </entry>
+        <entry>
+          <pl.edu.icm.cermine.structure.model.BxZoneLabel>MET_TITLE</pl.edu.icm.cermine.structure.model.BxZoneLabel>
+          <int>314</int>
+        </entry>
+      </eventCount>
+      <totalCount>317</totalCount>
+    </probability>
+  </initialProbability>
+  <transitionProbability class="pl.edu.icm.cermine.tools.classification.hmm.model.SimpleHMMTransitionProbability">
+    <probability>
+      <entry>
+        <pl.edu.icm.cermine.structure.model.BxZoneLabel>MET_AFFILIATION</pl.edu.icm.cermine.structure.model.BxZoneLabel>
+        <pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+          <eventCount>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>2</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel>MET_ABSTRACT</pl.edu.icm.cermine.structure.model.BxZoneLabel>
+              <int>196</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>1</int>
+            </entry>
+          </eventCount>
+          <totalCount>199</totalCount>
+        </pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+      </entry>
+      <entry>
+        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+        <pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+          <eventCount>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>117</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>109</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>2</int>
+            </entry>
+          </eventCount>
+          <totalCount>228</totalCount>
+        </pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+      </entry>
+      <entry>
+        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+        <pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+          <eventCount>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>200</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>114</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>3</int>
+            </entry>
+          </eventCount>
+          <totalCount>317</totalCount>
+        </pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+      </entry>
+      <entry>
+        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+        <pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+          <eventCount>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>5</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>1</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>312</int>
+            </entry>
+          </eventCount>
+          <totalCount>318</totalCount>
+        </pl.edu.icm.cermine.structure.tools.ProbabilityDistribution>
+      </entry>
+    </probability>
+  </transitionProbability>
+  <emissionProbability class="pl.edu.icm.cermine.tools.classification.hmm.model.DecisionTreeHMMEmissionProbability">
+    <decisionTree class="pl.edu.icm.cermine.tools.classification.hmm.model.SimpleDecisionTree">
+      <left>
+        <left>
+          <left>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>421</int>
+                </entry>
+              </eventCount>
+              <totalCount>421</totalCount>
+            </labelsProbability>
+            <featureCut>0.0</featureCut>
+          </left>
+          <right>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>1</int>
+                </entry>
+              </eventCount>
+              <totalCount>1</totalCount>
+            </labelsProbability>
+            <featureCut>0.0</featureCut>
+          </right>
+          <labelsProbability>
+            <eventCount>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>1</int>
+              </entry>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>421</int>
+              </entry>
+            </eventCount>
+            <totalCount>422</totalCount>
+          </labelsProbability>
+          <featureName>YPosition</featureName>
+          <featureCut>2521.0</featureCut>
+        </left>
+        <right>
+          <left>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>103</int>
+                </entry>
+              </eventCount>
+              <totalCount>103</totalCount>
+            </labelsProbability>
+            <featureCut>0.0</featureCut>
+          </left>
+          <right>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>1</int>
+                </entry>
+              </eventCount>
+              <totalCount>1</totalCount>
+            </labelsProbability>
+            <featureCut>0.0</featureCut>
+          </right>
+          <labelsProbability>
+            <eventCount>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>1</int>
+              </entry>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>103</int>
+              </entry>
+            </eventCount>
+            <totalCount>104</totalCount>
+          </labelsProbability>
+          <featureName>LetterCount</featureName>
+          <featureCut>279.0</featureCut>
+        </right>
+        <labelsProbability>
+          <eventCount>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>1</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>422</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>103</int>
+            </entry>
+          </eventCount>
+          <totalCount>526</totalCount>
+        </labelsProbability>
+        <featureName>WordWidthMean</featureName>
+        <featureCut>124.162</featureCut>
+      </left>
+      <right>
+        <left>
+          <left>
+            <left>
+              <left>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>6</int>
+                    </entry>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>9</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>15</totalCount>
+                </labelsProbability>
+                <featureCut>0.0</featureCut>
+              </left>
+              <right>
+                <left>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>1</int>
+                      </entry>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>4</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>5</totalCount>
+                  </labelsProbability>
+                  <featureCut>0.0</featureCut>
+                </left>
+                <right>
+                  <left>
+                    <labelsProbability>
+                      <eventCount>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>14</int>
+                        </entry>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>3</int>
+                        </entry>
+                      </eventCount>
+                      <totalCount>17</totalCount>
+                    </labelsProbability>
+                    <featureCut>0.0</featureCut>
+                  </left>
+                  <right>
+                    <left>
+                      <labelsProbability>
+                        <eventCount>
+                          <entry>
+                            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                            <int>248</int>
+                          </entry>
+                        </eventCount>
+                        <totalCount>248</totalCount>
+                      </labelsProbability>
+                      <featureCut>0.0</featureCut>
+                    </left>
+                    <right>
+                      <labelsProbability>
+                        <eventCount>
+                          <entry>
+                            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                            <int>16</int>
+                          </entry>
+                          <entry>
+                            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                            <int>1</int>
+                          </entry>
+                        </eventCount>
+                        <totalCount>17</totalCount>
+                      </labelsProbability>
+                      <featureCut>0.0</featureCut>
+                    </right>
+                    <labelsProbability>
+                      <eventCount>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>264</int>
+                        </entry>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>1</int>
+                        </entry>
+                      </eventCount>
+                      <totalCount>265</totalCount>
+                    </labelsProbability>
+                    <featureName>LineXPositionMean</featureName>
+                    <featureCut>215.83333333333337</featureCut>
+                  </right>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>278</int>
+                      </entry>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>4</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>282</totalCount>
+                  </labelsProbability>
+                  <featureName>Width</featureName>
+                  <featureCut>891.5</featureCut>
+                </right>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>279</int>
+                    </entry>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>8</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>287</totalCount>
+                </labelsProbability>
+                <featureName>YPositionRelative</featureName>
+                <featureCut>0.2535511939968246</featureCut>
+              </right>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>285</int>
+                  </entry>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>17</int>
+                  </entry>
+                </eventCount>
+                <totalCount>302</totalCount>
+              </labelsProbability>
+              <featureName>LetterCount</featureName>
+              <featureCut>48.5</featureCut>
+            </left>
+            <right>
+              <left>
+                <left>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>1</int>
+                      </entry>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>5</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>6</totalCount>
+                  </labelsProbability>
+                  <featureCut>0.0</featureCut>
+                </left>
+                <right>
+                  <left>
+                    <left>
+                      <labelsProbability>
+                        <eventCount>
+                          <entry>
+                            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                            <int>2</int>
+                          </entry>
+                        </eventCount>
+                        <totalCount>2</totalCount>
+                      </labelsProbability>
+                      <featureCut>0.0</featureCut>
+                    </left>
+                    <right>
+                      <left>
+                        <labelsProbability>
+                          <eventCount>
+                            <entry>
+                              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                              <int>42</int>
+                            </entry>
+                          </eventCount>
+                          <totalCount>42</totalCount>
+                        </labelsProbability>
+                        <featureCut>0.0</featureCut>
+                      </left>
+                      <right>
+                        <labelsProbability>
+                          <eventCount>
+                            <entry>
+                              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                              <int>2</int>
+                            </entry>
+                            <entry>
+                              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                              <int>5</int>
+                            </entry>
+                          </eventCount>
+                          <totalCount>7</totalCount>
+                        </labelsProbability>
+                        <featureCut>0.0</featureCut>
+                      </right>
+                      <labelsProbability>
+                        <eventCount>
+                          <entry>
+                            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                            <int>2</int>
+                          </entry>
+                          <entry>
+                            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                            <int>47</int>
+                          </entry>
+                        </eventCount>
+                        <totalCount>49</totalCount>
+                      </labelsProbability>
+                      <featureName>CharCountRelative</featureName>
+                      <featureCut>0.0811155311519498</featureCut>
+                    </right>
+                    <labelsProbability>
+                      <eventCount>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>4</int>
+                        </entry>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>47</int>
+                        </entry>
+                      </eventCount>
+                      <totalCount>51</totalCount>
+                    </labelsProbability>
+                    <featureName>LineRelativeCount</featureName>
+                    <featureCut>0.022108843537414963</featureCut>
+                  </left>
+                  <right>
+                    <labelsProbability>
+                      <eventCount>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>1</int>
+                        </entry>
+                        <entry>
+                          <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                          <int>1</int>
+                        </entry>
+                      </eventCount>
+                      <totalCount>2</totalCount>
+                    </labelsProbability>
+                    <featureCut>0.0</featureCut>
+                  </right>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>5</int>
+                      </entry>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>1</int>
+                      </entry>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>47</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>53</totalCount>
+                  </labelsProbability>
+                  <featureName>LowercaseRelativeCount</featureName>
+                  <featureCut>0.8747826086956522</featureCut>
+                </right>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>5</int>
+                    </entry>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>6</int>
+                    </entry>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>48</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>59</totalCount>
+                </labelsProbability>
+                <featureName>YPosition</featureName>
+                <featureCut>330.0</featureCut>
+              </left>
+              <right>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>9</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>9</totalCount>
+                </labelsProbability>
+                <featureCut>0.0</featureCut>
+              </right>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>14</int>
+                  </entry>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>6</int>
+                  </entry>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>48</int>
+                  </entry>
+                </eventCount>
+                <totalCount>68</totalCount>
+              </labelsProbability>
+              <featureName>YPositionRelative</featureName>
+              <featureCut>0.6165193642817888</featureCut>
+            </right>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>299</int>
+                </entry>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>6</int>
+                </entry>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>65</int>
+                </entry>
+              </eventCount>
+              <totalCount>370</totalCount>
+            </labelsProbability>
+            <featureName>LineHeightMean</featureName>
+            <featureCut>32.5</featureCut>
+          </left>
+          <right>
+            <left>
+              <left>
+                <left>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>211</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>211</totalCount>
+                  </labelsProbability>
+                  <featureCut>0.0</featureCut>
+                </left>
+                <right>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>1</int>
+                      </entry>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>2</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>3</totalCount>
+                  </labelsProbability>
+                  <featureCut>0.0</featureCut>
+                </right>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>1</int>
+                    </entry>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>213</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>214</totalCount>
+                </labelsProbability>
+                <featureName>LowercaseRelativeCount</featureName>
+                <featureCut>0.8099343185550082</featureCut>
+              </left>
+              <right>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>4</int>
+                    </entry>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>20</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>24</totalCount>
+                </labelsProbability>
+                <featureCut>0.0</featureCut>
+              </right>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>5</int>
+                  </entry>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>233</int>
+                  </entry>
+                </eventCount>
+                <totalCount>238</totalCount>
+              </labelsProbability>
+              <featureName>DigitCount</featureName>
+              <featureCut>2.5</featureCut>
+            </left>
+            <right>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>9</int>
+                  </entry>
+                </eventCount>
+                <totalCount>9</totalCount>
+              </labelsProbability>
+              <featureCut>0.0</featureCut>
+            </right>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>14</int>
+                </entry>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>233</int>
+                </entry>
+              </eventCount>
+              <totalCount>247</totalCount>
+            </labelsProbability>
+            <featureName>YPosition</featureName>
+            <featureCut>1334.5</featureCut>
+          </right>
+          <labelsProbability>
+            <eventCount>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>313</int>
+              </entry>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>6</int>
+              </entry>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>298</int>
+              </entry>
+            </eventCount>
+            <totalCount>617</totalCount>
+          </labelsProbability>
+          <featureName>UppercaseRelativeCount</featureName>
+          <featureCut>0.18561584840654607</featureCut>
+        </left>
+        <right>
+          <left>
+            <left>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>14</int>
+                  </entry>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>16</int>
+                  </entry>
+                </eventCount>
+                <totalCount>30</totalCount>
+              </labelsProbability>
+              <featureCut>0.0</featureCut>
+            </left>
+            <right>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>5</int>
+                  </entry>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>2</int>
+                  </entry>
+                </eventCount>
+                <totalCount>7</totalCount>
+              </labelsProbability>
+              <featureCut>0.0</featureCut>
+            </right>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>5</int>
+                </entry>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>2</int>
+                </entry>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>14</int>
+                </entry>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>16</int>
+                </entry>
+              </eventCount>
+              <totalCount>37</totalCount>
+            </labelsProbability>
+            <featureName>YPosition</featureName>
+            <featureCut>894.0</featureCut>
+          </left>
+          <right>
+            <left>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>2</int>
+                  </entry>
+                </eventCount>
+                <totalCount>2</totalCount>
+              </labelsProbability>
+              <featureCut>0.0</featureCut>
+            </left>
+            <right>
+              <left>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>1</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>1</totalCount>
+                </labelsProbability>
+                <featureCut>0.0</featureCut>
+              </left>
+              <right>
+                <left>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>191</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>191</totalCount>
+                  </labelsProbability>
+                  <featureCut>0.0</featureCut>
+                </left>
+                <right>
+                  <labelsProbability>
+                    <eventCount>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>1</int>
+                      </entry>
+                      <entry>
+                        <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                        <int>4</int>
+                      </entry>
+                    </eventCount>
+                    <totalCount>5</totalCount>
+                  </labelsProbability>
+                  <featureCut>0.0</featureCut>
+                </right>
+                <labelsProbability>
+                  <eventCount>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>1</int>
+                    </entry>
+                    <entry>
+                      <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                      <int>195</int>
+                    </entry>
+                  </eventCount>
+                  <totalCount>196</totalCount>
+                </labelsProbability>
+                <featureName>WordCountRelative</featureName>
+                <featureCut>0.09619047619047619</featureCut>
+              </right>
+              <labelsProbability>
+                <eventCount>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>2</int>
+                  </entry>
+                  <entry>
+                    <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                    <int>195</int>
+                  </entry>
+                </eventCount>
+                <totalCount>197</totalCount>
+              </labelsProbability>
+              <featureName>HeightRelative</featureName>
+              <featureCut>0.01688437163044674</featureCut>
+            </right>
+            <labelsProbability>
+              <eventCount>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>4</int>
+                </entry>
+                <entry>
+                  <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                  <int>195</int>
+                </entry>
+              </eventCount>
+              <totalCount>199</totalCount>
+            </labelsProbability>
+            <featureName>LineWidthMean</featureName>
+            <featureCut>713.65</featureCut>
+          </right>
+          <labelsProbability>
+            <eventCount>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>5</int>
+              </entry>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>2</int>
+              </entry>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>20</int>
+              </entry>
+              <entry>
+                <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+                <int>209</int>
+              </entry>
+            </eventCount>
+            <totalCount>236</totalCount>
+          </labelsProbability>
+          <featureName>WidthRelative</featureName>
+          <featureCut>0.6098920608293643</featureCut>
+        </right>
+        <labelsProbability>
+          <eventCount>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>318</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>2</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>318</int>
+            </entry>
+            <entry>
+              <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+              <int>215</int>
+            </entry>
+          </eventCount>
+          <totalCount>853</totalCount>
+        </labelsProbability>
+        <featureName>WordWidthMean</featureName>
+        <featureCut>135.22727272727275</featureCut>
+      </right>
+      <labelsProbability>
+        <eventCount>
+          <entry>
+            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+            <int>319</int>
+          </entry>
+          <entry>
+            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../transitionProbability/probability/entry/pl.edu.icm.cermine.structure.tools.ProbabilityDistribution/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+            <int>424</int>
+          </entry>
+          <entry>
+            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../initialProbability/probability/eventCount/entry/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+            <int>318</int>
+          </entry>
+          <entry>
+            <pl.edu.icm.cermine.structure.model.BxZoneLabel reference="../../../../../../initialProbability/probability/eventCount/entry[2]/pl.edu.icm.cermine.structure.model.BxZoneLabel"/>
+            <int>318</int>
+          </entry>
+        </eventCount>
+        <totalCount>1379</totalCount>
+      </labelsProbability>
+      <featureName>UppercaseWordRelativeCount</featureName>
+      <featureCut>0.2436046511627907</featureCut>
+    </decisionTree>
+  </emissionProbability>
+</pl.edu.icm.cermine.tools.classification.hmm.model.SimpleHMMProbabilityInfo>

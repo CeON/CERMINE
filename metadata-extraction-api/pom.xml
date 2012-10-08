@@ -3,16 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>pl.edu.icm.coansys</groupId>
-        <artifactId>metaextr</artifactId>
+        <groupId>pl.edu.icm</groupId>
+        <artifactId>cermine</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <groupId>pl.edu.icm.coansys</groupId>
+    <groupId>pl.edu.icm.cermine</groupId>
     <version>1.0-SNAPSHOT</version>
-    <artifactId>metadata-extraction-api</artifactId>
+    <artifactId>cermine-api</artifactId>
     <packaging>jar</packaging>
-    <name>Metadata Extraction API</name>
+    <name>CERMINE API</name>
     <url>http://maven.apache.org</url>
 
 </project>

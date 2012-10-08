@@ -3,16 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>pl.edu.icm.coansys</groupId>
-        <artifactId>metaextr</artifactId>
+        <groupId>pl.edu.icm</groupId>
+        <artifactId>cermine</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <groupId>pl.edu.icm.coansys</groupId>
+    <groupId>pl.edu.icm.cermine</groupId>
     <version>1.0-SNAPSHOT</version>
-    <artifactId>metadata-extraction-impl</artifactId>
+    <artifactId>cermine-impl</artifactId>
     <packaging>jar</packaging>
-    <name>Metadata Extraction Implementation</name>
+    <name>CERMINE Implementation</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
@@ -20,11 +20,6 @@
             <groupId>tw.edu.ntu.csie</groupId>
             <artifactId>libsvm</artifactId>
             <version>3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>pl.edu.icm.coansys</groupId>
-            <artifactId>metadata-extraction-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -116,6 +111,12 @@
             <artifactId>xmlunit</artifactId>
             <version>1.3</version>
             <scope>test</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>pl.edu.icm.cermine</groupId>
+            <artifactId>cermine-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
     </dependencies>

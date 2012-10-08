@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+    <import resource="classpath:pl/edu/icm/cermine/metadata/common/common-beans.xml"/>
+
+    <bean id="pageSegmenter" class="pl.edu.icm.cermine.structure.DocstrumPageSegmenter">
+        <!-- Set spacing histogram resolution to 0.5pt -->
+        <property name="spacingHistogramResolution" value="0.5"/>
+
+        <!-- Set spacing histogram smoothing window length to 2.5pt (5 histogram bars in total) -->
+        <property name="spacingHistogramSmoothingWindowLength" value="2.5"/>
+
+        <!-- Set spacing histogram gaussian smoothing window standard deviation to 0.5pt -->
+        <property name="spacingHistogramSmoothingWindowStdDeviation" value="0.5"/>
+
+
+        <property name="wordDistanceMultiplier" value="0.2" />
+
+        <!-- Allow small negative distance to handle following case:
+                W.....
+                y    .....
+             After line determination letter "y" is in separate line and it
+             needs to be merged in one zone with line "W....", but during
+             horizontal distance computation we do not take W's bounds into
+             account (only its middle point), so the horizontal distance
+             between these lines is slightly negative.
+        -->
+        <property name="minHorizontalDistanceMultiplier" value="-0.5"/>
+
+        <property name="maxVerticalDistanceMultiplier" value="1.3"/>
+
+        <property name="maxVerticalMergeDistanceMultiplier" value="0.5"/>
+
+        <property name="componentDistanceCharacterMultiplier" value="3.0"/>
+
+        <property name="maxLineSizeScale" value="Infinity"/>
+    </bean>
+
+    <bean id="initialZoneClassifier" class="pl.edu.icm.cermine.structure.HMMZoneClassifier">
+        <constructor-arg index="0" ref="hmmService" />
+        <constructor-arg index="1" ref="hmmStorage" />
+        <constructor-arg index="2" value="initialzoneclassification" />
+        <constructor-arg index="3" ref="initialZoneFeatureVectorBuilder" />
+        <!--constructor-arg index="1">
+            <bean id="probabilityInfo" factory-bean="xstream" factory-method="fromXML">
+                <constructor-arg>
+                    <bean class="java.io.FileReader">
+                        <constructor-arg value="/tmp/hmm/initialzoneclassification/hmm-probabilities.xml"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg index="2" ref="initialZoneFeatureVectorBuilder" /-->
+    </bean>
+    <bean id="xstream" class="com.thoughtworks.xstream.XStream"/>
+    
+    <bean id="zoneClassifier" class="pl.edu.icm.cermine.structure.HMMZoneClassifier">
+        <constructor-arg index="0" ref="hmmService" />
+        <constructor-arg index="1" ref="hmmStorage" />
+        <constructor-arg index="2" value="zoneclassification" />
+        <constructor-arg index="3" ref="zoneFeatureVectorBuilder" />
+    </bean>
+
+    <bean id="referenceExtractor" class="pl.edu.icm.cermine.bibref.HMMBibReferenceExtractor">
+        <constructor-arg index="0" ref="hmmService" />
+        <constructor-arg index="1" ref="hmmStorage" />
+        <constructor-arg index="2" value="referenceextraction" />
+        <constructor-arg index="3" ref="refsExtrFeatureVectorBuilder" />
+    </bean>
+    
+    <bean id="clustReferenceExtractor" class="pl.edu.icm.cermine.bibref.ClusteringBibReferenceExtractor">
+        <constructor-arg ref="clustRefsExtrFeatureVectorBuilder" />
+    </bean>
+
+    <bean id="referenceParser" class="pl.edu.icm.cermine.structure.HMMBibReferenceParser">
+        <constructor-arg ref="hmmService" />
+        <constructor-arg ref="hmmStorage" />
+        <constructor-arg value="referenceparsing" />
+        <constructor-arg ref="refsFeatureVectorBuilder" />
+    </bean>
+
+    <!--
+    <bean id="referenceParser" class="pl.edu.icm.cermine.structure.HMMBibReferenceParser">
+        <constructor-arg ref="hmmService" />
+        <constructor-arg>
+            <bean id="probabilityInfo" factory-bean="xstream" factory-method="fromXML">
+                <constructor-arg>
+                    <bean class="java.io.FileReader">
+                        <constructor-arg value="/tmp/hmm/referenceparsing/hmm-probabilities.xml"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg ref="refsFeatureVectorBuilder" />
+    </bean>
+    <bean id="xstream" class="com.thoughtworks.xstream.XStream"/>
+    -->
+
+    <bean id="metadataExtractor" class="pl.edu.icm.cermine.metadata.extraction.EnhancerMetadataExtractor">
+        <property name="enhancers">
+            <list>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.HindawiCornerInfoEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.TitleMergedWithTypeEnhancer">
+                    <property name="types">
+                        <set>
+                            <value>Case Report</value>
+                            <value>Case Study</value>
+                            <value>Clinical Study</value>
+                            <value>Debate</value>
+                            <value>Editorial</value>
+                            <value>Methodology</value>
+                            <value>Research</value>
+                            <value>Research Article</value>
+                            <value>Review Article</value>
+                            <value>Study</value>
+                            <value>Study Protocol</value>
+                        </set>
+                    </property>
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.TitleEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.AffiliationGeometricEnhancer">
+                    <property name="headers">
+                        <list>
+                            <value>Author Affiliations</value>
+                            <value>Author details</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.AuthorEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.EmailEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.DoiEnhancer">
+                    <property name="searchedZoneLabels">
+                        <set>
+                            <value>MET_BIB_INFO</value>
+                            <value>OTH_HEADER</value>
+                        </set>
+                    </property>
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.IssnEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.UrnEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.DescriptionEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.KeywordsEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.ArticleIdEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.VolumeEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.IssueEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.JournalVolumeIssueWithAuthorEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.JournalVolumeIssueEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.JournalEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.EditorEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.ReceivedDateEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.AcceptedDateEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.PublishedDateEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.RevisedDateEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.RevisedFormDateEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.PagesEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.PagesPartialEnhancer">
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.CiteAsEnhancer">
+                    <property name="referenceParser" ref="referenceParser"/>
+                </bean>
+                <bean class="pl.edu.icm.cermine.metadata.extraction.enhancers.YearEnhancer">
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+</beans>

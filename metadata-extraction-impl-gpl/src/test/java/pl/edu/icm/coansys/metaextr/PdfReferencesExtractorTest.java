@@ -16,7 +16,7 @@ import pl.edu.icm.coansys.metaextr.exception.AnalysisException;
  * @author Dominika Tkaczyk
  */
 public class PdfReferencesExtractorTest {
-    static final private String INPUT_FILE = "/pl/edu/icm/coansys/metaextr/structure/refs.pdf";
+    static final private String INPUT_FILE = "/pl/edu/icm/coansys/metaextr/refs.pdf";
     
     private DocumentReferencesExtractor<BibEntry> extractor;
     

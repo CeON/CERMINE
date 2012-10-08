@@ -17,7 +17,6 @@
     <modules>
         <module>metadata-extraction-api</module>
         <module>metadata-extraction-impl</module>
-        <module>metadata-extraction-impl-gpl</module>
     </modules>
 
     <dependencyManagement>

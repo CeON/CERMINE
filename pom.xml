@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Metadata Extraction System</name>
+    <name>CERMINE Content Extractor and Miner</name>
 
     <organization>
         <name>ICM, Warsaw University</name>
@@ -15,8 +15,8 @@
     </organization>
 
     <modules>
-        <module>metadata-extraction-api</module>
-        <module>metadata-extraction-impl</module>
+        <module>cermine-api</module>
+        <module>cermine-impl</module>
     </modules>
 
     <dependencyManagement>

@@ -8,3 +8,4 @@ CERMINE is written in Java at [Centre for Open Science](http://ceon.pl/en/resear
 The code is licensed under GNU General Public License version 3.
 
 Expected launch of the service: January 2013.
+

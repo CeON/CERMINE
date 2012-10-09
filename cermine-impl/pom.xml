@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>pl.edu.icm</groupId>
-        <artifactId>cermine</artifactId>
+        <groupId>pl.edu.icm.cermine</groupId>
+        <artifactId>cermine-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     
@@ -12,10 +12,15 @@
     <version>1.0-SNAPSHOT</version>
     <artifactId>cermine-impl</artifactId>
     <packaging>jar</packaging>
-    <name>CERMINE Implementation</name>
-    <url>http://maven.apache.org</url>
+    <name>CERMINE Engine Implementation - ${project.version}</name>
 
     <dependencies>
+        <dependency>
+            <groupId>pl.edu.icm.cermine</groupId>
+            <artifactId>cermine-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>tw.edu.ntu.csie</groupId>
             <artifactId>libsvm</artifactId>
@@ -24,47 +29,35 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>2.5.6.SEC02</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.6.1</version>
         </dependency>
         <dependency>
-            <groupId>jdom</groupId>
-            <artifactId>jdom</artifactId>
-            <version>1.0</version>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.5</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>r07</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
-            <version>1.4.2</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>
@@ -93,8 +86,6 @@
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -113,26 +104,10 @@
             <scope>test</scope>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>pl.edu.icm.cermine</groupId>
-            <artifactId>cermine-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
     </dependencies>
     
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-            
+        <plugins>            
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.3</version>
@@ -153,24 +128,5 @@
             </plugin>
         </plugins>
     </build>
-    
-    <repositories>
-        <repository>
-            <id>yadda</id>
-            <name>YADDA project repository</name>
-            <url>http://maven.icm.edu.pl/artifactory/repo</url>
-        </repository>
-        <repository>
-            <id>repo</id>
-            <releases>
-                <enabled>true</enabled>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <url>file://${project.basedir}/repo</url>
-        </repository>
-    </repositories>
-    
+        
 </project>

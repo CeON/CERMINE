@@ -140,18 +140,10 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	 */
 	private void setIdsAndLinkTogether(BxDocument doc) {
 		setIdsGenericImpl(doc.asPages());
-		for(BxPage page: doc.asPages()) {
-			setIdsGenericImpl(doc.asZones());
-			setIdsGenericImpl(doc.asLines());
-			setIdsGenericImpl(doc.asWords());
-			setIdsGenericImpl(doc.asChunks());
-		}
-	}
-
-	private String s(String string) {
-		if(string.length() <= 10)
-			return string;
-		return string.substring(0, 10);
+    	setIdsGenericImpl(doc.asZones());
+		setIdsGenericImpl(doc.asLines());
+		setIdsGenericImpl(doc.asWords());
+		setIdsGenericImpl(doc.asChunks());
 	}
 
 	/** Builds a binary tree of zones and groups of zones from a list of unordered zones.

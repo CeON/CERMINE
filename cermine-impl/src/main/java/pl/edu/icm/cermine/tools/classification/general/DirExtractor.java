@@ -26,8 +26,7 @@ public class DirExtractor implements DocumentsExtractor
 	}
 	
     @Override
-	public List<BxDocument> getDocuments() throws TransformationException, FileNotFoundException
-	{
+	public List<BxDocument> getDocuments() throws TransformationException {
 		String dirPath = directory.getPath();
 		TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
 		List<BxDocument> documents = new ArrayList<BxDocument>();
@@ -40,16 +39,28 @@ public class DirExtractor implements DocumentsExtractor
                 continue;
             }
     		if (filename.endsWith("xml")) {
-    			InputStream is = new FileInputStream(dirPath + filename);
-    			List<BxPage> pages = tvReader.read(new InputStreamReader(is));
-    			BxDocument newDoc = new BxDocument();
-				for(BxPage page: pages)
-					page.setParent(newDoc);
-    			
-    			newDoc.setFilename(filename);
-    			newDoc.setPages(pages);
-    			
-    			documents.add(newDoc);
+                InputStream is = null;
+                try {
+                    is = new FileInputStream(dirPath + filename);
+                    List<BxPage> pages = tvReader.read(new InputStreamReader(is));
+                    BxDocument newDoc = new BxDocument();
+                    for(BxPage page: pages) {
+                        page.setParent(newDoc);
+                    }
+                    newDoc.setFilename(filename);
+                    newDoc.setPages(pages);
+                    documents.add(newDoc);
+                } catch (FileNotFoundException ex) {
+                    throw new TransformationException("Cannot read file!", ex);
+                } finally {
+                    if (is != null) {
+                        try {
+                            is.close();
+                        } catch (IOException ex) {
+                            throw new TransformationException("Cannot close stream!", ex);
+                        }
+                    }
+                }
     		}
     	}
 		return documents;

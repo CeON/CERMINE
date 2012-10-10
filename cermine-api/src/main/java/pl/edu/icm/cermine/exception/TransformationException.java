@@ -1,8 +1,6 @@
 package pl.edu.icm.cermine.exception;
 
-import java.io.Serializable;
-
-public class TransformationException extends Exception implements Serializable {
+public class TransformationException extends Exception {
         private static final long serialVersionUID = -4871017514024156616L;
 
         public TransformationException() {

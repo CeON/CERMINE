@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  * @param <S> Type of labels of objects.
  */
-public interface TrainingElement<S> {
+public interface TrainingElement<S> extends Cloneable {
 
     /**
      * Gets observation emitted by an element.

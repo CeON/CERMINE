@@ -7,7 +7,7 @@ import java.util.Set;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public interface FeatureVector {
+public interface FeatureVector extends Cloneable {
 
 	Double[] getFeatures();
     /**

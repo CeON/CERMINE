@@ -73,7 +73,7 @@ public class KnnClassifier<T> {
 
     public class FVEuclideanDistanceComparator implements Comparator<KnnTrainingSample<T>> {
         
-        public FeatureVectorDistanceMetric metric;
+        private FeatureVectorDistanceMetric metric;
         private FeatureVector sample;
 
         public FVEuclideanDistanceComparator(FeatureVector sample, FeatureVectorDistanceMetric metric) {

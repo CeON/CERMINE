@@ -26,19 +26,17 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     }
 
     public BxLine setWords(Collection<BxWord> words) {
-        if (words == null) {
-            throw new NullPointerException();
+        if (words != null) {
+            this.words.clear();
+            this.words.addAll(words);
         }
-        this.words.clear();
-        this.words.addAll(words);
         return this;
     }
 
     public BxLine addWord(BxWord word) {
-        if (word == null) {
-            throw new NullPointerException();
+        if (word != null) {
+            this.words.add(word);
         }
-        this.words.add(word);
         return this;
     }
 

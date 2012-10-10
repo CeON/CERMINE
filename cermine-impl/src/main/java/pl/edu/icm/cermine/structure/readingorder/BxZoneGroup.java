@@ -30,6 +30,7 @@ public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
     	setBounds(zone.getBounds());
     }
 
+    @Override
     public BxZoneGroup setBounds(BxBounds bounds) {
     	super.setBounds(bounds);
     	return this;

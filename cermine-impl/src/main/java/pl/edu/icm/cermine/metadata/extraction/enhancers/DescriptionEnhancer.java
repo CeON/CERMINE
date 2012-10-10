@@ -30,7 +30,7 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxDocument document, Element metadata) {
-        String text = "";
+        StringBuilder sb = new StringBuilder();
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
                 String[] lines = zone.toText().split("\n");
@@ -39,12 +39,13 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
                         || line.toLowerCase().startsWith("key words")) {
                         break;
                     }
-                    text += "\n" + line;
+                    sb.append("\n");
+                    sb.append(line);
                 }
             }
          }
 
-        text = text.trim();
+        String text = sb.toString().trim();
         if (!text.isEmpty()) {
             Matcher matcher = PREFIX.matcher(text);
             if (matcher.find()) {

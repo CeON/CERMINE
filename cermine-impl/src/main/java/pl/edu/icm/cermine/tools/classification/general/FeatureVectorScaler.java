@@ -54,8 +54,7 @@ public class FeatureVectorScaler {
 				}
 				++featureIdx;
 			}
-		}
-		Integer idx=0;
+        }
 		for(FeatureLimits limit: limits) {
 			assert limit.getMin() != Double.MAX_VALUE;
 			assert limit.getMax() != Double.MIN_VALUE;

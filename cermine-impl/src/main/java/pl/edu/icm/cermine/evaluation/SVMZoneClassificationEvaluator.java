@@ -132,12 +132,7 @@ public class SVMZoneClassificationEvaluator extends
 			List<BxDocument> copiedTrainingDocuments = BxModelUtils.deepClone(trainingDocuments);
 			for(BxDocument doc: copiedTrainingDocuments) {
 				for(BxZone zone: doc.asZones()) {
-					if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_BODY
-						|| zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER
-						|| zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_REFERENCES	)
-						zone.setLabel(zone.getLabel().getGeneralLabel());
-					else
-						zone.setLabel(zone.getLabel().getGeneralLabel());
+					zone.setLabel(zone.getLabel().getGeneralLabel());
 				}
 			}
 			
@@ -158,11 +153,13 @@ public class SVMZoneClassificationEvaluator extends
         }
         PipelineClassifier classifier = new PipelineClassifier();
         classifier.addClassifier(new PickyClassifier(metaBodyRefClassifier) {
+            @Override
         	public Boolean shouldBeClassified(BxZone zone) {
         		return true;
         	}
         });
         classifier.addClassifier(new PickyClassifier(metaClassifier) {
+            @Override
         	public Boolean shouldBeClassified(BxZone zone) {
         		if(zone.getLabel() == BxZoneLabel.GEN_METADATA)
         			return true;
@@ -171,6 +168,7 @@ public class SVMZoneClassificationEvaluator extends
         	}
         });
         classifier.addClassifier(new PickyClassifier(bodyOtherClassifier) {
+            @Override
         	public Boolean shouldBeClassified(BxZone zone) {
         		if(zone.getLabel() == BxZoneLabel.GEN_BODY)
         			return true;

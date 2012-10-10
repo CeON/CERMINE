@@ -41,8 +41,8 @@ public abstract class AbstractDocumentProcessorTest {
         List<Reader> expectedReaders = new ArrayList<Reader>();
 
         for (String file : files) {
-            testReaders.add(new InputStreamReader(this.getClass().getResourceAsStream(file)));
-            expectedReaders.add(new InputStreamReader(this.getClass().getResourceAsStream(file)));
+            testReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file)));
+            expectedReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file)));
         }
 
         testCollection(testReaders, expectedReaders, percentage);

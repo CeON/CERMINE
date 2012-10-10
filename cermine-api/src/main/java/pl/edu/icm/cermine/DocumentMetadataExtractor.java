@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface DocumentMetadataExtractor<T> {
 	
-	public T extractMetadata(InputStream stream) throws AnalysisException;
+	T extractMetadata(InputStream stream) throws AnalysisException;
     
-    public T extractMetadata(BxDocument document) throws AnalysisException;
+    T extractMetadata(BxDocument document) throws AnalysisException;
 }

@@ -18,6 +18,6 @@ public interface BibReferenceParser<T> {
 	 * @return Parsed reference, or <code>null</code>
 	 * if the specified text couldn't be parsed.
 	 */
-	public T parseBibReference(String text) throws AnalysisException;
+	T parseBibReference(String text) throws AnalysisException;
 
 }

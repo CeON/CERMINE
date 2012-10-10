@@ -10,5 +10,5 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface BibReferenceExtractor {
 
-    public String[] extractBibReferences(BxDocument document) throws AnalysisException;
+    String[] extractBibReferences(BxDocument document) throws AnalysisException;
 }

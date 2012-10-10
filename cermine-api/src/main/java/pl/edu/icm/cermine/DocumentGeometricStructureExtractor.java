@@ -9,5 +9,5 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface DocumentGeometricStructureExtractor {
 	
-	public BxDocument extractStructure(InputStream stream) throws AnalysisException;
+	BxDocument extractStructure(InputStream stream) throws AnalysisException;
 }

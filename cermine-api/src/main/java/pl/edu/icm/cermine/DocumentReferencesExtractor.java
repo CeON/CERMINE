@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface DocumentReferencesExtractor<T> {
 	
-	public T[] extractReferences(InputStream stream) throws AnalysisException;
+	T[] extractReferences(InputStream stream) throws AnalysisException;
     
-    public T[] extractReferences(BxDocument document) throws AnalysisException;
+    T[] extractReferences(BxDocument document) throws AnalysisException;
 }

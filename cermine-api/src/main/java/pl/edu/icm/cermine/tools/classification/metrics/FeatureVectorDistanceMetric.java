@@ -8,6 +8,6 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
  */
 public interface FeatureVectorDistanceMetric {
 
-    public double getDistance(FeatureVector vector1, FeatureVector vector2);
+    double getDistance(FeatureVector vector1, FeatureVector vector2);
     
 }

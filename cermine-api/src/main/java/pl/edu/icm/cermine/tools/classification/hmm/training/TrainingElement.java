@@ -30,7 +30,8 @@ public interface TrainingElement<S> {
      * @return The label.
      */
     S getLabel();
-    public void setLabel(S label);
+    
+    void setLabel(S label);
     
 
     /**
@@ -40,7 +41,7 @@ public interface TrainingElement<S> {
      * @return The label of the following element.
      */
     S getNextLabel();
-    public TrainingElement<S> clone();
-
+    
+    TrainingElement<S> clone();
 
 }

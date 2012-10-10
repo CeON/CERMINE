@@ -25,6 +25,7 @@ public class DirExtractor implements DocumentsExtractor
 		this.directory = directory;
 	}
 	
+    @Override
 	public List<BxDocument> getDocuments() throws TransformationException, FileNotFoundException
 	{
 		String dirPath = directory.getPath();

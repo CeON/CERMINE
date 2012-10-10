@@ -75,7 +75,7 @@ public class BxObjectDump {
 			 			 .append("]");
 			return stringBuilder.toString();
 		} else {
-			return new String("");
+			return "";
 		}
 	}
 	

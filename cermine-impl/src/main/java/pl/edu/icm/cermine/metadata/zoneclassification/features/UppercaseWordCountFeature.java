@@ -14,10 +14,11 @@ public class UppercaseWordCountFeature extends FeatureCalculator<BxZone, BxPage>
         int count = 0;
         for (BxLine line : zone.getLines()) {
             for (BxWord word : line.getWords()) {
-                String s = "";
+                StringBuilder sb = new StringBuilder();
                 for (BxChunk chunk : word.getChunks()) {
-                    s += chunk.getText();
+                    sb.append(chunk.getText());
                 }
+                String s = sb.toString();
                 if (!s.isEmpty() && Character.isUpperCase(s.charAt(0))) {
                     count++;
                 }

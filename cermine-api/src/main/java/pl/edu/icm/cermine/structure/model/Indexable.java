@@ -2,22 +2,21 @@ package pl.edu.icm.cermine.structure.model;
 
 public interface Indexable<A> {
 	/** Getter for the value based on TrueViz XxxID field */
-	public String getId();
+	String getId();
 	/** Getter for the value based on TrueViz XxxNext field */
-	public String getNextId();
+	String getNextId();
 	/** Setter for the value based on TrueViz XxxID field */
-	public void setId(String id);
+	void setId(String id);
 	/** Setter for the value based on TrueViz XxxNext field */
-	public void setNextId(String nextId);
+	void setNextId(String nextId);
 	
 	/** Get next linked list element */
-	public A getNext();
+	A getNext();
 	/** Set next linked list element */
-	public void setNext(A elem);
-	public boolean hasNext();
+	void setNext(A elem);
+	boolean hasNext();
 	
-	public A getPrev();
-	public void setPrev(A elem);
-	public boolean hasPrev();
-	
+	A getPrev();
+	void setPrev(A elem);
+	boolean hasPrev();
 }

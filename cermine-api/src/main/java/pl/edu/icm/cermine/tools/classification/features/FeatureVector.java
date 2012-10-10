@@ -18,7 +18,7 @@ public interface FeatureVector {
      */
     double getFeature(String name);
 
-    void setFeature(String name, Double value) throws RuntimeException;
+    void setFeature(String name, Double value);
     /**
      * Adds a feature value to the vector.
      *

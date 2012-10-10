@@ -68,7 +68,7 @@ public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
     public BxZoneGroup setBounds(Double x0, Double y0, Double x1, Double y1) {
     	assert x1 >= x0;
     	assert y1 >= y0;
-    	this.bounds = new BxBounds(x0, y0, x1-x0, y1-y0);
+    	this.setBounds(new BxBounds(x0, y0, x1-x0, y1-y0));
     	return this;
     }
 }

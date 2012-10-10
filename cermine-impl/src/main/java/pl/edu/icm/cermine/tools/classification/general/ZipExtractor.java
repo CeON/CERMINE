@@ -35,6 +35,7 @@ public class ZipExtractor implements DocumentsExtractor {
 		this.zipFile = zipFile;
 	}
 
+    @Override
 	public List<BxDocument> getDocuments()
 			throws ZipException, IOException, URISyntaxException,
 			ParserConfigurationException, SAXException, AnalysisException,

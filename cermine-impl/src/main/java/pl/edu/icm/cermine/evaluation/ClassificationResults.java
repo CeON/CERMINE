@@ -52,6 +52,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         }
     }
 
+    @Override
     public void add(ClassificationResults results)
     {
     	for(BxZoneLabel possibleLabel: results.getPossibleLabels())
@@ -69,7 +70,6 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     public void printMatrix()
     {
         int maxLabelLength = 0;
-        int labelCount = possibleLabels.size();
 
         Map<BxZoneLabel, Integer> labelLengths = new HashMap<BxZoneLabel, Integer>();
 

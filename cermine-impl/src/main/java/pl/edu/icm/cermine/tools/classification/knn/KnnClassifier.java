@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
 
@@ -60,10 +61,10 @@ public class KnnClassifier<T> {
         
         T label = null;
         int labelCount = 0;
-        for (T l : labelCountMap.keySet()) {
-            if (labelCountMap.get(l) > labelCount) {
-                label = l;
-                labelCount = labelCountMap.get(l);
+        for (Entry<T, Integer> entry : labelCountMap.entrySet()) {
+            if (labelCountMap.get(entry.getKey()) > labelCount) {
+                label = entry.getKey();
+                labelCount = labelCountMap.get(entry.getKey());
             }
         }
        

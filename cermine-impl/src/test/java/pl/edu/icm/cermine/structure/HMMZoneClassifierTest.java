@@ -37,7 +37,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
     protected static final double testSuccessPercentage = 85;
 
     protected static final String hmmProbabilitiesFile = "/pl/edu/icm/cermine/structure/hmmZoneProbabilities.xml";
-    protected static final String[] zipResources = {"/pl/edu/icm/cermine/structure/margSmallSample.zip"};
+    static final String[] zipResources = {"/pl/edu/icm/cermine/structure/margSmallSample.zip"};
 
     private HMMService hmmService = new HMMServiceImpl();
     private ZoneClassifier zoneClassifier;

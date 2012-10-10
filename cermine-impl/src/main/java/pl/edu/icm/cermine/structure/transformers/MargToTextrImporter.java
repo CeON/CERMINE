@@ -310,17 +310,12 @@ public class MargToTextrImporter {
         return page.setBounds(new BxBounds(minX, minY, maxX - minX, maxY - minY));
     }
 
-    private BxDocument parseDocumentNode(Element elem) {
-        return null;
-    }
-
     private BxPage importSource(InputSource source) throws IOException, ParserConfigurationException, SAXException{
         Document doc = TrueVizUtils.newDocumentBuilder().parse(source);
 
         if ("Page".equalsIgnoreCase(doc.getDocumentElement().getTagName())) {
             BxPage page = parsePageNode(doc.getDocumentElement());
             return page;
-        } else if ("Document".equalsIgnoreCase(doc.getDocumentElement().getTagName())) {
         }
 
         throw new UnsupportedDataTypeException("There were no example of this type contact kura for more info");

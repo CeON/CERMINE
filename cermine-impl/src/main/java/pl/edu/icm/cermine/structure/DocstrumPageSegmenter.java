@@ -99,17 +99,6 @@ public class DocstrumPageSegmenter implements PageSegmenter {
     private double maxVerticalDistanceMultiplier = 1.2;
 
     /**
-     * Component distance line spacing multiplier.
-     *
-     * Maximum distance between components that belong to the same line is
-     * equal to (lineSpacing * componentDistanceLineMultiplier +
-     * characterSpacing * componentDistanceCharacterMultiplier), where
-     * lineSpacing and characterSpacing are estimated between-line and
-     * within-line spacing, respectively.
-     */
-    private double componentDistanceLineMultiplier = 1.41;
-
-    /**
      * Component distance character spacing multiplier.
      *
      * Maximum distance between components that belong to the same line is
@@ -181,10 +170,6 @@ public class DocstrumPageSegmenter implements PageSegmenter {
 
     public void setMinHorizontalDistanceMultiplier(double value) {
         minHorizontalDistanceMultiplier = value;
-    }
-
-    public void setComponentDistanceLineMultiplier(double value) {
-        componentDistanceLineMultiplier = value;
     }
 
     public void setComponentDistanceCharacterMultiplier(double value) {

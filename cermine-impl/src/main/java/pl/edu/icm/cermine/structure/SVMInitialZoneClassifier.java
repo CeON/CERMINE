@@ -159,7 +159,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 				// Create file 
 				FileWriter fstream = new FileWriter(doc.getFilename());
 				BufferedWriter out = new BufferedWriter(fstream);
-				out.write(tvw.write(doc.getPages(), null));
+				out.write(tvw.write(doc.getPages()));
 				out.close();
 			} catch (Exception e){//Catch exception if any
 				System.err.println("Error: " + e.getMessage());

@@ -22,10 +22,10 @@ import pl.edu.icm.cermine.structure.tools.UnsegmentedZonesFlattener;
  */
 public class PageSegmenterTest extends AbstractDocumentProcessorTest {
 
-    protected static double testSuccessPercentage = 0;
-    protected static double boundsTolerance = 20;
-    protected static String[] testResources = {"/pl/edu/icm/cermine/structure/001.xml"};
-    protected static String[] zipResources = {"/pl/edu/icm/cermine/structure/margSmallSample.zip"};
+    protected static final double testSuccessPercentage = 0;
+    protected static final double boundsTolerance = 20;
+    static final String[] testResources = {"/pl/edu/icm/cermine/structure/001.xml"};
+    static final String[] zipResources = {"/pl/edu/icm/cermine/structure/margSmallSample.zip"};
 
     @Before
     public void setUp() {

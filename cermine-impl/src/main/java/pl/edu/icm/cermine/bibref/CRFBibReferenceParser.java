@@ -36,7 +36,9 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
             throw new AnalysisException("Cannot set model!", ex);
         } finally {
             try {
-                ois.close();
+                if (ois != null) {
+                    ois.close();
+                }
             } catch (IOException ex) {
                 throw new AnalysisException("Cannot set model!", ex);
             }
@@ -54,7 +56,9 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
             throw new AnalysisException("Cannot set model!", ex);
         } finally {
             try {
-                ois.close();
+                if (ois != null) {
+                    ois.close();
+                }
             } catch (IOException ex) {
                 throw new AnalysisException("Cannot set model!", ex);
             }

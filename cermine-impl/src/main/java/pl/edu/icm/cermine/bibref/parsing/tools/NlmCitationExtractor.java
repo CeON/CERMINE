@@ -20,11 +20,11 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
  */
 public class NlmCitationExtractor {
 
-    public static String TAG_CITATION = "mixed-citation";
+    public final static String TAG_CITATION = "mixed-citation";
 
-    public static String KEY_TEXT = "text";
+    public final static String KEY_TEXT = "text";
 
-    public static List<String> EXP_TAGS = Arrays.asList(
+    public final static List<String> EXP_TAGS = Arrays.asList(
             "string-name", "italic", "bold", "sup", "sub", "styled-content", "monospace", "sans-serif", "underline",
             "xref", "inline-formula");
 

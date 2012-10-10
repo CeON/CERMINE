@@ -14,8 +14,8 @@
     <packaging>jar</packaging>
     <name>CERMINE Engine Implementation - ${project.version}</name>
 
-    <!-- local repository is used to store fresh itextpdf 5.3.3 version, 
-         which is not yet available in public repositories -->
+    <!-- local repository is used to store fresh itextpdf 5.3.3 version, which is not yet available in public repositories.
+         Commented, Jenkins is unable to see it         
     <repositories>
         <repository>
             <id>repo</id>
@@ -28,7 +28,7 @@
             </snapshots>
             <url>file://${project.basedir}/repo</url>
         </repository>
-    </repositories>
+    </repositories>-->
 
     <dependencies>
         <dependency>

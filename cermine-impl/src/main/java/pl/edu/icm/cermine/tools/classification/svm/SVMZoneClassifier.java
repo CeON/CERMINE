@@ -204,7 +204,11 @@ public class SVMZoneClassifier implements ZoneClassifier {
 		Integer idx;
 		if(rangeFile.read() == 'x') {
 			rangeFile.readLine();		// pass the '\n' after 'x'
-			StringTokenizer st = new StringTokenizer(rangeFile.readLine());
+            String line = rangeFile.readLine();
+            if (line == null) {
+                line = "";
+            }
+			StringTokenizer st = new StringTokenizer(line);
 			Double scaledLowerBound = Double.parseDouble(st.nextToken());
 			Double scaledUpperBound = Double.parseDouble(st.nextToken());
 			if(scaledLowerBound != 0 || scaledUpperBound != 1) {

@@ -74,8 +74,12 @@ public class XMLHMMStorage implements HMMStorage {
         String filePath = directory + File.separator + hmmId + File.separator + hmmProbabilitiesFile;
         File hmmFile = new File(filePath);
         if (!hmmFile.exists()) {
-            hmmFile.getParentFile().mkdirs();
-            hmmFile.createNewFile();
+            if (!hmmFile.getParentFile().mkdirs()) {
+                throw new IOException("Cannot create directories!");
+            }
+            if (!hmmFile.createNewFile()) {
+                throw new IOException("Cannot create file!");
+            }
         }
         Writer w = new FileWriter(directory + hmmId + "/" + hmmProbabilitiesFile);
         XStream xstream = new XStream();

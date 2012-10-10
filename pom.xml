@@ -55,32 +55,16 @@
         </plugins>		
 	</build>        
 	
-   <repositories>
+    <repositories>
         <repository>
             <id>yadda</id>
             <name>YADDA project repository</name>
             <url>http://maven.icm.edu.pl/artifactory/repo</url>
         </repository>
-        <repository>
-            <id>repo</id>
-            <releases>
-                <enabled>true</enabled>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <url>file://${project.basedir}/repo</url>
-        </repository>
     </repositories>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.6.1</version>
-            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

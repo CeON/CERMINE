@@ -54,11 +54,13 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
             Iterator<BxLine> iterator = zone.getLines().iterator();
             String firstLine = iterator.next().toText().toLowerCase();
             if (types.contains(firstLine)) {
-                String text = iterator.next().toText();
+                StringBuilder text = new StringBuilder();
+                text.append(iterator.next().toText());
                 while (iterator.hasNext()) {
-                    text += " " + iterator.next().toText();
+                    text.append(" ");
+                    text.append(iterator.next().toText());
                 }
-                Enhancers.setTitle(metadata, text);
+                Enhancers.setTitle(metadata, text.toString());
                 return true;
             } else {
                 return false;

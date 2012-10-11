@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.sampleselection;
 
+import java.util.Map.Entry;
 import java.util.*;
 import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
@@ -22,10 +23,11 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
         }
 
         Integer smallestClassNumber = Integer.MAX_VALUE;
-        for(S lab: labelCount.keySet()) {
-        	if(labelCount.get(lab) < smallestClassNumber)
-        		smallestClassNumber = labelCount.get(lab);
-        	System.out.println(lab + " " + labelCount.get(lab));
+        for(Entry<S, Integer> entry: labelCount.entrySet()) {
+        	if(entry.getValue() < smallestClassNumber) {
+        		smallestClassNumber = entry.getValue();
+            }
+        	System.out.println(entry.getKey() + " " + entry.getValue());
         }
         
         List<TrainingElement<S>> trainingElements = new ArrayList<TrainingElement<S>>();

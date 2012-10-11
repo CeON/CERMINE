@@ -10,12 +10,12 @@ import pl.edu.icm.cermine.structure.model.BxZone;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
-	protected static String[] monthsRegexps = new String[36];
-	protected static String[] digitRegexps = {
+	static final String[] monthsRegexps = new String[36];
+	static final String[] digitRegexps = {
 			"\\d{4}[ \\.-/]\\d{2}[ \\.-/]\\d{2}",
 			"\\d{2}[ \\.-/]\\d{2}[ \\.-/]\\d{4}"
 	};
-	protected static String[] months = { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+	static final String[] months = { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 	
 	static {
 		Integer idx=0;

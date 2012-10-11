@@ -32,14 +32,25 @@ public class PdfMetadataExtractorTest {
     }
     
     @Test
-    public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException {
+    public void metadataExtractionTest() throws AnalysisException, IOException, JDOMException, SAXException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
-        Element testMetadata = extractor.extractMetadata(testStream);
+        Element testMetadata;
+        try {
+            testMetadata = extractor.extractMetadata(testStream);
+        } finally {
+            testStream.close();
+        }
         
         InputStream expStream = this.getClass().getResourceAsStream(EXP_FILE);
         InputStreamReader expReader = new InputStreamReader(expStream);
         SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
-        Document dom = saxBuilder.build(expReader);
+        Document dom;
+        try {
+            dom = saxBuilder.build(expReader);
+        } finally {
+            expStream.close();
+            expReader.close();
+        }
         Element expMetadata = dom.getRootElement();
         
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());

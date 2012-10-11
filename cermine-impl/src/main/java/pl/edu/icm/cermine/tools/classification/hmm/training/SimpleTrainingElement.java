@@ -47,7 +47,16 @@ public class SimpleTrainingElement<S> implements TrainingElement<S> {
     
     @Override
     public SimpleTrainingElement<S> clone() {
-    	return new SimpleTrainingElement<S>(observation.clone(), label, first);
+        try {
+            SimpleTrainingElement<S> element = (SimpleTrainingElement) super.clone();
+            element.first = first;
+            element.label = label;
+            element.nextLabel = nextLabel;
+            element.observation = observation.clone();
+            return element;
+        } catch (CloneNotSupportedException ex) {
+            return null;
+        }
     }
 
 	@Override

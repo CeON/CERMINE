@@ -76,7 +76,7 @@ public abstract class AbstractDocumentProcessorTest {
         Map<String, Integer> dirSamplesCount = new HashMap<String, Integer>();
 
         for (String file : zipFiles) {
-            ZipFile zipFile = new ZipFile(new File(this.getClass().getResource(file).toURI()));
+            ZipFile zipFile = new ZipFile(new File(AbstractDocumentProcessorTest.class.getResource(file).toURI()));
             Enumeration entries = zipFile.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipEntry = (ZipEntry) entries.nextElement();

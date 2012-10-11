@@ -39,7 +39,7 @@ public class BxZoneTree {
 		}
 
 		public BxZoneTreeNode addChild(BxZoneOrderTuple tuple) {
-			if (this.tuple.getOrder() == tuple.getOrder()) {
+			if (this.tuple.getOrder().equals(tuple.getOrder())) {
 				parent.getChildren().add(new BxZoneTreeNode(tuple, parent));
 				return parent;
 			} else if (this.tuple.getOrder() > tuple.getOrder()) {

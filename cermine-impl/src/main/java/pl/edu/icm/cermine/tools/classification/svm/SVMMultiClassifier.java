@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.util.*;
+import java.util.Map.Entry;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -25,10 +26,10 @@ public class SVMMultiClassifier extends SVMZoneClassifier {
 	private BxZoneLabel findMaxLabel(Map<BxZoneLabel, Integer> votes) {
 		Integer maxVote = 0;
 		BxZoneLabel bestLab = null;
-		for(BxZoneLabel lab: votes.keySet()) {
-			if(votes.get(lab) > maxVote) {
-				maxVote = votes.get(lab);
-				bestLab = lab;
+		for(Entry<BxZoneLabel, Integer> entry: votes.entrySet()) {
+			if(entry.getValue() > maxVote) {
+				maxVote = entry.getValue();
+				bestLab = entry.getKey();
 			}
 		}
 		assert bestLab != null;

@@ -41,10 +41,10 @@ class DividedEvaluationSet
 
 		List<DividedEvaluationSet> ret = new ArrayList<DividedEvaluationSet>(foldness);
 
-		for(Integer fold=0; fold<foldness; ++fold) {
+		for(int fold=0; fold<foldness; ++fold) {
 			List<BxDocument> trainingDocuments = new ArrayList<BxDocument>();
 			List<BxDocument> testDocuments = new ArrayList<BxDocument>();
-			for(Integer setIdx=0; setIdx<foldness; ++setIdx) {
+			for(int setIdx=0; setIdx<foldness; ++setIdx) {
 				if(setIdx == fold)
 					testDocuments.addAll(dividedDocs.get(setIdx));
 				else

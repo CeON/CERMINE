@@ -200,7 +200,12 @@ public class PdfReferencesExtractorTest {
     @Test
     public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException {
         InputStream testStream = this.getClass().getResourceAsStream(INPUT_FILE);
-        BibEntry[] testRefs = extractor.extractReferences(testStream);
+        BibEntry[] testRefs;
+        try {
+            testRefs = extractor.extractReferences(testStream);
+        } finally {
+            testStream.close();
+        }
         
         assertEquals(testRefs.length, expRefs.length);
         

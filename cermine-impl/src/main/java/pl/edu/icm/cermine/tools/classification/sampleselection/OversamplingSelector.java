@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.sampleselection;
 
+import java.util.Map.Entry;
 import java.util.*;
 import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
@@ -24,10 +25,11 @@ public class OversamplingSelector<S> implements SampleSelector<S> {
         }
 
         Integer greatestClassNumber = 0;
-        for(S lab: labelCount.keySet()) {
-        	if(labelCount.get(lab) > greatestClassNumber)
-        		greatestClassNumber = labelCount.get(lab);
-        	System.out.println(lab + " " + labelCount.get(lab));
+        for(Entry<S, Integer> entry: labelCount.entrySet()) {
+        	if(entry.getValue() > greatestClassNumber) {
+        		greatestClassNumber = entry.getValue();
+            }
+        	System.out.println(entry.getKey() + " " + entry.getValue());
         }
         
         List<TrainingElement<S>> trainingElements = new ArrayList<TrainingElement<S>>();

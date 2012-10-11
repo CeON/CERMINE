@@ -69,6 +69,9 @@ public class DisjointSets<E> implements Iterable<Set<E>> {
 
             @Override
             public Set<E> next() {
+                if (nextRepresentative == null) {
+                    throw new NoSuchElementException();
+                }
                 Set<E> result = nextRepresentative.asSet();
                 findNextRepresentative();
                 return result;
@@ -148,6 +151,9 @@ public class DisjointSets<E> implements Iterable<Set<E>> {
 
                         @Override
                         public E next() {
+                            if (nextEntry == null) {
+                                throw new NoSuchElementException();
+                            }
                             E result = nextEntry.value;
                             nextEntry = nextEntry.next;
                             return result;

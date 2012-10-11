@@ -38,6 +38,18 @@ public class PdfMetadataExtractor implements DocumentMetadataExtractor<Element> 
         
         extractor = new EnhancerMetadataExtractor();
     }
+    
+    public PdfMetadataExtractor(InputStream model, InputStream range) throws IOException {
+        strExtractor = new PdfGeometricStructureExtractor();
+        
+        InputStreamReader modelISRM = new InputStreamReader(model);
+        BufferedReader modelFileM = new BufferedReader(modelISRM);
+        InputStreamReader rangeISRM = new InputStreamReader(range);
+        BufferedReader rangeFileM = new BufferedReader(rangeISRM);
+        metadataClassifier = new SVMMetadataZoneClassifier(modelFileM, rangeFileM);
+        
+        extractor = new EnhancerMetadataExtractor();
+    }
         
     @Override
     public Element extractMetadata(InputStream stream) throws AnalysisException {

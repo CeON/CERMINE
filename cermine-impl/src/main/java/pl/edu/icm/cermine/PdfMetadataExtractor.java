@@ -19,11 +19,11 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public class PdfMetadataExtractor implements DocumentMetadataExtractor<Element> {
 
-    DocumentGeometricStructureExtractor strExtractor;
+    private DocumentGeometricStructureExtractor strExtractor;
    
-    ZoneClassifier metadataClassifier;
+    private ZoneClassifier metadataClassifier;
     
-    MetadataExtractor<Element> extractor;
+    private MetadataExtractor<Element> extractor;
 
     public PdfMetadataExtractor() throws IOException {
         strExtractor = new PdfGeometricStructureExtractor();

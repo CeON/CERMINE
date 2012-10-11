@@ -15,13 +15,13 @@ import pl.edu.icm.cermine.structure.tools.BxModelUtils;
  */
 public class PdfGeometricStructureExtractor implements DocumentGeometricStructureExtractor {
     
-    CharacterExtractor glyphExtractor;
+    private CharacterExtractor glyphExtractor;
     
-    PageSegmenter pageSegmenter;
+    private PageSegmenter pageSegmenter;
     
-    ReadingOrderResolver roResolver;
+    private ReadingOrderResolver roResolver;
     
-    ZoneClassifier initialClassifier;
+    private ZoneClassifier initialClassifier;
 
 
     public PdfGeometricStructureExtractor() {

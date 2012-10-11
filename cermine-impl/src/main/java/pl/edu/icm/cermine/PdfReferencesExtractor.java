@@ -16,11 +16,11 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public class PdfReferencesExtractor implements DocumentReferencesExtractor<BibEntry> {
     
-    DocumentGeometricStructureExtractor strExtractor;
+    private DocumentGeometricStructureExtractor strExtractor;
     
-    BibReferenceExtractor extractor;
+    private BibReferenceExtractor extractor;
     
-    BibReferenceParser<BibEntry> parser;
+    private BibReferenceParser<BibEntry> parser;
 
     public PdfReferencesExtractor() throws AnalysisException {
         strExtractor = new PdfGeometricStructureExtractor();

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <display-name>Sedno backend</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            <!-- classpath:net/bull/javamelody/monitoring-spring-datasource.xml -->
+            classpath:spring/applicationContext-cermine.xml
+        </param-value>
+    </context-param>
+
+    <!-- javamelody
+    <listener>
+        <listener-class>net.bull.javamelody.SessionListener</listener-class>
+    </listener> -->
+
+    <listener>
+        <listener-class>
+       		org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    
+    <servlet>
+        <servlet-name>springMvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/classes/spring/applicationContext-cermine-web.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>springMvc</servlet-name>
+        <url-pattern>/ui/*</url-pattern>
+    </servlet-mapping>
+
+   <filter>
+       <filter-name>RequestLoggerFilter</filter-name>
+        <filter-class>pl.edu.icm.common.web.RequestLoggerFilter</filter-class>
+   </filter>
+   
+   <filter-mapping>
+        <filter-name>RequestLoggerFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+   </filter-mapping>
+
+    <!-- javamelody
+    <filter>
+        <filter-name>monitoring</filter-name>
+        <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+        <init-param>
+            // prevents unstoppable Tomcat when using Quartz only via Spring SchedulerFactoryBean
+            // See http://code.google.com/p/javamelody/issues/detail?id=58
+            <param-name>quartz-default-listener-disabled</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>monitoring</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping> -->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

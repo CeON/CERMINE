@@ -1,0 +1,40 @@
+<configuration scan="true">
+    <!-- logback config for tomcat -->
+
+    <property resource="logback-common.properties"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="pl.edu.icm.common.logback.MainFilter" />
+    
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>${log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <filter class="pl.edu.icm.common.logback.MainFilter" />
+	
+	    <file>${log_base}/cermine-web.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	      <!-- daily rollover -->
+	      <fileNamePattern>${log_base}/cermine-web.%d{yyyy-MM-dd}.log</fileNamePattern>
+	
+	      <!-- keep 30 days' worth of history -->
+	      <maxHistory>30</maxHistory>
+	    </rollingPolicy>
+
+        <encoder>
+            <pattern>${log_pattern}</pattern>
+        </encoder>
+    </appender>
+    
+    <root level="WARN">
+        <appender-ref ref="STDOUT" /> 
+        <appender-ref ref="FILE" />    
+    </root>
+    
+    <logger name="org.springframework"  level="INFO"/>
+    <logger name="pl.edu.icm"     level="INFO"/>    
+         
+</configuration>

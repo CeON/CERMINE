@@ -103,8 +103,6 @@ public class SVMMetadataClassificationEvaluator extends
 		List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised = EvaluationUtils.getTrainingElements(trainingDocuments, featureVectorBuilder);
 		trainingElementsUnrevised = ClassificationUtils.filterElements(trainingElementsUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
-		double inequalityFactor = 1.5;
-		
 		SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(0.7);
 		List<TrainingElement<BxZoneLabel>> trainingElements = selector.pickElements(trainingElementsUnrevised);
 

@@ -32,20 +32,18 @@ public final class BxDocument implements Serializable {
     }
 
     public BxDocument setPages(Collection<BxPage> pages) {
-        if (pages == null) {
-            throw new NullPointerException();
+        if (pages != null) {
+            this.pages.clear();
+            this.pages.addAll(pages);
         }
-        this.pages.clear();
-        this.pages.addAll(pages);
         return this;
     }
 
     public BxDocument addPage(BxPage page) {
-        if (page == null) {
-            throw new NullPointerException();
+        if (page != null) {
+            page.setId(Integer.toString(this.curPageNumber++));
+            this.pages.add(page);
         }
-        page.setId(Integer.toString(this.curPageNumber++));
-        this.pages.add(page);
         return this;
     }
 

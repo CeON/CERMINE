@@ -19,9 +19,6 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
-import pl.edu.icm.cermine.structure.tools.DocumentPreprocessor;
-import pl.edu.icm.cermine.structure.tools.InitiallyClassifiedZonesPreprocessor;
-import pl.edu.icm.cermine.structure.tools.UnclassifiedZonesPreprocessor;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
@@ -45,7 +42,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         }
     }
 
-    private DocumentPreprocessor flattener = new UnclassifiedZonesPreprocessor();
     private AbstractEvaluator.Detail detail;
 
     protected Integer foldness;
@@ -96,7 +92,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 				evaluator.detail = Detail.FULL;
 			}
 			evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-			evaluator.setPreprocessor(new InitiallyClassifiedZonesPreprocessor());
 		
 			evaluator.run(inputDir, null);
 		
@@ -126,7 +121,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 				BxModelUtils.setReadingOrder(processedDocument);
 				for(BxZone zone: processedDocument.asZones())
 					zone.setLabel(null);
-				ClassificationResults documentResults = newResults();
 
 				if (detail != Detail.MINIMAL) {
 					System.out.println("=== Document " + testDocument.getFilename());
@@ -139,7 +133,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 				}
 				preprocessDocumentForEvaluation(testDocument);
 				BxModelUtils.setReadingOrder(testDocument);
-				documentResults = compareDocuments(testDocument, processedDocument);
+				ClassificationResults documentResults = compareDocuments(testDocument, processedDocument);
 				if (detail != Detail.MINIMAL) {
 					printDocumentResults(documentResults);
 				}
@@ -269,11 +263,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
     {
         labelMap.putAll(DEFAULT_LABEL_MAP);
         labelMap.putAll(value);
-    }
-
-    public void setPreprocessor(DocumentPreprocessor flattener)
-    {
-    	this.flattener = flattener;
     }
 
 	protected void writeDocument(BxDocument document, Writer output) throws Exception

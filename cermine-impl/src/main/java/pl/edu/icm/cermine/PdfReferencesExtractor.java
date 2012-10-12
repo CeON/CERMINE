@@ -29,11 +29,13 @@ public class PdfReferencesExtractor implements DocumentReferencesExtractor<BibEn
         parser = new CRFBibReferenceParser(modelFile);
     }
     
+    @Override
     public BibEntry[] extractReferences(InputStream stream) throws AnalysisException {
         BxDocument doc = strExtractor.extractStructure(stream);
         return extractReferences(doc);
     }
 
+    @Override
     public BibEntry[] extractReferences(BxDocument document) throws AnalysisException {
         String[] refs = extractor.extractBibReferences(document);
         

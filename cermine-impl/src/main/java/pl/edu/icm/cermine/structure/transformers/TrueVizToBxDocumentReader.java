@@ -1,20 +1,9 @@
 package pl.edu.icm.cermine.structure.transformers;
 
-import pl.edu.icm.cermine.structure.model.BxLine;
-import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxChunk;
-import pl.edu.icm.cermine.structure.model.Indexable;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.structure.model.BxWord;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxBounds;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +15,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 
@@ -140,7 +130,7 @@ public class TrueVizToBxDocumentReader {
 			indicesMap.put(elem.getId(), elem);
 		for (A elem : list) {
 			String nextId = elem.getNextId();
-			if (nextId.equals(new String("-1"))) { /* there is no next element */
+			if (nextId.equals("-1")) { /* there is no next element */
 				elem.setNext(null);
 			} else {
 				A next = indicesMap.get(nextId);
@@ -177,7 +167,7 @@ public class TrueVizToBxDocumentReader {
 	}
 
 	private void setIdsAndLinkPages(List<BxPage> pages) {
-		if(pages.size() == 0)
+		if(pages.isEmpty())
 			return;
 		if(pages.size() == 1) {
 			BxPage page = pages.get(0);
@@ -232,9 +222,9 @@ public class TrueVizToBxDocumentReader {
      */
 	private String getOptionalChildValue(String name, Element el) {
 		List<Element> children = getChildren(name, el);
-		if(children.size() != 0) {
+		if(!children.isEmpty()) {
 			String val = children.get(0).getAttribute("Value");
-			if(val.equals(new String("")))
+			if(val.equals(""))
 				return null;
 			else
 				return val;

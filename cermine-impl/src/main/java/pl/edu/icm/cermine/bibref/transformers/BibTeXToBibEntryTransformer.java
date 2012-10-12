@@ -33,9 +33,6 @@ public class BibTeXToBibEntryTransformer {
             bibEntryList.add(processBibteX(s.substring(s.indexOf("@"))));
 
         }
-
-
-
         return bibEntryList;
     }
 
@@ -62,13 +59,11 @@ public class BibTeXToBibEntryTransformer {
         //type
         int indexOfAt = lines[0].indexOf('@');
         int indexOfBrace = lines[0].indexOf('{');
-        String type = null;
         if (indexOfBrace > indexOfAt) {
-            type = lines[0].substring(indexOfAt + 1, indexOfBrace).toLowerCase();
+            String type = lines[0].substring(indexOfAt + 1, indexOfBrace).toLowerCase();
             //list??
             bibEntry.setType(type);
         }
-
 
         //fields
         for (int i = 1; i < lines.length; i++) {

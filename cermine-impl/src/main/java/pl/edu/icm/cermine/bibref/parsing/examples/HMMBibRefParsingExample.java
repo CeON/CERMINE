@@ -1,10 +1,12 @@
 package pl.edu.icm.cermine.bibref.parsing.examples;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.HMMBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
@@ -36,9 +38,11 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  */
 public class HMMBibRefParsingExample {
 
-    protected static final String hmmTrainFile = ".xml";
+    protected static final String HMM_TRAIN_FILE = ".xml";
 
-    public static void main(String[] args) throws URISyntaxException, Exception {
+    private HMMBibRefParsingExample() {}
+    
+    public static void main(String[] args) throws URISyntaxException, JDOMException, IOException {
         
         // 1. construct vector of features builder
         FeatureVectorBuilder<CitationToken, Citation> vectorBuilder =
@@ -93,7 +97,7 @@ public class HMMBibRefParsingExample {
                 new UppercaseRelativeCountFeature()));
 
         // 2. import and generate training set based on sequences and vector of features
-        URL u = HMMBibRefParsingExample.class.getResource(hmmTrainFile);
+        URL u = HMMBibRefParsingExample.class.getResource(HMM_TRAIN_FILE);
 
         Set<Citation> citations = NlmCitationExtractor.extractCitations(new InputSource(u.openStream()));
         

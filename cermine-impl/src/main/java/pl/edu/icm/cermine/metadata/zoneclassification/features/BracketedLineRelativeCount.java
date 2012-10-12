@@ -23,6 +23,6 @@ public class BracketedLineRelativeCount extends FeatureCalculator<BxZone, BxPage
 			if(line.toText().charAt(0) == '[' || line.toText().charAt(0) == ']')
 				++bracketedLines;
 		}
-		return (new Double(bracketedLines))/(new Double(lines));
+		return (double)bracketedLines / (double)lines;
 	}
 }

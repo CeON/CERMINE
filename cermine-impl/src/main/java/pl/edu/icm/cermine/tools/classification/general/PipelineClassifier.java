@@ -17,7 +17,7 @@ public class PipelineClassifier implements ZoneClassifier {
 
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException {
-		assert classifiers.size() != 0;
+		assert !classifiers.isEmpty();
 		
 		BxDocument ret = document;
 		for(ZoneClassifier clas: classifiers) {

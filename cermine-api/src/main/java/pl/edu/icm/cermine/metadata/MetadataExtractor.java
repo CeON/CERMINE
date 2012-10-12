@@ -10,5 +10,5 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface MetadataExtractor<T> {
 	
-	public T extractMetadata(BxDocument document) throws AnalysisException;
+	T extractMetadata(BxDocument document) throws AnalysisException;
 }

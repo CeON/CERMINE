@@ -37,7 +37,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
     protected static final double testSuccessPercentage = 85;
 
     protected static final String hmmProbabilitiesFile = "/pl/edu/icm/cermine/structure/hmmZoneProbabilities.xml";
-    protected static final String[] zipResources = {"/pl/edu/icm/cermine/structure/margSmallSample.zip"};
+    static final String[] zipResources = {"/pl/edu/icm/cermine/structure/margSmallSample.zip"};
 
     private HMMService hmmService = new HMMServiceImpl();
     private ZoneClassifier zoneClassifier;
@@ -46,7 +46,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
     int badZones = 0;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
     	this.startProcessFlattener = new DocumentPreprocessor() {
 			@Override
 			public void process(BxDocument document) {
@@ -55,8 +55,12 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 		};
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
         XStream xstream = new XStream();
-        HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
-                = (SimpleHMMProbabilityInfo<BxZoneLabel>) xstream.fromXML(is);
+        HMMProbabilityInfo<BxZoneLabel> hmmProbabilities;
+        try {
+            hmmProbabilities = (SimpleHMMProbabilityInfo<BxZoneLabel>) xstream.fromXML(is);
+        } finally {
+            is.close();
+        }
 
         FeatureVectorBuilder<BxZone, BxPage> vBuilder = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
         vBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(

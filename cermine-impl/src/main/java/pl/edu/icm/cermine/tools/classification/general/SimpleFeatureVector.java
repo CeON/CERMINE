@@ -25,21 +25,22 @@ public class SimpleFeatureVector implements FeatureVector {
         features.put(name, calculateFeatureValue);
     }
 
+    @Override
     public Set<String> getFeatureNames() {
         return features.keySet();
     }
     
     @Override
     public String dump() {
-    	String ret = "";
+    	StringBuilder ret = new StringBuilder();
     	Set<String> keysSet = features.keySet();
     	ArrayList<String> keys = new ArrayList<String>(keysSet);
     	Collections.sort(keys);
     	for(String name: keys) {
     		String shortName = (name.length() > 18 ? name.substring(0, 18) : name);
-    		ret += String.format("%18s: %5.2f\n", shortName, features.get(name));
+    		ret.append(String.format("%18s: %5.2f\n", shortName, features.get(name)));
     	}
-    	return ret;
+    	return ret.toString();
     }
 
     @Override
@@ -62,11 +63,15 @@ public class SimpleFeatureVector implements FeatureVector {
 	
 	@Override
 	public SimpleFeatureVector clone() {
-		SimpleFeatureVector ret = new SimpleFeatureVector();
-		for(String feature: features.keySet()) {
-			ret.features.put(new String(feature), new Double(features.get(feature)));
-		}
-		return ret;
+        try {
+            SimpleFeatureVector ret = (SimpleFeatureVector) super.clone();
+            for(String feature: features.keySet()) {
+                ret.features.put(feature, new Double(features.get(feature)));
+            }
+            return ret;
+        } catch (CloneNotSupportedException ex) {
+            return null;
+        }
 	}
 	
 }

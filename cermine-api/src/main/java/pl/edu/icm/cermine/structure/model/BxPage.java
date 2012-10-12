@@ -24,19 +24,17 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     }
 
     public Printable setZones(Collection<BxZone> zones) {
-        if (zones == null) {
-            throw new NullPointerException();
+        if (zones != null) {
+            this.zones.clear();
+            this.zones.addAll(zones);
         }
-        this.zones.clear();
-        this.zones.addAll(zones);
         return this;
     }
 
     public Printable addZone(BxZone zone) {
-        if (zone == null) {
-            throw new NullPointerException();
+        if (zone != null) {
+            this.zones.add(zone);
         }
-        this.zones.add(zone);
         return this;
     }
 

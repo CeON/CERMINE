@@ -10,6 +10,6 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface ReadingOrderResolver {
     
-    public BxDocument resolve(BxDocument document) throws AnalysisException;
+    BxDocument resolve(BxDocument document) throws AnalysisException;
     
 }

@@ -20,19 +20,17 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
 	}
 
     public BxWord setChunks(Collection<BxChunk> chunks) {
-        if (chunks == null) {
-            throw new NullPointerException();
+        if (chunks != null) {
+            this.chunks.clear();
+            this.chunks.addAll(chunks);
         }
-        this.chunks.clear();
-        this.chunks.addAll(chunks);
         return this;
     }
 
     public BxWord addChunks(BxChunk chunks) {
-        if (chunks == null) {
-            throw new NullPointerException();
+        if (chunks != null) {
+            this.chunks.add(chunks);
         }
-        this.chunks.add(chunks);
         return this;
     }
 

@@ -6,7 +6,7 @@ package pl.edu.icm.cermine.tools.classification.clustering;
  */
 public interface Clusterizer {
     
-    public int[] clusterize(double distanceMatrix[][], double maxDistance);
+    int[] clusterize(double distanceMatrix[][], double maxDistance);
    
 }
 

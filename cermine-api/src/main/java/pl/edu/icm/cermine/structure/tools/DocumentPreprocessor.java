@@ -8,5 +8,5 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface DocumentPreprocessor{
 
-    public void process(BxDocument document);
+    void process(BxDocument document);
 }

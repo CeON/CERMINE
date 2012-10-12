@@ -41,8 +41,8 @@ public abstract class AbstractDocumentProcessorTest {
         List<Reader> expectedReaders = new ArrayList<Reader>();
 
         for (String file : files) {
-            testReaders.add(new InputStreamReader(this.getClass().getResourceAsStream(file)));
-            expectedReaders.add(new InputStreamReader(this.getClass().getResourceAsStream(file)));
+            testReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file)));
+            expectedReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file)));
         }
 
         testCollection(testReaders, expectedReaders, percentage);
@@ -76,7 +76,7 @@ public abstract class AbstractDocumentProcessorTest {
         Map<String, Integer> dirSamplesCount = new HashMap<String, Integer>();
 
         for (String file : zipFiles) {
-            ZipFile zipFile = new ZipFile(new File(this.getClass().getResource(file).toURI()));
+            ZipFile zipFile = new ZipFile(new File(AbstractDocumentProcessorTest.class.getResource(file).toURI()));
             Enumeration entries = zipFile.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipEntry = (ZipEntry) entries.nextElement();

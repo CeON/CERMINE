@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
-import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -35,10 +32,8 @@ public class ZipExtractor implements DocumentsExtractor {
 		this.zipFile = zipFile;
 	}
 
-	public List<BxDocument> getDocuments()
-			throws ZipException, IOException, URISyntaxException,
-			ParserConfigurationException, SAXException, AnalysisException,
-			TransformationException {
+    @Override
+	public List<BxDocument> getDocuments() throws TransformationException {
 		List<BxDocument> documents = new ArrayList<BxDocument>();
 
 		TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
@@ -46,15 +41,18 @@ public class ZipExtractor implements DocumentsExtractor {
 		while (entries.hasMoreElements()) {
 			ZipEntry zipEntry = (ZipEntry) entries.nextElement();
 			if (zipEntry.getName().endsWith("xml")) {
-				List<BxPage> pages = tvReader.read(new InputStreamReader(
-						zipFile.getInputStream(zipEntry)));
-				BxDocument newDoc = new BxDocument();
-				for(BxPage page: pages)
-					page.setParent(newDoc);
-				newDoc.setFilename(zipEntry.getName());
-				newDoc.setPages(pages);
-				
-				documents.add(newDoc);
+                try {
+                    List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry)));
+                    BxDocument newDoc = new BxDocument();
+                    for(BxPage page: pages) {
+                        page.setParent(newDoc);
+                    }
+                    newDoc.setFilename(zipEntry.getName());
+                    newDoc.setPages(pages);
+                    documents.add(newDoc);
+                } catch (IOException ex) {
+                    throw new TransformationException("Cannot read file!", ex);
+                }
 			}
 		}
 		return documents;

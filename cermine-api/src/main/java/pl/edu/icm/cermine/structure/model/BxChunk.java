@@ -16,7 +16,7 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
     private final String text;
 
     public BxChunk(BxBounds bounds, String text) {
-        this.bounds = bounds;
+        this.setBounds(bounds);
         this.text = text;
     }
  
@@ -29,7 +29,7 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
     }
 
     public BxChunk withText(String text) {
-        return new BxChunk(bounds, text);
+        return new BxChunk(getBounds(), text);
     }
 
     public String toText() {

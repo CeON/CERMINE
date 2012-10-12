@@ -82,35 +82,35 @@ public class TrueVizToBxDocumentReaderTest {
     		if(page.getNext() == null)
     			++nextNulls;
     	}
-    	assertEquals(nextNulls, new Integer(1));
+    	assertEquals(nextNulls, Integer.valueOf(1));
 
     	nextNulls = 0;
     	for(BxZone zone: orderedDoc.asZones()) {
     		if(zone.getNext() == null)
     			++nextNulls;
     	}
-    	assertEquals(nextNulls, new Integer(1));
+    	assertEquals(nextNulls, Integer.valueOf(1));
 
     	nextNulls = 0;
     	for(BxLine line: orderedDoc.asLines()) {
     		if(line.getNext() == null)
     			++nextNulls;
     	}
-    	assertEquals(nextNulls, new Integer(1));
+    	assertEquals(nextNulls, Integer.valueOf(1));
 
     	nextNulls = 0;
     	for(BxWord word: orderedDoc.asWords()) {
     		if(word.getNext() == null)
     			++nextNulls;
     	}
-    	assertEquals(nextNulls, new Integer(1));
+    	assertEquals(nextNulls, Integer.valueOf(1));
 
     	nextNulls = 0;
     	for(BxChunk chunk: orderedDoc.asChunks()) {
     		if(chunk.getNext() == null)
     			++nextNulls;
     	}
-    	assertEquals(nextNulls, new Integer(1));
+    	assertEquals(nextNulls, Integer.valueOf(1));
     	
     }
     
@@ -127,11 +127,11 @@ public class TrueVizToBxDocumentReaderTest {
     @Test
     public void testChainedElementsEven() throws TransformationException, IOException, URISyntaxException {
     	BxDocument doc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
-    	assertEquals(countChainedElements(doc.asPages()),  new Integer(doc.asPages().size()-1));
-    	assertEquals(countChainedElements(doc.asZones()),  new Integer(doc.asZones().size()-1));
-    	assertEquals(countChainedElements(doc.asLines()),  new Integer(doc.asLines().size()-1));
-    	assertEquals(countChainedElements(doc.asWords()),  new Integer(doc.asWords().size()-1));
-    	assertEquals(countChainedElements(doc.asChunks()), new Integer(doc.asChunks().size()-1));
+    	assertEquals(countChainedElements(doc.asPages()),  Integer.valueOf(doc.asPages().size()-1));
+    	assertEquals(countChainedElements(doc.asZones()),  Integer.valueOf(doc.asZones().size()-1));
+    	assertEquals(countChainedElements(doc.asLines()),  Integer.valueOf(doc.asLines().size()-1));
+    	assertEquals(countChainedElements(doc.asWords()),  Integer.valueOf(doc.asWords().size()-1));
+    	assertEquals(countChainedElements(doc.asChunks()), Integer.valueOf(doc.asChunks().size()-1));
     }
     
     @Test

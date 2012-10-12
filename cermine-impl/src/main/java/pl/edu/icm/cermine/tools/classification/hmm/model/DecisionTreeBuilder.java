@@ -17,6 +17,8 @@ public class DecisionTreeBuilder {
      */
     private static int stopExpanding = 20;
 
+    private DecisionTreeBuilder() {}
+    
     /**
      * Builds a decision tree from a training set.
      *

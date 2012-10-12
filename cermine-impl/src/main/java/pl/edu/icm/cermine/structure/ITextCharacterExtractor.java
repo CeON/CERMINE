@@ -115,7 +115,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
      * from PDF content processor. Listener uses this to construct a BxDocument object
      * containing lists of BxChunk elements.
      */
-    class BxDocumentCreator implements RenderListener {
+    static class BxDocumentCreator implements RenderListener {
 
         private BxDocument document = new BxDocument();
         private BxPage actPage;

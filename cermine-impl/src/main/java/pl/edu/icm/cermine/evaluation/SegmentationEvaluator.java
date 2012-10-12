@@ -37,6 +37,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
 	private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
 
+    @Override
 	protected Pattern getFilenamePattern() {
 		return FILENAME_PATTERN;
 	}

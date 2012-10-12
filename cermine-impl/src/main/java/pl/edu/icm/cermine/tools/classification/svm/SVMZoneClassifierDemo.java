@@ -3,6 +3,7 @@ package pl.edu.icm.cermine.tools.classification.svm;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.Map.Entry;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
@@ -146,10 +147,11 @@ public class SVMZoneClassifierDemo {
         }
         
         Integer max = Integer.MAX_VALUE;
-        for(BxZoneLabel lab: labelCount.keySet()) {
-        	if(labelCount.get(lab) < max)
-        		max = labelCount.get(lab);
-        	System.out.println(lab + " " + labelCount.get(lab));
+        for(Entry<BxZoneLabel, Integer> entry: labelCount.entrySet()) {
+        	if(entry.getValue() < max) {
+        		max = entry.getValue();
+            }
+        	System.out.println(entry.getKey() + " " + entry.getValue());
         }
         
         labelCount.put(BxZoneLabel.GEN_BODY, 0);

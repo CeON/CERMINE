@@ -10,5 +10,5 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface ZoneClassifier {
 
-	public BxDocument classifyZones(BxDocument document) throws AnalysisException;
+	BxDocument classifyZones(BxDocument document) throws AnalysisException;
 }

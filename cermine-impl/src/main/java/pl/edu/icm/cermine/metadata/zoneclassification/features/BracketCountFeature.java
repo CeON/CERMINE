@@ -12,6 +12,6 @@ public class BracketCountFeature extends FeatureCalculator<BxZone, BxPage> {
 		for(char c: zone.toText().toCharArray())
 			if(c == '[' || c == ']')
 				++bracketCount;
-		return new Double(bracketCount); 
+		return bracketCount; 
 	}
 }

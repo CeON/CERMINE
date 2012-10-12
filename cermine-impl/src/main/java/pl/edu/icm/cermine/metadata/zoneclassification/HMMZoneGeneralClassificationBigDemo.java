@@ -1,11 +1,14 @@
 package pl.edu.icm.cermine.metadata.zoneclassification;
 
 import com.thoughtworks.xstream.XStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipException;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
@@ -36,20 +39,21 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 public class HMMZoneGeneralClassificationBigDemo {
 
-	protected static final String hmmTrainingFile = "xmls.zip";
-	private static final String hmmTestFile = "/09629351.xml";
+	protected static final String HMM_TRAIN_FILE = "xmls.zip";
+	private static final String HMM_TEST_FILE = "/09629351.xml";
+
+    public HMMZoneGeneralClassificationBigDemo() {}
     
 	public static BxDocument getTestFile() throws TransformationException, AnalysisException {
-        InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);
+        InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(HMM_TEST_FILE);
         InputStreamReader isr = new InputStreamReader(is);
         
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         List<BxPage> pages = reader.read(isr);
-        BxDocument testDocument = new BxDocument().setPages(pages);
-        return testDocument;
+        return new BxDocument().setPages(pages);
 	}
 
-    public static void main(String[] args) throws TransformationException, Exception {
+    public static void main(String[] args) throws TransformationException, AnalysisException, ZipException, IOException, URISyntaxException {
         
         // 1.1 construct vector of features builder
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =
@@ -137,7 +141,7 @@ public class HMMZoneGeneralClassificationBigDemo {
         testList.add(testDocument);
                 
         // 2.1 import training documents
-        DocumentsExtractor extractor = new ZipExtractor(hmmTrainingFile);
+        DocumentsExtractor extractor = new ZipExtractor(HMM_TRAIN_FILE);
         List<BxDocument> documents = extractor.getDocuments();
         List<BxDocument> trainingList = new ArrayList<BxDocument>();
         for (BxDocument doc : documents) {

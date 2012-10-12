@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  * @param <S> Type of labels of objects.
  */
-public interface TrainingElement<S> {
+public interface TrainingElement<S> extends Cloneable {
 
     /**
      * Gets observation emitted by an element.
@@ -30,7 +30,8 @@ public interface TrainingElement<S> {
      * @return The label.
      */
     S getLabel();
-    public void setLabel(S label);
+    
+    void setLabel(S label);
     
 
     /**
@@ -40,7 +41,7 @@ public interface TrainingElement<S> {
      * @return The label of the following element.
      */
     S getNextLabel();
-    public TrainingElement<S> clone();
-
+    
+    TrainingElement<S> clone();
 
 }

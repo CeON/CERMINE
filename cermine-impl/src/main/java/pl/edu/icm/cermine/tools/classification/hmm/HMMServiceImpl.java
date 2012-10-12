@@ -154,9 +154,9 @@ public class HMMServiceImpl implements HMMService {
 
     private static class MatrixNode<S> {
 
-        double probability;
-        S label;
-        MatrixNode<S> prevNode;
+        private double probability;
+        private S label;
+        private MatrixNode<S> prevNode;
 
         public MatrixNode(double probability, S label, MatrixNode<S> prevNode) {
             this.probability = probability;

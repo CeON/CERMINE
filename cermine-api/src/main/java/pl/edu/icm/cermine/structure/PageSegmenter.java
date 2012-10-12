@@ -10,5 +10,5 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface PageSegmenter {
 	
-	public BxDocument segmentPages(BxDocument document) throws AnalysisException;
+	BxDocument segmentPages(BxDocument document) throws AnalysisException;
 }

@@ -61,17 +61,22 @@ abstract public class AbstractDateEnhancer extends AbstractPatternEnhancer {
     protected abstract void enhanceMetadata(Element metadata, String day, String month, String year);
 
     private static Pattern createPattern(String nameRegex) {
-        String regex = "\\b"+nameRegex+"[\\s:-]\\s*((\\d{1,2})\\s+(?:";
+        StringBuilder regex = new StringBuilder();
+        regex.append("\\b");
+        regex.append(nameRegex);
+        regex.append("[\\s:-]\\s*((\\d{1,2})\\s+(?:");
         boolean first = true;
         for (String monthRegex : MONTHS) {
             if (first) {
                 first = false;
             } else {
-                regex += "|";
+                regex.append("|");
             }
-            regex += "(" + monthRegex + ")";
+            regex.append("(");
+            regex.append(monthRegex);
+            regex.append(")");
         }
-        regex += ")\\s+(\\d{4}))";
-        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        regex.append(")\\s+(\\d{4}))");
+        return Pattern.compile(regex.toString(), Pattern.CASE_INSENSITIVE);
     }
 }

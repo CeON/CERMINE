@@ -12,11 +12,11 @@ public class WhitespaceCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		Integer spaceCount = 0;
+		int spaceCount = 0;
 		for(Character c: zone.toText().toCharArray())
 			if (Character.isWhitespace(c)) {
 				++spaceCount;
 			}
-		return new Double(spaceCount);
+		return spaceCount;
 	}
 }

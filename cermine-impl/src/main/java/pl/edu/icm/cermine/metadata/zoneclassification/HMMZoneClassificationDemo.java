@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
@@ -27,9 +28,11 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  */
 public class HMMZoneClassificationDemo {
 
-    protected static final String hmmTestFile = "plik.xml";
+    protected static final String HMM_TEST_FILE = "plik.xml";
 
-    public static void main(String[] args) throws TransformationException, Exception {
+    private HMMZoneClassificationDemo() {}
+    
+    public static void main(String[] args) throws TransformationException, AnalysisException {
         
         // 1. construct vector of features builder
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =
@@ -75,7 +78,7 @@ public class HMMZoneClassificationDemo {
                 ));
 
         // 2. import and generate training set based on sequences and vector of features
-		InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(hmmTestFile);
+		InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(HMM_TEST_FILE);
 		FileExtractor fe = new FileExtractor(is);
 		BxDocument document = fe.getDocument();
         List<BxDocument> documents = new ArrayList<BxDocument>(1);

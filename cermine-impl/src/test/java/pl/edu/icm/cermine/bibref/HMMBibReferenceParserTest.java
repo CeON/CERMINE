@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.bibref;
 
 import com.thoughtworks.xstream.XStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import org.junit.Before;
@@ -31,11 +32,15 @@ public class HMMBibReferenceParserTest extends AbstractBibReferenceParserTest {
     private double minPercentage = 0.9;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
         XStream xstream = new XStream();
-        HMMProbabilityInfo<CitationTokenLabel> hmmProbabilities = 
-            (HMMProbabilityInfo<CitationTokenLabel>) xstream.fromXML(is);
+        HMMProbabilityInfo<CitationTokenLabel> hmmProbabilities;
+        try {
+            hmmProbabilities = (HMMProbabilityInfo<CitationTokenLabel>) xstream.fromXML(is);
+        } finally {
+            is.close();
+        }
 
         FeatureVectorBuilder<CitationToken, Citation> vectorBuilder =
         		new SimpleFeatureVectorBuilder<CitationToken, Citation>();

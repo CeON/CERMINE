@@ -35,7 +35,7 @@ public class BxModelUtils {
 	public static void setReadingOrder(BxDocument document){
 		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
 		try {
-			document = ror.resolve(document);
+			ror.resolve(document);
 		} catch(AnalysisException e) {
 			System.out.println(e.getCause());
 			e.printStackTrace();
@@ -226,7 +226,7 @@ public class BxModelUtils {
      */
     public static BxDocument deepClone(BxDocument document) {
         BxDocument copy = new BxDocument();
-        copy.setFilename(new String(document.getFilename()));
+        copy.setFilename(document.getFilename());
         for (BxPage page : document.getPages()) {
         	BxPage copiedPage = deepClone(page);
         	copiedPage.setParent(copy);

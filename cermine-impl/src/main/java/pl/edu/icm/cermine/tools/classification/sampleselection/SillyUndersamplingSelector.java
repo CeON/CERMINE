@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
@@ -28,10 +29,11 @@ public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
         }
 
         Integer smallestClassNumber = Integer.MAX_VALUE;
-        for(S lab: labelCount.keySet()) {
-        	if(labelCount.get(lab) < smallestClassNumber)
-        		smallestClassNumber = labelCount.get(lab);
-        	System.out.println(lab + " " + labelCount.get(lab));
+        for(Entry<S, Integer> entry: labelCount.entrySet()) {
+        	if(entry.getValue() < smallestClassNumber) {
+        		smallestClassNumber = entry.getValue();
+            }
+        	System.out.println(entry.getKey() + " " + entry.getValue());
         }
 
         for(S label: zoneLabels) {

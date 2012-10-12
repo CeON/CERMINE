@@ -21,6 +21,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	final static Integer GRIDSIZE = 50;
 	final static Double BOXES_FLOW = 0.5;
 	final static Comparator<BxObject> Y_ASCENDING_ORDER = new Comparator<BxObject>() {
+        @Override
 		public int compare(BxObject o1, BxObject o2) {
 			return (o1.getY() < o2.getY() ? -1 :
 				   (o1.getY() == o2.getY() ? 0 : 1));
@@ -38,12 +39,14 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	}
 
 	final static Comparator<BxObject> X_ASCENDING_ORDER = new Comparator<BxObject>() {
+        @Override
 		public int compare(BxObject o1, BxObject o2) {
 			return (o1.getX() < o2.getX() ? -1 :
 				   (o1.getX() == o2.getX() ? 0 : 1));
 		}
 	};
 
+    @Override
 	public BxDocument resolve(BxDocument messyDoc) {
 		BxDocument orderedDoc = new BxDocument();
 		List<BxPage> pages = messyDoc.getPages();
@@ -75,7 +78,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	 * @return a list of ordered zones
 	 */
 	private List<BxZone> reorderZones(List<BxZone> unorderedZones) {
-		if(unorderedZones.size() == 0) {
+		if(unorderedZones.isEmpty()) {
 			return new ArrayList<BxZone>();
 		} else if(unorderedZones.size() == 1) {
 			List<BxZone> ret = new ArrayList<BxZone>(1);
@@ -137,18 +140,10 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver{
 	 */
 	private void setIdsAndLinkTogether(BxDocument doc) {
 		setIdsGenericImpl(doc.asPages());
-		for(BxPage page: doc.asPages()) {
-			setIdsGenericImpl(doc.asZones());
-			setIdsGenericImpl(doc.asLines());
-			setIdsGenericImpl(doc.asWords());
-			setIdsGenericImpl(doc.asChunks());
-		}
-	}
-
-	private String s(String string) {
-		if(string.length() <= 10)
-			return string;
-		return string.substring(0, 10);
+    	setIdsGenericImpl(doc.asZones());
+		setIdsGenericImpl(doc.asLines());
+		setIdsGenericImpl(doc.asWords());
+		setIdsGenericImpl(doc.asChunks());
 	}
 
 	/** Builds a binary tree of zones and groups of zones from a list of unordered zones.

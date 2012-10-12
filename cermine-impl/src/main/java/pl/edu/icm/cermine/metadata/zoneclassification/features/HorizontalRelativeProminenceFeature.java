@@ -67,13 +67,13 @@ public class HorizontalRelativeProminenceFeature extends FeatureCalculator<BxZon
 				continue;
 			if(oct == 7) {
 				newLeftProminence = Math.min(leftProminence, cx-(ox+ow));
-				if(newLeftProminence != leftProminence) {
+				if(Math.abs(newLeftProminence - leftProminence) > Double.MIN_VALUE) {
 					leftProminence = newLeftProminence;
 					minOct = oct;
 				}
 			} else { //oct == 3
 				newRightProminence = Math.min(rightProminence, ox-(cx+cw));
-				if(newRightProminence != rightProminence) {
+				if(Math.abs(newRightProminence - rightProminence) > Double.MIN_VALUE) {
 					rightProminence = newRightProminence;
 					minOct = oct;
 				}

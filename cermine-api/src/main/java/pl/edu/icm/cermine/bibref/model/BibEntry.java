@@ -13,10 +13,10 @@ import org.apache.commons.lang.StringUtils;
  */
 public class BibEntry {
 
-    protected String type;
-    protected String key;
-    protected String text;
-    protected final SortedMap<String, List<BibEntryField>> fields = new TreeMap<String, List<BibEntryField>>();
+    private String type;
+    private String key;
+    private String text;
+    private final SortedMap<String, List<BibEntryField>> fields = new TreeMap<String, List<BibEntryField>>();
 
     public BibEntry() {
     }
@@ -157,10 +157,7 @@ public class BibEntry {
 
     /** Escapes curly braces and underscores. */
     protected String escape(String text) {
-        text = text.replace("{", "\\{");
-        text = text.replace("}", "\\}");
-        text = text.replace("_", "\\_");
-        return text;
+        return text.replace("{", "\\{").replace("}", "\\}").replace("_", "\\_");
     }
 
     public String toBibTeX() {
@@ -178,39 +175,7 @@ public class BibEntry {
         sb.append('}');
         return sb.toString();
     }
-    /**
-     * Returns an array of authors. Possibly empty, never <code>null</code>.
-     * 
-     * @return an array of authors. Possibly empty, never <code>null</code>.
-     */
-    /*    public String[] getAuthors() {
-    if (fields.get(FIELD_AUTHOR) == null) {
-    return new String[0];
-    }
-    String[] authors = new String[fields.get(FIELD_AUTHOR).size()];
-    int i = 0;
-    for (BibEntryField authorField : fields.get(FIELD_AUTHOR)) {
-    authors[i] = authorField.getValue();
-    i++;
-    }
-
-    return authors;
-    }
-
-    public String[] getEditors() {
-    if (fields.get(FIELD_EDITOR) == null) {
-    return new String[0];
-    }
-    String[] editors = new String[fields.get(FIELD_EDITOR).size()];
-    int i = 0;
-    for (BibEntryField editorField : fields.get(FIELD_EDITOR)) {
-    editors[i] = editorField.getValue();
-    i++;
-    }
-
-    return editors;
-    }
-     */
+    
     /* Field constants */
     public static final String FIELD_ABSTRACT = "abstract";
     public static final String FIELD_ADDRESS = "address";

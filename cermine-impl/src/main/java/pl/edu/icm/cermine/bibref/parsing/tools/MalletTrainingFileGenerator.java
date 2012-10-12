@@ -18,7 +18,7 @@ public class MalletTrainingFileGenerator {
     private static String outFile = "/tmp/crf-train.txt";
     private static int minCount = 10;
 
-    public static void main(String[] args) throws FileNotFoundException, JDOMException, IOException {
+    public static void main(String[] args) throws IOException, JDOMException {
         
         File dir = new File(nlmDir);
         FileWriter writer = new FileWriter(outFile);
@@ -34,7 +34,13 @@ public class MalletTrainingFileGenerator {
             InputStream is = new FileInputStream(file);
             InputSource source = new InputSource(is);
             
-            Set<Citation> citations = NlmCitationExtractor.extractCitations(source);
+            Set<Citation> citations;
+            try {
+                citations = NlmCitationExtractor.extractCitations(source);
+            } finally {
+                is.close();
+                writer.close();
+            }
             
             for (Citation citation : citations) {
                 allcitations.add(citation);

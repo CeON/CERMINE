@@ -173,8 +173,6 @@ public class MargToTextrImporter {
             list.add(new ComparablePair<Integer, Integer>(x, y));
         }
         Collections.sort(list);
-        ComparablePair<Integer, Integer> mine = list.get(0);
-        ComparablePair<Integer, Integer> maxe = list.get(list.size() - 1);
         BxBounds ret = new BxBounds(minx, miny, maxx-minx, maxy - miny);
         if (ret.getHeight()==0 || ret.getWidth()==0) {
             log.warn("problems with height or width points are:");
@@ -312,17 +310,12 @@ public class MargToTextrImporter {
         return page.setBounds(new BxBounds(minX, minY, maxX - minX, maxY - minY));
     }
 
-    private BxDocument parseDocumentNode(Element elem) {
-        return null;
-    }
-
     private BxPage importSource(InputSource source) throws IOException, ParserConfigurationException, SAXException{
         Document doc = TrueVizUtils.newDocumentBuilder().parse(source);
 
         if ("Page".equalsIgnoreCase(doc.getDocumentElement().getTagName())) {
             BxPage page = parsePageNode(doc.getDocumentElement());
             return page;
-        } else if ("Document".equalsIgnoreCase(doc.getDocumentElement().getTagName())) {
         }
 
         throw new UnsupportedDataTypeException("There were no example of this type contact kura for more info");

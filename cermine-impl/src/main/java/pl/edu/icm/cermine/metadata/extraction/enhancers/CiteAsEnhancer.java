@@ -31,7 +31,9 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
         setSearchedZoneLabels(BxZoneLabel.MET_BIB_INFO);
         try {
             referenceParser = new CRFBibReferenceParser(this.getClass().getResourceAsStream(modelFile));
-        } catch (AnalysisException ex) {}
+        } catch (AnalysisException ex) {
+            referenceParser = null;
+        }
     }
 
     public void setReferenceParser(BibReferenceParser<BibEntry> referenceParser) {

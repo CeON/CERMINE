@@ -42,7 +42,6 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         // so that in the learning examples all classes are
         // represented equally
 
-        double inequalityFactor = 1.5;
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
         trainingElements = selector.pickElements(trainingElements);
 

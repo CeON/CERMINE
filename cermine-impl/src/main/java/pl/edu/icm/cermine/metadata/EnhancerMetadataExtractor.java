@@ -66,9 +66,7 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<Element> {
         Set<EnhancedField> enhancedFields = EnumSet.noneOf(EnhancedField.class);
         
         Element metadata = new Element("article");
-        //metadata.setAttribute("xsi:noNamespaceSchemaLocation", "http://dtd.nlm.nih.gov/archiving/3.0/xsd/archivearticle3.xsd");
-        //metadata.setAttribute("xml:lang", "en");
-        
+       
         Element front = new Element("front");
         metadata.addContent(front);
         

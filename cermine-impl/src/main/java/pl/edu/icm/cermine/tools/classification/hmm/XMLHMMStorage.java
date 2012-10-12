@@ -13,7 +13,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.model.*;
 public class XMLHMMStorage implements HMMStorage {
 
     private String directory = "/tmp/hmm/";
-    private static final String hmmProbabilitiesFile = "hmm-probabilities.xml";
+    private static final String HMM_PROB_FILE = "hmm-probabilities.xml";
 
     @Override
     public synchronized <S> void storeInitialProbability(String hmmId, HMMInitialProbability<S> probability)
@@ -50,7 +50,7 @@ public class XMLHMMStorage implements HMMStorage {
 
     @Override
     public <S> HMMProbabilityInfo<S> getProbabilityInfo(String hmmId) throws IOException {
-        String filePath = directory + File.separator + hmmId + File.separator + hmmProbabilitiesFile;
+        String filePath = directory + File.separator + hmmId + File.separator + HMM_PROB_FILE;
         InputStream is = null;
 
         try {
@@ -71,13 +71,17 @@ public class XMLHMMStorage implements HMMStorage {
     }
 
     private <S,T> void storeProbabilityInfo(String hmmId, HMMProbabilityInfo<S> hmmProbability) throws IOException {
-        String filePath = directory + File.separator + hmmId + File.separator + hmmProbabilitiesFile;
+        String filePath = directory + File.separator + hmmId + File.separator + HMM_PROB_FILE;
         File hmmFile = new File(filePath);
         if (!hmmFile.exists()) {
-            hmmFile.getParentFile().mkdirs();
-            hmmFile.createNewFile();
+            if (!hmmFile.getParentFile().mkdirs()) {
+                throw new IOException("Cannot create directories!");
+            }
+            if (!hmmFile.createNewFile()) {
+                throw new IOException("Cannot create file!");
+            }
         }
-        Writer w = new FileWriter(directory + hmmId + "/" + hmmProbabilitiesFile);
+        Writer w = new FileWriter(directory + hmmId + "/" + HMM_PROB_FILE);
         XStream xstream = new XStream();
         xstream.toXML(hmmProbability, w);
         w.close();

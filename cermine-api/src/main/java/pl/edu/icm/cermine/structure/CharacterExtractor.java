@@ -11,5 +11,5 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface CharacterExtractor {
 	
-	public BxDocument extractCharacters(InputStream stream) throws AnalysisException;
+	BxDocument extractCharacters(InputStream stream) throws AnalysisException;
 }

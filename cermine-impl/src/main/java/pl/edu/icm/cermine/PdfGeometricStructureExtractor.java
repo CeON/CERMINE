@@ -38,6 +38,7 @@ public class PdfGeometricStructureExtractor implements DocumentGeometricStructur
         initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
     }
         
+    @Override
     public BxDocument extractStructure(InputStream stream) throws AnalysisException {
         BxDocument doc = glyphExtractor.extractCharacters(stream);
         doc = pageSegmenter.segmentPages(doc);

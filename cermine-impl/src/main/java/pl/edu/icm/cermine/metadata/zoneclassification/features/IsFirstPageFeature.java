@@ -12,6 +12,6 @@ public class IsFirstPageFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		return page.getId().equals(new String("0")) == true ? 1.0 : 0.0;
+		return page.getId().equals("0") == true ? 1.0 : 0.0;
 	}
 }

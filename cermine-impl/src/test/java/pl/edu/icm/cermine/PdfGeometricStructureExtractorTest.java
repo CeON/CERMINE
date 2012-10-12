@@ -39,7 +39,12 @@ public class PdfGeometricStructureExtractorTest {
     @Test
     public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException, TransformationException, URISyntaxException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
-        BxDocument testDocument = extractor.extractStructure(testStream);
+        BxDocument testDocument;
+        try {
+            testDocument = extractor.extractStructure(testStream);
+        } finally {
+            testStream.close();
+        }
         
         URL url = this.getClass().getResource(EXP_ZIP_FILE);
         ZipFile zipFile = new ZipFile(new File(url.toURI()));

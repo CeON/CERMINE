@@ -35,19 +35,17 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     }
     
     public BxZone setLines(Collection<BxLine> lines) {
-        if (lines == null) {
-            throw new NullPointerException();
+        if (lines != null) {
+            this.lines.clear();
+            this.lines.addAll(lines);
         }
-        this.lines.clear();
-        this.lines.addAll(lines);
         return this;
     }
 
     public BxZone addLine(BxLine line) {
-        if (line == null) {
-            throw new NullPointerException();
+        if (line != null) {
+            this.lines.add(line);
         }
-        this.lines.add(line);
         return this;
     }
 

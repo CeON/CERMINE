@@ -83,8 +83,4 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
 			zones.get(zoneIdx).setLabel(chosenLabel);
 		}
 	}
-
-	private void chooseBestLabels(BxDocument document, List<Map<BxZoneLabel, Integer>> votesForZones) {
-		chooseBestLabels(document.asZones(), votesForZones);
-	}
 }

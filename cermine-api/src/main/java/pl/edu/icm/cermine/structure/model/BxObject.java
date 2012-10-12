@@ -14,18 +14,18 @@ package pl.edu.icm.cermine.structure.model;
 public abstract class BxObject <S, T> implements Indexable<S> {
 
     /** zone's bounding box */
-    protected BxBounds bounds;
+    private BxBounds bounds;
     /** page number in the document */
-    protected String objId;
+    private String objId;
 
     /** number of the next page from the sequence */
-    protected String nextObjId;
+    private String nextObjId;
 
     /** next page in the linked list of pages. Stored in the logical reading order */
-    protected S nextObj;
-    protected S prevObj;
+    private S nextObj;
+    private S prevObj;
 
-    protected T parent;
+    private T parent;
     
     public void setParent(T parent) {
     	this.parent = parent;

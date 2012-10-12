@@ -39,11 +39,13 @@ public class PdfMetadataExtractor implements DocumentMetadataExtractor<Element> 
         extractor = new EnhancerMetadataExtractor();
     }
         
+    @Override
     public Element extractMetadata(InputStream stream) throws AnalysisException {
         BxDocument doc = strExtractor.extractStructure(stream);
         return extractMetadata(doc);
     }
     
+    @Override
     public Element extractMetadata(BxDocument document) throws AnalysisException {
         BxDocument doc = metadataClassifier.classifyZones(document);
         return extractor.extractMetadata(doc);

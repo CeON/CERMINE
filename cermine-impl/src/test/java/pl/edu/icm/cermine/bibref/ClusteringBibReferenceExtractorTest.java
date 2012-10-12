@@ -43,6 +43,8 @@ public class ClusteringBibReferenceExtractorTest {
             sb.append(line);
             sb.append("\n");
         }
+        expStream.close();
+        expReader.close();
         
         URL url = this.getClass().getResource(TEST_FILE);
         ZipFile zipFile = new ZipFile(new File(url.toURI()));

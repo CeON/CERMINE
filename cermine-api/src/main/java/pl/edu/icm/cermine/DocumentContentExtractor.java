@@ -7,7 +7,10 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 /**
  * @author Dominika Tkaczyk
  */
-public interface DocumentGeometricStructureExtractor {
+public interface DocumentContentExtractor<T> {
 	
-	BxDocument extractStructure(InputStream stream) throws AnalysisException;
+	T extractContent(InputStream stream) throws AnalysisException;
+    
+    T extractContent(BxDocument document) throws AnalysisException;
+
 }

@@ -15,8 +15,8 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfReferencesExtractorTest {
-    static final private String INPUT_FILE = "/pl/edu/icm/cermine/refs.pdf";
+public class PdfBibEntryReferencesExtractorTest {
+    static final private String INPUT_FILE = "/pl/edu/icm/cermine/test2.pdf";
     
     private DocumentReferencesExtractor<BibEntry> extractor;
     
@@ -194,7 +194,7 @@ public class PdfReferencesExtractorTest {
     
     @Before
     public void setUp() throws AnalysisException {
-        extractor = new PdfReferencesExtractor();
+        extractor = new PdfBibEntryReferencesExtractor();
     }
     
     @Test

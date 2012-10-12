@@ -22,17 +22,17 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfGeometricStructureExtractorTest {
-    static final private String TEST_FILE = "/pl/edu/icm/cermine/test.pdf";
-    static final private String EXP_FILE = "str.xml";
-    static final private String EXP_ZIP_FILE = "/pl/edu/icm/cermine/str.xml.zip";
+public class PdfBxStructureExtractorTest {
+    static final private String TEST_FILE = "/pl/edu/icm/cermine/test1.pdf";
+    static final private String EXP_FILE = "test1-str.xml";
+    static final private String EXP_ZIP_FILE = "/pl/edu/icm/cermine/test1-str.xml.zip";
     
-    private DocumentGeometricStructureExtractor extractor;
+    private DocumentStructureExtractor extractor;
     private TrueVizToBxDocumentReader reader;
     
     @Before
-    public void setUp() throws IOException {
-        extractor = new PdfGeometricStructureExtractor();
+    public void setUp() throws AnalysisException {
+        extractor = new PdfBxStructureExtractor();
         reader = new TrueVizToBxDocumentReader();
     }
     

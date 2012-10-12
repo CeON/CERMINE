@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.jdom.Element;
@@ -17,16 +16,16 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfMetadataExtractor implements DocumentMetadataExtractor<Element> {
+public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Element> {
 
-    private DocumentGeometricStructureExtractor strExtractor;
+    private DocumentStructureExtractor strExtractor;
    
     private ZoneClassifier metadataClassifier;
     
     private MetadataExtractor<Element> extractor;
 
-    public PdfMetadataExtractor() throws IOException {
-        strExtractor = new PdfGeometricStructureExtractor();
+    public PdfNLMMetadataExtractor() throws AnalysisException {
+        strExtractor = new PdfBxStructureExtractor();
         
         InputStreamReader modelISRM = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream("/pl/edu/icm/cermine/structure/svm_metadata_classifier"));
@@ -39,8 +38,8 @@ public class PdfMetadataExtractor implements DocumentMetadataExtractor<Element> 
         extractor = new EnhancerMetadataExtractor();
     }
     
-    public PdfMetadataExtractor(InputStream model, InputStream range) throws IOException {
-        strExtractor = new PdfGeometricStructureExtractor();
+    public PdfNLMMetadataExtractor(InputStream model, InputStream range) throws AnalysisException {
+        strExtractor = new PdfBxStructureExtractor();
         
         InputStreamReader modelISRM = new InputStreamReader(model);
         BufferedReader modelFileM = new BufferedReader(modelISRM);
@@ -50,7 +49,15 @@ public class PdfMetadataExtractor implements DocumentMetadataExtractor<Element> 
         
         extractor = new EnhancerMetadataExtractor();
     }
-        
+
+    public PdfNLMMetadataExtractor(DocumentStructureExtractor strExtractor, ZoneClassifier metadataClassifier, 
+            MetadataExtractor<Element> extractor) {
+        this.strExtractor = strExtractor;
+        this.metadataClassifier = metadataClassifier;
+        this.extractor = extractor;
+    }
+    
+            
     @Override
     public Element extractMetadata(InputStream stream) throws AnalysisException {
         BxDocument doc = strExtractor.extractStructure(stream);
@@ -71,7 +78,7 @@ public class PdfMetadataExtractor implements DocumentMetadataExtractor<Element> 
         this.metadataClassifier = metadataClassifier;
     }
 
-    public void setStrExtractor(DocumentGeometricStructureExtractor strExtractor) {
+    public void setStrExtractor(DocumentStructureExtractor strExtractor) {
         this.strExtractor = strExtractor;
     }
 

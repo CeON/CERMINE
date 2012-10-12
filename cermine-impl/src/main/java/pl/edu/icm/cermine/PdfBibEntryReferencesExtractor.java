@@ -14,26 +14,33 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfReferencesExtractor implements DocumentReferencesExtractor<BibEntry> {
+public class PdfBibEntryReferencesExtractor implements DocumentReferencesExtractor<BibEntry> {
     
-    private DocumentGeometricStructureExtractor strExtractor;
+    private DocumentStructureExtractor strExtractor;
     
     private BibReferenceExtractor extractor;
     
     private BibReferenceParser<BibEntry> parser;
 
-    public PdfReferencesExtractor() throws AnalysisException {
-        strExtractor = new PdfGeometricStructureExtractor();
+    public PdfBibEntryReferencesExtractor() throws AnalysisException {
+        strExtractor = new PdfBxStructureExtractor();
         extractor = new ClusteringBibReferenceExtractor();
         InputStream modelFile = Thread.currentThread().getClass().getResourceAsStream("/pl/edu/icm/cermine/bibref/acrf-small.ser.gz");
         parser = new CRFBibReferenceParser(modelFile);
     }
     
-    public PdfReferencesExtractor(InputStream model) throws AnalysisException {
-        strExtractor = new PdfGeometricStructureExtractor();
+    public PdfBibEntryReferencesExtractor(InputStream model) throws AnalysisException {
+        strExtractor = new PdfBxStructureExtractor();
         extractor = new ClusteringBibReferenceExtractor();
         parser = new CRFBibReferenceParser(model);
     }
+
+    public PdfBibEntryReferencesExtractor(DocumentStructureExtractor strExtractor, BibReferenceExtractor extractor, BibReferenceParser<BibEntry> parser) {
+        this.strExtractor = strExtractor;
+        this.extractor = extractor;
+        this.parser = parser;
+    }
+    
     
     @Override
     public BibEntry[] extractReferences(InputStream stream) throws AnalysisException {
@@ -60,7 +67,7 @@ public class PdfReferencesExtractor implements DocumentReferencesExtractor<BibEn
         this.parser = parser;
     }
 
-    public void setStrExtractor(DocumentGeometricStructureExtractor strExtractor) {
+    public void setStrExtractor(DocumentStructureExtractor strExtractor) {
         this.strExtractor = strExtractor;
     }
 

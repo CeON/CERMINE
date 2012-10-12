@@ -55,7 +55,7 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
             
         FeatureVectorClusterizer clusterizer = new FeatureVectorClusterizer();
         clusterizer.setClusterizer(new CompleteLinkageClusterizer());
-        int[] clusters = clusterizer.clusterize(featureVectors.toArray(new FeatureVector[]{}), VECTOR_BUILDER, 
+        int[] clusters = clusterizer.clusterize(featureVectors.toArray(new FeatureVector[featureVectors.size()]), VECTOR_BUILDER, 
                 new FeatureVectorEuclideanMetric(), maxDistance, false);
 
         List<String> references = new ArrayList<String>();

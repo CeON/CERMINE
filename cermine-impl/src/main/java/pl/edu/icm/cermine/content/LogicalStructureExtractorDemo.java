@@ -30,21 +30,21 @@ import pl.edu.icm.cermine.tools.classification.knn.KnnModel;
  */
 public class LogicalStructureExtractorDemo {
     
-    String dir = "/pl/edu/icm/cermine/content/";
-    String trainZip = "train.zip";
-    String testZip = "train.zip";
-    String sourceDir = "source/";
-    String structureDir = "structure/";
+    private String dir = "/pl/edu/icm/cermine/content/";
+    private String trainZip = "train.zip";
+    private String testZip = "train.zip";
+    private String sourceDir = "source/";
+    private String structureDir = "structure/";
     
-    List<BxDocument> trainDocuments = new ArrayList<BxDocument>();
-    List<DocumentContentStructure> trainHeaderStructures = new ArrayList<DocumentContentStructure>();
+    private List<BxDocument> trainDocuments = new ArrayList<BxDocument>();
+    private List<DocumentContentStructure> trainHeaderStructures = new ArrayList<DocumentContentStructure>();
         
-    List<BxDocument> testDocuments = new ArrayList<BxDocument>();
-    List<DocumentContentStructure> testHeaderStructures = new ArrayList<DocumentContentStructure>();
+    private List<BxDocument> testDocuments = new ArrayList<BxDocument>();
+    private List<DocumentContentStructure> testHeaderStructures = new ArrayList<DocumentContentStructure>();
        
-    FeatureVectorBuilder<BxLine, BxPage> classVectorBuilder;
-    FeatureVectorBuilder<BxLine, BxPage> clustVectorBuilder;
-    FeatureVectorBuilder<BxZone, BxPage> junkVectorBuilder;
+    private FeatureVectorBuilder<BxLine, BxPage> classVectorBuilder;
+    private FeatureVectorBuilder<BxLine, BxPage> clustVectorBuilder;
+    private FeatureVectorBuilder<BxZone, BxPage> junkVectorBuilder;
     
     public void setUp() throws IOException, TransformationException, AnalysisException, URISyntaxException, JDOMException {
         classVectorBuilder = new SimpleFeatureVectorBuilder<BxLine, BxPage>();

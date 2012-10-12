@@ -48,7 +48,7 @@ public class ReferenceExtractionEvaluator extends AbstractDualInputEvaluator<Str
         while ((line = lineInput.readLine()) != null) {
             lines.add(line);
         }
-        return lines.toArray(new String[]{});
+        return lines.toArray(new String[lines.size()]);
     }
 
     private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();

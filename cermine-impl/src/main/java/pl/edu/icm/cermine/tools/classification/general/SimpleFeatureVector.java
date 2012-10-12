@@ -56,8 +56,9 @@ public class SimpleFeatureVector implements FeatureVector {
 
 	@Override
 	public void setFeature(String name, Double value) throws RuntimeException {
-		if(!features.containsKey(name))
+		if(!features.containsKey(name)) {
 			throw new RuntimeException("Bad feature name: " + name);
+        }
 		features.put(name, value);
 	}
 	

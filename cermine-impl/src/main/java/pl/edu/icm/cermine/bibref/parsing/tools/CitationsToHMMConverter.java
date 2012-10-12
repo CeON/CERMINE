@@ -38,7 +38,7 @@ public class CitationsToHMMConverter {
                 prevToken = element;
             }
         }
-        return trainingList.toArray(new TrainingElement[]{});
+        return trainingList.toArray(new TrainingElement[trainingList.size()]);
     }
 
     public void setFeatureVectorBuilder(FeatureVectorBuilder<CitationToken, Citation> featureVectorBuilder) {

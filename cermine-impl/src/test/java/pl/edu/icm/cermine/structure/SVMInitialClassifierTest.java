@@ -20,7 +20,7 @@ import pl.edu.icm.cermine.structure.tools.DocumentPreprocessor;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
-	protected static final String zipResources = "/pl/edu/icm/cermine/structure/roa_test.zip";
+	protected static final String zipResources = "/pl/edu/icm/cermine/structure/roa_test_small.zip";
 	protected static final String modelPath = "/pl/edu/icm/cermine/structure/svm_initial_classifier";
 	protected static final String rangeFilePath = "/pl/edu/icm/cermine/structure/svm_initial_classifier.range";
 	
@@ -32,7 +32,7 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
     int badZones = 0;
     
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, AnalysisException {
     	classifier = new SVMInitialZoneClassifier(getModel(), getRange());
     	startProcessFlattener = new DocumentPreprocessor() {
 			@Override

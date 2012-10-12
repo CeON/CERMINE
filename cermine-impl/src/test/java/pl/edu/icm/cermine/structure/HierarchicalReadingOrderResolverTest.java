@@ -28,8 +28,9 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 public class HierarchicalReadingOrderResolverTest {
 	static final private String PATH = "/pl/edu/icm/cermine/structure/";
-	static final private String[] TEST_FILENAMES = {"13191004.xml", "09629351.xml", "10255834.xml", "11781238.xml", "1748717X.xml"};
- 	static final private String ZIP_FILE_NAME = "roa_test.zip";
+	//static final private String[] TEST_FILENAMES = {"13191004.xml", "09629351.xml", "10255834.xml", "11781238.xml", "1748717X.xml"};
+    static final private String[] TEST_FILENAMES = {"1748717X.xml"};
+ 	static final private String ZIP_FILE_NAME = "roa_test_small.zip";
 	static private ZipFile zipFile;
 	
 	static {

@@ -23,17 +23,16 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	
-	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) {
+	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
 		super(getFeatureVectorBuilder());
-		try {
-			loadModel(modelFile, rangeFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+        try {
+            loadModel(modelFile, rangeFile);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create SVM classifier!", ex);
+        }
 	}
 
-	public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws IOException {
+	public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException {
 		super(getFeatureVectorBuilder());
 		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(modelFilePath));
@@ -42,7 +41,11 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(rangeFilePath));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
-		loadModel(modelFile, rangeFile);
+        try {
+            loadModel(modelFile, rangeFile);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create SVM classifier!", ex);
+        }
 	}
 
 	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder()

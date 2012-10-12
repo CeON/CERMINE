@@ -76,7 +76,7 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
             references.add(actRef);
         }
             
-        return references.toArray(new String[]{});
+        return references.toArray(new String[references.size()]);
     }
 
     public void setMaxDistance(double maxDistance) {

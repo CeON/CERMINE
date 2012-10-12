@@ -171,8 +171,9 @@ public enum BxZoneLabel {
     
     public static Map<BxZoneLabel, BxZoneLabel> getIdentityMap() {
     	Map<BxZoneLabel, BxZoneLabel> ret = new HashMap<BxZoneLabel, BxZoneLabel>();
-    	for (BxZoneLabel label : BxZoneLabel.values()) 
+    	for (BxZoneLabel label : BxZoneLabel.values()) {
     		ret.put(label, label);
+        }
     	return ret;
     }
 }

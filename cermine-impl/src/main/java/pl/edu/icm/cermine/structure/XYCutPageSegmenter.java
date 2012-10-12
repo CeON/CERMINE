@@ -12,8 +12,8 @@ import pl.edu.icm.cermine.structure.tools.Valley;
  */
 public class XYCutPageSegmenter implements PageSegmenter {
 
-    double pageHight;
-    double threshold = 0.025;
+    private double pageHeight;
+    private double threshold = 0.025;
 
     @Override
     public BxDocument segmentPages(BxDocument bd) {
@@ -21,7 +21,7 @@ public class XYCutPageSegmenter implements PageSegmenter {
         List<BxPage> pages = bd.getPages();
         for (BxPage page : pages) {
 
-            pageHight = page.getBounds().getHeight();
+            pageHeight = page.getBounds().getHeight();
 
             if (page.getChunks() != null) {
                 List<BxZone> xySegmentation = xySegmentation(page);
@@ -94,7 +94,7 @@ public class XYCutPageSegmenter implements PageSegmenter {
 
     double computeThreshold() {
 
-        return threshold * pageHight;
+        return threshold * pageHeight;
     }
 
     BxBounds computeChunksListBounds(List<BxChunk> chunksList) {
@@ -222,4 +222,13 @@ public class XYCutPageSegmenter implements PageSegmenter {
 
         return sameRangeSet;
     }
+
+    public void setPageHeight(double pageHeight) {
+        this.pageHeight = pageHeight;
+    }
+
+    public double getPageHeight() {
+        return pageHeight;
+    }
+    
 }

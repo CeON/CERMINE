@@ -64,9 +64,9 @@ abstract public class AbstractFilterEnhancer implements Enhancer {
         public Iterator<T> iterator() {
             return new Iterator<T>() {
 
-                Iterator<T> iterator;
-                int index = -1;
-                T next = null;
+                private Iterator<T> iterator;
+                private int index = -1;
+                private T next = null;
 
                 {
                     iterator = list.iterator();

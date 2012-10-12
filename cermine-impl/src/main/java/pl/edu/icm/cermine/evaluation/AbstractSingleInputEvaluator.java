@@ -65,7 +65,7 @@ abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>
 	        I expectedItem = expectedItems.next();
 	        I actualItem = actualItems.next();
 	        R results = compareItems(expectedItem, actualItem);
-	        if (detail == Detail.FULL) {
+	        if (getDetail() == Detail.FULL) {
 	            printItemResults(expectedItem, actualItem, i, results);
 	        }
 	        summary.add(results);

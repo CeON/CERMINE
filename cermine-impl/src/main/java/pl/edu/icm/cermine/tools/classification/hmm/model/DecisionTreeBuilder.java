@@ -187,8 +187,8 @@ public class DecisionTreeBuilder {
 
     private static class NodeDecision {
 
-        String testedFeature;
-        double cut;
+        private String testedFeature;
+        private double cut;
 
         public NodeDecision(String testedFeature, double cut) {
             this.testedFeature = testedFeature;

@@ -115,11 +115,9 @@ public class XYCutPageSegmenterTest {
     @Test
     public void xySegmentationTest() {
         BxPage page = sampleDocument.getPages().get(0);
-        xy.pageHight = page.getBounds().getHeight();
+        xy.setPageHeight(page.getBounds().getHeight());
         List<BxZone> xySegmentation = xy.xySegmentation(page);
         assertEquals(5, xySegmentation.size());
-
-
     }
 
     @Test

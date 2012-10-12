@@ -26,10 +26,9 @@ import pl.edu.icm.cermine.structure.model.*;
 public class MargToTextrImporter {
     
     private static final Logger log = LoggerFactory.getLogger(MargToTextrImporter.class);
-
-    public static int STANDART_DOCUMENT_HEIGHT=3299;
     
-    public static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
+    private static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
+    
     static {
         zoneLabelMap.put("abstract",    BxZoneLabel.MET_ABSTRACT);
         zoneLabelMap.put("affiliation", BxZoneLabel.MET_AFFILIATION);
@@ -60,8 +59,8 @@ public class MargToTextrImporter {
 
     private static class ComparablePair<X extends Comparable, Y extends Comparable> implements Comparable {
 
-        X o1;
-        Y o2;
+        private X o1;
+        private Y o2;
 
         public X getO1() {
             return o1;

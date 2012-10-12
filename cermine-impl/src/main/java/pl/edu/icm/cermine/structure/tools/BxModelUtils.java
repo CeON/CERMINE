@@ -22,8 +22,9 @@ public class BxModelUtils {
 		for(BxZone zone: page.getZones()) {
 			for(BxLine line: zone.getLines()) {
 				for(BxWord word: line.getWords()) {
-					for(BxChunk chunk: word.getChunks())
+					for(BxChunk chunk: word.getChunks()) {
 						chunk.setParent(word);
+                    }
 					word.setParent(line);
 				}
 				line.setParent(zone);

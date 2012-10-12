@@ -10,7 +10,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
  */
 public class SimpleFeatureVector implements FeatureVector {
 
-    Map<String, Double> features = new HashMap<String, Double>();
+    private Map<String, Double> features = new HashMap<String, Double>();
 
     @Override
     public double getFeature(String name) {

@@ -66,8 +66,9 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 
 	@Override
 	protected void preprocessDocumentForEvaluation(BxDocument doc) {
-		for(BxZone zone: doc.asZones())
+		for(BxZone zone: doc.asZones()) {
 			zone.setLabel(zone.getLabel().getGeneralLabel());
+        }
 	}
 	
 }

@@ -871,8 +871,8 @@ public class DocstrumPageSegmenter implements PageSegmenter {
      */
     private static abstract class AngleFilter {
 
-        protected final double lowerAngle;
-        protected final double upperAngle;
+        private final double lowerAngle;
+        private final double upperAngle;
 
         private AngleFilter(double lowerAngle, double upperAngle) {
             this.lowerAngle = lowerAngle;
@@ -900,6 +900,14 @@ public class DocstrumPageSegmenter implements PageSegmenter {
             }
         }
 
+        public double getLowerAngle() {
+            return lowerAngle;
+        }
+
+        public double getUpperAngle() {
+            return upperAngle;
+        }
+        
         public abstract boolean matches(Neighbor neighbor);
 
         public static class AndFilter extends AngleFilter {
@@ -910,7 +918,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
 
             @Override
             public boolean matches(Neighbor neighbor) {
-                return lowerAngle <= neighbor.getAngle() && neighbor.getAngle() < upperAngle;
+                return getLowerAngle() <= neighbor.getAngle() && neighbor.getAngle() < getUpperAngle();
             }
 
         }
@@ -923,7 +931,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
 
             @Override
             public boolean matches(Neighbor neighbor) {
-                return lowerAngle <= neighbor.getAngle() || neighbor.getAngle() < upperAngle;
+                return getLowerAngle() <= neighbor.getAngle() || neighbor.getAngle() < getUpperAngle();
             }
 
         }

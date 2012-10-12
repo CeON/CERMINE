@@ -10,15 +10,18 @@ package pl.edu.icm.cermine.structure.model;
  */
 
 public class BxObjectDump {
-	static Integer indentWidth = 4;
-	public String dump(BxDocument doc) {
+    
+	private static Integer indentWidth = 4;
+	
+    public String dump(BxDocument doc) {
 		return dump(doc, -1, 0, false, 10);
 	}
 	
 	public String dump(BxDocument doc, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
-		for(int i=0; i<indent*indentWidth; ++i)
+		for(int i=0; i<indent*indentWidth; ++i) {
 			stringBuilder.append(" ");
+        }
 		stringBuilder.append("BxDocument");
 		if(dumpReference) {
 			stringBuilder.append(" @")
@@ -36,8 +39,9 @@ public class BxObjectDump {
 	
 	public String dump(BxPage page, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
-		for(int i=0; i<indent*indentWidth; ++i)
+		for(int i=0; i<indent*indentWidth; ++i) {
 			stringBuilder.append(" ");
+        }
 		stringBuilder.append("BxPage(");
 		if(page.getId() != null) {
 			stringBuilder.append(page.getId());
@@ -61,10 +65,11 @@ public class BxObjectDump {
 	}
 	
 	private String brief(String text) {
-		if(text.length() < 100)
+		if(text.length() < 100) {
 			return text;
-		else
+        } else {
 			return text.substring(0, 100) + "...";
+        }
 	}
 	
 	private <A extends Printable> String dumpContentBriefly(A obj, Integer contentLength) {
@@ -81,8 +86,9 @@ public class BxObjectDump {
 	
 	public String dump(BxZone zone, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
-		for(int i=0; i<indent*indentWidth; ++i)
+		for(int i=0; i<indent*indentWidth; ++i) {
 			stringBuilder.append(" ");
+        }
 		stringBuilder.append("BxZone(");
 		if(zone.getId() != null) {
 			stringBuilder.append(zone.getId());
@@ -112,8 +118,9 @@ public class BxObjectDump {
 	
 	public String dump(BxLine line, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
-		for(int i=0; i<indent*indentWidth; ++i)
+		for(int i=0; i<indent*indentWidth; ++i) {
 			stringBuilder.append(" ");
+        }
 		stringBuilder.append("BxLine(");
 		if(line.getId() != null) {
 			stringBuilder.append(line.getId());
@@ -138,8 +145,9 @@ public class BxObjectDump {
 	
 	public String dump(BxWord word, Integer levels, Integer indent, Boolean dumpReference, Integer contentLength) {
 		StringBuilder stringBuilder = new StringBuilder();
-		for(int i=0; i<indent*indentWidth; ++i)
+		for(int i=0; i<indent*indentWidth; ++i) {
 			stringBuilder.append(" ");
+        }
 		stringBuilder.append("BxWord(");
 		if(word.getId() != null) {
 			stringBuilder.append(word.getId());

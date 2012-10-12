@@ -211,7 +211,7 @@ public class DocumentContentStructure {
                
         private List<DocumentContentPart> parts = new ArrayList<DocumentContentPart>();
         
-        DocumentContentPart parent;
+        private DocumentContentPart parent;
 
       
         public Header getHeader() {
@@ -331,14 +331,6 @@ public class DocumentContentStructure {
             }
             return pars;
         }
-        /*
-        public List<String> getParagraphTexts() {
-            List<String> paragraphTexts = new ArrayList<String>();
-            for (Paragraph p : paragraphs) {
-                paragraphTexts.add(p.getText());
-            }
-            return paragraphTexts;
-        }*/
         
         public int getParagraphCountRec() {
             int sum = paragraphs.size();

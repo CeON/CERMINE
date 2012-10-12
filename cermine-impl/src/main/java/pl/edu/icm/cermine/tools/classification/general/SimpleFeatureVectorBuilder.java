@@ -14,7 +14,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
  */
 public class SimpleFeatureVectorBuilder<S, T> implements FeatureVectorBuilder<S, T> {
 
-    Map<String, FeatureCalculator<S, T>> featureCalculators = new HashMap<String, FeatureCalculator<S, T>>();
+    private Map<String, FeatureCalculator<S, T>> featureCalculators = new HashMap<String, FeatureCalculator<S, T>>();
 
     @Override
     public void setFeatureCalculators(Collection<FeatureCalculator<S, T>> featureCalculators) {

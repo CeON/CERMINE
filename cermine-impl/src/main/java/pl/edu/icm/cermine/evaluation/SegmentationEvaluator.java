@@ -305,10 +305,10 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
 
     public static class LevelResults {
-        int all;
-        int matched;
-        int splitted;
-        int merged;
+        private int all;
+        private int matched;
+        private int splitted;
+        private int merged;
 
         public void add(LevelResults results) {
             all += results.all;

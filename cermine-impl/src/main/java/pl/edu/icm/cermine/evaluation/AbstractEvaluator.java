@@ -16,7 +16,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  */
 public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R>> {
 
-    protected Detail detail = Detail.FULL;
+    private Detail detail = Detail.FULL;
 
     /**
      * Creates new results object.
@@ -56,6 +56,10 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
     abstract protected R compareDocuments(P expected, P actual);
 
     abstract protected Documents<P> getDocuments(String directory, String filename) throws Exception;
+
+    public Detail getDetail() {
+        return detail;
+    }
 
     public void run(String inDir, String outDir) throws Exception {
         if (inDir == null) {

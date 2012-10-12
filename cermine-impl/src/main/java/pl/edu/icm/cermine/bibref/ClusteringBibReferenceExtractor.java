@@ -26,10 +26,10 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
 
     private double maxDistance = 1.2;
     
-    private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder =
+    private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> VECTOR_BUILDER =
                 new SimpleFeatureVectorBuilder<BxLine, BxDocumentBibReferences>();
     static {
-        featureVectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxDocumentBibReferences>>asList(
+        VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxDocumentBibReferences>>asList(
                 new PrevEndsWithDotFeature(),
                 new RelativeLengthFeature(),
                 new RelativeStartTresholdFeature(),
@@ -45,7 +45,7 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
         List<String> lines = new ArrayList<String>();
         List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
         for (BxLine line : documentReferences.getLines()) {
-            featureVectors.add(featureVectorBuilder.getFeatureVector(line, documentReferences));
+            featureVectors.add(VECTOR_BUILDER.getFeatureVector(line, documentReferences));
             lines.add(line.toText());
         }
         
@@ -55,7 +55,7 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
             
         FeatureVectorClusterizer clusterizer = new FeatureVectorClusterizer();
         clusterizer.setClusterizer(new CompleteLinkageClusterizer());
-        int[] clusters = clusterizer.clusterize(featureVectors.toArray(new FeatureVector[]{}), featureVectorBuilder, 
+        int[] clusters = clusterizer.clusterize(featureVectors.toArray(new FeatureVector[]{}), VECTOR_BUILDER, 
                 new FeatureVectorEuclideanMetric(), maxDistance, false);
 
         List<String> references = new ArrayList<String>();

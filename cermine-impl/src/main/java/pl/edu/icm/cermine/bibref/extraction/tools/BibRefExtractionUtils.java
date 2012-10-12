@@ -14,6 +14,8 @@ import pl.edu.icm.cermine.structure.model.*;
  */
 public class BibRefExtractionUtils {
 
+    private BibRefExtractionUtils() {}
+    
     /**
      * Extracts lines and zones labeled as "references" from BxDocument.
      *
@@ -121,7 +123,7 @@ public class BibRefExtractionUtils {
             references.add(actCitation);
         }
 
-        return references.toArray(new String[]{});
+        return references.toArray(new String[references.size()]);
     }
 
 }

@@ -39,7 +39,7 @@ public class BibRefLinesToHMMConverter {
             }
         }
 
-        return trainingList.toArray(new TrainingElement[]{});
+        return trainingList.toArray(new TrainingElement[trainingList.size()]);
     }
 
     public void setFeatureVectorBuilder(FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {

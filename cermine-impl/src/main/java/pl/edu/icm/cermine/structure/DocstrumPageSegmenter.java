@@ -754,15 +754,15 @@ public class DocstrumPageSegmenter implements PageSegmenter {
 
             if (components.size() >= 2) {
                 // Simple linear regression
-                double Sx = 0.0, Sxx = 0.0, Sxy = 0.0, Sy = 0.0;
+                double sx = 0.0, sxx = 0.0, sxy = 0.0, sy = 0.0;
                 for (Component component : components) {
-                    Sx += component.getX();
-                    Sxx += component.getX() * component.getX();
-                    Sxy += component.getX() * component.getY();
-                    Sy += component.getY();
+                    sx += component.getX();
+                    sxx += component.getX() * component.getX();
+                    sxy += component.getX() * component.getY();
+                    sy += component.getY();
                 }
-                double b = (components.size() * Sxy - Sx * Sy) / (components.size() * Sxx - Sx * Sx);
-                double a = (Sy - b * Sx) / components.size();
+                double b = (components.size() * sxy - sx * sy) / (components.size() * sxx - sx * sx);
+                double a = (sy - b * sx) / components.size();
 
                 this.x0 = components.get(0).getX();
                 this.y0 = a + b * this.x0;

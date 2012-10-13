@@ -6,11 +6,13 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class IsLastButOnePageFeature extends FeatureCalculator<BxZone, BxPage> {
 
-	@Override
-	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		if(page.getNext() != null)
-			if(page.getNext().getNext() == null)
-				return 1.0;
-		return 0.0;
-	}
+    @Override
+    public double calculateFeatureValue(BxZone zone, BxPage page) {
+        if (page.getNext() != null) {
+            if (page.getNext().getNext() == null) {
+                return 1.0;
+            }
+        }
+        return 0.0;
+    }
 }

@@ -6,12 +6,13 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class IsLongestOnThePageFeature extends FeatureCalculator<BxZone, BxPage> {
 
-	@Override
-	public double calculateFeatureValue(BxZone object, BxPage context) {
-		for(BxZone zone: context.getZones())
-			if(zone.toText().length() > object.toText().length())
-				return 0.0;
-		return 1.0;
-	}
-
+    @Override
+    public double calculateFeatureValue(BxZone object, BxPage context) {
+        for (BxZone zone : context.getZones()) {
+            if (zone.toText().length() > object.toText().length()) {
+                return 0.0;
+            }
+        }
+        return 1.0;
+    }
 }

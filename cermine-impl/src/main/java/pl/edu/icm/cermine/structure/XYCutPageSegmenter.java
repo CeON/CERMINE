@@ -62,12 +62,12 @@ public class XYCutPageSegmenter implements PageSegmenter {
         List<Valley> xValleys = toValleys(sameXRangeList, Direction.X);
         List<Valley> yValleys = toValleys(sameYRangeList, Direction.Y);
 
-        double Th = computeThreshold();
+        double th = computeThreshold();
         Valley maxValley = maxValley(xValleys, yValleys);
 
         List<BxZone> newZones = new ArrayList<BxZone>();
 
-        if (maxValley.getLength() > Th) {
+        if (maxValley.getLength() > th) {
            
 
             List<List<BxChunk>> dividedChunks = null;

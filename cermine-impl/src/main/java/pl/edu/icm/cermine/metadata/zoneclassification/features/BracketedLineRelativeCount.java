@@ -6,23 +6,25 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class BracketedLineRelativeCount extends FeatureCalculator<BxZone, BxPage> {
-	private static String featureName = "BracketedRelativeLineCount";
-	
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
 
-	@Override
-	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		int lines = 0;
-		int bracketedLines = 0;
-		
-		for(BxLine line: zone.getLines()) {
-			++lines;
-			if(line.toText().charAt(0) == '[' || line.toText().charAt(0) == ']')
-				++bracketedLines;
-		}
-		return (double)bracketedLines / (double)lines;
-	}
+    private static String featureName = "BracketedRelativeLineCount";
+
+    @Override
+    public String getFeatureName() {
+        return featureName;
+    }
+
+    @Override
+    public double calculateFeatureValue(BxZone zone, BxPage page) {
+        int lines = 0;
+        int bracketedLines = 0;
+
+        for (BxLine line : zone.getLines()) {
+            ++lines;
+            if (line.toText().charAt(0) == '[' || line.toText().charAt(0) == ']') {
+                ++bracketedLines;
+            }
+        }
+        return (double) bracketedLines / (double) lines;
+    }
 }

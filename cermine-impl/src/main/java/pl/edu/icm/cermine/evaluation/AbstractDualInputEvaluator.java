@@ -1,10 +1,14 @@
 package pl.edu.icm.cermine.evaluation;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Results;
+import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
  * Abstract evaluator used for implementation of evaluators that requires two
@@ -20,9 +24,9 @@ abstract public class AbstractDualInputEvaluator<P, R extends Results<R>> extend
 
     abstract protected String getExpectedFilenameReplacement();
 
-    abstract protected P getExpectedDocument(Reader input) throws Exception;
+    abstract protected P getExpectedDocument(Reader input) throws IOException;
 
-    protected P getExpectedDocument(String path) throws Exception {
+    protected P getExpectedDocument(String path) throws FileNotFoundException, IOException {
         Reader input = new FileReader(path);
         try {
             return getExpectedDocument(input);
@@ -31,9 +35,9 @@ abstract public class AbstractDualInputEvaluator<P, R extends Results<R>> extend
         }
     }
 
-    abstract protected P getActualDocument(Reader input) throws Exception;
+    abstract protected P getActualDocument(Reader input) throws AnalysisException, TransformationException;
 
-    protected P getActualDocument(String path) throws Exception {
+    protected P getActualDocument(String path) throws FileNotFoundException, AnalysisException, TransformationException, IOException {
         Reader input = new FileReader(path);
         try {
             return getActualDocument(input);
@@ -43,7 +47,7 @@ abstract public class AbstractDualInputEvaluator<P, R extends Results<R>> extend
     }
 
     @Override
-    protected Documents<P> getDocuments(String directory, String filename) throws Exception {
+    protected Documents<P> getDocuments(String directory, String filename) throws FileNotFoundException, IOException, AnalysisException, TransformationException {
         Matcher matcher = getActualFilenamePattern().matcher(filename);
         if (matcher.matches()) {
             StringBuffer buffer = new StringBuffer();

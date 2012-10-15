@@ -1,5 +1,6 @@
 <%-- 
-    Author     : bart
+    desc       : user entry point
+    author     : bart
 --%>
 <%@ page    language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib  prefix="c"      uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,12 +9,28 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        
+        <!-- blueimp fileUpload css: -->
+		<link rel="stylesheet" href="<c:url value='/static/fileupload/css/style.css' />">
+		<link rel="stylesheet" href="<c:url value='/static/fileupload/css/jquery.fileupload-ui.css' />">
+        <link rel="stylesheet" href="<c:url value='/static/fileupload/css/bootstrap.min.css' />">
+		<!-- eof blueimp fileUpload css-->
+		        
         <title>Content ExtRactor and MINEr - User Console</title>
     </head>
     <body>    
      
-    <c:out value="${hi}"></c:out>
+    <h4>Welcome to CERMINE - <b>Content ExtRactor and MINEr</b>
+    </h4>
+
+    <blockquote>
+        Uploaded file will be used only for metadata extraction, we do not store uploaded files.
+        <br/>
+        Accepted file format - *.pdf, maximum file size is <strong>5 MB</strong>.
+    </blockquote>
+
+    <%@ include file="fileupload.jsp" %>
 
     <br/>
     cermine-web version:

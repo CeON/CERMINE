@@ -316,16 +316,6 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
     }
 
     /**
-     * Key function for sorting in sortGroupedZones(). Allows to order two objects joined together in a logical order.
-     *
-     * @param obj is an object to have a sorting key
-     * @return value based on object's physical properties
-     */
-    private Double sortPrecedence(BxObject obj) {
-        return Math.sqrt((obj.getX() + obj.getWidth() / 2) * (obj.getX() + obj.getWidth() / 2) + obj.getY() * obj.getY());
-    }
-
-    /**
      * A distance function between two TextBoxes.
      *
      * Consider the bounding rectangle for obj1 and obj2. Return its area minus the areas of obj1 and obj2, shown as

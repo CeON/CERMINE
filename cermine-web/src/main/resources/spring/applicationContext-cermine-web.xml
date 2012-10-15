@@ -8,6 +8,18 @@
           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     
+    
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:cermine-web.default.properties</value>
+                <!-- <value>file:///${user.home}/.icm/sedno-util.local.properties</value> -->
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="ignoreUnresolvablePlaceholders" value="false" />
+    </bean>  
+    
     <!-- 
     <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
     -->
@@ -27,6 +39,15 @@
         <property name="suffix" value=".jsp"/>
     </bean>
         
-    <context:annotation-config />    
+    <context:annotation-config />  
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+            <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="${maxUploadSize}"/>
+    </bean>    
+    
+    <!-- http://stackoverflow.com/questions/6479712/why-is-jackson-wrapping-my-objects-with-an-extra-layer-named-after-the-class -->
+    <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"
+          p:extractValueFromSingleKeyModel="true" />
 
 </beans>

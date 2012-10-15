@@ -9,7 +9,13 @@ import java.util.Set;
  */
 public interface FeatureVector extends Cloneable {
 
+    /**
+     * Return the vector of feature values.
+     * 
+     * @return an array of feature values
+     */
 	Double[] getFeatures();
+
     /**
      * Returns a single feature value.
      *
@@ -18,7 +24,14 @@ public interface FeatureVector extends Cloneable {
      */
     double getFeature(String name);
 
+    /**
+     * Sets a feature value
+     * 
+     * @param name Feature name
+     * @param value Feature value
+     */
     void setFeature(String name, Double value);
+    
     /**
      * Adds a feature value to the vector.
      *
@@ -29,6 +42,7 @@ public interface FeatureVector extends Cloneable {
 
     /**
      * Dumps content of a feature vector to a string
+     * 
      * @return string of feature values in a human readable form 
      */
     String dump();
@@ -40,7 +54,17 @@ public interface FeatureVector extends Cloneable {
      */
     Set<String> getFeatureNames();
     
+    /**
+     * Return the length of the feature vector.
+     * 
+     * @return the length
+     */
     Integer size();
     
+    /**
+     * Clones feature vector.
+     * 
+     * @return cloned object
+     */
     FeatureVector clone();
 }

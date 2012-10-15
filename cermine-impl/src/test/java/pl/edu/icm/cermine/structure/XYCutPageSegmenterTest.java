@@ -22,7 +22,7 @@ import pl.edu.icm.cermine.structure.transformers.MargToTextrImporter;
  */
 public class XYCutPageSegmenterTest {
 
-    XYCutPageSegmenter xy;
+    XYCutSegmenter xy;
     List<BxChunk> generatedVertices;
     BxDocument sampleDocument;
 
@@ -39,7 +39,7 @@ public class XYCutPageSegmenterTest {
 
     @Before
     public void setUp() {
-        xy = new XYCutPageSegmenter();
+        xy = new XYCutSegmenter();
         generatedVertices = generateVertices();
         sampleDocument = createSampleDocument(generatedVertices);
 
@@ -139,7 +139,7 @@ public class XYCutPageSegmenterTest {
 
 
         BxDocument doc = createSampleDocument(chunksList);
-        BxDocument xyCutSegmentation = xy.segmentPages(doc);
+        BxDocument xyCutSegmentation = xy.segmentDocument(doc);
         List<BxZone> zones = xyCutSegmentation.getPages().get(0).getZones();
         System.out.println("Size " + zones.size());
         for (BxZone zone : zones) {

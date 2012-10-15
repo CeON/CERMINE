@@ -13,15 +13,19 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 
 
 /**
+ * NLM-based metadata extractor from PDF files.
  *
  * @author Dominika Tkaczyk
  */
 public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Element> {
 
+    /** geometric structure extractor */
     private DocumentStructureExtractor strExtractor;
    
+    /** metadata zone classifier */
     private ZoneClassifier metadataClassifier;
     
+    /** metadata extractor from labelled zones */
     private MetadataExtractor<Element> extractor;
 
     public PdfNLMMetadataExtractor() throws AnalysisException {
@@ -56,14 +60,27 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
         this.metadataClassifier = metadataClassifier;
         this.extractor = extractor;
     }
-    
-            
+         
+    /**
+     * Extracts metadata from PDF file and stores it in NLM format.
+     * 
+     * @param stream
+     * @return extracted metadata in NLM format
+     * @throws AnalysisException 
+     */
     @Override
     public Element extractMetadata(InputStream stream) throws AnalysisException {
         BxDocument doc = strExtractor.extractStructure(stream);
         return extractMetadata(doc);
     }
     
+    /**
+     * Extracts metadata from PDF file and stores it in NLM format.
+     * 
+     * @param document
+     * @return extracted metadata in NLM format
+     * @throws AnalysisException 
+     */
     @Override
     public Element extractMetadata(BxDocument document) throws AnalysisException {
         BxDocument doc = metadataClassifier.classifyZones(document);

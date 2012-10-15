@@ -10,23 +10,29 @@ import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 
 
 /**
+ * Document geometric structure extractor. Extracts the geometric hierarchical structure
+ * (pages, zones, lines, words and characters) from a PDF file and stores it as a BxDocument object.
  *
  * @author Dominika Tkaczyk
  */
 public class PdfBxStructureExtractor implements DocumentStructureExtractor {
+
+    /** individual character extractor */
+    private CharacterExtractor characterExtractor;
     
-    private CharacterExtractor glyphExtractor;
+    /** document object segmenter */
+    private DocumentSegmenter documentSegmenter;
     
-    private PageSegmenter pageSegmenter;
-    
+    /** reading order resolver */
     private ReadingOrderResolver roResolver;
     
+    /** iniial zone classifier */
     private ZoneClassifier initialClassifier;
 
 
     public PdfBxStructureExtractor() throws AnalysisException {
-        glyphExtractor = new ITextCharacterExtractor();
-        pageSegmenter = new DocstrumPageSegmenter();
+        characterExtractor = new ITextCharacterExtractor();
+        documentSegmenter = new DocstrumSegmenter();
         roResolver = new HierarchicalReadingOrderResolver();
         
         InputStreamReader modelISRI = new InputStreamReader(PdfBxStructureExtractor.class
@@ -39,8 +45,8 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     }
     
     public PdfBxStructureExtractor(InputStream model, InputStream range) throws AnalysisException {
-        glyphExtractor = new ITextCharacterExtractor();
-        pageSegmenter = new DocstrumPageSegmenter();
+        characterExtractor = new ITextCharacterExtractor();
+        documentSegmenter = new DocstrumSegmenter();
         roResolver = new HierarchicalReadingOrderResolver();
         
         InputStreamReader modelISRI = new InputStreamReader(model);
@@ -50,34 +56,40 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
         initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
     }
 
-    public PdfBxStructureExtractor(CharacterExtractor glyphExtractor, PageSegmenter pageSegmenter, 
+    public PdfBxStructureExtractor(CharacterExtractor glyphExtractor, DocumentSegmenter pageSegmenter, 
             ReadingOrderResolver roResolver, ZoneClassifier initialClassifier) {
-        this.glyphExtractor = glyphExtractor;
-        this.pageSegmenter = pageSegmenter;
+        this.characterExtractor = glyphExtractor;
+        this.documentSegmenter = pageSegmenter;
         this.roResolver = roResolver;
         this.initialClassifier = initialClassifier;
     }
     
-        
+    /**
+     * Extracts the geometric structure from a PDF file and stores it as BxDocument.
+     * 
+     * @param stream
+     * @return BxDocument object storing the geometric structure
+     * @throws AnalysisException 
+     */
     @Override
     public BxDocument extractStructure(InputStream stream) throws AnalysisException {
-        BxDocument doc = glyphExtractor.extractCharacters(stream);
-        doc = pageSegmenter.segmentPages(doc);
+        BxDocument doc = characterExtractor.extractCharacters(stream);
+        doc = documentSegmenter.segmentDocument(doc);
         BxModelUtils.setParents(doc);
         doc = roResolver.resolve(doc);
         return initialClassifier.classifyZones(doc);
     }
 
     public void setGlyphExtractor(CharacterExtractor glyphExtractor) {
-        this.glyphExtractor = glyphExtractor;
+        this.characterExtractor = glyphExtractor;
     }
 
     public void setInitialClassifier(ZoneClassifier initialClassifier) {
         this.initialClassifier = initialClassifier;
     }
 
-    public void setPageSegmenter(PageSegmenter pageSegmenter) {
-        this.pageSegmenter = pageSegmenter;
+    public void setPageSegmenter(DocumentSegmenter pageSegmenter) {
+        this.documentSegmenter = pageSegmenter;
     }
 
     public void setRoResolver(ReadingOrderResolver roResolver) {

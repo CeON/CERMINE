@@ -16,7 +16,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
-import pl.edu.icm.cermine.structure.tools.DocumentPreprocessor;
+import pl.edu.icm.cermine.structure.tools.DocumentProcessor;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
@@ -34,7 +34,7 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
     @Before
     public void setUp() throws IOException, AnalysisException {
     	classifier = new SVMInitialZoneClassifier(getModel(), getRange());
-    	startProcessFlattener = new DocumentPreprocessor() {
+    	startProcessFlattener = new DocumentProcessor() {
 			@Override
 			public void process(BxDocument document) {
 				BxModelUtils.setReadingOrder(document);

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.PageSegmenter;
+import pl.edu.icm.cermine.structure.DocumentSegmenter;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
@@ -28,7 +28,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
     
-    private PageSegmenter pageSegmenter;
+    private DocumentSegmenter pageSegmenter;
 
     private final Set<BxZoneLabel> ignoredLabels = EnumSet.noneOf(BxZoneLabel.class);
 
@@ -45,7 +45,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 		return FILENAME_PATTERN;
 	}
 	
-    public void setPageSegmenter(PageSegmenter pageSegmenter) {
+    public void setPageSegmenter(DocumentSegmenter pageSegmenter) {
         this.pageSegmenter = pageSegmenter;
     }
 
@@ -66,7 +66,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
     @Override
     protected BxDocument processDocument(BxDocument document) throws AnalysisException {
-        return pageSegmenter.segmentPages(document);
+        return pageSegmenter.segmentDocument(document);
     }
 
     @Override

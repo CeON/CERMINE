@@ -28,7 +28,7 @@ public class DocstrumPageSegmenterTest {
         BxDocument inDoc = new BxDocument().setPages(new MargToTextrImporter().read(reader));
         new UnsegmentedPagesFlattener().process(inDoc);
         
-        DocstrumPageSegmenter pageSegmenter = new DocstrumPageSegmenter();
+        DocstrumSegmenter pageSegmenter = new DocstrumSegmenter();
         pageSegmenter.setSpacingHistogramResolution(2.0);
         pageSegmenter.setSpacingHistogramSmoothingWindowLength(10.0);
         pageSegmenter.setSpacingHistogramSmoothingWindowStdDeviation(2.0);
@@ -39,7 +39,7 @@ public class DocstrumPageSegmenterTest {
         pageSegmenter.setMaxVerticalMergeDistanceMultiplier(0.5);
         pageSegmenter.setComponentDistanceCharacterMultiplier(3.0);
         
-        BxDocument outDoc = pageSegmenter.segmentPages(inDoc);
+        BxDocument outDoc = pageSegmenter.segmentDocument(inDoc);
 
         // Check whether zones are correctly detected
         assertEquals(1, outDoc.getPages().size());
@@ -71,7 +71,7 @@ public class DocstrumPageSegmenterTest {
 
     public void testSegmentPages_badBounds(BxBounds bounds) throws AnalysisException {
         BxDocument doc = new BxDocument().addPage(new BxPage().addChunk(new BxChunk(bounds, "a")));
-        new DocstrumPageSegmenter().segmentPages(doc);
+        new DocstrumSegmenter().segmentDocument(doc);
     }
 
     @Test(expected=AnalysisException.class)

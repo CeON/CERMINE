@@ -38,6 +38,16 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
                 ));
     }
 
+    /**
+     * Extracts individual bibliographic references from the document. The references lines
+     * are clustered based on feature vector computed for them. The cluster containing the first line
+     * is then assumed to be the set of all first lines, which allows for splitting references blocks
+     * into individual references.
+     * 
+     * @param document
+     * @return an array of extracted references
+     * @throws AnalysisException 
+     */
     @Override
     public String[] extractBibReferences(BxDocument document) throws AnalysisException {
         BxDocumentBibReferences documentReferences = BibRefExtractionUtils.extractBibRefLines(document);

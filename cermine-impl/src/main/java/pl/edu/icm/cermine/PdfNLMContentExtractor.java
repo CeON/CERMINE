@@ -6,13 +6,19 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
+ * NLM-based content extractor from PDF files.
  *
  * @author Dominika Tkaczyk
  */
 public class PdfNLMContentExtractor implements DocumentContentExtractor<Element> {
-    
+  
+    /** geometric structure extractor */
     private DocumentStructureExtractor structureExtractor;
+    
+    /** document metadata extractor from geometric structure */
     private DocumentMetadataExtractor<Element> metadataExtractor;
+    
+    /** parsed references extractor from geometric structure */
     private DocumentReferencesExtractor<Element> referencesExtractor;
 
     public PdfNLMContentExtractor() throws AnalysisException {
@@ -21,12 +27,26 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         referencesExtractor = new PdfNLMReferencesExtractor();
     }
     
+    /**
+     * Extracts content from PDF file and stored it in NLM format.
+     * 
+     * @param stream
+     * @return extracted content in NLM format
+     * @throws AnalysisException 
+     */
     @Override
     public Element extractContent(InputStream stream) throws AnalysisException {
         BxDocument document = structureExtractor.extractStructure(stream);
         return extractContent(document);
     }
 
+    /**
+     * Extracts content from PDF file and stored it in NLM format.
+     * 
+     * @param document
+     * @return extracted content in NLM format
+     * @throws AnalysisException 
+     */
     @Override
     public Element extractContent(BxDocument document) throws AnalysisException {
         Element content = metadataExtractor.extractMetadata(document);

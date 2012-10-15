@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class InitiallyClassifiedZonesPreprocessor implements DocumentPreprocessor {
+public class InitiallyClassifiedZonesPreprocessor implements DocumentProcessor {
 
     @Override
     public void process(BxDocument document) {

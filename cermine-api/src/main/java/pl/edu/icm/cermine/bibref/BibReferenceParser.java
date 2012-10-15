@@ -10,14 +10,15 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  * @param <T> Type of parsed reference.
  */
 public interface BibReferenceParser<T> {
-	
-	/**
-	 * Parses a text of a reference.
-	 * 
-	 * @param text Text of a bibliographic reference.
-	 * @return Parsed reference, or <code>null</code>
+
+    /**
+     * Parses a text of a reference.
+     * 
+     * @param text
+     * @return Parsed reference, or <code>null</code>
 	 * if the specified text couldn't be parsed.
-	 */
+     * @throws AnalysisException 
+     */
 	T parseBibReference(String text) throws AnalysisException;
 
 }

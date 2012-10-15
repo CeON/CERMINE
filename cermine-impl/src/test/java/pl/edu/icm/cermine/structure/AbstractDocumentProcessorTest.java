@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.tools.DocumentPreprocessor;
+import pl.edu.icm.cermine.structure.tools.DocumentProcessor;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
@@ -26,8 +26,8 @@ public abstract class AbstractDocumentProcessorTest {
 
     private static String xmlFilenameSuffix = ".xml";
 
-    protected DocumentPreprocessor startProcessFlattener;
-    protected DocumentPreprocessor endProcessFlattener;
+    protected DocumentProcessor startProcessFlattener;
+    protected DocumentProcessor endProcessFlattener;
 
 
     protected abstract boolean compareDocuments(BxDocument testDoc, BxDocument expectedDoc);

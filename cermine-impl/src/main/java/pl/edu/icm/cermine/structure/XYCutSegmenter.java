@@ -7,16 +7,17 @@ import pl.edu.icm.cermine.structure.tools.Range;
 import pl.edu.icm.cermine.structure.tools.Valley;
 
 /**
- *
+ * XY-cut-based document segmenter.
+ * 
  * @author estocka
  */
-public class XYCutPageSegmenter implements PageSegmenter {
+public class XYCutSegmenter implements DocumentSegmenter {
 
     private double pageHeight;
     private double threshold = 0.025;
 
     @Override
-    public BxDocument segmentPages(BxDocument bd) {
+    public BxDocument segmentDocument(BxDocument bd) {
 
         List<BxPage> pages = bd.getPages();
         for (BxPage page : pages) {

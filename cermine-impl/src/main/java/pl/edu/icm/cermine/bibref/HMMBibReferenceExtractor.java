@@ -41,6 +41,15 @@ public class HMMBibReferenceExtractor implements BibReferenceExtractor {
         this.featureVectorBuilder = featureVectorBuilder;
     }
 
+    /**
+     * Extracts individual bibliographic references from the document. References lines are 
+     * classified using Viterbi algorithm as FIRST, INNER or LAST line of the reference, which 
+     * allows for splitting references blocks into individual references.
+     * 
+     * @param document
+     * @return an array of extracted references
+     * @throws AnalysisException 
+     */
     @Override
     public String[] extractBibReferences(BxDocument document) throws AnalysisException {
         BxDocumentBibReferences documentReferences = BibRefExtractionUtils.extractBibRefLines(document);

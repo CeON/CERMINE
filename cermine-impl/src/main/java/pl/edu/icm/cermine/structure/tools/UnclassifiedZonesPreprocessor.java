@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class UnclassifiedZonesPreprocessor implements DocumentPreprocessor {
+public class UnclassifiedZonesPreprocessor implements DocumentProcessor {
 
     @Override
     public void process(BxDocument document) {

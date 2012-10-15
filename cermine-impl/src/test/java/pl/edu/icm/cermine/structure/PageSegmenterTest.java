@@ -46,7 +46,7 @@ public class PageSegmenterTest extends AbstractDocumentProcessorTest {
 
     @Override
     protected BxDocument process(BxDocument doc) {
-        return new XYCutPageSegmenter().segmentPages(doc);
+        return new XYCutSegmenter().segmentDocument(doc);
     }
 
     @Override

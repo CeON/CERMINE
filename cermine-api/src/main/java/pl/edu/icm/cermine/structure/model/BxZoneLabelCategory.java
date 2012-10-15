@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.structure.model;
 
 /**
+ * Zone label category.
  * 
  * @author Dominika Tkaczyk
  */

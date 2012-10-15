@@ -11,15 +11,20 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 
 
 /**
+ * Parsed bibliograhic references extractor. Extracts references from a PDF file and returns them
+ * as BibEntry objects.
  *
  * @author Dominika Tkaczyk
  */
 public class PdfBibEntryReferencesExtractor implements DocumentReferencesExtractor<BibEntry> {
     
+    /** geometric structure extractor */
     private DocumentStructureExtractor strExtractor;
     
+    /** references strings extractor */
     private BibReferenceExtractor extractor;
     
+    /** bibliographic references parser */
     private BibReferenceParser<BibEntry> parser;
 
     public PdfBibEntryReferencesExtractor() throws AnalysisException {
@@ -41,13 +46,26 @@ public class PdfBibEntryReferencesExtractor implements DocumentReferencesExtract
         this.parser = parser;
     }
     
-    
+    /**
+     * Extracts parsed bibliographic references from a PDF file and returns them as BibEntry objects.
+     * 
+     * @param stream
+     * @return parsed bibliographic references
+     * @throws AnalysisException 
+     */
     @Override
     public BibEntry[] extractReferences(InputStream stream) throws AnalysisException {
         BxDocument doc = strExtractor.extractStructure(stream);
         return extractReferences(doc);
     }
 
+    /**
+     * Extracts parsed bibliographic references from a PDF file and returns them as BibEntry objects.
+     * 
+     * @param document
+     * @return parsed bibliographic references
+     * @throws AnalysisException 
+     */
     @Override
     public BibEntry[] extractReferences(BxDocument document) throws AnalysisException {
         String[] refs = extractor.extractBibReferences(document);

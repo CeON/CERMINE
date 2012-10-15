@@ -16,7 +16,8 @@ import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
- *
+ * CRF-based bibiliographic reference parser.
+ * 
  * @author Dominika Tkaczyk
  */
 public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {

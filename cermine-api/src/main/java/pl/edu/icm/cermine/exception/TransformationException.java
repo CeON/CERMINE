@@ -1,5 +1,11 @@
 package pl.edu.icm.cermine.exception;
 
+/**
+ * Thrown when an unrecoverable problem occurs during transformations.
+ * 
+ * @author Dominika Tkaczyk
+ *
+ */
 public class TransformationException extends Exception {
         private static final long serialVersionUID = -4871017514024156616L;
 

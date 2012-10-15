@@ -31,6 +31,11 @@ public interface TrainingElement<S> extends Cloneable {
      */
     S getLabel();
     
+    /**
+     * Set element's label.
+     * 
+     * @param label 
+     */
     void setLabel(S label);
     
 
@@ -42,6 +47,11 @@ public interface TrainingElement<S> extends Cloneable {
      */
     S getNextLabel();
     
+    /**
+     * Clones the element.
+     * 
+     * @return cloned element
+     */
     TrainingElement<S> clone();
 
 }

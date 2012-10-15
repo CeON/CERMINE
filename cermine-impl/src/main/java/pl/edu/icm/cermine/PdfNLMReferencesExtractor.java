@@ -11,13 +11,15 @@ import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
-
 /**
+ * Parsed bibliograhic references extractor. Extracts references from a PDF file and stores them
+ * in NLM format.
  *
  * @author Dominika Tkaczyk
  */
 public class PdfNLMReferencesExtractor implements DocumentReferencesExtractor<Element> {
     
+    /** BibEntry-based references extractor */
     private DocumentReferencesExtractor<BibEntry> extractor;
     
     public PdfNLMReferencesExtractor() throws AnalysisException {
@@ -32,6 +34,13 @@ public class PdfNLMReferencesExtractor implements DocumentReferencesExtractor<El
         this.extractor = new PdfBibEntryReferencesExtractor(strExtractor, extractor, parser);
     }
     
+    /**
+     * Extracts parsed bibliographic references from a PDF file and stores them in NLM format.
+     * 
+     * @param stream
+     * @return parsed bibliographic references
+     * @throws AnalysisException 
+     */
     @Override
     public Element[] extractReferences(InputStream stream) throws AnalysisException {
         BibEntry[] entries = extractor.extractReferences(stream);
@@ -42,6 +51,13 @@ public class PdfNLMReferencesExtractor implements DocumentReferencesExtractor<El
         return elements.toArray(new Element[entries.length]);
     }
 
+    /**
+     * Extracts parsed bibliographic references from a PDF file and stores them in NLM format.
+     * 
+     * @param document
+     * @return parsed bibliographic references
+     * @throws AnalysisException 
+     */
     @Override
     public Element[] extractReferences(BxDocument document) throws AnalysisException {
         BibEntry[] entries = extractor.extractReferences(document);

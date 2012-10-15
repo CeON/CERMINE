@@ -19,7 +19,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
-import pl.edu.icm.cermine.structure.tools.DocumentPreprocessor;
+import pl.edu.icm.cermine.structure.tools.DocumentProcessor;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
@@ -47,7 +47,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
     @Before
     public void setUp() throws IOException {
-    	this.startProcessFlattener = new DocumentPreprocessor() {
+    	this.startProcessFlattener = new DocumentProcessor() {
 			@Override
 			public void process(BxDocument document) {
 				BxModelUtils.setReadingOrder(document);

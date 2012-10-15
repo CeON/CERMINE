@@ -6,7 +6,7 @@ import pl.edu.icm.cermine.structure.model.*;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class UnsegmentedZonesFlattener implements DocumentPreprocessor {
+public class UnsegmentedZonesFlattener implements DocumentProcessor {
 
     @Override
     public void process(BxDocument document) {

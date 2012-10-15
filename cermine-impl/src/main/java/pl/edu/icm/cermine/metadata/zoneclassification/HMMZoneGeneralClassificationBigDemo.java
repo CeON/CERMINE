@@ -19,7 +19,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.structure.tools.DocumentPreprocessor;
+import pl.edu.icm.cermine.structure.tools.DocumentProcessor;
 import pl.edu.icm.cermine.structure.tools.InitiallyClassifiedZonesPreprocessor;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
@@ -133,7 +133,7 @@ public class HMMZoneGeneralClassificationBigDemo {
                 ));
 
         // 1.2 labels flattener (changes specific labels to general ones)
-        DocumentPreprocessor flattener = new InitiallyClassifiedZonesPreprocessor();
+        DocumentProcessor flattener = new InitiallyClassifiedZonesPreprocessor();
         
         // 1.3 open test file
         BxDocument testDocument = getTestFile();

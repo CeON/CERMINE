@@ -13,7 +13,7 @@ import pl.edu.icm.cermine.structure.tools.Histogram;
  * 
  * @author krusek
  */
-public class DocstrumPageSegmenter implements PageSegmenter {
+public class DocstrumSegmenter implements DocumentSegmenter {
 
     private static final double DISTANCE_STEP = 16.0;
 
@@ -189,7 +189,7 @@ public class DocstrumPageSegmenter implements PageSegmenter {
     }
 
     @Override
-    public BxDocument segmentPages(BxDocument document) throws AnalysisException {
+    public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
         BxDocument output = new BxDocument();
         for (BxPage page: document.getPages()) {
             output.addPage(segmentPage(page));

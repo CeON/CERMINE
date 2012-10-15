@@ -18,8 +18,9 @@ public class WordLengthMedianFeature extends FeatureCalculator<BxZone, BxPage> {
 		String text = object.toText();
 		String[] words = text.split("\\s");
 		List<Integer> wordLengths = new ArrayList<Integer>(words.length);
-		for(String word: words)
+		for(String word: words) {
 			wordLengths.add(word.length());
+		}
 		Collections.sort(wordLengths);
 		return wordLengths.get(wordLengths.size()/2);
 	}

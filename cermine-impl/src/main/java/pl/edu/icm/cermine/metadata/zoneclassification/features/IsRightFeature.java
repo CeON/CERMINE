@@ -5,7 +5,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class IsRightFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 
-	private static double TRESHOLD = 0.3;
+	private final static double TRESHOLD = 0.3;
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {
 		if(object.getX()+object.getWidth()/2.0 > context.getWidth()*(1-TRESHOLD))

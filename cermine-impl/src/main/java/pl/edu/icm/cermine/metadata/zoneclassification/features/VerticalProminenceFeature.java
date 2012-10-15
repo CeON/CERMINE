@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class VerticalProminenceFeature extends FeatureCalculator<BxZone, BxPage> {
 
-    private static Double ZONE_EPSILON = 1.0;
+    private final static Double ZONE_EPSILON = 1.0;
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

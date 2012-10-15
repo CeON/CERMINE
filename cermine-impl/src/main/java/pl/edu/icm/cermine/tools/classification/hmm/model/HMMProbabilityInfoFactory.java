@@ -7,7 +7,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class HMMProbabilityInfoFactory {
+public final class HMMProbabilityInfoFactory {
 
     private HMMProbabilityInfoFactory() {}
     

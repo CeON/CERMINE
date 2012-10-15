@@ -11,7 +11,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  * 
  * @author krusek
  */
-abstract public class AbstractFilterEnhancer implements Enhancer {
+public abstract class AbstractFilterEnhancer implements Enhancer {
 
     private boolean searchedFirstPageOnly = false;
 
@@ -50,7 +50,7 @@ abstract public class AbstractFilterEnhancer implements Enhancer {
         };
     }
 
-    private static abstract class FilterIterable<T> implements Iterable<T> {
+    private abstract static class FilterIterable<T> implements Iterable<T> {
 
         private List<T> list;
 
@@ -58,7 +58,7 @@ abstract public class AbstractFilterEnhancer implements Enhancer {
             this.list = list;
         }
 
-        abstract protected boolean match(T zone, int index, List<T> zones);
+        protected abstract boolean match(T zone, int index, List<T> zones);
 
         @Override
         public Iterator<T> iterator() {

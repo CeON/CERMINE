@@ -12,7 +12,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  *
  * @author krusek
  */
-abstract public class AbstractPatternEnhancer extends AbstractSimpleEnhancer {
+public abstract class AbstractPatternEnhancer extends AbstractSimpleEnhancer {
 
     private Pattern pattern;
 

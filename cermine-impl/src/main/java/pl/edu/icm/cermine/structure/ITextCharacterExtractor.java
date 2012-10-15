@@ -9,6 +9,7 @@ import com.itextpdf.text.pdf.parser.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -24,7 +25,7 @@ import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
  */
 public class ITextCharacterExtractor implements CharacterExtractor {
 
-    protected static final HashMap<String, PdfName> AltStandardFontsMap = new HashMap<String, PdfName>();
+    protected static final Map<String, PdfName> AltStandardFontsMap = new HashMap<String, PdfName>();
 
     static {
         AltStandardFontsMap.put("CourierNew",               PdfName.COURIER);

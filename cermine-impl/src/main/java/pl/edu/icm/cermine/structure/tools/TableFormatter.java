@@ -22,7 +22,7 @@ public class TableFormatter {
     }
 
     public void endRow() {
-        formatter.format("\n");
+        formatter.format("%n");
     }
 
     public void data(String text, int size, Alignment padding) {
@@ -61,7 +61,7 @@ public class TableFormatter {
     }
 
     public void endSeparator() {
-        formatter.format("\n");
+        formatter.format("%n");
     }
 
     public static enum Alignment {
@@ -84,6 +84,6 @@ public class TableFormatter {
             }
         };
 
-        abstract public String align(String text, int size);
+        public abstract String align(String text, int size);
     }
 }

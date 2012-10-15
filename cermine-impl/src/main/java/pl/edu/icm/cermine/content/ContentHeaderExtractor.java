@@ -94,13 +94,9 @@ public class ContentHeaderExtractor {
             for (BxPage page : doc.getPages()) {
                 for (BxZone zone : page.getZones()) {
                     if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_BODY)
-                            && !zone.getLabel().equals(BxZoneLabel.BODY_JUNK)
-                            && !zone.getLabel().equals(BxZoneLabel.BODY_EQUATION)
-                            && !zone.getLabel().equals(BxZoneLabel.BODY_EQUATION_LABEL)
-                            && !zone.getLabel().equals(BxZoneLabel.BODY_FIGURE)
-                            && !zone.getLabel().equals(BxZoneLabel.BODY_FIGURE_CAPTION)
-                            && !zone.getLabel().equals(BxZoneLabel.BODY_TABLE)
-                            && !zone.getLabel().equals(BxZoneLabel.BODY_TABLE_CAPTION)) {
+                            && (zone.getLabel().equals(BxZoneLabel.GEN_BODY)
+                            || zone.getLabel().equals(BxZoneLabel.BODY_CONTENT) 
+                            || zone.getLabel().equals(BxZoneLabel.BODY_HEADER))) {
                         for (BxLine line : zone.getLines()) {
                             FeatureVector fv = vectorBuilder.getFeatureVector(line, page);
                             if (contentStr.containsHeaderFirstLineText(line.toText())) {
@@ -159,11 +155,10 @@ public class ContentHeaderExtractor {
             if (lastCandidate.getWidth() < headerLine.getWidth() * headerLineWidthMultiplier) {
                 score++;
             }
-            if (lastCandidate.hasNext()) {
-                if (Math.abs(headerLine.getY() - firstCandidate.getY()) 
+            if (lastCandidate.hasNext() 
+                    && Math.abs(headerLine.getY() - firstCandidate.getY()) 
                   < Math.abs(lastCandidate.getY() - lastCandidate.getNext().getY()) * headerLineSpacingMultiplier) {
-                    score++;
-                }
+                score++;
             }
             if (score >= minHeaderLineScore) {
                 for (BxLine candidate : candidates) {

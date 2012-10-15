@@ -33,34 +33,34 @@ public class BxDocumentToTrueVizWriter {
 
     private static final DecimalFormat FORMAT = new DecimalFormat("0.000", new DecimalFormatSymbols(Locale.US));
 
-    public static final Map<BxZoneLabel, String> zoneLabelMap = new HashMap<BxZoneLabel, String>();
+    public static final Map<BxZoneLabel, String> ZONE_LABEL_MAP = new HashMap<BxZoneLabel, String>();
     static {
-        zoneLabelMap.put(BxZoneLabel.GEN_METADATA,          "bib_info");
-        zoneLabelMap.put(BxZoneLabel.GEN_BODY,              "body");
-        zoneLabelMap.put(BxZoneLabel.GEN_REFERENCES,        "references");
-        zoneLabelMap.put(BxZoneLabel.GEN_OTHER,             "other");
-        zoneLabelMap.put(BxZoneLabel.MET_ABSTRACT,          "abstract");
-        zoneLabelMap.put(BxZoneLabel.MET_AFFILIATION,       "affiliation");
-        zoneLabelMap.put(BxZoneLabel.MET_AUTHOR,            "author");
-        zoneLabelMap.put(BxZoneLabel.MET_BIB_INFO,          "bib_info");
-        zoneLabelMap.put(BxZoneLabel.MET_CORRESPONDENCE,    "correspondence");
-        zoneLabelMap.put(BxZoneLabel.MET_DATES,             "dates");
-        zoneLabelMap.put(BxZoneLabel.MET_EDITOR,            "editor");
-        zoneLabelMap.put(BxZoneLabel.MET_KEYWORDS,          "keywords");
-        zoneLabelMap.put(BxZoneLabel.MET_TITLE,             "title");
-        zoneLabelMap.put(BxZoneLabel.MET_TYPE,              "type");
-        zoneLabelMap.put(BxZoneLabel.BODY_CONTENT,          "body");
-        zoneLabelMap.put(BxZoneLabel.BODY_EQUATION,         "equation");
-        zoneLabelMap.put(BxZoneLabel.BODY_EQUATION_LABEL,   "equation_label");
-        zoneLabelMap.put(BxZoneLabel.BODY_FIGURE,           "figure");
-        zoneLabelMap.put(BxZoneLabel.BODY_FIGURE_CAPTION,   "figure_caption");
-        zoneLabelMap.put(BxZoneLabel.BODY_TABLE,            "table");
-        zoneLabelMap.put(BxZoneLabel.BODY_TABLE_CAPTION,    "table_caption");
-        zoneLabelMap.put(BxZoneLabel.OTH_COPYRIGHT,         "copyright");
-        zoneLabelMap.put(BxZoneLabel.OTH_HEADER,            "header");
-        zoneLabelMap.put(BxZoneLabel.OTH_FOOTER,            "footer");
-        zoneLabelMap.put(BxZoneLabel.OTH_PAGE_NUMBER,       "page_number");
-        zoneLabelMap.put(BxZoneLabel.OTH_UNKNOWN ,          "unknown");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_METADATA,          "bib_info");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_BODY,              "body");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_REFERENCES,        "references");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_OTHER,             "other");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_ABSTRACT,          "abstract");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_AFFILIATION,       "affiliation");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_AUTHOR,            "author");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_BIB_INFO,          "bib_info");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_CORRESPONDENCE,    "correspondence");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_DATES,             "dates");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_EDITOR,            "editor");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_KEYWORDS,          "keywords");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_TITLE,             "title");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_TYPE,              "type");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_CONTENT,          "body");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_EQUATION,         "equation");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_EQUATION_LABEL,   "equation_label");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_FIGURE,           "figure");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_FIGURE_CAPTION,   "figure_caption");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_TABLE,            "table");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_TABLE_CAPTION,    "table_caption");
+        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_COPYRIGHT,         "copyright");
+        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_HEADER,            "header");
+        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_FOOTER,            "footer");
+        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_PAGE_NUMBER,       "page_number");
+        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_UNKNOWN ,          "unknown");
     }
     
     private void appendProperty(Document doc, Element parent, String name, String value) {
@@ -149,8 +149,8 @@ public class BxDocumentToTrueVizWriter {
         node.appendChild(insetsNode);
         appendProperty(doc, node, "ZoneLines", "");
         if (zone.getLabel() != null) {
-            if (zoneLabelMap.containsKey(zone.getLabel())) {
-                appendClassification(doc, node, zoneLabelMap.get(zone.getLabel()), "");
+            if (ZONE_LABEL_MAP.containsKey(zone.getLabel())) {
+                appendClassification(doc, node, ZONE_LABEL_MAP.get(zone.getLabel()), "");
             } else {
                 appendClassification(doc, node, zone.getLabel().toString(), "");
             }

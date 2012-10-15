@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import org.apache.commons.lang.ArrayUtils;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
@@ -10,13 +11,13 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class PunctuationRelativeCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
+    private static final char[] PUNCT_CHARS = {'.', ',', '[', ']', ':', '-'};
+    
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int punctuationCount = 0;
         for (char character : zone.toText().toCharArray()) {
-            if (character == '.' || character == ','
-                    || character == '[' || character == ']'
-                    || character == ':' || character == '-') {
+            if (ArrayUtils.contains(PUNCT_CHARS, character)) {
                 punctuationCount++;
             }
         }

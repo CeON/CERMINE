@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine.evaluation;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -18,15 +17,15 @@ import pl.edu.icm.cermine.exception.TransformationException;
  *
  * @author krusek
  */
-abstract public class AbstractDualInputEvaluator<P, R extends Results<R>> extends AbstractEvaluator<P, R> {
+public abstract class AbstractDualInputEvaluator<P, R extends Results<R>> extends AbstractEvaluator<P, R> {
 
-    abstract protected Pattern getActualFilenamePattern();
+    protected abstract Pattern getActualFilenamePattern();
 
-    abstract protected String getExpectedFilenameReplacement();
+    protected abstract String getExpectedFilenameReplacement();
 
-    abstract protected P getExpectedDocument(Reader input) throws IOException;
+    protected abstract P getExpectedDocument(Reader input) throws IOException;
 
-    protected P getExpectedDocument(String path) throws FileNotFoundException, IOException {
+    protected P getExpectedDocument(String path) throws IOException {
         Reader input = new FileReader(path);
         try {
             return getExpectedDocument(input);
@@ -35,9 +34,9 @@ abstract public class AbstractDualInputEvaluator<P, R extends Results<R>> extend
         }
     }
 
-    abstract protected P getActualDocument(Reader input) throws AnalysisException, TransformationException;
+    protected abstract P getActualDocument(Reader input) throws AnalysisException, TransformationException;
 
-    protected P getActualDocument(String path) throws FileNotFoundException, AnalysisException, TransformationException, IOException {
+    protected P getActualDocument(String path) throws AnalysisException, TransformationException, IOException {
         Reader input = new FileReader(path);
         try {
             return getActualDocument(input);
@@ -47,7 +46,7 @@ abstract public class AbstractDualInputEvaluator<P, R extends Results<R>> extend
     }
 
     @Override
-    protected Documents<P> getDocuments(String directory, String filename) throws FileNotFoundException, IOException, AnalysisException, TransformationException {
+    protected Documents<P> getDocuments(String directory, String filename) throws IOException, AnalysisException, TransformationException {
         Matcher matcher = getActualFilenamePattern().matcher(filename);
         if (matcher.matches()) {
             StringBuffer buffer = new StringBuffer();

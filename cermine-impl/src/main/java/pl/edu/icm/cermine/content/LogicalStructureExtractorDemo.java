@@ -144,7 +144,7 @@ public class LogicalStructureExtractorDemo {
         System.out.println("Header Recall: " + hRecall + "%");
     }
     
-    private List<ZipEntry> getEntries(ZipFile zipFile) throws URISyntaxException, ZipException, IOException {
+    private List<ZipEntry> getEntries(ZipFile zipFile) throws URISyntaxException, IOException {
         List<ZipEntry> entries = new ArrayList<ZipEntry>();
                
         Enumeration enumeration = zipFile.entries();

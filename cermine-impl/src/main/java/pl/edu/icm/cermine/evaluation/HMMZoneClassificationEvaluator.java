@@ -22,7 +22,6 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 	@Override
 	protected HMMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments)
 	{
-		System.out.println("HMM");
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
         BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         node.setFeatureVectorBuilder(featureVectorBuilder);
@@ -31,15 +30,15 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
         List<TrainingElement<BxZoneLabel>> trainingElements;
         try {
         	trainingElements = node.process(trainingDocuments);
-        } catch(Exception e) {
-			throw new RuntimeException("Unable to process the delivered training documents!");
+        } catch (Exception e) {
+			throw new RuntimeException("Unable to process the delivered training documents!", e);
 		}
         
 		HMMProbabilityInfo<BxZoneLabel> hmmProbabilities;
 		try {
 			hmmProbabilities = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, featureVectorBuilder);
-		} catch(Exception e) {
-			throw new RuntimeException("Unable to figure out HMM probability information!");
+		} catch (Exception e) {
+			throw new RuntimeException("Unable to figure out HMM probability information!", e);
 		}
 		
 		HMMZoneClassifier zoneClassifier = new HMMZoneClassifier(
@@ -50,7 +49,7 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 		return zoneClassifier;
 	}
 	
-	public static void main(String[] args) throws ParseException, RuntimeException, AnalysisException, IOException {
+	public static void main(String[] args) throws ParseException, AnalysisException, IOException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new HMMZoneClassificationEvaluator());
 	}
 

@@ -58,8 +58,8 @@ public class XYCutSegmenter implements DocumentSegmenter {
     List<BxZone> cutZoneIn2(BxZone currentZone) {
         List<BxChunk> chunks = currentZone.getChunks();
 
-        TreeSet<Range> sameYRangeList = toRanges(chunks, Direction.Y);
-        TreeSet<Range> sameXRangeList = toRanges(chunks, Direction.X);
+        SortedSet<Range> sameYRangeList = toRanges(chunks, Direction.Y);
+        SortedSet<Range> sameXRangeList = toRanges(chunks, Direction.X);
         List<Valley> xValleys = toValleys(sameXRangeList, Direction.X);
         List<Valley> yValleys = toValleys(sameYRangeList, Direction.Y);
 
@@ -104,33 +104,30 @@ public class XYCutSegmenter implements DocumentSegmenter {
         double maxX = 0;
         double minY = 0;
         double maxY = 0;
-        if (chunksList != null) {
-            if (!chunksList.isEmpty()) {
-                minX = chunksList.get(0).getBounds().getX();
-                maxX = chunksList.get(0).getBounds().getX();
-                minY = chunksList.get(0).getBounds().getY();
-                maxY = chunksList.get(0).getBounds().getY();
-                for (BxChunk bc : chunksList) {
-                    if (bc.getBounds().getX() < minX) {
-                        minX = bc.getBounds().getX();
-                    }
-                    if (bc.getBounds().getX() + bc.getBounds().getWidth() > maxX) {
-                        maxX = bc.getBounds().getX() + bc.getBounds().getWidth();
-                    }
-                    if (bc.getBounds().getY() < minY) {
-                        minY = bc.getBounds().getY();
-                    }
-                    if (bc.getBounds().getY() + bc.getBounds().getHeight() > maxY) {
-                        maxY = bc.getBounds().getY() + bc.getBounds().getHeight();
-                    }
+        if (chunksList != null && !chunksList.isEmpty()) {
+            minX = chunksList.get(0).getBounds().getX();
+            maxX = chunksList.get(0).getBounds().getX();
+            minY = chunksList.get(0).getBounds().getY();
+            maxY = chunksList.get(0).getBounds().getY();
+            for (BxChunk bc : chunksList) {
+                if (bc.getBounds().getX() < minX) {
+                    minX = bc.getBounds().getX();
+                }
+                if (bc.getBounds().getX() + bc.getBounds().getWidth() > maxX) {
+                    maxX = bc.getBounds().getX() + bc.getBounds().getWidth();
+                }
+                if (bc.getBounds().getY() < minY) {
+                    minY = bc.getBounds().getY();
+                }
+                if (bc.getBounds().getY() + bc.getBounds().getHeight() > maxY) {
+                    maxY = bc.getBounds().getY() + bc.getBounds().getHeight();
                 }
             }
         }
-        BxBounds bounds = new BxBounds(minX, minY, maxX - minX, maxY - minY);
-        return bounds;
+        return new BxBounds(minX, minY, maxX - minX, maxY - minY);
     }
 
-    List<List<BxChunk>> divideChunks(TreeSet<Range> notDivided, Valley maxValley) {
+    List<List<BxChunk>> divideChunks(SortedSet<Range> notDivided, Valley maxValley) {
         Range boundRange = new Range();
         boundRange.setRangeStart(maxValley.getValleyStart());
         SortedSet<Range> headSet = notDivided.headSet(boundRange);
@@ -170,7 +167,7 @@ public class XYCutSegmenter implements DocumentSegmenter {
         return max;
     }
 
-    List<Valley> toValleys(TreeSet<Range> sr, Direction direction) {
+    List<Valley> toValleys(SortedSet<Range> sr, Direction direction) {
         Range[] tab = new Range[sr.size()];
         List<Valley> valleysList = new ArrayList<Valley>();
         sr.toArray(tab);
@@ -184,7 +181,7 @@ public class XYCutSegmenter implements DocumentSegmenter {
         return valleysList;
     }
 
-    TreeSet<Range> toRanges(List<BxChunk> chunkList, Direction d) {
+    SortedSet<Range> toRanges(List<BxChunk> chunkList, Direction d) {
         TreeSet<Range> sameRangeSet = new TreeSet<Range>();
         for (BxChunk chunk : chunkList) {
             boolean classified = false;

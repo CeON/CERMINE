@@ -98,17 +98,6 @@ public class DocumentContentStructure {
         return pars;
     }
     
-    /*
-    public List<String> getContentLines() {
-        List<String> lines = new ArrayList<String>();
-        if (parts != null) {
-            for (DocumentContentPart part : parts) {
-                lines.addAll(part.getContents());
-            }
-        }
-        return lines;
-    }*/
-    
     public int getParagraphCount() {
         int sum = 0;
         for (DocumentContentPart part : parts) {
@@ -147,13 +136,11 @@ public class DocumentContentStructure {
         List<BxDocContentPart> contentParts = contentStructure.getParts();
         List<BxDocContentPart> sectionParts = new ArrayList<BxDocContentPart>();
         for (BxDocContentPart contentPart : contentParts) {
-            if (contentPart.getLevelId() == topClusterNum) {
-                if (!sectionParts.isEmpty()) {
-                    DocumentContentPart dcp = new DocumentContentPart();
-                    dcp.buildFromBxDocContent(sectionParts, 1);
-                    parts.add(dcp);
-                    sectionParts.clear();
-                }
+            if (contentPart.getLevelId() == topClusterNum && !sectionParts.isEmpty()) {
+                DocumentContentPart dcp = new DocumentContentPart();
+                dcp.buildFromBxDocContent(sectionParts, 1);
+                parts.add(dcp);
+                sectionParts.clear();
             }
             sectionParts.add(contentPart);
         }
@@ -170,15 +157,12 @@ public class DocumentContentStructure {
         String topClusterName = elements.get(0).getName();
 
         for (Element element : elements) {
-            if (element.getName().startsWith("h")) {
-                if (topClusterName.equals(element.getName())) {
-                    if (!partElements.isEmpty()) {
-                        DocumentContentPart dcp = new DocumentContentPart();
-                        dcp.buildFromXML(partElements, 1);
-                        parts.add(dcp);
-                        partElements.clear();
-                    }
-                }
+            if (element.getName().startsWith("h") && topClusterName.equals(element.getName())
+                    && !partElements.isEmpty()) {
+                DocumentContentPart dcp = new DocumentContentPart();
+                dcp.buildFromXML(partElements, 1);
+                parts.add(dcp);
+                partElements.clear();
             }
             partElements.add(element);
         }
@@ -395,17 +379,13 @@ public class DocumentContentStructure {
                 } else if (topHeaderName == null && element.getName().equals("p")) {
                     paragraphs.add(new Paragraph(element.getValue(), this));
                 } else {
-                    if (element.getName().startsWith("h")) {
-                        if (topHeaderName.equals(element.getName())) {
-                            if (!partElements.isEmpty()) {
-                                DocumentContentPart dcp = new DocumentContentPart();
-                                dcp.parent = this;
-                                dcp.buildFromXML(partElements, level + 1);
-                                parts.add(dcp);
-                                partElements.clear();
-
-                            }
-                        }
+                    if (element.getName().startsWith("h") && topHeaderName.equals(element.getName())
+                            && !partElements.isEmpty()) {
+                        DocumentContentPart dcp = new DocumentContentPart();
+                        dcp.parent = this;
+                        dcp.buildFromXML(partElements, level + 1);
+                        parts.add(dcp);
+                        partElements.clear();
                     }
                     partElements.add(element);
                 }
@@ -441,14 +421,12 @@ public class DocumentContentStructure {
             List<BxDocContentPart> sectionContentParts = new ArrayList<BxDocContentPart>();
             
             for (BxDocContentPart contentPart : contentParts) {
-                if (contentPart.getLevelId() == topClusterNum) {
-                    if (!sectionContentParts.isEmpty()) {
-                        DocumentContentPart dcp = new DocumentContentPart();
-                        dcp.parent = this;
-                        dcp.buildFromBxDocContent(sectionContentParts, level+1);
-                        parts.add(dcp);
-                        sectionContentParts.clear();
-                    }
+                if (contentPart.getLevelId() == topClusterNum && !sectionContentParts.isEmpty()) {
+                    DocumentContentPart dcp = new DocumentContentPart();
+                    dcp.parent = this;
+                    dcp.buildFromBxDocContent(sectionContentParts, level+1);
+                    parts.add(dcp);
+                    sectionContentParts.clear();
                 }
                 sectionContentParts.add(contentPart);
             }

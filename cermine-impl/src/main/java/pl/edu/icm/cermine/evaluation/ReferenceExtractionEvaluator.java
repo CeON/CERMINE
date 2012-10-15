@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine.evaluation;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -103,7 +102,7 @@ public class ReferenceExtractionEvaluator extends AbstractDualInputEvaluator<Str
         result.print();
     }
 
-    public static void main(String[] args) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
         AbstractEvaluator.main("ReferenceExtractionEvaluator", args, DEFAULT_CONFIGURATION_PATH);
     }
 

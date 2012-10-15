@@ -52,9 +52,9 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
 
     protected abstract void printFinalResults(R results);
 
-    abstract protected R compareDocuments(P expected, P actual);
+    protected abstract R compareDocuments(P expected, P actual);
 
-    abstract protected Documents<P> getDocuments(String directory, String filename) throws AnalysisException, FileNotFoundException, IOException, TransformationException;
+    protected abstract Documents<P> getDocuments(String directory, String filename) throws AnalysisException, FileNotFoundException, IOException, TransformationException;
 
     public Detail getDetail() {
         return detail;
@@ -97,7 +97,7 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
         printFinalResults(results);
     }
 
-    public static void main(String programName, String[] args, String defaultConfigPath) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
+    public static void main(String programName, String[] args, String defaultConfigPath) throws AnalysisException, IOException, TransformationException {
         Options options = new Options();
         options.addOption("compact", false, "do not print results for pages");
         options.addOption("config", true, "use given evaluator configuration file");
@@ -151,8 +151,8 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
         FULL, COMPACT, MINIMAL;
     }
     
-    public static interface Results<R> {
-        public void add(R results);
+    public interface Results<R> {
+        void add(R results);
     }
 
     protected static class Documents<P> {

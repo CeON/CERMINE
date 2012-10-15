@@ -111,10 +111,9 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
         private void endAffiliation() {
             if (affiliationBuilder.length() > 0) {
                 String text = affiliationBuilder.toString();
-                if (!NONAFFILIATION_PATTERN.matcher(text).matches()) {
-                    if (isIndex(affiliationRef) || affiliationRef.equals("")) {
-                        affiliations.put(affiliationRef, text);
-                    }
+                if (!NONAFFILIATION_PATTERN.matcher(text).matches()
+                        && (isIndex(affiliationRef) || affiliationRef.equals(""))) {
+                    affiliations.put(affiliationRef, text);
                 }
                 affiliationBuilder.setLength(0);
             }

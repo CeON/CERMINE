@@ -695,7 +695,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      *
      * The ordering is not consistent with equals.
      */
-    private static class ComponentXComparator implements Comparator<Component> {
+    private static final class ComponentXComparator implements Comparator<Component> {
 
         private ComponentXComparator() {
         }
@@ -717,7 +717,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      *
      * The ordering is not consistent with equals.
      */
-    private static class NeighborDistanceComparator implements Comparator<Neighbor> {
+    private static final class NeighborDistanceComparator implements Comparator<Neighbor> {
 
         private NeighborDistanceComparator() {
         }
@@ -869,7 +869,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Filter class for neighbor objects that checks if the angle of the
      * neighbor is within specified range.
      */
-    private static abstract class AngleFilter {
+    private abstract static class AngleFilter {
 
         private final double lowerAngle;
         private final double upperAngle;
@@ -910,7 +910,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         
         public abstract boolean matches(Neighbor neighbor);
 
-        public static class AndFilter extends AngleFilter {
+        public static final class AndFilter extends AngleFilter {
 
             private AndFilter(double lowerAngle, double upperAngle) {
                 super(lowerAngle, upperAngle);
@@ -923,7 +923,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
 
         }
 
-        public static class OrFilter extends AngleFilter {
+        public static final class OrFilter extends AngleFilter {
 
             private OrFilter(double lowerAngle, double upperAngle) {
                 super(lowerAngle, upperAngle);

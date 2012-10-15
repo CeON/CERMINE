@@ -12,7 +12,7 @@ import org.xml.sax.SAXException;
  *
  * @author krusek
  */
-public class TrueVizUtils {
+public final class TrueVizUtils {
 
     private static final String TRUEVIZ_DTD = "pl/edu/icm/cermine/structure/imports/Trueviz.dtd";
 
@@ -45,4 +45,7 @@ public class TrueVizUtils {
         });
         return builder;
     }
+
+    private TrueVizUtils() {}
+    
 }

@@ -24,20 +24,18 @@ import pl.edu.icm.cermine.structure.model.*;
  * @author krusek
  */
 public class MargToTextrImporter {
-    
-    private static final Logger log = LoggerFactory.getLogger(MargToTextrImporter.class);
-    
-    private static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
-    
-    static {
-        zoneLabelMap.put("abstract",    BxZoneLabel.MET_ABSTRACT);
-        zoneLabelMap.put("affiliation", BxZoneLabel.MET_AFFILIATION);
-        zoneLabelMap.put("author",      BxZoneLabel.MET_AUTHOR);
-        zoneLabelMap.put("title",       BxZoneLabel.MET_TITLE);
-        zoneLabelMap.put("footer",      BxZoneLabel.OTH_FOOTER);
-        zoneLabelMap.put("header",      BxZoneLabel.OTH_HEADER);
-    }
 
+    private static final Logger log = LoggerFactory.getLogger(MargToTextrImporter.class);
+    private static final Map<String, BxZoneLabel> ZONE_LABEL_MAP = new HashMap<String, BxZoneLabel>();
+
+    static {
+        ZONE_LABEL_MAP.put("abstract", BxZoneLabel.MET_ABSTRACT);
+        ZONE_LABEL_MAP.put("affiliation", BxZoneLabel.MET_AFFILIATION);
+        ZONE_LABEL_MAP.put("author", BxZoneLabel.MET_AUTHOR);
+        ZONE_LABEL_MAP.put("title", BxZoneLabel.MET_TITLE);
+        ZONE_LABEL_MAP.put("footer", BxZoneLabel.OTH_FOOTER);
+        ZONE_LABEL_MAP.put("header", BxZoneLabel.OTH_HEADER);
+    }
 
     public List<BxPage> read(String string, Object... hints) throws TransformationException {
         return read(new StringReader(string), hints);
@@ -134,14 +132,14 @@ public class MargToTextrImporter {
         }
     }
 
-    private ArrayList<Element> getChildren(String name, Element el) {
-         ArrayList<Element> list=new ArrayList<Element>();
-         NodeList nl=el.getChildNodes();
-         for (int i=0; i<nl.getLength();i++) {
-            Node n=nl.item(i);
+    private List<Element> getChildren(String name, Element el) {
+        ArrayList<Element> list = new ArrayList<Element>();
+        NodeList nl = el.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node n = nl.item(i);
             if (n instanceof Element) {
-                Element e=(Element) n;
-                if (e.getTagName().equalsIgnoreCase(name)){
+                Element e = (Element) n;
+                if (e.getTagName().equalsIgnoreCase(name)) {
                     list.add(e);
                 }
             }
@@ -149,42 +147,39 @@ public class MargToTextrImporter {
         return list;
     }
 
-
-
-
     private BxBounds parseElementContainingVertexes(Element el) {
-        ArrayList<Element> vs = getChildren("Vertex",el);
+        List<Element> vs = getChildren("Vertex", el);
         if (vs.isEmpty()) {
             return null;
         }
-        ArrayList<ComparablePair<Integer, Integer>> list = new ArrayList<ComparablePair<Integer, Integer>>();
-        int minx=Integer.MAX_VALUE;
-        int maxx=Integer.MIN_VALUE;
-        int miny=Integer.MAX_VALUE;
-        int maxy=Integer.MIN_VALUE;
+        List<ComparablePair<Integer, Integer>> list = new ArrayList<ComparablePair<Integer, Integer>>();
+        int minx = Integer.MAX_VALUE;
+        int maxx = Integer.MIN_VALUE;
+        int miny = Integer.MAX_VALUE;
+        int maxy = Integer.MIN_VALUE;
         for (Element v : vs) {
             int x = Integer.parseInt(v.getAttribute("x"));
-            if (x<minx) {
-                minx=x;
+            if (x < minx) {
+                minx = x;
             }
-            if (x>maxx) {
-                maxx=x;
+            if (x > maxx) {
+                maxx = x;
             }
             int y = Integer.parseInt(v.getAttribute("y"));
-            if (y<miny) {
-                miny=y;
+            if (y < miny) {
+                miny = y;
             }
-            if (y>maxy) {
-                maxy=y;
+            if (y > maxy) {
+                maxy = y;
             }
             list.add(new ComparablePair<Integer, Integer>(x, y));
         }
         Collections.sort(list);
-        BxBounds ret = new BxBounds(minx, miny, maxx-minx, maxy - miny);
-        if (ret.getHeight()==0 || ret.getWidth()==0) {
+        BxBounds ret = new BxBounds(minx, miny, maxx - minx, maxy - miny);
+        if (ret.getHeight() == 0 || ret.getWidth() == 0) {
             log.warn("problems with height or width points are:");
-            for (ComparablePair<Integer, Integer> pa:list) {
-                log.warn("\t"+pa.o1+" , "+pa.o2);
+            for (ComparablePair<Integer, Integer> pa : list) {
+                log.warn("\t" + pa.o1 + " , " + pa.o2);
 
             }
         }
@@ -194,22 +189,22 @@ public class MargToTextrImporter {
     private BxChunk parseCharacterElement(Element charE) {
         BxBounds bou = null;
         String text = null;
-        if (!getChildren("CharacterCorners",charE).isEmpty()) {
-            bou = (parseElementContainingVertexes(getChildren("CharacterCorners",charE).get(0)));
+        if (!getChildren("CharacterCorners", charE).isEmpty()) {
+            bou = (parseElementContainingVertexes(getChildren("CharacterCorners", charE).get(0)));
         }
-        if (!(getChildren("GT_Text",charE).isEmpty())) {
-            text = getChildren("GT_Text",charE).get(0).getAttribute("Value");
+        if (!(getChildren("GT_Text", charE).isEmpty())) {
+            text = getChildren("GT_Text", charE).get(0).getAttribute("Value");
         }
         return new BxChunk(bou, text);
     }
 
     private BxWord parseWordElement(Element wordE) {
         BxWord word = new BxWord();
-        if (!(getChildren("WordCorners",wordE).isEmpty())) {
-            word.setBounds(parseElementContainingVertexes(getChildren("WordCorners",wordE).get(0)));
+        if (!(getChildren("WordCorners", wordE).isEmpty())) {
+            word.setBounds(parseElementContainingVertexes(getChildren("WordCorners", wordE).get(0)));
         }
 
-        List<Element> e = getChildren("Character",wordE);
+        List<Element> e = getChildren("Character", wordE);
         for (Element caE : e) {
             BxChunk ch = parseCharacterElement(caE);
             word.addChunks(ch);
@@ -219,10 +214,10 @@ public class MargToTextrImporter {
 
     private BxLine parseLineElement(Element lineE) {
         BxLine line = new BxLine();
-         if (!(getChildren("LineCorners",lineE).isEmpty()))  {
-            line.setBounds(parseElementContainingVertexes(getChildren("LineCorners",lineE).get(0)));
+        if (!(getChildren("LineCorners", lineE).isEmpty())) {
+            line.setBounds(parseElementContainingVertexes(getChildren("LineCorners", lineE).get(0)));
         }
-        List<Element> e = getChildren("Word",lineE);
+        List<Element> e = getChildren("Word", lineE);
         for (Element we : e) {
             BxWord wo = parseWordElement(we);
             line.addWord(wo);
@@ -231,11 +226,11 @@ public class MargToTextrImporter {
     }
 
     private BxZoneLabel parseClassification(Element elClassicfication) {
-        ArrayList<Element> eli=getChildren("Category",elClassicfication);
-        Element catEl = eli.isEmpty()?null:eli.get(0);
+        List<Element> eli = getChildren("Category", elClassicfication);
+        Element catEl = eli.isEmpty() ? null : eli.get(0);
         if (catEl == null) {
-            eli=getChildren("Type",elClassicfication);
-            catEl = eli.isEmpty()?null:eli.get(0);
+            eli = getChildren("Type", elClassicfication);
+            catEl = eli.isEmpty() ? null : eli.get(0);
         }
         if (catEl == null) {
             return null;
@@ -244,21 +239,21 @@ public class MargToTextrImporter {
         if (val == null) {
             return null;
         }
-        if (zoneLabelMap.containsKey(val.toLowerCase())) {
-            return zoneLabelMap.get(val.toLowerCase());
+        if (ZONE_LABEL_MAP.containsKey(val.toLowerCase())) {
+            return ZONE_LABEL_MAP.get(val.toLowerCase());
         }
         return BxZoneLabel.OTH_UNKNOWN;
     }
 
     private BxZone parseZoneNode(Element zoneE) {
         BxZone zone = new BxZone();
-        if (!getChildren("Classification",zoneE).isEmpty()) {
-            zone.setLabel(parseClassification(getChildren("Classification",zoneE).get(0)));
+        if (!getChildren("Classification", zoneE).isEmpty()) {
+            zone.setLabel(parseClassification(getChildren("Classification", zoneE).get(0)));
         }
-        if (!getChildren("ZoneCorners",zoneE).isEmpty()) {
-            zone.setBounds(parseElementContainingVertexes(getChildren("ZoneCorners",zoneE).get(0)));
+        if (!getChildren("ZoneCorners", zoneE).isEmpty()) {
+            zone.setBounds(parseElementContainingVertexes(getChildren("ZoneCorners", zoneE).get(0)));
         }
-        List<Element> e = getChildren("Line",zoneE);
+        List<Element> e = getChildren("Line", zoneE);
         for (Element lin : e) {
             BxLine li = parseLineElement(lin);
             zone.addLine(li);
@@ -273,7 +268,7 @@ public class MargToTextrImporter {
         double minX = 0, minY = 0, maxX = 0, maxY = 0;
         boolean started = false;
 
-        List<Element> e = getChildren("Zone",elem);
+        List<Element> e = getChildren("Zone", elem);
         for (Element zo : e) {
             BxZone zon = parseZoneNode(zo);
             page.addZone(zon);
@@ -317,12 +312,11 @@ public class MargToTextrImporter {
         return page.setBounds(new BxBounds(minX, minY, maxX - minX, maxY - minY));
     }
 
-    private BxPage importSource(InputSource source) throws IOException, ParserConfigurationException, SAXException{
+    private BxPage importSource(InputSource source) throws IOException, ParserConfigurationException, SAXException {
         Document doc = TrueVizUtils.newDocumentBuilder().parse(source);
 
         if ("Page".equalsIgnoreCase(doc.getDocumentElement().getTagName())) {
-            BxPage page = parsePageNode(doc.getDocumentElement());
-            return page;
+            return parsePageNode(doc.getDocumentElement());
         }
 
         throw new UnsupportedDataTypeException("There were no example of this type contact kura for more info");

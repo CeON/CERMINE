@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
+import java.util.SortedSet;
 import javax.xml.parsers.ParserConfigurationException;
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -51,7 +51,7 @@ public class XYCutPageSegmenterTest {
 
     @Test
     public void toRanges() {
-        TreeSet<Range> rangesList = xy.toRanges(generatedVertices,
+        SortedSet<Range> rangesList = xy.toRanges(generatedVertices,
                 Direction.X);
         assertEquals(56, rangesList.size());
 
@@ -74,7 +74,7 @@ public class XYCutPageSegmenterTest {
 
     @Test
     public void toValleyTest() {
-        TreeSet<Range> rangesYList = xy.toRanges(generatedVertices,
+        SortedSet<Range> rangesYList = xy.toRanges(generatedVertices,
                 Direction.Y);
         List<Valley> toValleys = xy.toValleys(rangesYList, Direction.Y);
         assertEquals(32, toValleys.size());
@@ -83,10 +83,10 @@ public class XYCutPageSegmenterTest {
 
     @Test
     public void maxValleyTest() {
-        TreeSet<Range> rangesYList = xy.toRanges(generatedVertices,
+        SortedSet<Range> rangesYList = xy.toRanges(generatedVertices,
                 Direction.Y);
         List<Valley> toYValleys = xy.toValleys(rangesYList, Direction.Y);
-        TreeSet<Range> rangesXList = xy.toRanges(generatedVertices,
+        SortedSet<Range> rangesXList = xy.toRanges(generatedVertices,
                 Direction.X);
         List<Valley> toXValleys = xy.toValleys(rangesXList, Direction.X);
         Valley maxValley = xy.maxValley(toXValleys, toYValleys);
@@ -99,10 +99,10 @@ public class XYCutPageSegmenterTest {
     @Test
     public void divideChunksTest() {
 
-        TreeSet<Range> rangesYList = xy.toRanges(generatedVertices,
+        SortedSet<Range> rangesYList = xy.toRanges(generatedVertices,
                 Direction.Y);
         List<Valley> toYValleys = xy.toValleys(rangesYList, Direction.Y);
-        TreeSet<Range> rangesXList = xy.toRanges(generatedVertices,
+        SortedSet<Range> rangesXList = xy.toRanges(generatedVertices,
                 Direction.X);
         List<Valley> toXValleys = xy.toValleys(rangesXList, Direction.X);
         Valley maxValley = xy.maxValley(toXValleys, toYValleys);

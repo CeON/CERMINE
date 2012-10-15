@@ -10,7 +10,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class DecisionTreeBuilder {
+public final class DecisionTreeBuilder {
 
     /* This field causes the expansion of tree nodes to be stopped, when there 
      * are less that stopExpanding training elements arriving to the node.
@@ -156,7 +156,7 @@ public class DecisionTreeBuilder {
                     }
                 }
 
-                if (label1 != label2) {
+                if (label1.equals(label2)) {
                     double leftEntropy = leftLabelsProb.getEntropy();
                     double rightEntropy = rightLabelsProb.getEntropy();
 

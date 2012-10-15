@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine.evaluation;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -8,8 +7,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.DocumentSegmenter;
+import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
@@ -333,11 +332,11 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         }
 
         public void printSummary(Formatter formatter) {
-            formatter.format("      * all      : %8d\n", all);
-            formatter.format("      * matched  : %8d\n", matched);
-            formatter.format("      * splitted : %8d\n", splitted);
-            formatter.format("      * merged   : %8d\n", merged);
-            formatter.format("      * score    : %7.2f%%\n", getScore() * 100);
+            formatter.format("      * all      : %8d%n", all);
+            formatter.format("      * matched  : %8d%n", matched);
+            formatter.format("      * splitted : %8d%n", splitted);
+            formatter.format("      * merged   : %8d%n", merged);
+            formatter.format("      * score    : %7.2f%%%n", getScore() * 100);
         }
 
         public double getScore() {
@@ -350,7 +349,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         }
     }
     
-    public static void main(String[] args) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
         main("SegmentationEvaluator", args, DEFAULT_CONFIGURATION_PATH);
     }
 }

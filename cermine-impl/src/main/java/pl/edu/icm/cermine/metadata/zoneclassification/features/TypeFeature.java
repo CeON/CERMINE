@@ -18,7 +18,7 @@ public class TypeFeature extends FeatureCalculator<BxZone, BxPage> {
 
         int count = 0;
         for (String keyword : keywords) {
-            if (zone.toText().toLowerCase().equals(keyword)) {
+            if (zone.toText().equalsIgnoreCase(keyword)) {
                 count++;
             }
         }

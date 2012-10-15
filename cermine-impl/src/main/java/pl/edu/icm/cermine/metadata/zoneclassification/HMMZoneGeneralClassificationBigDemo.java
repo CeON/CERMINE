@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.zip.ZipException;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
@@ -37,12 +36,12 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 
-public class HMMZoneGeneralClassificationBigDemo {
+public final class HMMZoneGeneralClassificationBigDemo {
 
 	protected static final String HMM_TRAIN_FILE = "xmls.zip";
 	private static final String HMM_TEST_FILE = "/09629351.xml";
 
-    public HMMZoneGeneralClassificationBigDemo() {}
+    private HMMZoneGeneralClassificationBigDemo() {}
     
 	public static BxDocument getTestFile() throws TransformationException, AnalysisException {
         InputStream is = HMMZoneClassificationDemo.class.getResourceAsStream(HMM_TEST_FILE);
@@ -53,7 +52,7 @@ public class HMMZoneGeneralClassificationBigDemo {
         return new BxDocument().setPages(pages);
 	}
 
-    public static void main(String[] args) throws TransformationException, AnalysisException, ZipException, IOException, URISyntaxException {
+    public static void main(String[] args) throws TransformationException, AnalysisException, IOException, URISyntaxException {
         
         // 1.1 construct vector of features builder
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =

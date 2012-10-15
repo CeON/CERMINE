@@ -10,19 +10,19 @@ import pl.edu.icm.cermine.structure.model.BxZone;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
-	static final String[] monthsRegexps = new String[36];
-	static final String[] digitRegexps = {
+	static final String[] MONTH_REGEXPS = new String[36];
+	static final String[] DIGIT_REGEXPS = {
 			"\\d{4}[ \\.-/]\\d{2}[ \\.-/]\\d{2}",
 			"\\d{2}[ \\.-/]\\d{2}[ \\.-/]\\d{4}"
 	};
-	static final String[] months = { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+	static final String[] MONTHS = { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 	
 	static {
 		Integer idx=0;
-		for(String month: months) {
-			monthsRegexps[idx] = "\\d{4}" + "[ \\.-/]" + month + "[ \\.-/]" + "\\d{2}";
-			monthsRegexps[idx+12] = "\\d{2}" + "[ \\.-/]" + month + "[ \\.-/]" + "\\d{4}";
-			monthsRegexps[idx+24] = "\\d{4}" + "[ ]" + month.substring(0, 3) + "\\.?[ ]" + "\\d{2}";
+		for(String month: MONTHS) {
+			MONTH_REGEXPS[idx] = "\\d{4}" + "[ \\.-/]" + month + "[ \\.-/]" + "\\d{2}";
+			MONTH_REGEXPS[idx+12] = "\\d{2}" + "[ \\.-/]" + month + "[ \\.-/]" + "\\d{4}";
+			MONTH_REGEXPS[idx+24] = "\\d{4}" + "[ ]" + month.substring(0, 3) + "\\.?[ ]" + "\\d{2}";
 			++idx;
 		}
 	}
@@ -30,7 +30,7 @@ public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
 		String text = zone.toText().toLowerCase();
-		for(String regex: monthsRegexps) {
+		for(String regex: MONTH_REGEXPS) {
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(text);
 			if (matcher.find()) {
@@ -38,7 +38,7 @@ public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
             }
 		}
 
-		for(String regex: digitRegexps) {
+		for(String regex: DIGIT_REGEXPS) {
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(text);
 			if (matcher.find()) {

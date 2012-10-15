@@ -73,11 +73,9 @@ public class ContentCleaner {
                         score++;
                     }
                 }
-                if (next != null) {
-                    if (line.getX() > next.getX() && line.getX() - next.getX() < paragraphLineIndentMultiplier * maxLen 
+                if (next != null && line.getX() > next.getX() && line.getX() - next.getX() < paragraphLineIndentMultiplier * maxLen 
                             && line.getX() - next.getX() > minParagraphIndent) {
-                        score++;
-                    }
+                    score++;
                 }
                 
                 if (score >= firstParagraphLineMinScore) {

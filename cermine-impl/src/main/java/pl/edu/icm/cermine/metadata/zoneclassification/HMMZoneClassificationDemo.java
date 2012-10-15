@@ -26,7 +26,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  *
  * @author Dominika Tkaczyk
  */
-public class HMMZoneClassificationDemo {
+public final class HMMZoneClassificationDemo {
 
     protected static final String HMM_TEST_FILE = "plik.xml";
 

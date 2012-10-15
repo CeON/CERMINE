@@ -2,6 +2,7 @@ package pl.edu.icm.cermine.structure.tools;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Histogram for double values in range [minValue, maxValue].
@@ -182,7 +183,6 @@ public class Histogram implements Iterable<Histogram.Bin> {
                 peakIndex = i;
             }
         }
-//        return ((double) peakIndex + 0.5) * resolution + min;
         int peakEndIndex = peakIndex + 1;
         while(peakEndIndex < frequencies.length && frequencies[peakEndIndex] == frequencies[peakIndex]) {
             peakEndIndex++;
@@ -208,7 +208,7 @@ public class Histogram implements Iterable<Histogram.Bin> {
     public Iterator<Bin> iterator() {
         return new Iterator() {
 
-            int index = 0;
+            private int index = 0;
 
             @Override
             public boolean hasNext() {
@@ -217,6 +217,9 @@ public class Histogram implements Iterable<Histogram.Bin> {
 
             @Override
             public Object next() {
+                if (index >= frequencies.length) {
+                    throw new NoSuchElementException();
+                }
                 return new Bin(index++);
             }
 
@@ -228,7 +231,7 @@ public class Histogram implements Iterable<Histogram.Bin> {
         };
     }
 
-    public class Bin {
+    public final class Bin {
 
         private int index;
 

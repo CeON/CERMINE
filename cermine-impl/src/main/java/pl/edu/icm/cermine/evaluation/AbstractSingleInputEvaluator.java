@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine.evaluation;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -17,13 +16,13 @@ import pl.edu.icm.cermine.exception.TransformationException;
  *
  * @author krusek
  */
-abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>> extends AbstractEvaluator<P, R> {
+public abstract class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>> extends AbstractEvaluator<P, R> {
 
-
-    abstract protected L readDocument(Reader input) throws TransformationException;
+    protected abstract L readDocument(Reader input) throws TransformationException;
 
     protected abstract Pattern getFilenamePattern();
-    protected L readDocument(String path) throws FileNotFoundException, TransformationException, IOException {
+    
+    protected L readDocument(String path) throws TransformationException, IOException {
         Reader input = new FileReader(path);
         try {
             return readDocument(input);
@@ -41,7 +40,7 @@ abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>
     protected abstract P prepareActualDocument(L document) throws AnalysisException;
 
     @Override
-    protected Documents<P> getDocuments(String directory, String filename) throws FileNotFoundException, TransformationException, IOException, AnalysisException {
+    protected Documents<P> getDocuments(String directory, String filename) throws TransformationException, IOException, AnalysisException {
         if (getFilenamePattern().matcher(filename).matches()) {
             L loadedDocument = readDocument(directory + filename);
             P expectedDocument = prepareExpectedDocument(loadedDocument);
@@ -76,6 +75,7 @@ abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>
 	    }
 	    return summary;
 	}    
-	abstract protected void printItemResults(I expected, I actual, int itemIndex, R results);
+
+    protected abstract void printItemResults(I expected, I actual, int itemIndex, R results);
 
 }

@@ -16,7 +16,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  *
  * @author krusek
  */
-abstract public class AbstractSimpleEnhancer extends AbstractFilterEnhancer {
+public abstract class AbstractSimpleEnhancer extends AbstractFilterEnhancer {
 
     protected AbstractSimpleEnhancer() {}
     
@@ -46,15 +46,14 @@ abstract public class AbstractSimpleEnhancer extends AbstractFilterEnhancer {
         return false;
     }
 
-    abstract protected Set<EnhancedField> getEnhancedFields();
+    protected abstract Set<EnhancedField> getEnhancedFields();
 
     @Override
     public void enhanceMetadata(BxDocument document, Element metadata, Set<EnhancedField> enhancedFields) {
         Set<EnhancedField> fieldsToEnhance = getEnhancedFields();
-        if (! CollectionUtils.containsAny(enhancedFields, fieldsToEnhance)) {
-            if (enhanceMetadata(document, metadata)) {
-                enhancedFields.addAll(fieldsToEnhance);
-            }
+        if (!CollectionUtils.containsAny(enhancedFields, fieldsToEnhance) 
+                && enhanceMetadata(document, metadata)) {
+            enhancedFields.addAll(fieldsToEnhance);
         }
     }
 }

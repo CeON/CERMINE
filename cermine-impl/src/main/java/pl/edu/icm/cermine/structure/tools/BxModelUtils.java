@@ -10,7 +10,10 @@ import pl.edu.icm.cermine.structure.model.*;
  *
  * @author krusek
  */
-public class BxModelUtils {
+public final class BxModelUtils {
+
+    private BxModelUtils() {}
+    
 	public static void setParents(BxDocument doc) {
 		for(BxPage page: doc.getPages()) {
 			page.setParent(doc);
@@ -176,8 +179,7 @@ public class BxModelUtils {
     }
 
     public static BxChunk deepClone(BxChunk chunk) {
-    	BxChunk copy = new BxChunk(chunk.getBounds(), chunk.getText());
-    	return copy;
+    	return new BxChunk(chunk.getBounds(), chunk.getText());
     }
     
     /**

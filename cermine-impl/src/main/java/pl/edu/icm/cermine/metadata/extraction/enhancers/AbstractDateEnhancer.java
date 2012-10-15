@@ -11,9 +11,9 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  *
  * @author krusek
  */
-abstract public class AbstractDateEnhancer extends AbstractPatternEnhancer {
+public abstract class AbstractDateEnhancer extends AbstractPatternEnhancer {
 
-    private final static String[] MONTHS = {
+    private static final String[] MONTHS = {
         "january|jan\\.",
         "february|feb\\.",
         "march|mar\\.",

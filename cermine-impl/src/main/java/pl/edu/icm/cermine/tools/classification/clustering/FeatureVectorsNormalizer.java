@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
  *
  * @author Dominika Tkaczyk
  */
-public class FeatureVectorsNormalizer {
+public final class FeatureVectorsNormalizer {
     
     public static void normalize(FeatureVector[] vectors, FeatureVectorBuilder builder) {
         for (String feature : (Set<String>)builder.getFeatureNames()) {
@@ -33,5 +33,7 @@ public class FeatureVectorsNormalizer {
             }
         }
     }
+
+    private FeatureVectorsNormalizer() {}
     
 }

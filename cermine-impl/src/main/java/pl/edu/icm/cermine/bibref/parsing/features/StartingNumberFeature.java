@@ -16,10 +16,8 @@ public class StartingNumberFeature extends FeatureCalculator<CitationToken, Cita
         List<CitationToken> tokens = context.getTokens();
         int index = context.getTokens().indexOf(object);
 
-        if (tokens.size() > 0) {
-            if (tokens.get(0).getText().matches("^\\d+$") && index == 0) {
-                return 1;
-            }
+        if (tokens.size() > 0 && tokens.get(0).getText().matches("^\\d+$") && index == 0) {
+            return 1;
         }
 
         if (tokens.size() > 1) {

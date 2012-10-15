@@ -17,11 +17,11 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class CitationsToHMMConverter {
+public final class CitationsToHMMConverter {
 
-    private FeatureVectorBuilder<CitationToken, Citation> featureVectorBuilder;
+    private CitationsToHMMConverter() {}
     
-    public TrainingElement<CitationTokenLabel>[] process(Set<Citation> citations) {
+    public static TrainingElement<CitationTokenLabel>[] convertToHMM(Set<Citation> citations, FeatureVectorBuilder<CitationToken, Citation> featureVectorBuilder) {
         List<TrainingElement<CitationTokenLabel>> trainingList =
                 new ArrayList<TrainingElement<CitationTokenLabel>>();
         for (Citation citation : citations) {
@@ -41,7 +41,4 @@ public class CitationsToHMMConverter {
         return trainingList.toArray(new TrainingElement[trainingList.size()]);
     }
 
-    public void setFeatureVectorBuilder(FeatureVectorBuilder<CitationToken, Citation> featureVectorBuilder) {
-        this.featureVectorBuilder = featureVectorBuilder;
-    }
 }

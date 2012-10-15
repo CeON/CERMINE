@@ -15,7 +15,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class CitationUtils {
+public final class CitationUtils {
 
     private static final Map<CitationTokenLabel, String> TO_BIBENTRY =
             new EnumMap<CitationTokenLabel, String>(CitationTokenLabel.class);
@@ -47,6 +47,8 @@ public class CitationUtils {
         BIBENTRY_TO_NLM.put(BibEntry.FIELD_NUMBER,    "issue");
     }
 
+    private CitationUtils() {}
+    
     public static Citation stringToCitation(String citation) {
         List<CitationToken> tokenList = new ArrayList<CitationToken>();
 
@@ -315,7 +317,7 @@ public class CitationUtils {
     public static List<String> citationToMalletInputFormat(Citation citation) {
         List<String> trainingExamples = new ArrayList<String>();
         
-        FeatureVectorBuilder vectorBuilder = FeatureList.vectorBuilder;
+        FeatureVectorBuilder vectorBuilder = FeatureList.VECTOR_BUILDER;
         
         List<CitationToken> tokens = citation.getTokens();
         List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();

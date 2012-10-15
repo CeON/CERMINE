@@ -54,19 +54,17 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     }
 
     public BxZone setChunks(Collection<BxChunk> chunks) {
-        if (chunks == null) {
-            throw new NullPointerException();
+        if (chunks != null) {
+            this.chunks.clear();
+            this.chunks.addAll(chunks);
         }
-        this.chunks.clear();
-        this.chunks.addAll(chunks);
         return this;
     }
 
     public BxZone addChunk(BxChunk chunk) {
-        if (chunk == null) {
-            throw new NullPointerException();
+        if (chunk != null) {
+            this.chunks.add(chunk);
         }
-        this.chunks.add(chunk);
         return this;
     }
 

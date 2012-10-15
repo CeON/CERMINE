@@ -12,13 +12,13 @@ import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilde
  *
  * @author Dominika Tkaczyk
  */
-public class FeatureList {
+public final class FeatureList {
 
-    public static final FeatureVectorBuilder<CitationToken, Citation> vectorBuilder;
-
+    public static final FeatureVectorBuilder<CitationToken, Citation> VECTOR_BUILDER;
+    
     static {
-        vectorBuilder = new SimpleFeatureVectorBuilder<CitationToken, Citation>();
-        vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<CitationToken, Citation>>asList(
+        VECTOR_BUILDER = new SimpleFeatureVectorBuilder<CitationToken, Citation>();
+        VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<CitationToken, Citation>>asList(
                 new IsAllDigitsFeature(),
                 new IsAllLettersFeature(),
                 new IsAllLettersOrDigitsFeature(),
@@ -62,4 +62,7 @@ public class FeatureList {
                 new StartsWithUppercaseFeature(),
                 new StartsWithWordMcFeature()));
     }
+
+    private FeatureList() {}
+    
 }

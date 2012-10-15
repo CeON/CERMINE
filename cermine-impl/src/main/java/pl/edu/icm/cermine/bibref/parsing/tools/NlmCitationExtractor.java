@@ -18,13 +18,13 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class NlmCitationExtractor {
+public final class NlmCitationExtractor {
 
-    public final static String TAG_CITATION = "mixed-citation";
+    public static final String TAG_CITATION = "mixed-citation";
 
-    public final static String KEY_TEXT = "text";
+    public static final String KEY_TEXT = "text";
 
-    public final static List<String> EXP_TAGS = Arrays.asList(
+    public static final List<String> EXP_TAGS = Arrays.asList(
             "string-name", "italic", "bold", "sup", "sub", "styled-content", "monospace", "sans-serif", "underline",
             "xref", "inline-formula");
 
@@ -52,6 +52,8 @@ public class NlmCitationExtractor {
         TAGS_LABEL_MAP.put("year",            CitationTokenLabel.YEAR);
     }
 
+    private NlmCitationExtractor() {}
+    
     public static Set<Citation> extractCitations(InputSource source) throws JDOMException, IOException {
         Document doc = new SAXBuilder("org.apache.xerces.parsers.SAXParser").build(source);
 

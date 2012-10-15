@@ -201,7 +201,6 @@ public class SVMZoneClassifier implements ZoneClassifier {
 	public void loadModel(BufferedReader modelFile, BufferedReader rangeFile) throws IOException
 	{
 		Double feature_min, feature_max;
-		Integer idx;
 		if(rangeFile.read() == 'x') {
 			rangeFile.readLine();		// pass the '\n' after 'x'
             String line = rangeFile.readLine();
@@ -220,7 +219,7 @@ public class SVMZoneClassifier implements ZoneClassifier {
 			while((restore_line = rangeFile.readLine())!=null)
 			{
 				StringTokenizer st2 = new StringTokenizer(restore_line);
-				idx = Integer.parseInt(st2.nextToken());
+				st2.nextToken(); //discard feature index
 				feature_min = Double.parseDouble(st2.nextToken());
 				feature_max = Double.parseDouble(st2.nextToken());
 				FeatureLimits newLimit = new FeatureLimits(feature_min, feature_max);
@@ -238,21 +237,26 @@ public class SVMZoneClassifier implements ZoneClassifier {
 
 	public void saveModel(String modelPath) throws IOException
 	{
-		Formatter formatter = new Formatter(new StringBuilder());
-		BufferedWriter fp_save;
-		fp_save = new BufferedWriter(new FileWriter(modelPath + ".range"));
-		
-		Double lower = 0.0;
-		Double upper = 1.0;
+		BufferedWriter fp_save = null;
+		try {
+			Formatter formatter = new Formatter(new StringBuilder());
+			fp_save = new BufferedWriter(new FileWriter(modelPath + ".range"));
 
-		formatter.format("x\n");
-		formatter.format("%.16g %.16g\n", lower, upper);
-		for(Integer i=0 ; i<featureVectorBuilder.size() ; ++i) {
-			formatter.format("%d %.16g %.16g\n", i, scaler.getLimits()[i].getMin(), scaler.getLimits()[i].getMax());
+			Double lower = 0.0;
+			Double upper = 1.0;
+
+			formatter.format("x\n");
+			formatter.format("%.16g %.16g\n", lower, upper);
+			for(Integer i=0 ; i<featureVectorBuilder.size() ; ++i) {
+				formatter.format("%d %.16g %.16g\n", i, scaler.getLimits()[i].getMin(), scaler.getLimits()[i].getMax());
+			}
+			
+			fp_save.write(formatter.toString());
+		} finally {
+			if(fp_save != null) {
+				fp_save.close();
+			}
 		}
-		
-		fp_save.write(formatter.toString());
-		fp_save.close();
 		
 		svm.svm_save_model(modelPath, model);
 	}

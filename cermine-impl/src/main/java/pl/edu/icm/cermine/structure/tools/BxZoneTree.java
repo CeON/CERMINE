@@ -57,7 +57,7 @@ public class BxZoneTree {
                     return this;
                 } else {
                     BxZoneTreeNode lastChild = children.get(children.size() - 1);
-                    if (lastChild.getTuple().getOrder() == tuple.getOrder()
+                    if (lastChild.getTuple().getOrder().equals(tuple.getOrder())
                             || lastChild.getTuple().getOrder() > tuple.getOrder()) {
                         children.add(new BxZoneTreeNode(tuple, this));
                         return this;

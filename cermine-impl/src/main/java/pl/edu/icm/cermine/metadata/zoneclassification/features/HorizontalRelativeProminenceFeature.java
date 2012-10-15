@@ -14,9 +14,6 @@ public class HorizontalRelativeProminenceFeature extends FeatureCalculator<BxZon
         Double leftProminence = zone.getX();
         Double rightProminence = page.getWidth() - (zone.getX() + zone.getWidth());
 
-        Integer minOct = null;
-        BxZone minZone;
-
         for (BxZone otherZone : page.getZones()) {
             if (otherZone == zone) {
                 continue;
@@ -72,13 +69,11 @@ public class HorizontalRelativeProminenceFeature extends FeatureCalculator<BxZon
                 newLeftProminence = Math.min(leftProminence, cx - (ox + ow));
                 if (Math.abs(newLeftProminence - leftProminence) > Double.MIN_VALUE) {
                     leftProminence = newLeftProminence;
-                    minOct = oct;
                 }
             } else { //oct == 3
                 newRightProminence = Math.min(rightProminence, ox - (cx + cw));
                 if (Math.abs(newRightProminence - rightProminence) > Double.MIN_VALUE) {
                     rightProminence = newRightProminence;
-                    minOct = oct;
                 }
             }
         }

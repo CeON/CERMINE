@@ -30,7 +30,7 @@ public class ClassificationUtils {
         List<TrainingElement<BxZoneLabel>> ret = new ArrayList<TrainingElement<BxZoneLabel>>();
 
         for (TrainingElement<BxZoneLabel> elem : elements) {
-            if (labels.contains(elem.getLabel().getCategory())) {
+            if (labels.contains(elem.getLabel())) {
                 ret.add(elem);
             }
         }

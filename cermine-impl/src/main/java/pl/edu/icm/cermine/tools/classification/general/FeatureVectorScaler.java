@@ -56,8 +56,9 @@ public class FeatureVectorScaler {
 			}
         }
 		for(FeatureLimits limit: limits) {
-			assert limit.getMin() != Double.MAX_VALUE;
-			assert limit.getMax() != Double.MIN_VALUE;
+			if(Double.isInfinite(limit.getMin()) || Double.isInfinite(limit.getMax())) {
+				throw new RuntimeException("Feature limit is not calculated properly!");
+			}
 		}
 	}
 	

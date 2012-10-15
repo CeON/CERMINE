@@ -23,7 +23,9 @@ public class LinearScaling implements ScalingStrategy {
 				Double b = scaledLowerBound-a*limits[featureIdx].getMin();
 				
 				featureValue = a*featureValue+b; 
-				assert featureValue != Double.NaN;
+				//assert featureValue != Double.NaN;
+				if(featureValue.isNaN())
+					throw new RuntimeException("Feature value is set to NaN afeter scaling. Probably an implementation bug.");
 				newVector.addFeature(name, featureValue);
 			}
 			++featureIdx;

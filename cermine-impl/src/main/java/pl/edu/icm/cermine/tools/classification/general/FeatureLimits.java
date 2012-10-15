@@ -6,18 +6,18 @@ public class FeatureLimits
 		min = minValue;
 		max = maxValue;
 	}
-	public double getMin() {
+	public Double getMin() {
 		return min;
 	}
-	public void setMin(double min) {
+	public void setMin(Double min) {
 		this.min = min;
 	}
-	public double getMax() {
+	public Double getMax() {
 		return max;
 	}
-	public void setMax(double max) {
+	public void setMax(Double max) {
 		this.max = max;
 	}
-	double min;
-	double max;
+	Double min;
+	Double max;
 }

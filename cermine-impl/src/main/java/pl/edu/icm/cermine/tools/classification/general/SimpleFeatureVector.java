@@ -10,7 +10,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
  */
 public class SimpleFeatureVector implements FeatureVector {
 
-    Map<String, Double> features = new HashMap<String, Double>();
+    private Map<String, Double> features = new HashMap<String, Double>();
 
     @Override
     public double getFeature(String name) {
@@ -56,8 +56,9 @@ public class SimpleFeatureVector implements FeatureVector {
 
 	@Override
 	public void setFeature(String name, Double value) throws RuntimeException {
-		if(!features.containsKey(name))
+		if(!features.containsKey(name)) {
 			throw new RuntimeException("Bad feature name: " + name);
+        }
 		features.put(name, value);
 	}
 	

@@ -29,12 +29,12 @@ public class ContentCleaner {
                 String lineText = headerLine.toText();
                 if (lineText.endsWith("-")) {
                     lineText = lineText.substring(0, lineText.length()-1);
-                    if (lineText.lastIndexOf(" ") < 0) {
+                    if (lineText.lastIndexOf(' ') < 0) {
                         sb.append(lineText);
                     } else {
-                        sb.append(lineText.substring(0, lineText.lastIndexOf(" ")));
+                        sb.append(lineText.substring(0, lineText.lastIndexOf(' ')));
                         sb.append(" ");
-                        sb.append(lineText.substring(lineText.lastIndexOf(" ")+1));
+                        sb.append(lineText.substring(lineText.lastIndexOf(' ')+1));
                     }
                 } else {
                     sb.append(lineText);
@@ -90,12 +90,12 @@ public class ContentCleaner {
                 String lineText = line.toText();
                 if (lineText.endsWith("-")) {
                     lineText = lineText.substring(0, lineText.length()-1);
-                    if (lineText.lastIndexOf(" ") < 0) {
+                    if (lineText.lastIndexOf(' ') < 0) {
                         contentText += lineText;
                     } else {
-                        contentText += lineText.substring(0, lineText.lastIndexOf(" "));
+                        contentText += lineText.substring(0, lineText.lastIndexOf(' '));
                         contentText += "\n";
-                        contentText += lineText.substring(lineText.lastIndexOf(" ")+1);
+                        contentText += lineText.substring(lineText.lastIndexOf(' ')+1);
                     }
                 } else {
                     contentText += lineText;

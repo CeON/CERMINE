@@ -26,10 +26,9 @@ import pl.edu.icm.cermine.structure.model.*;
 public class MargToTextrImporter {
     
     private static final Logger log = LoggerFactory.getLogger(MargToTextrImporter.class);
-
-    public static int STANDART_DOCUMENT_HEIGHT=3299;
     
-    public static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
+    private static final Map<String, BxZoneLabel> zoneLabelMap = new HashMap<String, BxZoneLabel>();
+    
     static {
         zoneLabelMap.put("abstract",    BxZoneLabel.MET_ABSTRACT);
         zoneLabelMap.put("affiliation", BxZoneLabel.MET_AFFILIATION);
@@ -60,8 +59,8 @@ public class MargToTextrImporter {
 
     private static class ComparablePair<X extends Comparable, Y extends Comparable> implements Comparable {
 
-        X o1;
-        Y o2;
+        private X o1;
+        private Y o2;
 
         public X getO1() {
             return o1;
@@ -139,10 +138,10 @@ public class MargToTextrImporter {
          ArrayList<Element> list=new ArrayList<Element>();
          NodeList nl=el.getChildNodes();
          for (int i=0; i<nl.getLength();i++) {
-             Node n=nl.item(i);
+            Node n=nl.item(i);
             if (n instanceof Element) {
-                 Element e=(Element) n;
-                 if (e.getTagName().equalsIgnoreCase(name)){
+                Element e=(Element) n;
+                if (e.getTagName().equalsIgnoreCase(name)){
                     list.add(e);
                 }
             }
@@ -154,7 +153,7 @@ public class MargToTextrImporter {
 
 
     private BxBounds parseElementContainingVertexes(Element el) {
-         ArrayList<Element> vs = getChildren("Vertex",el);
+        ArrayList<Element> vs = getChildren("Vertex",el);
         if (vs.isEmpty()) {
             return null;
         }
@@ -165,11 +164,19 @@ public class MargToTextrImporter {
         int maxy=Integer.MIN_VALUE;
         for (Element v : vs) {
             int x = Integer.parseInt(v.getAttribute("x"));
-            if (x<minx) minx=x;
-            if (x>maxx) maxx=x;
+            if (x<minx) {
+                minx=x;
+            }
+            if (x>maxx) {
+                maxx=x;
+            }
             int y = Integer.parseInt(v.getAttribute("y"));
-            if (y<miny) miny=y;
-            if (y>maxy) maxy=y;
+            if (y<miny) {
+                miny=y;
+            }
+            if (y>maxy) {
+                maxy=y;
+            }
             list.add(new ComparablePair<Integer, Integer>(x, y));
         }
         Collections.sort(list);

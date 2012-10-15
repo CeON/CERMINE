@@ -36,7 +36,7 @@ public class SimpleLogicalStructureExtractorTest {
     
     String dir = "/pl/edu/icm/cermine/content/";
 
-    String testZip = "test.zip";
+    String testZip = "test-small.zip";
     String sourceDir = "source/";
     String structureDir = "structure/";
     
@@ -116,7 +116,7 @@ public class SimpleLogicalStructureExtractorTest {
 
         for (int i = 0; i < testDocuments.size(); i++) {
             BxDocument document = testDocuments.get(i);
-            
+        
             System.out.println("");
             System.out.println(i);
             DocumentContentStructure hdrs = testHeaderStructures.get(i);
@@ -128,7 +128,7 @@ public class SimpleLogicalStructureExtractorTest {
             hdrs.printHeaders();
             
             DocumentContentStructure extractedHdrs = extractor.extractStructure(junkModel, classModel, junkVectorBuilder, classVectorBuilder, clustVectorBuilder, document);
-                    
+                   
             System.out.println("EXTRACTED:");
             extractedHdrs.printHeaders();
             

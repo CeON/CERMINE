@@ -1,12 +1,16 @@
 package pl.edu.icm.cermine.evaluation;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
+import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
@@ -41,20 +45,20 @@ public class ReferenceExtractionEvaluator extends AbstractDualInputEvaluator<Str
     }
 
     @Override
-    protected String[] getExpectedDocument(Reader input) throws Exception {
+    protected String[] getExpectedDocument(Reader input) throws IOException {
         List<String> lines = new ArrayList<String>();
         String line;
         BufferedReader lineInput = new BufferedReader(input);
         while ((line = lineInput.readLine()) != null) {
             lines.add(line);
         }
-        return lines.toArray(new String[]{});
+        return lines.toArray(new String[lines.size()]);
     }
 
     private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
 
     @Override
-    protected String[] getActualDocument(Reader input) throws Exception {
+    protected String[] getActualDocument(Reader input) throws TransformationException, AnalysisException {
         BxDocument document = new BxDocument().setPages(reader.read(input));
         return referenceExtractor.extractBibReferences(document);
     }
@@ -99,7 +103,7 @@ public class ReferenceExtractionEvaluator extends AbstractDualInputEvaluator<Str
         result.print();
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
         AbstractEvaluator.main("ReferenceExtractionEvaluator", args, DEFAULT_CONFIGURATION_PATH);
     }
 

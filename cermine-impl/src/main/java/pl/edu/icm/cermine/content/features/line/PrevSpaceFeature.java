@@ -32,8 +32,9 @@ public class PrevSpaceFeature extends FeatureCalculator<BxLine, BxPage> {
             if (!l.hasPrev()) {
                 break;
             }
-            if (i >= 4 || l.getPrev().getY() > l.getY())
+            if (i >= 4 || l.getPrev().getY() > l.getY()) {
                 break;
+            }
             if (l.getY() - l.getPrev().getY() > space) {
                 space = l.getY() - l.getPrev().getY();
             }

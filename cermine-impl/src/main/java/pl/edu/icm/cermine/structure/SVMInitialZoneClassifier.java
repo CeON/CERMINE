@@ -23,17 +23,16 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	
-	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) {
+	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
 		super(getFeatureVectorBuilder());
-		try {
-			loadModel(modelFile, rangeFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+        try {
+            loadModel(modelFile, rangeFile);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create SVM classifier!", ex);
+        }
 	}
 
-	public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws IOException {
+	public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException {
 		super(getFeatureVectorBuilder());
 		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(modelFilePath));
@@ -42,7 +41,11 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(rangeFilePath));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
-		loadModel(modelFile, rangeFile);
+        try {
+            loadModel(modelFile, rangeFile);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create SVM classifier!", ex);
+        }
 	}
 
 	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder()
@@ -131,7 +134,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         return vectorBuilder;
 	}
 	
-	public static void main(String[] args) throws AnalysisException, TransformationException {
+	public static void main(String[] args) throws AnalysisException, TransformationException, IOException {
 		// args[0] path to xml directory
 		if(args.length != 1) {
 			System.err.println("Source directory needed!");
@@ -155,14 +158,20 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 			System.out.println(">> " + doc.getFilename());
 			ror.resolve(doc);
 			classifier.classifyZones(doc);
-			try{
+			BufferedWriter out = null;
+
+			try {
 				// Create file 
 				FileWriter fstream = new FileWriter(doc.getFilename());
-				BufferedWriter out = new BufferedWriter(fstream);
+				out = new BufferedWriter(fstream);
 				out.write(tvw.write(doc.getPages()));
 				out.close();
 			} catch (Exception e){//Catch exception if any
 				System.err.println("Error: " + e.getMessage());
+			} finally {
+				if(out != null) {
+					out.close();
+				}
 			}
 		}
 	}

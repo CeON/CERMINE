@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pl.edu.icm.cermine.evaluation.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
@@ -19,12 +21,16 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 
-	public SVMMetadataZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws IOException {
+	public SVMMetadataZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
 		super(getFeatureVectorBuilder());
-		loadModel(modelFile, rangeFile);
+        try {
+            loadModel(modelFile, rangeFile);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create SVM classifier!", ex);
+        }
 	}
 
-	public SVMMetadataZoneClassifier(String modelFilePath, String rangeFilePath) throws IOException {
+	public SVMMetadataZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException {
 		super(getFeatureVectorBuilder());
 		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(modelFilePath));
@@ -33,7 +39,11 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(rangeFilePath));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
-		loadModel(modelFile, rangeFile);
+        try {
+            loadModel(modelFile, rangeFile);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create SVM classifier!", ex);
+        }
 	}
 
 	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {

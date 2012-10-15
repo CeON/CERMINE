@@ -81,8 +81,9 @@ public class TrueVizToBxDocumentReader {
             if(areIdsSet) {
             	linkAndReorderOtherElements(pages);
             }
-            for(BxPage page: pages)
+            for(BxPage page: pages) {
             	BxModelUtils.setParents(page);
+            }
             return pages;
         } catch (IOException ex) {
             throw new TransformationException(ex);
@@ -95,11 +96,12 @@ public class TrueVizToBxDocumentReader {
     protected <A extends Indexable<A>> List<A> reorderList(List<A> list) {
     	Map<String, A> elems = new HashMap<String, A>();
     	List<A> ordered = new ArrayList<A>(list.size());
-    	for(A elem: list)
+    	for(A elem: list) {
     		elems.put(elem.getId(), elem);
+        }
     	
     	A start = null;
-    	for(A elem: list)
+    	for(A elem: list) {
     		if(elem.getPrev() == null) {//first element at all
     			start = elem;
     			break;
@@ -107,17 +109,21 @@ public class TrueVizToBxDocumentReader {
     			start = elem;
     			break;
     		}
-    	if(start == null)
+        }
+    	if(start == null) {
     		throw new RuntimeException("");
+        }
     	do {
     		ordered.add(start);
-    		if(!start.hasNext()) //last element at all
+    		if(!start.hasNext()) { //last element at all
     			break;
+            }
     		start = start.getNext();
     	} while(elems.keySet().contains(start.getId()));
     	
-    	if(ordered.size() != list.size())
+    	if(ordered.size() != list.size()) {
     		throw new RuntimeException("Output list size doesn't match the input one!");
+        }
     	return ordered;
     }
     /** A generic function for linking objects together (setting *Next and *Prev)
@@ -126,16 +132,18 @@ public class TrueVizToBxDocumentReader {
      */
 	private <A extends Indexable<A>> void linkGenericImpl(List<A> list) {
 		Map<String, A> indicesMap = new HashMap<String, A>();
-		for (A elem : list)
+		for (A elem : list) {
 			indicesMap.put(elem.getId(), elem);
+        }
 		for (A elem : list) {
 			String nextId = elem.getNextId();
 			if (nextId.equals("-1")) { /* there is no next element */
 				elem.setNext(null);
 			} else {
 				A next = indicesMap.get(nextId);
-				if (next == null)
+				if (next == null) {
 					throw new RuntimeException("No matching element found for \"" + nextId + "\"");
+                }
 				//link with the next element
 				elem.setNext(next);
 				//link with the previous element
@@ -167,8 +175,9 @@ public class TrueVizToBxDocumentReader {
 	}
 
 	private void setIdsAndLinkPages(List<BxPage> pages) {
-		if(pages.isEmpty())
+		if(pages.isEmpty()) {
 			return;
+        }
 		if(pages.size() == 1) {
 			BxPage page = pages.get(0);
 			page.setId("0");
@@ -202,10 +211,10 @@ public class TrueVizToBxDocumentReader {
          ArrayList<Element> list=new ArrayList<Element>();
          NodeList nl=el.getChildNodes();
          for (int i=0; i<nl.getLength();i++) {
-             Node n=nl.item(i);
+            Node n=nl.item(i);
             if (n instanceof Element) {
-                 Element e=(Element) n;
-                 if (e.getTagName().equalsIgnoreCase(name)){
+                Element e=(Element) n;
+                if (e.getTagName().equalsIgnoreCase(name)) {
                     list.add(e);
                 }
             }
@@ -224,10 +233,11 @@ public class TrueVizToBxDocumentReader {
 		List<Element> children = getChildren(name, el);
 		if(!children.isEmpty()) {
 			String val = children.get(0).getAttribute("Value");
-			if(val.equals(""))
+			if(val.equals("")) {
 				return null;
-			else
+            } else {
 				return val;
+            }
 		} else {
 			return null;
 		}
@@ -259,8 +269,9 @@ public class TrueVizToBxDocumentReader {
         chunk.setId(getOptionalChildValue("CharacterId", charE));
     	chunk.setNextId(getOptionalChildValue("CharacterNext", charE));
     	
-    	if(areIdsSet && (chunk.getId() == null || chunk.getNextId() == null))
+    	if(areIdsSet && (chunk.getId() == null || chunk.getNextId() == null)) {
     		areIdsSet = false;
+        }
     	
         return chunk;
     }
@@ -274,8 +285,9 @@ public class TrueVizToBxDocumentReader {
         word.setId(getOptionalChildValue("WordId", wordE));
     	word.setNextId(getOptionalChildValue("WordNext", wordE));
     	
-    	if(areIdsSet && (word.getId() == null || word.getNextId() == null))
+    	if(areIdsSet && (word.getId() == null || word.getNextId() == null)) {
     		areIdsSet = false;
+        }
     	
         List<Element> e = getChildren("Character",wordE);
         for (Element caE : e) {
@@ -288,15 +300,16 @@ public class TrueVizToBxDocumentReader {
 
     private BxLine parseLineElement(Element lineE) {
         BxLine line = new BxLine();
-         if (!(getChildren("LineCorners",lineE).isEmpty()))  {
+        if (!(getChildren("LineCorners",lineE).isEmpty()))  {
             line.setBounds(parseElementContainingVertexes(getChildren("LineCorners",lineE).get(0)));
         }
          
         line.setId(getOptionalChildValue("LineId", lineE));
      	line.setNextId(getOptionalChildValue("LineNext", lineE));
 
-    	if(areIdsSet && (line.getId() == null || line.getNextId() == null))
+    	if (areIdsSet && (line.getId() == null || line.getNextId() == null)) {
     		areIdsSet = false;
+        }
 
         List<Element> e = getChildren("Word",lineE);
         for (Element we : e) {
@@ -346,8 +359,9 @@ public class TrueVizToBxDocumentReader {
         zone.setId(getOptionalChildValue("ZoneId", zoneE));
     	zone.setNextId(getOptionalChildValue("ZoneNext", zoneE));
 
-    	if(areIdsSet && (zone.getId() == null || zone.getNextId() == null))
+    	if(areIdsSet && (zone.getId() == null || zone.getNextId() == null)) {
     		areIdsSet = false;
+        }
 
         List<Element> e = getChildren("Line",zoneE);
         for (Element lin : e) {
@@ -364,8 +378,9 @@ public class TrueVizToBxDocumentReader {
     	page.setId(getOptionalChildValue("PageId", elem));
         page.setNextId(getOptionalChildValue("PageNext", elem));
     	
-        if(areIdsSet && (page.getId() == null || page.getNextId() == null))
+        if(areIdsSet && (page.getId() == null || page.getNextId() == null)) {
     		areIdsSet = false;
+        }
         
         List<Element> e = getChildren("Zone", elem);
         for (Element zo : e) {

@@ -1,10 +1,13 @@
 package pl.edu.icm.cermine.evaluation;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.*;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.PageSegmenter;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
@@ -225,27 +228,26 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
 
 	@Override
-	protected BxDocument prepareActualDocument(BxDocument document) throws Exception {
+	protected BxDocument prepareActualDocument(BxDocument document) throws AnalysisException {
 	    document = BxModelUtils.deepClone(document);
 	    preprocessDocument(document);
 	    return processDocument(document);
 	}
 
 	@Override
-	protected BxDocument prepareExpectedDocument(BxDocument document)
-			throws AnalysisException {
-				resolver.resolve(document);
-			    return document;
-			}
+	protected BxDocument prepareExpectedDocument(BxDocument document) throws AnalysisException {
+		resolver.resolve(document);
+		return document;
+	}
 
 	@Override
-	protected BxDocument readDocument(Reader input) throws Exception {
+	protected BxDocument readDocument(Reader input) throws TransformationException {
 	    return new BxDocument().setPages(reader.read(input));
 	}
 
 	@Override
-	protected void writeDocument(BxDocument document, Writer output) throws Exception {
-	    writer.write(output, document.getPages());
+	protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
+        writer.write(output, document.getPages());
 	}
 
 	@Override
@@ -305,10 +307,10 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
 
     public static class LevelResults {
-        int all;
-        int matched;
-        int splitted;
-        int merged;
+        private int all;
+        private int matched;
+        private int splitted;
+        private int merged;
 
         public void add(LevelResults results) {
             all += results.all;
@@ -348,7 +350,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         }
     }
     
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
         main("SegmentationEvaluator", args, DEFAULT_CONFIGURATION_PATH);
     }
 }

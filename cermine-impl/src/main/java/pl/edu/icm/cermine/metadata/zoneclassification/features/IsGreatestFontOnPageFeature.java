@@ -6,14 +6,14 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class IsGreatestFontOnPageFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 
-	@Override
-	public double calculateFeatureValue(BxZone object, BxPage context) {
-		FeatureCalculator<BxZone, BxPage> fc = new FontHeightMeanFeature();
-		for(BxZone otherZone: getOtherZones(object)) {
-			if(fc.calculateFeatureValue(otherZone, context) > fc.calculateFeatureValue(object, context))
-				return 0.0;
-		}
-		return 1.0;
-	}
-
+    @Override
+    public double calculateFeatureValue(BxZone object, BxPage context) {
+        FeatureCalculator<BxZone, BxPage> fc = new FontHeightMeanFeature();
+        for (BxZone otherZone : getOtherZones(object)) {
+            if (fc.calculateFeatureValue(otherZone, context) > fc.calculateFeatureValue(object, context)) {
+                return 0.0;
+            }
+        }
+        return 1.0;
+    }
 }

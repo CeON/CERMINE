@@ -27,7 +27,7 @@ public class BxDocumentBibReferences {
         for (BxLine line : zone.getLines()) {
             String normalized = line.toText().toLowerCase().replaceAll("[^a-z]", "");
             if (line.toText().length() < 30 && zone.getLines().indexOf(line) == 0 && 
-                    (normalized.startsWith("refer") || normalized.startsWith("biblio") || normalized.startsWith("heimildask"))) {
+                    (normalized.startsWith("refer") || normalized.startsWith("biblio"))) {
                 continue;
             }
                    

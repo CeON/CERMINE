@@ -14,26 +14,26 @@ public class SingleLinkageClusterizer implements Clusterizer {
         }
         
         while (true) {
-            int min_i = -1;
-            int min_j = -1;
+            int mini = -1;
+            int minj = -1;
             for (int k = 0; k < distanceMatrix.length; k++) {
                 for (int l = 0; l < distanceMatrix.length; l++) {
                     if (distanceMatrix[k][l] < maxDistance && clusters[k] != clusters[l]) {
-                        min_i = k;
-                        min_j = l;
+                        mini = k;
+                        minj = l;
                     }
                 }
             }
             
-            if (min_i == -1) {
+            if (mini == -1) {
                 return clusters;
             }
             
-            int old = clusters[min_i];
+            int old = clusters[mini];
 
             for (int i = 0; i < clusters.length; i++) {
                 if (clusters[i] == old) {
-                    clusters[i] = clusters[min_j];
+                    clusters[i] = clusters[minj];
                 }
             }
         }

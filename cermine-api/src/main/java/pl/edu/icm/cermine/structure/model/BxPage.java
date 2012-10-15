@@ -43,19 +43,17 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     }
 
     public BxPage setChunks(Collection<BxChunk> chunks) {
-        if (chunks == null) {
-            throw new NullPointerException();
+        if (chunks != null) {
+            this.chunks.clear();
+            this.chunks.addAll(chunks);
         }
-        this.chunks.clear();
-        this.chunks.addAll(chunks);
         return this;
     }
 
     public BxPage addChunk(BxChunk chunk) {
-        if (chunk == null) {
-            throw new NullPointerException();
+        if (chunk != null) {
+            this.chunks.add(chunk);
         }
-        this.chunks.add(chunk);
         return this;
     }
 

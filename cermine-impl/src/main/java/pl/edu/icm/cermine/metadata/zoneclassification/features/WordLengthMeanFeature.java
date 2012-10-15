@@ -13,13 +13,15 @@ public class WordLengthMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 	public double calculateFeatureValue(BxZone object, BxPage context) {
 		Integer wordsLengthsSum = 0;
 		Integer numberOfWords = 0;
-		for(BxLine line: object.getLines())
+		for(BxLine line: object.getLines()) {
 			for(BxWord word: line.getWords()) {
 				Integer curLength = 0;
-				for(BxChunk chunk: word.getChunks())
+				for(BxChunk chunk: word.getChunks()) {
 					curLength += chunk.getText().length();
+				}
 				wordsLengthsSum += curLength;
-			    ++numberOfWords;
+				++numberOfWords;
+			}
 		}
 		return wordsLengthsSum.doubleValue()/numberOfWords;
 	}

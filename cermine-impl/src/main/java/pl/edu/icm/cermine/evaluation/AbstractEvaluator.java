@@ -1,12 +1,12 @@
 package pl.edu.icm.cermine.evaluation;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.*;
 import org.apache.commons.cli.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
  *
@@ -16,7 +16,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  */
 public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R>> {
 
-    protected Detail detail = Detail.FULL;
+    private Detail detail = Detail.FULL;
 
     /**
      * Creates new results object.
@@ -30,11 +30,10 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
      *
      * @param document document processed by evaluated processor
      * @param writer
-     * @throws Exception
      */
-    protected void writeDocument(P document, Writer writer) throws Exception {}
+    protected void writeDocument(P document, Writer writer) throws TransformationException{}
 
-    protected void writeDocument(P document, String path) throws Exception {
+    protected void writeDocument(P document, String path) throws IOException, TransformationException {
         FileWriter writer = new FileWriter(path);
         try {
             writeDocument(document, writer);
@@ -55,9 +54,13 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
 
     abstract protected R compareDocuments(P expected, P actual);
 
-    abstract protected Documents<P> getDocuments(String directory, String filename) throws Exception;
+    abstract protected Documents<P> getDocuments(String directory, String filename) throws AnalysisException, FileNotFoundException, IOException, TransformationException;
 
-    public void run(String inDir, String outDir) throws Exception {
+    public Detail getDetail() {
+        return detail;
+    }
+
+    public void run(String inDir, String outDir) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
         if (inDir == null) {
             throw new NullPointerException("Input directory must not be null.");
         }
@@ -94,7 +97,7 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
         printFinalResults(results);
     }
 
-    public static void main(String programName, String[] args, String defaultConfigPath) throws Exception {
+    public static void main(String programName, String[] args, String defaultConfigPath) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
         Options options = new Options();
         options.addOption("compact", false, "do not print results for pages");
         options.addOption("config", true, "use given evaluator configuration file");

@@ -18,7 +18,7 @@ public class MalletTrainingFileGenerator {
     private static String outFile = "/tmp/crf-train.txt";
     private static int minCount = 10;
 
-    public static void main(String[] args) throws IOException, JDOMException {
+    public static void main(String[] args) throws JDOMException, IOException {
         
         File dir = new File(nlmDir);
         FileWriter writer = new FileWriter(outFile);
@@ -28,17 +28,20 @@ public class MalletTrainingFileGenerator {
         Map<String, Integer> wordMap = new HashMap<String, Integer>();
         
         for (File file : dir.listFiles()) {
-            if (file.isDirectory())
+            if (file.isDirectory()) {
                 continue;
+            }
             
-            InputStream is = new FileInputStream(file);
-            InputSource source = new InputSource(is);
-            
+            InputStream is = null;
             Set<Citation> citations;
             try {
+                is = new FileInputStream(file);
+                InputSource source = new InputSource(is);
                 citations = NlmCitationExtractor.extractCitations(source);
             } finally {
-                is.close();
+                if (is != null) {
+                    is.close();
+                }
                 writer.close();
             }
             
@@ -83,11 +86,15 @@ public class MalletTrainingFileGenerator {
         for (Citation citation : allcitations) {
             //List<String> tokens = CitationUtils.citationToMalletInputFormat(citation, additionalFeatures);
             List<String> tokens = CitationUtils.citationToMalletInputFormat(citation);
-            for (String token : tokens) {
-                writer.write(token);
+            try {
+                for (String token : tokens) {
+                    writer.write(token);
+                    writer.write("\n");
+                }
                 writer.write("\n");
+            } finally {
+                writer.close();
             }
-            writer.write("\n");
         }
             
         writer.flush();

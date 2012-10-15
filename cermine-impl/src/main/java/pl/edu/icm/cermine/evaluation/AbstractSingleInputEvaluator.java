@@ -1,11 +1,14 @@
 package pl.edu.icm.cermine.evaluation;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Results;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
  * Abstract evaluator used for implementation of evaluators that requires single
@@ -17,10 +20,10 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>> extends AbstractEvaluator<P, R> {
 
 
-    abstract protected L readDocument(Reader input) throws Exception;
+    abstract protected L readDocument(Reader input) throws TransformationException;
 
     protected abstract Pattern getFilenamePattern();
-    protected L readDocument(String path) throws Exception {
+    protected L readDocument(String path) throws FileNotFoundException, TransformationException, IOException {
         Reader input = new FileReader(path);
         try {
             return readDocument(input);
@@ -33,12 +36,12 @@ abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>
 
     protected abstract void preprocessDocument(L document);
 
-    protected abstract P prepareExpectedDocument(L document) throws Exception;
+    protected abstract P prepareExpectedDocument(L document) throws AnalysisException;
 
-    protected abstract P prepareActualDocument(L document) throws Exception;
+    protected abstract P prepareActualDocument(L document) throws AnalysisException;
 
     @Override
-    protected Documents<P> getDocuments(String directory, String filename) throws Exception {
+    protected Documents<P> getDocuments(String directory, String filename) throws FileNotFoundException, TransformationException, IOException, AnalysisException {
         if (getFilenamePattern().matcher(filename).matches()) {
             L loadedDocument = readDocument(directory + filename);
             P expectedDocument = prepareExpectedDocument(loadedDocument);
@@ -65,7 +68,7 @@ abstract public class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>
 	        I expectedItem = expectedItems.next();
 	        I actualItem = actualItems.next();
 	        R results = compareItems(expectedItem, actualItem);
-	        if (detail == Detail.FULL) {
+	        if (getDetail() == Detail.FULL) {
 	            printItemResults(expectedItem, actualItem, i, results);
 	        }
 	        summary.add(results);

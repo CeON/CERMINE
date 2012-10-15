@@ -12,12 +12,13 @@ public class IsAnywhereElseFeature extends AbstractFeatureCalculator<BxZone, BxP
 		if(object.toText().length() <= 5) {
 			return 0.0;
 		}
-		for(BxPage page: pages)
+		for(BxPage page: pages) {
 			for(BxZone zone: page.getZones()) {
 				if(zone.toText().equals(object.toText())) {
 					return 1.0;
 				}
 			}
+		}
 		return 0.0;
 	}
 }

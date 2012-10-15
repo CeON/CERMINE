@@ -9,11 +9,10 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults>
 {
-	protected Set<BxZoneLabel> possibleLabels;
-    protected int nbOfZoneTypes = BxZoneLabel.values().length;
-    protected Map<LabelPair, Integer> classificationMatrix;
-    protected int goodRecognitions = 0;
-    protected int badRecognitions = 0;
+	private Set<BxZoneLabel> possibleLabels;
+    private Map<LabelPair, Integer> classificationMatrix;
+    private int goodRecognitions = 0;
+    private int badRecognitions = 0;
 
     public ClassificationResults()
     {
@@ -22,9 +21,9 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     }
 
     private void addPossibleLabel(BxZoneLabel lab) {
-    	if(possibleLabels.contains(lab))
+    	if(possibleLabels.contains(lab)) {
     		return;
-    	else {
+        } else {
     		for(BxZoneLabel lab2: possibleLabels) {
     			classificationMatrix.put(new LabelPair(lab, lab2), 0);
     			classificationMatrix.put(new LabelPair(lab2, lab), 0);
@@ -55,8 +54,9 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     @Override
     public void add(ClassificationResults results)
     {
-    	for(BxZoneLabel possibleLabel: results.getPossibleLabels())
+    	for(BxZoneLabel possibleLabel: results.getPossibleLabels()) {
     		addPossibleLabel(possibleLabel);
+        }
         for (BxZoneLabel label1 : results.possibleLabels) {
             for (BxZoneLabel label2 : results.possibleLabels) {
             	LabelPair coord = new LabelPair(label1, label2); 

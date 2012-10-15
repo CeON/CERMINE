@@ -17,18 +17,16 @@ public class SpaceBetweenLinesFeature extends FeatureCalculator<BxLine, BxDocume
         double lineSpace = 0;
         BxLine prevLine = null;
         for (BxLine line : refs.getLines()) {
-            if (prevLine != null) {
-                if (line.getBounds().getY() > prevLine.getBounds().getY()) {
-                    double difference = line.getBounds().getY() - prevLine.getBounds().getY();
-                    if (minSpace > difference) {
-                        minSpace = difference;
-                    }
-                    if (maxSpace < difference) {
-                        maxSpace = difference;
-                    }
-                    if (line.equals(refLine)) {
-                        lineSpace = difference;
-                    }
+            if (prevLine != null && line.getBounds().getY() > prevLine.getBounds().getY()) {
+                double difference = line.getBounds().getY() - prevLine.getBounds().getY();
+                if (minSpace > difference) {
+                    minSpace = difference;
+                }
+                if (maxSpace < difference) {
+                    maxSpace = difference;
+                }
+                if (line.equals(refLine)) {
+                    lineSpace = difference;
                 }
             }
             prevLine = line;

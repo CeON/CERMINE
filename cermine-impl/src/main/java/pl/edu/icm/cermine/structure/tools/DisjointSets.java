@@ -101,11 +101,11 @@ public class DisjointSets<E> implements Iterable<Set<E>> {
     }
 
     private static class Entry<E> {
-        int size = 1;
-        E value;
-        Entry<E> parent = this;
-        Entry<E> next = null;
-        Entry<E> last = this;
+        private int size = 1;
+        private E value;
+        private Entry<E> parent = this;
+        private Entry<E> next = null;
+        private Entry<E> last = this;
 
         Entry(E value) {
             this.value = value;

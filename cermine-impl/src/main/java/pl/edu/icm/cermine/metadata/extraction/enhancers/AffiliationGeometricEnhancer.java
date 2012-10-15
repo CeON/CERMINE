@@ -102,7 +102,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                 Pattern.CASE_INSENSITIVE);
 
         private Map<String, String> affiliations = new HashMap<String, String>();
-        int nextIndex = 1;
+        private int nextIndex = 1;
         private boolean firstPart = true;
         private String affiliationRef = "";
         private StringBuilder affiliationBuilder = new StringBuilder();

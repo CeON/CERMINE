@@ -1,10 +1,9 @@
 package pl.edu.icm.cermine.bibref.parsing.tools;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryField;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
@@ -16,10 +15,11 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class CitationUtils {
+public final class CitationUtils {
 
     private static final Map<CitationTokenLabel, String> TO_BIBENTRY =
             new EnumMap<CitationTokenLabel, String>(CitationTokenLabel.class);
+    private static final Map<String, String> BIBENTRY_TO_NLM = new HashMap<String, String>();
 
     static {
         TO_BIBENTRY.put(CitationTokenLabel.ARTICLE_TITLE,   BibEntry.FIELD_TITLE);
@@ -33,8 +33,22 @@ public class CitationUtils {
         TO_BIBENTRY.put(CitationTokenLabel.VOLUME,          BibEntry.FIELD_VOLUME);
         TO_BIBENTRY.put(CitationTokenLabel.YEAR,            BibEntry.FIELD_YEAR);
         TO_BIBENTRY.put(CitationTokenLabel.ISSUE,           BibEntry.FIELD_NUMBER);
+        
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_TITLE,     "article-title");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_CONTENTS,  "named-content");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_EDITION,   "edition");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_PUBLISHER, "publisher-name");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_LOCATION,  "publisher-loc");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_SERIES,    "series");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_JOURNAL,   "source");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_URL,       "uri");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_VOLUME,    "volume");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_YEAR,      "year");
+        BIBENTRY_TO_NLM.put(BibEntry.FIELD_NUMBER,    "issue");
     }
 
+    private CitationUtils() {}
+    
     public static Citation stringToCitation(String citation) {
         List<CitationToken> tokenList = new ArrayList<CitationToken>();
 
@@ -196,10 +210,114 @@ public class CitationUtils {
         return bibEntry;
     }
     
+    public static Element bibEntryToNLM(BibEntry entry) {
+        Element element = new Element("mixed-citation");
+     
+        Map<BibEntryField, String> fieldKeyMap = new HashMap<BibEntryField, String>();
+        
+        String text = entry.getText();
+        List<BibEntryField> fields = new ArrayList<BibEntryField>();
+        for (String key : entry.getFieldKeys()) {
+            fields.addAll(entry.getAllFields(key));
+            for (BibEntryField field : entry.getAllFields(key)) {
+                fieldKeyMap.put(field, key);
+            }
+        }
+        Collections.sort(fields, new Comparator<BibEntryField>() {
+
+            @Override
+            public int compare(BibEntryField t1, BibEntryField t2) {
+                return Integer.valueOf(t1.getStartIndex()).compareTo(Integer.valueOf(t2.getStartIndex()));
+            }
+        
+        });
+        
+        int lastIndex = 0;
+        for (BibEntryField field : fields) {
+            String fieldText = text.substring(field.getStartIndex(), field.getEndIndex());
+            if (field.getStartIndex() != lastIndex) {
+                element.addContent(text.substring(lastIndex, field.getStartIndex()));
+            }
+            
+            if (BIBENTRY_TO_NLM.get(fieldKeyMap.get(field)) != null) {
+                Element fieldElement = new Element(BIBENTRY_TO_NLM.get(fieldKeyMap.get(field)));
+                fieldElement.setText(fieldText);
+                element.addContent(fieldElement);
+            } else if (BibEntry.FIELD_PAGES.equals(fieldKeyMap.get(field))) {
+                String firstPage = field.getText().replaceAll("--.*", "");
+                String lastPage = field.getText().replaceAll(".*--", "");
+                
+                int firstPageIndex = fieldText.indexOf(firstPage);
+                int lastPageIndex = fieldText.indexOf(lastPage);
+                
+                element.addContent(fieldText.substring(0, firstPageIndex));
+                
+                Element firstPageElement = new Element("fpage");
+                firstPageElement.setText(firstPage);
+                element.addContent(firstPageElement);
+                
+                element.addContent(fieldText.substring(firstPageIndex + firstPage.length(), lastPageIndex));
+                
+                Element lastPageElement = new Element("lpage");
+                lastPageElement.setText(lastPage);
+                element.addContent(lastPageElement);
+                
+                element.addContent(fieldText.substring(lastPageIndex + lastPage.length(), fieldText.length()));
+            } else if (BibEntry.FIELD_AUTHOR.equals(fieldKeyMap.get(field))) {
+                String surname = field.getText().replaceAll(",.*", "");
+                String givenname = field.getText().replaceAll(".*, ", "");
+                
+                int surnameIndex = fieldText.indexOf(surname);
+                int givennameIndex = fieldText.indexOf(givenname);
+                
+                String firstText = surname;
+                String firstLabel = "surname";
+                int firstIndex = surnameIndex;
+                String secondText = givenname;
+                String secondLabel = "given-names";
+                int secondIndex = givennameIndex;
+                
+                if (secondIndex < firstIndex) {
+                    firstText = givenname;
+                    firstLabel = "given-names";
+                    firstIndex = givennameIndex;
+                    secondText = surname;
+                    secondLabel = "surname";
+                    secondIndex = surnameIndex;
+                }
+                
+                Element nameElement = new Element("string-name");
+                
+                nameElement.addContent(fieldText.substring(0, firstIndex));
+                
+                Element firstElement = new Element(firstLabel);
+                firstElement.setText(firstText);
+                nameElement.addContent(firstElement);
+                
+                nameElement.addContent(fieldText.substring(firstIndex + firstText.length(), secondIndex));
+                
+                Element lastElement = new Element(secondLabel);
+                lastElement.setText(secondText);
+                nameElement.addContent(lastElement);
+                
+                nameElement.addContent(fieldText.substring(secondIndex + secondText.length(), fieldText.length()));
+                element.addContent(nameElement);
+            } else {
+                System.out.println("UWAGA "+fieldKeyMap.get(field));
+            }
+            lastIndex = field.getEndIndex();
+        }
+        if (lastIndex < text.length()) {
+            element.addContent(text.substring(lastIndex, text.length()));
+        }
+       
+        return element;
+    }
+    
     public static List<String> citationToMalletInputFormat(Citation citation) {
         List<String> trainingExamples = new ArrayList<String>();
         
-        FeatureVectorBuilder vectorBuilder = FeatureList.vectorBuilder;
+        FeatureVectorBuilder vectorBuilder = FeatureList.VECTOR_BUILDER;
         
         List<CitationToken> tokens = citation.getTokens();
         List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();

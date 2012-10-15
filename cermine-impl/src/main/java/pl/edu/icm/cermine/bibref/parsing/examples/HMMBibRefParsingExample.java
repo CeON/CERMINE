@@ -36,7 +36,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class HMMBibRefParsingExample {
+public final class HMMBibRefParsingExample {
 
     protected static final String HMM_TRAIN_FILE = ".xml";
 
@@ -101,9 +101,7 @@ public class HMMBibRefParsingExample {
 
         Set<Citation> citations = NlmCitationExtractor.extractCitations(new InputSource(u.openStream()));
         
-        CitationsToHMMConverter citationsToHMMTEsNode = new CitationsToHMMConverter();
-        citationsToHMMTEsNode.setFeatureVectorBuilder(vectorBuilder);
-        TrainingElement<CitationTokenLabel>[] trainingElements = citationsToHMMTEsNode.process(citations);
+        TrainingElement<CitationTokenLabel>[] trainingElements = CitationsToHMMConverter.convertToHMM(citations, vectorBuilder);
 
 		// 3. HMM training. The resulting probabilities object should be
 		// serialized for further usage

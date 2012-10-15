@@ -13,7 +13,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  */
 abstract public class AbstractDateEnhancer extends AbstractPatternEnhancer {
 
-    private static String[] MONTHS = {
+    private final static String[] MONTHS = {
         "january|jan\\.",
         "february|feb\\.",
         "march|mar\\.",
@@ -42,9 +42,6 @@ abstract public class AbstractDateEnhancer extends AbstractPatternEnhancer {
 
     @Override
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        //YDate date = new YDate().setType(dateType);
-        
-        //date.setDay(Integer.parseInt(result.group(2)));
         String day = result.group(2);
         String month = null;
         for (int i = 0; i < 12; i++) {

@@ -9,8 +9,6 @@ import com.itextpdf.text.pdf.parser.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -25,8 +23,6 @@ import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
 public class ITextCharacterExtractor implements CharacterExtractor {
-
-    Logger log = LoggerFactory.getLogger(ITextCharacterExtractor.class);
 
     protected static final HashMap<String, PdfName> AltStandardFontsMap = new HashMap<String, PdfName>();
 

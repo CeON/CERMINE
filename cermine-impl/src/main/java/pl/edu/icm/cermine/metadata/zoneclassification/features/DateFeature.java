@@ -33,15 +33,17 @@ public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 		for(String regex: monthsRegexps) {
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(text);
-			if(matcher.find())
+			if (matcher.find()) {
 				return 1.0;
+            }
 		}
 
 		for(String regex: digitRegexps) {
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(text);
-			if(matcher.find())
+			if (matcher.find()) {
 				return 1.0;
+            }
 		}
 		return 0.0;
 	}

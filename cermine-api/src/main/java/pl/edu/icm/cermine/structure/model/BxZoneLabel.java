@@ -97,41 +97,41 @@ public enum BxZoneLabel {
          
     private final BxZoneLabelCategory category;
     
-    private static final Map<BxZoneLabelCategory, BxZoneLabel> categoryToGeneral = 
+    private static final Map<BxZoneLabelCategory, BxZoneLabel> CATEGORY_TO_GENERAL = 
             new EnumMap<BxZoneLabelCategory, BxZoneLabel>(BxZoneLabelCategory.class);
     static {
-        categoryToGeneral.put(BxZoneLabelCategory.CAT_BODY,         GEN_BODY);
-        categoryToGeneral.put(BxZoneLabelCategory.CAT_METADATA,     GEN_METADATA);
-        categoryToGeneral.put(BxZoneLabelCategory.CAT_OTHER,        GEN_OTHER);
-        categoryToGeneral.put(BxZoneLabelCategory.CAT_REFERENCES,   GEN_REFERENCES);
+        CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_BODY,         GEN_BODY);
+        CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_METADATA,     GEN_METADATA);
+        CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_OTHER,        GEN_OTHER);
+        CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_REFERENCES,   GEN_REFERENCES);
     }
     
-    private static final Map<BxZoneLabel, BxZoneLabelCategory> generalToCategory = 
+    private static final Map<BxZoneLabel, BxZoneLabelCategory> GENERAL_TO_CATEGORY = 
             new EnumMap<BxZoneLabel, BxZoneLabelCategory>(BxZoneLabel.class);
     static {
-        generalToCategory.put(GEN_BODY,         BxZoneLabelCategory.CAT_BODY);
-        generalToCategory.put(GEN_METADATA,     BxZoneLabelCategory.CAT_METADATA);
-        generalToCategory.put(GEN_OTHER,        BxZoneLabelCategory.CAT_OTHER);
-        generalToCategory.put(GEN_REFERENCES,   BxZoneLabelCategory.CAT_REFERENCES);
+        GENERAL_TO_CATEGORY.put(GEN_BODY,         BxZoneLabelCategory.CAT_BODY);
+        GENERAL_TO_CATEGORY.put(GEN_METADATA,     BxZoneLabelCategory.CAT_METADATA);
+        GENERAL_TO_CATEGORY.put(GEN_OTHER,        BxZoneLabelCategory.CAT_OTHER);
+        GENERAL_TO_CATEGORY.put(GEN_REFERENCES,   BxZoneLabelCategory.CAT_REFERENCES);
     }
     
-    private static final Map<BxZoneLabel, BxZoneLabel> labelToGeneral = 
+    private static final Map<BxZoneLabel, BxZoneLabel> LABEL_TO_GENERAL = 
             new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
     static {
         for (BxZoneLabel label : BxZoneLabel.values()) {
-            if (categoryToGeneral.get(label.category) != null) {
-                labelToGeneral.put(label, categoryToGeneral.get(label.category));
+            if (CATEGORY_TO_GENERAL.get(label.category) != null) {
+                LABEL_TO_GENERAL.put(label, CATEGORY_TO_GENERAL.get(label.category));
             } else {
-                labelToGeneral.put(label, label);
+                LABEL_TO_GENERAL.put(label, label);
             }
         }
     }
     
-    private static final Map<BxZoneLabel, BxZoneLabelCategory> labelToCategory = 
+    private static final Map<BxZoneLabel, BxZoneLabelCategory> LABEL_TO_CATEGORY = 
             new EnumMap<BxZoneLabel, BxZoneLabelCategory>(BxZoneLabel.class);
     static {
         for (BxZoneLabel label : BxZoneLabel.values()) {
-            labelToCategory.put(label, label.category);
+            LABEL_TO_CATEGORY.put(label, label.category);
         }
     }
     
@@ -144,7 +144,7 @@ public enum BxZoneLabel {
     }
     
     public BxZoneLabel getGeneralLabel() {
-        return labelToGeneral.get(this);
+        return LABEL_TO_GENERAL.get(this);
     }
     
     public boolean isOfCategory(BxZoneLabelCategory category) {
@@ -152,7 +152,7 @@ public enum BxZoneLabel {
     }
     
     public boolean isOfCategoryOrGeneral(BxZoneLabelCategory category) {
-        return category.equals(this.getCategory()) || this.equals(categoryToGeneral.get(category));
+        return category.equals(this.getCategory()) || this.equals(CATEGORY_TO_GENERAL.get(category));
     }
     
     public static List<BxZoneLabel> valuesOfCategory(BxZoneLabelCategory category) {
@@ -166,13 +166,14 @@ public enum BxZoneLabel {
     }
     
     public static Map<BxZoneLabel, BxZoneLabel> getLabelToGeneralMap() {
-        return labelToGeneral;
+        return LABEL_TO_GENERAL;
     }
     
     public static Map<BxZoneLabel, BxZoneLabel> getIdentityMap() {
     	Map<BxZoneLabel, BxZoneLabel> ret = new HashMap<BxZoneLabel, BxZoneLabel>();
-    	for (BxZoneLabel label : BxZoneLabel.values()) 
+    	for (BxZoneLabel label : BxZoneLabel.values()) {
     		ret.put(label, label);
+        }
     	return ret;
     }
 }

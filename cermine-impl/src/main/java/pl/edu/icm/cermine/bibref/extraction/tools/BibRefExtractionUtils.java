@@ -6,14 +6,20 @@ import pl.edu.icm.cermine.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.cermine.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.hmm.training.SimpleTrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 /**
  * Bibliographic reference extraction utility class.
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class BibRefExtractionUtils {
+public final class BibRefExtractionUtils {
 
+    private BibRefExtractionUtils() {}
+    
     /**
      * Extracts lines and zones labeled as "references" from BxDocument.
      *
@@ -121,7 +127,30 @@ public class BibRefExtractionUtils {
             references.add(actCitation);
         }
 
-        return references.toArray(new String[]{});
+        return references.toArray(new String[references.size()]);
     }
 
+    public static TrainingElement<BibReferenceLineLabel>[] convertToHMM(BxDocumentBibReferences[] references, 
+            FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {
+
+        List<TrainingElement<BibReferenceLineLabel>> trainingList =
+                new ArrayList<TrainingElement<BibReferenceLineLabel>>();
+
+        for (BxDocumentBibReferences refs : references) {
+            SimpleTrainingElement<BibReferenceLineLabel> prevToken = null;
+            for (BxLine line : refs.getLines()) {
+                FeatureVector featureVector = featureVectorBuilder.getFeatureVector(line, refs);
+                SimpleTrainingElement<BibReferenceLineLabel> element =
+                        new SimpleTrainingElement<BibReferenceLineLabel>(featureVector, refs.getLabel(line), prevToken == null);
+                trainingList.add(element);
+                if (prevToken != null) {
+                    prevToken.setNextLabel(refs.getLabel(line));
+                }
+                prevToken = element;
+            }
+        }
+
+        return trainingList.toArray(new TrainingElement[trainingList.size()]);
+    }
+    
 }

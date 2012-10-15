@@ -17,12 +17,18 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
 
     final static Integer GRIDSIZE = 50;
     final static Double BOXES_FLOW = 0.5;
+    final static Double EPS = 0.0001;
     final static Comparator<BxObject> Y_ASCENDING_ORDER = new Comparator<BxObject>() {
 
         @Override
         public int compare(BxObject o1, BxObject o2) {
-            return (o1.getY() < o2.getY() ? -1
-                    : (o1.getY() == o2.getY() ? 0 : 1));
+        	if((o1.getY() - o2.getY()) > EPS ) {
+        		return 1;
+        	} else if(Math.abs(o1.getY() - o2.getY()) < EPS) {
+        		return 0;
+        	} else {
+        		return -1;
+        	}
         }
     };
     private Boolean force;
@@ -38,8 +44,13 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
 
         @Override
         public int compare(BxObject o1, BxObject o2) {
-            return (o1.getX() < o2.getX() ? -1
-                    : (o1.getX() == o2.getX() ? 0 : 1));
+        	if(o1.getX()-o2.getX() > EPS) {
+        		return 1;
+        	} else if(Math.abs(o1.getX() - o2.getX()) < EPS) {
+        		return 0;
+        	} else {
+        		return -1;
+        	}
         }
     };
 
@@ -161,9 +172,6 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         /*
          * Distance tuples are stored sorted by ascending distance value
          */
-        if (zones.size() == 1) {
-            return new BxZoneGroup(zones.get(0), null);
-        }
         List<DistElem<BxObject>> dists = new ArrayList<DistElem<BxObject>>();
         for (int idx1 = 0; idx1 < zones.size(); ++idx1) {
             for (int idx2 = idx1 + 1; idx2 < zones.size(); ++idx2) {
@@ -244,13 +252,14 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         //	Double leftChildSortPrecedence = sortPrecedence(leftChild);
         //	Double rightChildSortPrecedence = sortPrecedence(rightChild);
         //	if (leftChildSortPrecedence < rightChildSortPrecedence) {
-        if (!shouldBeSwapped(leftChild, rightChild)) {
-            // the order is fine, don't do anything
-        } else {
+        if (shouldBeSwapped(leftChild, rightChild)) {
             // swap
             group.setLeftChild(rightChild);
             group.setRightChild(leftChild);
-        }
+        } // else {  
+          //the order is fine, don't do anything 
+          //}
+        
         if (leftChild instanceof BxZoneGroup) // if the child is a tree node, then recurse
         {
             sortGroupedZones((BxZoneGroup) leftChild);
@@ -304,16 +313,6 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         } else { //two zones
             return false;
         }
-    }
-
-    /**
-     * Key function for sorting in sortGroupedZones(). Allows to order two objects joined together in a logical order.
-     *
-     * @param obj is an object to have a sorting key
-     * @return value based on object's physical properties
-     */
-    private Double sortPrecedence(BxObject obj) {
-        return Math.sqrt((obj.getX() + obj.getWidth() / 2) * (obj.getX() + obj.getWidth() / 2) + obj.getY() * obj.getY());
     }
 
     /**

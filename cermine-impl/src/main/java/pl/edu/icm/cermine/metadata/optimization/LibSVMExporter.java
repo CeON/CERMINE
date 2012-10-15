@@ -2,6 +2,7 @@ package pl.edu.icm.cermine.metadata.optimization;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Formatter;
 import java.util.List;
@@ -23,10 +24,11 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSele
 
 public class LibSVMExporter {
 
-    public static void toLibSVM(List<TrainingElement<BxZoneLabel>> trainingElements, String filePath) {
+    public static void toLibSVM(List<TrainingElement<BxZoneLabel>> trainingElements, String filePath) throws IOException {
+    	BufferedWriter svmDataFile = null;
         try {
             FileWriter fstream = new FileWriter(filePath);
-            BufferedWriter svmDataFile = new BufferedWriter(fstream);
+            svmDataFile = new BufferedWriter(fstream);
             for (TrainingElement<BxZoneLabel> elem : trainingElements) {
                 svmDataFile.write(String.valueOf(elem.getLabel().ordinal()));
                 svmDataFile.write(" ");
@@ -45,11 +47,16 @@ public class LibSVMExporter {
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             return;
+        } finally {
+        	if(svmDataFile != null) {
+        		svmDataFile.close();
+        	}
         }
+        
         System.out.println("Done.");
     }
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, IOException {
         Options options = new Options();
         options.addOption("meta", false, "export data for metadata classification");
         options.addOption("initial", false, "export data for initial classification");

@@ -15,7 +15,7 @@ import pl.edu.icm.cermine.structure.tools.Histogram;
  */
 public class DocstrumPageSegmenter implements PageSegmenter {
 
-    private static double DISTANCE_STEP = 16.0;
+    private static final double DISTANCE_STEP = 16.0;
 
     /**
      * Angle histogram resolution in radians per bin.

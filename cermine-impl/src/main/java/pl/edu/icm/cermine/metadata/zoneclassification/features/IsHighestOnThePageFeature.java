@@ -9,13 +9,17 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
-	
+	private static final double EPS = 10.0;
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override
 		public int compare(BxZone z1, BxZone z2) {
-			return (z1.getY() + z1.getHeight() < z2.getY() + z2.getHeight() ? -1
-					: (z1.getY() + z1.getHeight() == z2.getY() + z2.getHeight() ? 0
-							: 1));
+			if((z1.getY() + z1.getHeight() - (z2.getY() + z2.getHeight())) > EPS) {
+				return 1;
+			} else if(Math.abs(z1.getY() + z1.getHeight() - (z2.getY() + z2.getHeight())) < EPS) {
+				return 0;
+			} else {
+				return -1;
+			}
 		}
 	}
 	
@@ -24,14 +28,12 @@ public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>
 		List<BxZone> zones = new ArrayList<BxZone>(page.getZones());
 		Collections.sort(zones, new yCoordinateComparator());
 		BxZone firstZone = zones.get(0);
-		final double IDENT_TRESHOLD = 1.0;
-		if(zone == firstZone)
+		if(zone.equals(firstZone)) {
 			return 1.0;
-		else
-			if(Math.abs(zone.getY() - firstZone.getY()) <= IDENT_TRESHOLD) {
-				return 1.0;
-			} else {
-				return 0.0;
-			}
+		} else	if(Math.abs(zone.getY() - firstZone.getY()) <= EPS) {
+			return 1.0;
+		} else {
+			return 0.0;
+		}
 	}
 }

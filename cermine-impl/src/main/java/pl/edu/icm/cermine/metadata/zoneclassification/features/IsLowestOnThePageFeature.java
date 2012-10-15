@@ -8,13 +8,17 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
-	
+	public static final Double EPS = 10.0;
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override
 		public int compare(BxZone z1, BxZone z2) {
-			return (z1.getY() + z1.getHeight() < z2.getY() + z2.getHeight() ? -1
-					: (z1.getY() + z1.getHeight() == z2.getY() + z2.getHeight() ? 0
-							: 1));
+			if(z1.getY() + z1.getHeight() - (z2.getY() + z2.getHeight()) > EPS) {
+				return 1;
+			} else if(Math.abs(z1.getY() + z1.getHeight() - (z2.getY() + z2.getHeight())) < EPS) {
+				return 0;
+			} else {
+				return -1;
+			}
 		}
 	}
 	
@@ -23,13 +27,12 @@ public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
 		List<BxZone> zones = new ArrayList<BxZone>(page.getZones());
 		Collections.sort(zones, new yCoordinateComparator());
 		BxZone lastZone = zones.get(zones.size()-1);
-		final double IDENT_TRESHOLD = 10.0;
-		if(zone == lastZone)
+		if(zone.equals(lastZone)) {
 			return 1.0;
-		else
-			if(Math.abs(lastZone.getY()+lastZone.getHeight() - zone.getY()+zone.getHeight()) <= IDENT_TRESHOLD) 
-				return 1.0;
-			else
-				return 0.0;
+		} else if(Math.abs(lastZone.getY() + lastZone.getHeight() - (zone.getY() + zone.getHeight())) <= EPS) {
+			return 1.0;
+		} else {
+			return 0.0;
+		}
 	}
 }

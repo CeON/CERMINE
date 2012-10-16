@@ -17,6 +17,7 @@
                     <span>Add files...</span>
                     <input type="file" name="files[]" multiple/>
                 </span>
+                <%--
                 <button type="submit" class="btn btn-primary start">
                     <i class="icon-upload icon-white"></i>
                     <span>Start upload</span>
@@ -29,7 +30,7 @@
                     <i class="icon-trash icon-white"></i>
                     <span>Delete</span>
                 </button>
-                <input type="checkbox" class="toggle">
+                <input type="checkbox" class="toggle"> --%>
             </div>
             <!-- The global progress information -->
             <div class="span5 fileupload-progress fade">
@@ -77,11 +78,10 @@
 
 <!-- The Templates plugin is included to render the upload/download listings -->
 <script src="<c:url value='/static/fileupload/js/tmpl.min.js'/>" type="text/javascript"></script>
-<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+<!-- The Load Image plugin is included for the preview images and image resizing functionality
+<script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script> -->
     
-<script src="<c:url value='/static/fileupload/js/bootstrap.min.js'/>" type="text/javascript"></script> 
- 
+<script src="<c:url value='/static/fileupload/js/bootstrap.min.js'/>" type="text/javascript"></script>  
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="<c:url value='/static/fileupload/js/jquery.iframe-transport.js'/>" type="text/javascript"></script>
 <!-- The basic File Upload plugin -->
@@ -97,9 +97,9 @@ $(function () {
     'use strict';
 
     // Initialize the jQuery File Upload widget:
-    $('#fileupload').fileupload();
+     $('#fileupload').fileupload();
 
-    // Enable iframe cross-domain access via redirect option:
+    /* Enable iframe cross-domain access via redirect option:
     $('#fileupload').fileupload(
         'option',
         'redirect',
@@ -107,29 +107,13 @@ $(function () {
             /\/[^\/]*$/,
             '/cors/result.html?%s'
         )
-    );
+    );*/
 
-    if (window.location.hostname === 'blueimp.github.com') {
         // Demo settings:
         $('#fileupload').fileupload('option', {
-            url: '//jquery-file-upload.appspot.com/',
+            //url: '//jquery-file-upload.appspot.com/',
             maxFileSize: 5000000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            process: [
-                {
-                    action: 'load',
-                    fileTypes: /^image\/(gif|jpeg|png)$/,
-                    maxFileSize: 20000000 // 20MB
-                },
-                {
-                    action: 'resize',
-                    maxWidth: 1440,
-                    maxHeight: 900
-                },
-                {
-                    action: 'save'
-                }
-            ]
+            acceptFileTypes: /(\.|\/)(pdf)$/i
         });
         // Upload server status check for browsers with CORS support:
        /* if ($.support.cors) {
@@ -143,7 +127,7 @@ $(function () {
                     .appendTo('#fileupload');
             });
         }*/
-   } 
+  
     /*else {
         // Load existing files:
         $('#fileupload').each(function () {
@@ -215,7 +199,7 @@ $(function () {
                 <i class="icon-trash icon-white"></i>
                 <span>Delete</span>
             </button>
-            <input type="checkbox" name="delete" value="1">
+            <%--<input type="checkbox" name="delete" value="1">--%>
         </td>
     </tr>
 {% } %}

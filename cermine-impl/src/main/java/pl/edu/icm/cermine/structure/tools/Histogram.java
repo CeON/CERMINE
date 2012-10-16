@@ -184,7 +184,8 @@ public class Histogram implements Iterable<Histogram.Bin> {
             }
         }
         int peakEndIndex = peakIndex + 1;
-        while(peakEndIndex < frequencies.length && frequencies[peakEndIndex] == frequencies[peakIndex]) {
+        final double EPS = 0.0001;
+        while(peakEndIndex < frequencies.length && Math.abs(frequencies[peakEndIndex] - frequencies[peakIndex]) < EPS) {
             peakEndIndex++;
         }
         return ((double) peakIndex + peakEndIndex) / 2 * resolution + min;

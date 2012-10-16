@@ -290,22 +290,10 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         // __|___|__
         // 6 | 5 | 4
 
-        if (cx + cw <= ox) {
-            if (cy + ch <= oy) {
-                return false; //4
-            } else if (cy >= oy + oh) {
-                return false;// 2;
-            } else {
-                return false; // 3;
-            }
-        } else if (ox + ow <= cx) {
-            if (cy + ch <= oy) {
-                return true; //6
-            } else if (oy + oh <= cy) {
-                return true; //0
-            } else {
-                return true; //7
-            }
+        if (cx + cw <= ox) { //2,3,4
+        	return false; 
+        } else if (ox + ow <= cx) { //0,6,7
+        	return true; //6
         } else if (cy + ch <= oy) {
             return false; //5
         } else if (oy + oh <= cy) {

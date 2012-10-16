@@ -169,22 +169,14 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 
             @Override
             public Boolean shouldBeClassified(BxZone zone) {
-                if (zone.getLabel() == BxZoneLabel.GEN_METADATA) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return zone.getLabel() == BxZoneLabel.GEN_METADATA;
             }
         });
         classifier.addClassifier(new PickyClassifier(bodyOtherClassifier) {
 
             @Override
             public Boolean shouldBeClassified(BxZone zone) {
-                if (zone.getLabel() == BxZoneLabel.GEN_BODY) {
-                    return true;
-                } else {
-                    return false;
-                }
+            	return zone.getLabel() == BxZoneLabel.GEN_BODY;
             }
         });
         return classifier;

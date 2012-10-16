@@ -19,7 +19,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator{ 
 	@Override
-	protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException
+	protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException
 	{
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
 //		for(BxDocument doc: trainingDocuments)
@@ -30,13 +30,7 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         BxDocsToHMMConverter node = new BxDocsToHMMConverter(featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
         
         List<TrainingElement<BxZoneLabel>> trainingElements;
-        try {
-        	trainingElements = node.process(trainingDocuments);
-        } catch(Exception e) {
-        	System.out.println(e.getCause());
-        	e.printStackTrace();
-			throw new RuntimeException("Unable to process the delivered training documents!");
-		}
+        trainingElements = node.process(trainingDocuments);
 
         // Filter the training documents
         // so that in the learning examples all classes are

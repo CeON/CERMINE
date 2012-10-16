@@ -64,10 +64,10 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
         if (inDir == null) {
             throw new NullPointerException("Input directory must not be null.");
         }
-        if (! inDir.endsWith(File.separator)) {
+        if (!inDir.endsWith(File.separator)) {
             inDir += File.separator;
         }
-        if (outDir != null && ! outDir.endsWith(File.separator)) {
+        if (outDir != null && !outDir.endsWith(File.separator)) {
             outDir += File.separator;
         }
         R results = newResults();

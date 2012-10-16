@@ -55,6 +55,9 @@ public class Valley implements Comparable {
 
     @Override
     public int compareTo(Object o) {
+        if (this.equals(o)) {
+            return 0;
+        }
         int result = 0;
         Valley v = (Valley) o;
         if (this.getLength() > v.getLength()) {
@@ -64,4 +67,27 @@ public class Valley implements Comparable {
         }
         return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Valley other = (Valley) obj;
+        if (Double.doubleToLongBits(this.length) != Double.doubleToLongBits(other.length)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.length) ^ (Double.doubleToLongBits(this.length) >>> 32));
+        return hash;
+    }
+    
 }

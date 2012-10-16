@@ -76,6 +76,9 @@ public class Range implements Comparable {
 
     @Override
     public int compareTo(Object o) {
+        if (this.equals(o)) {
+            return 0;
+        }
         int result = 0;
         Range sr = (Range) o;
         if (this.getRangeStart() > sr.getRangeStart()) {
@@ -85,4 +88,27 @@ public class Range implements Comparable {
         }
         return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Range other = (Range) obj;
+        if (Double.doubleToLongBits(this.rangeStart) != Double.doubleToLongBits(other.rangeStart)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.rangeStart) ^ (Double.doubleToLongBits(this.rangeStart) >>> 32));
+        return hash;
+    }
+    
 }

@@ -83,9 +83,6 @@ public class BibTeXToBibEntryTransformer {
     }
 
     protected String revertEscape(String text) {
-        text = text.replace("\\{", "{");
-        text = text.replace("\\}", "}");
-        text = text.replace("\\_", "_");
-        return text;
+        return text.replace("\\{", "{").replace("\\}", "}").replace("\\_", "_");
     }
 }

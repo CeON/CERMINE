@@ -21,7 +21,9 @@ public class MalletTrainingFileGenerator {
     public static void main(String[] args) throws JDOMException, IOException {
         
         File dir = new File(nlmDir);
-        FileWriter writer = new FileWriter(outFile);
+        FileWriter writer = null;
+        try {
+        writer = new FileWriter(outFile);
         
         Set<Citation> allcitations = new HashSet<Citation>();
         
@@ -98,7 +100,11 @@ public class MalletTrainingFileGenerator {
         }
             
         writer.flush();
-        writer.close();
+        } finally {
+        	if(writer != null) {
+        		writer.close();
+        	}
+        }
     }
 
 }

@@ -54,7 +54,7 @@ public class LogicalStructureExtractorDemo {
                 new DoubleDigitSchemaFeature(),
                 new HeightFeature(),
                 new IndentationFeature(),
-                new IsHeigherThanNeighborsFeature(),
+                new IsHigherThanNeighborsFeature(),
                 new LengthFeature(),
                 new LowercaseSchemaFeature(),
                 new NextLineIndentationFeature(),

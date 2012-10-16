@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class IsHeigherThanNeighborsFeature extends FeatureCalculator<BxLine, BxPage> {
+public class IsHigherThanNeighborsFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {
@@ -19,18 +19,11 @@ public class IsHeigherThanNeighborsFeature extends FeatureCalculator<BxLine, BxP
 
         BxLine l = line;
         int i = 0;
-        while (l.hasPrev()) {
-            if (i >= 2) {
-                break;
-            }
+        while (l.hasPrev() && i < 2) {
             l = l.getPrev();
-            if (l.getHeight() > max) {
-                max = l.getHeight();
-            }
-            if (l.getHeight() < min) {
-                min = l.getHeight();
-            }
-            i++;
+            max = Math.max(l.getHeight(), max);
+            min = Math.min(l.getHeight(), min);
+            ++i;
         }
 
         if (Math.abs(max - line.getHeight()) < 0.1 && Math.abs(min - line.getHeight()) > 1) {
@@ -42,18 +35,11 @@ public class IsHeigherThanNeighborsFeature extends FeatureCalculator<BxLine, BxP
 
         i = 0;
         l = line;
-        while (l.hasNext()) {
-            if (i >= 2) {
-                break;
-            }
+        while (l.hasNext() && i < 2) {
             l = l.getNext();
-            if (l.getHeight() > max) {
-                max = l.getHeight();
-            }
-            if (l.getHeight() < min) {
-                min = l.getHeight();
-            }
-            i++;
+            max = Math.max(l.getHeight(), max);
+            min = Math.min(l.getHeight(), min);
+            ++i;
         }
 
         if (Math.abs(max - line.getHeight()) < 0.1 && Math.abs(min - line.getHeight()) > 1) {

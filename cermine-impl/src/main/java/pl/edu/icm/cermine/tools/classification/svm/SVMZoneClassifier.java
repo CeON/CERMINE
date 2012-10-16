@@ -167,7 +167,6 @@ public class SVMZoneClassifier implements ZoneClassifier {
 			}
 		}
 		double w_list[][][] = new double[model.nr_class][model.nr_class - 1][model.SV[0].length];
-		System.out.println(model.nr_class);
 
 		for (int i = 0; i < model.SV[0].length; ++i) {
 			for (int j = 0; j < model.nr_class - 1; ++j) {

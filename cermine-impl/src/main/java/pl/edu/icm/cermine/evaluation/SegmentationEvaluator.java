@@ -270,7 +270,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
             zoneLevel.printResults(formatter);
             lineLevel.printResults(formatter);
             wordLevel.printResults(formatter);
-            formatter.format("\n");
+            formatter.format("%n");
         }
 
         public static void printLevelHeader() {

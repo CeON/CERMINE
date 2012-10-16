@@ -29,3 +29,5 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+#generated xmls
+cermine-impl/*.xml

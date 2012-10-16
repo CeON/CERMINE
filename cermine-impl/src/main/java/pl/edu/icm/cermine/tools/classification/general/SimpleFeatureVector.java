@@ -38,7 +38,7 @@ public class SimpleFeatureVector implements FeatureVector {
     	Collections.sort(keys);
     	for(String name: keys) {
     		String shortName = (name.length() > 18 ? name.substring(0, 18) : name);
-    		ret.append(String.format("%18s: %5.2f\n", shortName, features.get(name)));
+    		ret.append(String.format("%18s: %5.2f%n", shortName, features.get(name)));
     	}
     	return ret.toString();
     }

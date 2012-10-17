@@ -82,7 +82,6 @@ public abstract class AbstractDocumentProcessorTest {
                 ZipEntry zipEntry = (ZipEntry) entries.nextElement();
                 if (zipEntry.getName().endsWith(xmlFilenameSuffix)) {
                     String parent = new File(zipEntry.getName()).getParent();
-                //    System.out.println(zipEntry.getName());
                     if (dirSamplesCount.containsKey(parent)) {
                         dirSamplesCount.put(parent, dirSamplesCount.get(parent) + 1);
                     } else {
@@ -130,13 +129,7 @@ public abstract class AbstractDocumentProcessorTest {
             endProcessFlattener.process(expectedDoc);
         }
         
-        //BxObjectDump dump = new BxObjectDump();
-        //System.out.println("--------------------");
-        //System.out.println(dump.dump(testDoc, 2, 2, false, true));
-        //System.out.println(dump.dump(expectedDoc, 2, 2, false, true));
-        boolean ret =  compareDocuments(testDoc, expectedDoc);
-        //System.out.println(ret);
-        return ret;
+        return compareDocuments(testDoc, expectedDoc);
     }
     
 }

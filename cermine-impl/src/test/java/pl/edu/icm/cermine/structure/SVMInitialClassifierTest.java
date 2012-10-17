@@ -27,6 +27,8 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 	protected static final double testSuccessPercentage = 80;
 	
 	protected SVMZoneClassifier classifier;
+    
+    protected ReadingOrderResolver ror;
 	
     int allZones = 0;
     int badZones = 0;
@@ -34,10 +36,17 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
     @Before
     public void setUp() throws IOException, AnalysisException {
     	classifier = new SVMInitialZoneClassifier(getModel(), getRange());
+        ror = new HierarchicalReadingOrderResolver();
     	startProcessFlattener = new DocumentProcessor() {
 			@Override
-			public void process(BxDocument document) {
-				BxModelUtils.setReadingOrder(document);
+			public void process(BxDocument document) throws AnalysisException {
+				ror.resolve(document);
+			}
+		};
+        endProcessFlattener = new DocumentProcessor() {
+			@Override
+			public void process(BxDocument document) throws AnalysisException {
+				ror.resolve(document);
 			}
 		};
     }
@@ -70,7 +79,6 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 		if(testDoc.asPages().size() != expectedDoc.asPages().size())
 			return false;
 		
-		BxModelUtils.setReadingOrder(expectedDoc);
 		Integer correctZones = 0;
 		Integer zones = testDoc.asZones().size();
 		for(Integer zoneIdx=0; zoneIdx < testDoc.asZones().size(); ++zoneIdx) {
@@ -94,4 +102,5 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 		classifier.classifyZones(doc);
 		return doc;
 	}
+
 }

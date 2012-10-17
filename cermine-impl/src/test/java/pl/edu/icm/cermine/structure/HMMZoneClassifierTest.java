@@ -41,16 +41,24 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
 
     private HMMService hmmService = new HMMServiceImpl();
     private ZoneClassifier zoneClassifier;
+    protected ReadingOrderResolver ror;
 
     int allZones = 0;
     int badZones = 0;
 
     @Before
     public void setUp() throws IOException {
-    	this.startProcessFlattener = new DocumentProcessor() {
+        ror = new HierarchicalReadingOrderResolver();
+    	startProcessFlattener = new DocumentProcessor() {
 			@Override
-			public void process(BxDocument document) {
-				BxModelUtils.setReadingOrder(document);
+			public void process(BxDocument document) throws AnalysisException {
+				ror.resolve(document);
+			}
+		};
+        endProcessFlattener = new DocumentProcessor() {
+			@Override
+			public void process(BxDocument document) throws AnalysisException {
+				ror.resolve(document);
 			}
 		};
         InputStream is = this.getClass().getResourceAsStream(hmmProbabilitiesFile);
@@ -124,7 +132,6 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
     @Override
     protected boolean compareDocuments(BxDocument testDoc, BxDocument expectedDoc) {
         boolean ret = true;
-        BxModelUtils.setReadingOrder(expectedDoc);
         for (int i = 0; i < testDoc.getPages().size(); i++) {
             BxPage testPage = testDoc.getPages().get(i);
             BxPage expectedPage = expectedDoc.getPages().get(i);

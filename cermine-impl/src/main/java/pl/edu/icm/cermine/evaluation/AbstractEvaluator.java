@@ -54,13 +54,13 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
 
     protected abstract R compareDocuments(P expected, P actual);
 
-    protected abstract Documents<P> getDocuments(String directory, String filename) throws AnalysisException, FileNotFoundException, IOException, TransformationException;
+    protected abstract Documents<P> getDocuments(String directory, String filename) throws AnalysisException, IOException, TransformationException;
 
     public Detail getDetail() {
         return detail;
     }
 
-    public void run(String inDir, String outDir) throws AnalysisException, FileNotFoundException, IOException, TransformationException {
+    public void run(String inDir, String outDir) throws AnalysisException, IOException, TransformationException {
         if (inDir == null) {
             throw new NullPointerException("Input directory must not be null.");
         }

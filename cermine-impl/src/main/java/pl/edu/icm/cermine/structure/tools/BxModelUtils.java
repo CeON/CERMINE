@@ -1,9 +1,6 @@
 package pl.edu.icm.cermine.structure.tools;
 
 import java.util.*;
-import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.model.*;
 
 /**
@@ -11,7 +8,9 @@ import pl.edu.icm.cermine.structure.model.*;
  * @author krusek
  */
 public final class BxModelUtils {
-
+    
+    private static final double SIMILARITY_TOLERANCE = 0.001;
+    
     private BxModelUtils() {}
     
 	public static void setParents(BxDocument doc) {
@@ -36,16 +35,6 @@ public final class BxModelUtils {
 		}
 	}
 	
-	public static void setReadingOrder(BxDocument document){
-		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-		try {
-			ror.resolve(document);
-		} catch(AnalysisException e) {
-			System.out.println(e.getCause());
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
     public static void sortZonesYX(BxPage page, final double tolerance) {
         Collections.sort(page.getZones(), new Comparator<BxZone>() {
 
@@ -347,7 +336,7 @@ public final class BxModelUtils {
         if (!chunk1.getText().equals(chunk2.getText())) {
             return false;
         }
-        if (!chunk1.getBounds().isSimilarTo(chunk2.getBounds(), 0.001)) {
+        if (!chunk1.getBounds().isSimilarTo(chunk2.getBounds(), SIMILARITY_TOLERANCE)) {
             return false;
         }
         return true;

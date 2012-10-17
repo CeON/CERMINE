@@ -107,10 +107,12 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             ClassificationResults iterationResults = newResults();
 
             ZoneClassifier zoneClassifier = getZoneClassifier(BxModelUtils.deepClone(trainingDocuments));
+            
+            ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
 
             for (BxDocument testDocument : testDocuments) {
                 BxDocument processedDocument = BxModelUtils.deepClone(testDocument);
-                BxModelUtils.setReadingOrder(processedDocument);
+                processedDocument = ror.resolve(processedDocument);
                 for (BxZone zone : processedDocument.asZones()) {
                     zone.setLabel(null);
                 }
@@ -118,14 +120,11 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
                 if (detail != Detail.MINIMAL) {
                     System.out.println("=== Document " + testDocument.getFilename());
                 }
-                try {
-                    zoneClassifier.classifyZones(processedDocument);
-                } catch (AnalysisException e) {
-                    e.printStackTrace();
-                    System.exit(1);
-                }
+                
+                zoneClassifier.classifyZones(processedDocument);
+
                 preprocessDocumentForEvaluation(testDocument);
-                BxModelUtils.setReadingOrder(testDocument);
+                testDocument = ror.resolve(testDocument);
                 ClassificationResults documentResults = compareDocuments(testDocument, processedDocument);
                 if (detail != Detail.MINIMAL) {
                     printDocumentResults(documentResults);

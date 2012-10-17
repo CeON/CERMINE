@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import org.jdom.Element;
 import org.jdom.JDOMException;

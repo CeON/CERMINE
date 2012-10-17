@@ -25,21 +25,21 @@ import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
  */
 public class ITextCharacterExtractor implements CharacterExtractor {
 
-    protected static final Map<String, PdfName> AltStandardFontsMap = new HashMap<String, PdfName>();
+    protected static final Map<String, PdfName> ALT_TO_STANDART_FONTS = new HashMap<String, PdfName>();
 
     static {
-        AltStandardFontsMap.put("CourierNew",               PdfName.COURIER);
-        AltStandardFontsMap.put("CourierNew,Bold",          PdfName.COURIER_BOLD);
-        AltStandardFontsMap.put("CourierNew,BoldItalic",    PdfName.COURIER_BOLDOBLIQUE);
-        AltStandardFontsMap.put("CourierNew,Italic",        PdfName.COURIER_OBLIQUE);
-        AltStandardFontsMap.put("Arial",                    PdfName.HELVETICA);
-        AltStandardFontsMap.put("Arial,Bold",               PdfName.HELVETICA_BOLD);
-        AltStandardFontsMap.put("Arial,BoldItalic",         PdfName.HELVETICA_BOLDOBLIQUE);
-        AltStandardFontsMap.put("Arial,Italic",             PdfName.HELVETICA_OBLIQUE);
-        AltStandardFontsMap.put("TimesNewRoman",            PdfName.TIMES_ROMAN);
-        AltStandardFontsMap.put("TimesNewRoman,Bold",       PdfName.TIMES_BOLD);
-        AltStandardFontsMap.put("TimesNewRoman,BoldItalic", PdfName.TIMES_BOLDITALIC);
-        AltStandardFontsMap.put("TimesNewRoman,Italic",     PdfName.TIMES_ITALIC);
+        ALT_TO_STANDART_FONTS.put("CourierNew",               PdfName.COURIER);
+        ALT_TO_STANDART_FONTS.put("CourierNew,Bold",          PdfName.COURIER_BOLD);
+        ALT_TO_STANDART_FONTS.put("CourierNew,BoldItalic",    PdfName.COURIER_BOLDOBLIQUE);
+        ALT_TO_STANDART_FONTS.put("CourierNew,Italic",        PdfName.COURIER_OBLIQUE);
+        ALT_TO_STANDART_FONTS.put("Arial",                    PdfName.HELVETICA);
+        ALT_TO_STANDART_FONTS.put("Arial,Bold",               PdfName.HELVETICA_BOLD);
+        ALT_TO_STANDART_FONTS.put("Arial,BoldItalic",         PdfName.HELVETICA_BOLDOBLIQUE);
+        ALT_TO_STANDART_FONTS.put("Arial,Italic",             PdfName.HELVETICA_OBLIQUE);
+        ALT_TO_STANDART_FONTS.put("TimesNewRoman",            PdfName.TIMES_ROMAN);
+        ALT_TO_STANDART_FONTS.put("TimesNewRoman,Bold",       PdfName.TIMES_BOLD);
+        ALT_TO_STANDART_FONTS.put("TimesNewRoman,BoldItalic", PdfName.TIMES_BOLDITALIC);
+        ALT_TO_STANDART_FONTS.put("TimesNewRoman,Italic",     PdfName.TIMES_ITALIC);
     }
 
     /**
@@ -100,8 +100,8 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             PdfName baseFont = fontDictionary.getAsName(PdfName.BASEFONT);
             if (baseFont != null) {
                 String fontName = PdfName.decodeName(baseFont.toString());
-                if (fontDictionary.getAsArray(PdfName.WIDTHS) == null && AltStandardFontsMap.containsKey(fontName)) {
-                    fontDictionary.put(PdfName.BASEFONT, AltStandardFontsMap.get(fontName));
+                if (fontDictionary.getAsArray(PdfName.WIDTHS) == null && ALT_TO_STANDART_FONTS.containsKey(fontName)) {
+                    fontDictionary.put(PdfName.BASEFONT, ALT_TO_STANDART_FONTS.get(fontName));
                 }
             }
         }
@@ -141,7 +141,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             for (TextRenderInfo charTri : tri.getCharacterRenderInfos()) {
                 String text = charTri.getText();
                 char ch = charTri.getText().charAt(0);
-                if (ch <= 32 || text.matches("^[\uD800-\uD8FF]$")
+                if (ch <= ' ' || text.matches("^[\uD800-\uD8FF]$")
                         || text.matches("^[\uDC00-\uDFFF]$")
                         || text.matches("^[\uFFF0-\uFFFF]$")) {
                     continue;

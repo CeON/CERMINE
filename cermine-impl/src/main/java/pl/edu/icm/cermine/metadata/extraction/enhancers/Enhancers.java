@@ -111,10 +111,8 @@ public class Enhancers {
                 element.addContent(aff);
             }
             for (Object child : children) {
-                if (child instanceof Element) {
-                    if (id.equals(((Element)child).getText())) {
-                        ((Element)child).setText(affiliation);
-                    }
+                if (child instanceof Element && id.equals(((Element)child).getText())) {
+                    ((Element)child).setText(affiliation);
                 }
             }
         }
@@ -197,10 +195,8 @@ public class Enhancers {
             List children = element.getChildren(TAG_AFF);
             List<Element> toRemove = new ArrayList<Element>();
             for (Object child : children) {
-                if (child instanceof Element) {
-                    if (((Element)child).getText().length() < 5) {
-                        toRemove.add((Element)child);
-                    }
+                if (child instanceof Element && ((Element)child).getText().length() < 5) {
+                    toRemove.add((Element)child);
                 }
             }
             for (Element aff : toRemove) {

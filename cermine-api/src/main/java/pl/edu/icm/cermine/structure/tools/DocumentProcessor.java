@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.structure.tools;
 
+import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
@@ -14,5 +15,5 @@ public interface DocumentProcessor{
      * 
      * @param document 
      */
-    void process(BxDocument document);
+    void process(BxDocument document) throws AnalysisException;
 }

@@ -26,6 +26,19 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         metadataExtractor = new PdfNLMMetadataExtractor();
         referencesExtractor = new PdfNLMReferencesExtractor();
     }
+
+    public PdfNLMContentExtractor(DocumentStructureExtractor structureExtractor, DocumentMetadataExtractor<Element> metadataExtractor, DocumentReferencesExtractor<Element> referencesExtractor) {
+        this.structureExtractor = structureExtractor;
+        this.metadataExtractor = metadataExtractor;
+        this.referencesExtractor = referencesExtractor;
+    }
+    
+    public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, 
+            InputStream metadataModel, InputStream metadataRange, InputStream refModel) throws AnalysisException {
+        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
+        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
+        referencesExtractor = new PdfNLMReferencesExtractor(refModel);
+    }
     
     /**
      * Extracts content from PDF file and stored it in NLM format.

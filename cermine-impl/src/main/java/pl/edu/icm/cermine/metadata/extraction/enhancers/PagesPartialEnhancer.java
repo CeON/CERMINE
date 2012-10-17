@@ -17,7 +17,7 @@ public class PagesPartialEnhancer extends AbstractPatternEnhancer {
     private static final Pattern PATTERN = Pattern.compile(
             "(\\d+)[-\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212](\\d+)",
             Pattern.CASE_INSENSITIVE);
-    private int pages = 100;
+    private int pages = 10;
 
     public PagesPartialEnhancer() {
         super(PATTERN);
@@ -34,7 +34,7 @@ public class PagesPartialEnhancer extends AbstractPatternEnhancer {
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
         int first = Integer.parseInt(result.group(1));
         int last = Integer.parseInt(result.group(2));
-        if (first <= last && last - first < pages + 10) {
+        if (first <= last && last - first < pages *2) {
             Enhancers.setPages(metadata, result.group(1), result.group(2));
             return true;
         } else {

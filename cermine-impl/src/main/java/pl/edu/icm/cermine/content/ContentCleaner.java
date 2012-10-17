@@ -12,13 +12,22 @@ import pl.edu.icm.cermine.structure.model.BxLine;
  */
 public class ContentCleaner {
     
-    private double paragraphLineIndentMultiplier = 0.5;
+    public static final double DEFAULT_PAR_LINE_MULT = 0.5;
     
-    private double minParagraphIndent = 5;
+    public static final double DEFAULT_MIN_PAR_IND = 5;
     
-    private double lastParagraphLineLengthMult = 0.8;
+    public static final double DEFAULT_LAST_PAR_LINE_MULT = 0.8;
     
-    private double firstParagraphLineMinScore = 3;
+    public static final double DEFAULT_FIRST_PAR_LINE_SCORE = 3;
+    
+    
+    private double paragraphLineIndentMultiplier = DEFAULT_PAR_LINE_MULT;
+    
+    private double minParagraphIndent = DEFAULT_MIN_PAR_IND;
+    
+    private double lastParagraphLineLengthMult = DEFAULT_LAST_PAR_LINE_MULT;
+    
+    private double firstParagraphLineMinScore = DEFAULT_FIRST_PAR_LINE_SCORE;
 
     public void cleanupContent(BxDocContentStructure contentStructure) {
         for (BxDocContentPart contentPart : contentStructure.getParts()) {
@@ -116,6 +125,22 @@ public class ContentCleaner {
                   .replaceAll("\uFB04", "ffl")
                   .replaceAll("\uFB05", "ft")
                   .replaceAll("\uFB06", "st");
+    }
+
+    public void setFirstParagraphLineMinScore(double firstParagraphLineMinScore) {
+        this.firstParagraphLineMinScore = firstParagraphLineMinScore;
+    }
+
+    public void setLastParagraphLineLengthMult(double lastParagraphLineLengthMult) {
+        this.lastParagraphLineLengthMult = lastParagraphLineLengthMult;
+    }
+
+    public void setMinParagraphIndent(double minParagraphIndent) {
+        this.minParagraphIndent = minParagraphIndent;
+    }
+
+    public void setParagraphLineIndentMultiplier(double paragraphLineIndentMultiplier) {
+        this.paragraphLineIndentMultiplier = paragraphLineIndentMultiplier;
     }
     
 }

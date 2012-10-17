@@ -24,7 +24,9 @@ import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMet
  */
 public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
 
-    private double maxDistance = 1.2;
+    private static final double DEFAULT_MAX_DIST = 1.2;
+    
+    private double maxDistance = DEFAULT_MAX_DIST;
     
     private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> VECTOR_BUILDER =
                 new SimpleFeatureVectorBuilder<BxLine, BxDocumentBibReferences>();

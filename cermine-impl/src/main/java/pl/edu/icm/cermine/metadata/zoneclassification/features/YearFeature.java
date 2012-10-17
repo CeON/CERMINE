@@ -13,6 +13,9 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class YearFeature extends FeatureCalculator<BxZone, BxPage> {
 
+    private static final int MIN_YEAR = 1800;
+    private static final int MAX_YEAR = 2100;
+    
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
  
@@ -29,7 +32,7 @@ public class YearFeature extends FeatureCalculator<BxZone, BxPage> {
                 String numbers = matcher.group(1);
                 try {
                     int i = Integer.parseInt(numbers);
-                    if (i >= 1500 && i < 2100) {
+                    if (i >= MIN_YEAR && i < MAX_YEAR) {
                         yearCount++;
                     }
                 } catch (NumberFormatException ex) {}

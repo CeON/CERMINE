@@ -14,39 +14,76 @@ import pl.edu.icm.cermine.structure.tools.Histogram;
  * @author krusek
  */
 public class DocstrumSegmenter implements DocumentSegmenter {
-
+    
     private static final double DISTANCE_STEP = 16.0;
+    
+    public static final double DEFAULT_ANGLE_HIST_RES = Math.toRadians(0.5);
 
+    public static final double DEFAULT_ANGLE_HIST_SMOOTH_LEN = 0.25 * Math.PI;
+
+    public static final double DEFAULT_ANGLE_HIST_SMOOTH_STDDEV = 0.0625 * Math.PI;
+
+    public static final double DEFAULT_SPACE_HIST_RES = 0.5;
+
+    public static final double DEFAULT_SPACE_HIST_SMOOTH_LEN = 2.5;
+    
+    public static final double DEFAULT_SPACE_HIST_SMOOTH_STDDEV = 0.5;
+    
+    public static final double DEFAULT_MAX_VERT_COMP_DIST = 0.67;
+
+    public static final double DEFAULT_MIN_LINE_SIZE_SCALE = 0.9;
+
+    public static final double DEFAULT_MAX_LINE_SIZE_SCALE = 2.5;
+
+    public static final double DEFAULT_MIN_HORIZONTAL_DIST = -0.5;
+
+    public static final double DEFAULT_MIN_VERTICAL_DIST = 0.0;
+
+    public static final double DEFAULT_MAX_VERTICAL_DIST = 1.2;
+
+    public static final double DEFAULT_COMP_DIST_CHAR = 4.5;
+
+    public static final double DEFAULT_WORD_DIST = 0.2;
+
+    public static final double DEFAULT_MIN_HORIZONTAL_MERGE_DIST = -3.0;
+
+    public static final double DEFAULT_MAX_VERTICAL_MERGE_DIST = 0.5;
+
+    public static final double DEFAULT_ANGLE_TOLERANCE = Math.PI / 6;
+
+    public static final int DEFAULT_NEIGHBOR_COUNT = 5;
+    
+     
     /**
      * Angle histogram resolution in radians per bin.
      */
-    private double angleHistogramResolution = Math.toRadians(0.5);
+    private double angleHistogramResolution = DEFAULT_ANGLE_HIST_RES;
 
     /**
      * Angle histogram smoothing window length in radians.
      * Length of angle histogram is equal to pi.
      */
-    private double angleHistogramSmoothingWindowLength = 0.25 * Math.PI;
+    private double angleHistogramSmoothingWindowLength = DEFAULT_ANGLE_HIST_SMOOTH_LEN;
 
     /**
      * Angle histogram gaussian smoothing window standard deviation in radians.
      */
-    private double angleHistogramSmoothingWindowStdDeviation = 0.0625 * Math.PI;
+    private double angleHistogramSmoothingWindowStdDeviation = DEFAULT_ANGLE_HIST_SMOOTH_STDDEV;
 
     /**
      * Spacing histogram resolution per bin.
      */
-    private double spacingHistogramResolution = 0.5;
+    private double spacingHistogramResolution = DEFAULT_SPACE_HIST_RES;
 
     /**
      * Spacing histogram smoothing window length.
      */
-    private double spacingHistogramSmoothingWindowLength = 2.5;
+    private double spacingHistogramSmoothingWindowLength = DEFAULT_SPACE_HIST_SMOOTH_LEN;
 
     /**
      * Spacing histogram gaussian smoothing window standard deviation.
      */
-    private double spacingHistogramSmoothingWindowStdDeviation = 0.5;
+    private double spacingHistogramSmoothingWindowStdDeviation = DEFAULT_SPACE_HIST_SMOOTH_STDDEV;
     
     /**
      * Maximum vertical component distance multiplier used during line
@@ -56,7 +93,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * to the same line is equal to the product of this value and estimated
      * between-line spacing.
      */
-    private double maxVerticalComponentDistanceMultiplier = 0.67;
+    private double maxVerticalComponentDistanceMultiplier = DEFAULT_MAX_VERT_COMP_DIST;
 
     /**
      * Minimum line size scale value.
@@ -65,14 +102,14 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * taken into account. To achieve this, line size scale is estimated and
      * limited to range [minLineSizeScale, maxLineSizeScale].
      */
-    private double minLineSizeScale = 0.9;
+    private double minLineSizeScale = DEFAULT_MIN_LINE_SIZE_SCALE;
 
     /**
      * Maximum line size scale value.
      *
      * See minLineSizeScale for more information.
      */
-    private double maxLineSizeScale = 2.5;
+    private double maxLineSizeScale = DEFAULT_MAX_LINE_SIZE_SCALE;
 
     /**
      * Minimum horizontal line distance multiplier.
@@ -80,7 +117,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Minimum horizontal distance between lines that belong to the same zone
      * is equal to the product of this value and estimated within-line spacing.
      */
-    private double minHorizontalDistanceMultiplier = -0.5;
+    private double minHorizontalDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_DIST;
 
     /**
      * Minimum vertical line distance multiplier.
@@ -88,7 +125,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Minimum vertical distance between lines that belong to the same zone
      * is equal to the product of this value and estimated between-line spacing.
      */
-    private double minVerticalDistanceMultiplier = 0.0;
+    private double minVerticalDistanceMultiplier = DEFAULT_MIN_VERTICAL_DIST;
 
     /**
      * Maximum vertical line distance multiplier.
@@ -96,7 +133,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Maximum vertical distance between lines that belong to the same zone
      * is equal to the product of this value and estimated between-line spacing.
      */
-    private double maxVerticalDistanceMultiplier = 1.2;
+    private double maxVerticalDistanceMultiplier = DEFAULT_MAX_VERTICAL_DIST;
 
     /**
      * Component distance character spacing multiplier.
@@ -107,7 +144,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * lineSpacing and characterSpacing are estimated between-line and
      * within-line spacing, respectively.
      */
-    private double componentDistanceCharacterMultiplier = 4.5;
+    private double componentDistanceCharacterMultiplier = DEFAULT_COMP_DIST_CHAR;
 
     /**
      * Word distance multiplier.
@@ -115,7 +152,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Maximum distance between components that belong to the same word is
      * equal to the product of this value and estimated within-line spacing.
      */
-    private double wordDistanceMultiplier = 0.2;
+    private double wordDistanceMultiplier = DEFAULT_WORD_DIST;
 
     /**
      * Minimum horizontal line merge distance multiplier.
@@ -126,7 +163,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Because split lines do not overlap this value should be negative.
      */
 
-    private double minHorizontalMergeDistanceMultiplier = -3.0;
+    private double minHorizontalMergeDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_MERGE_DIST;
 
     /**
      * Maximum vertical line merge distance multiplier.
@@ -135,18 +172,19 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * to the product of this value and estimated between-line spacing.
      */
 
-    private double maxVerticalMergeDistanceMultiplier = 0.5;
+    private double maxVerticalMergeDistanceMultiplier = DEFAULT_MAX_VERTICAL_MERGE_DIST;
 
     /**
      * Angle tolerance for comparisons of angles between components and angles
      * between lines.
      */
-    private double angleTolerance = Math.PI / 6;
+    private double angleTolerance = DEFAULT_ANGLE_TOLERANCE;
 
     /**
      * Number of nearest-neighbors found per component.
      */
-    private int neighborCount = 5;
+    private int neighborCount = DEFAULT_NEIGHBOR_COUNT;
+    
 
     public void setSpacingHistogramResolution(double value) {
         spacingHistogramResolution = value;

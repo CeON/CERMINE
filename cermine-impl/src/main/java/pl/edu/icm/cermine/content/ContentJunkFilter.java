@@ -16,10 +16,12 @@ import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMet
  */
 public class ContentJunkFilter {
 
+    public static final int DEFAULT_KNN_VOTERS = 3;
+    
     /**
      * The number of nearest training samples used for line classification.
      */
-    private int knnVoters = 3;
+    private int knnVoters = DEFAULT_KNN_VOTERS;
     
         
     public BxDocument filterJunk(KnnModel<BxZoneLabel> model, FeatureVectorBuilder<BxZone, BxPage> vectorBuilder, 
@@ -65,6 +67,10 @@ public class ContentJunkFilter {
         }
         
         return model;
+    }
+
+    public void setKnnVoters(int knnVoters) {
+        this.knnVoters = knnVoters;
     }
 
 }

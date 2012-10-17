@@ -14,6 +14,8 @@ import org.jdom.filter.Filter;
  */
 public class Enhancers {
     
+    private final static int MAX_JUNK_AFF_LENGTH = 5;
+    
     //getters
     
     //author names
@@ -188,14 +190,14 @@ public class Enhancers {
         setValue(metadata, path, year);
     }
     
-    static void cleanAffiliations(Element metadata) {
+    public static void cleanAffiliations(Element metadata) {
         String[] path = {TAG_FRONT, TAG_ARTICLE_META, TAG_CONTRIB_GROUP, TAG_CONTRIB};
         
         for (Element element : getElements(metadata, path)) {
             List children = element.getChildren(TAG_AFF);
             List<Element> toRemove = new ArrayList<Element>();
             for (Object child : children) {
-                if (child instanceof Element && ((Element)child).getText().length() < 5) {
+                if (child instanceof Element && ((Element)child).getText().length() < MAX_JUNK_AFF_LENGTH) {
                     toRemove.add((Element)child);
                 }
             }

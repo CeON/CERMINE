@@ -11,11 +11,13 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
 public final class DecisionTreeBuilder {
+    
+    public static final int DEFAULT_STOP_EXPANDING = 20;
 
     /* This field causes the expansion of tree nodes to be stopped, when there 
      * are less that stopExpanding training elements arriving to the node.
      */
-    private static int stopExpanding = 20;
+    private static int stopExpanding = DEFAULT_STOP_EXPANDING;
 
     private DecisionTreeBuilder() {}
     

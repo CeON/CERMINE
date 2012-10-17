@@ -11,10 +11,12 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class ProportionsFeature extends FeatureCalculator<BxZone, BxPage> {
 
+    private static final double MIN_WIDTH = 0.00005;
+    
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         BxBounds bounds = zone.getBounds();
-        if(bounds.getWidth() < 0.00005) {
+        if (bounds.getWidth() < MIN_WIDTH) {
         	return 0.0;
         } else {
         	return bounds.getHeight() / bounds.getWidth();

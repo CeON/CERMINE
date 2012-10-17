@@ -10,12 +10,14 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class IndentationFeature extends FeatureCalculator<BxLine, BxPage> {
 
+    private static final int MAX_LINES = 5;
+    
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {
         int i = 0;
         BxLine l = line;
         double meanX = 0;
-        while (l.hasNext() && i < 5) {
+        while (l.hasNext() && i < MAX_LINES) {
             l = l.getNext();
             if ((line.getX() < l.getX() && l.getX() < line.getX() + line.getWidth()) 
                     || (l.getX() < line.getX() && line.getX() < l.getX() + l.getWidth())) {

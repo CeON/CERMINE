@@ -16,6 +16,9 @@ public class YearEnhancer extends AbstractPatternEnhancer {
     private static final Pattern PATTERN = Pattern.compile("(\\d\\d\\d\\d)");
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
+    private static final int MIN_YEAR = 1800;
+    private static final int MAX_YEAR = 2100;
+    
     public YearEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);
     }
@@ -31,7 +34,7 @@ public class YearEnhancer extends AbstractPatternEnhancer {
             String year = result.group(i);
             try {
                 int y = Integer.parseInt(year);
-                if (y >= 1900 && y < 2020) {
+                if (y >= MIN_YEAR && y < MAX_YEAR) {
                     Enhancers.setYear(metadata, year);
                     return true;
                 }

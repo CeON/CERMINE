@@ -14,6 +14,8 @@ import pl.edu.icm.cermine.structure.model.BxZone;
  */
 public class BxDocumentBibReferences {
 
+    private static final int MAX_TITLE_LENGTH = 30;
+    
     /** A list of references' lines */
     private List<BxLine> lines = new ArrayList<BxLine>();
 
@@ -26,7 +28,7 @@ public class BxDocumentBibReferences {
     public void addZone(BxZone zone) {
         for (BxLine line : zone.getLines()) {
             String normalized = line.toText().toLowerCase().replaceAll("[^a-z]", "");
-            if (line.toText().length() < 30 && zone.getLines().indexOf(line) == 0 && 
+            if (line.toText().length() < MAX_TITLE_LENGTH && zone.getLines().indexOf(line) == 0 && 
                     (normalized.startsWith("refer") || normalized.startsWith("biblio"))) {
                 continue;
             }

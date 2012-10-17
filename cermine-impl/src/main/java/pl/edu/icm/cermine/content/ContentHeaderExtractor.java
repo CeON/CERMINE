@@ -20,34 +20,51 @@ import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMet
  * @author Dominika Tkaczyk
  */
 public class ContentHeaderExtractor {
+    
+    public static final int DEFAULT_KNN_VOTERS = 3;
+    
+    public static final int DEFAULT_MAX_ADDED_LINES = 2;
+    
+    public static final double DEFAULT_HEADER_HEIGHT_TOL = 0.01;
+    
+    public static final int DEFAULT_MIN_HEADER_SCORE = 1;
+    
+    public static final double DEFAULT_HEADER_LINE_WIDTH_MULT = 0.7;
+    
+    public static final double DEFAULT_HEADER_LINE_MULT = 0.7;
+    
+    public static final int DEFAULT_MIN_HEADER_LINE_SCORE = 1;
+    
+    public static final double DEFAULT_MAX_HEADER_LEV_DIST = 1;
+    
 
     /**
      * The number of nearest training samples used for line classification.
      */
-    private int knnVoters = 3;
+    private int knnVoters = DEFAULT_KNN_VOTERS;
     
     /**
      * The maximum number of additional line following the first header line added as a part of the header.
      */
-    private int maxAddedHeaderLines = 2;
+    private int maxAddedHeaderLines = DEFAULT_MAX_ADDED_LINES;
     
     /**
      * The maximum difference between heights of lines belonging to the same header.
      */
-    private double headerHeightTolerance = 0.01;
+    private double headerHeightTolerance = DEFAULT_HEADER_HEIGHT_TOL;
     
     /**
      * The minimum score for a line to be considered as a candidate for header expanding.
      */
-    private int minHeaderCandidateScore = 1;
+    private int minHeaderCandidateScore = DEFAULT_MIN_HEADER_SCORE;
     
-    private double headerLineWidthMultiplier = 0.7;
+    private double headerLineWidthMultiplier = DEFAULT_HEADER_LINE_WIDTH_MULT;
     
-    private double headerLineSpacingMultiplier = 0.7;
+    private double headerLineSpacingMultiplier = DEFAULT_HEADER_LINE_MULT;
     
-    private int minHeaderLineScore = 1;
+    private int minHeaderLineScore = DEFAULT_MIN_HEADER_LINE_SCORE;
     
-    private double maxHeaderLevelDistance = 1;
+    private double maxHeaderLevelDistance = DEFAULT_MAX_HEADER_LEV_DIST;
     
         
     public BxDocContentStructure extractHeaders(KnnModel<BxZoneLabel> model, 
@@ -167,6 +184,38 @@ public class ContentHeaderExtractor {
             }
         }
 
+    }
+
+    public void setHeaderHeightTolerance(double headerHeightTolerance) {
+        this.headerHeightTolerance = headerHeightTolerance;
+    }
+
+    public void setHeaderLineSpacingMultiplier(double headerLineSpacingMultiplier) {
+        this.headerLineSpacingMultiplier = headerLineSpacingMultiplier;
+    }
+
+    public void setHeaderLineWidthMultiplier(double headerLineWidthMultiplier) {
+        this.headerLineWidthMultiplier = headerLineWidthMultiplier;
+    }
+
+    public void setKnnVoters(int knnVoters) {
+        this.knnVoters = knnVoters;
+    }
+
+    public void setMaxAddedHeaderLines(int maxAddedHeaderLines) {
+        this.maxAddedHeaderLines = maxAddedHeaderLines;
+    }
+
+    public void setMaxHeaderLevelDistance(double maxHeaderLevelDistance) {
+        this.maxHeaderLevelDistance = maxHeaderLevelDistance;
+    }
+
+    public void setMinHeaderCandidateScore(int minHeaderCandidateScore) {
+        this.minHeaderCandidateScore = minHeaderCandidateScore;
+    }
+
+    public void setMinHeaderLineScore(int minHeaderLineScore) {
+        this.minHeaderLineScore = minHeaderLineScore;
     }
     
 }

@@ -10,9 +10,11 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class RelativeStartTresholdFeature extends FeatureCalculator<BxLine, BxDocumentBibReferences> {
 
+    private static final int LINE_INDENT_TRESHOLD = 10;
+    
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {
-        return (refLine.getBounds().getX() - refs.getZone(refLine).getBounds().getX() > 10) ? 1 : 0;
+        return (refLine.getBounds().getX() - refs.getZone(refLine).getBounds().getX() > LINE_INDENT_TRESHOLD) ? 1 : 0;
     }
     
 }

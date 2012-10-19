@@ -244,64 +244,80 @@ public final class CitationUtils {
                 fieldElement.setText(fieldText);
                 element.addContent(fieldElement);
             } else if (BibEntry.FIELD_PAGES.equals(fieldKeyMap.get(field))) {
-                String firstPage = field.getText().replaceAll("--.*", "");
-                String lastPage = field.getText().replaceAll(".*--", "");
+                if (!field.getText().contains("--")) {
+                    Element firstPageElement = new Element("fpage");
+                    firstPageElement.setText(field.getText());
+                    element.addContent(firstPageElement);
+                } else {
+                    String firstPage = field.getText().replaceAll("--.*", "");
+                    String lastPage = field.getText().replaceAll(".*--", "");
                 
-                int firstPageIndex = fieldText.indexOf(firstPage);
-                int lastPageIndex = fieldText.indexOf(lastPage);
+                    int firstPageIndex = fieldText.indexOf(firstPage);
+                    int lastPageIndex = fieldText.indexOf(lastPage);
                 
-                element.addContent(fieldText.substring(0, firstPageIndex));
+                    element.addContent(fieldText.substring(0, firstPageIndex));
                 
-                Element firstPageElement = new Element("fpage");
-                firstPageElement.setText(firstPage);
-                element.addContent(firstPageElement);
+                    Element firstPageElement = new Element("fpage");
+                    firstPageElement.setText(firstPage);
+                    element.addContent(firstPageElement);
                 
-                element.addContent(fieldText.substring(firstPageIndex + firstPage.length(), lastPageIndex));
+                    element.addContent(fieldText.substring(firstPageIndex + firstPage.length(), lastPageIndex));
                 
-                Element lastPageElement = new Element("lpage");
-                lastPageElement.setText(lastPage);
-                element.addContent(lastPageElement);
+                    Element lastPageElement = new Element("lpage");
+                    lastPageElement.setText(lastPage);
+                    element.addContent(lastPageElement);
                 
-                element.addContent(fieldText.substring(lastPageIndex + lastPage.length(), fieldText.length()));
-            } else if (BibEntry.FIELD_AUTHOR.equals(fieldKeyMap.get(field))) {
-                String surname = field.getText().replaceAll(",.*", "");
-                String givenname = field.getText().replaceAll(".*, ", "");
-                
-                int surnameIndex = fieldText.indexOf(surname);
-                int givennameIndex = fieldText.indexOf(givenname);
-                
-                String firstText = surname;
-                String firstLabel = "surname";
-                int firstIndex = surnameIndex;
-                String secondText = givenname;
-                String secondLabel = "given-names";
-                int secondIndex = givennameIndex;
-                
-                if (secondIndex < firstIndex) {
-                    firstText = givenname;
-                    firstLabel = "given-names";
-                    firstIndex = givennameIndex;
-                    secondText = surname;
-                    secondLabel = "surname";
-                    secondIndex = surnameIndex;
+                    element.addContent(fieldText.substring(lastPageIndex + lastPage.length(), fieldText.length()));
                 }
+            } else if (BibEntry.FIELD_AUTHOR.equals(fieldKeyMap.get(field))) {
+                if (field.getText().indexOf(',') < 0) {
+                    Element nameElement = new Element("string-name");
+                    Element firstElement = new Element("surname");
+                    firstElement.setText(field.getText());
+                    nameElement.addContent(firstElement);
+                    element.addContent(nameElement);
+                } else {               
+                    System.out.println(field.getText());
+                    String surname = field.getText().replaceAll(",.*", "");
+                    String givenname = field.getText().replaceAll(".*, ", "");
+                    System.out.println(surname);
+                    System.out.println(givenname);
+                    int surnameIndex = fieldText.indexOf(surname);
+                    int givennameIndex = fieldText.indexOf(givenname);
                 
-                Element nameElement = new Element("string-name");
+                    String firstText = surname;
+                    String firstLabel = "surname";
+                    int firstIndex = surnameIndex;
+                    String secondText = givenname;
+                    String secondLabel = "given-names";
+                    int secondIndex = givennameIndex;
                 
-                nameElement.addContent(fieldText.substring(0, firstIndex));
+                    if (secondIndex < firstIndex) {
+                        firstText = givenname;
+                        firstLabel = "given-names";
+                        firstIndex = givennameIndex;
+                        secondText = surname;
+                        secondLabel = "surname";
+                        secondIndex = surnameIndex;
+                    }
                 
-                Element firstElement = new Element(firstLabel);
-                firstElement.setText(firstText);
-                nameElement.addContent(firstElement);
+                    Element nameElement = new Element("string-name");
                 
-                nameElement.addContent(fieldText.substring(firstIndex + firstText.length(), secondIndex));
+                    nameElement.addContent(fieldText.substring(0, firstIndex));
                 
-                Element lastElement = new Element(secondLabel);
-                lastElement.setText(secondText);
-                nameElement.addContent(lastElement);
+                    Element firstElement = new Element(firstLabel);
+                    firstElement.setText(firstText);
+                    nameElement.addContent(firstElement);
                 
-                nameElement.addContent(fieldText.substring(secondIndex + secondText.length(), fieldText.length()));
-                element.addContent(nameElement);
+                    nameElement.addContent(fieldText.substring(firstIndex + firstText.length(), secondIndex));
+                
+                    Element lastElement = new Element(secondLabel);
+                    lastElement.setText(secondText);
+                    nameElement.addContent(lastElement);
+                
+                    nameElement.addContent(fieldText.substring(secondIndex + secondText.length(), fieldText.length()));
+                    element.addContent(nameElement);
+                }
             } else {
                 System.out.println("UWAGA "+fieldKeyMap.get(field));
             }

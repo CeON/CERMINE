@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>pl.edu.icm.cermine</groupId>
+		<artifactId>cermine-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>pl.edu.icm.cermine</groupId>
+			<artifactId>cermine-api</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>pl.edu.icm.cermine</groupId>
+			<artifactId>cermine-impl</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+
+	<groupId>pl.edu.icm.cermine</groupId>
+	<version>1.0-SNAPSHOT</version>
+	<artifactId>cermine-tools</artifactId>
+	<packaging>jar</packaging>
+	<name>CERMINE TOOLS - ${project.version}</name>
+	<url>http://maven.apache.org</url>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+	<executions>
+	<execution>
+	<id>analyze</id>
+	<goals>
+	<goal>analyze-only</goal>
+	</goals>
+	</execution>
+	</executions>
+	</plugin>
+	<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-jar-plugin</artifactId>
+	<configuration>
+	<archive>
+	<manifest>
+	<addClasspath>true</addClasspath>
+	<mainClass>pl.edu.icm.cermine.pubmed.PubmedDatasetGenerator</mainClass>
+	</manifest>
+	</archive>
+	</configuration>
+	</plugin>
+	</plugins>
+	</build>
+
+</project>

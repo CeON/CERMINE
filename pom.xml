@@ -17,6 +17,7 @@
     <modules>
         <module>cermine-api</module>
         <module>cermine-impl</module>
+	<module>cermine-tools</module>
     </modules>
     
 	<build>
@@ -46,9 +47,9 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-                        <goals>
+<!--                        <goals>
                             <goal>jar-no-fork</goal>
-                        </goals>
+                        </goals>-->
                     </execution>
                 </executions>
             </plugin>

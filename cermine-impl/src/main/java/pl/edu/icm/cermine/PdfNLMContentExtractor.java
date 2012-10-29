@@ -1,7 +1,16 @@
 package pl.edu.icm.cermine;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import javax.xml.xpath.XPathExpressionException;
+
 import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -76,4 +85,18 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         return content;
     }
     
+    public static void main(String[] args) throws AnalysisException, FileNotFoundException, XPathExpressionException, JDOMException {
+    	if(args.length != 1){
+    		System.err.println("USAGE: program FILE_PATH");
+    		System.exit(1);
+    	}
+
+    	PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+    	InputStream in = new FileInputStream(args[0]);
+    	Element result = extractor.extractContent(in);
+
+    	XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+    	System.out.println(outputter.outputString(result));
+    }
+
 }

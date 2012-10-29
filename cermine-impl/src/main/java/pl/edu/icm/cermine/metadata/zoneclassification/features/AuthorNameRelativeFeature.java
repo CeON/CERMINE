@@ -10,6 +10,8 @@ public class AuthorNameRelativeFeature extends AbstractFeatureCalculator<BxZone,
         String text = object.toText();
         String[] parts = text.split(",|and");
         Integer numberOfNames = 0;
+        if(parts.length == 0)
+        	return 0;
         for (String part : parts) {
             if (part.length() == 0) {
                 ++numberOfNames;

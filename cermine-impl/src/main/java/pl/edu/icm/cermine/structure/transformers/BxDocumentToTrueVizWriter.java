@@ -35,10 +35,10 @@ public class BxDocumentToTrueVizWriter {
 
     public static final Map<BxZoneLabel, String> ZONE_LABEL_MAP = new HashMap<BxZoneLabel, String>();
     static {
-        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_METADATA,          "bib_info");
-        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_BODY,              "body");
-        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_REFERENCES,        "references");
-        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_OTHER,             "other");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_METADATA,          "gen_metadata");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_BODY,              "gen_body");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_REFERENCES,        "gen_references");
+        ZONE_LABEL_MAP.put(BxZoneLabel.GEN_OTHER,             "gen_other");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_ABSTRACT,          "abstract");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_AFFILIATION,       "affiliation");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_AUTHOR,            "author");

@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.structure.tools;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 
@@ -15,7 +16,6 @@ public class BxBoundsBuilderTest {
     @Test
     public void testExpand_bounds() {
         BxBoundsBuilder builder = new BxBoundsBuilder();
-        assertEquals(null, builder.getBounds());
         builder.expand(new BxBounds(0, 0, 1, 1));
         assertBounds(0, 0, 1, 1, builder.getBounds());
         builder.expand(new BxBounds(1, 1, 4, 5));

@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.structure;
 
 import java.util.*;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
@@ -230,7 +231,10 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
         BxDocument output = new BxDocument();
         for (BxPage page: document.getPages()) {
-            output.addPage(segmentPage(page));
+        	BxPage segmentedPage = segmentPage(page);
+        	if(segmentedPage.getBounds() != null) {
+        		output.addPage(segmentedPage);
+        	}
         }
         return output;
     }
@@ -510,7 +514,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         List<List<ComponentLine>> outputZones = new ArrayList<List<ComponentLine>>();
         mainFor: for (int i = 0; i < zones.size(); i++) {
             for (int j = 0; j < zones.size(); j++) {
-                if (i == j || bounds.get(j) == null) {
+                if (i == j || bounds.get(j) == null || bounds.get(i) == null) {
                     continue;
                 }
                 if (BxModelUtils.contains(bounds.get(j), bounds.get(i), tolerance)) {

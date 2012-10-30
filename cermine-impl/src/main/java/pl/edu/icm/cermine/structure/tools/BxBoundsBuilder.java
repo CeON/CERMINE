@@ -104,7 +104,8 @@ public class BxBoundsBuilder {
         if (minX <= maxX && minY <= maxY) {
             return new BxBounds(minX, minY, maxX - minX, maxY - minY);
         } else {
-            return null;
+        	return new BxBounds(0, 0, 0, 0);
+//            return null;
         }
     }
 

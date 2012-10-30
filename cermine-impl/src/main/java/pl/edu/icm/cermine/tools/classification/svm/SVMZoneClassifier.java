@@ -221,6 +221,11 @@ public class SVMZoneClassifier implements ZoneClassifier {
 				FeatureLimits newLimit = new FeatureLimits(feature_min, feature_max);
 				limits.add(newLimit);
 			}
+			if(limits.size() != featureVectorBuilder.size()) {
+				throw new IllegalArgumentException("Supplied .range file has "
+						+ "wrong number of features (got " + limits.size() 
+						+ ", expected " + featureVectorBuilder.size() + " )");
+			}
 			scaler = new FeatureVectorScaler(limits.size(), scaledLowerBound, scaledUpperBound);
 			scaler.setStrategy(new LinearScaling());
 			scaler.setFeatureLimits(limits);

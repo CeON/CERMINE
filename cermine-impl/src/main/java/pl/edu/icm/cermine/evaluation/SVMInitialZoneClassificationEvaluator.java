@@ -22,10 +22,9 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 	protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException
 	{
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
-//		for(BxDocument doc: trainingDocuments)
-//			for(BxZone zone: doc.asZones())
-//				if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER)
-//					zone.setLabel(BxZoneLabel.GEN_BODY);
+		for(BxDocument doc: trainingDocuments)
+			for(BxZone zone: doc.asZones())
+				zone.setLabel(zone.getLabel().getGeneralLabel());
 		
         BxDocsToHMMConverter node = new BxDocsToHMMConverter(featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
         
@@ -50,6 +49,7 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 		zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingElements);
         zoneClassifier.printWeigths(featureVectorBuilder);
+        zoneClassifier.saveModel("svm_initial_classifier");
 		return zoneClassifier;
 	}
 

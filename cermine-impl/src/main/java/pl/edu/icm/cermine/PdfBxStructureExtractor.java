@@ -1,12 +1,24 @@
 package pl.edu.icm.cermine;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
+import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
 
 /**
@@ -94,6 +106,24 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
 
     public void setRoResolver(ReadingOrderResolver roResolver) {
         this.roResolver = roResolver;
+    }
+    
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
+    	if(args.length != 1){
+    		System.err.println("USAGE: program FILE_PATH");
+    		System.exit(1);
+    	}
+
+    	PdfBxStructureExtractor extractor = new PdfBxStructureExtractor();
+    	InputStream in = new FileInputStream(args[0]);
+    	BxDocument result = extractor.extractStructure(in);
+    	
+		FileWriter fstream = new FileWriter("PdfBxStructureExtractor_out.xml");
+		BufferedWriter out = new BufferedWriter(fstream);
+    	BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+		out.write(writer.write(result.getPages()));
+    	writer.write(result.getPages());
+    	out.close();
     }
    
 }

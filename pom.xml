@@ -47,9 +47,6 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-<!--                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>-->
                     </execution>
                 </executions>
 		</plugin>
@@ -63,7 +60,6 @@
 			</configuration>
 			<executions>
 				<execution>
-					<phase>package</phase>
 					<id>create-my-bundle</id>
 					<goals>
 						<goal>single</goal>

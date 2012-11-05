@@ -9,9 +9,9 @@
     </parent>
     
     <groupId>pl.edu.icm.cermine</groupId>
-    <version>1.0-SNAPSHOT</version>
-    <artifactId>cermine-impl</artifactId>
-    <packaging>jar</packaging>
+        <version>1.0-SNAPSHOT</version>
+        <artifactId>cermine-impl</artifactId>
+        <packaging>jar</packaging>
     <name>CERMINE Engine Implementation - ${project.version}</name>
 
     <dependencies>

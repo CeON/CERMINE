@@ -140,6 +140,11 @@ public final class CitationUtils {
                     token = new CitationToken(actToken.getText(), actToken.getStartIndex(), actToken.getEndIndex(),
                             actToken.getLabel());
                 }
+            } else {
+                if (token != null) {
+                    tokens.add(token);
+                    token = null;
+                }
             }
         }
 
@@ -251,10 +256,10 @@ public final class CitationUtils {
                 } else {
                     String firstPage = field.getText().replaceAll("--.*", "");
                     String lastPage = field.getText().replaceAll(".*--", "");
-                
+
                     int firstPageIndex = fieldText.indexOf(firstPage);
-                    int lastPageIndex = fieldText.indexOf(lastPage);
-                
+                    int lastPageIndex = fieldText.indexOf(lastPage, firstPageIndex + firstPage.length());
+                    
                     element.addContent(fieldText.substring(0, firstPageIndex));
                 
                     Element firstPageElement = new Element("fpage");
@@ -266,24 +271,23 @@ public final class CitationUtils {
                     Element lastPageElement = new Element("lpage");
                     lastPageElement.setText(lastPage);
                     element.addContent(lastPageElement);
-                
-                    element.addContent(fieldText.substring(lastPageIndex + lastPage.length(), fieldText.length()));
                 }
             } else if (BibEntry.FIELD_AUTHOR.equals(fieldKeyMap.get(field))) {
-                if (field.getText().indexOf(',') < 0) {
+                if (!field.getText().contains(", ")) {
                     Element nameElement = new Element("string-name");
                     Element firstElement = new Element("surname");
                     firstElement.setText(field.getText());
                     nameElement.addContent(firstElement);
                     element.addContent(nameElement);
                 } else {               
-                    System.out.println(field.getText());
-                    String surname = field.getText().replaceAll(",.*", "");
+                    String surname = field.getText().replaceAll(", .*", "");
                     String givenname = field.getText().replaceAll(".*, ", "");
-                    System.out.println(surname);
-                    System.out.println(givenname);
                     int surnameIndex = fieldText.indexOf(surname);
-                    int givennameIndex = fieldText.indexOf(givenname);
+                    int givennameIndex = fieldText.indexOf(givenname, surnameIndex + surname.length());
+                    if (givennameIndex < 0) {
+                        givennameIndex = fieldText.indexOf(givenname);
+                        surnameIndex = fieldText.indexOf(surname, givennameIndex + givenname.length());
+                    }
                 
                     String firstText = surname;
                     String firstLabel = "surname";
@@ -300,7 +304,7 @@ public final class CitationUtils {
                         secondLabel = "surname";
                         secondIndex = surnameIndex;
                     }
-                
+
                     Element nameElement = new Element("string-name");
                 
                     nameElement.addContent(fieldText.substring(0, firstIndex));
@@ -318,8 +322,6 @@ public final class CitationUtils {
                     nameElement.addContent(fieldText.substring(secondIndex + secondText.length(), fieldText.length()));
                     element.addContent(nameElement);
                 }
-            } else {
-                System.out.println("UWAGA "+fieldKeyMap.get(field));
             }
             lastIndex = field.getEndIndex();
         }

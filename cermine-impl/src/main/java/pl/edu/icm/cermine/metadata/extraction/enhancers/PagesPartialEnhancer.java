@@ -15,7 +15,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class PagesPartialEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile(
-            "(\\d+)[-\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212](\\d+)",
+            "(\\d{1,5})[-\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212](\\d{1,5})",
             Pattern.CASE_INSENSITIVE);
     private int pages = 10;
 

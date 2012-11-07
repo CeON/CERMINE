@@ -14,7 +14,7 @@ public class StartsWithNumberFeature extends FeatureCalculator<BxLine, BxDocumen
 
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {
-        String[] patterns = {"^\\[(\\d+)\\] .*", "^(\\d+)\\.? .*"};
+        String[] patterns = {"^\\[(\\d{1,3})\\] .*", "^(\\d{1,3})\\.? .*"};
         for (String pText : patterns) {
             Pattern pattern = Pattern.compile(pText);
             Matcher matcher = pattern.matcher(refLine.toText());

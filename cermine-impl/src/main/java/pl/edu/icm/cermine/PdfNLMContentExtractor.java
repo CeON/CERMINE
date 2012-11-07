@@ -3,14 +3,11 @@ package pl.edu.icm.cermine;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
 import javax.xml.xpath.XPathExpressionException;
-
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -20,7 +17,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  * @author Dominika Tkaczyk
  */
 public class PdfNLMContentExtractor implements DocumentContentExtractor<Element> {
-  
+
     /** geometric structure extractor */
     private DocumentStructureExtractor structureExtractor;
     
@@ -50,7 +47,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     }
     
     /**
-     * Extracts content from PDF file and stored it in NLM format.
+     * Extracts content from PDF file and stores it in NLM format.
      * 
      * @param stream
      * @return extracted content in NLM format
@@ -81,7 +78,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
             r.addContent(ref);
             refList.addContent(r);
         }
-        
+
         return content;
     }
     

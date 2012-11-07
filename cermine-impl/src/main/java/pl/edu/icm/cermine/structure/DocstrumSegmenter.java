@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine.structure;
 
 import java.util.*;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
@@ -290,6 +289,10 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      */
     private void findNeighbors(Component[] components) throws AnalysisException {
         if (components.length == 0) {
+            return;
+        }
+        if (components.length == 1) {
+            components[0].setNeighbors(new ArrayList<Neighbor>());
             return;
         }
         int pageNeighborCount = neighborCount;

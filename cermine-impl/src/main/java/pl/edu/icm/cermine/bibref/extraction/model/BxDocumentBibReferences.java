@@ -32,6 +32,9 @@ public class BxDocumentBibReferences {
                     (normalized.startsWith("refer") || normalized.startsWith("biblio"))) {
                 continue;
             }
+            if (line.toText().replaceAll("[\\s\\u00A0]", "").isEmpty()) {
+                continue;
+            }
                    
             lines.add(line);
             lineZones.put(line, zone);

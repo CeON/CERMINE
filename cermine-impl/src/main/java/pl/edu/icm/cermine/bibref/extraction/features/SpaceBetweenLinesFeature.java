@@ -33,10 +33,10 @@ public class SpaceBetweenLinesFeature extends FeatureCalculator<BxLine, BxDocume
         }
         
         if (refs.getLines().indexOf(refLine) == 0 && maxSpace > minSpace * 1.2) {
-            return 1;
+            return 0.5;
         }
         
-        return (lineSpace > minSpace * 1.2) ? 1 : 0;
+        return (lineSpace > minSpace * 1.2) ? 0.5 : 0;
     }
     
 }

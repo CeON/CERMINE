@@ -5,10 +5,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
+ * Complete linkage clusterizer.
+ * 
  * @author Dominika Tkaczyk
  */
 public class CompleteLinkageClusterizer implements Clusterizer {
+    
+    ClusteringEvaluator evaluator;
+
+    public CompleteLinkageClusterizer() {
+    }
+    
+    public CompleteLinkageClusterizer(ClusteringEvaluator evaluator) {
+        this.evaluator = evaluator;
+    }
     
     @Override
     public int[] clusterize(double distanceMatrix[][], double maxDistance) {
@@ -41,7 +51,10 @@ public class CompleteLinkageClusterizer implements Clusterizer {
                     }
                 }
             }
-            if (mind < maxDistance) {
+            
+            int[] clusterArray = createClusterArray(distanceMatrix.length, clusters);
+            
+            if (mind < maxDistance || (evaluator != null && !evaluator.isAcceptable(clusterArray))) {
                 clusters.remove(minClust1);
                 clusters.remove(minClust2);
                 minClust1.addAll(minClust2);
@@ -51,16 +64,28 @@ public class CompleteLinkageClusterizer implements Clusterizer {
             }
         }
         
-        int[] clusterArray = new int[distanceMatrix.length];
-        int i = 0;
-        for (Set<Integer> cl : clusters) {
-            for (int h : cl) {
-                clusterArray[h] = i;
+        return createClusterArray(distanceMatrix.length, clusters);
+    }
+    
+    private int[] createClusterArray(int length, Set<Set<Integer>> clusters) {
+        int[] clusterArray = new int[length];
+        int clusterIndex = 0;
+        for (Set<Integer> cluster : clusters) {
+            for (int element : cluster) {
+                clusterArray[element] = clusterIndex;
             }
-            i++;
+            clusterIndex++;
         }
         
         return clusterArray;
+    }
+
+    public ClusteringEvaluator getEvaluator() {
+        return evaluator;
+    }
+
+    public void setEvaluator(ClusteringEvaluator evaluator) {
+        this.evaluator = evaluator;
     }
     
 }

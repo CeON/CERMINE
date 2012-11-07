@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.structure;
 
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.exceptions.InvalidPdfException;
 import com.itextpdf.text.pdf.PRIndirectReference;
 import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
@@ -24,7 +25,16 @@ import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
 public class ITextCharacterExtractor implements CharacterExtractor {
-
+    
+    public static final int DEFAULT_FRONT_PAGES_LIMIT = 20;
+    
+    public static final int DEFAULT_BACK_PAGES_LIMIT = 20;
+    
+    
+    private int frontPagesLimit = DEFAULT_FRONT_PAGES_LIMIT;
+    
+    private int backPagesLimit = DEFAULT_BACK_PAGES_LIMIT;
+    
     protected static final Map<String, PdfName> ALT_TO_STANDART_FONTS = new HashMap<String, PdfName>();
 
     static {
@@ -58,8 +68,13 @@ public class ITextCharacterExtractor implements CharacterExtractor {
 
             PdfReader reader = new PdfReader(stream);
             PdfContentStreamProcessor processor = new PdfContentStreamProcessor(documentCreator);
-
+            
             for (int pageNumber = 1; pageNumber <= reader.getNumberOfPages(); pageNumber++) {
+                if (frontPagesLimit > 0 && backPagesLimit > 0) {
+                    if (pageNumber > frontPagesLimit && pageNumber < reader.getNumberOfPages() - 1 - backPagesLimit) {
+                        continue;
+                    }
+                }
                 documentCreator.processNewBxPage(reader.getPageSize(pageNumber));
 
                 PdfDictionary resources = reader.getPageN(pageNumber).getAsDict(PdfName.RESOURCES);
@@ -68,10 +83,12 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 processor.reset();
                 processor.processContent(ContentByteUtils.getContentBytesForPage(reader, pageNumber), resources);
             }
-
+            
             return documentCreator.document;
+        } catch (InvalidPdfException ex) {
+            throw new AnalysisException("Invalid PDF file", ex);
         } catch (IOException ex) {
-            throw new AnalysisException("Cannot extract glyphs from PDF file", ex);
+            throw new AnalysisException("Cannot extract characters from PDF file", ex);
         }
     }
 
@@ -178,4 +195,23 @@ public class ITextCharacterExtractor implements CharacterExtractor {
         }
 
     }
+
+    public int getBackPagesLimit() {
+        return backPagesLimit;
+    }
+
+    public int getFrontPagesLimit() {
+        return frontPagesLimit;
+    }
+
+    /**
+     * Sets the number of front and back pages to be processed and returned.
+     * If any of the values is set to 0 or less, the whole document is processed.
+     * This may cause long processing time for large documents.
+     */
+    public void setPagesLimits(int frontPagesLimit, int backPagesLimit) {
+        this.frontPagesLimit = frontPagesLimit;
+        this.backPagesLimit = backPagesLimit;
+    }
+    
 }

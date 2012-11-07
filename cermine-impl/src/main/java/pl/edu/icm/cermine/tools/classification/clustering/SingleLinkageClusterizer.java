@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.tools.classification.clustering;
 
 /**
+ * Single linkage clusterizer.
  *
  * @author Dominika Tkaczyk
  */
@@ -38,6 +39,6 @@ public class SingleLinkageClusterizer implements Clusterizer {
             }
         }
     }
-    
+
 }
 

@@ -12,7 +12,6 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -32,7 +31,6 @@ public class PdfNLMContentExtractorTest {
         extractor = new PdfNLMContentExtractor();
     }
     
-    @Ignore
     @Test
     public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);

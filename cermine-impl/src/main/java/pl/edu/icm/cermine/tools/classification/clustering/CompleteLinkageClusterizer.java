@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class CompleteLinkageClusterizer implements Clusterizer {
     
-    ClusteringEvaluator evaluator;
+    private ClusteringEvaluator evaluator;
 
     public CompleteLinkageClusterizer() {
     }

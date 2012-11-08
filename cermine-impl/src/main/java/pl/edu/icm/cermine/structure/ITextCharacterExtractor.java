@@ -70,10 +70,9 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             PdfContentStreamProcessor processor = new PdfContentStreamProcessor(documentCreator);
             
             for (int pageNumber = 1; pageNumber <= reader.getNumberOfPages(); pageNumber++) {
-                if (frontPagesLimit > 0 && backPagesLimit > 0) {
-                    if (pageNumber > frontPagesLimit && pageNumber < reader.getNumberOfPages() - 1 - backPagesLimit) {
-                        continue;
-                    }
+                if (frontPagesLimit > 0 && backPagesLimit > 0 && pageNumber > frontPagesLimit 
+                        && pageNumber < reader.getNumberOfPages() - 1 - backPagesLimit) {
+                    continue;
                 }
                 documentCreator.processNewBxPage(reader.getPageSize(pageNumber));
 

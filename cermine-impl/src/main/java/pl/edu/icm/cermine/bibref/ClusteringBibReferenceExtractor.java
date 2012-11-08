@@ -113,9 +113,8 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
         
         Double prevDist = null;
         for (Double dist : distanceList) {
-            if (prevDist != null) {
-                if (dist - prevDist > MIN_CANDIDATE_WINDOW)
-                    candidates.add(prevDist + (dist - prevDist) / 2);
+            if (prevDist != null && dist - prevDist > MIN_CANDIDATE_WINDOW) {
+                candidates.add(prevDist + (dist - prevDist) / 2);
             }
             prevDist = dist;
         }
@@ -131,8 +130,9 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
             for (FeatureVector featureVector : featureVectors) {
                 if (new FeatureVectorEuclideanMetric().getDistance(first, featureVector) < candidate) {
                     firstCount++;
-                    if (featureVectors.indexOf(featureVector) - prevFirstIndex > maxLineCount)
+                    if (featureVectors.indexOf(featureVector) - prevFirstIndex > maxLineCount) {
                         maxLineCount = featureVectors.indexOf(featureVector) - prevFirstIndex;
+                    }
                     prevFirstIndex = featureVectors.indexOf(featureVector);
                 }
             }

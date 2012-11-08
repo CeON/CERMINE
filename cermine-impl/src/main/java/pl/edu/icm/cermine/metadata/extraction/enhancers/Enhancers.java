@@ -14,7 +14,7 @@ import org.jdom.filter.Filter;
  */
 public class Enhancers {
     
-    private final static int MAX_JUNK_AFF_LENGTH = 5;
+    private static final int MAX_JUNK_AFF_LENGTH = 5;
     
     //getters
     

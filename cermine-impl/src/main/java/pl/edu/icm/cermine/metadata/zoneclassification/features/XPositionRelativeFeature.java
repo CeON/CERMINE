@@ -12,6 +12,9 @@ public class XPositionRelativeFeature extends FeatureCalculator<BxZone, BxPage> 
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
+    	if(page.getBounds().getWidth() < 0.00001) {
+    		return 0.0;
+    	}	
         return zone.getBounds().getX() / page.getBounds().getWidth();
     }
 

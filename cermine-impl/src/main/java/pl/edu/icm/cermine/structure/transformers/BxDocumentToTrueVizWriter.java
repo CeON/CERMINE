@@ -50,6 +50,7 @@ public class BxDocumentToTrueVizWriter {
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_TITLE,             "title");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_TYPE,              "type");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_CONTENT,          "body");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_HEADER,          "header");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_EQUATION,         "equation");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_EQUATION_LABEL,   "equation_label");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_FIGURE,           "figure");

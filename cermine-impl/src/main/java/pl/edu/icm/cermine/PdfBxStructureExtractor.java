@@ -107,11 +107,14 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     	BxDocument result = extractor.extractStructure(in);
     	
 		FileWriter fstream = new FileWriter("PdfBxStructureExtractor_out.xml");
-		BufferedWriter out = new BufferedWriter(fstream);
-    	BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-		out.write(writer.write(result.getPages()));
-    	writer.write(result.getPages());
-    	out.close();
+        BufferedWriter out = new BufferedWriter(fstream);
+        try {
+            BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+            out.write(writer.write(result.getPages()));
+            writer.write(result.getPages());
+        } finally {
+            out.close();
+        }
     }
    
 }

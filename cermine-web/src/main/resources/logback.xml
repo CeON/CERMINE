@@ -35,6 +35,6 @@
     </root>
     
     <logger name="org.springframework"  level="INFO"/>
-    <logger name="pl.edu.icm"     level="INFO"/>    
+    <logger name="pl.edu.icm"     level="DEBUG"/>    
          
 </configuration>

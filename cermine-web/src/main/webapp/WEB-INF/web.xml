@@ -34,10 +34,14 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+
     <servlet-mapping>
         <servlet-name>springMvc</servlet-name>
-        <url-pattern>/ui/*</url-pattern>
+        <!--<url-pattern>/ui/*</url-pattern>-->
+        <url-pattern>*.html</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </servlet-mapping>
+
 
    <filter>
        <filter-name>RequestLoggerFilter</filter-name>
@@ -67,7 +71,7 @@
     </filter-mapping> -->
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
 
 </web-app>

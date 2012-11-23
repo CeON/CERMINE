@@ -24,7 +24,7 @@
     <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
     -->
     
-    <context:component-scan base-package="pl.edu.icm.cermine.web.controller"/>
+    <context:component-scan base-package="pl.edu.icm.cermine"/>
     
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
     

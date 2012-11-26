@@ -84,7 +84,7 @@ public class UserConsoleController {
             byte[] content = file.getBytes();
             String res = extractorService.extractNLM(new ByteArrayInputStream(content));
             res = StringEscapeUtils.escapeHtml(res);
-            HashMap<String, Object> model = new HashMap<>();
+            HashMap<String, Object> model = new HashMap<String, Object>();
             model.put("message", "Aqqq");
             model.put("result", res);
             return new ModelAndView("result", model);

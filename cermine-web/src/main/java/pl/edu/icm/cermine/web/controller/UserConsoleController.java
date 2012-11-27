@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import pl.edu.icm.cermine.service.CermineExtractorService;
+import pl.edu.icm.cermine.service.ExtractionResult;
 
 /**
  *
@@ -82,11 +83,12 @@ public class UserConsoleController {
 //            IOUtils.copy(file.getInputStream(), cos);
 //            logger.info("Got {} bytes", cos.getCount());
             byte[] content = file.getBytes();
-            String res = extractorService.extractNLM(new ByteArrayInputStream(content));
-            res = StringEscapeUtils.escapeHtml(res);
+            ExtractionResult eres = extractorService.extractNLM(new ByteArrayInputStream(content));
+            String nlmHtml = StringEscapeUtils.escapeHtml(eres.getNlm());
             HashMap<String, Object> model = new HashMap<String, Object>();
             model.put("message", "Aqqq");
-            model.put("result", res);
+            model.put("nlm", nlmHtml);
+            model.put("result", eres);
             return new ModelAndView("result", model);
         } catch (Exception ex) {
             throw new RuntimeException(ex);

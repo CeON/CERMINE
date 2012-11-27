@@ -18,7 +18,7 @@
         <module>cermine-api</module>
         <module>cermine-impl</module>
         <module>cermine-tools</module>
-        <module>cermine-web</module>
+        <!--module>cermine-web</module-->
     </modules>
     
     <build>

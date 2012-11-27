@@ -9,15 +9,16 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
-public class SVMMultiClassifier2 extends SVMZoneClassifier {
+/*
+public class SVMZoneMultiClassifier2 extends SVMZoneClassifier {
 
     private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
     private List<BxZoneLabel> possibleLabels;
-    private Map<BxZoneLabel, SVMZoneClassifier> classifiers;
-    private SVMZoneClassifier ultimateClassifier;
+    private Map<BxZoneLabel, SVMClassifier> classifiers;
+    private SVMClassifier ultimateClassifier;
 
-    public SVMMultiClassifier2(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder, Boolean forceReadingOrder) {
-        super(featureVectorBuilder);
+    public SVMZoneMultiClassifier2(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder, Class<BxZoneLabel> bxZoneLabelClass, Boolean forceReadingOrder) {
+        super(featureVectorBuilder, bxZoneLabelClass);
         this.featureVectorBuilder = featureVectorBuilder;
     }
 
@@ -48,7 +49,7 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
         return document;
     }
 
-    public SVMZoneClassifier getClassifier(BxZoneLabel lab) {
+    public SVMClassifier getClassifier(BxZoneLabel lab) {
         if (lab == null) {
             return ultimateClassifier;
         }
@@ -58,7 +59,7 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
     public void setPossibleLabels(Collection<BxZoneLabel> labels) {
         possibleLabels.addAll(labels);
         for (BxZoneLabel lab : possibleLabels) {
-            classifiers.put(lab, new SVMZoneClassifier(featureVectorBuilder));
+            classifiers.put(lab, new SVMClassifier(featureVectorBuilder, this.enumClassObj));
         }
     }
 
@@ -72,7 +73,7 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
         }
 
         for (final BxZoneLabel lab : possibleLabels) {
-            SVMZoneClassifier clas = classifiers.get(lab);
+            SVMClassifier clas = classifiers.get(lab);
 
             List<TrainingElement<BxZoneLabel>> convertedElements = new ArrayList<TrainingElement<BxZoneLabel>>() {
 
@@ -99,3 +100,4 @@ public class SVMMultiClassifier2 extends SVMZoneClassifier {
         ultimateClassifier.buildClassifier(trainingElements);
     }
 }
+*/

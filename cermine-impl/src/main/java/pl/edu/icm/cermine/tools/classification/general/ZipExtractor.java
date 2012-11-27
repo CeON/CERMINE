@@ -28,6 +28,10 @@ public class ZipExtractor implements DocumentsExtractor {
 		this.zipFile = new ZipFile(file);
 	}
 
+	public ZipExtractor(File file) throws ZipException, IOException {
+		this.zipFile = new ZipFile(file);
+	}
+	
 	public ZipExtractor(ZipFile zipFile) {
 		this.zipFile = zipFile;
 	}

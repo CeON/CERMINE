@@ -38,8 +38,8 @@ public class FeatureVectorScaler {
 		this.limits = featureLimits.toArray(new FeatureLimits[featureLimits.size()]);
 	}
 	
-	public void calculateFeatureLimits(List<TrainingElement<BxZoneLabel>> trainingElements) 	{
-		for(TrainingElement<BxZoneLabel> trainingElem: trainingElements) {
+	public <A extends Enum<A>>void calculateFeatureLimits(List<TrainingElement<A>> trainingElements) 	{
+		for(TrainingElement<A> trainingElem: trainingElements) {
 			FeatureVector fv = trainingElem.getObservation();
 			Set<String> names = fv.getFeatureNames();
 			

@@ -43,7 +43,7 @@ public class PipelineClassifier implements ZoneClassifier {
                 throws AnalysisException {
             for (BxZone zone : document.asZones()) {
                 if (shouldBeClassified(zone)) {
-                    zone.setLabel(classifier.predictZoneLabel(zone));
+                    zone.setLabel(classifier.predictLabel(zone, zone.getParent()));
                 }
             }
             return document;

@@ -30,7 +30,6 @@ public interface FeatureVectorBuilder<X, Y> {
      * @return Calculated feature vector.
      */
     FeatureVector getFeatureVector(X object, Y context);
-
     /**
      * Returns the names of features that are part of calculated feature vector.
      *

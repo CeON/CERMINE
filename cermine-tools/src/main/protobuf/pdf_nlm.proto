@@ -1,0 +1,14 @@
+//
+// (c) 2012 ICM UW. All rights reserved
+//
+
+package model;
+
+option java_package = "pl.edu.icm.cermine.pubmed.importer.model";
+option java_outer_classname = "DocumentProtos";
+
+message Document {
+	required string key = 1;
+	optional bytes nlm = 2;
+	optional bytes pdf = 3;
+}

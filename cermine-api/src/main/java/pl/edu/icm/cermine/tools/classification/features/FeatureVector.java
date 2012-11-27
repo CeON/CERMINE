@@ -66,5 +66,6 @@ public interface FeatureVector extends Cloneable {
      * 
      * @return cloned object
      */
-    FeatureVector clone();
+    FeatureVector clone() throws CloneNotSupportedException;
+    
 }

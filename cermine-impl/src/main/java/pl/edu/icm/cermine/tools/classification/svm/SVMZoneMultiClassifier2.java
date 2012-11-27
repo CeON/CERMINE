@@ -81,16 +81,18 @@ public class SVMZoneMultiClassifier2 extends SVMZoneClassifier {
                     Integer elemIdx = 0;
                     for (TrainingElement<BxZoneLabel> elem : trainingElements) {
                         //convert training elements' labels to one of two: lab (current iteration) or OTH_UNKNOWN
-                        TrainingElement<BxZoneLabel> toBeAdded = elem.clone();
-                        if (toBeAdded.getLabel() != lab) { //if label is wrong then change it
-                            toBeAdded.setLabel(BxZoneLabel.OTH_UNKNOWN);
-                            if (elemIdx != trainingElements.size() - 1) {//last element
-                                trainingElements.get(elemIdx + 1).getObservation().setFeature("PreviousZoneFeature",
+                        try {
+                            TrainingElement<BxZoneLabel> toBeAdded = elem.clone();
+                            if (toBeAdded.getLabel() != lab) { //if label is wrong then change it
+                                toBeAdded.setLabel(BxZoneLabel.OTH_UNKNOWN);
+                                if (elemIdx != trainingElements.size() - 1) {//last element
+                                    trainingElements.get(elemIdx + 1).getObservation().setFeature("PreviousZoneFeature",
                                         (double) BxZoneLabel.OTH_UNKNOWN.ordinal());
-                            }
-                        } //else leave it as it is
-                        add(toBeAdded);
-                        ++elemIdx;
+                                }
+                            } //else leave it as it is
+                            add(toBeAdded);
+                            ++elemIdx;
+                        } catch (CloneNotSupportedException ex) {}
                     }
                 }
             };

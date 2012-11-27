@@ -31,10 +31,10 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
     public PdfNLMMetadataExtractor() throws AnalysisException {
         strExtractor = new PdfBxStructureExtractor();
         
-        InputStreamReader modelISRM = new InputStreamReader(Thread.currentThread().getClass()
+        InputStreamReader modelISRM = new InputStreamReader(this.getClass()
 				.getResourceAsStream("/pl/edu/icm/cermine/structure/svm_metadata_classifier"));
         BufferedReader modelFileM = new BufferedReader(modelISRM);
-        InputStreamReader rangeISRM = new InputStreamReader(Thread.currentThread().getClass()
+        InputStreamReader rangeISRM = new InputStreamReader(this.getClass()
 				.getResourceAsStream("/pl/edu/icm/cermine/structure/svm_metadata_classifier.range"));
         BufferedReader rangeFileM = new BufferedReader(rangeISRM);
         metadataClassifier = new SVMMetadataZoneClassifier(modelFileM, rangeFileM);

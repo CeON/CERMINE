@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+<H1>1. BACKGROUND</H1>
+<p>
+The establishment of the Network for Computational Nan-
+otechnology in 2002 by the National Science Foundation led
+to the development of nanoHUB.org, a unique cyberinfras-
+tructure platform for developing and sharing nanoscience
+resources online, and in particular, an integrated develop-
+ment environment for creating and executing simulations
+within a web browser and that utilize backend grid resources.
+By 2007, nanoHUB.org was serving approximately 1,000 re-
+sources to over 56,000 users from 172 dierent countries [1].
+Based on this success, the NSF supported the generalization
+of the platform so that it could be adapted and adopted by
+other scientic communities [2]. The result, HUBzero 1, was
+released as open source software in 2010 and is maintained
+by a non-prot consortium led by Purdue, Clemson, and In-
+diana Universities with the University of Wisconsin. Over
+twenty-ve \hubs&quot; have been deployed in a wide variety of
+communities such as pharmaceutical product development,
+energy, social change, high performance computing, earth-
+quake engineering, ethics, and science, technology, engineer-
+ing, and mathematics (STEM) education.
+HUBzero functions much like an institutional repository
+system in which users can create and upload resources, which
+are organized by resource type. By default, HUBzero sup-
+ports courses, seminars, tools, downloads, series, workshops,
+publications, and teaching materials. Descriptive metadata
+inputted by the submitter of the resource enables it to be
+searched and browsed in the system. HUBzero allows users
+to tag, rank, discuss, and annotate resources as well as inte-
+grate them into various social networking sites. Each type
+of resource oers its own manner of presentation (e.g., tools
+prompt for input and can be executed online, seminars can
+be streamed as video or audio, etc.) Usage statistics and
+citations are reported back to those who submit resources.
+HUBzero utilizes the Joomla content management system,
+which provides a framework for managing users, content,
+and web-based functionality. Hub resources are instantiated
+using the Resource component, which is a Joomla extension.
+Joomla utilize a model-view-controller (MVC) architecture
+that separates the underlying data from the presentation
+and interaction of the component and its user. In practical
+terms, this allows multiple views and interactions with the
+same data model by modifying dierent PHP scripts. Data
+relating to hub resources are populated by SQL queries into
+variables that are parsed and presented dierently depend-
+ing on the context of the interaction.
+</p>
+<H1>2. DATA MODELING AND MAPPING</H1>
+<H2>2.1 Lined Data</H2>
+<p>
+While the hub presents a robust interface and rich func-
+tionality for users, its resources are not presented in a way
+that user-agents (i.e., a user that is a machine) can under-
+stand and use. With this motivation, Linked Data was se-
+lected as the approach because of its simplicity and high rate
+of adoption in the digital library domain relative to other
+Semantic Web approaches. The four basic \rules&quot; of Linked
+Data are to use Uniform Resource Identiers (URI) to iden-
+tify things; use HyperText Transfer Protocol (HTTP) URIs
+that can be linked and followed; provide useful metadata
+when URIs are dereferenced, such as Resource Description
+Framework (RDF); and link to other URIs to create relations
+to other information [3]. The goal of this work is to enable
+hubs to become a part of this \web of data&quot; and to serve as
+a practical introduction of HUBzero and its communities to
+the Open Archives Initiative.
+</p>
+<H2>2.2 Object Reuse and Exchange (OAI-ORE)</H2>
+<p>
+The OAI-ORE specication denes a set of standards for
+describing and exchanging aggregations of web resources.
+In simple terms, OAI-ORE denes an Aggregation as a col-
+lection of web resources (Aggregated Resources), and each
+Aggregation includes a Resource Map that lists the con-
+tents of the Aggregation and additional metadata such as
+the relationship between an Aggregation and something else
+on the web. An Aggregation can include other Aggrega-
+tions, resulting in a Nested Aggregation [4]. Applying this
+to HUBzero, its basic structural semantics can be captured
+by describing the entire hub as an Aggregation with hub
+resources grouped by type (e.g., seminars, tools, publica-
+tions) as Nested Aggregations. Lastly, each individual hub
+resource is dened as its own Aggregation, nested within its
+respective Aggregation by resource type containing its own
+metadata and Aggregated Resources.
+</p>
+<H2>2.3 Dublin Core</H2>
+<p>
+HUBzero requires users who are submitting a resource
+to identify the type of resource and to describe it using a
+local, custom schema. Dublin Core2 provides a convenient
+and generic descriptive vocabulary that was straight-forward
+to map. This information is stored natively in HUBzero&#8217;s
+MySQL database in relational tables.
+RDF triples are constituted using the URI of the hub re-
+source Aggregation (using hash notation) as the subject,
+the URI to the Dublin Core term as the predicate, and a
+string literal as the object, which is parsed from variables
+returning data from Joomla from the database and envi-
+ronment. The example hub allows submitters to apply a
+Creative Commons license to their work; in these cases, the
+URI to the license is used for the object to dc:rights. The
+dc:publisher is assigned statically.
+</p>
+<H1>3. TOOLS</H1>
+<H2>3.1 OAI-PMH Data Provider</H2>
+<p>
+The Open Archives Initiative Protocol for Metadata Har-
+vesting denes a web service for data providers to expose
+metadata records serialized in eXtensible Markup Language
+</p><p>
+(XML) for retrieval by service providers (i.e., harvesters)
+using a simple set of six verbs [Identify, ListSets, ListMeta-
+dataFormats, List Identiers, ListRecords, and GetRecord],
+which are called as HTTP requests [5]. The OAI-PMH data
+provider created for HUBzero was written in PHP and im-
+plemented as a stand-alone component in Joomla. Each re-
+source type in the hub is exposed as an OAI-PMH Set, and
+each resource in the hub minimally furnishes a descriptive
+metadata record in Dublin Core. The data provider also
+advertises OAI-ORE Resource Maps using the ListMeta-
+dataFormats verb and will furnish the Resource Maps of
+Aggregations that represent individual hub resources when
+the service provider species a metadataPrex of \oai ore&quot;.
+The Resource Map for a hub resource references the Set
+(ore:isAggregatedBy) to which it belongs as well as the
+data and metadata that it aggregates (ore:aggregates).
+Resource Maps are serialized as RDF/XML. The OAI-PMH
+data provider implements one of the batch discovery meth-
+ods suggested by the OAI-ORE specication [6]. Because
+it was designed as a stand-alone component in the Joomla
+framework, the data provider could be easily modied to
+expose metadata from other content managed by Joomla
+outside or independent of HUBzero.
+</p>
+<H2>3.2 RDF Crawler</H2>
+<p>
+To demonstrate discovery and use of Linked Data from
+the web, a crawler was written in Python to traverse all the
+resource web pages in an example hub. The crawler begins
+from the top-level of the hub (the beginning splash page,
+which is the Aggregation that represents the entire hub)
+and dereferences URIs to the Aggregations and Resource
+Maps for resource types and individual resources. The task
+of the crawler is to parse the HTML source and extract
+div fragments that have a class property of \ResourceMap&quot;
+or \Aggregation&quot;. The BeautifulSoup3 parser was used to
+make the crawler resilient to ill-formed HTML fragments
+such as the incorrect embedding of h2 tags within span tags.
+Resources Maps are serialized in the RDFa+XHTML for-
+mat such that metadata are embedded within div fragments
+in the HTML source. The class property of the div frag-
+ment indicates whether the fragment describes the Resource
+Map or the Aggregation based on its respective string value.
+The Dublin Core metadata are wrapped within span tags
+with property=&quot;dc:title&quot;, etc. String literals are embed-
+ded in span tags, whereas URIs are embedded in a tags.
+The job of the crawler is to parse all the contents embedded
+</p><p>
+in these tags and generate the triples with proper subjects,
+predicates, and objects.
+The crawler traverses URIs to all the RDF triples and
+stores them in an N-Triples le. N-Triples is a line-based,
+plain text serialization format for RDF graphs. Each line
+of the le represents a single statement of information or a
+comment. Each statement consists of three parts, separated
+by whitespace { the subject, the predicate and the object {
+and is terminated with a full stop. Subjects take the form
+of URIs, which are delimited by angle brackets. Objects
+may be URIs or string literals, which are represented by a
+C-style string. The crawler builds a resource URI list by
+crawling and parsing URIs within each resource type of the
+hub. Whenever the crawler parses an a tag of the HTML
+with rel property of value of ore:aggregates, it will insert
+the URI contained in the tag in the list. By iterating all the
+resource types in the prototype, all the URIs of resources
+are inserted into the list. For each single URI in the list, the
+crawler parses the div fragments in the HTML source le
+and stores the RDF triples in the result le.
+After all the triples have been harvested from the exam-
+ple hub, the N-Triples le is ushed to a TDB triplestore for
+permanent storage and retrieval within a Jena framework4.
+Jena implements APIs for dealing with Semantic Web build-
+ing blocks such as RDF. TDB is a persistent graph storage
+layer for Jena. TDB works with the Jena SPARQL query
+engine to provide a SPARQL endpoint along with a number
+of extensions (e.g., property functions, aggregates, arbitrary
+length property paths).
+</p>
+<H2>3.3 Graph Browser</H2>
+<p>
+With the triples populated from the hub and stored in the
+native triplestore, a graph browser was developed to help us
+analyze the data quality and validate the metadata exposed
+as Linked Data (see Figure 1). JUNG5, a Java based graph
+framework, was used to achieve the goal of visualization.
+JUNG is a software library that provides a common and ex-
+tensible language for modeling, analysis, and visualization
+of data that can be represented as a graph or network. Our
+implementation of the graph browser has an interactive in-
+terface that enables one to click on individual nodes and
+navigates through the hub data and metadata.
+The graph browser will rst send a SPARQL query &quot;SE-
+LECT ?s ?p ?o WHERE ?s ?p ?o;&quot; to retrieve all the triples
+in the TDB triplestore. The graph browser will display the
+hub resources in dierent layers as the user clicks on various
+nodes in the browser. A circle node in the graph represents a
+URI or a plain string. A directed arrow with a URI above it
+denotes the predicates between the subject and the object.
+The circle node which the arrow points out is the subject of
+the triple and the circle node which the arrow points to is the
+object of the triple. There are three dierent colors of the
+circle nodes in all, i.e., blue, green, and grey. The blue circle
+nodes represent URIs of Aggregated Resources and Resource
+Maps. The green circle nodes represent plain strings appear-
+ing in the object eld of the triple. The grey circle nodes are
+pointed to by dotted arrows from green circle nodes. These
+grey circle nodes indicate shared boundaries that connect to
+a larger graph outside of the immediate current scope.
+The rst page of the graph browser shows the aggregation
+</p><p>
+of all the triples in the hub in a graphical form. One can click
+on any blue circle node to have a clear look at the details of
+this particular Aggregated Resource or Resource Map. If the
+blue node that one clicks on is a Resource Map, the browser
+will display the descriptive information of the Resource Map
+and the URI of the Aggregated Resource it describes. If the
+blue node that one clicks on is an Aggregated Resource,
+the browser will graph its Resource Map, all the Dublin
+Core metadata records about this Aggregated Resource, any
+resource it aggregates, and any Aggregation it belongs to. If
+a green circle node is clicked on, the browser will display all
+the triples with this string value in the object eld.
+With the help of the graph browser, we can debug the
+correctness of exposing the Dublin Core metadata records
+from the hub and validate the Resource Maps. This graph
+browser serves as a supplementary tool to navigate through
+RDF triples by introducing an interactive way between users
+and the data. It has also been a helpful tool for demon-
+strating to people the network power of Linked Data and to
+visualize the linkages that are being created between their
+data and metadata. Numerous classes and demonstrations
+of the visualization have been given in the campus Fakespace
+FLEX system Virtual Reality Theater.
+</p>
+<H1>4. FUTURE WORK</H1>
+<p>
+The combination of OAI-ORE and Dublin Core enables a
+base representation of HUBzero and its content.; however,
+richer and more specic vocabularies should be identied
+and incorporated. It would be useful to create more links
+to other, related information on the web, for example, to
+link to scientic workows (e.g., MyExperiment) that are
+supported by hub tools and datasets. Another important,
+next step is to incorporate vocabularies on the front-end
+data ingest to produce more URIs and fewer string literals as
+objects in the RDF. For example, tags could be constructed
+as Library Congress Subject Headings or another linkable
+subject classication scheme.
+Inspired by Tarrant et al.[7], a synchronization tool to
+replicate content and semantics from HUBzero to other repos-
+itories using OAI-ORE has been developed and described in
+a dierent paper that is currently under review.
+Two new tools are under development now: one to enable
+users to create and publish their own collections (Aggrega-
+tions) on the hub, and another to leverage Linked Data for
+semantic search.
+The Linked Data implementation for HUBzero along with
+the OAI-PMH Joomla component, RDF Crawler, and Graph
+Browser are in the process of being incorporated into the
+HUBzero open source software distribution and should be
+available in the next major version release of HUBzero. An
+assessment is planned for 2013.
+</p>
+</html>

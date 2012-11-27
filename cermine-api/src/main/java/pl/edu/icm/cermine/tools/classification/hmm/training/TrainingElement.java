@@ -52,6 +52,6 @@ public interface TrainingElement<S> extends Cloneable {
      * 
      * @return cloned element
      */
-    TrainingElement<S> clone();
+    TrainingElement<S> clone() throws CloneNotSupportedException;
 
 }

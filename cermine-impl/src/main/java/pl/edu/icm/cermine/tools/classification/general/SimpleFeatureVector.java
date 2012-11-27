@@ -63,16 +63,12 @@ public class SimpleFeatureVector implements FeatureVector {
 	}
 	
 	@Override
-	public SimpleFeatureVector clone() {
-        try {
-            SimpleFeatureVector ret = (SimpleFeatureVector) super.clone();
-            for(String feature: features.keySet()) {
-                ret.features.put(feature, new Double(features.get(feature)));
-            }
-            return ret;
-        } catch (CloneNotSupportedException ex) {
-            return null;
+	public SimpleFeatureVector clone() throws CloneNotSupportedException {
+        SimpleFeatureVector ret = (SimpleFeatureVector) super.clone();
+        for (String feature: features.keySet()) {
+            ret.features.put(feature, new Double(features.get(feature)));
         }
+        return ret;
 	}
 	
 }

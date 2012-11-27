@@ -18,7 +18,7 @@ public class BxDocContentStructure {
     private List<BxLine> firstHeaderLines = new ArrayList<BxLine>();
     private Map<BxLine, BxDocContentPart> parts = new HashMap<BxLine, BxDocContentPart>();
 
-    
+
     public void addFirstHeaderLine(BxPage page, BxLine headerLine) {
         firstHeaderLines.add(headerLine);
         parts.put(headerLine, new BxDocContentPart(page, headerLine));
@@ -68,7 +68,7 @@ public class BxDocContentStructure {
         return sortedParts;
     }
 
-    int getTopHeaderLevelId() {
+    public int getTopHeaderLevelId() {
         if (firstHeaderLines == null || firstHeaderLines.isEmpty()) {
             return -1;
         }

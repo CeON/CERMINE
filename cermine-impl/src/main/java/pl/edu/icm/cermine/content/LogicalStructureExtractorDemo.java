@@ -8,11 +8,10 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 import pl.edu.icm.cermine.content.features.line.*;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
+import pl.edu.icm.cermine.content.transformers.HTMLToDocContentStructReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
@@ -114,7 +113,7 @@ public class LogicalStructureExtractorDemo {
             System.out.println(i);
             DocumentContentStructure hdrs = testHeaderStructures.get(i);
             
-            headerCount += hdrs.getHeaderCount();
+            headerCount += hdrs.getAllHeaderCount();
 
             System.out.println();
             System.out.println("ORIGINAL: ");
@@ -125,9 +124,9 @@ public class LogicalStructureExtractorDemo {
             System.out.println("EXTRACTED:");
             extractedHdrs.printHeaders();
             
-            recognizedHeaderCount += extractedHdrs.getHeaderCount();
+            recognizedHeaderCount += extractedHdrs.getAllHeaderCount();
             
-            for (String header : hdrs.getHeaderTexts()) {
+            for (String header : hdrs.getAllHeaderTexts()) {
                 if (extractedHdrs.containsHeaderText(header)) {
                     goodHeaderCount++;
                 } else {
@@ -169,25 +168,20 @@ public class LogicalStructureExtractorDemo {
     private void fillLists(ZipFile zipFile, List<ZipEntry> entries, List<BxDocument> documents, 
             List<DocumentContentStructure> headerStructures) throws IOException, TransformationException, JDOMException {
         HierarchicalReadingOrderResolver roa = new HierarchicalReadingOrderResolver();
+        TrueVizToBxDocumentReader bxReader = new TrueVizToBxDocumentReader();
+        HTMLToDocContentStructReader dcsReader = new HTMLToDocContentStructReader();
         for (ZipEntry ze : entries) {
             if (ze.getName().matches("^.*/"+sourceDir+".*$")) {
                 InputStream xis = zipFile.getInputStream(ze);
                 InputStreamReader xisr = new InputStreamReader(xis);
-                TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-                List<BxPage> pages = reader.read(xisr);
+                List<BxPage> pages = bxReader.read(xisr);
                 documents.add(roa.resolve(new BxDocument().setPages(pages)));
             }
             if (ze.getName().matches("^.*/"+structureDir+".*$")) {
                 InputStream cis = zipFile.getInputStream(ze);
                 InputStreamReader cisr = new InputStreamReader(cis);
                 
-                SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
-                org.jdom.Document dom = saxBuilder.build(cisr);
-                Element root = dom.getRootElement();
-                List<Element> elements = root.getChildren();
-                
-                DocumentContentStructure hs = new DocumentContentStructure();
-                hs.build(elements);
+                DocumentContentStructure hs = dcsReader.read(cisr);
                 headerStructures.add(hs);
             }
         }

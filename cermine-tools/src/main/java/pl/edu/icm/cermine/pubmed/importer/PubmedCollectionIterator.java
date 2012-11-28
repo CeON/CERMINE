@@ -11,7 +11,7 @@ import org.apache.hadoop.hbase.util.FSUtils.DirFilter;
 
 public class PubmedCollectionIterator implements Iterable<PubmedEntry>{
 	
-	private Integer curItem = 0;
+	private Integer curItemIdx = -1;
 	private List<PubmedEntry> entries = null;
 	
 	public PubmedCollectionIterator(String pubmedPath) {
@@ -44,15 +44,22 @@ public class PubmedCollectionIterator implements Iterable<PubmedEntry>{
 							continue;
 						}
 						PubmedEntry entry = new PubmedEntry();
+						File pdfFile = null;
+						File nlmFile = null;
 						for(File journalFile: journalFiles) {
 							if(journalFile.getName().matches(".*\\.pdf")) {
-								entry.setPdf(journalFile);
+								pdfFile = journalFile;
 							}
-							if(journalFile.getName().matches(".*\\.nxml")) {
-								entry.setNlm(journalFile);
+							else if(journalFile.getName().matches(".*\\.nxml")) {
+								nlmFile = journalFile;
 							}
-							entry.setKey(journalDir.getName());
 						}
+						if(nlmFile == null && pdfFile == null) {
+							continue;
+						}
+						entry.setNlm(nlmFile);
+						entry.setPdf(pdfFile);
+						entry.setKey(journalDir.getName());
 						entries.add(entry);
 					}
 				}
@@ -65,19 +72,19 @@ public class PubmedCollectionIterator implements Iterable<PubmedEntry>{
 		return new Iterator<PubmedEntry>() {
 			@Override
 			public boolean hasNext() {
-				return curItem + 1 < entries.size();
+				return curItemIdx + 1 < entries.size();
 			}
 			
 			@Override
 			public PubmedEntry next() {
-				PubmedEntry actualItem = entries.get(curItem);
-				++curItem;
+				++curItemIdx;
+				PubmedEntry actualItem = entries.get(curItemIdx);
 				return actualItem;
 			}
 			
 			@Override
 			public void remove() {
-				++curItem;
+				++curItemIdx;
 			}
 		};
 	}
@@ -87,10 +94,10 @@ public class PubmedCollectionIterator implements Iterable<PubmedEntry>{
 		for(PubmedEntry entry: iter) {
 			try {
 				System.out.println(entry.getNlm().getName() + " ");
-			} catch(NullPointerException e) {}
+			} catch(NullPointerException e) {System.out.println("____");}
 			try {
 				System.out.println(entry.getPdf().getName() + " ");
-			} catch(NullPointerException e) {}
+			} catch(NullPointerException e) {System.out.println("____");}
 			try {
 				//System.out.print(entry.getKey() + " ");
 			} catch(NullPointerException e) {}

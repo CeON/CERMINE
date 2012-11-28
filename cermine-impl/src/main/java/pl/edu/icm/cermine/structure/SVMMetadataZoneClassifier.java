@@ -123,7 +123,7 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
         }
         for (BxZone zone: document.asZones()) {
             if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_METADATA)) {
-                zone.setLabel(predictZoneLabel(zone));
+                zone.setLabel(predictLabel(zone, zone.getParent()));
             }
 		}
         return document;

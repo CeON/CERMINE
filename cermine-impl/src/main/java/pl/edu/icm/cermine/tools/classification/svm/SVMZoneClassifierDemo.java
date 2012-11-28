@@ -27,8 +27,8 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 public class SVMZoneClassifierDemo {
 
-	protected static final String hmmTrainingFile = "xmls.zip";
-	private static final String hmmTestFile = "plik.xml";
+	protected static final String hmmTrainingFile = "/pl/edu/icm/cermine/tools/classification/svm/xmls.zip";
+	private static final String hmmTestFile = "/pl/edu/icm/cermine/tools/classification/svm/test.xml";
     
 	public static BxDocument getTestFile() throws TransformationException, AnalysisException {
         InputStream is = SVMZoneClassifierDemo.class.getResourceAsStream(hmmTestFile);

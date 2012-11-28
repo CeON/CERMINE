@@ -12,7 +12,8 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
-public class SVMMultiClassifier extends SVMZoneClassifier {
+/*
+public class SVMZoneMultiClassifier extends SVMZoneClassifier {
 
     private FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder;
     private List<BxZoneLabel> possibleLabels;
@@ -105,3 +106,4 @@ public class SVMMultiClassifier extends SVMZoneClassifier {
         }
     }
 }
+*/

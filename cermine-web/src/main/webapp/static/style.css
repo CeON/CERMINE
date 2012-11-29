@@ -1,0 +1,28 @@
+/* 
+    Document   : style
+    Created on : 2012-11-28, 22:32:24
+    Author     : Aleksander Nowinski <a.nowinski@icm.edu.pl>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body {
+    width: 900px;
+    font-family: sans-serif;
+}
+
+
+#header {
+    background: lightgreen;
+    border-bottom: 1px black;
+    
+}
+
+#footer {
+    background: lightgreen;
+}
+

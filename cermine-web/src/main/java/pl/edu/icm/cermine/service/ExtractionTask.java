@@ -11,21 +11,50 @@ import java.util.Date;
  * @author Aleksander Nowinski <a.nowinski@icm.edu.pl>
  */
 public class ExtractionTask {
+
+    public static enum TaskStatus {
+
+        CREATED("queue", "SUBMITTED"),
+        QUEUED("queue", "QUEUED"),
+        PROCESSING("processing", "PROCESSING"),
+        FINISHED("success", "SUCCESS", true),
+        FAILED("failure", "FAILURE", true);
+        String css;
+        String text;
+        boolean finalState;
+
+        
+        TaskStatus(String css, String text) {
+            this(css, text, false);
+        }
+        
+        TaskStatus(String css, String text, boolean f) {
+            this.css = css;
+            this.text = text;
+            finalState = f;
+        }
+
+        public String getCss() {
+            return css;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public boolean isFinalState() {
+            return finalState;
+        }
+        
+        
+    }
     private long id;
     byte[] pdf;
+    String fileName;
     String md5Sum;
-    
-    
-    public static enum TaskStatus {
-        CREATED,
-        QUEUED,
-        PROCESSING,
-        FINISHED
-    }
     private TaskStatus status;
     private Date creationDate;
     private String clientAddress;
-    
     private ExtractionResult result;
 
     public long getId() {
@@ -83,7 +112,28 @@ public class ExtractionTask {
     public void setResult(ExtractionResult result) {
         this.result = result;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public boolean isFinished() {
+        return status.isFinalState();
+    }
+
+    public boolean isSucceeded() {
+        return isFinished() && status!=TaskStatus.FAILED;
+    }
     
+    public boolean isFailed() {
+        
+        return status==TaskStatus.FAILED;
+    }
+
     
     
 }

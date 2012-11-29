@@ -25,6 +25,6 @@ public interface CermineExtractorService {
      */
     ExtractionResult extractNLM(InputStream ii)throws AnalysisException;
     
-    long initExtractionTask(byte[] pdf, String client);
+    long initExtractionTask(byte[] pdf, String fileName);
     
 }

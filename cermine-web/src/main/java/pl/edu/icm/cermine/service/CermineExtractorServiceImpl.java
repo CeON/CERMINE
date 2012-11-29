@@ -37,7 +37,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
     ExecutorService processingExecutor;
     @Autowired
     TaskManager taskManager;
-    
+
     public CermineExtractorServiceImpl() {
     }
 
@@ -63,15 +63,13 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         this.threadPoolSize = threadPoolSize;
     }
 
-    public TaskManager getTaskManager() {
-        return taskManager;
-    }
-
-    public void setTaskManager(TaskManager taskManager) {
-        this.taskManager = taskManager;
-    }
-    
-    
+//    public TaskManager getTaskManager() {
+//        return taskManager;
+//    }
+//
+//    public void setTaskManager(TaskManager taskManager) {
+//        this.taskManager = taskManager;
+//    }
 
     @Override
     public ExtractionResult extractNLM(InputStream is) throws AnalysisException {
@@ -89,21 +87,20 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
     }
 
     @Override
-    public long initExtractionTask(byte[] pdf, String client) {
+   public long initExtractionTask(byte[] pdf, String fileName) {
         ExtractionTask task = new ExtractionTask();
         task.setPdf(pdf);
-        task.setClientAddress(client);
+        task.setFileName(fileName);
+//        task.setClientAddress(client);
         task.setCreationDate(new Date());
         task.setStatus(ExtractionTask.TaskStatus.CREATED);
         long id = taskManager.registerTask(task);
         //now process the task...
         task.setStatus(ExtractionTask.TaskStatus.QUEUED);
         processingExecutor.submit(new ExtractingTaskExecution(task));
-        
+
         return id;
     }
-    
-    
 
     protected PdfNLMContentExtractor obtainExtractor() {
         log.debug("Obtaining extractor from the pool");
@@ -131,30 +128,35 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         }
     }
 
-    
-    
-        private ExtractionResult performExtraction(ExtractionResult result, InputStream input) {
-            try {
-                
-                PdfNLMContentExtractor e = obtainExtractor();
-                result.processingStart = new Date();
-                Element resEl = e.extractContent(input);
-                log.debug("Extract OK.");
-                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                String res = outputter.outputString(resEl);
-                result.setNlm(res);
-                result.setSucceeded(true);
-                log.debug("Returning xml:\n {}", res);
-            } catch (AnalysisException anal) {
-                result.setError(anal);
-                result.setSucceeded(false);
-            } finally {
-                result.setProcessingEnd(new Date());
-            }
-            return result;
+    /**
+     * Method to perform real extraction.
+     *
+     * @param result
+     * @param input
+     * @return
+     */
+    private ExtractionResult performExtraction(ExtractionResult result, InputStream input) {
+        try {
+            PdfNLMContentExtractor e = obtainExtractor();
+            result.processingStart = new Date();
+            Element resEl = e.extractContent(input);
+            log.debug("Extract OK.");
+            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+            String res = outputter.outputString(resEl);
+            result.setNlm(res);
+            result.setSucceeded(true);
+//            log.debug("Returning xml:\n {}", res);
+        } catch (AnalysisException anal) {
+            result.setError(anal);
+            result.setSucceeded(false);
+        } finally {
+            result.setProcessingEnd(new Date());
         }
-    
+        return result;
+    }
+
     private class ExtractingTaskExecution implements Runnable {
+
         ExtractionTask task;
 
         public ExtractingTaskExecution(ExtractionTask task) {
@@ -163,20 +165,23 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
 
         @Override
         public void run() {
+            log.debug("Starting processing task: " + task.getId());
             task.setStatus(ExtractionTask.TaskStatus.PROCESSING);
-            ExtractionResult result = new ExtractionResult()
-                    ;
+
+            ExtractionResult result = new ExtractionResult();
             result.setProcessingStart(new Date());
             result.setSubmit(task.getCreationDate());
+            log.debug("Running extraction: " + task.getId());
             performExtraction(result, new ByteArrayInputStream(task.getPdf()));
             task.setResult(result);
+
+            log.debug("Processing finished: " + task.getId());
             task.setStatus(ExtractionTask.TaskStatus.FINISHED);
             task.setPdf(null);//clean up memory, we will overflow after few request without it...
+
+            log.debug("finishing task: " + task.getId());
         }
     }
-    
-    
-    
 
     private class SimpleExtractionCallable implements Callable<ExtractionResult> {
 
@@ -191,6 +196,5 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         public ExtractionResult call() throws Exception {
             return performExtraction(result, input);
         }
-
     }
 }

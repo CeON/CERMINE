@@ -42,11 +42,11 @@ public class TaskManagerImpl implements TaskManager {
         tasks.put(task.getId(), task);
         return task.getId();
     }
-    
+
     @Override
     public ExtractionTask getTask(long id) throws NoSuchTaskException {
         ExtractionTask t = tasks.get(id);
-        if(t==null) {
+        if (t == null) {
             throw new NoSuchTaskException(id);
         }
         return t;
@@ -58,8 +58,7 @@ public class TaskManagerImpl implements TaskManager {
         for (Map.Entry<Long, ExtractionTask> entries : tasks.entrySet()) {
             res.add(entries.getValue());
         }
-        Collections .sort(res, new Comparator<ExtractionTask>() {
-
+        Collections.sort(res, new Comparator<ExtractionTask>() {
             @Override
             public int compare(ExtractionTask t, ExtractionTask t1) {
                 return t.getCreationDate().compareTo(t1.getCreationDate());
@@ -68,20 +67,46 @@ public class TaskManagerImpl implements TaskManager {
         return res;
     }
 
-    
-    
-    
     public void deleteFinishedBefore(Date before) {
         List<Long> toRemove = new ArrayList<Long>();
 
         for (Map.Entry<Long, ExtractionTask> entry : tasks.entrySet()) {
-            if (entry.getValue().getStatus() == ExtractionTask.TaskStatus.FINISHED && 
-                    entry.getValue().getResult().getProcessingEnd().before(before)) {
+            if (entry.getValue().getStatus() == ExtractionTask.TaskStatus.FINISHED
+                    && entry.getValue().getResult().getProcessingEnd().before(before)) {
                 toRemove.add(entry.getKey());
             }
         }
         for (Long id : toRemove) {
             tasks.remove(id);
         }
+    }
+
+    @Override
+    public String getProperFilename(String filename) {
+        String fbase = filename;
+        if (fbase == null || fbase.isEmpty()) {
+            fbase = "input.pdf";
+        }
+        boolean ok = true;
+        for (Map.Entry<Long, ExtractionTask> entry : tasks.entrySet()) {
+            if (fbase.equals(entry.getValue().getFileName())) {
+                ok = false;
+                break;
+            }
+        }
+        int suffix = 1;
+        String fname = fbase;
+        while (!ok) {
+            ok = true;
+            fname = fbase + "#" + suffix;
+            for (Map.Entry<Long, ExtractionTask> entry : tasks.entrySet()) {
+                if (fname.equals(entry.getValue().getFileName())) {
+                    ok = false;
+                    break;
+                }
+            }
+            suffix++;
+        }
+        return fname;
     }
 }

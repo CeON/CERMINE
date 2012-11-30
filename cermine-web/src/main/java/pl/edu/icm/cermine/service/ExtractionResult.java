@@ -5,6 +5,8 @@
 package pl.edu.icm.cermine.service;
 
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -12,6 +14,7 @@ import java.util.Date;
  */
 public class ExtractionResult {
 
+    Logger log = LoggerFactory.getLogger(ExtractionResult.class);
     String requestMD5;
     Date submit, processingStart, processingEnd;
     String nlm;
@@ -55,8 +58,6 @@ public class ExtractionResult {
         this.processingEnd = processingEnd;
     }
 
-    
-    
     public String getNlm() {
         return nlm;
     }
@@ -96,12 +97,26 @@ public class ExtractionResult {
     public void setError(Throwable error) {
         this.error = error;
     }
-    
+
     public double getQueueTimeSec() {
-        return (processingStart.getTime()-submit.getTime())/1000.;
+        return (processingStart.getTime() - submit.getTime()) / 1000.;
     }
-    
+
     public double getProcessingTimeSec() {
-        return (processingEnd.getTime() - processingStart.getTime())/1000.;
+        return (processingEnd.getTime() - processingStart.getTime()) / 1000.;
+    }
+
+    public String getErrorMessage() {
+        String res = "";
+        if (error != null) {
+            res = error.getMessage();
+            if(res==null || res.isEmpty()) {
+                res = "Exception is: "+res.getClass().toString();
+            }
+        } else {
+            res = "Unknown error";
+            log.warn("Unexpected question for error message while no exception. Wazzup?");
+        }
+        return res;
     }
 }

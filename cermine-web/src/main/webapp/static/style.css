@@ -11,18 +11,176 @@ root {
 }
 
 body {
-    width: 900px;
+    text-align: center;
     font-family: sans-serif;
+    background: #CBFD96;
+    color: #142310;
+}
+
+#wrapper {
+    text-align: left;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    background: white;
+    -webkit-box-shadow: 7px 7px 5px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow:    7px 7px 5px rgba(50, 50, 50, 0.5);
+    box-shadow:         7px 7px 5px rgba(50, 50, 50, 0.5);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    /*    padding-left: 30px;
+        padding-right: 30px;*/
+}
+
+a {
+    color: #142310;
+}
+
+a:visited {
+    color: #0d2e04;
 }
 
 
+
+#logo {
+    display: inline;
+    padding-right: 20px;
+}
+
+#banner {
+    vertical-align: top;
+
+}
+
+#banner  h1 {
+    font-size: 52px;
+}
+
+#header a {
+    text-decoration: none;
+
+}
 #header {
-    background: lightgreen;
-    border-bottom: 1px black;
-    
+    margin-top: 0px;
+    background: #80B280;
+    border-bottom: 1px solid black;
+    padding-left: 30px;
+    padding-right: 30px;
+
+}
+
+#top_nav {
+
+    width: 100%;
+    padding: 0;
+    background: #4f871f;
+    border: 1px solid black;
+}
+
+#top_nav li {
+    display: inline;
+    padding: 10px;
 }
 
 #footer {
-    background: lightgreen;
+    background: #80B280;
+    border-top: 1px solid black;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    text-align: center;
+    -moz-border-radius-bottomright: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
+#versions {
+    font-size: small;
+    padding-top: 10px;
+    text-align: right;
+}
+
+
+#main {
+/*    padding-left: 50px;
+    padding-right: 50px;*/
+    padding: 50px;
+}
+
+#main h1 {
+    font-size: 24px;
+}
+
+#main h2 {
+    font-size: 20px;
+}
+
+#file_upload_form {
+    text-align: center;
+}
+
+#file_upload_form input {
+    margin: 15px;
+}
+
+#task_table {
+    width: 100%;
+    background: gray;
+    
+    /*border-collapse: true;*/
+    border: 2px solid darkgray;
+    border-spacing: 0;
+}
+
+#task_table th {
+    text-align: left;
+}
+
+#task_table tr:first-of-type {
+    background: greenyellow;
+} 
+
+#task_table tr:nth-child(even) {
+    background: whitesmoke;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.success .status {
+    color:darkgreen;
+}
+
+
+.processing .status {
+    color:green;
+}
+
+.queued .status {
+    color: darkblue;
+}
+
+.failure td {
+    background: red;
+}
+
+
+#task_table tr:nth-child(odd) {
+    background: lightgray;
+}
+
+#task_table td {
+    text-align: left;
+    /*margin: 0;*/
+    /*border: none;*/
+    
+    /*background: lightgray;*/
+    
+}

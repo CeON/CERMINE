@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import javax.annotation.PostConstruct;
+import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -70,7 +71,6 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
 //    public void setTaskManager(TaskManager taskManager) {
 //        this.taskManager = taskManager;
 //    }
-
     @Override
     public ExtractionResult extractNLM(InputStream is) throws AnalysisException {
         ExtractionResult res = new ExtractionResult();
@@ -87,7 +87,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
     }
 
     @Override
-   public long initExtractionTask(byte[] pdf, String fileName) {
+    public long initExtractionTask(byte[] pdf, String fileName) {
         ExtractionTask task = new ExtractionTask();
         task.setPdf(pdf);
         task.setFileName(fileName);
@@ -136,20 +136,27 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
      * @return
      */
     private ExtractionResult performExtraction(ExtractionResult result, InputStream input) {
+        PdfNLMContentExtractor e = null;
         try {
-            PdfNLMContentExtractor e = obtainExtractor();
+            e = obtainExtractor();
             result.processingStart = new Date();
+            log.debug("Starting extraction on the input stream...");
             Element resEl = e.extractContent(input);
-            log.debug("Extract OK.");
+            log.debug("Extraction ok..");
             XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-            String res = outputter.outputString(resEl);
+            Document doc = new Document(resEl);
+            String res = outputter.outputString(doc);
             result.setNlm(res);
             result.setSucceeded(true);
 //            log.debug("Returning xml:\n {}", res);
-        } catch (AnalysisException anal) {
+        } catch (Exception anal) {
+            log.debug("Exception from analysis: ", anal);
             result.setError(anal);
             result.setSucceeded(false);
         } finally {
+            if (e != null) {
+                returnExtractor(e);
+            }
             result.setProcessingEnd(new Date());
         }
         return result;
@@ -174,11 +181,13 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
             log.debug("Running extraction: " + task.getId());
             performExtraction(result, new ByteArrayInputStream(task.getPdf()));
             task.setResult(result);
-
             log.debug("Processing finished: " + task.getId());
-            task.setStatus(ExtractionTask.TaskStatus.FINISHED);
+            if (result.isSucceeded()) {
+                task.setStatus(ExtractionTask.TaskStatus.FINISHED);
+            } else {
+                task.setStatus(ExtractionTask.TaskStatus.FAILED);
+            }
             task.setPdf(null);//clean up memory, we will overflow after few request without it...
-
             log.debug("finishing task: " + task.getId());
         }
     }

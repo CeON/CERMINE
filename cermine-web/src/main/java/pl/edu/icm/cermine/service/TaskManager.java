@@ -17,5 +17,7 @@ public interface TaskManager {
     long registerTask(ExtractionTask task);
     
     List<ExtractionTask> taskList();
+
+    public String getProperFilename(String filename);
     
 }

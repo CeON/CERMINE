@@ -44,27 +44,33 @@ public class CermineController {
     @Autowired
     TaskManager taskManager;
     Logger logger = LoggerFactory.getLogger(CermineController.class);
-    public static final String VIEW_USER_CONSOLE = "userConsole";
 
     @RequestMapping(value = "/index.html")
-    public String showForm2(Model model) {
-        model.addAttribute("hi", "hello!");
-
+    public String showHome(Model model) {
+        //you may use 'warning' to show problem.
         return "home";
+    }
+    @RequestMapping(value = "/about.html")
+    public String showAbout(Model model) {
+        return "about";
     }
 
     @RequestMapping(value = "/upload.do", method = RequestMethod.POST)
-    @ResponseBody
-    public View uploadFileStream(@RequestParam("files") MultipartFile file, HttpServletRequest request) {
+    public String uploadFileStream(@RequestParam("files") MultipartFile file, HttpServletRequest request, Model model) {
         logger.info("Got an upload request.");
         try {
             byte[] content = file.getBytes();
+            if(content.length==0) {
+                model.addAttribute("warning", "An empty or no file sent.");
+                return "home";
+            }
             String filename = file.getOriginalFilename();
             logger.debug("Original filename is: " + filename);
-//            filename = filename.split("/")[0].split("[\\\\]?")[0];
+            filename = taskManager.getProperFilename(filename);
+            logger.debug("Created filename: "+filename);
             long taskId = extractorService.initExtractionTask(content, filename);
             logger.debug("Task manager is: " + taskManager);
-            return new RedirectView("task.html?task=" + taskId, true);
+            return "redirect:/task.html?task=" + taskId;
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);

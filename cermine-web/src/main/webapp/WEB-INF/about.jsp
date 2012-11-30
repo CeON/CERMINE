@@ -8,21 +8,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <%@include file="html_meta.jsp" %>
         <!-- eof blueimp fileUpload css-->
-
-        <title>Content ExtRactor and MINEr - User Console</title>
+        <title>Content ExtRactor and MINEr - about</title>
     </head>
     <body>
         <div id="wrapper">
             <%@include file="header.jsp" %>
             <article id="main">
-                <h1>Error occured!</h1>
-                Sorry, an unexpected error occured:
-                <div class="ui-widget">
-                    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
-                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                            ${errorMessage}</p>
-                    </div>
-                </div>
+                <h1>About cermie CERMINE - <b>Content ExtRactor and MINEr</b></h1>
+                <p>Write me...</p>
+                <h2>Some more information</h2>
+                <p>Write me too...</p>
+
             </article>
             <%@include file="footer.jsp" %>
         </div>

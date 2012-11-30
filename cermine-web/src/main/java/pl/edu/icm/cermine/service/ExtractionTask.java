@@ -130,7 +130,6 @@ public class ExtractionTask {
     }
     
     public boolean isFailed() {
-        
         return status==TaskStatus.FAILED;
     }
 

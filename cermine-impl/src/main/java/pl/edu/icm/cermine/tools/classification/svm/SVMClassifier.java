@@ -17,6 +17,13 @@ import pl.edu.icm.cermine.tools.classification.general.LinearScaling;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 //import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
+/**
+ * @author Pawel Szostek (p.szostek@
+ *
+ * @param <S> classified object's class
+ * @param <T> context class
+ * @param <E> target enumeration for labels
+ */
 public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	final protected static svm_parameter defaultParameter = new svm_parameter();		
 	static {

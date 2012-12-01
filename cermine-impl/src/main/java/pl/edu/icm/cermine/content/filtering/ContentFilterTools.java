@@ -7,7 +7,6 @@ import java.util.Map;
 import pl.edu.icm.cermine.content.filtering.features.*;
 import pl.edu.icm.cermine.evaluation.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;

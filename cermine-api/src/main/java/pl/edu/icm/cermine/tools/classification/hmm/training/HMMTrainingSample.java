@@ -7,7 +7,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
  * 
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class HMMTrainingSample<S> extends TrainingSample<S> {
+public class HMMTrainingSample<S> extends TrainingSample<S> implements Cloneable {
 
     private S nextLabel;
     private boolean first;

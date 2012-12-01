@@ -22,8 +22,7 @@ public class EvaluationUtils {
 		try {
 			 evaluationDocuments = extractor.getDocuments();
 		} catch(Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to get evaluation documents from the indicated location! Got exception: " + e);
+			throw new RuntimeException("Unable to get evaluation documents from the indicated location! Got exception: ", e);
 		}
 		return evaluationDocuments;
 	}

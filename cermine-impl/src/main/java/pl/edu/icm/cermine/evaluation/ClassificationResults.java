@@ -7,43 +7,41 @@ import java.util.Set;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
-public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults>
-{
-	private Set<BxZoneLabel> possibleLabels;
+public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults> {
+
+    private Set<BxZoneLabel> possibleLabels;
     private Map<LabelPair, Integer> classificationMatrix;
     private int goodRecognitions = 0;
     private int badRecognitions = 0;
 
-    public ClassificationResults()
-    {
-    	possibleLabels = new HashSet<BxZoneLabel>();
-    	classificationMatrix = new HashMap<LabelPair, Integer>();
+    public ClassificationResults() {
+        possibleLabels = new HashSet<BxZoneLabel>();
+        classificationMatrix = new HashMap<LabelPair, Integer>();
     }
 
     private void addPossibleLabel(BxZoneLabel lab) {
-    	if(possibleLabels.contains(lab)) {
-    		return;
+        if (possibleLabels.contains(lab)) {
+            return;
         } else {
-    		for(BxZoneLabel lab2: possibleLabels) {
-    			classificationMatrix.put(new LabelPair(lab, lab2), 0);
-    			classificationMatrix.put(new LabelPair(lab2, lab), 0);
-    		}
-    		classificationMatrix.put(new LabelPair(lab, lab), 0);
-    		possibleLabels.add(lab);
-    	}
+            for (BxZoneLabel lab2 : possibleLabels) {
+                classificationMatrix.put(new LabelPair(lab, lab2), 0);
+                classificationMatrix.put(new LabelPair(lab2, lab), 0);
+            }
+            classificationMatrix.put(new LabelPair(lab, lab), 0);
+            possibleLabels.add(lab);
+        }
     }
-    
-    public Set<BxZoneLabel> getPossibleLabels()
-    {
-    	return possibleLabels;
+
+    public Set<BxZoneLabel> getPossibleLabels() {
+        return possibleLabels;
     }
-    public void addOneZoneResult(BxZoneLabel label1, BxZoneLabel label2)
-    {
-    	addPossibleLabel(label1);
-    	addPossibleLabel(label2);
-    	
-    	LabelPair coord = new LabelPair(label1, label2); 
-        classificationMatrix.put(coord, classificationMatrix.get(coord)+1);
+
+    public void addOneZoneResult(BxZoneLabel label1, BxZoneLabel label2) {
+        addPossibleLabel(label1);
+        addPossibleLabel(label2);
+
+        LabelPair coord = new LabelPair(label1, label2);
+        classificationMatrix.put(coord, classificationMatrix.get(coord) + 1);
         if (label1.equals(label2)) {
             goodRecognitions++;
         } else {
@@ -52,23 +50,21 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     }
 
     @Override
-    public void add(ClassificationResults results)
-    {
-    	for(BxZoneLabel possibleLabel: results.getPossibleLabels()) {
-    		addPossibleLabel(possibleLabel);
+    public void add(ClassificationResults results) {
+        for (BxZoneLabel possibleLabel : results.getPossibleLabels()) {
+            addPossibleLabel(possibleLabel);
         }
         for (BxZoneLabel label1 : results.possibleLabels) {
             for (BxZoneLabel label2 : results.possibleLabels) {
-            	LabelPair coord = new LabelPair(label1, label2); 
-            	classificationMatrix.put(coord, classificationMatrix.get(coord) + results.classificationMatrix.get(coord));
+                LabelPair coord = new LabelPair(label1, label2);
+                classificationMatrix.put(coord, classificationMatrix.get(coord) + results.classificationMatrix.get(coord));
             }
         }
         goodRecognitions += results.goodRecognitions;
         badRecognitions += results.badRecognitions;
     }
 
-    public void printMatrix()
-    {
+    public void printMatrix() {
         int maxLabelLength = 0;
 
         Map<BxZoneLabel, Integer> labelLengths = new HashMap<BxZoneLabel, Integer>();
@@ -83,7 +79,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
 
         StringBuilder oneLine = new StringBuilder();
         oneLine.append("+-").append(new String(new char[maxLabelLength]).replace('\0', '-')).append("-+");
-        
+
         for (BxZoneLabel label : possibleLabels) {
             oneLine.append(new String(new char[labelLengths.get(label) + 2]).replace('\0', '-'));
             oneLine.append("+");
@@ -111,7 +107,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
             oneLine.append(new String(new char[maxLabelLength - labelLengths.get(label1)]).replace('\0', ' '));
             oneLine.append(" |");
             for (BxZoneLabel label2 : possibleLabels) {
-            	LabelPair coord = new LabelPair(label1, label2);
+                LabelPair coord = new LabelPair(label1, label2);
                 String nbRecognitions = classificationMatrix.get(coord).toString();
                 oneLine.append(" ").append(nbRecognitions);
                 oneLine.append(new String(new char[Math.max(0, labelLengths.get(label2) - nbRecognitions.length() + 1)]).replace('\0', ' '));
@@ -157,7 +153,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
             int labelGoodRecognitions = 0;
             int labelAllRecognitions = 0;
             for (BxZoneLabel label2 : possibleLabels) {
-            	LabelPair coord = new LabelPair(label1, label2);
+                LabelPair coord = new LabelPair(label1, label2);
                 if (label1.equals(label2)) {
                     labelGoodRecognitions += classificationMatrix.get(coord);
                 }

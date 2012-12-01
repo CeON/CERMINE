@@ -1,6 +1,9 @@
 package pl.edu.icm.cermine.structure.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a zone's function on a page.
@@ -170,7 +173,7 @@ public enum BxZoneLabel {
     }
     
     public static Map<BxZoneLabel, BxZoneLabel> getIdentityMap() {
-    	Map<BxZoneLabel, BxZoneLabel> ret = new HashMap<BxZoneLabel, BxZoneLabel>();
+    	Map<BxZoneLabel, BxZoneLabel> ret = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
     	for (BxZoneLabel label : BxZoneLabel.values()) {
     		ret.put(label, label);
         }

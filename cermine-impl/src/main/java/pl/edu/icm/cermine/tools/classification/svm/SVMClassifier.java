@@ -1,21 +1,21 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.BufferedReader;
-import java.util.EnumSet;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
-import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZone;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.FeatureLimits;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScaler;
 import pl.edu.icm.cermine.tools.classification.general.LinearScaling;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-//import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 /**
  * @author Pawel Szostek (p.szostek@

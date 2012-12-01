@@ -2,9 +2,7 @@ package pl.edu.icm.cermine.tools.classification.general;
 
 import java.util.List;
 import java.util.Set;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-//import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 public class FeatureVectorScaler {
 	protected FeatureLimits[] limits;

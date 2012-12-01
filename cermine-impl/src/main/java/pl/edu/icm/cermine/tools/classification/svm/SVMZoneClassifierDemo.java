@@ -130,7 +130,7 @@ public class SVMZoneClassifierDemo {
         List<TrainingSample<BxZoneLabel>> trainingSamplesUnrevised = 
                 BxDocsToTrainingSamplesConverter.getTrainingSamples(trainingList, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
         
-        Map<BxZoneLabel, Integer> labelCount = new HashMap<BxZoneLabel, Integer>();
+        Map<BxZoneLabel, Integer> labelCount = new EnumMap<BxZoneLabel, Integer>(BxZoneLabel.class);
         labelCount.put(BxZoneLabel.GEN_BODY, 0);
         labelCount.put(BxZoneLabel.GEN_METADATA, 0);
         labelCount.put(BxZoneLabel.GEN_OTHER, 0);

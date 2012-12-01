@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
 
 /**
@@ -21,10 +22,10 @@ public class KnnClassifier<T> {
        
         FVEuclideanDistanceComparator comparator = new FVEuclideanDistanceComparator(sample, metric);
         
-        KnnTrainingSample[] voters = new KnnTrainingSample[samplesCount];
-        Iterator<KnnTrainingSample<T>> trainingIterator = model.getIterator();
+        TrainingSample[] voters = new TrainingSample[samplesCount];
+        Iterator<TrainingSample<T>> trainingIterator = model.getIterator();
         int i = 0;
-        KnnTrainingSample<T> largest = null;
+        TrainingSample<T> largest = null;
         int largestIndex = 0;
         while (trainingIterator.hasNext()) {
             if (i < samplesCount) {
@@ -40,7 +41,7 @@ public class KnnClassifier<T> {
                         }
                     }
                 }
-                KnnTrainingSample<T> next = trainingIterator.next();
+                TrainingSample<T> next = trainingIterator.next();
                 if (comparator.compare(largest, next) > 0) {
                     voters[largestIndex] = next;
                     largest = null;
@@ -50,7 +51,7 @@ public class KnnClassifier<T> {
         }
         
         Map<T,Integer> labelCountMap = new HashMap<T,Integer>();
-        for (KnnTrainingSample<T> trainingSample : voters) {
+        for (TrainingSample<T> trainingSample : voters) {
             if (trainingSample != null) {
                 T label = trainingSample.getLabel();
                 if (labelCountMap.get(label) == null) {
@@ -73,7 +74,7 @@ public class KnnClassifier<T> {
         return label;
     }
 
-    public class FVEuclideanDistanceComparator implements Comparator<KnnTrainingSample<T>> {
+    public class FVEuclideanDistanceComparator implements Comparator<TrainingSample<T>> {
         
         private FeatureVectorDistanceMetric metric;
         private FeatureVector sample;
@@ -84,7 +85,7 @@ public class KnnClassifier<T> {
         }
         
         @Override
-        public int compare(KnnTrainingSample<T> ts1, KnnTrainingSample<T> ts2) {
+        public int compare(TrainingSample<T> ts1, TrainingSample<T> ts2) {
             double dist1 = metric.getDistance(sample, ts1.getFeatures());
             double dist2 = metric.getDistance(sample, ts2.getFeatures());
             if (dist1 < dist2) {

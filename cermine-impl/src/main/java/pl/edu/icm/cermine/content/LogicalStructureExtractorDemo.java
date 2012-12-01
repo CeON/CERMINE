@@ -9,17 +9,19 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.jdom.JDOMException;
-import pl.edu.icm.cermine.content.features.line.*;
+import pl.edu.icm.cermine.content.filtering.ContentFilterTools;
+import pl.edu.icm.cermine.content.filtering.KnnContentFilter;
+import pl.edu.icm.cermine.content.headers.ContentHeaderExtractor;
+import pl.edu.icm.cermine.content.headers.ContentHeaderTools;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
 import pl.edu.icm.cermine.content.transformers.HTMLToDocContentStructReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.knn.KnnModel;
 
 /**
@@ -40,52 +42,8 @@ public class LogicalStructureExtractorDemo {
     private List<BxDocument> testDocuments = new ArrayList<BxDocument>();
     private List<DocumentContentStructure> testHeaderStructures = new ArrayList<DocumentContentStructure>();
        
-    private FeatureVectorBuilder<BxLine, BxPage> classVectorBuilder;
-    private FeatureVectorBuilder<BxLine, BxPage> clustVectorBuilder;
-    private FeatureVectorBuilder<BxZone, BxPage> junkVectorBuilder;
-    
+   
     public void setUp() throws IOException, TransformationException, AnalysisException, URISyntaxException, JDOMException {
-        classVectorBuilder = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
-        classVectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
-                new DigitDotSchemaFeature(),
-                new DigitParSchemaFeature(),
-                new DoubleDigitSchemaFeature(),
-                new HeightFeature(),
-                new IndentationFeature(),
-                new IsHigherThanNeighborsFeature(),
-                new LengthFeature(),
-                new LowercaseSchemaFeature(),
-                new NextLineIndentationFeature(),
-                new PrevSpaceFeature(),
-                new RomanDigitsSchemaFeature(),
-                new TripleDigitSchemaFeature(),
-                new UppercaseSchemaFeature(),
-                new WordsAllUppercaseFeature(),
-                new WordsUppercaseFeature()
-                ));
-        
-        clustVectorBuilder = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
-        clustVectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
-                new DigitDotSchemaFeature(),
-                new DigitParSchemaFeature(),
-                new DoubleDigitSchemaFeature(),
-                new LowercaseSchemaFeature(),
-                new RomanDigitsSchemaFeature(),
-                new TripleDigitSchemaFeature(),
-                new UppercaseSchemaFeature()
-                ));
- 
-        junkVectorBuilder = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
-        junkVectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
-                new pl.edu.icm.cermine.content.features.zone.AreaFeature(),
-                new pl.edu.icm.cermine.content.features.zone.FigureTableFeature(),
-                new pl.edu.icm.cermine.content.features.zone.GreekLettersFeature(),
-                new pl.edu.icm.cermine.content.features.zone.RelativeMeanLengthFeature(),
-                new pl.edu.icm.cermine.content.features.zone.MathSymbolsFeature(),
-                new pl.edu.icm.cermine.content.features.zone.XVarianceFeature()
-                ));
-        
- 
         ZipFile trainZipFile = new ZipFile(new File(this.getClass().getResource(dir + trainZip).toURI()));
         List<ZipEntry> trainZipEntries = getEntries(trainZipFile);
         fillLists(trainZipFile, trainZipEntries, trainDocuments, trainHeaderStructures);
@@ -98,8 +56,8 @@ public class LogicalStructureExtractorDemo {
     public void test() throws IOException, TransformationException, AnalysisException, URISyntaxException {
         LogicalStructureExtractor extractor = new LogicalStructureExtractor();
         
-        KnnModel<BxZoneLabel> classModel = new ContentHeaderExtractor().buildModel(classVectorBuilder, trainDocuments, trainHeaderStructures);
-        KnnModel<BxZoneLabel> junkModel = new ContentJunkFilter().buildModel(junkVectorBuilder, trainDocuments);
+        KnnModel<BxZoneLabel> classModel = ContentHeaderExtractor.buildModel(ContentHeaderTools.vectorBuilder, trainDocuments, trainHeaderStructures);
+        KnnModel<BxZoneLabel> junkModel = KnnContentFilter.buildModel(trainDocuments);
 
         int headerCount = 0;
         int goodHeaderCount = 0;
@@ -119,7 +77,8 @@ public class LogicalStructureExtractorDemo {
             System.out.println("ORIGINAL: ");
             hdrs.printHeaders();
             
-            DocumentContentStructure extractedHdrs = extractor.extractStructure(junkModel, classModel, junkVectorBuilder, classVectorBuilder, clustVectorBuilder, document);
+            DocumentContentStructure extractedHdrs = extractor.extractStructure(junkModel, classModel, 
+                    ContentFilterTools.vectorBuilder, ContentHeaderTools.vectorBuilder, ContentHeaderTools.clustVectorBuilder, document);
                     
             System.out.println("EXTRACTED:");
             extractedHdrs.printHeaders();

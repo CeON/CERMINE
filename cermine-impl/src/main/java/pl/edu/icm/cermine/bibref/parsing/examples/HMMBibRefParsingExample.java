@@ -23,7 +23,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.HMMService;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * HMM-based bibliographic reference parsing example.
@@ -101,13 +101,13 @@ public final class HMMBibRefParsingExample {
 
         Set<Citation> citations = NlmCitationExtractor.extractCitations(new InputSource(u.openStream()));
         
-        TrainingElement<CitationTokenLabel>[] trainingElements = CitationsToHMMConverter.convertToHMM(citations, vectorBuilder);
+        HMMTrainingSample<CitationTokenLabel>[] trainingElements = CitationsToHMMConverter.convertToHMM(citations, vectorBuilder);
 
 		// 3. HMM training. The resulting probabilities object should be
 		// serialized for further usage
 		HMMProbabilityInfo<CitationTokenLabel> hmmProbabilities = HMMProbabilityInfoFactory
 				.getFVHMMProbability(
-						new ArrayList<TrainingElement<CitationTokenLabel>>(
+						new ArrayList<HMMTrainingSample<CitationTokenLabel>>(
 								Arrays.asList(trainingElements)), vectorBuilder);
 
         // 4. create an HMM service instance

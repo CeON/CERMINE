@@ -6,14 +6,14 @@ import java.util.List;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.PipelineClassifier;
 import pl.edu.icm.cermine.tools.classification.general.PipelineClassifier.PickyClassifier;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
@@ -47,7 +47,6 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
     @Override
     protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws AnalysisException {
         FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
-        BxDocsToHMMConverter node = new BxDocsToHMMConverter(featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
 
         // Filter the training documents
         // so that in the learning examples all classes are
@@ -55,7 +54,7 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 
         double inequalityFactor = 1.5;
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
-        List<TrainingElement<BxZoneLabel>> trainingElements;
+        List<TrainingSample<BxZoneLabel>> trainingSamples;
 
         SVMZoneClassifier metaBodyRefClassifier = new SVMZoneClassifier(featureVectorBuilder);
         {
@@ -77,11 +76,12 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
                     }
                 }
             }
-            trainingElements = node.process(copiedTrainingDocuments);
-            trainingElements = selector.pickElements(trainingElements);
+            trainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(copiedTrainingDocuments, 
+                    featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
+            trainingSamples = selector.pickElements(trainingSamples);
 
             System.out.println("building metaBodyRef");
-            metaBodyRefClassifier.buildClassifier(trainingElements);
+            metaBodyRefClassifier.buildClassifier(trainingSamples);
         }
 
 
@@ -108,20 +108,21 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
                 }
             }
 
-            trainingElements = node.process(copiedTrainingDocuments);
-            System.out.println("trainingElements" + trainingElements.size());
-            List<TrainingElement<BxZoneLabel>> toBeRemoved = new ArrayList<TrainingElement<BxZoneLabel>>();
-            for (TrainingElement<BxZoneLabel> elem : trainingElements) {
+            trainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(copiedTrainingDocuments, 
+                    featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
+            System.out.println("TrainingSamples" + trainingSamples.size());
+            List<TrainingSample<BxZoneLabel>> toBeRemoved = new ArrayList<TrainingSample<BxZoneLabel>>();
+            for (TrainingSample<BxZoneLabel> elem : trainingSamples) {
                 if (elem.getLabel().getGeneralLabel() != BxZoneLabel.GEN_METADATA) {
                     toBeRemoved.add(elem);
                 }
             }
-            trainingElements.removeAll(toBeRemoved);
-            System.out.println("trainingElements" + trainingElements.size());
-            trainingElements = selector.pickElements(trainingElements);
-            System.out.println("trainingElements" + trainingElements.size());
+            trainingSamples.removeAll(toBeRemoved);
+            System.out.println("TrainingSamples" + trainingSamples.size());
+            trainingSamples = selector.pickElements(trainingSamples);
+            System.out.println("TrainingSamples" + trainingSamples.size());
             System.out.println("building meta");
-            metaClassifier.buildClassifier(trainingElements);
+            metaClassifier.buildClassifier(trainingSamples);
         }
 
         SVMZoneClassifier bodyOtherClassifier = new SVMZoneClassifier(featureVectorBuilder);
@@ -141,21 +142,22 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
                 }
             }
 
-            trainingElements = node.process(copiedTrainingDocuments);
-            System.out.println("trainingElements" + trainingElements.size());
-            List<TrainingElement<BxZoneLabel>> toBeRemoved = new ArrayList<TrainingElement<BxZoneLabel>>();
-            for (TrainingElement<BxZoneLabel> elem : trainingElements) {
+            trainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(copiedTrainingDocuments, 
+                    featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
+            System.out.println("TrainingSamples" + trainingSamples.size());
+            List<TrainingSample<BxZoneLabel>> toBeRemoved = new ArrayList<TrainingSample<BxZoneLabel>>();
+            for (TrainingSample<BxZoneLabel> elem : trainingSamples) {
                 if (elem.getLabel().getGeneralLabel() != BxZoneLabel.GEN_BODY
                         && elem.getLabel().getGeneralLabel() != BxZoneLabel.GEN_OTHER) {
                     toBeRemoved.add(elem);
                 }
             }
-            trainingElements.removeAll(toBeRemoved);
-            System.out.println("trainingElements" + trainingElements.size());
-            trainingElements = selector.pickElements(trainingElements);
-            System.out.println("trainingElements" + trainingElements.size());
+            trainingSamples.removeAll(toBeRemoved);
+            System.out.println("TrainingSamples" + trainingSamples.size());
+            trainingSamples = selector.pickElements(trainingSamples);
+            System.out.println("TrainingSamples" + trainingSamples.size());
             System.out.println("building bodyOtherClassifier");
-            bodyOtherClassifier.buildClassifier(trainingElements);
+            bodyOtherClassifier.buildClassifier(trainingSamples);
         }
         PipelineClassifier classifier = new PipelineClassifier();
         classifier.addClassifier(new PickyClassifier(metaBodyRefClassifier) {

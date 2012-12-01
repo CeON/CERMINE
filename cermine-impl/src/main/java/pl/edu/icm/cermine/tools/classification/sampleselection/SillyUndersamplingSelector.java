@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
 	private List<S> zoneLabels;
@@ -18,13 +18,13 @@ public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
 	}
 
 	@Override
-	public List<TrainingElement<S>> pickElements(List<TrainingElement<S>> inputElements) {
+	public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements) {
 		Map<S, Integer> labelCount = new HashMap<S, Integer>();
         for(S label: zoneLabels) {
         	labelCount.put(label, 0);
         }
 
-        for(TrainingElement<S> elem: inputElements) {
+        for(TrainingSample<S> elem: inputElements) {
         	labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel())+1);
         }
 
@@ -40,13 +40,13 @@ public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
         	labelCount.put(label, 0);
         }
 
-        List<TrainingElement<S>> trainingElements = new ArrayList<TrainingElement<S>>();
-        for(TrainingElement<S> elem: inputElements) {
+        List<TrainingSample<S>> TrainingSamples = new ArrayList<TrainingSample<S>>();
+        for(TrainingSample<S> elem: inputElements) {
         	if(labelCount.get(elem.getLabel()) < smallestClassNumber*inequalityFactor) {
-        		trainingElements.add(elem);
+        		TrainingSamples.add(elem);
         		labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel())+1);
         	}
         }   
-        return trainingElements;
+        return TrainingSamples;
 	}
 }

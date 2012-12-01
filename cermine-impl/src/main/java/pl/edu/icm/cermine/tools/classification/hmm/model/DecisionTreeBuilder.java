@@ -3,7 +3,7 @@ package pl.edu.icm.cermine.tools.classification.hmm.model;
 import java.util.*;
 import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * Builds a decision tree using a collection of training elements.
@@ -30,7 +30,7 @@ public final class DecisionTreeBuilder {
      * @return Root of the built decision tree.
      */
     public static <S extends Comparable<S>> DecisionTree<S> buildDecisionTree(
-            Set<TrainingElement<S>> trainingSet, Set<String> attributes) {
+            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes) {
         return DecisionTreeBuilder.buildDecisionTree(trainingSet, attributes, stopExpanding);
     }
 
@@ -45,7 +45,7 @@ public final class DecisionTreeBuilder {
      * @return Root of the built decision tree.
      */
     public static <S extends Comparable<S>> SimpleDecisionTree<S> buildDecisionTree(
-            Set<TrainingElement<S>> trainingSet, Set<String> attributes, int stopExpanding) {
+            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
         return constructNode(trainingSet, attributes, stopExpanding);
     }
 
@@ -60,13 +60,13 @@ public final class DecisionTreeBuilder {
      * @return Constructed node.
      */
     private static <S extends Comparable<S>> SimpleDecisionTree<S> constructNode(
-            Set<TrainingElement<S>> trainingSet, Set<String> attributes, int stopExpanding) {
+            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
         if (trainingSet.isEmpty()) {
             return null;
         }
 
         ProbabilityDistribution<S> probDistribution = new ProbabilityDistribution<S>();
-        for (TrainingElement<S> element : trainingSet) {
+        for (HMMTrainingSample<S> element : trainingSet) {
             probDistribution.addEvent(element.getLabel());
         }
         if (probDistribution.getEvents().size() == 1 || attributes.isEmpty() || trainingSet.size() < stopExpanding) {
@@ -81,10 +81,10 @@ public final class DecisionTreeBuilder {
         Set<String> newAttributes = new HashSet<String>(attributes);
         newAttributes.remove(decision.testedFeature);
 
-        Set<TrainingElement<S>> leftElements = new HashSet<TrainingElement<S>>();
-        Set<TrainingElement<S>> rightElements = new HashSet<TrainingElement<S>>();
+        Set<HMMTrainingSample<S>> leftElements = new HashSet<HMMTrainingSample<S>>();
+        Set<HMMTrainingSample<S>> rightElements = new HashSet<HMMTrainingSample<S>>();
 
-        for (TrainingElement<S> element : trainingSet) {
+        for (HMMTrainingSample<S> element : trainingSet) {
             if (decision.isLeft(element.getObservation())) {
                 leftElements.add(element);
             } else {
@@ -109,22 +109,22 @@ public final class DecisionTreeBuilder {
      * @return The best decision.
      */
     private static <S extends Comparable<S>> NodeDecision chooseDecision(
-            Set<TrainingElement<S>> trainingSet, Set<String> attributes) {
+            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes) {
         String bestAttribute = null;
         double bestCut = -1;
         double bestEntropyGain = 0;
 
-        List<TrainingElement<S>> trainingList =
-                new ArrayList<TrainingElement<S>>(trainingSet);
+        List<HMMTrainingSample<S>> trainingList =
+                new ArrayList<HMMTrainingSample<S>>(trainingSet);
 
         for (String attribute : attributes) {
             final String sortAttribute = attribute;
-            Collections.sort(trainingList, new Comparator<TrainingElement<S>>() {
+            Collections.sort(trainingList, new Comparator<HMMTrainingSample<S>>() {
 
                 @Override
-                public int compare(TrainingElement<S> t,  TrainingElement<S> t1) {
-                    TrainingElement<S> te1 = (TrainingElement<S>) t;
-                    TrainingElement<S> te2 = (TrainingElement<S>) t1;
+                public int compare(HMMTrainingSample<S> t,  HMMTrainingSample<S> t1) {
+                    HMMTrainingSample<S> te1 = (HMMTrainingSample<S>) t;
+                    HMMTrainingSample<S> te2 = (HMMTrainingSample<S>) t1;
                     int ret = Double.compare(te1.getObservation().getFeature(sortAttribute),
                             te2.getObservation().getFeature(sortAttribute));
                     if (ret == 0) {
@@ -136,15 +136,15 @@ public final class DecisionTreeBuilder {
 
             ProbabilityDistribution<S> leftLabelsProb = new ProbabilityDistribution<S>();
             ProbabilityDistribution<S> rightLabelsProb = new ProbabilityDistribution<S>();
-            for (TrainingElement<S> element : trainingList) {
+            for (HMMTrainingSample<S> element : trainingList) {
                 rightLabelsProb.addEvent(element.getLabel());
             }
 
             int leftCount = 0;
             for (int i = 0; i < trainingList.size() - 1; i++) {
 
-                TrainingElement<S> trainingElement1 = trainingList.get(i);
-                TrainingElement<S> trainingElement2 = trainingList.get(i + 1);
+                HMMTrainingSample<S> trainingElement1 = trainingList.get(i);
+                HMMTrainingSample<S> trainingElement2 = trainingList.get(i + 1);
                 S label1 = trainingElement1.getLabel();
                 S label2 = trainingElement2.getLabel();
 

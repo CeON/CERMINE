@@ -2,7 +2,7 @@ package pl.edu.icm.cermine.tools.classification.sampleselection;
 
 import java.util.Map.Entry;
 import java.util.*;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class UndersamplingSelector<S> implements SampleSelector<S> {
 
@@ -14,10 +14,10 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
     }
 
     @Override
-    public List<TrainingElement<S>> pickElements(List<TrainingElement<S>> inputElements) {
+    public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements) {
         Map<S, Integer> labelCount = new HashMap<S, Integer>();
 
-        for (TrainingElement<S> elem : inputElements) {
+        for (TrainingSample<S> elem : inputElements) {
             if (!labelCount.containsKey(elem.getLabel())) {
                 labelCount.put(elem.getLabel(), 0);
             }
@@ -32,30 +32,30 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
 
-        List<TrainingElement<S>> trainingElements = new ArrayList<TrainingElement<S>>();
+        List<TrainingSample<S>> TrainingSamples = new ArrayList<TrainingSample<S>>();
 
         for (S label : labelCount.keySet()) {
-            List<TrainingElement<S>> thisLabelElements = new ArrayList<TrainingElement<S>>();
-            for (TrainingElement<S> elem : inputElements) {
+            List<TrainingSample<S>> thisLabelElements = new ArrayList<TrainingSample<S>>();
+            for (TrainingSample<S> elem : inputElements) {
                 if (elem.getLabel() == label) {
                     thisLabelElements.add(elem);
                 }
             }
             if (thisLabelElements.size() < smallestClassNumber * inequalityFactor) {
-                trainingElements.addAll(thisLabelElements);
+                TrainingSamples.addAll(thisLabelElements);
             } else {
                 Random randomGenerator = new Random();
-                List<TrainingElement<S>> chosenElements = new ArrayList<TrainingElement<S>>();
+                List<TrainingSample<S>> chosenElements = new ArrayList<TrainingSample<S>>();
                 while (chosenElements.size() < smallestClassNumber * inequalityFactor) {
                     Integer randInt = randomGenerator.nextInt(thisLabelElements.size());
-                    TrainingElement<S> randElem = thisLabelElements.get(randInt);
+                    TrainingSample<S> randElem = thisLabelElements.get(randInt);
                     if (!chosenElements.contains(randElem)) {
                         chosenElements.add(randElem);
                     }
                 }
-                trainingElements.addAll(chosenElements);
+                TrainingSamples.addAll(chosenElements);
             }
         }
-        return trainingElements;
+        return TrainingSamples;
     }
 }

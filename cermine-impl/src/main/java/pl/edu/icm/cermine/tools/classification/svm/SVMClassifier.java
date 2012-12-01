@@ -14,7 +14,8 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.FeatureLimits;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScaler;
 import pl.edu.icm.cermine.tools.classification.general.LinearScaling;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+//import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	final protected static svm_parameter defaultParameter = new svm_parameter();		
@@ -87,7 +88,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		return clone(defaultParameter);
 	}
 	
-	public void buildClassifier(List<TrainingElement<E>> trainingElements) 
+	public void buildClassifier(List<TrainingSample<E>> trainingElements) 
 	{
 		assert trainingElements.size() > 0;
 		scaler.calculateFeatureLimits(trainingElements);
@@ -107,16 +108,16 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
 
-	protected svm_problem buildDatasetForTraining(List<TrainingElement<E>> trainingElements)
+	protected svm_problem buildDatasetForTraining(List<TrainingSample<E>> trainingElements)
 	{
 		svm_problem problem = new svm_problem();
 		problem.l = trainingElements.size();
-		problem.x = new svm_node[problem.l][trainingElements.get(0).getObservation().size()];
+		problem.x = new svm_node[problem.l][trainingElements.get(0).getFeatures().size()];
 		problem.y = new double[trainingElements.size()];
 		
 		Integer elemIdx = 0;
-		for(TrainingElement<E> trainingElem : trainingElements) {
-			FeatureVector scaledFV = scaler.scaleFeatureVector(trainingElem.getObservation());
+		for(TrainingSample<E> trainingElem : trainingElements) {
+			FeatureVector scaledFV = scaler.scaleFeatureVector(trainingElem.getFeatures());
 			Integer featureIdx = 0;
 			for(Double val: scaledFV.getFeatures()) {
 				svm_node cur = new svm_node();

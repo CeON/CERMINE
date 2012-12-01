@@ -1,7 +1,7 @@
 package pl.edu.icm.cermine.tools.classification.sampleselection;
 
 import java.util.List;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 /**
  * Interface for picking samples according to a certain strategy from the
@@ -12,5 +12,5 @@ import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
  * @param <S> label type (BxZoneLabel by default)
  */
 public interface SampleSelector<S> {
-	public List<TrainingElement<S>> pickElements(List<TrainingElement<S>> inputElements);
+	public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements);
 }

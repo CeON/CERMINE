@@ -15,6 +15,8 @@ import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetr
  */
 public class KnnClassifier<T> {
     
+    
+    
     public T classify(KnnModel<T> model, FeatureVectorDistanceMetric metric, FeatureVector sample, int samplesCount) {
        
         FVEuclideanDistanceComparator comparator = new FVEuclideanDistanceComparator(sample, metric);

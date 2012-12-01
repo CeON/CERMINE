@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+//import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 public class FeatureVectorScaler {
 	protected FeatureLimits[] limits;
@@ -38,9 +38,9 @@ public class FeatureVectorScaler {
 		this.limits = featureLimits.toArray(new FeatureLimits[featureLimits.size()]);
 	}
 	
-	public <A extends Enum<A>>void calculateFeatureLimits(List<TrainingElement<A>> trainingElements) 	{
-		for(TrainingElement<A> trainingElem: trainingElements) {
-			FeatureVector fv = trainingElem.getObservation();
+	public <A extends Enum<A>>void calculateFeatureLimits(List<TrainingSample<A>> trainingElements) {
+		for(TrainingSample<A> trainingElem: trainingElements) {
+			FeatureVector fv = trainingElem.getFeatures();
 			Set<String> names = fv.getFeatureNames();
 			
 			int featureIdx = 0;

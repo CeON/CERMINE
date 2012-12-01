@@ -7,7 +7,6 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
 
 /*
 public class SVMZoneMultiClassifier2 extends SVMZoneClassifier {

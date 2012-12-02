@@ -23,9 +23,9 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
  */
 public class HeaderExtractingTools {
 
-    public static final FeatureVectorBuilder<BxLine, BxPage> vectorBuilder = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
+    public static final FeatureVectorBuilder<BxLine, BxPage> EXTRACT_VB = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
     static {
-        vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
+        EXTRACT_VB.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
                 new DigitDotSchemaFeature(),
                 new DigitParSchemaFeature(),
                 new DoubleDigitSchemaFeature(),
@@ -44,9 +44,9 @@ public class HeaderExtractingTools {
                 ));
     }
     
-    public static final FeatureVectorBuilder<BxLine, BxPage> clustVectorBuilder = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
+    public static final FeatureVectorBuilder<BxLine, BxPage> CLUSTERING_VB = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
     static {
-        clustVectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
+        CLUSTERING_VB.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
                 new DigitDotSchemaFeature(),
                 new DigitParSchemaFeature(),
                 new DoubleDigitSchemaFeature(),
@@ -70,11 +70,14 @@ public class HeaderExtractingTools {
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
         map.put(BxZoneLabel.BODY_JUNK, BxZoneLabel.BODY_CONTENT);
        
-        trainingSamples = BxDocsToTrainingSamplesConverter.getLineTrainingSamples(documents, vectorBuilder, map);
+        trainingSamples = BxDocsToTrainingSamplesConverter.getLineTrainingSamples(documents, EXTRACT_VB, map);
         trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
         trainingSamples = selector.pickElements(trainingSamples);
         
         return trainingSamples;
+    }
+
+    private HeaderExtractingTools() {
     }
 
 }

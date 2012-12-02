@@ -26,8 +26,6 @@ public class KnnContentHeadersExtractor implements ContentHeadersExtractor {
     
     private FeatureVectorBuilder<BxLine, BxPage> classVectorBuilder;
     
-    private FeatureVectorBuilder<BxLine, BxPage> clustVectorBuilder;
-    
     private KnnClassifier<BxZoneLabel> classifier;
     
     private HeadersClusterizer headersClusterizer;
@@ -36,8 +34,7 @@ public class KnnContentHeadersExtractor implements ContentHeadersExtractor {
 
     public KnnContentHeadersExtractor(KnnModel<BxZoneLabel> model, KnnClassifier<BxZoneLabel> classifier) {
         this.model = model;
-        this.classVectorBuilder = HeaderExtractingTools.vectorBuilder;
-        this.clustVectorBuilder = HeaderExtractingTools.clustVectorBuilder;
+        this.classVectorBuilder = HeaderExtractingTools.EXTRACT_VB;
         this.classifier = classifier;
         this.headersClusterizer = new HeadersClusterizer();
         this.headerLinesCompletener = new HeaderLinesCompletener();
@@ -107,6 +104,6 @@ public class KnnContentHeadersExtractor implements ContentHeadersExtractor {
     }
     
     public static KnnModel<BxZoneLabel> buildModel(List<BxDocument> documents, List<DocumentContentStructure> headers) {
-        return buildModel(HeaderExtractingTools.vectorBuilder, documents, headers);
+        return buildModel(HeaderExtractingTools.EXTRACT_VB, documents, headers);
     }
 }

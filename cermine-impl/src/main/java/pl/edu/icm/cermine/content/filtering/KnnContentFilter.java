@@ -28,7 +28,7 @@ public class KnnContentFilter implements ContentFilter {
     private KnnModel<BxZoneLabel> knnModel;
 
     public KnnContentFilter(KnnModel<BxZoneLabel> knnModel) {
-        this.vectorBuilder = ContentFilterTools.vectorBuilder;
+        this.vectorBuilder = ContentFilterTools.VECTOR_BUILDER;
         this.knnModel = knnModel;
     }
     
@@ -84,7 +84,7 @@ public class KnnContentFilter implements ContentFilter {
     }
     
     public static KnnModel<BxZoneLabel> buildModel(List<BxDocument> documents) {
-        return buildModel(ContentFilterTools.vectorBuilder, documents);
+        return buildModel(ContentFilterTools.VECTOR_BUILDER, documents);
     }
 
     public void setKnnVoters(int knnVoters) {

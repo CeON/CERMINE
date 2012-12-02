@@ -22,5 +22,8 @@ public class LibSVMContentFilterExporter {
         List<TrainingSample<BxZoneLabel>> trainingSamples = ContentFilterTools.toTrainingSamples(args[0]);
         LibSVMExporter.toLibSVM(trainingSamples, args[1]);
     }
-            
+
+    private LibSVMContentFilterExporter() {
+    }
+   
 }

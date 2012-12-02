@@ -27,7 +27,7 @@ public class HeadersClusterizer {
     private FeatureVectorDistanceMetric metric;
 
     public HeadersClusterizer() {
-        this.vectorBuilder = HeaderExtractingTools.clustVectorBuilder;
+        this.vectorBuilder = HeaderExtractingTools.CLUSTERING_VB;
         this.clusterizer = new SingleLinkageClusterizer();
         this.metric = new FeatureVectorEuclideanMetric();
     }

@@ -25,7 +25,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
  * @param <E> target enumeration for labels
  */
 public abstract class SVMClassifier<S, T, E extends Enum<E>> {
-	final protected static svm_parameter defaultParameter = new svm_parameter();		
+	final static protected svm_parameter defaultParameter = new svm_parameter();		
 	static {
 		// default values
 		defaultParameter.svm_type = svm_parameter.C_SVC;

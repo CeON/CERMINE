@@ -15,7 +15,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMClassifier;
 public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel> implements ContentFilter {
     
     public SVMContentFilter() throws AnalysisException {
-		super(ContentFilterTools.vectorBuilder, BxZoneLabel.class);
+		super(ContentFilterTools.VECTOR_BUILDER, BxZoneLabel.class);
 	}
 
 	public SVMContentFilter(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) throws AnalysisException {
@@ -23,11 +23,11 @@ public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel>
 	}
     
     public SVMContentFilter(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
-		this(modelFile, rangeFile, ContentFilterTools.vectorBuilder);
+		this(modelFile, rangeFile, ContentFilterTools.VECTOR_BUILDER);
 	}
 
 	public SVMContentFilter(String modelFilePath, String rangeFilePath) throws AnalysisException {
-		this(modelFilePath, rangeFilePath, ContentFilterTools.vectorBuilder);
+		this(modelFilePath, rangeFilePath, ContentFilterTools.VECTOR_BUILDER);
 	}
     
     public SVMContentFilter(BufferedReader modelFile, BufferedReader rangeFile, FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) throws AnalysisException {

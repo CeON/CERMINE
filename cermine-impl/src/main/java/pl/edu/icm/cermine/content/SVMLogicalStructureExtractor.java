@@ -15,10 +15,10 @@ public class SVMLogicalStructureExtractor extends LogicalStructureExtractor {
     
     public SVMLogicalStructureExtractor(BufferedReader filterModelFile, BufferedReader filterRangeFile,
             BufferedReader headerModelFile, BufferedReader headerRangeFile) throws AnalysisException {
-        this.contentFilter = new SVMContentFilter(filterModelFile, filterRangeFile);
-        this.headerExtractor = new SVMContentHeadersExtractor(headerModelFile, headerRangeFile);
-        this.contentCleaner = new ContentCleaner();
-        this.converter = new BxContentStructToDocContentStructConverter();
+        super(new SVMContentFilter(filterModelFile, filterRangeFile),
+                new SVMContentHeadersExtractor(headerModelFile, headerRangeFile),
+                new ContentCleaner(),
+                new BxContentStructToDocContentStructConverter());
     }
     
 }

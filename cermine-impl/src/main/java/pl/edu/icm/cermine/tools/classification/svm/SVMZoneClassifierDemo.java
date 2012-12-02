@@ -36,7 +36,7 @@ public class SVMZoneClassifierDemo {
         return testDocument;
 	}
   
-    public static void main(String[] args) throws TransformationException, Exception {
+    public static void main(String[] args) throws Exception {
         
         // 1.1 construct vector of features builder
     	List<FeatureCalculator<BxZone, BxPage>> featureCalculators = Arrays.<FeatureCalculator<BxZone, BxPage>>asList(

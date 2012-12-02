@@ -15,10 +15,10 @@ import pl.edu.icm.cermine.tools.classification.knn.KnnModel;
 public class KnnLogicalStructureExtractor extends LogicalStructureExtractor {
 
     public KnnLogicalStructureExtractor(KnnModel<BxZoneLabel> knnFilterModel, KnnModel<BxZoneLabel> knnHeaderModel) {
-        this.contentFilter = new KnnContentFilter(knnFilterModel);
-        this.headerExtractor = new KnnContentHeadersExtractor(knnHeaderModel, new KnnClassifier<BxZoneLabel>());
-        this.contentCleaner = new ContentCleaner();
-        this.converter = new BxContentStructToDocContentStructConverter();
+        super (new KnnContentFilter(knnFilterModel), 
+                new KnnContentHeadersExtractor(knnHeaderModel, new KnnClassifier<BxZoneLabel>()),
+                new ContentCleaner(), 
+                new BxContentStructToDocContentStructConverter());
     }
     
 }

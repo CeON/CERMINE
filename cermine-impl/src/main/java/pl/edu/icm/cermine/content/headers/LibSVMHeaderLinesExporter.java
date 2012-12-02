@@ -21,5 +21,8 @@ public class LibSVMHeaderLinesExporter {
         List<TrainingSample<BxZoneLabel>> trainingSamples = HeaderExtractingTools.toTrainingSamples(args[0]);
         LibSVMExporter.toLibSVM(trainingSamples, args[1]);
     }
+
+    private LibSVMHeaderLinesExporter() {
+    }
             
 }

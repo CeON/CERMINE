@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.content;
 
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,8 +24,8 @@ import pl.edu.icm.cermine.tools.classification.knn.KnnModel;
  * @author Dominika Tkaczyk
  */
 public class ModelGeneratorDemo {
-
-    public static void main(String[] args) throws FileNotFoundException, TransformationException, JDOMException, IOException {
+    
+    public static void main(String[] args) throws TransformationException, JDOMException, IOException {
         String trainPath = "/home/domin/newexamples/all/train/";
         
         List<String> trainNames = new ArrayList<String>();
@@ -70,4 +69,8 @@ public class ModelGeneratorDemo {
         System.out.println("");
         System.out.println(xs.toXML(junkModel));
     }
+
+    private ModelGeneratorDemo() {
+    }
+        
 }

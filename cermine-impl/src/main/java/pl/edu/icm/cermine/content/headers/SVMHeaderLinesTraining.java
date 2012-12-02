@@ -14,12 +14,16 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  */
 public class SVMHeaderLinesTraining {
     
+    public static final double BEST_GAMMA = 0.5;
+    
+    public static final double BEST_C = 32.0;
+    
     public static void trainClassifier(List<TrainingSample<BxZoneLabel>> trainingElements, String output) 
             throws AnalysisException, IOException {
         SVMHeaderLinesClassifier contentFilter = new SVMHeaderLinesClassifier();
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
-        param.gamma = 0.5;
-        param.C = 32.0;
+        param.gamma = BEST_GAMMA;
+        param.C = BEST_C;
         param.kernel_type = svm_parameter.RBF;
         
         contentFilter.setParameter(param);
@@ -34,6 +38,9 @@ public class SVMHeaderLinesTraining {
         }
         List<TrainingSample<BxZoneLabel>> trainingElements = HeaderExtractingTools.toTrainingSamples(args[0]);
         trainClassifier(trainingElements, args[1]);
+    }
+
+    private SVMHeaderLinesTraining() {
     }
    
 }

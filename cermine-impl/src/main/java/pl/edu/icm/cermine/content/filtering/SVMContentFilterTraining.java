@@ -14,12 +14,16 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  */
 public class SVMContentFilterTraining {
     
+    public static final double BEST_GAMMA = 8.0;
+    
+    public static final double BEST_C = 512.0;
+    
     public static void trainClassifier(List<TrainingSample<BxZoneLabel>> trainingElements, String output) 
             throws AnalysisException, IOException {
         SVMContentFilter contentFilter = new SVMContentFilter();
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
-        param.gamma = 8.0;
-        param.C = 512.0;
+        param.gamma = BEST_GAMMA;
+        param.C = BEST_C;
         param.kernel_type = svm_parameter.RBF;
         
         contentFilter.setParameter(param);
@@ -34,6 +38,9 @@ public class SVMContentFilterTraining {
         }
         List<TrainingSample<BxZoneLabel>> trainingElements = ContentFilterTools.toTrainingSamples(args[0]);
         trainClassifier(trainingElements, args[1]);
+    }
+
+    private SVMContentFilterTraining() {
     }
    
 }

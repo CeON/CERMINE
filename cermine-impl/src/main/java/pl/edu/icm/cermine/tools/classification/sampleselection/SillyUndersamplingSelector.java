@@ -40,13 +40,13 @@ public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
         	labelCount.put(label, 0);
         }
 
-        List<TrainingSample<S>> TrainingSamples = new ArrayList<TrainingSample<S>>();
+        List<TrainingSample<S>> trainingSamples = new ArrayList<TrainingSample<S>>();
         for(TrainingSample<S> elem: inputElements) {
         	if(labelCount.get(elem.getLabel()) < smallestClassNumber*inequalityFactor) {
-        		TrainingSamples.add(elem);
+        		trainingSamples.add(elem);
         		labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel())+1);
         	}
         }   
-        return TrainingSamples;
+        return trainingSamples;
 	}
 }

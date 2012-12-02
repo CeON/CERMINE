@@ -16,18 +16,25 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public abstract class LogicalStructureExtractor {
     
-    protected ContentFilter contentFilter;
+    private ContentFilter contentFilter;
     
-    protected ContentHeadersExtractor headerExtractor;
+    private ContentHeadersExtractor headerExtractor;
     
-    protected ContentCleaner contentCleaner;
+    private ContentCleaner contentCleaner;
     
-    protected BxContentStructToDocContentStructConverter converter;
+    private BxContentStructToDocContentStructConverter converter;
+
+    public LogicalStructureExtractor(ContentFilter contentFilter, ContentHeadersExtractor headerExtractor, ContentCleaner contentCleaner, BxContentStructToDocContentStructConverter converter) {
+        this.contentFilter = contentFilter;
+        this.headerExtractor = headerExtractor;
+        this.contentCleaner = contentCleaner;
+        this.converter = converter;
+    }
     
     
     public DocumentContentStructure extractStructure(BxDocument document) throws AnalysisException, TransformationException {
-        document = contentFilter.filter(document);
-        BxDocContentStructure tmpContentStructure = headerExtractor.extractHeaders(document);
+        BxDocument doc = contentFilter.filter(document);
+        BxDocContentStructure tmpContentStructure = headerExtractor.extractHeaders(doc);
         contentCleaner.cleanupContent(tmpContentStructure);
         return converter.convert(tmpContentStructure);
     }

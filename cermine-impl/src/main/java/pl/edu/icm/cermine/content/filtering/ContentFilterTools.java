@@ -23,9 +23,9 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
  */
 public class ContentFilterTools {
 
-    public static final FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+    public static final FeatureVectorBuilder<BxZone, BxPage> VECTOR_BUILDER = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
     static {
-        vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
+        VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
                 new AreaFeature(),
                 new FigureTableFeature(),
                 new GreekLettersFeature(),
@@ -48,11 +48,14 @@ public class ContentFilterTools {
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
         map.put(BxZoneLabel.BODY_HEADER, BxZoneLabel.BODY_CONTENT);
        
-        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(documents, vectorBuilder, map);
+        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(documents, VECTOR_BUILDER, map);
         trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
         trainingSamples = selector.pickElements(trainingSamples);
         
         return trainingSamples;
+    }
+
+    private ContentFilterTools() {
     }
     
 }

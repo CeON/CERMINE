@@ -32,7 +32,7 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
 
-        List<TrainingSample<S>> TrainingSamples = new ArrayList<TrainingSample<S>>();
+        List<TrainingSample<S>> trainingSamples = new ArrayList<TrainingSample<S>>();
 
         for (S label : labelCount.keySet()) {
             List<TrainingSample<S>> thisLabelElements = new ArrayList<TrainingSample<S>>();
@@ -42,7 +42,7 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
                 }
             }
             if (thisLabelElements.size() < smallestClassNumber * inequalityFactor) {
-                TrainingSamples.addAll(thisLabelElements);
+                trainingSamples.addAll(thisLabelElements);
             } else {
                 Random randomGenerator = new Random();
                 List<TrainingSample<S>> chosenElements = new ArrayList<TrainingSample<S>>();
@@ -53,9 +53,9 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
                         chosenElements.add(randElem);
                     }
                 }
-                TrainingSamples.addAll(chosenElements);
+                trainingSamples.addAll(chosenElements);
             }
         }
-        return TrainingSamples;
+        return trainingSamples;
     }
 }

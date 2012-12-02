@@ -17,7 +17,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMClassifier;
 public class SVMHeaderLinesClassifier extends SVMClassifier<BxLine, BxPage, BxZoneLabel> {
     
     public SVMHeaderLinesClassifier() throws AnalysisException {
-		super(HeaderExtractingTools.vectorBuilder, BxZoneLabel.class);
+		super(HeaderExtractingTools.EXTRACT_VB, BxZoneLabel.class);
 	}
 
 	public SVMHeaderLinesClassifier(FeatureVectorBuilder<BxLine, BxPage> featureVectorBuilder) throws AnalysisException {
@@ -25,11 +25,11 @@ public class SVMHeaderLinesClassifier extends SVMClassifier<BxLine, BxPage, BxZo
 	}
     
     public SVMHeaderLinesClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
-		this(modelFile, rangeFile, HeaderExtractingTools.vectorBuilder);
+		this(modelFile, rangeFile, HeaderExtractingTools.EXTRACT_VB);
 	}
 
 	public SVMHeaderLinesClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException {
-		this(modelFilePath, rangeFilePath, HeaderExtractingTools.vectorBuilder);
+		this(modelFilePath, rangeFilePath, HeaderExtractingTools.EXTRACT_VB);
 	}
     
     public SVMHeaderLinesClassifier(BufferedReader modelFile, BufferedReader rangeFile, FeatureVectorBuilder<BxLine, BxPage> featureVectorBuilder) throws AnalysisException {

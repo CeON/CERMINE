@@ -121,7 +121,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
     }
 
     public static void main(String[] args)
-            throws ParseException, RuntimeException, AnalysisException, IOException {
+            throws ParseException, AnalysisException, IOException {
         CrossvalidatingZoneClassificationEvaluator.main(args, new SVMMetadataClassificationEvaluator());
     }
 

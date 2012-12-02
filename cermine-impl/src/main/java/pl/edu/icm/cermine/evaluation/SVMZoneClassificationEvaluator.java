@@ -185,7 +185,7 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
     }
 
     public static void main(String[] args)
-            throws ParseException, RuntimeException, AnalysisException, IOException {
+            throws ParseException, AnalysisException, IOException {
         CrossvalidatingZoneClassificationEvaluator.main(args, new SVMZoneClassificationEvaluator());
     }
 }

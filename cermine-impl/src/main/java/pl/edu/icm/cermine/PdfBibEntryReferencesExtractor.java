@@ -30,7 +30,7 @@ public class PdfBibEntryReferencesExtractor implements DocumentReferencesExtract
     public PdfBibEntryReferencesExtractor() throws AnalysisException {
         strExtractor = new PdfBxStructureExtractor();
         extractor = new ClusteringBibReferenceExtractor();
-        InputStream modelFile = this.getClass().getResourceAsStream("/pl/edu/icm/cermine/bibref/acrf-small.ser.gz");
+        InputStream modelFile = PdfBibEntryReferencesExtractor.class.getResourceAsStream("/pl/edu/icm/cermine/bibref/acrf-small.ser.gz");
         parser = new CRFBibReferenceParser(modelFile);
     }
     

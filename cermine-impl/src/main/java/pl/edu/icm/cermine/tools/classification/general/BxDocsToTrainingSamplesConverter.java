@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneClassificationUtils;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
@@ -23,12 +21,8 @@ public abstract class BxDocsToTrainingSamplesConverter {
     public static List<TrainingSample<BxZoneLabel>> getZoneTrainingSamples(List<BxDocument> documents, 
             FeatureVectorBuilder<BxZone, BxPage> vectorBuilder, Map<BxZoneLabel, BxZoneLabel> labelMap) throws AnalysisException {
         List<TrainingSample<BxZoneLabel>> trainingList = new ArrayList<TrainingSample<BxZoneLabel>>(documents.size());
-        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
         
         for (BxDocument doc : documents) {
-            ZoneClassificationUtils.correctPagesBounds(doc);
-            doc = ror.resolve(doc);
-
             if (labelMap != null) {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }
@@ -62,12 +56,8 @@ public abstract class BxDocsToTrainingSamplesConverter {
     public static List<TrainingSample<BxZoneLabel>> getLineTrainingSamples(List<BxDocument> documents, 
             FeatureVectorBuilder<BxLine, BxPage> vectorBuilder, Map<BxZoneLabel, BxZoneLabel> labelMap) throws AnalysisException {
         List<TrainingSample<BxZoneLabel>> trainingList = new ArrayList<TrainingSample<BxZoneLabel>>(documents.size());
-        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-        
+       
         for (BxDocument doc : documents) {
-            ZoneClassificationUtils.correctPagesBounds(doc);
-            doc = ror.resolve(doc);
-
             if (labelMap != null) {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }

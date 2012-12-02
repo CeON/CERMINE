@@ -21,7 +21,7 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
  *
  * @author Dominika Tkaczyk
  */
-public class HeaderExtractingTools {
+public final class HeaderExtractingTools {
 
     public static final FeatureVectorBuilder<BxLine, BxPage> EXTRACT_VB = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
     static {

@@ -12,7 +12,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  *
  * @author Dominika Tkaczyk
  */
-public class SVMHeaderLinesTraining {
+public final class SVMHeaderLinesTraining {
     
     public static final double BEST_GAMMA = 0.5;
     

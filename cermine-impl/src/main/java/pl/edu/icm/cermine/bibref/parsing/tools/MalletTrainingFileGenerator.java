@@ -12,7 +12,7 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
  *
  * @author Dominika Tkaczyk
  */
-public class MalletTrainingFileGenerator {
+public final class MalletTrainingFileGenerator {
     
     private static String nlmDir = "/tmp/train/";
     private static String outFile = "/tmp/crf-train.txt";
@@ -105,6 +105,9 @@ public class MalletTrainingFileGenerator {
         		writer.close();
         	}
         }
+    }
+
+    private MalletTrainingFileGenerator() {
     }
 
 }

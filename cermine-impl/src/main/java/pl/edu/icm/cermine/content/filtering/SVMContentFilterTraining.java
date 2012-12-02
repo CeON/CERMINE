@@ -12,7 +12,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  *
  * @author Dominika Tkaczyk
  */
-public class SVMContentFilterTraining {
+public final class SVMContentFilterTraining {
     
     public static final double BEST_GAMMA = 8.0;
     

@@ -21,7 +21,7 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
  *
  * @author Dominika Tkaczyk
  */
-public class ContentFilterTools {
+public final class ContentFilterTools {
 
     public static final FeatureVectorBuilder<BxZone, BxPage> VECTOR_BUILDER = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
     static {

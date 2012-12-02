@@ -11,7 +11,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
  *
  * @author Dominika Tkaczyk
  */
-public class LibSVMContentFilterExporter {
+public final class LibSVMContentFilterExporter {
     
     public static void main(String[] args) throws AnalysisException, IOException {
         if (args.length < 2) {

@@ -19,6 +19,6 @@ public interface ModelToModelConverter<S, T> {
      * @return the converted object
      * @throws TransformationException 
      */
-    public T convert(S source, Object... hints) throws TransformationException;
+    T convert(S source, Object... hints) throws TransformationException;
     
 }

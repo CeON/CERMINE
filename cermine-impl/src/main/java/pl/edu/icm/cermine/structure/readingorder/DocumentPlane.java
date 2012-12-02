@@ -145,7 +145,7 @@ public class DocumentPlane {
         return this;
     }
 
-    public DocumentPlane remove(BxObject obj) throws RuntimeException {
+    public DocumentPlane remove(BxObject obj) {
         /*
          * iterate over grid squares
          */

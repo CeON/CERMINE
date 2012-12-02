@@ -15,10 +15,10 @@ import pl.edu.icm.cermine.structure.readingorder.TreeToListConverter;
  */
 public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
 
-    final static Integer GRIDSIZE = 50;
-    final static Double BOXES_FLOW = 0.5;
-    final static Double EPS = 0.0001;
-    final static Comparator<BxObject> Y_ASCENDING_ORDER = new Comparator<BxObject>() {
+    static final Integer GRIDSIZE = 50;
+    static final Double BOXES_FLOW = 0.5;
+    static final Double EPS = 0.0001;
+    static final Comparator<BxObject> Y_ASCENDING_ORDER = new Comparator<BxObject>() {
 
         @Override
         public int compare(BxObject o1, BxObject o2) {
@@ -40,7 +40,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
     public HierarchicalReadingOrderResolver() {
         this.force = true;
     }
-    final static Comparator<BxObject> X_ASCENDING_ORDER = new Comparator<BxObject>() {
+    static final Comparator<BxObject> X_ASCENDING_ORDER = new Comparator<BxObject>() {
 
         @Override
         public int compare(BxObject o1, BxObject o2) {

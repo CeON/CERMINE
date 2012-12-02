@@ -2,13 +2,13 @@ package pl.edu.icm.cermine.tools.classification.sampleselection;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class NormalSelector<S> implements SampleSelector<S> {
 
 	@Override
-	public List<TrainingElement<S>> pickElements(List<TrainingElement<S>> inputElements) {
-		return new ArrayList<TrainingElement<S>>(inputElements);
+	public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements) {
+		return new ArrayList<TrainingSample<S>>(inputElements);
 	}
 
 }

@@ -5,14 +5,14 @@ import java.util.List;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
@@ -26,17 +26,16 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 			for(BxZone zone: doc.asZones())
 				zone.setLabel(zone.getLabel().getGeneralLabel());
 		
-        BxDocsToHMMConverter node = new BxDocsToHMMConverter(featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
-        
-        List<TrainingElement<BxZoneLabel>> trainingElements;
-        trainingElements = node.process(trainingDocuments);
+        List<TrainingSample<BxZoneLabel>> trainingSamples;
+        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder, 
+                BxZoneLabel.getLabelToGeneralMap());
 
         // Filter the training documents
         // so that in the learning examples all classes are
         // represented equally
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
-        trainingElements = selector.pickElements(trainingElements);
+        trainingSamples = selector.pickElements(trainingSamples);
 
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
 		svm_parameter param = SVMZoneClassifier.getDefaultParam();
@@ -47,14 +46,14 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 		param.kernel_type = svm_parameter.POLY;
 
 		zoneClassifier.setParameter(param);
-        zoneClassifier.buildClassifier(trainingElements);
+        zoneClassifier.buildClassifier(trainingSamples);
         zoneClassifier.printWeigths(featureVectorBuilder);
         zoneClassifier.saveModel("svm_initial_classifier");
 		return zoneClassifier;
 	}
 
 	public static void main(String[] args) 
-			throws ParseException, RuntimeException, AnalysisException, IOException {
+			throws ParseException, AnalysisException, IOException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialZoneClassificationEvaluator());
 	}
 

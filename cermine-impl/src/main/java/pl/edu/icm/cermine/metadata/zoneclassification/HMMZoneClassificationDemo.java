@@ -20,7 +20,7 @@ import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilde
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  *
@@ -86,7 +86,7 @@ public final class HMMZoneClassificationDemo {
         
         BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         node.setFeatureVectorBuilder(vectorBuilder);
-        List<TrainingElement<BxZoneLabel>> trainingElements = node.process(documents);
+        List<HMMTrainingSample<BxZoneLabel>> trainingElements = node.process(documents);
         // 3. HMM training. The resulting probabilities object should be serialized for further usage
         HMMProbabilityInfo<BxZoneLabel> hmmProbabilities
                 = HMMProbabilityInfoFactory.getFVHMMProbability(trainingElements, vectorBuilder);

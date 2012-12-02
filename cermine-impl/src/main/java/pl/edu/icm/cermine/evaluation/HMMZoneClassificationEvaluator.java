@@ -11,7 +11,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /*
  *  @author Pawel Szostek (p.szostek@icm.edu.pl)
@@ -27,7 +27,7 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
         node.setFeatureVectorBuilder(featureVectorBuilder);
         node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
         
-        List<TrainingElement<BxZoneLabel>> trainingElements;
+        List<HMMTrainingSample<BxZoneLabel>> trainingElements;
         try {
         	trainingElements = node.process(trainingDocuments);
         } catch (Exception e) {

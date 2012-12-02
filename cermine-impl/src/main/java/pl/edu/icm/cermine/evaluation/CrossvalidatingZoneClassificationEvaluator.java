@@ -32,7 +32,7 @@ import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilde
  */
 public abstract class CrossvalidatingZoneClassificationEvaluator {
 
-    static private final EnumMap<BxZoneLabel, BxZoneLabel> DEFAULT_LABEL_MAP = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
+    private static final EnumMap<BxZoneLabel, BxZoneLabel> DEFAULT_LABEL_MAP = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
 
     static {
         for (BxZoneLabel label : BxZoneLabel.values()) {
@@ -48,7 +48,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 
     //sample launch: -fold 5 /path/to/your/xml/catalog
     public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator)
-            throws ParseException, RuntimeException, AnalysisException, IOException {
+            throws ParseException, AnalysisException, IOException {
         Options options = new Options();
         options.addOption("compact", false, "do not print results for pages");
         options.addOption("fold", true, "foldness of cross-validation");
@@ -91,7 +91,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         }
     }
 
-    public void run(String inDir, String outDir) throws RuntimeException, AnalysisException, IOException {
+    public void run(String inDir, String outDir) throws AnalysisException, IOException {
         List<BxDocument> evaluationDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
         ClassificationResults summary = newResults();
 

@@ -1,17 +1,5 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
-import java.util.*;
-import java.util.Map.Entry;
-import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.zoneclassification.tools.LabelPair;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
-
 /*
 public class SVMZoneMultiClassifier extends SVMZoneClassifier {
 

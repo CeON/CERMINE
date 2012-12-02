@@ -20,15 +20,14 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 public class ZipExtractor implements DocumentsExtractor {
 	protected ZipFile zipFile;
 
-	public ZipExtractor(String path) throws ZipException, IOException,
-			URISyntaxException {
+	public ZipExtractor(String path) throws IOException, URISyntaxException {
 		URL url = path.getClass().getResource(path);
 		URI uri = url.toURI();
 		File file = new File(uri);
 		this.zipFile = new ZipFile(file);
 	}
 
-	public ZipExtractor(File file) throws ZipException, IOException {
+	public ZipExtractor(File file) throws IOException {
 		this.zipFile = new ZipFile(file);
 	}
 	

@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
-import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -15,10 +14,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.DocumentsExtractor;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.ZipExtractor;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.*;
 
 /**
  *
@@ -40,7 +36,7 @@ public class SVMZoneClassifierDemo {
         return testDocument;
 	}
   
-    public static void main(String[] args) throws TransformationException, Exception {
+    public static void main(String[] args) throws Exception {
         
         // 1.1 construct vector of features builder
     	List<FeatureCalculator<BxZone, BxPage>> featureCalculators = Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
@@ -131,18 +127,16 @@ public class SVMZoneClassifierDemo {
         BxDocument testDocument = trainingList.get(testDocIdx);
 
         /* generate training set based on sequences and vector of features */
-        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
-        node.setFeatureVectorBuilder(vectorBuilder);
-        node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-        List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised = node.process(trainingList);
+        List<TrainingSample<BxZoneLabel>> trainingSamplesUnrevised = 
+                BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingList, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
         
-        Map<BxZoneLabel, Integer> labelCount = new HashMap<BxZoneLabel, Integer>();
+        Map<BxZoneLabel, Integer> labelCount = new EnumMap<BxZoneLabel, Integer>(BxZoneLabel.class);
         labelCount.put(BxZoneLabel.GEN_BODY, 0);
         labelCount.put(BxZoneLabel.GEN_METADATA, 0);
         labelCount.put(BxZoneLabel.GEN_OTHER, 0);
         labelCount.put(BxZoneLabel.GEN_REFERENCES, 0);
         
-        for(TrainingElement<BxZoneLabel> elem: trainingElementsUnrevised) {
+        for(TrainingSample<BxZoneLabel> elem: trainingSamplesUnrevised) {
         	labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel())+1);
         }
         
@@ -158,24 +152,25 @@ public class SVMZoneClassifierDemo {
         labelCount.put(BxZoneLabel.GEN_METADATA, 0);
         labelCount.put(BxZoneLabel.GEN_OTHER, 0);
         labelCount.put(BxZoneLabel.GEN_REFERENCES, 0);
-        List<TrainingElement<BxZoneLabel>> trainingElements = new ArrayList<TrainingElement<BxZoneLabel>>();
+        List<TrainingSample<BxZoneLabel>> trainingSamples = new ArrayList<TrainingSample<BxZoneLabel>>();
         
-        for(TrainingElement<BxZoneLabel> elem: trainingElementsUnrevised) {
+        for(TrainingSample<BxZoneLabel> elem: trainingSamplesUnrevised) {
         	if(labelCount.get(elem.getLabel()) < max*1.3) {
-        		trainingElements.add(elem);
+        		trainingSamples.add(elem);
         		labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel())+1);
         	}
         }
         System.out.println(max);
-        System.out.println(trainingElements.size());
+        System.out.println(trainingSamples.size());
 
         List<BxDocument> testList = new ArrayList<BxDocument>(1);
         testList.add(testDocument);
-        List<TrainingElement<BxZoneLabel>> testElement = node.process(testList);
+        List<TrainingSample<BxZoneLabel>> testElement = 
+                BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(testList, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
 
         /* build a classifier */
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(vectorBuilder);
-        zoneClassifier.buildClassifier(trainingElements);
+        zoneClassifier.buildClassifier(trainingSamples);
         
         /* classify zones from the test file */
         zoneClassifier.classifyZones(testDocument);

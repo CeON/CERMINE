@@ -40,7 +40,7 @@ public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
         return (rightChild == null);
     }
 
-    public BxZone getZone() throws RuntimeException {
+    public BxZone getZone() {
         if (!hasZone()) {
             throw new RuntimeException();
         }

@@ -11,9 +11,10 @@ import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
@@ -84,7 +85,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
     }
 
     @Override
-    protected SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException {
+    protected SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException {
         FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
 
         Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
@@ -96,11 +97,11 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
             }
         }
 
-        List<TrainingElement<BxZoneLabel>> trainingElementsUnrevised = EvaluationUtils.getTrainingElements(trainingDocuments, featureVectorBuilder);
-        trainingElementsUnrevised = ClassificationUtils.filterElements(trainingElementsUnrevised, BxZoneLabelCategory.CAT_METADATA);
+        List<TrainingSample<BxZoneLabel>> TrainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder);
+        TrainingSamplesUnrevised = ClassificationUtils.filterElements(TrainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(0.7);
-        List<TrainingElement<BxZoneLabel>> trainingElements = selector.pickElements(trainingElementsUnrevised);
+        List<TrainingSample<BxZoneLabel>> TrainingSamples = selector.pickElements(TrainingSamplesUnrevised);
 
 
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
@@ -112,7 +113,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);
 
-        zoneClassifier.buildClassifier(trainingElements);
+        zoneClassifier.buildClassifier(TrainingSamples);
         zoneClassifier.saveModel("metadata_classifier");
         zoneClassifier.printWeigths(featureVectorBuilder);
 
@@ -120,7 +121,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
     }
 
     public static void main(String[] args)
-            throws ParseException, RuntimeException, AnalysisException, IOException {
+            throws ParseException, AnalysisException, IOException {
         CrossvalidatingZoneClassificationEvaluator.main(args, new SVMMetadataClassificationEvaluator());
     }
 

@@ -1,18 +1,27 @@
 package pl.edu.icm.cermine.content.headers;
 
 import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import pl.edu.icm.cermine.content.headers.features.*;
-import pl.edu.icm.cermine.structure.model.BxLine;
-import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.evaluation.EvaluationUtils;
+import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
+import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
+import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
 /**
  *
  * @author Dominika Tkaczyk
  */
-public class ContentHeaderTools {
+public class HeaderExtractingTools {
 
     public static final FeatureVectorBuilder<BxLine, BxPage> vectorBuilder = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
     static {
@@ -47,30 +56,25 @@ public class ContentHeaderTools {
                 new UppercaseSchemaFeature()
                 ));
     }
-    /*
-    public static List<TrainingElement<BxZoneLabel>> toTrainingElements(String trainPath) throws AnalysisException {
+    
+    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException {
         List<BxDocument> documents = EvaluationUtils.getDocumentsFromPath(trainPath);
-        return toTrainingElements(documents);
-    }*/
-/*
-    public static List<TrainingElement<BxZoneLabel>> toTrainingElements(List<BxDocument> documents) throws AnalysisException {
-        List<TrainingElement<BxZoneLabel>> trainingElements;
+        return toTrainingSamples(documents);
+    }
+
+    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(List<BxDocument> documents) throws AnalysisException {
+        List<TrainingSample<BxZoneLabel>> trainingSamples;
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
         
-        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
-        
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
-        map.put(BxZoneLabel.BODY_HEADER, BxZoneLabel.BODY_CONTENT);
-        node.setLabelMap(map);
+        map.put(BxZoneLabel.BODY_JUNK, BxZoneLabel.BODY_CONTENT);
+       
+        trainingSamples = BxDocsToTrainingSamplesConverter.getLineTrainingSamples(documents, vectorBuilder, map);
+        trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
+        trainingSamples = selector.pickElements(trainingSamples);
         
-        node.setFeatureVectorBuilder(vectorBuilder);
-        
-        trainingElements = node.process(documents);
-        trainingElements = ClassificationUtils.filterElements(trainingElements, BxZoneLabelCategory.CAT_BODY);
-        trainingElements = selector.pickElements(trainingElements);
-        
-        return trainingElements;
+        return trainingSamples;
     }
-  */  
+
 }

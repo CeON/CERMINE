@@ -41,18 +41,18 @@ public class ContentFilterTools {
     }
     
     public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(List<BxDocument> documents) throws AnalysisException {
-        List<TrainingSample<BxZoneLabel>> TrainingSamples;
+        List<TrainingSample<BxZoneLabel>> trainingSamples;
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
         
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
         map.put(BxZoneLabel.BODY_HEADER, BxZoneLabel.BODY_CONTENT);
        
-        TrainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(documents, vectorBuilder, map);
-        TrainingSamples = ClassificationUtils.filterElements(TrainingSamples, BxZoneLabelCategory.CAT_BODY);
-        TrainingSamples = selector.pickElements(TrainingSamples);
+        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(documents, vectorBuilder, map);
+        trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
+        trainingSamples = selector.pickElements(trainingSamples);
         
-        return TrainingSamples;
+        return trainingSamples;
     }
     
 }

@@ -14,8 +14,6 @@ import org.jdom.JDOMException;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.icm.cermine.content.filtering.ContentFilterTools;
-import pl.edu.icm.cermine.content.headers.ContentHeaderTools;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
 import pl.edu.icm.cermine.content.transformers.HTMLToDocContentStructReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -31,7 +29,7 @@ import pl.edu.icm.cermine.tools.classification.knn.KnnModel;
  *
  * @author Dominika Tkaczyk
  */
-public class SimpleLogicalStructureExtractorTest {
+public class KnnLogicalStructureExtractorTest {
     
     String dir = "/pl/edu/icm/cermine/content/";
 
@@ -63,7 +61,7 @@ public class SimpleLogicalStructureExtractorTest {
    
     @Test
     public void test() throws IOException, TransformationException, AnalysisException, URISyntaxException {
-        LogicalStructureExtractor extractor = new LogicalStructureExtractor();
+        LogicalStructureExtractor extractor = new KnnLogicalStructureExtractor(junkModel, classModel);
         
         int headerCount = 0;
         int goodHeaderCount = 0;
@@ -82,8 +80,7 @@ public class SimpleLogicalStructureExtractorTest {
             System.out.println("ORIGINAL: ");
             hdrs.printHeaders();
             
-            DocumentContentStructure extractedHdrs = extractor.extractStructure(junkModel, classModel, 
-                    ContentFilterTools.vectorBuilder, ContentHeaderTools.vectorBuilder, ContentHeaderTools.clustVectorBuilder, document);
+            DocumentContentStructure extractedHdrs = extractor.extractStructure(document);
                    
             System.out.println("EXTRACTED:");
             extractedHdrs.printHeaders();

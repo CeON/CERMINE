@@ -1,8 +1,8 @@
 package pl.edu.icm.cermine.content.filtering;
 
-import java.io.*;
-import java.util.List;
-import pl.edu.icm.cermine.evaluation.EvaluationUtils;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
@@ -59,24 +59,10 @@ public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel>
     public BxDocument filter(BxDocument document) throws AnalysisException {
         for (BxZone zone: document.asZones()) {
 			if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_BODY)) {
-                
                 zone.setLabel(predictLabel(zone, zone.getParent()));
-                System.out.println(zone.getLabel()+" "+zone.toText());
-                System.out.println("");
             }
 		}
 		return document;
-    }
-    
-    public static void main(String[] args) throws AnalysisException, FileNotFoundException {
-        BufferedReader r1 = new BufferedReader(new FileReader("/tmp/junkfilter"));
-        BufferedReader r2 = new BufferedReader(new FileReader("/tmp/junkfilter.range"));
-        SVMContentFilter filter = new SVMContentFilter(r1, r2);
-        String trainPath = "/home/domin/newexamples/all/data/ex/";
-        List<BxDocument> documents = EvaluationUtils.getDocumentsFromPath(trainPath);
-        for (BxDocument d : documents) {
-            filter.filter(d);
-        }
     }
     
 }

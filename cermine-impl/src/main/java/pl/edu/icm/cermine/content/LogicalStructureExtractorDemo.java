@@ -9,10 +9,8 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.jdom.JDOMException;
-import pl.edu.icm.cermine.content.filtering.ContentFilterTools;
 import pl.edu.icm.cermine.content.filtering.KnnContentFilter;
-import pl.edu.icm.cermine.content.headers.ContentHeaderExtractor;
-import pl.edu.icm.cermine.content.headers.ContentHeaderTools;
+import pl.edu.icm.cermine.content.headers.KnnContentHeadersExtractor;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
 import pl.edu.icm.cermine.content.transformers.HTMLToDocContentStructReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -54,10 +52,11 @@ public class LogicalStructureExtractorDemo {
     }
     
     public void test() throws IOException, TransformationException, AnalysisException, URISyntaxException {
-        LogicalStructureExtractor extractor = new LogicalStructureExtractor();
         
-        KnnModel<BxZoneLabel> classModel = ContentHeaderExtractor.buildModel(ContentHeaderTools.vectorBuilder, trainDocuments, trainHeaderStructures);
+        KnnModel<BxZoneLabel> classModel = KnnContentHeadersExtractor.buildModel(trainDocuments, trainHeaderStructures);
         KnnModel<BxZoneLabel> junkModel = KnnContentFilter.buildModel(trainDocuments);
+        
+        LogicalStructureExtractor extractor = new KnnLogicalStructureExtractor(junkModel, classModel);
 
         int headerCount = 0;
         int goodHeaderCount = 0;
@@ -77,8 +76,7 @@ public class LogicalStructureExtractorDemo {
             System.out.println("ORIGINAL: ");
             hdrs.printHeaders();
             
-            DocumentContentStructure extractedHdrs = extractor.extractStructure(junkModel, classModel, 
-                    ContentFilterTools.vectorBuilder, ContentHeaderTools.vectorBuilder, ContentHeaderTools.clustVectorBuilder, document);
+            DocumentContentStructure extractedHdrs = extractor.extractStructure(document);
                     
             System.out.println("EXTRACTED:");
             extractedHdrs.printHeaders();

@@ -128,7 +128,7 @@ public class SVMZoneClassifierDemo {
 
         /* generate training set based on sequences and vector of features */
         List<TrainingSample<BxZoneLabel>> trainingSamplesUnrevised = 
-                BxDocsToTrainingSamplesConverter.getTrainingSamples(trainingList, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
+                BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingList, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
         
         Map<BxZoneLabel, Integer> labelCount = new EnumMap<BxZoneLabel, Integer>(BxZoneLabel.class);
         labelCount.put(BxZoneLabel.GEN_BODY, 0);
@@ -166,7 +166,7 @@ public class SVMZoneClassifierDemo {
         List<BxDocument> testList = new ArrayList<BxDocument>(1);
         testList.add(testDocument);
         List<TrainingSample<BxZoneLabel>> testElement = 
-                BxDocsToTrainingSamplesConverter.getTrainingSamples(testList, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
+                BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(testList, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
 
         /* build a classifier */
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(vectorBuilder);

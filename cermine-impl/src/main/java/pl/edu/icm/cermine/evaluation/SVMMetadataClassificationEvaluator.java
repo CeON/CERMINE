@@ -97,7 +97,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
             }
         }
 
-        List<TrainingSample<BxZoneLabel>> TrainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getTrainingSamples(trainingDocuments, featureVectorBuilder);
+        List<TrainingSample<BxZoneLabel>> TrainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder);
         TrainingSamplesUnrevised = ClassificationUtils.filterElements(TrainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(0.7);

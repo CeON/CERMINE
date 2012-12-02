@@ -112,7 +112,7 @@ public class LibSVMExporter {
 
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = evaluator.getFeatureVectorBuilder();
         try {
-            trainingElements = BxDocsToTrainingSamplesConverter.getTrainingSamples(evaluationDocs, vectorBuilder, labelMap);
+            trainingElements = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(evaluationDocs, vectorBuilder, labelMap);
         } catch (Exception e) {
             throw new RuntimeException("Unable to process the delivered training documents!");
         }

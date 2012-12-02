@@ -76,7 +76,7 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
                     }
                 }
             }
-            trainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(copiedTrainingDocuments, 
+            trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(copiedTrainingDocuments, 
                     featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
             trainingSamples = selector.pickElements(trainingSamples);
 
@@ -108,7 +108,7 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
                 }
             }
 
-            trainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(copiedTrainingDocuments, 
+            trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(copiedTrainingDocuments, 
                     featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
             System.out.println("TrainingSamples" + trainingSamples.size());
             List<TrainingSample<BxZoneLabel>> toBeRemoved = new ArrayList<TrainingSample<BxZoneLabel>>();
@@ -142,7 +142,7 @@ public class SVMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
                 }
             }
 
-            trainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(copiedTrainingDocuments, 
+            trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(copiedTrainingDocuments, 
                     featureVectorBuilder, BxZoneLabel.getLabelToGeneralMap());
             System.out.println("TrainingSamples" + trainingSamples.size());
             List<TrainingSample<BxZoneLabel>> toBeRemoved = new ArrayList<TrainingSample<BxZoneLabel>>();

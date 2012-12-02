@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.content.filtering;
+package pl.edu.icm.cermine.content.headers;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,14 +12,14 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  *
  * @author Dominika Tkaczyk
  */
-public class SVMContentFilterTraining {
+public class SVMHeaderLinesTraining {
     
     public static void trainClassifier(List<TrainingSample<BxZoneLabel>> trainingElements, String output) 
             throws AnalysisException, IOException {
-        SVMContentFilter contentFilter = new SVMContentFilter();
+        SVMHeaderLinesClassifier contentFilter = new SVMHeaderLinesClassifier();
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
-        param.gamma = 8.0;
-        param.C = 512.0;
+        param.gamma = 0.5;
+        param.C = 32.0;
         param.kernel_type = svm_parameter.RBF;
         
         contentFilter.setParameter(param);
@@ -29,10 +29,10 @@ public class SVMContentFilterTraining {
     
     public static void main(String[] args) throws AnalysisException, IOException {
         if (args.length < 2) {
-            System.out.println("Usage: SVMContentFilterTraining <training files dir> <output>");
+            System.out.println("Usage: SVMContentHeaderTraining <input dir> <output>");
             return;
         }
-        List<TrainingSample<BxZoneLabel>> trainingElements = ContentFilterTools.toTrainingSamples(args[0]);
+        List<TrainingSample<BxZoneLabel>> trainingElements = HeaderExtractingTools.toTrainingSamples(args[0]);
         trainClassifier(trainingElements, args[1]);
     }
    

@@ -27,7 +27,7 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 				zone.setLabel(zone.getLabel().getGeneralLabel());
 		
         List<TrainingSample<BxZoneLabel>> trainingSamples;
-        trainingSamples = BxDocsToTrainingSamplesConverter.getTrainingSamples(trainingDocuments, featureVectorBuilder, 
+        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder, 
                 BxZoneLabel.getLabelToGeneralMap());
 
         // Filter the training documents

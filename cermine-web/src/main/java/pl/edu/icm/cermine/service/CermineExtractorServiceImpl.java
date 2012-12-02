@@ -147,6 +147,9 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
             Document doc = new Document(resEl);
             String res = outputter.outputString(doc);
             result.setNlm(res);
+            log.debug("Article meta extraction start:");
+            result.setMeta(ArticleMeta.extractNLM(doc));
+            log.debug("Article meta extraction succeeded");
             result.setSucceeded(true);
 //            log.debug("Returning xml:\n {}", res);
         } catch (Exception anal) {

@@ -150,6 +150,11 @@ a:visited {
     background: whitesmoke;
 }
 
+
+#task_table tr:nth-child(odd) {
+    background: lightgray;
+}
+
 .status {
     font-weight: bold;
 }
@@ -171,11 +176,6 @@ a:visited {
     background: red;
 }
 
-
-#task_table tr:nth-child(odd) {
-    background: lightgray;
-}
-
 #task_table td {
     text-align: left;
     /*margin: 0;*/
@@ -183,4 +183,34 @@ a:visited {
     
     /*background: lightgray;*/
     
+}
+
+table.summaryTable {
+    
+    width: 100%;
+    background: gray;
+    border: 2px solid darkgray;
+    border-spacing: 0;
+    vertical-align: top;
+}
+
+table.summaryTable th {
+    vertical-align: top;
+    text-align: right;
+    width: 10%;
+    padding: 5px;
+}
+
+table.summaryTable td {
+    vertical-align: top;
+    text-align: left;
+}
+
+table.summaryTable tr:nth-child(even) {
+    background: whitesmoke;
+}
+
+
+table.summaryTable tr:nth-child(odd) {
+    background: lightgray;
 }

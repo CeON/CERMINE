@@ -43,6 +43,18 @@ public class ArticleMetaTest {
         ArticleMeta result = ArticleMeta.extractNLM(nlm);
         assertEquals("Annales de l’institut Fourier",result.getJournalTitle());
         assertEquals("Analytic inversion of adjunction: blabla extension theorems with gain", result.getTitle());
+        assertEquals("10.1016/j.lisr.2011.06.002", result.getDoi());
+        assertEquals("Some abstract text...", result.getAbstractText());
+        assertEquals("703", result.getFpage());
+        assertEquals("718", result.getLpage());
+        assertEquals("57", result.getVolume());
+        assertEquals("3", result.getIssue());
+        assertEquals(2, result.getAuthors().size());
         
+        assertTrue(result.getAuthors().get(0).contains("McNeal"));
+        assertTrue(result.getAuthors().get(0).contains("Jeffery D."));
+        assertTrue(result.getKeywords().contains("32Q99"));
+        assertTrue(result.getKeywords().contains("denominators"));
+        assertEquals(8, result.getKeywords().size());
     }
 }

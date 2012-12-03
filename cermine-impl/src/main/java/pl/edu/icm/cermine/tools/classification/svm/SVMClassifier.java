@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
@@ -196,6 +197,18 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		return weights;
 	}
 
+	public void loadModel(String modelFilePath, String rangeFilePath) throws IOException
+	{
+		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
+				.getResourceAsStream(modelFilePath));
+		BufferedReader modelFile = new BufferedReader(modelISR);
+		
+		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
+				.getResourceAsStream(rangeFilePath));
+		BufferedReader rangeFile = new BufferedReader(rangeISR);
+		loadModel(modelFile, rangeFile);
+	}
+	
 	public void loadModel(BufferedReader modelFile, BufferedReader rangeFile) throws IOException
 	{
 		Double feature_min, feature_max;

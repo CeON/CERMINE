@@ -31,7 +31,7 @@ public class PdfBxStructureExtractorTest {
     private TrueVizToBxDocumentReader reader;
     
     @Before
-    public void setUp() throws AnalysisException {
+    public void setUp() throws AnalysisException, IOException {
         extractor = new PdfBxStructureExtractor();
         reader = new TrueVizToBxDocumentReader();
     }

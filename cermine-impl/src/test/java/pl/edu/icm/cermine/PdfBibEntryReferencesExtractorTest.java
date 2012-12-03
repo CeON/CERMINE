@@ -6,7 +6,6 @@ import org.jdom.JDOMException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
@@ -194,7 +193,7 @@ public class PdfBibEntryReferencesExtractorTest {
     };
     
     @Before
-    public void setUp() throws AnalysisException {
+    public void setUp() throws AnalysisException, IOException {
         extractor = new PdfBibEntryReferencesExtractor();
     }
     

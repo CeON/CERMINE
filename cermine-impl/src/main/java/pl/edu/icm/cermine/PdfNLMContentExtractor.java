@@ -2,6 +2,7 @@ package pl.edu.icm.cermine;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.xpath.XPathExpressionException;
 import org.jdom.Element;
@@ -27,7 +28,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     /** parsed references extractor from geometric structure */
     private DocumentReferencesExtractor<Element> referencesExtractor;
 
-    public PdfNLMContentExtractor() throws AnalysisException {
+    public PdfNLMContentExtractor() throws AnalysisException, IOException {
         structureExtractor = new PdfBxStructureExtractor();
         metadataExtractor = new PdfNLMMetadataExtractor();
         referencesExtractor = new PdfNLMReferencesExtractor();
@@ -40,7 +41,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     }
     
     public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, 
-            InputStream metadataModel, InputStream metadataRange, InputStream refModel) throws AnalysisException {
+            InputStream metadataModel, InputStream metadataRange, InputStream refModel) throws AnalysisException, IOException {
         structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
         metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
         referencesExtractor = new PdfNLMReferencesExtractor(refModel);
@@ -82,7 +83,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         return content;
     }
     
-    public static void main(String[] args) throws AnalysisException, FileNotFoundException, XPathExpressionException, JDOMException {
+    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException {
     	if(args.length != 1){
     		System.err.println("USAGE: program FILE_PATH");
     		System.exit(1);

@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.jdom.Element;
@@ -28,7 +29,7 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
     /** metadata extractor from labelled zones */
     private MetadataExtractor<Element> extractor;
 
-    public PdfNLMMetadataExtractor() throws AnalysisException {
+    public PdfNLMMetadataExtractor() throws AnalysisException, IOException {
         strExtractor = new PdfBxStructureExtractor();
         
         InputStreamReader modelISRM = new InputStreamReader(this.getClass()
@@ -42,7 +43,7 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
         extractor = new EnhancerMetadataExtractor();
     }
     
-    public PdfNLMMetadataExtractor(InputStream model, InputStream range) throws AnalysisException {
+    public PdfNLMMetadataExtractor(InputStream model, InputStream range) throws AnalysisException, IOException {
         strExtractor = new PdfBxStructureExtractor();
         
         InputStreamReader modelISRM = new InputStreamReader(model);

@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,11 @@ public class PdfNLMReferencesExtractor implements DocumentReferencesExtractor<El
     /** BibEntry-based references extractor */
     private DocumentReferencesExtractor<BibEntry> extractor;
     
-    public PdfNLMReferencesExtractor() throws AnalysisException {
+    public PdfNLMReferencesExtractor() throws AnalysisException, IOException {
         extractor = new PdfBibEntryReferencesExtractor();
     }
     
-    public PdfNLMReferencesExtractor(InputStream model) throws AnalysisException {
+    public PdfNLMReferencesExtractor(InputStream model) throws AnalysisException, IOException {
         extractor = new PdfBibEntryReferencesExtractor(model);
     }
     

@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine;
 
 import java.io.*;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.*;
@@ -30,7 +31,7 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     private ZoneClassifier initialClassifier;
 
 
-    public PdfBxStructureExtractor() throws AnalysisException {
+    public PdfBxStructureExtractor() throws AnalysisException, IOException {
         characterExtractor = new ITextCharacterExtractor();
         documentSegmenter = new DocstrumSegmenter();
         roResolver = new HierarchicalReadingOrderResolver();
@@ -44,7 +45,7 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
         initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
     }
     
-    public PdfBxStructureExtractor(InputStream model, InputStream range) throws AnalysisException {
+    public PdfBxStructureExtractor(InputStream model, InputStream range) throws AnalysisException, IOException {
         characterExtractor = new ITextCharacterExtractor();
         documentSegmenter = new DocstrumSegmenter();
         roResolver = new HierarchicalReadingOrderResolver();

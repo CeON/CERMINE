@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.xpath.XPathExpressionException;
@@ -28,7 +27,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     /** parsed references extractor from geometric structure */
     private DocumentReferencesExtractor<Element> referencesExtractor;
 
-    public PdfNLMContentExtractor() throws AnalysisException, IOException {
+    public PdfNLMContentExtractor() throws AnalysisException {
         structureExtractor = new PdfBxStructureExtractor();
         metadataExtractor = new PdfNLMMetadataExtractor();
         referencesExtractor = new PdfNLMReferencesExtractor();
@@ -41,7 +40,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     }
     
     public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, 
-            InputStream metadataModel, InputStream metadataRange, InputStream refModel) throws AnalysisException, IOException {
+            InputStream metadataModel, InputStream metadataRange, InputStream refModel) throws AnalysisException {
         structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
         metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
         referencesExtractor = new PdfNLMReferencesExtractor(refModel);

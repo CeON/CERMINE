@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine;
 
-import java.io.IOException;
 import java.io.InputStream;
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
@@ -28,14 +27,14 @@ public class PdfBibEntryReferencesExtractor implements DocumentReferencesExtract
     /** bibliographic references parser */
     private BibReferenceParser<BibEntry> parser;
 
-    public PdfBibEntryReferencesExtractor() throws AnalysisException, IOException {
+    public PdfBibEntryReferencesExtractor() throws AnalysisException {
         strExtractor = new PdfBxStructureExtractor();
         extractor = new ClusteringBibReferenceExtractor();
         InputStream modelFile = PdfBibEntryReferencesExtractor.class.getResourceAsStream("/pl/edu/icm/cermine/bibref/acrf-small.ser.gz");
         parser = new CRFBibReferenceParser(modelFile);
     }
     
-    public PdfBibEntryReferencesExtractor(InputStream model) throws AnalysisException, IOException {
+    public PdfBibEntryReferencesExtractor(InputStream model) throws AnalysisException {
         strExtractor = new PdfBxStructureExtractor();
         extractor = new ClusteringBibReferenceExtractor();
         parser = new CRFBibReferenceParser(model);

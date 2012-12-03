@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine;
 
 import java.io.*;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.*;
@@ -31,30 +30,38 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     private ZoneClassifier initialClassifier;
 
 
-    public PdfBxStructureExtractor() throws AnalysisException, IOException {
-        characterExtractor = new ITextCharacterExtractor();
-        documentSegmenter = new DocstrumSegmenter();
-        roResolver = new HierarchicalReadingOrderResolver();
-        
-        InputStreamReader modelISRI = new InputStreamReader(PdfBxStructureExtractor.class
-				.getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier"));
-        BufferedReader modelFileI = new BufferedReader(modelISRI);
-        InputStreamReader rangeISRI = new InputStreamReader(PdfBxStructureExtractor.class
-		        .getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier.range"));
-        BufferedReader rangeFileI = new BufferedReader(rangeISRI);
-        initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
+    public PdfBxStructureExtractor() throws AnalysisException {
+        try {
+            characterExtractor = new ITextCharacterExtractor();
+            documentSegmenter = new DocstrumSegmenter();
+            roResolver = new HierarchicalReadingOrderResolver();
+            
+            InputStreamReader modelISRI = new InputStreamReader(PdfBxStructureExtractor.class
+                    .getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier"));
+            BufferedReader modelFileI = new BufferedReader(modelISRI);
+            InputStreamReader rangeISRI = new InputStreamReader(PdfBxStructureExtractor.class
+                    .getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier.range"));
+            BufferedReader rangeFileI = new BufferedReader(rangeISRI);
+            initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create PdfBxStructureExtractor!", ex);
+        }
     }
     
-    public PdfBxStructureExtractor(InputStream model, InputStream range) throws AnalysisException, IOException {
-        characterExtractor = new ITextCharacterExtractor();
-        documentSegmenter = new DocstrumSegmenter();
-        roResolver = new HierarchicalReadingOrderResolver();
-        
-        InputStreamReader modelISRI = new InputStreamReader(model);
-        BufferedReader modelFileI = new BufferedReader(modelISRI);
-        InputStreamReader rangeISRI = new InputStreamReader(range);
-        BufferedReader rangeFileI = new BufferedReader(rangeISRI);
-        initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
+    public PdfBxStructureExtractor(InputStream model, InputStream range) throws AnalysisException {
+        try {
+            characterExtractor = new ITextCharacterExtractor();
+            documentSegmenter = new DocstrumSegmenter();
+            roResolver = new HierarchicalReadingOrderResolver();
+            
+            InputStreamReader modelISRI = new InputStreamReader(model);
+            BufferedReader modelFileI = new BufferedReader(modelISRI);
+            InputStreamReader rangeISRI = new InputStreamReader(range);
+            BufferedReader rangeFileI = new BufferedReader(rangeISRI);
+            initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot create PdfBxStructureExtractor!", ex);
+        }
     }
 
     public PdfBxStructureExtractor(CharacterExtractor glyphExtractor, DocumentSegmenter pageSegmenter, 

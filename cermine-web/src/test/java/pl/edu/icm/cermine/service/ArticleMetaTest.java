@@ -3,6 +3,7 @@ package pl.edu.icm.cermine.service;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.*;
 
 /**

@@ -92,6 +92,7 @@ public class CermineController {
             model.put("result", task.getResult());
             String nlmHtml = StringEscapeUtils.escapeHtml(task.getResult().getNlm());
             model.put("nlm", nlmHtml);
+            model.put("meta", task.getResult().getMeta());
         }
         return new ModelAndView("task", model);
     }

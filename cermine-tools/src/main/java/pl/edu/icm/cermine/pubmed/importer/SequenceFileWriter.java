@@ -11,7 +11,6 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
-import org.apache.hadoop.io.Writable;
 
 import com.google.protobuf.ByteString;
 
@@ -57,42 +56,51 @@ public class SequenceFileWriter {
     private static void generateSequenceFile(String inputDir, String outputSequenceFile) throws IOException {
     	
     	SequenceFile.Writer writer = createSequenceFileWriter(outputSequenceFile, byte[].class, byte[].class);
-    	//writer.
-    	
-    	PubmedCollectionIterator iter = new PubmedCollectionIterator(inputDir);
-    	for(PubmedEntry item : iter) {
-    		
-    		InputStream nlm_fis = new FileInputStream(item.getNlm());
-    		InputStream pdf_fis = new FileInputStream(item.getPdf());
-    		
-    		DocumentProtos.Document.Builder db = DocumentProtos.Document.newBuilder();
-    		db.setNlm(ByteString.copyFrom(IOUtils.toByteArray(nlm_fis)));
-    		db.setPdf(ByteString.copyFrom(IOUtils.toByteArray(pdf_fis)));
-    		db.setKey(item.getKey());
-    		Document d = db.build();    		
-    		
-    		byte[] rowBytes = item.getKey().getBytes();
-    		byte[] docBytes = d.toByteArray();
-    		
-            try {
-                BytesWritable rowKeyBytesWritable = new BytesWritable();
-                BytesWritable documentBytesWritable = new BytesWritable();
-                Document.Builder dw = Document.newBuilder();
 
-                
-                rowKeyBytesWritable.set(rowBytes, 0, rowBytes.length);
-                documentBytesWritable.set(docBytes, 0, docBytes.length);
-                writer.append(rowKeyBytesWritable, documentBytesWritable);
-            } finally {
-                writer.close();
-            }
+    	PubmedCollectionIterator iter = new PubmedCollectionIterator(inputDir);
+    	try {
+    		BytesWritable rowKeyBytesWritable = new BytesWritable();
+    		BytesWritable documentBytesWritable = new BytesWritable();
+
+    		for(PubmedEntry item : iter) {
+    			File nlm = item.getNlm();
+    			File pdf = item.getPdf();
+
+    			InputStream nlm_fis = null;
+    			DocumentProtos.Document.Builder db = DocumentProtos.Document.newBuilder();
+    			if(nlm != null) {
+    				nlm_fis = new FileInputStream(item.getNlm());
+    				db.setNlm(ByteString.copyFrom(IOUtils.toByteArray(nlm_fis)));
+    			} else {
+    				db.setPdf(ByteString.EMPTY);
+    			}
+
+    			InputStream pdf_fis = null;
+    			if(pdf != null) {
+    				pdf_fis = new FileInputStream(item.getPdf());
+    				db.setPdf(ByteString.copyFrom(IOUtils.toByteArray(pdf_fis)));
+    			} else {
+    				db.setPdf(ByteString.EMPTY);
+    			}
+
+    			db.setKey(item.getKey());
+    			Document d = db.build();
+
+    			byte[] rowBytes = item.getKey().getBytes();
+    			byte[] docBytes = d.toByteArray();
+
+    			rowKeyBytesWritable.set(rowBytes, 0, rowBytes.length);
+    			documentBytesWritable.set(docBytes, 0, docBytes.length);
+    			writer.append(rowKeyBytesWritable, documentBytesWritable);
+    		}
+    	} finally {
+    		writer.close();
     	}
         
     }
 
-    private static SequenceFile.Writer createSequenceFileWriter(String uri, Class keyClass, Class valueClass) throws IOException {
+    private static <T1, T2> SequenceFile.Writer createSequenceFileWriter(String uri, Class<T1> keyClass, Class<T2> valueClass) throws IOException {
         Configuration conf = new Configuration();
-        FileSystem fs = FileSystem.get(URI.create(uri), conf);
         Path path = new Path(uri);
 
         SequenceFile.Writer writer = SequenceFile.createWriter(conf, 

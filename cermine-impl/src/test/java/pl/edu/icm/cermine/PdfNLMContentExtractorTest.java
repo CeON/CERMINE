@@ -27,7 +27,7 @@ public class PdfNLMContentExtractorTest {
     private DocumentContentExtractor<Element> extractor;
     
     @Before
-    public void setUp() throws AnalysisException {
+    public void setUp() throws AnalysisException, IOException {
         extractor = new PdfNLMContentExtractor();
     }
     

@@ -1,71 +1,66 @@
 package pl.edu.icm.cermine.tools.classification.features;
 
-import java.util.Set;
+import java.util.*;
 
 /**
- * Feature vector interface.
+ * Simple feature vector.
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public interface FeatureVector extends Cloneable {
+public class FeatureVector implements Cloneable {
 
-    /**
-     * Return the vector of feature values.
-     * 
-     * @return an array of feature values
-     */
-	Double[] getFeatures();
+    private Map<String, Double> features = new HashMap<String, Double>();
 
-    /**
-     * Returns a single feature value.
-     *
-     * @param name The name of a single feature.
-     * @return Feature value.
-     */
-    double getFeature(String name);
+    public double getFeature(String name) {
+        if (features.get(name) == null) {
+            throw new IllegalArgumentException("Feature vector does not contain feature '" + name + "'.");
+        }
+        return features.get(name);
+    }
 
-    /**
-     * Sets a feature value
-     * 
-     * @param name Feature name
-     * @param value Feature value
-     */
-    void setFeature(String name, Double value);
+    public void addFeature(String name, double calculateFeatureValue) {
+        features.put(name, calculateFeatureValue);
+    }
+
+    public Set<String> getFeatureNames() {
+        return features.keySet();
+    }
     
-    /**
-     * Adds a feature value to the vector.
-     *
-     * @param name Feature name.
-     * @param featureValue Feature value.
-     */
-    void addFeature(String name, double featureValue);
+    public String dump() {
+    	StringBuilder ret = new StringBuilder();
+    	Set<String> keysSet = features.keySet();
+    	ArrayList<String> keys = new ArrayList<String>(keysSet);
+    	Collections.sort(keys);
+    	for(String name: keys) {
+    		String shortName = (name.length() > 18 ? name.substring(0, 18) : name);
+    		ret.append(String.format("%18s: %5.2f%n", shortName, features.get(name)));
+    	}
+    	return ret.toString();
+    }
 
-    /**
-     * Dumps content of a feature vector to a string
-     * 
-     * @return string of feature values in a human readable form 
-     */
-    String dump();
+    public Integer size() {
+    	return features.size();
+    }
 
-    /**
-     * Return a set of used feature names.
-     * 
-     * @return feature names set
-     */
-    Set<String> getFeatureNames();
-    
-    /**
-     * Return the length of the feature vector.
-     * 
-     * @return the length
-     */
-    Integer size();
-    
-    /**
-     * Clones feature vector.
-     * 
-     * @return cloned object
-     */
-    FeatureVector clone() throws CloneNotSupportedException;
-    
+	public Double[] getFeatures() {
+		Double[] ret = new Double[features.size()];
+		return features.values().toArray(ret);
+	}
+
+	public void setFeature(String name, Double value) {
+		if(!features.containsKey(name)) {
+			throw new RuntimeException("Bad feature name: " + name);
+        }
+		features.put(name, value);
+	}
+	
+	@Override
+	public FeatureVector clone() throws CloneNotSupportedException {
+        FeatureVector ret = (FeatureVector) super.clone();
+        for (String feature: features.keySet()) {
+            ret.features.put(feature, new Double(features.get(feature)));
+        }
+        return ret;
+	}
+	
 }

@@ -1,7 +1,7 @@
 package pl.edu.icm.cermine;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.xpath.XPathExpressionException;
 import org.jdom.Element;
@@ -82,7 +82,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         return content;
     }
     
-    public static void main(String[] args) throws AnalysisException, FileNotFoundException, XPathExpressionException, JDOMException {
+    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException {
     	if(args.length != 1){
     		System.err.println("USAGE: program FILE_PATH");
     		System.exit(1);

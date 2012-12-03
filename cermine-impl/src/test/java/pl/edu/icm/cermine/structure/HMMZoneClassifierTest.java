@@ -21,7 +21,6 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.tools.DocumentProcessor;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMService;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
@@ -69,7 +68,7 @@ public class HMMZoneClassifierTest extends AbstractDocumentProcessorTest {
             is.close();
         }
 
-        FeatureVectorBuilder<BxZone, BxPage> vBuilder = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+        FeatureVectorBuilder<BxZone, BxPage> vBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
                 new ProportionsFeature(),
                 new HeightFeature(),

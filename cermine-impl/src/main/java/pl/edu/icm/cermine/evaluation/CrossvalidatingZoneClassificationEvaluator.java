@@ -23,7 +23,6 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 
 /**
  * Class for performing cross-validating classifier performance in zone classification task
@@ -140,8 +139,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
     }
 
     public FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
-        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =
-                new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
                 new AffiliationFeature(),
                 new AuthorFeature(),

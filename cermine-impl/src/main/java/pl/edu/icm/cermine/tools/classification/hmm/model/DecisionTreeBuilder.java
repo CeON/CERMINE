@@ -1,7 +1,7 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
-import java.util.*;
 import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
+import java.util.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
@@ -44,7 +44,7 @@ public final class DecisionTreeBuilder {
      * @param stopExpanding stopExpanding parameter.
      * @return Root of the built decision tree.
      */
-    public static <S extends Comparable<S>> SimpleDecisionTree<S> buildDecisionTree(
+    public static <S extends Comparable<S>> DecisionTree<S> buildDecisionTree(
             Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
         return constructNode(trainingSet, attributes, stopExpanding);
     }
@@ -59,7 +59,7 @@ public final class DecisionTreeBuilder {
      * @param stopExpanding stopExpanding parameter.
      * @return Constructed node.
      */
-    private static <S extends Comparable<S>> SimpleDecisionTree<S> constructNode(
+    private static <S extends Comparable<S>> DecisionTree<S> constructNode(
             Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
         if (trainingSet.isEmpty()) {
             return null;
@@ -70,12 +70,12 @@ public final class DecisionTreeBuilder {
             probDistribution.addEvent(element.getLabel());
         }
         if (probDistribution.getEvents().size() == 1 || attributes.isEmpty() || trainingSet.size() < stopExpanding) {
-            return new SimpleDecisionTree<S>(probDistribution);
+            return new DecisionTree<S>(probDistribution);
         }
 
         NodeDecision decision = chooseDecision(trainingSet, attributes);
         if (decision == null) {
-            return new SimpleDecisionTree<S>(probDistribution);
+            return new DecisionTree<S>(probDistribution);
         }
 
         Set<String> newAttributes = new HashSet<String>(attributes);
@@ -92,10 +92,10 @@ public final class DecisionTreeBuilder {
             }
         }
 
-        SimpleDecisionTree<S> leftNode = constructNode(leftElements, newAttributes, stopExpanding);
-        SimpleDecisionTree<S> rightNode = constructNode(rightElements, newAttributes, stopExpanding);
+        DecisionTree<S> leftNode = constructNode(leftElements, newAttributes, stopExpanding);
+        DecisionTree<S> rightNode = constructNode(rightElements, newAttributes, stopExpanding);
 
-        return new SimpleDecisionTree<S>(probDistribution, leftNode, rightNode, decision.testedFeature, decision.cut);
+        return new DecisionTree<S>(probDistribution, leftNode, rightNode, decision.testedFeature, decision.cut);
     }
 
     /**

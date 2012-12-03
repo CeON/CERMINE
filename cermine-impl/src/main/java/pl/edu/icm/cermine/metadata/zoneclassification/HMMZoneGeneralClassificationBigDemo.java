@@ -24,7 +24,6 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.DocumentsExtractor;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.ZipExtractor;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
@@ -55,8 +54,7 @@ public final class HMMZoneGeneralClassificationBigDemo {
     public static void main(String[] args) throws TransformationException, AnalysisException, IOException, URISyntaxException {
         
         // 1.1 construct vector of features builder
-        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =
-                new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
         		new AbstractFeature(),
         		new AcknowledgementFeature(),

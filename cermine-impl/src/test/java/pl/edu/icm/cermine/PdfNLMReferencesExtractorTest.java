@@ -30,7 +30,7 @@ public class PdfNLMReferencesExtractorTest {
     private DocumentReferencesExtractor<Element> extractor;
     
     @Before
-    public void setUp() throws AnalysisException {
+    public void setUp() throws AnalysisException, IOException {
         extractor = new PdfNLMReferencesExtractor();
     }
     

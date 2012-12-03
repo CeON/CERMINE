@@ -193,7 +193,7 @@ public class PdfBibEntryReferencesExtractorTest {
     };
     
     @Before
-    public void setUp() throws AnalysisException {
+    public void setUp() throws AnalysisException, IOException {
         extractor = new PdfBibEntryReferencesExtractor();
     }
     

@@ -1339,7 +1339,7 @@
     </probability>
   </transitionProbability>
   <emissionProbability class="pl.edu.icm.cermine.tools.classification.hmm.model.DecisionTreeHMMEmissionProbability">
-    <decisionTree class="pl.edu.icm.cermine.tools.classification.hmm.model.SimpleDecisionTree">
+    <decisionTree class="pl.edu.icm.cermine.tools.classification.hmm.model.DecisionTree">
       <left>
         <left>
           <left>

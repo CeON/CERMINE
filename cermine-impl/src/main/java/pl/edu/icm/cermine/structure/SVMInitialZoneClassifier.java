@@ -13,7 +13,6 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
@@ -23,35 +22,19 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	
-	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
+	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException, IOException {
 		super(getFeatureVectorBuilder());
-        try {
-            loadModel(modelFile, rangeFile);
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot create SVM classifier!", ex);
-        }
+		loadModel(modelFile, rangeFile);
 	}
 
-	public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException {
+	public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException, IOException {
 		super(getFeatureVectorBuilder());
-		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
-				.getResourceAsStream(modelFilePath));
-		BufferedReader modelFile = new BufferedReader(modelISR);
-		
-		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
-				.getResourceAsStream(rangeFilePath));
-		BufferedReader rangeFile = new BufferedReader(rangeISR);
-        try {
-            loadModel(modelFile, rangeFile);
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot create SVM classifier!", ex);
-        }
+		loadModel(modelFilePath, rangeFilePath);
 	}
 
 	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder()
 	{
-		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =
-                new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
         		new AffiliationFeature(),
                 new AuthorFeature(),
@@ -142,15 +125,9 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 			System.err.println("Source directory needed!");
 			System.exit(1);
 		}
-		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
-				.getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier"));
-		BufferedReader modelFile = new BufferedReader(modelISR);
 		
-		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
-				.getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier.range"));
-		BufferedReader rangeFile = new BufferedReader(rangeISR);
-		
-		SVMZoneClassifier classifier = new SVMInitialZoneClassifier(modelFile, rangeFile);
+		SVMInitialZoneClassifier classifier = new SVMInitialZoneClassifier("/pl/edu/icm/cermine/structure/svm_initial_classifier", 
+				"/pl/edu/icm/cermine/structure/svm_initial_classifier.range");
 
 		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
 		BxDocumentToTrueVizWriter tvw = new BxDocumentToTrueVizWriter();

@@ -12,7 +12,6 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
@@ -23,7 +22,7 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
  */
 public final class HeaderExtractingTools {
 
-    public static final FeatureVectorBuilder<BxLine, BxPage> EXTRACT_VB = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
+    public static final FeatureVectorBuilder<BxLine, BxPage> EXTRACT_VB = new FeatureVectorBuilder<BxLine, BxPage>();
     static {
         EXTRACT_VB.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
                 new DigitDotSchemaFeature(),
@@ -44,7 +43,7 @@ public final class HeaderExtractingTools {
                 ));
     }
     
-    public static final FeatureVectorBuilder<BxLine, BxPage> CLUSTERING_VB = new SimpleFeatureVectorBuilder<BxLine, BxPage>();
+    public static final FeatureVectorBuilder<BxLine, BxPage> CLUSTERING_VB = new FeatureVectorBuilder<BxLine, BxPage>();
     static {
         CLUSTERING_VB.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
                 new DigitDotSchemaFeature(),

@@ -12,7 +12,6 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
@@ -23,7 +22,7 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
  */
 public final class ContentFilterTools {
 
-    public static final FeatureVectorBuilder<BxZone, BxPage> VECTOR_BUILDER = new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+    public static final FeatureVectorBuilder<BxZone, BxPage> VECTOR_BUILDER = new FeatureVectorBuilder<BxZone, BxPage>();
     static {
         VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
                 new AreaFeature(),

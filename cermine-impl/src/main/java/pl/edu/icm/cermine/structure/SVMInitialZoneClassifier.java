@@ -13,7 +13,6 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
@@ -50,8 +49,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 
 	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder()
 	{
-		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =
-                new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
         		new AffiliationFeature(),
                 new AuthorFeature(),

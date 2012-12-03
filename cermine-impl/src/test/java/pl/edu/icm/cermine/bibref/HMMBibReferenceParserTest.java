@@ -12,7 +12,6 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMService;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
@@ -43,7 +42,7 @@ public class HMMBibReferenceParserTest extends AbstractBibReferenceParserTest {
         }
 
         FeatureVectorBuilder<CitationToken, Citation> vectorBuilder =
-        		new SimpleFeatureVectorBuilder<CitationToken, Citation>();
+        		new FeatureVectorBuilder<CitationToken, Citation>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<CitationToken, Citation>>asList(
                 new DigitRelativeCountFeature(),
                 new IsAllDigitsFeature(),

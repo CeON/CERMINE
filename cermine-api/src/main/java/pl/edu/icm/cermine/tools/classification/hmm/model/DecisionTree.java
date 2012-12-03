@@ -1,61 +1,58 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
+import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 /**
  * Decision tree node interface.
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
- * @param <S> A type of labels.
+ * @param <T> A type of labels.
  */
-public interface DecisionTree<S> {
+public class DecisionTree<T> {
+    
+    private DecisionTree<T> left;
+    private DecisionTree<T> right;
+    private ProbabilityDistribution<T> labelsProbability;
+    private String featureName;
+    private double featureCut;
 
-    /**
-     * Gets left child of the node.
-     *
-     * @return Left child of the node.
-     */
-    DecisionTree<S> getLeft();
 
-    /**
-     * Gets right child of the node.
-     *
-     * @return Right child of the node.
-     */
-    DecisionTree<S> getRight();
+    public DecisionTree(ProbabilityDistribution<T> labelsProbability) {
+        this.labelsProbability = labelsProbability;
+    }
 
-    /**
-     * Checks whether the node is a leaf.
-     *
-     * @return True if the node is a leaf, false otherwise.
-     */
-    boolean isLeaf();
+    public DecisionTree(ProbabilityDistribution<T> labelsProbability,
+            DecisionTree<T> left, DecisionTree<T> right, String featureName, double featureCut) {
+        this(labelsProbability);
+        this.left = left;
+        this.right = right;
+        this.featureName = featureName;
+        this.featureCut = featureCut;
+    }
 
-    /**
-     * Checks whether given feature vector goes to the left child in
-     * the decision process.
-     *
-     * @param features Classified feature vector
-     * @return True if the vector should go to the left child, false otherwise.
-     */
-    boolean isClassifiedLeft(FeatureVector features);
+    public DecisionTree<T> getLeft() {
+        return left;
+    }
 
-    /**
-     * Checks whether given feature vector goes to the right child in
-     * the decision process.
-     *
-     * @param features Classified feature vector
-     * @return True if the vector should go to the right child, false otherwise.
-     */
-    boolean isClassifiedRight(FeatureVector features);
+    public DecisionTree<T> getRight() {
+        return right;
+    }
 
-    /**
-     * Gets the amount of training elements visiting the node
-     * in the decision process, that have given label.
-     *
-     * @param label The label.
-     * @return The amount of training elements.
-     */
-    int getLabelCount(S label);
+    public boolean isLeaf() {
+        return (left == null && right == null);
+    }
+
+    public boolean isClassifiedLeft(FeatureVector features) {
+        return !isLeaf() && features.getFeature(featureName) <= featureCut;
+    }
+
+    public boolean isClassifiedRight(FeatureVector features) {
+        return !isLeaf() && features.getFeature(featureName) > featureCut;
+    }
+
+    public int getLabelCount(T label) {
+        return labelsProbability.getEventCount(label);
+    }
 
 }

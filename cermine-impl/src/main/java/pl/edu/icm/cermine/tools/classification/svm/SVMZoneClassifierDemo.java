@@ -14,7 +14,10 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.*;
+import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
+import pl.edu.icm.cermine.tools.classification.general.DocumentsExtractor;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.classification.general.ZipExtractor;
 
 /**
  *
@@ -112,8 +115,7 @@ public class SVMZoneClassifierDemo {
                 new YPositionRelativeFeature(),
                 new YearFeature()
                 );
-        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder =
-                new SimpleFeatureVectorBuilder<BxZone, BxPage>();
+        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(featureCalculators);
 
         /* import training documents */

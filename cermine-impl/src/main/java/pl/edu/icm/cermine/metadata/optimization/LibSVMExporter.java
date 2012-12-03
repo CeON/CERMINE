@@ -7,16 +7,17 @@ import java.security.InvalidParameterException;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.CrossvalidatingZoneClassificationEvaluator;
 import pl.edu.icm.cermine.evaluation.EvaluationUtils;
 import pl.edu.icm.cermine.evaluation.SVMInitialZoneClassificationEvaluator;
 import pl.edu.icm.cermine.evaluation.SVMMetadataClassificationEvaluator;
-import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.NormalSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
@@ -24,17 +25,17 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSele
 
 public class LibSVMExporter {
 
-    public static void toLibSVM(List<TrainingElement<BxZoneLabel>> trainingElements, String filePath) throws IOException {
+    public static void toLibSVM(List<TrainingSample<BxZoneLabel>> trainingElements, String filePath) throws IOException {
     	BufferedWriter svmDataFile = null;
         try {
             FileWriter fstream = new FileWriter(filePath);
             svmDataFile = new BufferedWriter(fstream);
-            for (TrainingElement<BxZoneLabel> elem : trainingElements) {
+            for (TrainingSample<BxZoneLabel> elem : trainingElements) {
                 svmDataFile.write(String.valueOf(elem.getLabel().ordinal()));
                 svmDataFile.write(" ");
 
                 Integer featureCounter = 1;
-                for (Double value : elem.getObservation().getFeatures()) {
+                for (Double value : elem.getFeatures().getFeatures()) {
                     StringBuilder sb = new StringBuilder();
                     Formatter formatter = new Formatter(sb, Locale.US);
                     formatter.format("%d:%.5f", featureCounter++, value);
@@ -73,15 +74,15 @@ public class LibSVMExporter {
         }
         String inputDirPath = line.getArgs()[0];
         List<BxDocument> evaluationDocs = EvaluationUtils.getDocumentsFromPath(inputDirPath);
-        List<TrainingElement<BxZoneLabel>> trainingElements;
+        List<TrainingSample<BxZoneLabel>> trainingElements;
 
         CrossvalidatingZoneClassificationEvaluator evaluator;
-        BxDocsToHMMConverter node = new BxDocsToHMMConverter();
         BxZoneLabelCategory category;
+        Map<BxZoneLabel, BxZoneLabel> labelMap = null;
 
         if (line.hasOption("initial")) {
             evaluator = new SVMInitialZoneClassificationEvaluator();
-            node.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
+            labelMap = BxZoneLabel.getLabelToGeneralMap();
             category = BxZoneLabelCategory.CAT_GENERAL;
         } else if (line.hasOption("meta")) {
             evaluator = new SVMMetadataClassificationEvaluator();
@@ -110,9 +111,8 @@ public class LibSVMExporter {
         }
 
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = evaluator.getFeatureVectorBuilder();
-        node.setFeatureVectorBuilder(vectorBuilder);
         try {
-            trainingElements = node.process(evaluationDocs);
+            trainingElements = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(evaluationDocs, vectorBuilder, labelMap);
         } catch (Exception e) {
             throw new RuntimeException("Unable to process the delivered training documents!");
         }

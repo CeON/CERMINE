@@ -1,10 +1,10 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
+import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import java.util.HashMap;
 import java.util.Map;
-import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * Simple Hidden Markov Model emission probability implementation.
@@ -18,14 +18,14 @@ public class SimpleHMMEmissionProbability<S> implements HMMEmissionProbability<S
 
     private double zeroProbabilityValue;
 
-    public SimpleHMMEmissionProbability(TrainingElement<S>[] trainingElements) {
+    public SimpleHMMEmissionProbability(HMMTrainingSample<S>[] trainingElements) {
         this(trainingElements, 0.0);
     }
 
-    public SimpleHMMEmissionProbability(TrainingElement<S>[] trainingElements, double zeroProbabilityValue) {
+    public SimpleHMMEmissionProbability(HMMTrainingSample<S>[] trainingElements, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         probability = new HashMap<S, ProbabilityDistribution<FeatureVector>>();
-        for (TrainingElement<S> element : trainingElements) {
+        for (HMMTrainingSample<S> element : trainingElements) {
 
             if (!probability.containsKey(element.getLabel())) {
                 probability.put(element.getLabel(), new ProbabilityDistribution<FeatureVector>());

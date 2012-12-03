@@ -12,8 +12,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.training.SimpleTrainingElement;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * BxDocument objects to HMM training elements converter node. The observations
@@ -34,9 +33,9 @@ public class BxDocsToHMMConverter {
     	this.labelMap = labelMap;
     }
     
-    public List<TrainingElement<BxZoneLabel>> process(List<BxDocument> documents) throws AnalysisException {
-        List<TrainingElement<BxZoneLabel>> trainingList =
-                new ArrayList<TrainingElement<BxZoneLabel>>(documents.size());
+    public List<HMMTrainingSample<BxZoneLabel>> process(List<BxDocument> documents) throws AnalysisException {
+        List<HMMTrainingSample<BxZoneLabel>> trainingList =
+                new ArrayList<HMMTrainingSample<BxZoneLabel>>(documents.size());
         ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
         
         for (BxDocument doc : documents) {
@@ -47,12 +46,12 @@ public class BxDocsToHMMConverter {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }
 
-            SimpleTrainingElement<BxZoneLabel> prev = null;
+            HMMTrainingSample<BxZoneLabel> prev = null;
             for (BxPage page : doc.getPages()) {
                 for (BxZone zone : page.getZones()) {
                     FeatureVector featureVector = featureVectorBuilder.getFeatureVector(zone, page);
-                    SimpleTrainingElement<BxZoneLabel> element =
-                            new SimpleTrainingElement<BxZoneLabel>(featureVector, zone.getLabel(), prev == null);
+                    HMMTrainingSample<BxZoneLabel> element =
+                            new HMMTrainingSample<BxZoneLabel>(featureVector, zone.getLabel(), prev == null);
                     trainingList.add(element);
 
                     if (prev != null) {

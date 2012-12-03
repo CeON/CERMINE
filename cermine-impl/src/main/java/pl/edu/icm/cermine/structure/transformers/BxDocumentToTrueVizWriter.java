@@ -33,7 +33,7 @@ public class BxDocumentToTrueVizWriter {
 
     private static final DecimalFormat FORMAT = new DecimalFormat("0.000", new DecimalFormatSymbols(Locale.US));
 
-    public static final Map<BxZoneLabel, String> ZONE_LABEL_MAP = new HashMap<BxZoneLabel, String>();
+    public static final Map<BxZoneLabel, String> ZONE_LABEL_MAP = new EnumMap<BxZoneLabel, String>(BxZoneLabel.class);
     static {
         ZONE_LABEL_MAP.put(BxZoneLabel.GEN_METADATA,          "gen_metadata");
         ZONE_LABEL_MAP.put(BxZoneLabel.GEN_BODY,              "gen_body");

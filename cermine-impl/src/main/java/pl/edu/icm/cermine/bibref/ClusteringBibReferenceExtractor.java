@@ -13,7 +13,6 @@ import pl.edu.icm.cermine.tools.classification.clustering.FeatureVectorClusteriz
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
 import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMetric;
 
@@ -35,7 +34,7 @@ public class ClusteringBibReferenceExtractor implements BibReferenceExtractor {
     private int maxRefLines = DEFAULT_MAX_REF_LINES;
     
     private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> VECTOR_BUILDER =
-                new SimpleFeatureVectorBuilder<BxLine, BxDocumentBibReferences>();
+                new FeatureVectorBuilder<BxLine, BxDocumentBibReferences>();
     static {
         VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxDocumentBibReferences>>asList(
                 new PrevEndsWithDotFeature(),

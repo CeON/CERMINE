@@ -105,7 +105,6 @@ public class BxBoundsBuilder {
             return new BxBounds(minX, minY, maxX - minX, maxY - minY);
         } else {
         	return new BxBounds(0, 0, 0, 0);
-//            return null;
         }
     }
 

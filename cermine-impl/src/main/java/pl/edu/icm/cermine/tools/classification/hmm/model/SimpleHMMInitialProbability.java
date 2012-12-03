@@ -1,8 +1,8 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
-import java.util.List;
 import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import java.util.List;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * Simple Hidden Markov Model initial probability implementation.
@@ -16,14 +16,14 @@ public class SimpleHMMInitialProbability<S> implements HMMInitialProbability<S> 
 
     private double zeroProbabilityValue;
 
-    public SimpleHMMInitialProbability(List<TrainingElement<S>> trainingElements) {
+    public SimpleHMMInitialProbability(List<HMMTrainingSample<S>> trainingElements) {
         this(trainingElements, 0.0);
     }
 
-    public SimpleHMMInitialProbability(List<TrainingElement<S>> trainingElements, double zeroProbabilityValue) {
+    public SimpleHMMInitialProbability(List<HMMTrainingSample<S>> trainingElements, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         probability = new ProbabilityDistribution<S>();
-        for (TrainingElement<S> element : trainingElements) {
+        for (HMMTrainingSample<S> element : trainingElements) {
             if (element.isFirst()) {
                 probability.addEvent(element.getLabel());
             }

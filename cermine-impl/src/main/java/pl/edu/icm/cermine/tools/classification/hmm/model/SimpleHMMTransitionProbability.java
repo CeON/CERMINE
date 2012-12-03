@@ -1,10 +1,10 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
+import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * Simple Hidden Markov Model transition probability implementation.
@@ -17,14 +17,14 @@ public class SimpleHMMTransitionProbability<S> implements HMMTransitionProbabili
 
     private double zeroProbabilityValue;
 
-    public SimpleHMMTransitionProbability(List<TrainingElement<S>> trainingElements) {
+    public SimpleHMMTransitionProbability(List<HMMTrainingSample<S>> trainingElements) {
         this(trainingElements, 0.0);
     }
 
-    public SimpleHMMTransitionProbability(List<TrainingElement<S>> trainingElements, double zeroProbabilityValue) {
+    public SimpleHMMTransitionProbability(List<HMMTrainingSample<S>> trainingElements, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         probability = new HashMap<S, ProbabilityDistribution<S>>();
-        for (TrainingElement<S> element : trainingElements) {
+        for (HMMTrainingSample<S> element : trainingElements) {
             if (element.getNextLabel() != null) {
                 if (!probability.containsKey(element.getLabel())) {
                     probability.put(element.getLabel(), new ProbabilityDistribution<S>());

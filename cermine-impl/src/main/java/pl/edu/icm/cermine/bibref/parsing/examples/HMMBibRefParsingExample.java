@@ -18,12 +18,11 @@ import pl.edu.icm.cermine.bibref.parsing.tools.CitationsToHMMConverter;
 import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMService;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.TrainingElement;
+import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * HMM-based bibliographic reference parsing example.
@@ -45,8 +44,7 @@ public final class HMMBibRefParsingExample {
     public static void main(String[] args) throws URISyntaxException, JDOMException, IOException {
         
         // 1. construct vector of features builder
-        FeatureVectorBuilder<CitationToken, Citation> vectorBuilder =
-                new SimpleFeatureVectorBuilder<CitationToken, Citation>();
+        FeatureVectorBuilder<CitationToken, Citation> vectorBuilder = new FeatureVectorBuilder<CitationToken, Citation>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<CitationToken, Citation>>asList(
                 new DigitRelativeCountFeature(),
                 new IsAllDigitsFeature(),
@@ -101,13 +99,13 @@ public final class HMMBibRefParsingExample {
 
         Set<Citation> citations = NlmCitationExtractor.extractCitations(new InputSource(u.openStream()));
         
-        TrainingElement<CitationTokenLabel>[] trainingElements = CitationsToHMMConverter.convertToHMM(citations, vectorBuilder);
+        HMMTrainingSample<CitationTokenLabel>[] trainingElements = CitationsToHMMConverter.convertToHMM(citations, vectorBuilder);
 
 		// 3. HMM training. The resulting probabilities object should be
 		// serialized for further usage
 		HMMProbabilityInfo<CitationTokenLabel> hmmProbabilities = HMMProbabilityInfoFactory
 				.getFVHMMProbability(
-						new ArrayList<TrainingElement<CitationTokenLabel>>(
+						new ArrayList<HMMTrainingSample<CitationTokenLabel>>(
 								Arrays.asList(trainingElements)), vectorBuilder);
 
         // 4. create an HMM service instance

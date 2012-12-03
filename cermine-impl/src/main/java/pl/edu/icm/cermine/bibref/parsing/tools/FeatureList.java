@@ -6,7 +6,6 @@ import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.SimpleFeatureVectorBuilder;
 
 /**
  *
@@ -17,7 +16,7 @@ public final class FeatureList {
     public static final FeatureVectorBuilder<CitationToken, Citation> VECTOR_BUILDER;
     
     static {
-        VECTOR_BUILDER = new SimpleFeatureVectorBuilder<CitationToken, Citation>();
+        VECTOR_BUILDER = new FeatureVectorBuilder<CitationToken, Citation>();
         VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<CitationToken, Citation>>asList(
                 new IsAllDigitsFeature(),
                 new IsAllLettersFeature(),

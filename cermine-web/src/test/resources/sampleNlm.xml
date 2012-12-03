@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="en">
+   <front>
+      <journal-meta>
+         <journal-id journal-id-type="eudml-id">urn:eudml:journal:10006</journal-id>
+         <journal-id journal-id-type="cedram-id">AIF</journal-id>
+         <journal-title-group>
+            <journal-title>Annales de l’institut Fourier</journal-title>
+            <abbrev-journal-title abbrev-type="short-title">Ann. inst. Fourier</abbrev-journal-title>
+         </journal-title-group>
+         <issn pub-type="ppub">0373-0956</issn>
+         <issn pub-type="epub">1777-5310</issn>
+         <publisher>
+            <publisher-name>Association des Annales de l’institut Fourier</publisher-name>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <issue-id pub-id-type="eudml-id">urn:eudml:journal:10006_2007_57_3</issue-id>
+         <year-id pub-id-type="eudml-id">urn:eudml:journal:10006_2007</year-id>
+         <volume-id pub-id-type="eudml-id">urn:eudml:journal:10006_2007_57</volume-id>
+         <article-id pub-id-type="eudml-id">urn:eudml:doc:10238</article-id>
+         <article-id pub-id-type="cedram-id">AIF_2007__57_3_703_0</article-id>
+         <title-group>
+            <article-title>Analytic inversion of adjunction: blabla extension theorems with gain</article-title>
+            <trans-title-group xml:lang="fr">
+               <trans-title>L’inversion analytique d’adjonction : théorèmes de prolongement avec gain</trans-title>
+            </trans-title-group>
+         </title-group>
+         <contrib-group content-type="authors">
+            <contrib contrib-type="author">
+               <name>
+                  <surname>McNeal</surname>
+                  <given-names>Jeffery D.</given-names>
+               </name>
+               <address>
+                  <addr-line>Department of Mathematics 100 mathematics building 231 W. 18th avenue Columbus, Ohio 43210-1174 (USA)</addr-line>
+               </address>
+            </contrib>
+            <contrib contrib-type="author">
+               <name>
+                  <surname>Varolin</surname>
+                  <given-names>Dror</given-names>
+               </name>
+               <address>
+                  <addr-line>Stony Brook University Department of Mathematics Stony Brook NY 11794-3651 (USA)</addr-line>
+               </address>
+            </contrib>
+         </contrib-group>
+         <pub-date>
+            <year>2007</year>
+         </pub-date>
+         <volume>57</volume>
+         <issue>3</issue>
+         <issue-id pub-id-type="cedram-id">AIF_2007__57_3</issue-id>
+         <fpage>703</fpage>
+         <lpage>718</lpage>
+         <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=2336826">2336826</ext-link>
+         <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:pre05176602">pre05176602</ext-link>
+         <history>
+            <date date-type="received">
+               <day>25</day>
+               <month>07</month>
+               <year>2005</year>
+            </date>
+            <date date-type="accepted">
+               <day>20</day>
+               <month>02</month>
+               <year>2006</year>
+            </date>
+         </history>
+         <self-uri xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.cedram.org/item?id=AIF_2007__57_3_703_0">Access to full text</self-uri>
+         <abstract>
+            <p>We establish new results on weighted <inline-formula id="w1370aab1b3c29b1b1">
+                  <alternatives>
+                     <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML">
+                        <mml:msup>
+                           <mml:mi>L</mml:mi>
+                           <mml:mn>2</mml:mn>
+                        </mml:msup>
+                     </mml:math>
+                     <tex-math>$L^2$</tex-math>
+                  </alternatives>
+               </inline-formula>-extension of holomorphic top forms with values in a holomorphic line bundle, from a smooth hypersurface cut out by a holomorphic function. The weights we use are determined by certain functions that we call denominators. We give a collection of examples of these denominators related to the divisor defined by the submanifold.</p>
+         </abstract>
+         <trans-abstract xml:lang="fr">
+            <p>Nous établissons des résultats nouveaux sur le prolongement <inline-formula id="w1370aab1b3c31b1b1">
+                  <alternatives>
+                     <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML">
+                        <mml:msup>
+                           <mml:mi>L</mml:mi>
+                           <mml:mn>2</mml:mn>
+                        </mml:msup>
+                     </mml:math>
+                     <tex-math>$L^2$</tex-math>
+                  </alternatives>
+               </inline-formula> à poids des formes holomorphes de degré maximal avec des valeurs dans un fibré linéaire, d’une hypersurface holomorphe lisse définie par une fonction holomorphe. Les poids que nous employons sont déterminés par certaines fonctions que nous appelons des dénominateurs. Nous donnons une collection d’exemples de ces dénominateurs liés au diviseur défini par la sous-variété.</p>
+         </trans-abstract>
+         <kwd-group kwd-group-type="msc">
+            <kwd>32A99</kwd>
+            <kwd>32Q99</kwd>
+         </kwd-group>
+         <kwd-group xml:lang="fr">
+            <kwd>Ohsawa-Takegoshi-type extension</kwd>
+            <kwd>technique de Bochner-Kodaira tordue</kwd>
+            <kwd>dénominateurs</kwd>
+         </kwd-group>
+         <kwd-group>
+            <kwd>Ohsawa-Takegoshi-type extension</kwd>
+            <kwd>twisted Bochner-Kodaira technique</kwd>
+            <kwd>denominators</kwd>
+         </kwd-group>
+         <custom-meta-group>
+            <custom-meta>
+               <meta-name>provider</meta-name>
+               <meta-value>cedram</meta-value>
+            </custom-meta>
+         </custom-meta-group>
+      </article-meta>
+   </front>
+   <back>
+      <ref-list>
+         <ref id="bid5">
+            <label>1</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="eudml-item-id" xlink:href="http://eudml.org/doc/75200">75200</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1415958">1415958</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0853.32024">0853.32024</ext-link>
+               <name>
+                  <surname>Berndtsson</surname>
+                  <given-names>B.</given-names>
+               </name>
+               <article-title>The extension theorem of Ohsawa-Takegoshi and the theorem of Donnelly-Fefferman</article-title>
+               <source>Ann. Inst. Fourier (Grenoble)</source>
+               <year>1996</year>
+               <volume>46</volume>
+               <issue>4</issue>
+               <fpage>1083</fpage>
+               <lpage>1094</lpage>
+               <page-range>1083–1094</page-range>
+            </element-citation>
+         </ref>
+         <ref id="bid7">
+            <label>2</label>
+            <element-citation publication-type="incollection">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1919457">1919457</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:01816813">01816813</ext-link>
+               <name>
+                  <surname>Demailly</surname>
+                  <given-names>J.-P.</given-names>
+               </name>
+               <article-title>Multiplier ideal sheaves and analytic methods in algebraic geometry</article-title>
+               <publisher-name>Abdus Salam Int. Cent. Theoret. Phys.</publisher-name>
+               <publisher-loc>Trieste</publisher-loc>
+               <source>ICTP Lect. Notes</source>
+               <year>2001</year>
+               <volume>6</volume>
+            </element-citation>
+         </ref>
+         <ref id="bid2">
+            <label>3</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1492525">1492525</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0905.14002">0905.14002</ext-link>
+               <name>
+                  <surname>Kollár</surname>
+                  <given-names>J.</given-names>
+               </name>
+               <article-title>Singularities of pairs</article-title>
+               <source>Algebraic geometry – Santa Cruz</source>
+               <year>1995</year>
+               <fpage>221</fpage>
+               <lpage>287</lpage>
+               <page-range>221–287</page-range>
+            </element-citation>
+         </ref>
+         <ref id="bid0">
+            <label>4</label>
+            <element-citation publication-type="misc">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=2095471">2095471</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:1066.14021">1066.14021</ext-link>
+               <name>
+                  <surname>Lazarsfeld</surname>
+                  <given-names>R.</given-names>
+               </name>
+               <article-title>Positivity in algebraic geometry, I, II</article-title>
+               <source>Springer</source>
+               <year>2004</year>
+            </element-citation>
+         </ref>
+         <ref id="bid8">
+            <label>5</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1386844">1386844</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0865.32009">0865.32009</ext-link>
+               <name>
+                  <surname>McNeal</surname>
+                  <given-names>J. D.</given-names>
+               </name>
+               <article-title>On large values of <inline-formula id="w1370aab3b1b9b3b7b1">
+                     <alternatives>
+                        <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML">
+                           <mml:msup>
+                              <mml:mi>L</mml:mi>
+                              <mml:mn>2</mml:mn>
+                           </mml:msup>
+                        </mml:math>
+                        <tex-math>$L^2$</tex-math>
+                     </alternatives>
+                  </inline-formula> holomorphic functions</article-title>
+               <source>Math. Res. Let.</source>
+               <year>1996</year>
+               <volume>3</volume>
+               <fpage>247</fpage>
+               <lpage>259</lpage>
+               <page-range>247-259</page-range>
+            </element-citation>
+         </ref>
+         <ref id="bid6">
+            <label>6</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="eudml-item-id" xlink:href="http://eudml.org/doc/174768">174768</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1337216">1337216</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0823.32006">0823.32006</ext-link>
+               <name>
+                  <surname>Ohsawa</surname>
+                  <given-names>T.</given-names>
+               </name>
+               <article-title>On the extension of <inline-formula id="w1370aab3b1c11b3b7b1">
+                     <alternatives>
+                        <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML">
+                           <mml:msup>
+                              <mml:mi>L</mml:mi>
+                              <mml:mn>2</mml:mn>
+                           </mml:msup>
+                        </mml:math>
+                        <tex-math>$L^2$</tex-math>
+                     </alternatives>
+                  </inline-formula> holomorphic functions. III. Negligible weights</article-title>
+               <source>Math. Z.</source>
+               <year>1995</year>
+               <volume>219</volume>
+               <issue>2</issue>
+               <fpage>215</fpage>
+               <lpage>225</lpage>
+               <page-range>215–225</page-range>
+            </element-citation>
+         </ref>
+         <ref id="bid3">
+            <label>7</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="eudml-item-id" xlink:href="http://eudml.org/doc/183686">183686</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=892051">892051</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0625.32011">0625.32011</ext-link>
+               <name>
+                  <surname>Ohsawa</surname>
+                  <given-names>T.</given-names>
+               </name>
+               <name>
+                  <surname>Takegoshi</surname>
+                  <given-names>K.</given-names>
+               </name>
+               <article-title>On the extension of <inline-formula id="w1370aab3b1c13b3b9b1">
+                     <alternatives>
+                        <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML">
+                           <mml:msup>
+                              <mml:mi>L</mml:mi>
+                              <mml:mn>2</mml:mn>
+                           </mml:msup>
+                        </mml:math>
+                        <tex-math>$L^2$</tex-math>
+                     </alternatives>
+                  </inline-formula> holomorphic functions</article-title>
+               <source>Math. Z.</source>
+               <year>1987</year>
+               <volume>195</volume>
+               <issue>2</issue>
+               <fpage>197</fpage>
+               <lpage>204</lpage>
+               <page-range>197–204</page-range>
+            </element-citation>
+         </ref>
+         <ref id="bid9">
+            <label>8</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1453639">1453639</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0941.32021">0941.32021</ext-link>
+               <name>
+                  <surname>Siu</surname>
+                  <given-names>Y.-T.</given-names>
+               </name>
+               <article-title>The Fujita conjecture and the extension theorem of Ohsawa-Takegoshi</article-title>
+               <source>Geometric Complex Analysis, Hayama. World Scientific</source>
+               <year>1996</year>
+               <fpage>577</fpage>
+               <lpage>592</lpage>
+               <page-range>577-592</page-range>
+            </element-citation>
+         </ref>
+         <ref id="bid1">
+            <label>9</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1660941">1660941</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:0955.32017">0955.32017</ext-link>
+               <name>
+                  <surname>Siu</surname>
+                  <given-names>Y.-T.</given-names>
+               </name>
+               <article-title>Invariance of plurigenera</article-title>
+               <source>Invent. Math.</source>
+               <year>1998</year>
+               <volume>134</volume>
+               <issue>3</issue>
+               <fpage>661</fpage>
+               <lpage>673.</lpage>
+               <page-range>661–673.</page-range>
+            </element-citation>
+         </ref>
+         <ref id="bid4">
+            <label>10</label>
+            <element-citation publication-type="article">
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="mr-item-id" xlink:href="http://www.ams.org/mathscinet-getitem?mr=1922108">1922108</ext-link>
+               <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="zbl-item-id" xlink:href="http://www.zentralblatt-math.org/zmath/en/advanced/?q=an:1007.32010">1007.32010</ext-link>
+               <name>
+                  <surname>Siu</surname>
+                  <given-names>Y.-T.</given-names>
+               </name>
+               <article-title>Extension of twisted pluricanonical sections with plurisubharmonic weight and invariance of semipositively twisted plurigenera for manifolds not necessarily of general type</article-title>
+               <source>Complex geometry, Springer-Verlag</source>
+               <year>2002</year>
+               <fpage>223</fpage>
+               <lpage>277</lpage>
+               <page-range>223–277</page-range>
+            </element-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>
+                
+            

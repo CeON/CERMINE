@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -20,15 +19,14 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 public class ZipExtractor implements DocumentsExtractor {
 	protected ZipFile zipFile;
 
-	public ZipExtractor(String path) throws ZipException, IOException,
-			URISyntaxException {
+	public ZipExtractor(String path) throws IOException, URISyntaxException {
 		URL url = path.getClass().getResource(path);
 		URI uri = url.toURI();
 		File file = new File(uri);
 		this.zipFile = new ZipFile(file);
 	}
 
-	public ZipExtractor(File file) throws ZipException, IOException {
+	public ZipExtractor(File file) throws IOException {
 		this.zipFile = new ZipFile(file);
 	}
 	

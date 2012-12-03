@@ -27,7 +27,7 @@ public class PipelineClassifier implements ZoneClassifier {
         return ret;
     }
 
-    public static abstract class PickyClassifier implements ZoneClassifier {
+    public abstract static class PickyClassifier implements ZoneClassifier {
 
         SVMZoneClassifier classifier;
 

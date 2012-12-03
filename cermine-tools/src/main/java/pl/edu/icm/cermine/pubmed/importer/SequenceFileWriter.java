@@ -1,30 +1,29 @@
 package pl.edu.icm.cermine.pubmed.importer;
 
+import com.google.protobuf.ByteString;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
-
-import com.google.protobuf.ByteString;
-
 import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos;
 import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document;
 
 public class SequenceFileWriter {
 
-    private SequenceFileWriter() {}
+    private SequenceFileWriter() {
+    }
 
     public static void main(String[] args) throws IOException {
 
         if (args.length != 2) {
-        	System.out.println("Usage: <in_dir> <out_file>");
+            System.out.println("Usage: <in_dir> <out_file>");
             System.exit(1);
         }
 
@@ -54,7 +53,6 @@ public class SequenceFileWriter {
     }
 
     private static void generateSequenceFile(String inputDir, String outputSequenceFile) throws IOException {
-    	
     	SequenceFile.Writer writer = createSequenceFileWriter(outputSequenceFile, byte[].class, byte[].class);
 
     	PubmedCollectionIterator iter = new PubmedCollectionIterator(inputDir);
@@ -96,19 +94,16 @@ public class SequenceFileWriter {
     	} finally {
     		writer.close();
     	}
-        
     }
 
     private static <T1, T2> SequenceFile.Writer createSequenceFileWriter(String uri, Class<T1> keyClass, Class<T2> valueClass) throws IOException {
         Configuration conf = new Configuration();
         Path path = new Path(uri);
 
-        SequenceFile.Writer writer = SequenceFile.createWriter(conf, 
-        		SequenceFile.Writer.file(path),
-        		SequenceFile.Writer.keyClass(keyClass),
-        		SequenceFile.Writer.valueClass(valueClass)
-        		);
+        SequenceFile.Writer writer = SequenceFile.createWriter(conf,
+                SequenceFile.Writer.file(path),
+                SequenceFile.Writer.keyClass(keyClass),
+                SequenceFile.Writer.valueClass(valueClass));
         return writer;
     }
-
 }

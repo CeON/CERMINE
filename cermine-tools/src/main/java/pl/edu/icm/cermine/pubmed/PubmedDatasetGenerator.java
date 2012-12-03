@@ -26,9 +26,9 @@ public class PubmedDatasetGenerator {
 
     private static class LabelTrio {
 
-        public BxZoneLabel label;
-        public Double alignment;
-        public List<String> entryTokens;
+        private BxZoneLabel label;
+        private Double alignment;
+        private List<String> entryTokens;
 
         @Override
         public int hashCode() {

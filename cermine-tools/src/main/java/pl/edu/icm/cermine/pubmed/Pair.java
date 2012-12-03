@@ -2,8 +2,8 @@ package pl.edu.icm.cermine.pubmed;
 
 public class Pair<S, T> {
 
-    public S first;
-    public T second;
+    private S first;
+    private T second;
 
     @Override
     public int hashCode() {

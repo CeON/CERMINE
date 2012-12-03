@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import org.slf4j.Logger;
@@ -24,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 import pl.edu.icm.cermine.service.CermineExtractorService;
 import pl.edu.icm.cermine.service.ExtractionTask;
 import pl.edu.icm.cermine.service.NoSuchTaskException;
@@ -50,9 +49,24 @@ public class CermineController {
         //you may use 'warning' to show problem.
         return "home";
     }
+
     @RequestMapping(value = "/about.html")
     public String showAbout(Model model) {
         return "about";
+    }
+
+    @RequestMapping(value = "/download.html")
+    public ResponseEntity<String> downloadXML(@RequestParam("task") long taskId,
+            @RequestParam("type") String resultType, Model model) throws NoSuchTaskException {
+        ExtractionTask task = taskManager.getTask(taskId);
+        if ("nlm".equals(resultType)) {
+            String nlm = task.getResult().getNlm();
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.setContentType(MediaType.APPLICATION_XML);
+            return new ResponseEntity<String>(nlm, responseHeaders, HttpStatus.OK);
+        } else {
+            throw new RuntimeException("Unknown request type: " + resultType);
+        }
     }
 
     @RequestMapping(value = "/upload.do", method = RequestMethod.POST)
@@ -60,14 +74,14 @@ public class CermineController {
         logger.info("Got an upload request.");
         try {
             byte[] content = file.getBytes();
-            if(content.length==0) {
+            if (content.length == 0) {
                 model.addAttribute("warning", "An empty or no file sent.");
                 return "home";
             }
             String filename = file.getOriginalFilename();
             logger.debug("Original filename is: " + filename);
             filename = taskManager.getProperFilename(filename);
-            logger.debug("Created filename: "+filename);
+            logger.debug("Created filename: " + filename);
             long taskId = extractorService.initExtractionTask(content, filename);
             logger.debug("Task manager is: " + taskManager);
             return "redirect:/task.html?task=" + taskId;

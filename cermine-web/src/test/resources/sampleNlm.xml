@@ -20,6 +20,7 @@
          <volume-id pub-id-type="eudml-id">urn:eudml:journal:10006_2007_57</volume-id>
          <article-id pub-id-type="eudml-id">urn:eudml:doc:10238</article-id>
          <article-id pub-id-type="cedram-id">AIF_2007__57_3_703_0</article-id>
+         <article-id pub-id-type="doi">10.1016/j.lisr.2011.06.002</article-id>
          <title-group>
             <article-title>Analytic inversion of adjunction: blabla extension theorems with gain</article-title>
             <trans-title-group xml:lang="fr">
@@ -70,17 +71,7 @@
          </history>
          <self-uri xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.cedram.org/item?id=AIF_2007__57_3_703_0">Access to full text</self-uri>
          <abstract>
-            <p>We establish new results on weighted <inline-formula id="w1370aab1b3c29b1b1">
-                  <alternatives>
-                     <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML">
-                        <mml:msup>
-                           <mml:mi>L</mml:mi>
-                           <mml:mn>2</mml:mn>
-                        </mml:msup>
-                     </mml:math>
-                     <tex-math>$L^2$</tex-math>
-                  </alternatives>
-               </inline-formula>-extension of holomorphic top forms with values in a holomorphic line bundle, from a smooth hypersurface cut out by a holomorphic function. The weights we use are determined by certain functions that we call denominators. We give a collection of examples of these denominators related to the divisor defined by the submanifold.</p>
+            <p>Some abstract text...</p>
          </abstract>
          <trans-abstract xml:lang="fr">
             <p>Nous établissons des résultats nouveaux sur le prolongement <inline-formula id="w1370aab1b3c31b1b1">

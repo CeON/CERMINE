@@ -50,7 +50,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
             for (int i = 0; i < threadPoolSize; i++) {
                 extractors.add(new PdfNLMContentExtractor());
             }
-        } catch (AnalysisException ex) {
+        } catch (Exception ex) {
             log.error("Failed to init content extractor", ex);
             throw new RuntimeException(ex);
         }

@@ -17,10 +17,11 @@
 
 <div id="tabs">
     <ul>
-        <li><a href="#tabs-html">HTML</a></li>
+        <li><a href="#tabs-meta">Metadata</a></li>
+        <li><a href="#tabs-refs">References</a></li>
         <li><a href="#tabs-nlm">NLM</a></li>
     </ul>
-    <div id="tabs-html">
+    <div id="tabs-meta">
         <p>A shored result formatted in HTML form. Please get NLM for full extraction result.</p>
         <table class="summaryTable">
             <tr><th>Article&nbsp;title:</th><td>${meta.title}</td></tr>
@@ -51,6 +52,43 @@
             <tr><th>Revised&nbsp;date:</th><td>${meta.revisedDate}</td></tr>
             <tr><th>Accepted&nbsp;date:</th><td>${meta.acceptedDate}</td></tr>
         </table>
+    </div>
+    <div id="tabs-refs">
+        <p>References in HTML form. Please get NLM for full extraction result.</p>
+        <ol>
+        <c:forEach var="reference" items="${meta.references}">
+            <li><i>${reference.abstractText}</i></li>
+            <ul type="DISC">
+            <c:if test='${not empty reference.title}'>
+                <li>Title: ${reference.title}</li>
+            </c:if>
+            <c:forEach var="author" items="${reference.authors}">
+                <li>Author: ${author.name}</li>
+            </c:forEach>
+            <c:if test='${not empty reference.journalTitle}'>
+                <li>Journal&nbsp;title: ${reference.journalTitle}</li>
+            </c:if>
+            <c:if test='${not empty reference.volume}'>
+                <li>Volume: ${reference.volume}</li>
+            </c:if>    
+            <c:if test='${not empty reference.issue}'>
+                <li>Issue: ${reference.issue}</li>
+            </c:if>    
+            <c:if test='${not empty reference.pages}'>
+                <li>Pages: ${reference.pages}</li>
+            </c:if>    
+            <c:if test='${not empty reference.publisher}'>
+                <li>Publisher: ${reference.publisher}</li>
+            </c:if>
+            <c:if test='${not empty reference.publisherLoc}'>
+                <li>Publisher&nbsp;location: ${reference.publisherLoc}</li>
+            </c:if>
+            <c:if test='${not empty reference.pubDate}'>
+                <li>Publication&nbsp;date: ${reference.pubDate}</li>
+            </c:if>
+            </ul><br />
+        </c:forEach>
+        </ol>
     </div>
     <div id="tabs-nlm">
         <p>Result as an NLM XML record <a href="download.html?type=nlm&task=${task.id}"> (download)</a>:</p>

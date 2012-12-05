@@ -19,6 +19,7 @@ public class ArticleMeta {
     private String journalTitle;
     private String journalISSN;
     private String publisher;
+    private String publisherLoc;
     private String doi;
     private String urn;
     private String abstractText;
@@ -33,6 +34,7 @@ public class ArticleMeta {
     private String receivedDate;
     private String revisedDate;
     private String acceptedDate;
+    private List<ArticleMeta> references;
 
     public String getTitle() {
         return title;
@@ -64,6 +66,14 @@ public class ArticleMeta {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public String getPublisherLoc() {
+        return publisherLoc;
+    }
+
+    public void setPublisherLoc(String publisherLoc) {
+        this.publisherLoc = publisherLoc;
     }
 
     public String getDoi() {
@@ -105,8 +115,6 @@ public class ArticleMeta {
     public void setEditors(List<ContributorMeta> editors) {
         this.editors = editors;
     }
-
-    
     
     public String getKeywordsString() {
         StringBuilder resb = new StringBuilder();
@@ -199,6 +207,14 @@ public class ArticleMeta {
     public void setAcceptedDate(String acceptedDate) {
         this.acceptedDate = acceptedDate;
     }
+
+    public List<ArticleMeta> getReferences() {
+        return references;
+    }
+
+    public void setReferences(List<ArticleMeta> references) {
+        this.references = references;
+    }
     
     private static String extractXPathValue(Document nlm, String xpath) throws JDOMException {
         XPath xPath = XPath.newInstance(xpath);
@@ -256,6 +272,39 @@ public class ArticleMeta {
         }
         return authors;            
     }
+    
+    private static List<ArticleMeta> extractReferences(Document nlm, String xpath) throws JDOMException {
+        XPath xPath = XPath.newInstance(xpath);
+        List<Element> nodes = xPath.selectNodes(nlm);
+        List<ArticleMeta> references = new ArrayList<ArticleMeta>();
+        for (Element node : nodes) {
+            ArticleMeta reference = new ArticleMeta();
+            
+            reference.setAbstractText(node.getValue());
+            reference.setTitle(node.getChildText("article-title"));
+            reference.setPublisher(node.getChildText("publisher-name"));
+            reference.setPublisherLoc(node.getChildText("publisher-loc"));
+            reference.setPubDate(node.getChildText("year"));
+            reference.setFpage(node.getChildText("fpage"));
+            reference.setLpage(node.getChildText("lpage"));
+            reference.setJournalTitle(node.getChildText("source"));
+            reference.setVolume(node.getChildText("volume"));
+            reference.setIssue(node.getChildText("issue"));
+            
+            List<Element> authorNodes = node.getChildren("string-name");
+            List<ContributorMeta> authors = new ArrayList<ContributorMeta>();
+            for (Element authorNode : authorNodes) {
+                ContributorMeta author = new ContributorMeta();
+                author.setGivennames(authorNode.getChildText("given-names"));
+                author.setSurname(authorNode.getChildText("surname"));
+                authors.add(author);
+            }
+            reference.setAuthors(authors);
+            
+            references.add(reference);            
+        }
+        return references;
+    }
 
     public static ArticleMeta extractNLM(Document nlm) {
         log.debug("Starting extraction from document...");
@@ -305,6 +354,9 @@ public class ArticleMeta {
                 kwds.add(((Element) e).getTextTrim());
             }
             res.setKeywords(kwds);
+            
+            res.setReferences(extractReferences(nlm, "//ref/mixed-citation"));
+            
             return res;
         } catch (JDOMException ex) {
             log.error("Unexpected exception while working with xpath", ex);
@@ -314,15 +366,45 @@ public class ArticleMeta {
     
     public static class ContributorMeta {
         private String name;
+        private String givennames;
+        private String surname;
         private List<String> affiliations = new ArrayList<String>();
         private List<String> emails = new ArrayList<String>();
+
+        public ContributorMeta() {
+        }
 
         public ContributorMeta(String name) {
             this.name = name;
         }
 
         public String getName() {
+            if (name == null) {
+                if (givennames == null) {
+                    return surname;
+                } else if (surname == null) {
+                    return givennames;
+                } else {
+                    return surname + ", " + givennames;
+                }
+            }
             return name;
+        }
+
+        public String getGivennames() {
+            return givennames;
+        }
+
+        public void setGivennames(String givennames) {
+            this.givennames = givennames;
+        }
+
+        public String getSurname() {
+            return surname;
+        }
+
+        public void setSurname(String surname) {
+            this.surname = surname;
         }
 
         public void setName(String name) {

@@ -16,6 +16,7 @@ public class ExtractionResult {
     String nlm;
     String dublinCore;
     ArticleMeta meta;
+    String html;
     boolean succeeded;
     Throwable error;
 
@@ -76,6 +77,14 @@ public class ExtractionResult {
 
     public void setMeta(ArticleMeta meta) {
         this.meta = meta;
+    }
+
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
     }
 
     public boolean isSucceeded() {

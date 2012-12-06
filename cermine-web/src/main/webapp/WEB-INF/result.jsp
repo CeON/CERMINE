@@ -1,6 +1,5 @@
 <%@page pageEncoding="UTF-8"%>
-<%@ taglib  prefix="c"      uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
      SyntaxHighlighter.all();
@@ -19,6 +18,7 @@
     <ul>
         <li><a href="#tabs-meta">Metadata</a></li>
         <li><a href="#tabs-refs">References</a></li>
+        <li><a href="#tabs-text">Full text</a></li>
         <li><a href="#tabs-nlm">NLM</a></li>
     </ul>
     <div id="tabs-meta">
@@ -89,6 +89,10 @@
             </ul><br />
         </c:forEach>
         </ol>
+    </div>
+    <div id="tabs-text">
+        <p>Full text in HTML form. Please get NLM for full extraction result.</p>
+        ${html}
     </div>
     <div id="tabs-nlm">
         <p>Result as an NLM XML record <a href="download.html?type=nlm&task=${task.id}"> (download)</a>:</p>

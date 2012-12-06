@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.edu.icm.cermine.PdfNLMContentExtractor;
+import pl.edu.icm.cermine.content.transformers.NLMElementToHTMLWriter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
@@ -143,6 +144,8 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
             Document doc = new Document(resEl);
             String res = outputter.outputString(doc);
             result.setNlm(res);
+            String html = new NLMElementToHTMLWriter().write(resEl);
+            result.setHtml(html);
             log.debug("Article meta extraction start:");
             result.setMeta(ArticleMeta.extractNLM(doc));
             log.debug("Article meta extraction succeeded");

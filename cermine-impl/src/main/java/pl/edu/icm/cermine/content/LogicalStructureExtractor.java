@@ -24,7 +24,11 @@ public abstract class LogicalStructureExtractor {
     
     private BxContentStructToDocContentStructConverter converter;
 
-    public LogicalStructureExtractor(ContentFilter contentFilter, ContentHeadersExtractor headerExtractor, ContentCleaner contentCleaner, BxContentStructToDocContentStructConverter converter) {
+    public LogicalStructureExtractor() {
+    }
+    
+    public LogicalStructureExtractor(ContentFilter contentFilter, ContentHeadersExtractor headerExtractor, 
+            ContentCleaner contentCleaner, BxContentStructToDocContentStructConverter converter) {
         this.contentFilter = contentFilter;
         this.headerExtractor = headerExtractor;
         this.contentCleaner = contentCleaner;
@@ -32,11 +36,47 @@ public abstract class LogicalStructureExtractor {
     }
     
     
-    public DocumentContentStructure extractStructure(BxDocument document) throws AnalysisException, TransformationException {
-        BxDocument doc = contentFilter.filter(document);
-        BxDocContentStructure tmpContentStructure = headerExtractor.extractHeaders(doc);
-        contentCleaner.cleanupContent(tmpContentStructure);
-        return converter.convert(tmpContentStructure);
+    public DocumentContentStructure extractStructure(BxDocument document) throws AnalysisException {
+        try {
+            BxDocument doc = contentFilter.filter(document);
+            BxDocContentStructure tmpContentStructure = headerExtractor.extractHeaders(doc);
+            contentCleaner.cleanupContent(tmpContentStructure);
+            return converter.convert(tmpContentStructure);
+        } catch (TransformationException ex) {
+            throw new AnalysisException("Cannot extract logical structure!", ex);
+        }
+    }
+
+    public ContentCleaner getContentCleaner() {
+        return contentCleaner;
+    }
+
+    public void setContentCleaner(ContentCleaner contentCleaner) {
+        this.contentCleaner = contentCleaner;
+    }
+
+    public ContentFilter getContentFilter() {
+        return contentFilter;
+    }
+
+    public void setContentFilter(ContentFilter contentFilter) {
+        this.contentFilter = contentFilter;
+    }
+
+    public BxContentStructToDocContentStructConverter getConverter() {
+        return converter;
+    }
+
+    public void setConverter(BxContentStructToDocContentStructConverter converter) {
+        this.converter = converter;
+    }
+
+    public ContentHeadersExtractor getHeaderExtractor() {
+        return headerExtractor;
+    }
+
+    public void setHeaderExtractor(ContentHeadersExtractor headerExtractor) {
+        this.headerExtractor = headerExtractor;
     }
     
 }

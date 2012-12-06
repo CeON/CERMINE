@@ -15,7 +15,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToFormatWriter;
 /**
  * Writes DocumentContentStructure model to HTML format.
  *
- * @author krusek
+ * @author Dominika Tkaczyk
  */
 public class DocContentStructToHTMLWriter implements ModelToFormatWriter<DocumentContentStructure> {
 

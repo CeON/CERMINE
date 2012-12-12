@@ -46,13 +46,13 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
 
     public Element toHTML(DocumentHeader header) {
         Element element = new Element("title");
-        element.setText(header.getText());
+        element.setText(header.getText()+"\n");
         return element;
     }
     
     public Element toHTML(DocumentParagraph paragraph) {
         Element element = new Element("p");
-        element.setText(paragraph.getText());
+        element.setText(paragraph.getText()+"\n");
         return element;
     }
   

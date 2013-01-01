@@ -71,21 +71,22 @@ public class LibSVMExporter {
         if (args.length != 3 || !(line.hasOption("initial") ^ line.hasOption("meta")) || !(line.hasOption("under") ^ line.hasOption("over") ^ line.hasOption("normal"))) {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(args[0] + " [-options] input-directory", options);
+            System.exit(1); 
         }
         String inputDirPath = line.getArgs()[0];
         List<BxDocument> evaluationDocs = EvaluationUtils.getDocumentsFromPath(inputDirPath);
         List<TrainingSample<BxZoneLabel>> trainingElements;
 
-        CrossvalidatingZoneClassificationEvaluator evaluator;
+        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder;
         BxZoneLabelCategory category;
         Map<BxZoneLabel, BxZoneLabel> labelMap = null;
 
         if (line.hasOption("initial")) {
-            evaluator = new SVMInitialZoneClassificationEvaluator();
+            vectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
             labelMap = BxZoneLabel.getLabelToGeneralMap();
             category = BxZoneLabelCategory.CAT_GENERAL;
         } else if (line.hasOption("meta")) {
-            evaluator = new SVMMetadataClassificationEvaluator();
+            vectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
             category = BxZoneLabelCategory.CAT_METADATA;
             for (BxDocument doc : evaluationDocs) {
                 for (BxZone zone : doc.asZones()) {
@@ -110,12 +111,13 @@ public class LibSVMExporter {
             System.exit(1);
         }
 
-        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = evaluator.getFeatureVectorBuilder();
         try {
             trainingElements = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(evaluationDocs, vectorBuilder, labelMap);
         } catch (Exception e) {
             throw new RuntimeException("Unable to process the delivered training documents!");
         }
+        for(TrainingSample<BxZoneLabel> sample : trainingElements)
+        	System.out.println(sample.getLabel());
         trainingElements = ClassificationUtils.filterElements(trainingElements, category);
         trainingElements = selector.pickElements(trainingElements);
         toLibSVM(trainingElements, "zone_classification.dat");

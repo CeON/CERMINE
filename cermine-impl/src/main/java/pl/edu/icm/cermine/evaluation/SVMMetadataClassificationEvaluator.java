@@ -21,73 +21,9 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
-
-    @Override
-    public FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
-        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
-        vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
-                new AbstractFeature(),
-                new AffiliationFeature(),
-                new AuthorFeature(),
-                new AuthorNameRelativeFeature(),
-                new BibinfoFeature(),
-                new CharCountFeature(),
-                new CharCountRelativeFeature(),
-                new DateFeature(),
-                new DistanceFromNearestNeighbourFeature(),
-                new DotCountFeature(),
-                new DotRelativeCountFeature(),
-                new EmailFeature(),
-                new EmptySpaceRelativeFeature(),
-                new FontHeightMeanFeature(),
-                new FreeSpaceWithinZoneFeature(),
-                new FullWordsRelativeFeature(),
-                new HeightFeature(),
-                new HeightRelativeFeature(),
-                new HorizontalRelativeProminenceFeature(),
-                new IsAfterMetTitleFeature(),
-                new IsFontBiggerThanNeighboursFeature(),
-                new IsGreatestFontOnPageFeature(),
-                new IsWidestOnThePageFeature(),
-                new KeywordsFeature(),
-                new LineCountFeature(),
-                new LineRelativeCountFeature(),
-                new LineHeightMeanFeature(),
-                new LineWidthMeanFeature(),
-                new LineXPositionMeanFeature(),
-                new LineXWidthPositionDiffFeature(),
-                new LetterCountFeature(),
-                new LetterRelativeCountFeature(),
-                new LowercaseCountFeature(),
-                new LowercaseRelativeCountFeature(),
-                new PreviousZoneFeature(),
-                new ProportionsFeature(),
-                new PunctuationRelativeCountFeature(),
-                new UppercaseCountFeature(),
-                new UppercaseRelativeCountFeature(),
-                new UppercaseWordCountFeature(),
-                new UppercaseWordRelativeCountFeature(),
-                new VerticalProminenceFeature(),
-                new WidthFeature(),
-                new WordCountFeature(),
-                new WordCountRelativeFeature(),
-                new WordWidthMeanFeature(),
-                new WordLengthMeanFeature(),
-                new WordLengthMedianFeature(),
-                new WhitespaceCountFeature(),
-                new WhitespaceRelativeCountLogFeature(),
-                new WidthRelativeFeature(),
-                new XPositionFeature(),
-                new XPositionRelativeFeature(),
-                new YPositionFeature(),
-                new YPositionRelativeFeature(),
-                new YearFeature()));
-        return vectorBuilder;
-    }
-
     @Override
     protected SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException {
-        FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
+        FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
 
         Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
         for (BxDocument doc : trainingDocuments) {
@@ -98,11 +34,11 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
             }
         }
 
-        List<TrainingSample<BxZoneLabel>> TrainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder);
-        TrainingSamplesUnrevised = ClassificationUtils.filterElements(TrainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
+        List<TrainingSample<BxZoneLabel>> trainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder);
+        trainingSamplesUnrevised = ClassificationUtils.filterElements(trainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(0.7);
-        List<TrainingSample<BxZoneLabel>> TrainingSamples = selector.pickElements(TrainingSamplesUnrevised);
+        List<TrainingSample<BxZoneLabel>> trainingSamples = selector.pickElements(trainingSamplesUnrevised);
 
 
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
@@ -114,7 +50,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);
 
-        zoneClassifier.buildClassifier(TrainingSamples);
+        zoneClassifier.buildClassifier(trainingSamples);
         zoneClassifier.saveModel("metadata_classifier");
         zoneClassifier.printWeigths(featureVectorBuilder);
 

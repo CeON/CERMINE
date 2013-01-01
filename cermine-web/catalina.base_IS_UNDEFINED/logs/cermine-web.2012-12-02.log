@@ -1,0 +1,372 @@
+23:35:44.595 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:39:23.630 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:39:23.724 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got journal title: 
+23:41:40.092 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:41:40.159 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got journal title: 
+23:42:53.628 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:43:23.320 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:43:23.377 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got journal title: 
+23:46:46.913 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:46:46.964 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got as a result: null
+23:47:16.180 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:47:16.256 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got as a result: [Element: <article/>]
+23:47:16.256 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Text is: 
+   
+   
+
+23:47:16.257 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got journal title: 
+   
+      
+         urn:eudml:journal:10006
+         AIF
+         
+            Annales de l’institut Fourier
+            Ann. inst. Fourier
+         
+         0373-0956
+         1777-5310
+         
+            Association des Annales de l’institut Fourier
+         
+      
+      
+         urn:eudml:journal:10006_2007_57_3
+         urn:eudml:journal:10006_2007
+         urn:eudml:journal:10006_2007_57
+         urn:eudml:doc:10238
+         AIF_2007__57_3_703_0
+         
+            Analytic inversion of adjunction: 
+                  
+                     
+                        
+                           L
+                           2
+                        
+                     
+                     $L^2$
+                  
+                extension theorems with gain
+            
+               L’inversion analytique d’adjonction : théorèmes de prolongement avec gain
+            
+         
+         
+            
+               
+                  McNeal
+                  Jeffery D.
+               
+               
+                  Department of Mathematics 100 mathematics building 231 W. 18th avenue Columbus, Ohio 43210-1174 (USA)
+               
+            
+            
+               
+                  Varolin
+                  Dror
+               
+               
+                  Stony Brook University Department of Mathematics Stony Brook NY 11794-3651 (USA)
+               
+            
+         
+         
+            2007
+         
+         57
+         3
+         AIF_2007__57_3
+         703
+         718
+         2336826
+         pre05176602
+         
+            
+               25
+               07
+               2005
+            
+            
+               20
+               02
+               2006
+            
+         
+         Access to full text
+         
+            We establish new results on weighted 
+                  
+                     
+                        
+                           L
+                           2
+                        
+                     
+                     $L^2$
+                  
+               -extension of holomorphic top forms with values in a holomorphic line bundle, from a smooth hypersurface cut out by a holomorphic function. The weights we use are determined by certain functions that we call denominators. We give a collection of examples of these denominators related to the divisor defined by the submanifold.
+         
+         
+            Nous établissons des résultats nouveaux sur le prolongement 
+                  
+                     
+                        
+                           L
+                           2
+                        
+                     
+                     $L^2$
+                  
+                à poids des formes holomorphes de degré maximal avec des valeurs dans un fibré linéaire, d’une hypersurface holomorphe lisse définie par une fonction holomorphe. Les poids que nous employons sont déterminés par certaines fonctions que nous appelons des dénominateurs. Nous donnons une collection d’exemples de ces dénominateurs liés au diviseur défini par la sous-variété.
+         
+         
+            32A99
+            32Q99
+         
+         
+            Ohsawa-Takegoshi-type extension
+            technique de Bochner-Kodaira tordue
+            dénominateurs
+         
+         
+            Ohsawa-Takegoshi-type extension
+            twisted Bochner-Kodaira technique
+            denominators
+         
+         
+            
+               provider
+               cedram
+            
+         
+      
+   
+   
+      
+         
+            1
+            
+               75200
+               1415958
+               0853.32024
+               
+                  Berndtsson
+                  B.
+               
+               The extension theorem of Ohsawa-Takegoshi and the theorem of Donnelly-Fefferman
+               Ann. Inst. Fourier (Grenoble)
+               1996
+               46
+               4
+               1083
+               1094
+               1083–1094
+            
+         
+         
+            2
+            
+               1919457
+               01816813
+               
+                  Demailly
+                  J.-P.
+               
+               Multiplier ideal sheaves and analytic methods in algebraic geometry
+               Abdus Salam Int. Cent. Theoret. Phys.
+               Trieste
+               ICTP Lect. Notes
+               2001
+               6
+            
+         
+         
+            3
+            
+               1492525
+               0905.14002
+               
+                  Kollár
+                  J.
+               
+               Singularities of pairs
+               Algebraic geometry – Santa Cruz
+               1995
+               221
+               287
+               221–287
+            
+         
+         
+            4
+            
+               2095471
+               1066.14021
+               
+                  Lazarsfeld
+                  R.
+               
+               Positivity in algebraic geometry, I, II
+               Springer
+               2004
+            
+         
+         
+            5
+            
+               1386844
+               0865.32009
+               
+                  McNeal
+                  J. D.
+               
+               On large values of 
+                     
+                        
+                           
+                              L
+                              2
+                           
+                        
+                        $L^2$
+                     
+                   holomorphic functions
+               Math. Res. Let.
+               1996
+               3
+               247
+               259
+               247-259
+            
+         
+         
+            6
+            
+               174768
+               1337216
+               0823.32006
+               
+                  Ohsawa
+                  T.
+               
+               On the extension of 
+                     
+                        
+                           
+                              L
+                              2
+                           
+                        
+                        $L^2$
+                     
+                   holomorphic functions. III. Negligible weights
+               Math. Z.
+               1995
+               219
+               2
+               215
+               225
+               215–225
+            
+         
+         
+            7
+            
+               183686
+               892051
+               0625.32011
+               
+                  Ohsawa
+                  T.
+               
+               
+                  Takegoshi
+                  K.
+               
+               On the extension of 
+                     
+                        
+                           
+                              L
+                              2
+                           
+                        
+                        $L^2$
+                     
+                   holomorphic functions
+               Math. Z.
+               1987
+               195
+               2
+               197
+               204
+               197–204
+            
+         
+         
+            8
+            
+               1453639
+               0941.32021
+               
+                  Siu
+                  Y.-T.
+               
+               The Fujita conjecture and the extension theorem of Ohsawa-Takegoshi
+               Geometric Complex Analysis, Hayama. World Scientific
+               1996
+               577
+               592
+               577-592
+            
+         
+         
+            9
+            
+               1660941
+               0955.32017
+               
+                  Siu
+                  Y.-T.
+               
+               Invariance of plurigenera
+               Invent. Math.
+               1998
+               134
+               3
+               661
+               673.
+               661–673.
+            
+         
+         
+            10
+            
+               1922108
+               1007.32010
+               
+                  Siu
+                  Y.-T.
+               
+               Extension of twisted pluricanonical sections with plurisubharmonic weight and invariance of semipositively twisted plurigenera for manifolds not necessarily of general type
+               Complex geometry, Springer-Verlag
+               2002
+               223
+               277
+               223–277
+            
+         
+      
+   
+
+23:47:33.080 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:47:33.142 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got as a result: [Element: <journal-title/>]
+23:47:33.142 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Text is: Annales de l’institut Fourier
+23:47:33.142 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got journal title: Annales de l’institut Fourier
+23:55:29.101 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:55:29.156 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got journal title: Annales de l’institut Fourier
+23:55:29.157 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got title from xpath: Analytic inversion of adjunction: blabla extension theorems with gain
+23:58:57.759 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Starting extraction from document...
+23:58:57.819 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got journal title: Annales de l’institut Fourier
+23:58:57.820 [main] DEBUG p.e.icm.cermine.service.ArticleMeta - Got title from xpath: Analytic inversion of adjunction: blabla extension theorems with gain

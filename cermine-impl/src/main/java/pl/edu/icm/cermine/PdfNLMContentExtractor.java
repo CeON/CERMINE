@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.xpath.XPathExpressionException;
@@ -27,25 +26,32 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     
     /** parsed references extractor from geometric structure */
     private DocumentReferencesExtractor<Element> referencesExtractor;
+    
+    /** logical content extractor */
+    private DocumentTextExtractor<Element> textExtractor;
+    
+    private boolean extractMetadata = true;
+    
+    private boolean extractReferences = true;
+    
+    private boolean extractText = true;
+           
 
-    public PdfNLMContentExtractor() throws AnalysisException, IOException {
+    public PdfNLMContentExtractor() throws AnalysisException {
         structureExtractor = new PdfBxStructureExtractor();
         metadataExtractor = new PdfNLMMetadataExtractor();
         referencesExtractor = new PdfNLMReferencesExtractor();
+        textExtractor = new PdfNLMTextExtractor();
     }
 
-    public PdfNLMContentExtractor(DocumentStructureExtractor structureExtractor, DocumentMetadataExtractor<Element> metadataExtractor, DocumentReferencesExtractor<Element> referencesExtractor) {
+    public PdfNLMContentExtractor(DocumentStructureExtractor structureExtractor, DocumentMetadataExtractor<Element> metadataExtractor, 
+            DocumentReferencesExtractor<Element> referencesExtractor, DocumentTextExtractor<Element> textExtractor) {
         this.structureExtractor = structureExtractor;
         this.metadataExtractor = metadataExtractor;
         this.referencesExtractor = referencesExtractor;
+        this.textExtractor = textExtractor;
     }
     
-    public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, 
-            InputStream metadataModel, InputStream metadataRange, InputStream refModel) throws AnalysisException, IOException {
-        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
-        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
-        referencesExtractor = new PdfNLMReferencesExtractor(refModel);
-    }
     
     /**
      * Extracts content from PDF file and stores it in NLM format.
@@ -69,18 +75,117 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
      */
     @Override
     public Element extractContent(BxDocument document) throws AnalysisException {
-        Element content = metadataExtractor.extractMetadata(document);
-        Element[] references = referencesExtractor.extractReferences(document);
+        Element content = new Element("article");
         
-        Element back = content.getChild("back");
-        Element refList = back.getChild("ref-list");
-        for (Element ref : references) {
-            Element r = new Element("ref");
-            r.addContent(ref);
-            refList.addContent(r);
+        Element metadata = new Element("front");
+        if (extractMetadata) {
+            metadata = (Element) metadataExtractor.extractMetadata(document).getChild("front").clone();
         }
+        content.addContent(metadata);
+        
+        Element text = new Element("body");
+        if (extractText) {
+            text = textExtractor.extractText(document);
+        }
+        content.addContent(text);
+        
+        Element back = new Element("back");
+        Element refList = new Element("ref-list");
+        if (extractReferences) {
+            Element[] references = referencesExtractor.extractReferences(document);
+            for (Element ref : references) {
+                Element r = new Element("ref");
+                r.addContent(ref);
+                refList.addContent(r);
+            }
+        }
+        back.addContent(refList);
+        content.addContent(back);
 
         return content;
+    }
+    
+
+    public void buildStructureExtractor(InputStream initialModel, InputStream initialRange) throws AnalysisException {
+        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
+    }
+    
+    public void buildMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException {
+        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
+    }
+    
+    public void buildReferencesExtractor(InputStream refModel) throws AnalysisException {
+        referencesExtractor = new PdfNLMReferencesExtractor(refModel);
+    }
+    
+    public void buildTextExtractor(InputStream filteringModel, InputStream filteringRange, 
+            InputStream headerModel, InputStream headerRange) throws AnalysisException {
+        textExtractor = new PdfNLMTextExtractor(filteringModel, filteringRange, headerModel, headerRange);
+    }
+    
+    public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, InputStream metadataModel, 
+            InputStream metadataRange, InputStream refModel, InputStream filteringModel, InputStream filteringRange, 
+            InputStream headerModel, InputStream headerRange) throws AnalysisException {
+        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
+        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
+        referencesExtractor = new PdfNLMReferencesExtractor(refModel);
+        textExtractor = new PdfNLMTextExtractor(filteringModel, filteringRange, headerModel, headerRange);
+    }
+
+    public boolean isExtractMetadata() {
+        return extractMetadata;
+    }
+
+    public void setExtractMetadata(boolean extractMetadata) {
+        this.extractMetadata = extractMetadata;
+    }
+
+    public boolean isExtractReferences() {
+        return extractReferences;
+    }
+
+    public void setExtractReferences(boolean extractReferences) {
+        this.extractReferences = extractReferences;
+    }
+
+    public boolean isExtractText() {
+        return extractText;
+    }
+
+    public void setExtractText(boolean extractText) {
+        this.extractText = extractText;
+    }
+
+    public DocumentMetadataExtractor<Element> getMetadataExtractor() {
+        return metadataExtractor;
+    }
+
+    public void setMetadataExtractor(DocumentMetadataExtractor<Element> metadataExtractor) {
+        this.metadataExtractor = metadataExtractor;
+    }
+
+    public DocumentReferencesExtractor<Element> getReferencesExtractor() {
+        return referencesExtractor;
+    }
+
+    public void setReferencesExtractor(DocumentReferencesExtractor<Element> referencesExtractor) {
+        this.referencesExtractor = referencesExtractor;
+    }
+
+    public DocumentStructureExtractor getStructureExtractor() {
+        return structureExtractor;
+    }
+
+    public void setStructureExtractor(DocumentStructureExtractor structureExtractor) {
+        this.structureExtractor = structureExtractor;
+    }
+
+    public DocumentTextExtractor<Element> getTextExtractor() {
+        return textExtractor;
+    }
+
+    public void setTextExtractor(DocumentTextExtractor<Element> textExtractor) {
+        this.textExtractor = textExtractor;
     }
     
     public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException {
@@ -96,5 +201,4 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     	XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
     	System.out.println(outputter.outputString(result));
     }
-
 }

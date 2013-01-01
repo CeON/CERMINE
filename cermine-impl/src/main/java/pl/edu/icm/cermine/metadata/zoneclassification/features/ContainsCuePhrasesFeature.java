@@ -6,26 +6,27 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class ContainsCuePhrasesFeature extends FeatureCalculator<BxZone, BxPage> {
 
-	private static String featureName = "ContainsCuePhrases";
-	private static String[] cuePhrases = {"although", "therefore", "therein", "hereby",
-			"nevertheless", "to this end", "however", "moreover", "nonetheless" };
+    private static String featureName = "ContainsCuePhrases";
+    private static String[] cuePhrases = {"although", "therefore", "therein", "hereby",
+        "nevertheless", "to this end", "however", "moreover", "nonetheless"};
 
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
+    @Override
+    public String getFeatureName() {
+        return featureName;
+    }
 
-	@Override
-	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		String zoneText = zone.toText().toLowerCase();
-		int count = 0;
-		
-		for(String cuePhrase: cuePhrases) {
-			if(!zoneText.contains(cuePhrase))
-				continue;
-			else
-				return 1.0;
-		}
-		return 0.0;
-	}
+    @Override
+    public double calculateFeatureValue(BxZone zone, BxPage page) {
+        String zoneText = zone.toText().toLowerCase();
+        int count = 0;
+
+        for (String cuePhrase : cuePhrases) {
+            if (!zoneText.contains(cuePhrase)) {
+                continue;
+            } else {
+                return 1.0;
+            }
+        }
+        return 0.0;
+    }
 }

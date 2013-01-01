@@ -35,12 +35,12 @@
                     </c:when>
                 </c:choose>
                 <h2>Summary:</h2>
-                <table id="task_summary">
+                <table id="task_summary"  class="summaryTable">
                     <tr><th>File:</th><td>${task.fileName}</td></tr>
                     <tr><th>Submitted:</th><td><fmt:formatDate value="${task.creationDate}" pattern="MM/dd/yyyy"/></td></tr>
                     <tr><th>Status:</th><td class="${task.status.css}">${task.status.text}</td></tr>
-                    <tr><th>In queue</th><td><c:if test="${task.finished}">${task.result.queueTimeSec}s</c:if></td></tr>
-                    <tr><th>Processing</th><td><c:if test="${task.finished}">${task.result.processingTimeSec}s</c:if></td></tr>
+                    <tr><th>In queue:</th><td><c:if test="${task.finished}">${task.result.queueTimeSec}s</c:if></td></tr>
+                    <tr><th>Processing:</th><td><c:if test="${task.finished}">${task.result.processingTimeSec}s</c:if></td></tr>
 
                     </table>
 

@@ -13,7 +13,7 @@ import pl.edu.icm.cermine.structure.tools.BxModelUtils;
  * @author Paweł Szostek
  * @author Dominika Tkaczyk
  */
-public class PdfTextExtractor implements DocumentTextExtractor<String> {
+public class PdfRawTextExtractor implements DocumentTextExtractor<String> {
     /** individual character extractor */
     private CharacterExtractor characterExtractor;
     
@@ -23,13 +23,13 @@ public class PdfTextExtractor implements DocumentTextExtractor<String> {
     /** reading order resolver */
     private ReadingOrderResolver roResolver;
     
-    public PdfTextExtractor() throws AnalysisException {
+    public PdfRawTextExtractor() throws AnalysisException {
         characterExtractor = new ITextCharacterExtractor();
         documentSegmenter = new DocstrumSegmenter();
         roResolver = new HierarchicalReadingOrderResolver();
     }
     
-    public PdfTextExtractor(CharacterExtractor glyphExtractor, DocumentSegmenter pageSegmenter, ReadingOrderResolver roResolver) {
+    public PdfRawTextExtractor(CharacterExtractor glyphExtractor, DocumentSegmenter pageSegmenter, ReadingOrderResolver roResolver) {
         this.characterExtractor = glyphExtractor;
         this.documentSegmenter = pageSegmenter;
         this.roResolver = roResolver;

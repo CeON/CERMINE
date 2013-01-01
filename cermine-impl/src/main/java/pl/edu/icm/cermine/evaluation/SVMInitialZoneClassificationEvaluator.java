@@ -18,17 +18,19 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelec
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
-public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator{ 
-	@Override
-	protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException
-	{
-		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
-		for(BxDocument doc: trainingDocuments)
-			for(BxZone zone: doc.asZones())
-				zone.setLabel(zone.getLabel().getGeneralLabel());
-		
+public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
+
+    @Override
+    protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException {
+        FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
+        for (BxDocument doc : trainingDocuments) {
+            for (BxZone zone : doc.asZones()) {
+                zone.setLabel(zone.getLabel().getGeneralLabel());
+            }
+        }
+
         List<TrainingSample<BxZoneLabel>> trainingSamples;
-        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder, 
+        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder,
                 BxZoneLabel.getLabelToGeneralMap());
 
         // Filter the training documents
@@ -39,42 +41,42 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         trainingSamples = selector.pickElements(trainingSamples);
 
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
-		svm_parameter param = SVMZoneClassifier.getDefaultParam();
-		param.svm_type = svm_parameter.C_SVC;
-		param.gamma = 0.0625;
-		param.C = 2.82842712475;
-		param.degree = 4;
-		param.kernel_type = svm_parameter.POLY;
+        svm_parameter param = SVMZoneClassifier.getDefaultParam();
+        param.svm_type = svm_parameter.C_SVC;
+        param.gamma = 0.0625;
+        param.C = 2.82842712475;
+        param.degree = 4;
+        param.kernel_type = svm_parameter.POLY;
 
-		zoneClassifier.setParameter(param);
+        zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
         zoneClassifier.printWeigths(featureVectorBuilder);
         zoneClassifier.saveModel("svm_initial_classifier");
-		return zoneClassifier;
-	}
+        return zoneClassifier;
+    }
 
 	public static void main(String[] args) 
 			throws ParseException, AnalysisException, IOException, TransformationException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialZoneClassificationEvaluator());
 	}
 
-	@Override
-	protected ClassificationResults compareDocuments(BxDocument expected, BxDocument actual) {
-		ClassificationResults ret = newResults();
-		for(Integer idx=0; idx < actual.asZones().size(); ++idx) {
-			ClassificationResults itemResults = compareItems(expected.asZones().get(idx), actual.asZones().get(idx));
-			ret.add(itemResults);
-		}
-		return ret;
-	}
+    @Override
+    protected ClassificationResults compareDocuments(BxDocument expected, BxDocument actual) {
+        ClassificationResults ret = newResults();
+        for (Integer idx = 0; idx < actual.asZones().size(); ++idx) {
+            ClassificationResults itemResults = compareItems(expected.asZones().get(idx), actual.asZones().get(idx));
+            ret.add(itemResults);
+        }
+        return ret;
+    }
 
-	@Override
-	protected void preprocessDocumentForEvaluation(BxDocument doc) {
-		for(BxZone zone: doc.asZones()) {
+    @Override
+    protected void preprocessDocumentForEvaluation(BxDocument doc) {
+        for (BxZone zone : doc.asZones()) {
 //			if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER)
 //				zone.setLabel(BxZoneLabel.GEN_BODY);
 //			else
-				zone.setLabel(zone.getLabel().getGeneralLabel());
-		}
-	}
+            zone.setLabel(zone.getLabel().getGeneralLabel());
+        }
+    }
 }

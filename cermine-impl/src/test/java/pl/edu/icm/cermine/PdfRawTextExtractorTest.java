@@ -15,7 +15,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfTextExtractorTest {
+public class PdfRawTextExtractorTest {
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test2.pdf";
     static final private String EXP_FILE = "/pl/edu/icm/cermine/test2.txt";
     
@@ -23,7 +23,7 @@ public class PdfTextExtractorTest {
     
     @Before
     public void setUp() throws AnalysisException {
-        extractor = new PdfTextExtractor();
+        extractor = new PdfRawTextExtractor();
     }
     
     @Test

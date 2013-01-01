@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.edu.icm.cermine.service;
 
 import java.util.List;
@@ -18,6 +14,6 @@ public interface TaskManager {
     
     List<ExtractionTask> taskList();
 
-    public String getProperFilename(String filename);
+    String getProperFilename(String filename);
     
 }

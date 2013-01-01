@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import pl.edu.icm.cermine.evaluation.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -128,7 +129,7 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
         return document;
     }
 
-	public static void main(String[] args) throws AnalysisException, IOException {
+	public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
 		// args[0] path to the directory containing XML files
 		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream("/pl/edu/icm/cermine/textr/svm_metadata_classifier"));

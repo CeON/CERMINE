@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.cermine.structure.HMMZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
@@ -49,7 +50,7 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 		return zoneClassifier;
 	}
 	
-	public static void main(String[] args) throws ParseException, AnalysisException, IOException {
+	public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new HMMZoneClassificationEvaluator());
 	}
 

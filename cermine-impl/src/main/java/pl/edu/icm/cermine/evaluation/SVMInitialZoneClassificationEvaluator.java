@@ -5,6 +5,7 @@ import java.util.List;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -53,7 +54,7 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 	}
 
 	public static void main(String[] args) 
-			throws ParseException, AnalysisException, IOException {
+			throws ParseException, AnalysisException, IOException, TransformationException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialZoneClassificationEvaluator());
 	}
 

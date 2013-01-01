@@ -7,7 +7,9 @@ import java.util.Map;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
+import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
@@ -120,7 +122,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
     }
 
     public static void main(String[] args)
-            throws ParseException, AnalysisException, IOException {
+            throws ParseException, AnalysisException, IOException, TransformationException {
         CrossvalidatingZoneClassificationEvaluator.main(args, new SVMMetadataClassificationEvaluator());
     }
 

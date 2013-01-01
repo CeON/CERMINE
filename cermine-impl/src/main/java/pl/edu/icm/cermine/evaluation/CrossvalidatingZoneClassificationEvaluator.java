@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
@@ -47,7 +48,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 
     //sample launch: -fold 5 /path/to/your/xml/catalog
     public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator)
-            throws ParseException, AnalysisException, IOException {
+            throws ParseException, AnalysisException, IOException, TransformationException {
         Options options = new Options();
         options.addOption("compact", false, "do not print results for pages");
         options.addOption("fold", true, "foldness of cross-validation");
@@ -90,7 +91,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         }
     }
 
-    public void run(String inDir, String outDir) throws AnalysisException, IOException {
+    public void run(String inDir, String outDir) throws AnalysisException, IOException, TransformationException {
         List<BxDocument> evaluationDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
         ClassificationResults summary = newResults();
 

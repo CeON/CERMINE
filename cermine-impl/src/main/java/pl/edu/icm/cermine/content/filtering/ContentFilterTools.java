@@ -7,6 +7,7 @@ import java.util.Map;
 import pl.edu.icm.cermine.content.filtering.features.*;
 import pl.edu.icm.cermine.evaluation.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
@@ -34,7 +35,7 @@ public final class ContentFilterTools {
                 ));
     }
     
-    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException {
+    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException, TransformationException {
         List<BxDocument> documents = EvaluationUtils.getDocumentsFromPath(trainPath);
         return toTrainingSamples(documents);
     }

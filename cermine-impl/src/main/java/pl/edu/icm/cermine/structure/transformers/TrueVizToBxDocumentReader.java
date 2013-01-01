@@ -85,15 +85,21 @@ public class TrueVizToBxDocumentReader {
             }
             return pages;
         } catch (IOException ex) {
+        	System.err.println(ex.getMessage());
             throw new TransformationException(ex);
         } catch (ParserConfigurationException ex) {
+        	System.err.println(ex.getMessage());
             throw new TransformationException(ex);
         } catch (SAXException ex) {
+        	System.err.println(ex.getMessage());
             throw new TransformationException(ex);
         }
     }
 
-    protected <A extends Indexable<A>> List<A> reorderList(List<A> list) {
+    protected <A extends Indexable<A>> List<A> reorderList(List<A> list) throws IllegalStateException{
+    	if(list.isEmpty()) {
+    		return list;
+    	}
         Map<String, A> elems = new HashMap<String, A>();
         List<A> ordered = new ArrayList<A>(list.size());
         for (A elem : list) {
@@ -105,13 +111,23 @@ public class TrueVizToBxDocumentReader {
             if (elem.getPrev() == null) {//first element at all
                 start = elem;
                 break;
-            } else if (!elems.keySet().contains(elem.getPrev().getId())) {
-                start = elem;
-                break;
             }
         }
+        //maybe we are somewhere in the middle of the document
+        if(start == null) {
+        	for(A elem : list) {
+        		if (!elems.keySet().contains(elem.getPrev().getId())) {
+        			start = elem;
+        			break;
+        		}
+        	}
+        }
+        //there is not previous element..
         if (start == null) {
-            throw new RuntimeException("");
+        	for(A elem : list) {
+        		System.out.println(elem.getPrev());
+        	}
+            throw new IllegalStateException("Start element not found");
         }
         do {
             ordered.add(start);
@@ -122,7 +138,7 @@ public class TrueVizToBxDocumentReader {
         } while (elems.keySet().contains(start.getId()));
 
         if (ordered.size() != list.size()) {
-            throw new RuntimeException("Output list size doesn't match the input one!");
+            throw new IllegalStateException("Output list size doesn't match the input one: " + ordered.size() + " " + list.size());
         }
         return ordered;
     }
@@ -349,12 +365,9 @@ public class TrueVizToBxDocumentReader {
         if (ZONE_LABEL_MAP.containsKey(val.toLowerCase())) {
             return ZONE_LABEL_MAP.get(val.toLowerCase());
         } else {
-            try {
                 if (BxZoneLabel.valueOf(val.toUpperCase()) != null) {
                     return BxZoneLabel.valueOf(val.toUpperCase());
                 }
-            } catch (IllegalArgumentException ex) {
-            }
         }
         return BxZoneLabel.OTH_UNKNOWN;
     }

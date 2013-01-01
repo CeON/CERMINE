@@ -3,6 +3,7 @@ package pl.edu.icm.cermine.content.headers;
 import java.io.IOException;
 import java.util.List;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.optimization.LibSVMExporter;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
@@ -13,7 +14,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
  */
 public final class LibSVMHeaderLinesExporter {
     
-    public static void main(String[] args) throws AnalysisException, IOException {
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
         if (args.length < 2) {
             System.out.println("Usage: LibSVMContentHeadersExporter <input dir> <output>");
             return;

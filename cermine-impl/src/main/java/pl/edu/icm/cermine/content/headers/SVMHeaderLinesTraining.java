@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import libsvm.svm_parameter;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
@@ -31,7 +32,7 @@ public final class SVMHeaderLinesTraining {
         contentFilter.saveModel(output);
     }
     
-    public static void main(String[] args) throws AnalysisException, IOException {
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
         if (args.length < 2) {
             System.out.println("Usage: SVMContentHeaderTraining <input dir> <output>");
             return;

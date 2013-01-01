@@ -2,12 +2,14 @@ package pl.edu.icm.cermine.evaluation;
 
 import java.io.File;
 import java.util.List;
+
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.tools.classification.general.DirExtractor;
 import pl.edu.icm.cermine.tools.classification.general.DocumentsExtractor;
 
 public class EvaluationUtils {
-    public static List<BxDocument> getDocumentsFromPath(String inputDirPath)
+    public static List<BxDocument> getDocumentsFromPath(String inputDirPath) throws TransformationException
 	{
 		if (inputDirPath == null) {
 			throw new NullPointerException("Input directory must not be null.");
@@ -19,11 +21,7 @@ public class EvaluationUtils {
 		DocumentsExtractor extractor = new DirExtractor(inputDirPath);
 		
 		List<BxDocument> evaluationDocuments;
-		try {
-			 evaluationDocuments = extractor.getDocuments();
-		} catch(Exception e) {
-			throw new RuntimeException("Unable to get evaluation documents from the indicated location! Got exception: ", e);
-		}
+		evaluationDocuments = extractor.getDocuments();
 		return evaluationDocuments;
 	}
    

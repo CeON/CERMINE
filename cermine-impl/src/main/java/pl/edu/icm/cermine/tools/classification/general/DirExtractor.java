@@ -50,8 +50,12 @@ public class DirExtractor implements DocumentsExtractor
                     newDoc.setFilename(filename);
                     newDoc.setPages(pages);
                     documents.add(newDoc);
+                } catch (IllegalStateException ex) {
+                	System.err.println(ex.getMessage());
+                	System.err.println(dirPath + filename);
+                	throw ex;
                 } catch (FileNotFoundException ex) {
-                    throw new TransformationException("Cannot read file!", ex);
+                    throw new TransformationException("File not found!", ex);
                 } finally {
                     if (is != null) {
                         try {

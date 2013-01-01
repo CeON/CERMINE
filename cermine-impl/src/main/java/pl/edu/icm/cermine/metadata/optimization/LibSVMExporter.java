@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.apache.commons.cli.*;
-import pl.edu.icm.cermine.evaluation.CrossvalidatingZoneClassificationEvaluator;
 import pl.edu.icm.cermine.evaluation.EvaluationUtils;
-import pl.edu.icm.cermine.evaluation.SVMInitialZoneClassificationEvaluator;
-import pl.edu.icm.cermine.evaluation.SVMMetadataClassificationEvaluator;
+import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
+import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
@@ -57,7 +57,7 @@ public class LibSVMExporter {
         System.out.println("Done.");
     }
 
-    public static void main(String[] args) throws ParseException, IOException {
+    public static void main(String[] args) throws ParseException, IOException, TransformationException {
         Options options = new Options();
         options.addOption("meta", false, "export data for metadata classification");
         options.addOption("initial", false, "export data for initial classification");
@@ -95,7 +95,7 @@ public class LibSVMExporter {
                 }
             }
         } else {
-            throw new InvalidParameterException("Extraction purpose not specified!");
+            throw new InvalidParameterException("Export purpose not specified!");
         }
 
         SampleSelector<BxZoneLabel> selector = null;

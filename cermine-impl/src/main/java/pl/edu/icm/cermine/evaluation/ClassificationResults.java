@@ -1,7 +1,9 @@
 package pl.edu.icm.cermine.evaluation;
 
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.LabelPair;
@@ -64,6 +66,63 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         badRecognitions += results.badRecognitions;
     }
 
+    public void printQualityMeasures() {
+    	double accuracy;
+    	int correctly = 0;
+    	int all = 0;
+    	for(BxZoneLabel label : possibleLabels) {
+    		LabelPair coord = new LabelPair(label, label);
+    		correctly += classificationMatrix.get(coord);
+    		for(BxZoneLabel label1 : possibleLabels) {
+    			LabelPair coord1 = new LabelPair(label, label1);
+    			all += classificationMatrix.get(coord1);
+    		}
+    	}
+    	accuracy = (double) correctly / (double) all;
+    	Formatter formatter = new Formatter(System.out, Locale.US);
+    	formatter.format("Accuracy = 2.2f", accuracy*100.0);
+
+    	Map<BxZoneLabel, Double> precisions = new HashMap<BxZoneLabel, Double>();
+    	for(BxZoneLabel predictedClass : possibleLabels) {
+    		Integer correctPredictions = null;
+    		Integer predictions = 0;
+    		for(BxZoneLabel realClass : possibleLabels) {
+    			if(realClass.equals(predictedClass)) {
+    				correctPredictions = classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    			}
+    			predictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    		}
+    		precisions.put(predictedClass, (double)correctPredictions/predictions);
+    		
+    	}
+    	double precision = 0.0;
+    	for(Double value: precisions.values()) {
+    		precision += value;
+    	}
+    	precision /= possibleLabels.size();
+    	formatter.format("Precision = 2.2f", precision*100.0);
+    	
+    	Map<BxZoneLabel, Double> recalls = new HashMap<BxZoneLabel, Double>();
+    	for(BxZoneLabel realClass : possibleLabels) {
+    		Integer correctPredictions = null;
+    		Integer predictions = 0;
+    		for(BxZoneLabel predictedClass : possibleLabels) {
+    			if(realClass.equals(predictedClass)) {
+    				correctPredictions = classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    			}
+    			predictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    		}
+    		recalls.put(realClass, (double)correctPredictions/predictions);
+    		
+    	}
+    	double recall = 0;
+    	for(Double value: recalls.values()) {
+    		recall += value;
+    	}
+    	recall /= possibleLabels.size();
+    	formatter.format("Recall = 2.2f", recall*100.0);
+    }
+    
     public void printMatrix() {
         int maxLabelLength = 0;
 

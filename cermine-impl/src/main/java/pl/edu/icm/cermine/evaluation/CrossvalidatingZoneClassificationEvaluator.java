@@ -275,6 +275,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         results.printMatrix();
         results.printLongSummary();
         results.printShortSummary();
+        results.printQualityMeasures();
     }
 
     protected abstract ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws AnalysisException, IOException;

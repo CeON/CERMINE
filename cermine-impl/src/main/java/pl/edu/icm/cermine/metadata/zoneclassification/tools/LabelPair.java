@@ -3,8 +3,10 @@ package pl.edu.icm.cermine.metadata.zoneclassification.tools;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 public class LabelPair {
-
-    public BxZoneLabel l1, l2;
+	/** expected */
+    public BxZoneLabel l1;
+    /** predicted **/
+    public BxZoneLabel l2;
 
     public LabelPair(BxZoneLabel l1, BxZoneLabel l2) {
         this.l1 = l1;

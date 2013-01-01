@@ -110,6 +110,15 @@
 
 	<build>
 		<plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>    
+                </configuration>
+            </plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.1.2</version>

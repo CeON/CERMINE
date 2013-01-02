@@ -118,6 +118,14 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>    
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>create-my-bundle</id>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>

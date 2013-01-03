@@ -63,6 +63,10 @@ public class PubmedCollectionIterator implements Iterable<PubmedEntry> {
         }
     }
 
+    public Integer size() {
+    	return entries.size();
+    }
+    
     @Override
     public Iterator<PubmedEntry> iterator() {
         return new Iterator<PubmedEntry>() {

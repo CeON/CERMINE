@@ -4,12 +4,15 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.EvaluationUtils;
+import pl.edu.icm.cermine.evaluation.EvaluationUtils.DocumentsIterator;
+import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
@@ -31,6 +34,9 @@ public class LibSVMExporter {
             FileWriter fstream = new FileWriter(filePath);
             svmDataFile = new BufferedWriter(fstream);
             for (TrainingSample<BxZoneLabel> elem : trainingElements) {
+            	if(elem.getLabel() == null) {
+            		continue;
+            	}
                 svmDataFile.write(String.valueOf(elem.getLabel().ordinal()));
                 svmDataFile.write(" ");
 
@@ -56,11 +62,9 @@ public class LibSVMExporter {
         
         System.out.println("Done.");
     }
-
-    public static void main(String[] args) throws ParseException, IOException, TransformationException {
+    
+    public static void main(String[] args) throws ParseException, IOException, TransformationException, AnalysisException {
         Options options = new Options();
-        options.addOption("meta", false, "export data for metadata classification");
-        options.addOption("initial", false, "export data for initial classification");
         options.addOption("under", false, "use undersampling for data selection");
         options.addOption("over", false, "use oversampling for data selection");
         options.addOption("normal", false, "don't use any special strategy for data selection");
@@ -68,58 +72,63 @@ public class LibSVMExporter {
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
 
-        if (args.length != 3 || !(line.hasOption("initial") ^ line.hasOption("meta")) || !(line.hasOption("under") ^ line.hasOption("over") ^ line.hasOption("normal"))) {
+        if (args.length != 2 ||  !(line.hasOption("under") ^ line.hasOption("over") ^ line.hasOption("normal"))) {
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp(args[0] + " [-options] input-directory", options);
+            formatter.printHelp(" [-options] input-directory", options);
             System.exit(1); 
         }
         String inputDirPath = line.getArgs()[0];
-        List<BxDocument> evaluationDocs = EvaluationUtils.getDocumentsFromPath(inputDirPath);
-        List<TrainingSample<BxZoneLabel>> trainingElements;
 
-        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder;
-        BxZoneLabelCategory category;
-        Map<BxZoneLabel, BxZoneLabel> labelMap = null;
+        Map<BxZoneLabel, BxZoneLabel> labelMap = BxZoneLabel.getLabelToGeneralMap();
 
-        if (line.hasOption("initial")) {
-            vectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
-            labelMap = BxZoneLabel.getLabelToGeneralMap();
-            category = BxZoneLabelCategory.CAT_GENERAL;
-        } else if (line.hasOption("meta")) {
-            vectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
-            category = BxZoneLabelCategory.CAT_METADATA;
-            for (BxDocument doc : evaluationDocs) {
-                for (BxZone zone : doc.asZones()) {
-                    if (zone.getLabel().getCategory() != BxZoneLabelCategory.CAT_METADATA) {
-                        zone.setLabel(zone.getLabel().getGeneralLabel());
-                    }
-                }
-            }
-        } else {
-            throw new InvalidParameterException("Export purpose not specified!");
-        }
-
-        SampleSelector<BxZoneLabel> selector = null;
+        SampleSelector<BxZoneLabel> sampler = null;
         if (line.hasOption("over")) {
-            selector = new OversamplingSelector<BxZoneLabel>(1.0);
+            sampler = new OversamplingSelector<BxZoneLabel>(1.0);
         } else if (line.hasOption("under")) {
-            selector = new UndersamplingSelector<BxZoneLabel>(2.0);
+            sampler = new UndersamplingSelector<BxZoneLabel>(2.0);
         } else if (line.hasOption("normal")) {
-            selector = new NormalSelector<BxZoneLabel>();
+            sampler = new NormalSelector<BxZoneLabel>();
         } else {
             System.err.println("Sampling strategy is not specified!");
             System.exit(1);
         }
 
-        try {
-            trainingElements = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(evaluationDocs, vectorBuilder, labelMap);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to process the delivered training documents!");
+        List<TrainingSample<BxZoneLabel>> initialTrainingElements = new ArrayList<TrainingSample<BxZoneLabel>>();
+        List<TrainingSample<BxZoneLabel>> metaTrainingElements = new ArrayList<TrainingSample<BxZoneLabel>>();
+        
+        EvaluationUtils.DocumentsIterator iter = new DocumentsIterator(inputDirPath);
+        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder;
+        Integer docIdx = 0;
+        for(BxDocument doc: iter) {
+        	System.out.println(docIdx + ": " + doc.getFilename());
+        	////
+        	for (BxZone zone : doc.asZones()) {
+        		if (zone.getLabel() != null) {
+        			if (zone.getLabel().getCategory() != BxZoneLabelCategory.CAT_METADATA) {
+        				zone.setLabel(zone.getLabel().getGeneralLabel());
+        			}
+        		}
+        	}
+        	vectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
+        	List<TrainingSample<BxZoneLabel>> newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, labelMap);
+        	metaTrainingElements.addAll(newSamples);
+        	////
+        	for (BxZone zone : doc.asZones()) {
+        		if(zone.getLabel() != null) {
+        			zone.setLabel(zone.getLabel().getGeneralLabel());
+        		}
+        	}
+        	vectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
+        	newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, labelMap);
+        	initialTrainingElements.addAll(newSamples);
+        	////
+        	++docIdx;
         }
-        for(TrainingSample<BxZoneLabel> sample : trainingElements)
-        	System.out.println(sample.getLabel());
-        trainingElements = ClassificationUtils.filterElements(trainingElements, category);
-        trainingElements = selector.pickElements(trainingElements);
-        toLibSVM(trainingElements, "zone_classification.dat");
+
+        initialTrainingElements = sampler.pickElements(initialTrainingElements);
+        metaTrainingElements = sampler.pickElements(metaTrainingElements);
+
+        toLibSVM(initialTrainingElements, "initial_zone_classification.dat");
+        toLibSVM(metaTrainingElements, "meta_zone_classification.dat");
     }
 }

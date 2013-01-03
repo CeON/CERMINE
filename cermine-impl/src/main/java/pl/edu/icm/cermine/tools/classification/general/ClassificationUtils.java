@@ -15,11 +15,14 @@ public class ClassificationUtils {
         }
 
         List<TrainingSample<BxZoneLabel>> ret = new ArrayList<TrainingSample<BxZoneLabel>>();
-
+        
         for (TrainingSample<BxZoneLabel> elem : elements) {
         //	System.out.println(elem);
         //	System.out.println(elem.getLabel());
         //	System.out.println(elem.getLabel().getCategory());
+        	if (elem.getLabel() == null) {
+        		continue;
+        	}
             if (elem.getLabel().getCategory() == category) {
                 ret.add(elem);
             }

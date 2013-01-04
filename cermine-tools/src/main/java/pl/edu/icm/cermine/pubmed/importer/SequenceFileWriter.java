@@ -90,6 +90,7 @@ public class SequenceFileWriter {
     			documentBytesWritable.set(docBytes, 0, docBytes.length);
     			writer.append(rowKeyBytesWritable, documentBytesWritable);
     			nlm_fis.close();
+    			pdf_fis.close();
     			++fileCounter;
     		}
     	} finally {

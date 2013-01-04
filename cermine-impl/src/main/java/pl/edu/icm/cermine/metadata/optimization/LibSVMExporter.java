@@ -108,6 +108,7 @@ public class LibSVMExporter {
         				zone.setLabel(zone.getLabel().getGeneralLabel());
         			}
         		}
+        		System.out.println(zone.getLabel());
         	}
         	vectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
         	List<TrainingSample<BxZoneLabel>> newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, labelMap);

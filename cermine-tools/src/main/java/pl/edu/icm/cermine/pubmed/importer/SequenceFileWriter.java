@@ -50,51 +50,58 @@ public class SequenceFileWriter {
     }
 
     private static void generateSequenceFile(String inputDir, String outputSequenceFile) throws IOException {
-//    	SequenceFile.Writer writer = createSequenceFileWriter(outputSequenceFile, byte[].class, byte[].class);
-    	SequenceFile.Writer writer = createSequenceFileWriter(outputSequenceFile, BytesWritable.class, BytesWritable.class);
+    	SequenceFile.Writer sequenceFileWriter = createSequenceFileWriter(outputSequenceFile, BytesWritable.class, BytesWritable.class);
     	PubmedCollectionIterator iter = new PubmedCollectionIterator(inputDir);
+    	Integer fileCounter = 0;
+    	Integer filesAfterDump = 0;
+    	System.out.println(iter.size());
+
     	try {
-    		BytesWritable rowKeyBytesWritable = new BytesWritable();
-    		BytesWritable documentBytesWritable = new BytesWritable();
-    		Integer fileCounter = 0;
-    		System.out.println(iter.size());
     		for(PubmedEntry item : iter) {
+    			DocumentProtos.Document.Builder documentProtosBuilder = DocumentProtos.Document.newBuilder();
+    			BytesWritable rowKeyBytesWritable = new BytesWritable();
+    			BytesWritable documentBytesWritable = new BytesWritable();
+
+    			++filesAfterDump;
     			File nlm = item.getNlm();
     			File pdf = item.getPdf();
     			System.out.println(fileCounter + ": " + nlm.getName());
 
+    			documentProtosBuilder.setKey(item.getKey());
+
     			InputStream nlm_fis = null;
-    			DocumentProtos.Document.Builder db = DocumentProtos.Document.newBuilder();
     			if(nlm != null) {
     				nlm_fis = new FileInputStream(item.getNlm());
-    				db.setNlm(ByteString.copyFrom(IOUtils.toByteArray(nlm_fis)));
+    				documentProtosBuilder.setNlm(ByteString.copyFrom(IOUtils.toByteArray(nlm_fis)));
     			} else {
-    				db.setPdf(ByteString.EMPTY);
+    				documentProtosBuilder.setNlm(ByteString.EMPTY);
     			}
+    			nlm_fis.close();
 
     			InputStream pdf_fis = null;
     			if(pdf != null) {
     				pdf_fis = new FileInputStream(item.getPdf());
-    				db.setPdf(ByteString.copyFrom(IOUtils.toByteArray(pdf_fis)));
+    				documentProtosBuilder.setPdf(ByteString.copyFrom(IOUtils.toByteArray(pdf_fis)));
     			} else {
-    				db.setPdf(ByteString.EMPTY);
+    				documentProtosBuilder.setPdf(ByteString.EMPTY);
     			}
+    			pdf_fis.close();
 
-    			db.setKey(item.getKey());
-    			Document d = db.build();
+    			Document d = documentProtosBuilder.build();
 
     			byte[] rowBytes = item.getKey().getBytes();
     			byte[] docBytes = d.toByteArray();
-
     			rowKeyBytesWritable.set(rowBytes, 0, rowBytes.length);
     			documentBytesWritable.set(docBytes, 0, docBytes.length);
-    			writer.append(rowKeyBytesWritable, documentBytesWritable);
-    			nlm_fis.close();
-    			pdf_fis.close();
+    			sequenceFileWriter.append(rowKeyBytesWritable, documentBytesWritable);
+    			if(filesAfterDump == 256) {
+    				sequenceFileWriter.syncFs();
+    				filesAfterDump = 0;
+    			}
     			++fileCounter;
     		}
     	} finally {
-    		writer.close();
+    		sequenceFileWriter.close();
     	}
     }
 
@@ -102,12 +109,13 @@ public class SequenceFileWriter {
         Configuration conf = new Configuration();
         Path path = new Path(uri);
 
-//        SequenceFile.Writer writer = SequenceFile.createWriter(conf,
-//                SequenceFile.Writer.file(path),
-//                SequenceFile.Writer.keyClass(keyClass),
-//                SequenceFile.Writer.valueClass(valueClass));
-        FileSystem fs = FileSystem.get(URI.create(uri), conf);
-        SequenceFile.Writer writer = SequenceFile.createWriter(fs, conf, path, keyClass, valueClass);
+        SequenceFile.Writer writer = SequenceFile.createWriter(conf,
+                SequenceFile.Writer.file(path),
+                SequenceFile.Writer.keyClass(keyClass),
+                SequenceFile.Writer.valueClass(valueClass),
+                SequenceFile.Writer.bufferSize(1<<25));
+//        FileSystem fs = FileSystem.get(URI.create(uri), conf);
+//        SequenceFile.Writer writer = SequenceFile.createWriter(fs, conf, path, keyClass, valueClass);
         return writer;
     }
 }

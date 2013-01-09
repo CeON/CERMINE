@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.evaluation;
 
+import java.util.Collection;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,43 +67,56 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         badRecognitions += results.badRecognitions;
     }
 
+    public Double sum(Collection<Double> collection) {
+    	Double sum = 0.0;
+    	for(Double elem: collection) {
+    		sum += elem;
+    	}
+    	return sum;
+    }
+    
     public void printQualityMeasures() {
     	double accuracy;
     	int correctly = 0;
     	int all = 0;
+    	final Double EPS = 0.00001;
+
     	for(BxZoneLabel label : possibleLabels) {
-    		LabelPair coord = new LabelPair(label, label);
-    		correctly += classificationMatrix.get(coord);
+    		LabelPair positiveCoord = new LabelPair(label, label);
+    		correctly += classificationMatrix.get(positiveCoord);
     		for(BxZoneLabel label1 : possibleLabels) {
-    			LabelPair coord1 = new LabelPair(label, label1);
-    			all += classificationMatrix.get(coord1);
+    			LabelPair traversingCoord = new LabelPair(label, label1);
+    			all += classificationMatrix.get(traversingCoord);
     		}
     	}
     	accuracy = (double) correctly / (double) all;
     	Formatter formatter = new Formatter(System.out, Locale.US);
-    	formatter.format("Accuracy = 2.2f", accuracy*100.0);
+    	formatter.format("Accuracy = %2.2f\n", accuracy*100.0);
 
     	Map<BxZoneLabel, Double> precisions = new HashMap<BxZoneLabel, Double>();
+    	Integer pairsInvolved = 0;
     	for(BxZoneLabel predictedClass : possibleLabels) {
     		Integer correctPredictions = null;
-    		Integer predictions = 0;
+    		Integer allPredictions = 0;
     		for(BxZoneLabel realClass : possibleLabels) {
     			if(realClass.equals(predictedClass)) {
     				correctPredictions = classificationMatrix.get(new LabelPair(realClass, predictedClass));
     			}
-    			predictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    			allPredictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
     		}
-    		precisions.put(predictedClass, (double)correctPredictions/predictions);
+    		Double precision = (double)correctPredictions/allPredictions;
+    		precisions.put(predictedClass, precision);
+    		if(precision > EPS) {
+    			++pairsInvolved;
+    		}
     		
     	}
-    	double precision = 0.0;
-    	for(Double value: precisions.values()) {
-    		precision += value;
-    	}
-    	precision /= possibleLabels.size();
-    	formatter.format("Precision = 2.2f", precision*100.0);
+    	double precision = sum(precisions.values());
+    	precision /= pairsInvolved;;
+    	formatter.format("Precision = %2.2f\n", precision*100.0);
     	
     	Map<BxZoneLabel, Double> recalls = new HashMap<BxZoneLabel, Double>();
+    	pairsInvolved = 0;
     	for(BxZoneLabel realClass : possibleLabels) {
     		Integer correctPredictions = null;
     		Integer predictions = 0;
@@ -112,15 +126,15 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     			}
     			predictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
     		}
-    		recalls.put(realClass, (double)correctPredictions/predictions);
-    		
+    		Double recall = (double)correctPredictions/predictions;
+    		recalls.put(realClass, recall);
+    		if(recall > EPS) {
+    			++pairsInvolved;
+    		}
     	}
-    	double recall = 0;
-    	for(Double value: recalls.values()) {
-    		recall += value;
-    	}
-    	recall /= possibleLabels.size();
-    	formatter.format("Recall = 2.2f", recall*100.0);
+    	double recall = sum(recalls.values());
+    	recall /= pairsInvolved;
+    	formatter.format("Recall = %2.2f\n", recall*100.0);
     }
     
     public void printMatrix() {

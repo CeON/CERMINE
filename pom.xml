@@ -1,29 +1,51 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>pl.edu.icm.cermine</groupId>
     <artifactId>cermine-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-
     <name>CERMINE Content Extractor and Miner</name>
-
     <organization>
         <name>ICM, Warsaw University</name>
         <url>http://www.icm.edu.pl/</url>
     </organization>
-
     <modules>
         <module>cermine-api</module>
         <module>cermine-impl</module>
         <module>cermine-tools</module>
         <module>cermine-web</module>
     </modules>
-    
     <build>
         <pluginManagement>
             <plugins>
+                <!--This plugin's configuration is used to store Eclipse 
+                m2e settings only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>aspectj-maven-plugin</artifactId>
+                                        <versionRange>[1.0,)</versionRange>
+                                        <goals>
+                                            <goal>test-compile</goal>
+                                            <goal>compile</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute></execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
@@ -67,9 +89,8 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>		
-    </build>        
-	
+        </plugins>
+    </build>
     <repositories>
         <repository>
             <id>yadda</id>
@@ -77,7 +98,6 @@
             <url>http://maven.icm.edu.pl/artifactory/repo</url>
         </repository>
     </repositories>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -86,67 +106,55 @@
                 <version>4.8.2</version>
                 <scope>test</scope>
             </dependency>
-            
             <dependency>
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>2.6</version>
-            </dependency>      
-
+            </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>3.2.1</version>
-            </dependency>	              
-	              
+            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>11.0.1</version>
-            </dependency>   
-            
+            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-            
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
-            </dependency>            
-        	              
+            </dependency>
             <dependency>
                 <groupId>org.jdom</groupId>
                 <artifactId>jdom</artifactId>
                 <version>1.1</version>
             </dependency>
-            
             <dependency>
                 <groupId>com.thoughtworks.xstream</groupId>
                 <artifactId>xstream</artifactId>
                 <version>1.4.2</version>
             </dependency>
-            
             <dependency>
                 <groupId>xerces</groupId>
                 <artifactId>xercesImpl</artifactId>
                 <version>2.9.1</version>
-            </dependency>     
-            
+            </dependency>
             <dependency>
                 <groupId>pl.edu.icm.sedno</groupId>
                 <artifactId>sedno-tools</artifactId>
                 <version>1.2.4</version>
-            </dependency>                   
-        
+            </dependency>
         </dependencies>
     </dependencyManagement>
- 
-    <properties>   
+    <properties>
         <slf4j.version>1.6.4</slf4j.version>
         <spring.version>3.1.0.RELEASE</spring.version>
-    </properties>        
-
+    </properties>
 </project>

@@ -37,7 +37,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 //     Name, Name and Name
                 //     Name1, Name,1, Name,1,2
                 //     Name1*, Name1,*, Name,1*†
-                for (String part : text.split("(?=\\*|†)|,|\\band\\b|(?<=[^\\d])(?=[\\d])|(?<=\\d)\\s")) {
+                for (String part : text.split("(?=\\*|†)|,|\\band\\b|&|(?<=[^\\d])(?=[\\d])|(?<=\\d)\\s")) {
                     part = part.trim();
                     if (!part.isEmpty()) {
                         if (ref.matcher(part).matches()) {

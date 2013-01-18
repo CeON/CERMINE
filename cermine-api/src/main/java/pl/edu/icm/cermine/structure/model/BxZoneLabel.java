@@ -25,7 +25,7 @@ public enum BxZoneLabel {
 	
 	/** Other stuff left in the document. */
 	GEN_OTHER           (BxZoneLabelCategory.CAT_GENERAL),
-
+	
     /** Document's abstract. */
     MET_ABSTRACT        (BxZoneLabelCategory.CAT_METADATA),
     
@@ -94,7 +94,7 @@ public enum BxZoneLabel {
     OTH_PAGE_NUMBER     (BxZoneLabelCategory.CAT_OTHER),
     
     /** Undetermined zone. */
-    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_OTHER),
+    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_UNKNOWN),
     
     REFERENCES (BxZoneLabelCategory.CAT_REFERENCES);
          
@@ -107,6 +107,7 @@ public enum BxZoneLabel {
         CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_METADATA,     GEN_METADATA);
         CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_OTHER,        GEN_OTHER);
         CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_REFERENCES,   GEN_REFERENCES);
+        CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_UNKNOWN,      OTH_UNKNOWN);
     }
     
     private static final Map<BxZoneLabel, BxZoneLabelCategory> GENERAL_TO_CATEGORY = 
@@ -116,6 +117,7 @@ public enum BxZoneLabel {
         GENERAL_TO_CATEGORY.put(GEN_METADATA,     BxZoneLabelCategory.CAT_METADATA);
         GENERAL_TO_CATEGORY.put(GEN_OTHER,        BxZoneLabelCategory.CAT_OTHER);
         GENERAL_TO_CATEGORY.put(GEN_REFERENCES,   BxZoneLabelCategory.CAT_REFERENCES);
+        GENERAL_TO_CATEGORY.put(OTH_UNKNOWN,       BxZoneLabelCategory.CAT_UNKNOWN);
     }
     
     private static final Map<BxZoneLabel, BxZoneLabel> LABEL_TO_GENERAL = 
@@ -178,5 +180,9 @@ public enum BxZoneLabel {
     		ret.put(label, label);
         }
     	return ret;
+    }
+    
+    public static void main(String args[]) {
+    	System.out.println(LABEL_TO_GENERAL);
     }
 }

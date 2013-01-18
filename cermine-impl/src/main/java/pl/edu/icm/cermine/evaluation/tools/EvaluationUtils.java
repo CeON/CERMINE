@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.evaluation;
+package pl.edu.icm.cermine.evaluation.tools;
 
 import java.io.File;
 import java.io.FileInputStream;

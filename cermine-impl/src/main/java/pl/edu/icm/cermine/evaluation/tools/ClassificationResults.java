@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.evaluation;
+package pl.edu.icm.cermine.evaluation.tools;
 
 import java.util.Collection;
 import java.util.Formatter;
@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import pl.edu.icm.cermine.evaluation.AbstractEvaluator;
+import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Results;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -199,7 +202,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         System.out.println();
     }
 
-    void printShortSummary() {
+    public void printShortSummary() {
         int allRecognitions = goodRecognitions + badRecognitions;
         System.out.print("Good recognitions: " + goodRecognitions + "/" + allRecognitions);
         if (allRecognitions > 0) {
@@ -211,7 +214,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         }
     }
 
-    void printLongSummary() {
+    public void printLongSummary() {
         int maxLabelLength = 0;
         for (BxZoneLabel label : possibleLabels) {
             int labelLength = label.toString().length();

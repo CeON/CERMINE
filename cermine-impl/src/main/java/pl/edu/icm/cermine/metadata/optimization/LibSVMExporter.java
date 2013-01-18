@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.apache.commons.cli.*;
-import pl.edu.icm.cermine.evaluation.EvaluationUtils;
-import pl.edu.icm.cermine.evaluation.EvaluationUtils.DocumentsIterator;
+
+import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
+import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
@@ -79,8 +80,6 @@ public class LibSVMExporter {
         }
         String inputDirPath = line.getArgs()[0];
 
-        Map<BxZoneLabel, BxZoneLabel> labelMap = BxZoneLabel.getLabelToGeneralMap();
-
         SampleSelector<BxZoneLabel> sampler = null;
         if (line.hasOption("over")) {
             sampler = new OversamplingSelector<BxZoneLabel>(1.0);
@@ -89,7 +88,7 @@ public class LibSVMExporter {
         } else if (line.hasOption("normal")) {
             sampler = new NormalSelector<BxZoneLabel>();
         } else {
-            System.err.println("Sampling strategy is not specified!");
+            System.err.println("Sampling pattern is not specified!");
             System.exit(1);
         }
 
@@ -108,19 +107,28 @@ public class LibSVMExporter {
         				zone.setLabel(zone.getLabel().getGeneralLabel());
         			}
         		}
-        		System.out.println(zone.getLabel());
+        		else {
+        			zone.setLabel(BxZoneLabel.OTH_UNKNOWN);
+        		}
+        		//System.out.println(zone.getLabel());
         	}
         	vectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
-        	List<TrainingSample<BxZoneLabel>> newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, labelMap);
-        	metaTrainingElements.addAll(newSamples);
-        	////
-        	for (BxZone zone : doc.asZones()) {
-        		if(zone.getLabel() != null) {
-        			zone.setLabel(zone.getLabel().getGeneralLabel());
+        	List<TrainingSample<BxZoneLabel>> newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, BxZoneLabel.getIdentityMap());
+        	
+        	for(TrainingSample<BxZoneLabel> sample: newSamples) {
+        		if(sample.getLabel().getCategory() == BxZoneLabelCategory.CAT_METADATA) {
+        			metaTrainingElements.add(sample);
         		}
         	}
+        	for(TrainingSample<BxZoneLabel> sample: newSamples) {
+        		System.out.println("M " + sample.getLabel());
+        	}
+        	////
         	vectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
-        	newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, labelMap);
+        	newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
+        	for(TrainingSample<BxZoneLabel> sample: newSamples) {
+        		System.out.println("I " + sample.getLabel());
+        	}
         	initialTrainingElements.addAll(newSamples);
         	////
         	++docIdx;

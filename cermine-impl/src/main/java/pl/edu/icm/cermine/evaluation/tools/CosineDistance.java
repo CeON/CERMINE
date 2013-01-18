@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.pubmed;
+package pl.edu.icm.cermine.evaluation.tools;
 
 import java.util.HashMap;
 import java.util.List;

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Detail;
+import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
+import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;

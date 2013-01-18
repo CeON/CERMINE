@@ -1,10 +1,12 @@
 package pl.edu.icm.cermine;
 
 import java.io.*;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
@@ -35,14 +37,7 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
             characterExtractor = new ITextCharacterExtractor();
             documentSegmenter = new DocstrumSegmenter();
             roResolver = new HierarchicalReadingOrderResolver();
-            
-            InputStreamReader modelISRI = new InputStreamReader(PdfBxStructureExtractor.class
-                    .getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier"));
-            BufferedReader modelFileI = new BufferedReader(modelISRI);
-            InputStreamReader rangeISRI = new InputStreamReader(PdfBxStructureExtractor.class
-                    .getResourceAsStream("/pl/edu/icm/cermine/structure/svm_initial_classifier.range"));
-            BufferedReader rangeFileI = new BufferedReader(rangeISRI);
-            initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
+            initialClassifier = new SVMInitialZoneClassifier();
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create PdfBxStructureExtractor!", ex);
         }
@@ -106,23 +101,23 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
     	if(args.length != 1){
-    		System.err.println("USAGE: program FILE_PATH");
+    		System.err.println("USAGE: program DIR_PATH");
     		System.exit(1);
     	}
-
     	PdfBxStructureExtractor extractor = new PdfBxStructureExtractor();
-    	InputStream in = new FileInputStream(args[0]);
-    	BxDocument result = extractor.extractStructure(in);
-    	
-		FileWriter fstream = new FileWriter("PdfBxStructureExtractor_out.xml");
-        BufferedWriter out = new BufferedWriter(fstream);
-        try {
-            BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-            out.write(writer.write(result.getPages()));
-            writer.write(result.getPages());
-        } finally {
-            out.close();
-        }
+    	File dir = new File(args[0]);
+    	for(File pdf: dir.listFiles()) {
+    		BxDocument result = extractor.extractStructure(new FileInputStream(pdf));
+    		FileWriter fstream = new FileWriter(pdf.getName() + ".xml");
+            BufferedWriter out = new BufferedWriter(fstream);
+            try {
+                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                out.write(writer.write(result.getPages()));
+                writer.write(result.getPages());
+            } finally {
+                out.close();
+            }
+    	}
     }
    
 }

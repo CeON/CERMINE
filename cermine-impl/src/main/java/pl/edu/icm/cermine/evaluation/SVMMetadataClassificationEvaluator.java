@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
+
+import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
@@ -44,8 +46,8 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 1.0 / 8.0;
-        param.C = 16.0;
+        param.gamma = 1.0 / 2.0;
+        param.C = 256.0;
         //param.degree = 3;
         param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);
@@ -74,7 +76,7 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
                 continue;
             }
 
-            System.out.println("--- " + actualZone.getLabel() + " " + expectedZone.getLabel());
+            //System.out.println("--- " + actualZone.getLabel() + " " + expectedZone.getLabel());
             ret.add(compareItems(expectedZone, actualZone));
         }
         return ret;

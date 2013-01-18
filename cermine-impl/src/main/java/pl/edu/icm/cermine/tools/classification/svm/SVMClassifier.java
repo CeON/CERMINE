@@ -2,6 +2,7 @@ package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -197,7 +198,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		return weights;
 	}
 
-	public void loadModel(String modelFilePath, String rangeFilePath) throws IOException
+	public void loadModelFromResources(String modelFilePath, String rangeFilePath) throws IOException
 	{
 		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(modelFilePath));
@@ -206,10 +207,17 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(rangeFilePath));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
-		loadModel(modelFile, rangeFile);
+		loadModelFromFile(modelFile, rangeFile);
 	}
 	
-	public void loadModel(BufferedReader modelFile, BufferedReader rangeFile) throws IOException
+	public void loadModelFromFile(String modelFilePath, String rangeFilePath) throws IOException
+	{
+		BufferedReader modelFile = new BufferedReader(new InputStreamReader(new FileInputStream(modelFilePath)));
+		BufferedReader rangeFile = new BufferedReader(new InputStreamReader(new FileInputStream(rangeFilePath)));
+		loadModelFromFile(modelFile, rangeFile);
+	}
+	
+	public void loadModelFromFile(BufferedReader modelFile, BufferedReader rangeFile) throws IOException
 	{
 		Double feature_min, feature_max;
 		if(rangeFile.read() == 'x') {

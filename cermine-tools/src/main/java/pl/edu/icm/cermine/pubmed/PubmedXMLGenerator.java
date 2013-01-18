@@ -10,11 +10,20 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
+import org.apache.hadoop.io.BytesWritable;
+import org.apache.pig.EvalFunc;
+import org.apache.pig.data.DataByteArray;
+import org.apache.pig.data.Tuple;
+import org.apache.pig.data.TupleFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.PdfBxStructureExtractor;
+import pl.edu.icm.cermine.evaluation.tools.CosineDistance;
+import pl.edu.icm.cermine.evaluation.tools.SmithWatermanDistance;
+import pl.edu.icm.cermine.evaluation.tools.XMLTools;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -22,14 +31,14 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
-public class PubmedDatasetGenerator {
+public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 
     private static class LabelTrio {
 
         private BxZoneLabel label;
         private Double alignment;
         private List<String> entryTokens;
-
+        
         @Override
         public int hashCode() {
             final int prime = 31;
@@ -72,43 +81,49 @@ public class PubmedDatasetGenerator {
         }
     };
 
-    private static Double max(List<Double> values) {
-        Double max = Double.NEGATIVE_INFINITY;
-        for (Double val : values) {
-            if (!val.isNaN()) {
-                max = Math.min(max, val);
-            } else {
-                continue;
-            }
-        }
-        return max;
+    private Tuple output = TupleFactory.getInstance().newTuple(2);
+
+    @Override
+    public Tuple exec(Tuple input) throws IOException {
+    	String keyString = (String) input.get(0);
+    	DataByteArray pdfByteArray = (DataByteArray) input.get(1);
+    	DataByteArray nlmByteArray = (DataByteArray) input.get(2);
+    	BxDocument bxDoc = null;
+    	try {
+			bxDoc = generateTrueViz(new ByteArrayInputStream(pdfByteArray.get()),
+					new ByteArrayInputStream(nlmByteArray.get()));
+		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+			System.exit(1);
+		} catch (AnalysisException e) {
+			e.printStackTrace();
+			System.exit(2);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			System.exit(3);
+		} catch (SAXException e) {
+			e.printStackTrace();
+			System.exit(4);
+		} catch (TransformationException e) {
+			e.printStackTrace();
+			System.exit(5);
+		}
+    	BxDocumentToTrueVizWriter trueVizWriter = new BxDocumentToTrueVizWriter();
+    	String returnDoc = new String();
+    	try {
+    		returnDoc = trueVizWriter.write(bxDoc.getPages());
+		} catch (TransformationException e) {
+			e.printStackTrace();
+			System.exit(6);
+		}
+    	output.set(0, keyString);
+    	output.set(1, returnDoc);
+    	return output;
     }
 
-    private static Map<BxZoneLabel, Double> aggregate(List<LabelTrio> sims) {
-        HashMap<BxZoneLabel, Double> ret = new HashMap<BxZoneLabel, Double>();
-        for (LabelTrio trio : sims) {
-            if (ret.containsKey(trio.label)) {
-                ret.put(trio.label, ret.get(trio.label) + trio.alignment / trio.entryTokens.size());
-            } else {
-                ret.put(trio.label, trio.alignment / trio.entryTokens.size());
-            }
-        }
-        return ret;
-    }
-
-    public static void main(String[] args) throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
-        if (args.length != 1) {
-            System.err.println("Usage: <pubmed .pdf path>");
-            System.exit(1);
-        }
-        String pdfPath = args[0];
-        String nxmlPath = StringTools.getNLMPath(pdfPath);
-
+    public BxDocument generateTrueViz(InputStream pdfStream, InputStream nlmStream) 
+    		throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
         XPath xpath = XPathFactory.newInstance().newXPath();
-
-        InputStream pdfStream = new FileInputStream(pdfPath);
-        InputStream nxmlStream = new FileInputStream(nxmlPath);
-
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
         dbf.setFeature("http://xml.org/sax/features/namespaces", false);
@@ -117,7 +132,7 @@ public class PubmedDatasetGenerator {
         dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
         DocumentBuilder builder = dbf.newDocumentBuilder();
-        Document domDoc = builder.parse(nxmlStream);
+        Document domDoc = builder.parse(nlmStream);
 
         PdfBxStructureExtractor structureExtractor = new PdfBxStructureExtractor();
         BxDocument bxDoc = structureExtractor.extractStructure(pdfStream);
@@ -169,7 +184,7 @@ public class PubmedDatasetGenerator {
         entries.putIf(articleTypeStrings, BxZoneLabel.MET_TYPE);
 
         //received date
-        List<String> receivedDate = XMLTools.extractTextAsList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='received']", domDoc, XPathConstants.NODE));
+        List<String> receivedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='received']", domDoc, XPathConstants.NODE));
         if (!receivedDate.isEmpty()) {
             for (String date : StringTools.produceDates(receivedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
@@ -177,7 +192,7 @@ public class PubmedDatasetGenerator {
         }
 
         //accepted date
-        List<String> acceptedDate = XMLTools.extractTextAsList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='accepted']", domDoc, XPathConstants.NODE));
+        List<String> acceptedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='accepted']", domDoc, XPathConstants.NODE));
         if (!acceptedDate.isEmpty()) {
             for (String date : StringTools.produceDates(acceptedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
@@ -188,10 +203,10 @@ public class PubmedDatasetGenerator {
         List<String> pubdateString = null;
         if (((NodeList) xpath.evaluate("/article/front/article-meta/pub-date", domDoc, XPathConstants.NODESET)).getLength() > 1) {
             Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='epub']", domDoc, XPathConstants.NODE);
-            pubdateString = XMLTools.extractTextAsList(pubdateNode);
+            pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
         } else {
             Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='collection']", domDoc, XPathConstants.NODE);
-            pubdateString = XMLTools.extractTextAsList(pubdateNode);
+            pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
         }
         if (pubdateString != null && !pubdateString.isEmpty()) {
             for (String date : StringTools.produceDates(pubdateString)) {
@@ -539,6 +554,47 @@ public class PubmedDatasetGenerator {
             }
             System.out.println(curZone.getLabel() + " " + curZone.toText() + "\n");
         }
+        return bxDoc;
+    }
+    
+    private static Double max(List<Double> values) {
+        Double max = Double.NEGATIVE_INFINITY;
+        for (Double val : values) {
+            if (!val.isNaN()) {
+                max = Math.min(max, val);
+            } else {
+                continue;
+            }
+        }
+        return max;
+    }
+
+    private static Map<BxZoneLabel, Double> aggregate(List<LabelTrio> sims) {
+        HashMap<BxZoneLabel, Double> ret = new HashMap<BxZoneLabel, Double>();
+        for (LabelTrio trio : sims) {
+            if (ret.containsKey(trio.label)) {
+                ret.put(trio.label, ret.get(trio.label) + trio.alignment / trio.entryTokens.size());
+            } else {
+                ret.put(trio.label, trio.alignment / trio.entryTokens.size());
+            }
+        }
+        return ret;
+    }
+
+    public static void main(String[] args) throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
+        if (args.length != 1) {
+            System.err.println("Usage: <pubmed .pdf path>");
+            System.exit(1);
+        }
+        String pdfPath = args[0];
+        String nxmlPath = StringTools.getNLMPath(pdfPath);
+
+
+        InputStream pdfStream = new FileInputStream(pdfPath);
+        InputStream nxmlStream = new FileInputStream(nxmlPath);
+
+        PubmedXMLGenerator datasetGenerator = new PubmedXMLGenerator();
+        BxDocument bxDoc = datasetGenerator.generateTrueViz(pdfStream, nxmlStream);
 
         FileWriter fstream = new FileWriter(StringTools.getTrueVizPath(nxmlPath));
         BufferedWriter out = new BufferedWriter(fstream);
@@ -547,73 +603,5 @@ public class PubmedDatasetGenerator {
         out.close();
 
     }
+
 }
-/*
-#MET_TITLE
-/article/front/article-meta/title-group/article-title 
-
-#MET_DATES
-/article/front/article-meta/history/date[@date-type='received']/
-
-/article/front/article-meta/history/date[@date-type='accepted']/
-
-/article/front/article-meta/pub-date/
-
-#MET_ABSTRACT
-/article/front/article-meta/abstract/p 
-
-#MET_KEYWORDS
-/article/front/article-meta/kwd-group/kwd 
-
-#MET_BIB_INFO
-/article/front/journal-meta/journal-title
-/article/front/journal-meta/publisher/publisher-name
-/article/front/journal-meta/issn[@pub-type='ppub'] 
-/article/front/article-meta/article-id[@pub-id-type='doi']
-/article/front/article-meta/volume 
-/article/front/article-meta/issue 
-/article/front/article-meta/fpage
-/article/front/article-meta/lpage 
-
-#MET_TYPE
-/article/@article-type
-
-#MET_EDITOR
-/article/front/article-meta/contrib-group/contrib[@contrib-type='editor']/name/given-names
-/article/front/article-meta/contrib-group/contrib[@contrib-type='editor']/name/surname
-/article/front/article-meta/contrib-group/contrib[@contrib-type='editor']/email
-
-#MET_AUTHOR
-/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/name/given-names
-/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/name/surname
-
-#MET_CORRESPONDENCE
-/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/email
-/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/address/email
-
-#MET_AFFILIATION
-/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/aff
-/article/front/article-meta/contrib-group/contrib[@contrib-type='editor']/aff
-
-#GEN_REFERENCES
-/article/back/ref-list
-	/article/back/ref-list/ref/mixed-citation/article-title (article title)
-	/article/back/ref-list/ref/mixed-citation/edition (edition)
-	/article/back/ref-list/ref/mixed-citation/publisher-name (publisher name)
-	/article/back/ref-list/ref/mixed-citation/publisher-loc (publisher location)
-	/article/back/ref-list/ref/mixed-citation/series (series)
-	/article/back/ref-list/ref/mixed-citation/source (journal title)
-	/article/back/ref-list/ref/mixed-citation/uri (URI)
-	/article/back/ref-list/ref/mixed-citation/volume (volume)
-	/article/back/ref-list/ref/mixed-citation/year (year of publication)
-	/article/back/ref-list/ref/mixed-citation/issue (issue)
-	/article/back/ref-list/ref/mixed-citation/fpage (first page)
-	/article/back/ref-list/ref/mixed-citation/lpage (last page)
-	/article/back/ref-list/ref/mixed-citation/string-name (author)
-	/article/back/ref-list/ref/mixed-citation/string-name/given-names (author given names)
-	/article/back/ref-list/ref/mixed-citation/string-name/surname (author surname) 
-
-#GEN_BODY
-/article/body
- 
- */

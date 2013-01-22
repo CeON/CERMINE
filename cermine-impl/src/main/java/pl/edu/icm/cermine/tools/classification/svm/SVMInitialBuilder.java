@@ -3,13 +3,14 @@ package pl.edu.icm.cermine.tools.classification.svm;
 import java.io.IOException;
 import java.util.List;
 
+import libsvm.svm_parameter;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import libsvm.svm_parameter;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -21,8 +22,8 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
+import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSelector;
 
 public class SVMInitialBuilder {
 	protected static SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments, Integer kernelType, Double gamma, Double C, Integer degree) throws IOException, AnalysisException
@@ -40,7 +41,7 @@ public class SVMInitialBuilder {
         // so that in the learning examples all classes are
         // represented equally
 
-        SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
+        SampleSelector<BxZoneLabel> selector = new UndersamplingSelector<BxZoneLabel>(1.0);
         trainingSamples = selector.pickElements(trainingSamples);
 
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);

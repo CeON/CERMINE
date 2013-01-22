@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.pubmed;
+package pl.edu.icm.cermine.evaluation.tools;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class StringTools {
         }
     }
 
-    static List<String> produceDates(List<String> date) {
+    public static List<String> produceDates(List<String> date) {
         List<String> ret = new ArrayList<String>();
         Integer monthInt = Integer.valueOf(date.get(1));
         if (monthInt >= 1 && monthInt <= 12) {
@@ -83,11 +83,11 @@ public class StringTools {
         return ret;
     }
 
-    static String getTrueVizPath(String pdfPath) {
+    public static String getTrueVizPath(String pdfPath) {
         return getFileCoreName(pdfPath) + ".xml";
     }
 
-    static String getNLMPath(String pdfPath) {
+    public static String getNLMPath(String pdfPath) {
         return getFileCoreName(pdfPath) + ".nxml";
     }
 }

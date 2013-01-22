@@ -8,6 +8,7 @@ import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -24,7 +25,6 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 
     @Override
     protected ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException {
-        FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = getFeatureVectorBuilder();
         for (BxDocument doc : trainingDocuments) {
             for (BxZone zone : doc.asZones()) {
                 zone.setLabel(zone.getLabel().getGeneralLabel());
@@ -32,28 +32,17 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         }
 
         List<TrainingSample<BxZoneLabel>> trainingSamples;
-        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder,
+        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, SVMInitialZoneClassifier.getFeatureVectorBuilder(),
                 BxZoneLabel.getLabelToGeneralMap());
 
-        // Filter the training documents
-        // so that in the learning examples all classes are
-        // represented equally
-
-        SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
-        trainingSamples = selector.pickElements(trainingSamples);
-
-        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
+        SVMZoneClassifier zoneClassifier = new SVMInitialZoneClassifier();
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 0.0625;
-        param.C = 2.82842712475;
-        param.degree = 4;
-        param.kernel_type = svm_parameter.POLY;
-
+        param.gamma = 0.126;
+        param.C = 64.0;
+        param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
-        zoneClassifier.printWeigths(featureVectorBuilder);
-        zoneClassifier.saveModel("svm_initial_classifier");
         return zoneClassifier;
     }
 
@@ -75,9 +64,6 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
     @Override
     protected void preprocessDocumentForEvaluation(BxDocument doc) {
         for (BxZone zone : doc.asZones()) {
-//			if(zone.getLabel().getGeneralLabel() == BxZoneLabel.GEN_OTHER)
-//				zone.setLabel(BxZoneLabel.GEN_BODY);
-//			else
             zone.setLabel(zone.getLabel().getGeneralLabel());
         }
     }

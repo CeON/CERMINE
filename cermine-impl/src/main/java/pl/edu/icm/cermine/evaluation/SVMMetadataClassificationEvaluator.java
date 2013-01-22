@@ -11,6 +11,7 @@ import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
+import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
@@ -25,7 +26,6 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
     @Override
     protected SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws IOException, AnalysisException {
-        FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
 
         Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
         for (BxDocument doc : trainingDocuments) {
@@ -36,25 +36,22 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
             }
         }
 
-        List<TrainingSample<BxZoneLabel>> trainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder);
+        List<TrainingSample<BxZoneLabel>> trainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, SVMMetadataZoneClassifier.getFeatureVectorBuilder());
         trainingSamplesUnrevised = ClassificationUtils.filterElements(trainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(0.7);
         List<TrainingSample<BxZoneLabel>> trainingSamples = selector.pickElements(trainingSamplesUnrevised);
 
 
-        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
+        SVMZoneClassifier zoneClassifier = new SVMInitialZoneClassifier();
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 1.0 / 2.0;
+        param.gamma = 0.5;
         param.C = 256.0;
-        //param.degree = 3;
         param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);
-
         zoneClassifier.buildClassifier(trainingSamples);
-        zoneClassifier.saveModel("metadata_classifier");
-        zoneClassifier.printWeigths(featureVectorBuilder);
+//        zoneClassifier.printWeigths(SVMMetadataZoneClassifier.getFeatureVectorBuilder());
 
         return zoneClassifier;
     }

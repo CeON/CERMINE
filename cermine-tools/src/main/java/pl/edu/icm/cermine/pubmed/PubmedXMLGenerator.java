@@ -23,6 +23,7 @@ import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.PdfBxStructureExtractor;
 import pl.edu.icm.cermine.evaluation.tools.CosineDistance;
 import pl.edu.icm.cermine.evaluation.tools.SmithWatermanDistance;
+import pl.edu.icm.cermine.evaluation.tools.StringTools;
 import pl.edu.icm.cermine.evaluation.tools.XMLTools;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;

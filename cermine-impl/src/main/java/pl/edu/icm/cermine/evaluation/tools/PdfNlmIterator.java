@@ -49,7 +49,7 @@ public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 					return false;
 			}
 		})));
-		if(interestingFiles.size() < 3) {
+		if(interestingFiles.size() < 2) {
 			throw new IllegalArgumentException("There are too few files in the given directory!");
 		}
 		Collections.sort(interestingFiles, ALPHABETICAL_ORDER);

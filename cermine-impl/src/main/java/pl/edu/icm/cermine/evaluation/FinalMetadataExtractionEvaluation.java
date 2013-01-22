@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine.evaluation;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -22,13 +21,13 @@ import org.jdom.output.DOMOutputter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import javax.xml.xpath.XPath;
 
 import pl.edu.icm.cermine.PdfNLMMetadataExtractor;
 import pl.edu.icm.cermine.evaluation.tools.CosineDistance;
+import pl.edu.icm.cermine.evaluation.tools.DateComparator;
 import pl.edu.icm.cermine.evaluation.tools.PdfNlmIterator;
 import pl.edu.icm.cermine.evaluation.tools.PdfNlmPair;
+import pl.edu.icm.cermine.evaluation.tools.StringTools;
 import pl.edu.icm.cermine.evaluation.tools.XMLTools;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -39,7 +38,19 @@ import org.apache.commons.lang.StringUtils;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 
-public final class FinalEffectEvaluator {
+public final class FinalMetadataExtractionEvaluation {
+	
+	private Boolean verbose = false;
+	
+	public FinalMetadataExtractionEvaluation(Boolean verbose) {
+		this.verbose = verbose;
+	}
+	
+	private void printVerbose(String text) {
+		if(verbose) {
+			System.out.println(text);
+		}
+	}
 	
 	private static class CorrectAllPair {
 		public CorrectAllPair() {
@@ -53,14 +64,18 @@ public final class FinalEffectEvaluator {
 		public String toString() {
 			return "[Correct: " + correct + ", all: " + all + "]";
 		}
+		
+		public Double calculateAccuracy() {
+			if(all == 0) {
+				return null;
+			} else {
+				return (double)correct/all;
+			}
+		}
 	}
-
-    public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException,JDOMException, XPathExpressionException, TransformerException {
-        if (args.length < 1) {
-            System.out.println("Usage: FinalEffectEvaluator <input dir>");
-            return;
-        }
-        PdfNLMMetadataExtractor metadataExtractor = new PdfNLMMetadataExtractor();
+	
+	public void evaluate(PdfNlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException,JDOMException, XPathExpressionException, TransformerException {
+		PdfNLMMetadataExtractor metadataExtractor = new PdfNLMMetadataExtractor();
         
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -85,19 +100,19 @@ public final class FinalEffectEvaluator {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        PdfNlmIterator iter = new PdfNlmIterator(args[0]);
-        
         CorrectAllPair issn = new CorrectAllPair();
         CorrectAllPair doi = new CorrectAllPair();
         CorrectAllPair urn = new CorrectAllPair();
         CorrectAllPair volume = new CorrectAllPair();
         CorrectAllPair issue = new CorrectAllPair();
         CorrectAllPair pages = new CorrectAllPair();
-        CorrectAllPair dates = new CorrectAllPair();
+        CorrectAllPair dateYear = new CorrectAllPair();
+        CorrectAllPair dateFull = new CorrectAllPair();
 
         List<Double> abstractRates = new ArrayList<Double>(iter.size());
         List<Double> titleRates = new ArrayList<Double>(iter.size());
         List<Double> journalTitleRates = new ArrayList<Double>(iter.size());
+        List<Double> publisherNameRates = new ArrayList<Double>(iter.size());
         
         List<Double> keywordPrecisions = new ArrayList<Double>(iter.size());
         List<Double> keywordRecalls = new ArrayList<Double>(iter.size());
@@ -107,16 +122,15 @@ public final class FinalEffectEvaluator {
 
 
         for (PdfNlmPair pair : iter) {
+        	printVerbose(">>>>>>>>> " + pair.getPdf().getName());
 
         	org.w3c.dom.Document originalNlm = documentBuilder.parse(new FileInputStream(pair.getNlm()));
 
         	org.jdom.Element metaElement = metadataExtractor.extractMetadata(new FileInputStream(pair.getPdf()));
         	org.w3c.dom.Document extractedNlm = ElementToW3CDocument(metaElement);
-        	
-        	System.out.println(">>>>>>>>> " + pair.getPdf().getName());
             
-//        	System.out.println(outputDoc(originalNlm));
-//        	System.out.println(outputDoc(extractedNlm));
+//        	print(outputDoc(originalNlm));
+//        	print(outputDoc(extractedNlm));
         	
             String expectedTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/title-group/article-title");
             String extractedTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/title-group/article-title");
@@ -130,9 +144,9 @@ public final class FinalEffectEvaluator {
             String expectedJournalTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta/journal-title-group/journal-title");
             String extractedJournalTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/journal-meta/journal-title-group/journal-title");
             
-            String expectedPublisherName = XMLTools.extractTextFromNode(originalNlm, "/article/front//publisher-name");
-            String extractedPublisherName = XMLTools.extractTextFromNode(extractedNlm, "/article/front//publisher-name");
-
+            String expectedPublisherName = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta/publisher/publisher-name");
+            String extractedPublisherName = XMLTools.extractTextFromNode(extractedNlm, "/article/front/journal-meta/publisher/publisher-name");
+            
             String expectedAbstract = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/abstract");
             String extractedAbstract = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/abstract");
             		
@@ -145,6 +159,12 @@ public final class FinalEffectEvaluator {
             String expectedURN = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/article-id[@pub-id-type='urn']");
             String extractedURN = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/article-id[@pub-id-type='urn']");
 
+            String expectedVolume = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/volume");
+            String extractedVolume = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/volume");
+            
+            String expectedIssue = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/issue");
+            String extractedIssue = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/issue");
+            
             String expectedFPage = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/fpage");
             String extractedFPage = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/fpage");
             
@@ -158,6 +178,18 @@ public final class FinalEffectEvaluator {
             
             
             //equality measures
+            if(!expectedVolume.isEmpty()) {
+            	if(expectedVolume.equals(extractedVolume)) {
+            		++volume.correct;
+            	}
+            	++volume.all;
+            }
+            if(!expectedIssue.isEmpty()) {
+            	if(expectedIssue.equals(extractedIssue)) {
+            		++issue.correct;
+            	}
+            	++issue.all;
+            }
             if(!expectedISSN.isEmpty()) {
             	if(extractedISSN.equals(expectedISSN)) {
             		++issn.correct;
@@ -183,14 +215,30 @@ public final class FinalEffectEvaluator {
                 ++pages.all;
             }
 
+            
             if(!expectedPubDate.isEmpty()) {
-	            if(new CosineDistance().compare(expectedPubDate, extractedPubDate) > 0.95) {
-	            	++dates.correct;
-	            }
-	            ++dates.all;
+            	Boolean yearsMatch = DateComparator.yearsMatch(expectedPubDate, extractedPubDate);
+            	if(yearsMatch != null) {
+	            	if(yearsMatch) {
+	            		++dateYear.correct;
+	            	}
+	            	++dateYear.all;
+            	}
+            	Boolean datesMatch = DateComparator.datesMatch(expectedPubDate, extractedPubDate);
+            	if(datesMatch != null) {
+	            	if(datesMatch) {
+	            		++dateFull.correct;
+	            	}
+	            	++dateFull.all;
+            	}
             }
             
             //Smith-Waterman distance measures
+            if(expectedPublisherName.length() > 0) {
+            	publisherNameRates.add(compareStringsSW(expectedPublisherName, extractedPublisherName));
+            } else {
+            	publisherNameRates.add(null);
+            }
             if(expectedAbstract.length() > 0) {
             	abstractRates.add(compareStringsSW(expectedAbstract, extractedAbstract));
             } else {
@@ -223,66 +271,125 @@ public final class FinalEffectEvaluator {
             	keywordRecalls.add(null);
             }
             
-            System.out.println(">>> Expected authors: ");
+            printVerbose(">>> Expected authors: ");
             for(String author: expectedAuthors) {
-            	System.out.println(author);
+            	printVerbose(author);
             }
             
-            System.out.println(">>> Extracted authors: ");
+            printVerbose(">>> Extracted authors: ");
             for(String author: extractedAuthors) {
-            	System.out.println(author);
+            	printVerbose(author);
             }
             
-            System.out.println(">>> Expected keywords: ");
+            printVerbose(">>> Expected keywords: ");
             for(String keyword: expectedKeywords) {
-            	System.out.println(keyword);
+            	printVerbose(keyword);
             }
             
-            System.out.println(">>> Extracted keywords: ");
+            printVerbose(">>> Extracted keywords: ");
             for(String keyword: extractedKeywords) {
-            	System.out.println(keyword);
+            	printVerbose(keyword);
             }
             
-            System.out.println(">>> Expected journal title: " + expectedJournalTitle);
-            System.out.println(">>> Extracted journal title: " + extractedJournalTitle);
+            printVerbose(">>> Expected journal title: " + expectedJournalTitle);
+            printVerbose(">>> Extracted journal title: " + extractedJournalTitle);
             
-            System.out.println(">>> Expected publisher name: " + expectedPublisherName);
-            System.out.println(">>> Extracted publisher name: " + extractedPublisherName);
+            printVerbose(">>> Expected publisher name: " + expectedPublisherName);
+            printVerbose(">>> Extracted publisher name: " + extractedPublisherName);
             
-            System.out.println(">>> Expected article title: " + expectedTitle);
-            System.out.println(">>> Extracted article title: " + extractedTitle);
+            printVerbose(">>> Expected article title: " + expectedTitle);
+            printVerbose(">>> Extracted article title: " + extractedTitle);
 
-            System.out.println(">>> Expected article abstract: " + expectedAbstract);
-            System.out.println(">>> Extracted article abstract: " + extractedAbstract);
+            printVerbose(">>> Expected article abstract: " + expectedAbstract);
+            printVerbose(">>> Extracted article abstract: " + extractedAbstract);
             
-            System.out.println(">>> Expected doi: " + expectedDoi);
-            System.out.println(">>> Extracted doi: " + extractedDoi);
+            printVerbose(">>> Expected doi: " + expectedDoi);
+            printVerbose(">>> Extracted doi: " + extractedDoi);
             
-            System.out.println(">>> Expected date: ");
+            printVerbose(">>> Expected date: ");
             for(String date: expectedPubDate) {
-            	System.out.println(date);
+            	printVerbose(date);
             }
 
-            System.out.println(">>> Extracted date: ");
+            printVerbose(">>> Extracted date: ");
             for(String date: extractedPubDate) {
-            	System.out.println(date);
+            	printVerbose(date);
             }
-            System.out.println("abstract " + abstractRates);
-            System.out.println("title " + titleRates);
-            System.out.println("journal title " + journalTitleRates);
-            System.out.println("namesP " + authorsPrecisions);
-            System.out.println("namesR " + authorsRecalls);
-            System.out.println("keywordsP " + keywordPrecisions);
-            System.out.println("keywordsR " + keywordRecalls);
-            System.out.println("dates" + dates);
-            System.out.println("doi" + doi);
-            System.out.println("URN" + urn);
-            System.out.println("pages" + pages);
-            
+            printVerbose("abstract " + abstractRates);
+            printVerbose("title " + titleRates);
+            printVerbose("journal title " + journalTitleRates);
+            printVerbose("publisher name rates " + publisherNameRates);
+            printVerbose("namesP " + authorsPrecisions);
+            printVerbose("namesR " + authorsRecalls);
+            printVerbose("keywordsP " + keywordPrecisions);
+            printVerbose("keywordsR " + keywordRecalls);
+            printVerbose("date years" + dateYear);
+            printVerbose("date full" + dateFull);
+            printVerbose("doi" + doi);
+            printVerbose("URN" + urn);
+            printVerbose("pages" + pages);
         }
+        
+        Double value;
+        System.out.println("==== Summary ("+ iter.size() +" docs)====");
+        if((value = calculateAverage(abstractRates)) != null)
+        	System.out.printf("abstract avg (SW) \t\t%4.2f\n", 100*value);
+        if((value = calculateAverage(titleRates)) != null)
+        	System.out.printf("title avg (SW) \t\t\t%4.2f\n", 100*value);
+        if((value = calculateAverage(journalTitleRates)) != null)
+        	System.out.printf("journal title avg (SW) \t\t%4.2f\n", 100*value);
+        if((value = calculateAverage(publisherNameRates)) != null)
+        	System.out.printf("publisher name (SW) \t\t%4.2f\n", 100*value);
+        if((value = calculateAverage(authorsPrecisions)) != null)
+        	System.out.printf("names precision avg (EQ)\t%4.2f\n", 100*value);
+        if((value = calculateAverage(authorsRecalls)) != null)
+        	System.out.printf("names recall avg (EQ)\t\t%4.2f\n", 100*value);
+        if((value = calculateAverage(keywordPrecisions)) != null)
+        	System.out.printf("keywords precision avg (EQ)\t%4.2f\n", 100*value);
+        if((value = calculateAverage(keywordRecalls)) != null)
+        	System.out.printf("keywords recall avg (EQ)\t%4.2f\n", 100*value);
+        if((value = dateYear.calculateAccuracy()) != null)
+        	System.out.printf("date year accuracy avg\t\t%4.2f\n", 100*value);
+        if((value = dateFull.calculateAccuracy()) != null)
+        	System.out.printf("date full accuracy avg\t\t%4.2f\n", 100*value);
+        if((value = doi.calculateAccuracy()) != null)
+        	System.out.printf("doi accuracy avg\t\t%4.2f\n", 100*value);
+        if((value = urn.calculateAccuracy()) != null) 
+        	System.out.printf("URN accuracy avg\t\t%4.2f\n", 100*value);
+        if((value = pages.calculateAccuracy()) != null)
+        	System.out.printf("pages accuracy avg\t\t%4.2f\n", 100*value);
+	}
 
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException,JDOMException, XPathExpressionException, TransformerException {
+        if (args.length < 1 || args.length > 2) {
+            System.out.println("Usage: FinalEffectEvaluator [-v] <input dir>");
+            return;
+        }
+        Boolean verbose = false;
+        String directory = null;
+        if(args[0].equals("-v")) {
+        	verbose = true;
+        	directory = args[1];
+        } else {
+        	directory = args[0];
+        }
+        FinalMetadataExtractionEvaluation e = new FinalMetadataExtractionEvaluation(verbose);
+        PdfNlmIterator iter = new PdfNlmIterator(directory);
+        e.evaluate(iter);
     }
-   
+
+    private static Double calculateAverage(List<Double> values) {
+    	Integer all = 0;
+    	Double sum = .0;
+    	for(Double value: values) {
+    		if(value != null) {
+    			++all;
+    			sum += value;
+    		}
+    	}
+    	return sum/all;
+    }
+    
     private static Double calculatePrecision(List<String> expected, List<String> extracted) {
     	if(extracted.size() == 0) {
     		return .0;
@@ -290,12 +397,12 @@ public final class FinalEffectEvaluator {
     	Integer correct = 0;
     	CosineDistance cos = new CosineDistance();
     	external: for(String partExt: extracted) {
-    		internal: for(String partExp: expected) {
-    			if(cos.compare(tokenize(partExt), tokenize(partExp)) > Math.sqrt(2)/2) {
-    				++correct;
-    				continue external;
-    			}
-    		}
+    				 for(String partExp: expected) {
+    					if(cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp)) > Math.sqrt(2)/2) {
+    						++correct;
+    						continue external;
+    					}
+    				 }
     	}
     	return (double)correct/extracted.size();
     }
@@ -305,7 +412,7 @@ public final class FinalEffectEvaluator {
     	CosineDistance cos = new CosineDistance();
     	external: for(String partExt: extracted) {
     		internal: for(String partExp: expected) {
-    			if(cos.compare(tokenize(partExt), tokenize(partExp)) > Math.sqrt(2)/2) {
+    			if(cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp)) > Math.sqrt(2)/2) {
     				++correct;
     				continue external;
     			}
@@ -315,8 +422,8 @@ public final class FinalEffectEvaluator {
     }
     
     private static Double compareStringsSW(String expectedText, String extractedText) {
-		List<String> expectedTokens = tokenize(expectedText);
-		List<String> extractedTokens = tokenize(extractedText);
+		List<String> expectedTokens = StringTools.tokenize(expectedText);
+		List<String> extractedTokens = StringTools.tokenize(extractedText);
 		SmithWatermanDistance distanceFunc = new SmithWatermanDistance(.0, .0);
 		Double distance = distanceFunc.compare(expectedTokens, extractedTokens);
 		return distance/(double)expectedTokens.size();
@@ -356,16 +463,5 @@ public final class FinalEffectEvaluator {
     	  XMLSerializer serializer = new XMLSerializer(out, format);
     	  serializer.serialize(document);
     	  return out.toString();
-      }
-      
-      public static List<String> tokenize(String text) {
-          List<String> roughRet = new ArrayList<String>(Arrays.asList(text.split(" |\n|,|\\. |&|;|:|\\-")));
-          List<String> ret = new ArrayList<String>();
-          for (String candidate : roughRet) {
-              if (candidate.length() > 1) {
-                  ret.add(candidate.toLowerCase());
-              }
-          }
-          return ret;
       }
 }

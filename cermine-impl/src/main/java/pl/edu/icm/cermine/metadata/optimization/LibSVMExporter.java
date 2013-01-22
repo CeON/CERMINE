@@ -1,6 +1,7 @@
 package pl.edu.icm.cermine.metadata.optimization;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -29,6 +30,29 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSele
 
 public class LibSVMExporter {
 
+    public static void toLibSVM(TrainingSample<BxZoneLabel> trainingElement, BufferedWriter fileWriter) throws IOException {
+        try {
+        	if(trainingElement.getLabel() == null) {
+        		return;
+        	}
+        	fileWriter.write(String.valueOf(trainingElement.getLabel().ordinal()));
+        	fileWriter.write(" ");
+        	
+        	Integer featureCounter = 1;
+        	for (Double value : trainingElement.getFeatures().getFeatures()) {
+        		StringBuilder sb = new StringBuilder();
+        		Formatter formatter = new Formatter(sb, Locale.US);
+        		formatter.format("%d:%.5f", featureCounter++, value);
+        		fileWriter.write(sb.toString());
+        		fileWriter.write(" ");
+        	}
+        	fileWriter.write("\n");
+        	fileWriter.close();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            return;
+        }
+    }
     public static void toLibSVM(List<TrainingSample<BxZoneLabel>> trainingElements, String filePath) throws IOException {
     	BufferedWriter svmDataFile = null;
         try {
@@ -79,6 +103,7 @@ public class LibSVMExporter {
             System.exit(1); 
         }
         String inputDirPath = line.getArgs()[0];
+        File inputDirFile = new File(inputDirPath);
 
         SampleSelector<BxZoneLabel> sampler = null;
         if (line.hasOption("over")) {
@@ -110,7 +135,6 @@ public class LibSVMExporter {
         		else {
         			zone.setLabel(BxZoneLabel.OTH_UNKNOWN);
         		}
-        		//System.out.println(zone.getLabel());
         	}
         	vectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
         	List<TrainingSample<BxZoneLabel>> newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, BxZoneLabel.getIdentityMap());
@@ -120,15 +144,9 @@ public class LibSVMExporter {
         			metaTrainingElements.add(sample);
         		}
         	}
-        	for(TrainingSample<BxZoneLabel> sample: newSamples) {
-        		System.out.println("M " + sample.getLabel());
-        	}
         	////
         	vectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
         	newSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(doc, vectorBuilder, BxZoneLabel.getLabelToGeneralMap());
-        	for(TrainingSample<BxZoneLabel> sample: newSamples) {
-        		System.out.println("I " + sample.getLabel());
-        	}
         	initialTrainingElements.addAll(newSamples);
         	////
         	++docIdx;
@@ -137,7 +155,7 @@ public class LibSVMExporter {
         initialTrainingElements = sampler.pickElements(initialTrainingElements);
         metaTrainingElements = sampler.pickElements(metaTrainingElements);
 
-        toLibSVM(initialTrainingElements, "initial_zone_classification.dat");
-        toLibSVM(metaTrainingElements, "meta_zone_classification.dat");
+        toLibSVM(initialTrainingElements, "initial_" + inputDirFile.getName() + ".dat");
+        toLibSVM(metaTrainingElements, "meta_" + inputDirFile.getName() + ".dat");
     }
 }

@@ -44,7 +44,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
     private AbstractEvaluator.Detail detail;
     protected Integer foldness;
     private final Map<BxZoneLabel, BxZoneLabel> labelMap = DEFAULT_LABEL_MAP.clone();
-    private final ReadingOrderResolver resolver = new HierarchicalReadingOrderResolver();
     private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
     private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
 
@@ -113,8 +112,8 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
 
             for (BxDocument testDocument : testDocuments) {
+                testDocument = ror.resolve(testDocument);
                 BxDocument processedDocument = BxModelUtils.deepClone(testDocument);
-                processedDocument = ror.resolve(processedDocument);
                 for (BxZone zone : processedDocument.asZones()) {
                     zone.setLabel(null);
                 }
@@ -126,7 +125,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
                 zoneClassifier.classifyZones(processedDocument);
 
                 preprocessDocumentForEvaluation(testDocument);
-                testDocument = ror.resolve(testDocument);
                 ClassificationResults documentResults = compareDocuments(testDocument, processedDocument);
                 if (detail != Detail.MINIMAL) {
                     printDocumentResults(documentResults);
@@ -141,90 +139,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         printFinalResults(summary);
     }
 
-    public FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
-        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
-        vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
-                new AffiliationFeature(),
-                new AuthorFeature(),
-                new AuthorNameRelativeFeature(),
-                new BibinfoFeature(),
-                new BracketRelativeCount(),
-                new BracketedLineRelativeCount(),
-                new CharCountFeature(),
-                new CharCountRelativeFeature(),
-                new CommaCountFeature(),
-                new CommaRelativeCountFeature(),
-                new ContainsPageNumberFeature(),
-                new CuePhrasesRelativeCountFeature(),
-                new DateFeature(),
-                new DigitCountFeature(),
-                new DigitRelativeCountFeature(),
-                new DistanceFromNearestNeighbourFeature(),
-                new DotCountFeature(),
-                new DotRelativeCountFeature(),
-                new EmptySpaceRelativeFeature(),
-                new FontHeightMeanFeature(),
-                new FreeSpaceWithinZoneFeature(),
-                new FullWordsRelativeFeature(),
-                new HeightFeature(),
-                new HeightRelativeFeature(),
-                new HorizontalRelativeProminenceFeature(),
-                new IsAnywhereElseFeature(),
-                new IsFirstPageFeature(),
-                new IsFontBiggerThanNeighboursFeature(),
-                new IsGreatestFontOnPageFeature(),
-                new IsHighestOnThePageFeature(),
-                new IsItemizeFeature(),
-                new IsWidestOnThePageFeature(),
-                new IsLastButOnePageFeature(),
-                new IsLastPageFeature(),
-                new IsLeftFeature(),
-                new IsLongestOnThePageFeature(),
-                new IsLowestOnThePageFeature(),
-                new IsItemizeFeature(),
-                new IsOnSurroundingPagesFeature(),
-                new IsPageNumberFeature(),
-                new IsRightFeature(),
-        		new IsSingleWordFeature(),
-                new LineCountFeature(),
-                new LineRelativeCountFeature(),
-                new LineHeightMeanFeature(),
-                new LineWidthMeanFeature(),
-                new LineXPositionMeanFeature(),
-                new LineXPositionDiffFeature(),
-                new LineXWidthPositionDiffFeature(),
-                new LetterCountFeature(),
-                new LetterRelativeCountFeature(),
-                new LowercaseCountFeature(),
-                new LowercaseRelativeCountFeature(),
-                new PageNumberFeature(),
-                new PreviousZoneFeature(),
-                new ProportionsFeature(),
-                new PunctuationRelativeCountFeature(),
-                new ReferencesFeature(),
-                new StartsWithDigitFeature(),
-                new StartsWithHeaderFeature(),
-                new UppercaseCountFeature(),
-                new UppercaseRelativeCountFeature(),
-                new UppercaseWordCountFeature(),
-                new UppercaseWordRelativeCountFeature(),
-                new VerticalProminenceFeature(),
-                new WidthFeature(),
-                new WordCountFeature(),
-                new WordCountRelativeFeature(),
-                new WordWidthMeanFeature(),
-                new WordLengthMeanFeature(),
-                new WordLengthMedianFeature(),
-                new WhitespaceCountFeature(),
-                new WhitespaceRelativeCountLogFeature(),
-                new WidthRelativeFeature(),
-                new XPositionFeature(),
-                new XPositionRelativeFeature(),
-                new YPositionFeature(),
-                new YPositionRelativeFeature(),
-                new YearFeature()));
-        return vectorBuilder;
-    }
+
 
     protected ClassificationResults newResults() {
         return new ClassificationResults();

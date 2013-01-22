@@ -13,6 +13,7 @@ import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
@@ -116,10 +117,12 @@ public class LibSVMExporter {
         List<TrainingSample<BxZoneLabel>> initialTrainingElements = new ArrayList<TrainingSample<BxZoneLabel>>();
         List<TrainingSample<BxZoneLabel>> metaTrainingElements = new ArrayList<TrainingSample<BxZoneLabel>>();
         
+        HierarchicalReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
         EvaluationUtils.DocumentsIterator iter = new DocumentsIterator(inputDirPath);
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder;
         Integer docIdx = 0;
         for(BxDocument doc: iter) {
+        	doc = ror.resolve(doc);
         	System.out.println(docIdx + ": " + doc.getFilename());
         	////
         	for (BxZone zone : doc.asZones()) {

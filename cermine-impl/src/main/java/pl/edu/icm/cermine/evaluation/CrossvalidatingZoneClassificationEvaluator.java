@@ -82,7 +82,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
                 evaluator.detail = Detail.FULL;
             }
             evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-
             evaluator.run(inputDir, null);
 
         }
@@ -104,7 +103,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             ClassificationResults iterationResults = newResults();
 
             ZoneClassifier zoneClassifier = getZoneClassifier(BxModelUtils.deepClone(trainingDocuments));
-            
             ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
 
             for (BxDocument testDocument : testDocuments) {

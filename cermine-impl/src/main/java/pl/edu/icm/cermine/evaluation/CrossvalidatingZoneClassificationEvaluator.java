@@ -7,6 +7,14 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
@@ -39,7 +47,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
     }
     private AbstractEvaluator.Detail detail;
     protected Integer foldness;
-    private final Map<BxZoneLabel, BxZoneLabel> labelMap = DEFAULT_LABEL_MAP.clone();
     private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
     private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
 
@@ -81,8 +88,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             } else if (line.hasOption("full")) {
                 evaluator.detail = Detail.FULL;
             }
-            evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-
             evaluator.run(inputDir, null);
 
         }
@@ -161,11 +166,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             page.setParent(ret);
         }
         return ret.setPages(pages);
-    }
-
-    public void setLabelMap(Map<BxZoneLabel, BxZoneLabel> value) {
-        labelMap.putAll(DEFAULT_LABEL_MAP);
-        labelMap.putAll(value);
     }
 
     protected void writeDocument(BxDocument document, Writer output) throws Exception {

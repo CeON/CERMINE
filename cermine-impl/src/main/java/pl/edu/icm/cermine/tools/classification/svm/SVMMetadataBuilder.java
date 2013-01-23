@@ -3,13 +3,24 @@ package pl.edu.icm.cermine.tools.classification.svm;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 import libsvm.svm_parameter;
-import org.apache.commons.cli.*;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
-import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZone;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;

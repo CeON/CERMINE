@@ -122,7 +122,6 @@ public class LibSVMExporter {
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder;
         Integer docIdx = 0;
         for(BxDocument doc: iter) {
-        	doc = ror.resolve(doc);
         	System.out.println(docIdx + ": " + doc.getFilename());
         	String filename = doc.getFilename();
         	doc = ror.resolve(doc);

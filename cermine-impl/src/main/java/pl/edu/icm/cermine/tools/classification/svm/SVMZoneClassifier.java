@@ -14,10 +14,10 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 	public SVMZoneClassifier(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) {
 		super(featureVectorBuilder, BxZoneLabel.class);
 	}
-	
+
 	@Override
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
-	{       
+ {
     	for (BxZone zone: document.asZones()) {
 			svm_node[] instance = buildDatasetForClassification(zone, zone.getParent());
 			double predictedVal = svm.svm_predict(model, instance);

@@ -84,6 +84,10 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     	int all = 0;
     	final Double EPS = 0.00001;
 
+    	Map<BxZoneLabel, Double> classAccuracies = new HashMap<BxZoneLabel, Double>();
+    	Map<BxZoneLabel, Double> classPrecisions = new HashMap<BxZoneLabel, Double>();
+    	Map<BxZoneLabel, Double> classRecalls = new HashMap<BxZoneLabel, Double>();
+    	
     	for(BxZoneLabel label : possibleLabels) {
     		LabelPair positiveCoord = new LabelPair(label, label);
     		correctly += classificationMatrix.get(positiveCoord);

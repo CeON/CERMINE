@@ -4,52 +4,54 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 class DividedEvaluationSet {
 
-    public DividedEvaluationSet(List<BxDocument> trainingDocuments, List<BxDocument> testDocuments) {
-        this.trainingDocuments = trainingDocuments;
-        this.testDocuments = testDocuments;
+    public DividedEvaluationSet(List<TrainingSample<BxZoneLabel>> trainingSamples, List<TrainingSample<BxZoneLabel>> testSamples) {
+        this.trainingSamples = trainingSamples;
+        this.testSamples = testSamples;
     }
-    List<BxDocument> trainingDocuments;
-    List<BxDocument> testDocuments;
+    List<TrainingSample<BxZoneLabel>> trainingSamples;
+    List<TrainingSample<BxZoneLabel>> testSamples;
 
-    public List<BxDocument> getTrainingDocuments() {
-        return trainingDocuments;
-    }
-
-    public List<BxDocument> getTestDocuments() {
-        return testDocuments;
+    public List<TrainingSample<BxZoneLabel>> getTrainingDocuments() {
+        return trainingSamples;
     }
 
-    public static List<DividedEvaluationSet> build(List<BxDocument> documents, Integer foldness) {
-        List<BxDocument> shuffledDocs = new ArrayList<BxDocument>(documents.size());
-        shuffledDocs.addAll(documents);
+    public List<TrainingSample<BxZoneLabel>> getTestDocuments() {
+        return testSamples;
+    }
+
+    public static List<DividedEvaluationSet> build(List<TrainingSample<BxZoneLabel>> samples, Integer numberOfFolds) {
+        List<TrainingSample<BxZoneLabel>> shuffledDocs = new ArrayList<TrainingSample<BxZoneLabel>>(samples.size());
+        shuffledDocs.addAll(samples);
         Collections.shuffle(shuffledDocs);
-        List<List<BxDocument>> dividedDocs = new ArrayList<List<BxDocument>>(foldness);
+        List<List<TrainingSample<BxZoneLabel>>> dividedSamples = new ArrayList<List<TrainingSample<BxZoneLabel>>>(numberOfFolds);
 
-        for (Integer fold = 0; fold < foldness; ++fold) {
-            Integer docsPerSet = shuffledDocs.size() / (foldness - fold);
-            dividedDocs.add(new ArrayList<BxDocument>());
+        for (Integer fold = 0; fold < numberOfFolds; ++fold) {
+            Integer docsPerSet = shuffledDocs.size() / (numberOfFolds - fold);
+            dividedSamples.add(new ArrayList<TrainingSample<BxZoneLabel>>());
             for (Integer idx = 0; idx < docsPerSet; ++idx) {
-                dividedDocs.get(dividedDocs.size() - 1).add(shuffledDocs.get(0));
+                dividedSamples.get(dividedSamples.size() - 1).add(shuffledDocs.get(0));
                 shuffledDocs.remove(0);
             }
         }
 
-        List<DividedEvaluationSet> ret = new ArrayList<DividedEvaluationSet>(foldness);
+        List<DividedEvaluationSet> ret = new ArrayList<DividedEvaluationSet>(numberOfFolds);
 
-        for (int fold = 0; fold < foldness; ++fold) {
-            List<BxDocument> trainingDocuments = new ArrayList<BxDocument>();
-            List<BxDocument> testDocuments = new ArrayList<BxDocument>();
-            for (int setIdx = 0; setIdx < foldness; ++setIdx) {
+        for (int fold = 0; fold < numberOfFolds; ++fold) {
+            List<TrainingSample<BxZoneLabel>> trainingSamples = new ArrayList<TrainingSample<BxZoneLabel>>();
+            List<TrainingSample<BxZoneLabel>> testSamples = new ArrayList<TrainingSample<BxZoneLabel>>();
+            for (int setIdx = 0; setIdx < numberOfFolds; ++setIdx) {
                 if (setIdx == fold) {
-                    testDocuments.addAll(dividedDocs.get(setIdx));
+                    testSamples.addAll(dividedSamples.get(setIdx));
                 } else {
-                    trainingDocuments.addAll(dividedDocs.get(setIdx));
+                    trainingSamples.addAll(dividedSamples.get(setIdx));
                 }
             }
-            ret.add(new DividedEvaluationSet(trainingDocuments, testDocuments));
+            ret.add(new DividedEvaluationSet(trainingSamples, testSamples));
         }
         return ret;
     }

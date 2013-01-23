@@ -14,7 +14,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
+import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampler;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
 public class SVMMetadataBuilder {
@@ -33,7 +33,7 @@ public class SVMMetadataBuilder {
         List<TrainingSample<BxZoneLabel>> TrainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder);
         TrainingSamplesUnrevised = ClassificationUtils.filterElements(TrainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
-        SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(0.7);
+        SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(0.7);
         List<TrainingSample<BxZoneLabel>> trainingSamples = selector.pickElements(TrainingSamplesUnrevised);
 
         // Filter the training documents

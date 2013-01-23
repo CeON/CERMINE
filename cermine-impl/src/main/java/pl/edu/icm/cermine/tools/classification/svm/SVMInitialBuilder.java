@@ -21,7 +21,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
+import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampler;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
 public class SVMInitialBuilder {
@@ -40,7 +40,7 @@ public class SVMInitialBuilder {
         // so that in the learning examples all classes are
         // represented equally
 
-        SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
+        SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(1.0);
         trainingSamples = selector.pickElements(trainingSamples);
 
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);

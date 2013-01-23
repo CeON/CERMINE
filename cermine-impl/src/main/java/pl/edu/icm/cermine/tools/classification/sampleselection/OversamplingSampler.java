@@ -4,11 +4,11 @@ import java.util.Map.Entry;
 import java.util.*;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
-public class OversamplingSelector<S> implements SampleSelector<S> {
+public class OversamplingSampler<S> implements SampleSelector<S> {
 
     private Double inequalityFactor;
 
-    public OversamplingSelector(Double inequalityFactor) {
+    public OversamplingSampler(Double inequalityFactor) {
         this.inequalityFactor = inequalityFactor;
     }
 

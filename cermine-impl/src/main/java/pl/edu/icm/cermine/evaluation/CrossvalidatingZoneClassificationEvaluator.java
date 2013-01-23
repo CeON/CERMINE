@@ -5,23 +5,26 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
-import org.apache.commons.cli.*;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
-import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.ReadingOrderResolver;
-import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
  * Class for performing cross-validating classifier performance in zone classification task
@@ -39,7 +42,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
     }
     private AbstractEvaluator.Detail detail;
     protected Integer foldness;
-    private final Map<BxZoneLabel, BxZoneLabel> labelMap = DEFAULT_LABEL_MAP.clone();
     private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
     private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
 
@@ -58,8 +60,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 
         if (line.hasOption("help")) {
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp(args[0] + " [-options] input-directory",
-                    options);
+            formatter.printHelp(args[0] + " [-options] input-file",options);
         } else {
             String[] remaining = line.getArgs();
 
@@ -72,7 +73,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             } else {
                 evaluator.foldness = Integer.valueOf(line.getOptionValue("fold"));
             }
-            String inputDir = remaining[0];
+            String inputFile = remaining[0];
 
             if (line.hasOption("minimal")) {
                 evaluator.detail = Detail.MINIMAL;
@@ -81,48 +82,32 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             } else if (line.hasOption("full")) {
                 evaluator.detail = Detail.FULL;
             }
-            evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-            evaluator.run(inputDir, null);
+            evaluator.run(inputFile);
 
         }
     }
 
-    public void run(String inDir, String outDir) throws AnalysisException, IOException, TransformationException {
-        List<BxDocument> evaluationDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
+    public void run(String inputFile) throws AnalysisException, IOException, TransformationException {
         ClassificationResults summary = newResults();
-
-        List<DividedEvaluationSet> fileSets = DividedEvaluationSet.build(BxModelUtils.deepClone(evaluationDocuments), foldness);
-
+        List<TrainingSample<BxZoneLabel>> samples = SVMZoneClassifier.loadProblem(inputFile);
+        List<DividedEvaluationSet> sampleSets = DividedEvaluationSet.build(samples, foldness);
+        
         for (int fold = 0; fold < foldness; ++fold) {
-            List<BxDocument> trainingDocuments = fileSets.get(fold).getTrainingDocuments();
-            List<BxDocument> testDocuments = fileSets.get(fold).getTestDocuments();
-
-            System.out.println("Training documents " + trainingDocuments.size());
-            System.out.println("Test documents " + testDocuments.size());
+        	List<TrainingSample<BxZoneLabel>> trainingSamples = sampleSets.get(fold).getTrainingDocuments();
+        	List<TrainingSample<BxZoneLabel>> testSamples = sampleSets.get(fold).getTestDocuments();
+        	
+            System.out.println("Training documents " + trainingSamples.size());
+            System.out.println("Test documents " + testSamples.size());
 
             ClassificationResults iterationResults = newResults();
 
-            ZoneClassifier zoneClassifier = getZoneClassifier(BxModelUtils.deepClone(trainingDocuments));
-            ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
+            SVMZoneClassifier zoneClassifier = getZoneClassifier(trainingSamples);
 
-            for (BxDocument testDocument : testDocuments) {
-                testDocument = ror.resolve(testDocument);
-                BxDocument processedDocument = BxModelUtils.deepClone(testDocument);
-                for (BxZone zone : processedDocument.asZones()) {
-                    zone.setLabel(null);
-                }
-
-                if (detail != Detail.MINIMAL) {
-                    System.out.println("=== Document " + testDocument.getFilename());
-                }
+            for (TrainingSample<BxZoneLabel> testSample : testSamples) {
+            	BxZoneLabel expectedClass = testSample.getLabel();
+                BxZoneLabel inferedClass = zoneClassifier.classify(testSample.getFeatures());
+                ClassificationResults documentResults = compareItems(expectedClass, inferedClass);
                 
-                zoneClassifier.classifyZones(processedDocument);
-
-                preprocessDocumentForEvaluation(testDocument);
-                ClassificationResults documentResults = compareDocuments(testDocument, processedDocument);
-                if (detail != Detail.MINIMAL) {
-                    printDocumentResults(documentResults);
-                }
                 iterationResults.add(documentResults);
             }
             summary.add(iterationResults);
@@ -139,18 +124,11 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         return new ClassificationResults();
     }
 
-    protected ClassificationResults compareItems(BxZone expected, BxZone actual) {
+    protected ClassificationResults compareItems(BxZoneLabel expected, BxZoneLabel actual) {
         ClassificationResults pageResults = newResults();
-        if (expected.getLabel() == BxZoneLabel.GEN_OTHER && actual.getLabel() != BxZoneLabel.GEN_OTHER) {
-            System.out.println(expected.toText());
-        }
-        pageResults.addOneZoneResult(expected.getLabel(), actual.getLabel());
+        pageResults.addOneZoneResult(expected, actual);
         return pageResults;
     }
-
-    protected abstract ClassificationResults compareDocuments(BxDocument expected, BxDocument actual);
-
-    protected abstract void preprocessDocumentForEvaluation(BxDocument doc);
 
     protected BxDocument readDocument(Reader input) throws Exception {
         List<BxPage> pages = reader.read(input);
@@ -159,11 +137,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             page.setParent(ret);
         }
         return ret.setPages(pages);
-    }
-
-    public void setLabelMap(Map<BxZoneLabel, BxZoneLabel> value) {
-        labelMap.putAll(DEFAULT_LABEL_MAP);
-        labelMap.putAll(value);
     }
 
     protected void writeDocument(BxDocument document, Writer output) throws Exception {
@@ -189,5 +162,5 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         results.printQualityMeasures();
     }
 
-    protected abstract ZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments) throws AnalysisException, IOException;
+    protected abstract SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples) throws AnalysisException, IOException;
 }

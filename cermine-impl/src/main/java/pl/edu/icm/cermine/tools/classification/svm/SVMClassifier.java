@@ -2,11 +2,15 @@ package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -140,13 +144,10 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		return problem;
 	}
 	
-	protected svm_node[] buildDatasetForClassification(S object, T context)
-	{
+	protected svm_node[] buildDatasetForClassification(FeatureVector fv) {
 		svm_node[] ret = new svm_node[featureVectorBuilder.getFeatureNames().size()];
-		FeatureVector scaledFV = scaler.scaleFeatureVector(featureVectorBuilder.getFeatureVector(object, context));
-		
 		Integer featureIdx = 0;
-		for(Double val: scaledFV.getFeatures()) {
+		for(Double val: fv.getFeatures()) {
 			svm_node cur = new svm_node();
 			cur.index = featureIdx;
 			cur.value = val;
@@ -154,6 +155,12 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 			++featureIdx;
 		}
 		return ret;
+	}
+	
+	protected svm_node[] buildDatasetForClassification(S object, T context)
+	{
+		FeatureVector scaledFV = scaler.scaleFeatureVector(featureVectorBuilder.getFeatureVector(object, context));
+		return buildDatasetForClassification(scaledFV);
 	}
 
 	public double[] getWeights() {
@@ -265,5 +272,6 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	public void setParameter(svm_parameter param) {
 		this.param = param;
 	}
+
 
 }

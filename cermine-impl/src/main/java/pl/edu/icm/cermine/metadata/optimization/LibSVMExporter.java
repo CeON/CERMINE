@@ -21,7 +21,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.NormalSelector;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
+import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampler;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSelector;
 
@@ -104,7 +104,7 @@ public class LibSVMExporter {
 
         SampleSelector<BxZoneLabel> sampler = null;
         if (line.hasOption("over")) {
-            sampler = new OversamplingSelector<BxZoneLabel>(1.0);
+            sampler = new OversamplingSampler<BxZoneLabel>(1.0);
         } else if (line.hasOption("under")) {
             sampler = new UndersamplingSelector<BxZoneLabel>(2.0);
         } else if (line.hasOption("normal")) {
@@ -122,8 +122,10 @@ public class LibSVMExporter {
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder;
         Integer docIdx = 0;
         for(BxDocument doc: iter) {
-        	doc = ror.resolve(doc);
         	System.out.println(docIdx + ": " + doc.getFilename());
+        	String filename = doc.getFilename();
+        	doc = ror.resolve(doc);
+        	doc.setFilename(filename);
         	////
         	for (BxZone zone : doc.asZones()) {
         		if (zone.getLabel() != null) {

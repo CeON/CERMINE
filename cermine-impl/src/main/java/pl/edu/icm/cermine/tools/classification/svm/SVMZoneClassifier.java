@@ -29,22 +29,22 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
 	{       
     	for (BxZone zone: document.asZones()) {
-			svm_node[] instance = buildDatasetForClassification(zone, zone.getParent());
-			double predictedVal = svm.svm_predict(model, instance);
-//			System.out.println("predictedVal " + predictedVal + " " + BxZoneLabel.values()[(int)predictedVal] + " (is " + zone.getLabel() + ")");
-			zone.setLabel(BxZoneLabel.values()[(int)predictedVal]);
+    		
+			BxZoneLabel predicted = predictLabel(zone, zone.getParent());
+			System.out.println("predictedVal " + predicted + "( is " + zone.getLabel() + ")");
+			zone.setLabel(predicted);
 		}
 		return document;
 	}
 	
-	public BxZoneLabel classify(FeatureVector fv) {
-		svm_node[] instance = buildDatasetForClassification(fv);
-//		for(svm_node node: instance) {
-//			System.out.println(node.value);
-//		}
-		double predictedVal = svm.svm_predict(model, instance);
-		return BxZoneLabel.values()[(int)predictedVal];
-	}
+//	public BxZoneLabel classify(FeatureVector fv) {
+//		svm_node[] instance = buildDatasetForClassification(fv);
+////		for(svm_node node: instance) {
+////			System.out.println(node.value);
+////		}
+//		double predictedVal = svm.svm_predict(model, instance);
+//		return BxZoneLabel.values()[(int)predictedVal];
+//	}
 	
 	public static List<TrainingSample<BxZoneLabel>>loadProblem(String path, FeatureVectorBuilder fvb) throws IOException {
 		File file = new File(path);

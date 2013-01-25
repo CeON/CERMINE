@@ -114,7 +114,8 @@ public abstract class AbstractDocumentProcessorTest {
         }
 
         if (!testReaders.isEmpty()) {
-            assertTrue((double) passed * 100.0f / (double) testReaders.size() >= percentage);
+            assertTrue("Expected min " + percentage + " got " + (double) passed * 100.0f / (double) testReaders.size(),
+            		(double) passed * 100.0f / (double) testReaders.size() >= percentage);
         }
     }
 

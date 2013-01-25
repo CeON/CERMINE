@@ -22,9 +22,9 @@ public class FeatureVector implements Cloneable {
         return values.get(names.indexOf(name));
     }
 
-    public void addFeature(String name, double calculateFeatureValue) {
+    public void addFeature(String name, double featureValue) {
     	names.add(name);
-    	values.add(calculateFeatureValue);
+    	values.add(featureValue);
     }
 
 	public List<String> getFeatureNames() {
@@ -46,11 +46,15 @@ public class FeatureVector implements Cloneable {
     }
 
 	public Double[] getFeatures() {
-		return (Double[])values.toArray();
+		return values.toArray(new Double[values.size()]);
 	}
 
 	public void setValues(Double[] values) {
 		this.values = new ArrayList<Double>(Arrays.asList(values));
+	}
+	
+	public void setNames(List<String> names) {
+		this.names = names;
 	}
 	
 	public void addValue(String name, Double value) {

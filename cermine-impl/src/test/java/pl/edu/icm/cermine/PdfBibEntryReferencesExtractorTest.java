@@ -207,7 +207,7 @@ public class PdfBibEntryReferencesExtractorTest {
             testStream.close();
         }
         
-        assertEquals(testRefs.length, expRefs.length);
+        assertEquals("Expected " + expRefs.length  + " got " + testRefs.length ,testRefs.length, expRefs.length);
         
         int allFields = 0;
         int parsedFields = 0;

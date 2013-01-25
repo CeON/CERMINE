@@ -83,6 +83,7 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 		for(Integer zoneIdx=0; zoneIdx < testDoc.asZones().size(); ++zoneIdx) {
 			BxZone testZone = testDoc.asZones().get(zoneIdx);
 			BxZone expectedZone = expectedDoc.asZones().get(zoneIdx);
+			System.out.println(expectedZone.getLabel() + " " + testZone.getLabel());
 			++allZones;
 			if(testZone.getLabel() == expectedZone.getLabel().getGeneralLabel())
 				++correctZones;

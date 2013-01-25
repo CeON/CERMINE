@@ -37,7 +37,8 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         param.C = 64.0;
         param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);
-        zoneClassifier.buildClassifier(trainingSamples);
+        zoneClassifier.buildClassifier(trainingSamplesOversampled);
+//        zoneClassifier.saveModel("svm_initial_classifier");
         return zoneClassifier;
     }
 

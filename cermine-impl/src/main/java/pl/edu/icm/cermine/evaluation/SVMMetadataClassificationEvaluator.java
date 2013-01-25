@@ -44,6 +44,8 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         param.degree = 4;
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamplesOversampled);
+//        zoneClassifier.saveModel("svm_meta_classifier");
+//        zoneClassifier = new SVMMetadataZoneClassifier();
 
         return zoneClassifier;
     }

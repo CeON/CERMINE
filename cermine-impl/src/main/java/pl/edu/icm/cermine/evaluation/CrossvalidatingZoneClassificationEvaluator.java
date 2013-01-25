@@ -103,20 +103,17 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 //        		System.out.println(sample.getFeatures().getFeatures().length + " " + sample.getFeatures().getFeatureNames());
 //        	}
             System.out.println("Fold number " + fold);
-        	System.out.println("Training documents " + trainingSamples.size());
-            System.out.println("Test documents " + testSamples.size());
+        	System.out.println("Training elements " + trainingSamples.size());
+            System.out.println("Test elements  " + testSamples.size());
 
             ClassificationResults iterationResults = newResults();
 
             SVMZoneClassifier zoneClassifier = getZoneClassifier(trainingSamples);
 
             for (TrainingSample<BxZoneLabel> testSample : testSamples) {
-//            	System.out.println(Arrays.toString(testSample.getFeatures().getFeatures()));
             	BxZoneLabel expectedClass = testSample.getLabel();
-                BxZoneLabel inferedClass = zoneClassifier.classify(testSample.getFeatures());
-//                System.out.println(expectedClass + " " + inferedClass);
+                BxZoneLabel inferedClass = zoneClassifier.predictLabel(testSample);
                 ClassificationResults documentResults = compareItems(expectedClass, inferedClass);
-                
                 iterationResults.add(documentResults);
             }
             summary.add(iterationResults);

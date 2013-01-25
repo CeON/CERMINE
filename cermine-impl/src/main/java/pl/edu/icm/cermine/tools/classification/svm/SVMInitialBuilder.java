@@ -25,7 +25,7 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampl
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
 public class SVMInitialBuilder {
-	protected static SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments, Integer kernelType, Double gamma, Double C, Integer degree) throws IOException, AnalysisException
+	protected static SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments, Integer kernelType, Double gamma, Double C, Integer degree) throws IOException, AnalysisException, CloneNotSupportedException
 	{
 		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
 		for(BxDocument doc: trainingDocuments)
@@ -58,7 +58,7 @@ public class SVMInitialBuilder {
 		return zoneClassifier;
 	}
 
-	public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException {
+	public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException, CloneNotSupportedException {
         Options options = new Options();
         options.addOption("input", true, "input xml directory path");
         options.addOption("output", true, "output model path");

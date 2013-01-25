@@ -9,7 +9,6 @@ public class LinearScaling implements ScalingStrategy {
 			Double scaledUpperBound, FeatureLimits[] limits, FeatureVector fv) {
 		final double EPS = 0.00001;
 		FeatureVector newVector = new FeatureVector();
-		
 		int featureIdx = 0;
 		for(String name: fv.getFeatureNames()) {
 			//scaling function: y = a*x+b

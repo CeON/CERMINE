@@ -230,21 +230,25 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         System.out.println("Good recognitions per zone type:");
         for (BxZoneLabel label1 : possibleLabels) {
             String spaces;
-            int labelGoodRecognitions = 0;
-            int labelAllRecognitions = 0;
+        	int falsePositives = 0;
+            int truePositives = 0;
+            int falseNegatives = 0;
             for (BxZoneLabel label2 : possibleLabels) {
                 LabelPair coord = new LabelPair(label1, label2);
-                if (label1.equals(label2)) {
-                    labelGoodRecognitions += classificationMatrix.get(coord);
+                if(!label1.equals(label2)) { // false positives
+                	falsePositives += classificationMatrix.get(new LabelPair(label2, label1));
                 }
-                labelAllRecognitions += classificationMatrix.get(coord);
+                if (label1.equals(label2)) { //
+                    truePositives += classificationMatrix.get(coord);
+                } else {
+                	falseNegatives += classificationMatrix.get(coord);
+                }
             }
 
+            double precision = 100.0 * (double) truePositives/(falsePositives + truePositives);
+            double recall = 100.0 * truePositives / (truePositives+falseNegatives);
             spaces = new String(new char[maxLabelLength - label1.toString().length() + 1]).replace('\0', ' ');
-            System.out.format("%s:%s%d/%d", label1, spaces, labelGoodRecognitions, labelAllRecognitions);
-            if (labelAllRecognitions > 0) {
-                System.out.format(" (%.1f%%)", 100.0 * labelGoodRecognitions / labelAllRecognitions);
-            }
+            System.out.format("%s:%s%d/%d Pr=%4.2f Rcl=%4.2f", label1, spaces, truePositives, truePositives+falseNegatives, precision, recall);
             System.out.println();
         }
         System.out.println();

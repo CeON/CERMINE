@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.io.IOUtils;
+
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 public class FeatureVectorScalerImpl implements FeatureVectorScaler {
@@ -44,7 +48,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 	public <A extends Enum<A>> void calculateFeatureLimits(List<TrainingSample<A>> trainingElements) {
 		for(TrainingSample<A> trainingElem: trainingElements) {
 			FeatureVector fv = trainingElem.getFeatures();
-			Set<String> names = fv.getFeatureNames();
+			List<String> names = fv.getFeatureNames();
 
 			int featureIdx = 0;
 			for(String name: names) {

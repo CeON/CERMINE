@@ -1,24 +1,31 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
-import libsvm.*;
+import libsvm.svm;
+import libsvm.svm_model;
+import libsvm.svm_node;
+import libsvm.svm_parameter;
+import libsvm.svm_problem;
+
 import org.apache.commons.collections.iterators.ArrayIterator;
+
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.*;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScaler;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScalerImpl;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScalerNoOp;
+import pl.edu.icm.cermine.tools.classification.general.LinearScaling;
+import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 /**
  * @author Pawel Szostek (p.szostek@
@@ -102,8 +109,13 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	public void buildClassifier(List<TrainingSample<E>> trainingElements) 
 	{
 		assert trainingElements.size() > 0;
+//		for(TrainingSample<E> sample: trainingElements) {
+//			System.out.println(sample.getLabel() + " "+ Arrays.asList(sample.getFeatures().getFeatures()));
+//		}
 		scaler.calculateFeatureLimits(trainingElements);
 		problem = buildDatasetForTraining(trainingElements);
+//		System.out.println(Arrays.toString(problem.x));
+//		System.out.println(Arrays.toString(problem.y));
 		model = libsvm.svm.svm_train(problem, param);
 	}
 	
@@ -124,7 +136,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		svm_problem problem = new svm_problem();
 		problem.l = trainingElements.size();
 		problem.x = new svm_node[problem.l][trainingElements.get(0).getFeatures().size()];
-		problem.y = new double[trainingElements.size()];
+		problem.y = new double[problem.l];
 		
 		Integer elemIdx = 0;
 		for(TrainingSample<E> trainingElem : trainingElements) {
@@ -138,16 +150,18 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 				++featureIdx;
 			}
 			problem.y[elemIdx] = trainingElem.getLabel().ordinal();
-			System.out.println("training " + trainingElem.getLabel().ordinal() + " (" + trainingElem.getLabel() + ")");
 			++elemIdx;
 		}
 		return problem;
 	}
 	
 	protected svm_node[] buildDatasetForClassification(FeatureVector fv) {
-		svm_node[] ret = new svm_node[featureVectorBuilder.getFeatureNames().size()];
+//		System.out.println("FV " + Arrays.toString(fv.getFeatures()));
+		FeatureVector scaled = scaler.scaleFeatureVector(fv);
+//		System.out.println("SCALED " + Arrays.toString(scaled.getFeatures()));
+		svm_node[] ret = new svm_node[featureVectorBuilder.size()];
 		Integer featureIdx = 0;
-		for(Double val: fv.getFeatures()) {
+		for(Double val: scaled.getFeatures()) {
 			svm_node cur = new svm_node();
 			cur.index = featureIdx;
 			cur.value = val;

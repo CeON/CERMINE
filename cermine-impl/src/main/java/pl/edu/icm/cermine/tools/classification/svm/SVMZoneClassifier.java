@@ -39,16 +39,19 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 	
 	public BxZoneLabel classify(FeatureVector fv) {
 		svm_node[] instance = buildDatasetForClassification(fv);
+//		for(svm_node node: instance) {
+//			System.out.println(node.value);
+//		}
 		double predictedVal = svm.svm_predict(model, instance);
 		return BxZoneLabel.values()[(int)predictedVal];
 	}
 	
-	public static List<TrainingSample<BxZoneLabel>>loadProblem(String path) throws IOException {
+	public static List<TrainingSample<BxZoneLabel>>loadProblem(String path, FeatureVectorBuilder fvb) throws IOException {
 		File file = new File(path);
-		return loadProblem(file);
+		return loadProblem(file, fvb);
 	}
 
-	public static List<TrainingSample<BxZoneLabel>> loadProblem(File file) throws IOException {
+	public static List<TrainingSample<BxZoneLabel>> loadProblem(File file, FeatureVectorBuilder fvb) throws IOException {
 		List<TrainingSample<BxZoneLabel>> ret = new ArrayList<TrainingSample<BxZoneLabel>>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		String line = null;
@@ -61,7 +64,8 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 				String[] partParts = parts[partIdx].split(":");
 				values.add(Double.parseDouble(partParts[1]));
 			}
-			fv.setValues(values.toArray(new Double[1]));
+			fv.setValues(values.toArray(new Double[values.size()]));
+			fv.setNames(fvb.getFeatureNames());
 			TrainingSample<BxZoneLabel> sample = new TrainingSample<BxZoneLabel>(fv, label);
 			ret.add(sample);
 		}

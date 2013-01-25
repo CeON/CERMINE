@@ -32,7 +32,7 @@ public final class SVMHeaderLinesTraining {
         contentFilter.saveModel(output);
     }
     
-    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException {
         if (args.length < 2) {
             System.out.println("Usage: SVMContentHeaderTraining <input dir> <output>");
             return;

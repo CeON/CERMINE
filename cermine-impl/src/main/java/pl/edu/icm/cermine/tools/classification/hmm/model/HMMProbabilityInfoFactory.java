@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
+import java.util.HashSet;
 import java.util.List;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
@@ -31,7 +32,7 @@ public final class HMMProbabilityInfoFactory {
         hmmProbabilities.setTransitionProbability(transitionProbability);
 
         HMMEmissionProbability<S> emissionProbability = new DecisionTreeHMMEmissionProbability<S>(
-                trainingElements, vectorBuilder.getFeatureNames(), smoothing);
+                trainingElements, new HashSet<String>(vectorBuilder.getFeatureNames()), smoothing);
         hmmProbabilities.setEmissionProbability(emissionProbability);
 
         return hmmProbabilities;

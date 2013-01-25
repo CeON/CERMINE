@@ -1,9 +1,9 @@
 package pl.edu.icm.cermine.tools.classification.features;
 
-import java.lang.reflect.Array;
-import java.util.*;
-
-import org.apache.commons.lang.ArrayUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Simple feature vector.
@@ -27,8 +27,8 @@ public class FeatureVector implements Cloneable {
     	values.add(calculateFeatureValue);
     }
 
-    public Set<String> getFeatureNames() {
-        return new HashSet<String>(names);
+	public List<String> getFeatureNames() {
+		return names;
     }
     
     public String dump() {

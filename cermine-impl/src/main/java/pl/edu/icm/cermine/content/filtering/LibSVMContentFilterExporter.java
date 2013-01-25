@@ -14,7 +14,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
  */
 public final class LibSVMContentFilterExporter {
     
-    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException {
         if (args.length < 2) {
             System.out.println("Usage: LibSVMContentFilterExporter <input dir> <output>");
             return;

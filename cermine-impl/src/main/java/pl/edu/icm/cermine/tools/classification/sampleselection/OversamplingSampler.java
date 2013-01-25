@@ -13,7 +13,7 @@ public class OversamplingSampler<S> implements SampleSelector<S> {
     }
 
     @Override
-    public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements) {
+    public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements) throws CloneNotSupportedException {
         Map<S, Integer> labelCount = new HashMap<S, Integer>();
 
         for (TrainingSample<S> elem : inputElements) {

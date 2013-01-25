@@ -10,19 +10,27 @@ import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
+import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampler;
+import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
 
     @Override
-    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples) throws IOException, AnalysisException {
+    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples) throws IOException, AnalysisException, CloneNotSupportedException {
         for (TrainingSample<BxZoneLabel> trainingSample : trainingSamples) {
             trainingSample.setLabel(trainingSample.getLabel().getGeneralLabel());
         }
 
-        SVMZoneClassifier zoneClassifier = new SVMInitialZoneClassifier();
+        SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(1.);
+        List<TrainingSample<BxZoneLabel>> trainingSamplesOversampled = selector.pickElements(trainingSamples);
+        
+        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMInitialZoneClassifier.getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
         param.gamma = 0.126;
@@ -34,8 +42,13 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
     }
 
 	public static void main(String[] args) 
-			throws ParseException, AnalysisException, IOException, TransformationException {
+			throws ParseException, AnalysisException, IOException, TransformationException, CloneNotSupportedException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialZoneClassificationEvaluator());
+	}
+
+	@Override
+	protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
+		return SVMInitialZoneClassifier.getFeatureVectorBuilder();
 	}
 }
 

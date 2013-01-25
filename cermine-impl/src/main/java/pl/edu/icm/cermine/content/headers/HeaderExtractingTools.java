@@ -57,12 +57,12 @@ public final class HeaderExtractingTools {
                 ));
     }
     
-    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException, TransformationException {
+    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException, TransformationException, CloneNotSupportedException {
         List<BxDocument> documents = EvaluationUtils.getDocumentsFromPath(trainPath);
         return toTrainingSamples(documents);
     }
 
-    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(List<BxDocument> documents) throws AnalysisException {
+    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(List<BxDocument> documents) throws AnalysisException, CloneNotSupportedException {
         List<TrainingSample<BxZoneLabel>> trainingSamples;
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(1.0);

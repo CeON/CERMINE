@@ -32,7 +32,7 @@ public final class SVMContentFilterTraining {
         contentFilter.saveModel(output);
     }
     
-    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
+    public static void main(String[] args) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException {
         if (args.length < 2) {
             System.out.println("Usage: SVMContentFilterTraining <training files dir> <output>");
             return;

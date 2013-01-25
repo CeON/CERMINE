@@ -85,7 +85,7 @@ public class LibSVMExporter {
         System.out.println("Done.");
     }
     
-    public static void main(String[] args) throws ParseException, IOException, TransformationException, AnalysisException {
+    public static void main(String[] args) throws ParseException, IOException, TransformationException, AnalysisException, CloneNotSupportedException {
         Options options = new Options();
         options.addOption("under", false, "use undersampling for data selection");
         options.addOption("over", false, "use oversampling for data selection");
@@ -106,7 +106,7 @@ public class LibSVMExporter {
         if (line.hasOption("over")) {
             sampler = new OversamplingSampler<BxZoneLabel>(1.0);
         } else if (line.hasOption("under")) {
-            sampler = new UndersamplingSelector<BxZoneLabel>(2.0);
+            sampler = new UndersamplingSelector<BxZoneLabel>(1.0);
         } else if (line.hasOption("normal")) {
             sampler = new NormalSelector<BxZoneLabel>();
         } else {

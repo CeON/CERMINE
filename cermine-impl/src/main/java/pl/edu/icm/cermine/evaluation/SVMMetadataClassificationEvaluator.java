@@ -44,13 +44,15 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         SVMZoneClassifier zoneClassifier = new SVMInitialZoneClassifier();
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 0.5;
-        param.C = 256.0;
+        param.gamma = 0.25;
+        param.C = 32.0;
         param.kernel_type = svm_parameter.RBF;
+        param.degree = 4;
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
-//        zoneClassifier.printWeigths(SVMMetadataZoneClassifier.getFeatureVectorBuilder());
 
+//        zoneClassifier.saveModel("svm_meta_classifier");
+//        zoneClassifier = new SVMMetadataZoneClassifier();
         return zoneClassifier;
     }
 

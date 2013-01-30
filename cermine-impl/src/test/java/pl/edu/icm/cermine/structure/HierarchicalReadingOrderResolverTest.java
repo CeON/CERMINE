@@ -34,7 +34,7 @@ public class HierarchicalReadingOrderResolverTest {
 	static private ZipFile zipFile;
 	
 	static {
-		URL url = Thread.currentThread().getClass().getResource(PATH+ZIP_FILE_NAME);
+		URL url = HierarchicalReadingOrderResolverTest.class.getResource(PATH+ZIP_FILE_NAME);
         URI uri = null;
         System.out.println(url);
 		try {

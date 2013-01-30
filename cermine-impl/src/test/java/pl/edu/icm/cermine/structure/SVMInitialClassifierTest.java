@@ -51,14 +51,14 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
     }
     
 	public BufferedReader getModel() {
-		InputStream stream = Thread.currentThread().getClass()
+		InputStream stream = this.getClass()
 			    .getResourceAsStream(modelPath);
 		BufferedReader modelFileReader = new BufferedReader(new InputStreamReader(stream));
 		return modelFileReader;
 	}
 	
 	public BufferedReader getRange() {
-		InputStream stream = Thread.currentThread().getClass()
+		InputStream stream = this.getClass()
 			    .getResourceAsStream(rangeFilePath);
 		BufferedReader rangeFileReader = new BufferedReader(new InputStreamReader(stream));
 		return rangeFileReader;

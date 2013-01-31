@@ -33,9 +33,20 @@ public class KeywordsEnhancer extends AbstractSimpleEnhancer {
             for (BxZone zone : filterZones(page)) {
                 String text = zone.toText().replace("\n", " ");
                 text = PREFIX.matcher(text).replaceFirst("");
-                String separator = text.indexOf(';') > -1 ? ";" : ",";
+                String separator = null;
+                if(text.contains(";")) {
+                	separator = ";";
+                } else if(text.contains(",")) {
+                	separator = ",";
+                } else if(text.contains(".")) {
+                	separator = ".";
+                } else {
+                	separator = "\\s";
+                }
                 for (String keyword : text.split(separator)) {
-                    Enhancers.addKeyword(metadata, keyword.trim().replaceFirst("\\.$", ""));
+                	if(keyword.length() > 0) {
+                		Enhancers.addKeyword(metadata, keyword.trim().replaceFirst("\\.$", ""));
+                	}
                 }
                 return true;
             }

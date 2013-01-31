@@ -1,9 +1,13 @@
 package pl.edu.icm.cermine.evaluation.tools;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -15,13 +19,13 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults> {
 
-    private Set<BxZoneLabel> possibleLabels;
+    private List<BxZoneLabel> possibleLabels;
     private Map<LabelPair, Integer> classificationMatrix;
     private int goodRecognitions = 0;
     private int badRecognitions = 0;
 
     public ClassificationResults() {
-        possibleLabels = new HashSet<BxZoneLabel>();
+        possibleLabels = new ArrayList<BxZoneLabel>();
         classificationMatrix = new HashMap<LabelPair, Integer>();
     }
 
@@ -38,7 +42,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         }
     }
 
-    public Set<BxZoneLabel> getPossibleLabels() {
+    public List<BxZoneLabel> getPossibleLabels() {
         return possibleLabels;
     }
 
@@ -146,9 +150,8 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     
     public void printMatrix() {
         int maxLabelLength = 0;
-
+        Collections.sort(possibleLabels);
         Map<BxZoneLabel, Integer> labelLengths = new HashMap<BxZoneLabel, Integer>();
-
         for (BxZoneLabel label : possibleLabels) {
             int labelLength = label.toString().length();
             if (labelLength > maxLabelLength) {

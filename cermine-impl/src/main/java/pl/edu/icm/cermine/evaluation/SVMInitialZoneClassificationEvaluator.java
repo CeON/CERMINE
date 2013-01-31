@@ -16,7 +16,6 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampler;
-import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
@@ -27,13 +26,15 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
             trainingSample.setLabel(trainingSample.getLabel().getGeneralLabel());
         }
 
-        SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(1.);
-        List<TrainingSample<BxZoneLabel>> trainingSamplesOversampled = selector.pickElements(trainingSamples);
+		OversamplingSampler<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(
+				1.);
+		List<TrainingSample<BxZoneLabel>> trainingSamplesOversampled = selector
+				.pickElements(trainingSamples);
         
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMInitialZoneClassifier.getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 0.126;
+		param.gamma = 0.5;
         param.C = 64.0;
         param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);

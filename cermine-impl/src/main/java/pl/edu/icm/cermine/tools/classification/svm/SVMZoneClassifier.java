@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import libsvm.svm;
 import libsvm.svm_node;
@@ -31,44 +33,38 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
     	for (BxZone zone: document.asZones()) {
     		
 			BxZoneLabel predicted = predictLabel(zone, zone.getParent());
-			System.out.println("predictedVal " + predicted + "( is " + zone.getLabel() + ")");
+//			System.out.println("predictedVal " + predicted + "( is " + zone.getLabel() + ")");
 			zone.setLabel(predicted);
 		}
 		return document;
 	}
 	
-//	public BxZoneLabel classify(FeatureVector fv) {
-//		svm_node[] instance = buildDatasetForClassification(fv);
-////		for(svm_node node: instance) {
-////			System.out.println(node.value);
-////		}
-//		double predictedVal = svm.svm_predict(model, instance);
-//		return BxZoneLabel.values()[(int)predictedVal];
-//	}
-	
-	public static List<TrainingSample<BxZoneLabel>>loadProblem(String path, FeatureVectorBuilder fvb) throws IOException {
+	public static List<TrainingSample<BxZoneLabel>>loadProblem(String path, FeatureVectorBuilder<BxZone, BxPage> fvb) throws IOException {
 		File file = new File(path);
 		return loadProblem(file, fvb);
 	}
 
-	public static List<TrainingSample<BxZoneLabel>> loadProblem(File file, FeatureVectorBuilder fvb) throws IOException {
+	public static List<TrainingSample<BxZoneLabel>> loadProblem(File file, FeatureVectorBuilder<BxZone, BxPage> fvb) throws IOException {
 		List<TrainingSample<BxZoneLabel>> ret = new ArrayList<TrainingSample<BxZoneLabel>>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		String line = null;
+		final Pattern partsPattern = Pattern.compile(" ");
+		final Pattern twopartPattern = Pattern.compile(":");
 		while((line = br.readLine()) != null) {
-			String[] parts = line.split(" ");
+			String[] parts = partsPattern.split(line);
 			BxZoneLabel label = BxZoneLabel.values()[Integer.parseInt(parts[0])];
 			FeatureVector fv = new FeatureVector();
 			List<Double> values = new ArrayList<Double>();
 			for(Integer partIdx=1; partIdx<parts.length; ++partIdx) {
-				String[] partParts = parts[partIdx].split(":");
-				values.add(Double.parseDouble(partParts[1]));
+				String[] subparts = twopartPattern.split(parts[partIdx]);
+				values.add(Double.parseDouble(subparts[1]));
 			}
 			fv.setValues(values.toArray(new Double[values.size()]));
 			fv.setNames(fvb.getFeatureNames());
 			TrainingSample<BxZoneLabel> sample = new TrainingSample<BxZoneLabel>(fv, label);
 			ret.add(sample);
 		}
+		br.close();
 		return ret;
 	}
 }

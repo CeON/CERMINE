@@ -1,6 +1,8 @@
 package pl.edu.icm.cermine;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.xpath.XPathExpressionException;
@@ -38,7 +40,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
            
 
     public PdfNLMContentExtractor() throws AnalysisException {
-        structureExtractor = new PdfBxStructureExtractor();
+      //  structureExtractor = new PdfBxStructureExtractor();
         metadataExtractor = new PdfNLMMetadataExtractor();
         referencesExtractor = new PdfNLMReferencesExtractor();
         textExtractor = new PdfNLMTextExtractor();
@@ -105,15 +107,17 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         return content;
     }
     
-
+/*
     public void buildStructureExtractor(InputStream initialModel, InputStream initialRange) throws AnalysisException {
-        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
+        structureExtractor = new PdfBxStructureExtractor(new BufferedReader(new InputStreamReader(initialModel)), 
+        		new BufferedReader(new InputStreamReader(initialRange)));
     }
     
     public void buildMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException, IOException {
-        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
+        metadataExtractor = new PdfNLMMetadataExtractor(new BufferedReader(new InputStreamReader(metadataModel)),
+        		new BufferedReader(new InputStreamReader(metadataRange)));
     }
-    
+  */  
     public void buildReferencesExtractor(InputStream refModel) throws AnalysisException {
         referencesExtractor = new PdfNLMReferencesExtractor(refModel);
     }
@@ -126,8 +130,11 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, InputStream metadataModel, 
             InputStream metadataRange, InputStream refModel, InputStream filteringModel, InputStream filteringRange, 
             InputStream headerModel, InputStream headerRange) throws AnalysisException, IOException {
-        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
-        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
+        metadataExtractor = new PdfNLMMetadataExtractor(
+        		new BufferedReader(new InputStreamReader(initialModel)),
+        		new BufferedReader(new InputStreamReader(initialRange)),
+        		new BufferedReader(new InputStreamReader(metadataModel)),
+        		new BufferedReader(new InputStreamReader(metadataRange)));
         referencesExtractor = new PdfNLMReferencesExtractor(refModel);
         textExtractor = new PdfNLMTextExtractor(filteringModel, filteringRange, headerModel, headerRange);
     }

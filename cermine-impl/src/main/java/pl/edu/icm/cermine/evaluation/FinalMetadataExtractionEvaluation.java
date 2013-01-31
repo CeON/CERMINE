@@ -1,7 +1,9 @@
 package pl.edu.icm.cermine.evaluation;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -74,8 +76,8 @@ public final class FinalMetadataExtractionEvaluation {
 		}
 	}
 	
-	public void evaluate(PdfNlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException,JDOMException, XPathExpressionException, TransformerException {
-		PdfNLMMetadataExtractor metadataExtractor = new PdfNLMMetadataExtractor();
+	public void evaluate(PdfNlmIterator iter, BufferedReader initialModel, BufferedReader initialRange, BufferedReader metaModel, BufferedReader metaRange) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException,JDOMException, XPathExpressionException, TransformerException {
+		PdfNLMMetadataExtractor metadataExtractor = new PdfNLMMetadataExtractor(initialModel, initialRange, metaModel, metaRange);
         
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -108,6 +110,7 @@ public final class FinalMetadataExtractionEvaluation {
         CorrectAllPair pages = new CorrectAllPair();
         CorrectAllPair dateYear = new CorrectAllPair();
         CorrectAllPair dateFull = new CorrectAllPair();
+        CorrectAllPair title = new CorrectAllPair();
 
         List<Double> abstractRates = new ArrayList<Double>(iter.size());
         List<Double> titleRates = new ArrayList<Double>(iter.size());
@@ -208,6 +211,12 @@ public final class FinalMetadataExtractionEvaluation {
 	            }
 	            ++urn.all;
             }
+            if(!expectedTitle.isEmpty()) {
+	            if(new CosineDistance().compare(StringTools.tokenize(expectedTitle), StringTools.tokenize(extractedTitle)) > 0.8) {
+	            	++urn.correct;
+	            }
+	            ++urn.all;
+            }
             if(!expectedFPage.isEmpty() && !expectedLPage.isEmpty()) {
                 if(expectedFPage.equals(extractedFPage) && expectedLPage.equals(extractedLPage)) {
                 	++pages.correct;
@@ -218,14 +227,14 @@ public final class FinalMetadataExtractionEvaluation {
             
             if(!expectedPubDate.isEmpty()) {
             	Boolean yearsMatch = DateComparator.yearsMatch(expectedPubDate, extractedPubDate);
-            	if(yearsMatch != null) {
+            	if(extractedPubDate != null && yearsMatch != null) {
 	            	if(yearsMatch) {
 	            		++dateYear.correct;
 	            	}
 	            	++dateYear.all;
             	}
             	Boolean datesMatch = DateComparator.datesMatch(expectedPubDate, extractedPubDate);
-            	if(datesMatch != null) {
+            	if(extractedPubDate!= null &&datesMatch != null) {
 	            	if(datesMatch) {
 	            		++dateFull.correct;
 	            	}
@@ -245,9 +254,9 @@ public final class FinalMetadataExtractionEvaluation {
             	abstractRates.add(null);
             }
             if(expectedTitle.length() > 0) {
-            	titleRates.add(compareStringsSW(expectedTitle, extractedTitle));
+            	abstractRates.add(compareStringsSW(expectedTitle, extractedTitle));
             } else {
-            	titleRates.add(null);
+            	abstractRates.add(null);
             }
             if(expectedJournalTitle.length() > 0) {
             	journalTitleRates.add(compareStringsSW(expectedTitle, extractedTitle));
@@ -291,6 +300,7 @@ public final class FinalMetadataExtractionEvaluation {
             	printVerbose(keyword);
             }
             
+            
             printVerbose(">>> Expected journal title: " + expectedJournalTitle);
             printVerbose(">>> Extracted journal title: " + extractedJournalTitle);
             
@@ -306,6 +316,9 @@ public final class FinalMetadataExtractionEvaluation {
             printVerbose(">>> Expected doi: " + expectedDoi);
             printVerbose(">>> Extracted doi: " + extractedDoi);
             
+            printVerbose(">>> Expected abstract: " + expectedAbstract);
+            printVerbose(">>> Extracted abstract: " + extractedAbstract);
+            
             printVerbose(">>> Expected date: ");
             for(String date: expectedPubDate) {
             	printVerbose(date);
@@ -315,8 +328,10 @@ public final class FinalMetadataExtractionEvaluation {
             for(String date: extractedPubDate) {
             	printVerbose(date);
             }
+            printVerbose(">>> Expected pages" + expectedFPage + expectedLPage);
+            printVerbose(">>> Extracted pages" + extractedFPage + extractedLPage);
             printVerbose("abstract " + abstractRates);
-            printVerbose("title " + titleRates);
+            printVerbose("title " + title);
             printVerbose("journal title " + journalTitleRates);
             printVerbose("publisher name rates " + publisherNameRates);
             printVerbose("namesP " + authorsPrecisions);
@@ -334,20 +349,23 @@ public final class FinalMetadataExtractionEvaluation {
         System.out.println("==== Summary ("+ iter.size() +" docs)====");
         if((value = calculateAverage(abstractRates)) != null)
         	System.out.printf("abstract avg (SW) \t\t%4.2f\n", 100*value);
-        if((value = calculateAverage(titleRates)) != null)
-        	System.out.printf("title avg (SW) \t\t\t%4.2f\n", 100*value);
         if((value = calculateAverage(journalTitleRates)) != null)
         	System.out.printf("journal title avg (SW) \t\t%4.2f\n", 100*value);
         if((value = calculateAverage(publisherNameRates)) != null)
         	System.out.printf("publisher name (SW) \t\t%4.2f\n", 100*value);
-        if((value = calculateAverage(authorsPrecisions)) != null)
+        if((value = calculateAverage(titleRates)) != null)
+        	System.out.printf("title avg (SW)\t%4.2f\n", 100*value);
+        if((value = calculateAverage(titleRates)) != null)
         	System.out.printf("names precision avg (EQ)\t%4.2f\n", 100*value);
         if((value = calculateAverage(authorsRecalls)) != null)
         	System.out.printf("names recall avg (EQ)\t\t%4.2f\n", 100*value);
         if((value = calculateAverage(keywordPrecisions)) != null)
         	System.out.printf("keywords precision avg (EQ)\t%4.2f\n", 100*value);
         if((value = calculateAverage(keywordRecalls)) != null)
-        	System.out.printf("keywords recall avg (EQ)\t%4.2f\n", 100*value);
+        	System.out.printf("keywords recall" +
+        			" avg (EQ)\t%4.2f\n", 100*value);
+        if((value = title.calculateAccuracy()) != null)
+        	System.out.printf("title accuracy avg\t\t%4.2f\n", 100*value);
         if((value = dateYear.calculateAccuracy()) != null)
         	System.out.printf("date year accuracy avg\t\t%4.2f\n", 100*value);
         if((value = dateFull.calculateAccuracy()) != null)
@@ -356,27 +374,14 @@ public final class FinalMetadataExtractionEvaluation {
         	System.out.printf("doi accuracy avg\t\t%4.2f\n", 100*value);
         if((value = urn.calculateAccuracy()) != null) 
         	System.out.printf("URN accuracy avg\t\t%4.2f\n", 100*value);
+        if((value = issue.calculateAccuracy()) != null) 
+        	System.out.printf("issue accuracy avg\t\t%4.2f\n", 100*value);
+        if((value = volume.calculateAccuracy()) != null) 
+        	System.out.printf("volume accuracy avg\t\t%4.2f\n", 100*value);
         if((value = pages.calculateAccuracy()) != null)
         	System.out.printf("pages accuracy avg\t\t%4.2f\n", 100*value);
 	}
 
-    public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException,JDOMException, XPathExpressionException, TransformerException {
-        if (args.length < 1 || args.length > 2) {
-            System.out.println("Usage: FinalEffectEvaluator [-v] <input dir>");
-            return;
-        }
-        Boolean verbose = false;
-        String directory = null;
-        if(args[0].equals("-v")) {
-        	verbose = true;
-        	directory = args[1];
-        } else {
-        	directory = args[0];
-        }
-        FinalMetadataExtractionEvaluation e = new FinalMetadataExtractionEvaluation(verbose);
-        PdfNlmIterator iter = new PdfNlmIterator(directory);
-        e.evaluate(iter);
-    }
 
     private static Double calculateAverage(List<Double> values) {
     	Integer all = 0;
@@ -463,5 +468,32 @@ public final class FinalMetadataExtractionEvaluation {
     	  XMLSerializer serializer = new XMLSerializer(out, format);
     	  serializer.serialize(document);
     	  return out.toString();
+      }
+      
+
+      public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException,JDOMException, XPathExpressionException, TransformerException {
+          if (args.length < 5 || args.length > 6) {
+              System.out.println("Usage: FinalEffectEvaluator [-v] <input path> <initial-model> <initial-range> <meta-model> <meta-range>");
+              return;
+          }
+          Boolean verbose = false;
+          String directory = null;
+          Integer base = 0;
+          if(args[0].equals("-v")) {
+          	verbose = true;
+          	directory = args[1];
+          	base=2;
+          } else {
+        	  directory = args[0];
+        	  base = 1;
+          }
+          
+          BufferedReader initialModel= new BufferedReader(new InputStreamReader(new FileInputStream(args[0+base])));
+          BufferedReader initialRange= new BufferedReader(new InputStreamReader(new FileInputStream(args[1+base])));
+          BufferedReader metaModel= new BufferedReader(new InputStreamReader(new FileInputStream(args[2+base])));
+          BufferedReader metaRange= new BufferedReader(new InputStreamReader(new FileInputStream(args[3+base])));
+          FinalMetadataExtractionEvaluation e = new FinalMetadataExtractionEvaluation(verbose);
+          PdfNlmIterator iter = new PdfNlmIterator(directory);
+          e.evaluate(iter, initialModel, initialRange, metaModel, metaRange);
       }
 }

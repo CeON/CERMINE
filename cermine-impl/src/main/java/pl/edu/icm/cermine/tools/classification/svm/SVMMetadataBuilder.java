@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
@@ -18,29 +20,15 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampl
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
 public class SVMMetadataBuilder {
-	protected static SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments, Integer kernelType, Double gamma, Double C, Integer degree) throws IOException, AnalysisException, CloneNotSupportedException
+	protected static SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamplesUnrevised, Integer kernelType, Double gamma, Double C, Integer degree) throws IOException, AnalysisException, CloneNotSupportedException
 	{
-		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
-        Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
-        for (BxDocument doc : trainingDocuments) {
-            for (BxZone zone : doc.asZones()) {
-                if (zone.getLabel().getCategory() != BxZoneLabelCategory.CAT_METADATA) {
-                    zone.setLabel(labelMapper.get(zone.getLabel()));
-                }
-            }
-        }
-
-        List<TrainingSample<BxZoneLabel>> TrainingSamplesUnrevised = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder);
-        TrainingSamplesUnrevised = ClassificationUtils.filterElements(TrainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
+        trainingSamplesUnrevised = ClassificationUtils.filterElements(trainingSamplesUnrevised, BxZoneLabelCategory.CAT_METADATA);
 
         SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(0.7);
-        List<TrainingSample<BxZoneLabel>> trainingSamples = selector.pickElements(TrainingSamplesUnrevised);
+        List<TrainingSample<BxZoneLabel>> trainingSamples = selector.pickElements(trainingSamplesUnrevised);
 
-        // Filter the training documents
-        // so that in the learning examples all classes are
-        // represented equally
-
-        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
+        FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
+        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMMetadataZoneClassifier.getFeatureVectorBuilder());
 		svm_parameter param = SVMZoneClassifier.getDefaultParam();
 		param.svm_type = svm_parameter.C_SVC;
 		param.gamma = gamma;
@@ -54,9 +42,10 @@ public class SVMMetadataBuilder {
         zoneClassifier.saveModel("svm_initial_classifier");
 		return zoneClassifier;
 	}
+
 	public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException, CloneNotSupportedException {
         Options options = new Options();
-        options.addOption("input", true, "input xml directory path");
+        options.addOption("input", true, "input path");
         options.addOption("output", true, "output model path");
         options.addOption("kernel", true, "kernel type");
         options.addOption("g", true, "gamma");
@@ -65,8 +54,10 @@ public class SVMMetadataBuilder {
 
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
-        if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("k") && line.hasOption("g") && line.hasOption("C") && line.hasOption("degree"))) {
+        if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("kernel") && line.hasOption("g") && line.hasOption("C") && line.hasOption("degree"))) {
             System.err.println("Usage: <training-xml-directory path> <output model path>");
+            
+            System.err.println(line.hasOption("input") + " " + line.hasOption("output") + " " + line.hasOption("kernel") +  line.hasOption("g") + line.hasOption("C") + line.hasOption("degree"));
             System.exit(1);
         }
 
@@ -85,8 +76,19 @@ public class SVMMetadataBuilder {
         		throw new IllegalArgumentException("Invalid kernel value provided");
         }
         
-		List<BxDocument> trainingDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
-		SVMZoneClassifier classifier = getZoneClassifier(trainingDocuments, kernelType, gamma, C, degree);
-		classifier.saveModel(outFile);
+        File input = new File(inDir);
+        List<TrainingSample<BxZoneLabel>> trainingSamples;
+        if(input.isDirectory()) {
+        	List<BxDocument> trainingDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
+    		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
+            trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder, 
+                    BxZoneLabel.getIdentityMap());
+        } else {
+        	trainingSamples = SVMZoneClassifier.loadProblem(inDir, SVMMetadataZoneClassifier.getFeatureVectorBuilder());
+        }
+        
+        trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_METADATA);
+    	SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+    	classifier.saveModel(outFile);
 	}
 }

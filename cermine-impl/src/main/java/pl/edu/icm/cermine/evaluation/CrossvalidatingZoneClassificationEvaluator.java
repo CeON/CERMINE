@@ -96,6 +96,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         ClassificationResults summary = newResults();
         List<TrainingSample<BxZoneLabel>> samples = SVMZoneClassifier.loadProblem(inputFile, getFeatureVectorBuilder());
         List<DividedEvaluationSet> sampleSets = DividedEvaluationSet.build(samples, foldness);
+        System.out.println("All training elements: " +  samples.size());
         for (int fold = 0; fold < foldness; ++fold) {
         	List<TrainingSample<BxZoneLabel>> trainingSamples = sampleSets.get(fold).getTrainingDocuments();
         	List<TrainingSample<BxZoneLabel>> testSamples = sampleSets.get(fold).getTestDocuments();

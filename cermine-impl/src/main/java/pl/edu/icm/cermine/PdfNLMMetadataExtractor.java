@@ -40,15 +40,9 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
         extractor = new EnhancerMetadataExtractor();
     }
     
-    public PdfNLMMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException, IOException {
-        strExtractor = new PdfBxStructureExtractor();
-
-        BufferedReader metaModelFileReader = new BufferedReader(new InputStreamReader(metadataModel));
-        BufferedReader metaRangeFileReader = new BufferedReader(new InputStreamReader(metadataRange));
-        metadataClassifier = new SVMMetadataZoneClassifier(metaModelFileReader, metaRangeFileReader);
-        metaModelFileReader.close();
-        metaRangeFileReader.close();
-
+    public PdfNLMMetadataExtractor(BufferedReader initialModel, BufferedReader initialRange, BufferedReader metadataModel, BufferedReader metadataRange) throws AnalysisException, IOException {
+        strExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
+        metadataClassifier = new SVMMetadataZoneClassifier(metadataModel, metadataRange);
         extractor = new EnhancerMetadataExtractor();
     }
 

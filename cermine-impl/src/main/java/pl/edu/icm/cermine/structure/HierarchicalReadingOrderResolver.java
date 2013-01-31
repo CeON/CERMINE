@@ -191,17 +191,6 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                 continue;
             }
 
-            // !!!! Code below is used for debugging purposes
-
-            /*
-             * String obj1Content = null; try { obj1Content = ((BxZone)distElem.obj1).toText(); } catch (Exception e) {
-             * obj1Content = ""; } String obj2Content = null; try { obj2Content = ((BxZone)distElem.obj2).toText(); }
-             * catch (Exception e) { obj2Content = ""; } System.out.println("(" + distElem.obj1.getX() + ", " +
-             * distElem.obj1.getY() + ", " + (int)distElem.obj1.getWidth() + ", " + (int)distElem.obj1.getHeight() + ":
-             * "+ s(obj1Content)+"["+obj1Content.length()+"])" + " + (" + distElem.obj2.getX() + ", " +
-             * distElem.obj2.getY() + ", " + (int)distElem.obj2.getWidth() + ", " + (int)distElem.obj2.getHeight() + ":
-             * "+ s(obj2Content)+"["+obj2Content.length()+"]) " +distElem.dist);
-             */
             BxZoneGroup newGroup = new BxZoneGroup(distElem.getObj1(), distElem.getObj2());
             plane.remove(distElem.getObj1()).remove(distElem.getObj2());
             dists = removeDistElementsContainingObject(dists, distElem.getObj1());
@@ -230,15 +219,6 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         }
         return ret;
     }
-    /*
-     * private void sortTree(BxZoneGroup tree) { if(tree.getLeftChild() != null && tree.getRightChild() != null) {
-     * double leftChildDist = distFromRoot(tree.getLeftChild()); double rightChildDist =
-     * distFromRoot(tree.getRightChild()); if(rightChildDist < leftChildDist) { // swap BxObject tmp =
-     * tree.getLeftChild(); tree.setLeftChild(tree.getRightChild()); tree.setRightChild(tmp); } if(tree.getLeftChild()
-     * instanceof BxZoneGroup) { sortGroupedZones((BxZoneGroup)tree.getLeftChild()); } if(tree.getRightChild()
-     * instanceof BxZoneGroup) { sortGroupedZones((BxZoneGroup)tree.getRightChild()); } } }
-     */
-
     /**
      * Swaps children of BxZoneGroup if necessary. A group with smaller sort factor is placed to the left (leftChild).
      * An object with greater sort factor is placed on the right (rightChild). This plays an important role when
@@ -249,11 +229,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
     private void sortGroupedZones(BxZoneGroup group) {
         BxObject leftChild = group.getLeftChild();
         BxObject rightChild = group.getRightChild();
-        //	Double leftChildSortPrecedence = sortPrecedence(leftChild);
-        //	Double rightChildSortPrecedence = sortPrecedence(rightChild);
-        //	if (leftChildSortPrecedence < rightChildSortPrecedence) {
         if (shouldBeSwapped(leftChild, rightChild)) {
-            // swap
             group.setLeftChild(rightChild);
             group.setRightChild(leftChild);
         } // else {  
@@ -328,7 +304,8 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         Double obj2CenterX = obj2.getX() + obj2.getWidth() / 2;
         Double obj2CenterY = obj2.getY() + obj2.getHeight() / 2;
 
-        Double obj1obj2VectorCosineAbs = Math.abs((obj2CenterX - obj1CenterX) / Math.sqrt((obj2CenterX - obj1CenterX) * (obj2CenterX - obj1CenterX) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));
+        Double obj1obj2VectorCosineAbs =
+        		Math.abs((obj2CenterX - obj1CenterX) / Math.sqrt((obj2CenterX - obj1CenterX) * (obj2CenterX - obj1CenterX) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));
         final Double MAGIC_COEFF = 0.5;
         return dist * (MAGIC_COEFF + obj1obj2VectorCosineAbs);
     }

@@ -8,8 +8,11 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
 
     private Double inequalityFactor;
 
+    
     public UndersamplingSelector(Double inequalityFactor) {
-        assert inequalityFactor > 1.0;
+    	if(inequalityFactor <= 1.0) {
+    		throw new RuntimeException("Inequality factor must be greater than 1.");
+    	}
         this.inequalityFactor = inequalityFactor;
     }
 
@@ -41,12 +44,13 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
                     thisLabelElements.add(elem);
                 }
             }
-            if (thisLabelElements.size() < smallestClassNumber * inequalityFactor) {
+            if (thisLabelElements.size() < smallestClassNumber*inequalityFactor) {
                 trainingSamples.addAll(thisLabelElements);
+                System.out.println(label + " " + thisLabelElements.size());
             } else {
                 Random randomGenerator = new Random();
                 List<TrainingSample<S>> chosenElements = new ArrayList<TrainingSample<S>>();
-                while (chosenElements.size() < smallestClassNumber * inequalityFactor) {
+                while (chosenElements.size() < smallestClassNumber*inequalityFactor) {
                     Integer randInt = randomGenerator.nextInt(thisLabelElements.size());
                     TrainingSample<S> randElem = thisLabelElements.get(randInt);
                     if (!chosenElements.contains(randElem)) {
@@ -54,6 +58,7 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
                     }
                 }
                 trainingSamples.addAll(chosenElements);
+                System.out.println(label + " " + chosenElements.size());
             }
         }
         return trainingSamples;

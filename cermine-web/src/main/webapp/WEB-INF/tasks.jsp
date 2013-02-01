@@ -6,18 +6,27 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CERMINE extraction task</title>
-        <%@include file="html_meta.jsp" %>
-        <meta http-equiv="refresh" content="30"> 
-    </head>
-    <body>
-        <div id="wrapper">
+<html class="no-js">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>CERMINE extraction task</title>
+	<%@include file="html_meta.jsp" %>
+	<meta http-equiv="refresh" content="30"> 
+</head>
+<body>
+        
+        <div class="wrapper" id="wrapper">
+        
             <%@include file="header.jsp" %>
+            
             <article id="main">
+            
+            	<%@include file="navigation.jsp" %>
+            	
+            	<div class="content" >
+            	
                 <h1>Submitted extractions:</h1>
                 <c:choose>
                     <c:when test="${empty tasks}">
@@ -37,15 +46,20 @@
                                     <td>${status.index+1}</td>
                                     <td>${task.creationDate}</td>
                                     <td><a href="task.html?task=${task.id}">${task.fileName}</a></td>
-                                    <td class="status">${task.status.text}</td>
+                                    <td class="status" ><span status="${task.status.text}" >${task.status.text}</span></td>
                                     <td><c:if test="${task.finished}">${task.result.processingTimeSec}</c:if></td>
                                     </tr>
                             </c:forEach>
                         </table>
                     </c:otherwise>
                 </c:choose>
+                
+                </div> 
+                
             </article>
-            <%@include file="footer.jsp" %>
+           
+            <div class="push" ></div>
         </div>
+        <%@include file="footer.jsp" %>
     </body>
 </html>

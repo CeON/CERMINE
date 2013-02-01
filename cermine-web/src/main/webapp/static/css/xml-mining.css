@@ -1,0 +1,20 @@
+#xml-mining {
+  height: 200px;
+  margin: 0px auto;
+  position: relative;
+  width: 500px;
+}
+#xml-mining #axe, #xml-mining #article {
+  position: absolute;
+}
+#xml-mining #article {
+  left: 175px;
+  top: 35px;
+}
+#xml-mining #xml-parser {
+  font-size: 16px;
+  font-weight: bold;
+  left: 200px;
+  position: absolute;
+  top: 150px;
+}

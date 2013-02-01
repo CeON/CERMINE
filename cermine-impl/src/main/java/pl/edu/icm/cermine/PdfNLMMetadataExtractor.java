@@ -1,38 +1,21 @@
 package pl.edu.icm.cermine;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-
 import pl.edu.icm.cermine.evaluation.tools.PdfNlmIterator;
 import pl.edu.icm.cermine.evaluation.tools.PdfNlmPair;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.ReadingOrderResolver;
-import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.tools.BxModelUtils;
-import pl.edu.icm.cermine.tools.classification.general.DirExtractor;
-import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 
 /**

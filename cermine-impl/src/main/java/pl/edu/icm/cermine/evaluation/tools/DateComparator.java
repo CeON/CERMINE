@@ -2,8 +2,6 @@ package pl.edu.icm.cermine.evaluation.tools;
 
 import java.util.List;
 
-import org.apache.lucene.analysis.Tokenizer;
-
 public class DateComparator {
 	
 	public static Boolean yearsMatch(List<String> expected, List<String> extracted) {

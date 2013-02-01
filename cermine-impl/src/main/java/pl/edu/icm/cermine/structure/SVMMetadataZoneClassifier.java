@@ -1,17 +1,8 @@
 package pl.edu.icm.cermine.structure;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Arrays;
-import java.util.List;
-
 import pl.edu.icm.cermine.PdfBxStructureExtractor;
-import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;

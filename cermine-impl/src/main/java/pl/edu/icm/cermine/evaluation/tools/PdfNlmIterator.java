@@ -2,13 +2,7 @@ package pl.edu.icm.cermine.evaluation.tools;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Formatter;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 	private Integer curItemIdx = -1;

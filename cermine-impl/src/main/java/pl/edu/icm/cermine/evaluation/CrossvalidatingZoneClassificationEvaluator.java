@@ -3,7 +3,6 @@ package pl.edu.icm.cermine.evaluation;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
@@ -24,8 +22,6 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 
 /**
  * Class for performing cross-validating classifier performance in zone classification task

@@ -66,11 +66,11 @@
          <div><b>Submitted:</b><fmt:formatDate value="${task.creationDate}" pattern="MM/dd/yyyy"/></div>
          <div><b>In queue:</b><c:if test="${task.finished}">${task.result.queueTimeSec}s</c:if></div>
          <div><b>Processing:</b><c:if test="${task.finished}">${task.result.processingTimeSec}s</c:if></div>
-		 <div  ><b>Status:</b><span class="${task.status.css}">${task.status.text}</span></div>
+		 <div><b>Status:</b><span class="${task.status.css}">${task.status.text}</span></div>
 		 </section>
 		
          <c:if test="${task.failed}">
-             <h2>Oups - something went wrong...</h2>
+             <h2>Oops - something went wrong...</h2>
              <p>
                  We are sorry, but we were unable to process submitted file <strong>${task.fileName}</strong>. Error message is:
              </p>

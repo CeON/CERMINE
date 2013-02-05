@@ -40,7 +40,7 @@ $(function() {
 	                
 	                <legend>Upload PDF file</legend>
 	                
-	                <p>Upload an PDF file containing scientific article:</p> 
+	                <p>Upload a PDF file containing scientific article:</p> 
 	                <img src="static/images/icons/upload-8-128-1.png" class="upload-image"/>
 	                <c:if test="${not empty warning}">
 	                    <div class="ui-widget">
@@ -60,28 +60,35 @@ $(function() {
                 </fieldset>
                 <h2>About the service</h2>
                 <p>
-                    Upload a PDF file containing a scientific article to extract
-                    a metadata. PDF document layout will be analysed and automatic
-                    algorithm will attempt to use graphical structure to extract
-                    information about: 
+                    CERMINE is a Java library and a web service for extracting 
+                    metadata and content from scientific articles in born-digital form. 
+                    The system analyses the content of a PDF file and attempts 
+                    to extract information such as:
                 </p>
                 <ul>
                     <li>Title of the article</li>
-                    <li>Journal information (title etc.)</li>
-                    <li>Bibliographic information (vol, issue, page numbers etc.)</li>
-                    <li>Authors, affiliations</li>
+                    <li>Journal information (title, etc.)</li>
+                    <li>Bibliographic information (volume, issue, page numbers, etc.)</li>
+                    <li>Authors and affiliations</li>
                     <li>Keywords</li>
                     <li>Abstract</li>
-                    <li>Bibliographic reference</li>
+                    <li>Bibliographic references</li>
                 </ul>
            
                 <h2>Limitations</h2>
                 <p>
                     This is an experimental service, and result may be not accurate.
-	                Uploaded file will be used only for metadata extraction, we do not store uploaded files.
+	                Uploaded file will be used only for metadata extraction, we do 
+                    not store uploaded files.
 	               
 	                Accepted file format - *.pdf, maximum file size is <mark>5 MB</mark>.
 				</p>
+                
+                <h2>License</h2>
+                <p>
+                    CERMINE is licensed under GNU Affero General Public License version 3.
+				</p>
+                
 				</div>
             </article>
         	

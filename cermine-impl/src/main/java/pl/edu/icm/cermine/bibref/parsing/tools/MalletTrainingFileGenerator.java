@@ -33,9 +33,12 @@ public final class MalletTrainingFileGenerator {
             if (file.isDirectory()) {
                 continue;
             }
+            if (!file.getName().endsWith(".nxml")) {
+                continue;
+            }
             
             InputStream is = null;
-            Set<Citation> citations;
+            List<Citation> citations;
             try {
                 is = new FileInputStream(file);
                 InputSource source = new InputSource(is);

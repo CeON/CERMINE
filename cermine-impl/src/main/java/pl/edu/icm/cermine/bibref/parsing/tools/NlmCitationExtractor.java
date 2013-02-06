@@ -54,8 +54,13 @@ public final class NlmCitationExtractor {
 
     private NlmCitationExtractor() {}
     
-    public static Set<Citation> extractCitations(InputSource source) throws JDOMException, IOException {
-        Document doc = new SAXBuilder("org.apache.xerces.parsers.SAXParser").build(source);
+    public static List<Citation> extractCitations(InputSource source) throws JDOMException, IOException {
+        SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
+        builder.setValidation(false);
+        builder.setFeature("http://xml.org/sax/features/validation", false);
+        builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+        builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        Document doc = builder.build(source);
 
         Iterator mixedCitations = doc.getDescendants(new Filter() {
 
@@ -65,7 +70,7 @@ public final class NlmCitationExtractor {
             }
         });
 
-        Set<Citation> citationSet = new HashSet<Citation>();
+        List<Citation> citationSet = new ArrayList<Citation>();
 
         while (mixedCitations.hasNext()) {
             Citation citation = new Citation();

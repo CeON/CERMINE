@@ -21,7 +21,9 @@
         <%@include file="header.jsp" %>
      <article id="main">
             
-       	<%@include file="navigation.jsp" %>
+       	<jsp:include page="navigation.jsp" >
+            <jsp:param name="action" value="task"/>
+        </jsp:include>
        	
        	<div class="content" >
        	
@@ -33,10 +35,7 @@
              </c:when>
              <c:when test="${task.status=='PROCESSING'}">
                  <h1>Extracting metadata...</h1>
-                 <%--
-                 <%@include file="xml-mining.jsp" %>
-                  --%>
-                 
+                 <%@include file="loading.jsp" %>
              </c:when>
              <c:when test="${task.status=='FINISHED'}">
                  <h1>Extraction finished</h1>

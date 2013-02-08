@@ -23,9 +23,9 @@
   src: url("../fonts/Comfortaa/Comfortaa-Light.ttf") format("truetype"); }
 
 .no-opacity article {
-  background: #ebebeb; }
+  background: #c8c8c8; }
 .no-opacity footer {
-  background: #ebebeb; }
+  background: #c8c8c8; }
 
 .no-cssgradients article#main nav ul li a:hover {
   color: white;
@@ -37,7 +37,7 @@ html, body {
 
 body {
   background: #436d03;
-  background: -moz-linear-gradient(left center, #bfd255 0%, #6aa900 67%, #9ecb2d 100%) repeat scroll 0 0 transparent;
+  background-image: -moz-linear-gradient(left center, #bfd255 0%, #6aa900 67%, #9ecb2d 100%) repeat scroll 0 0 transparent;
   background-image: url("../../static/images/background.png");
   background-position: center;
   font-family: Verdana, Arial; }
@@ -45,11 +45,11 @@ body {
 .wrapper {
   height: 100%;
   height: auto !important;
-  margin: 0 auto -183px;
+  margin: 0 auto -210px;
   min-height: 100%; }
 
 .push {
-  height: 183px; }
+  height: 210px; }
 
 footer {
   border-radius: 6px;
@@ -151,6 +151,7 @@ article .content {
   border-radius: 6px;
   box-shadow: 0px 0px 3px 1px rgba(120, 120, 120, 0.85);
   background: #faf8ee;
+  line-height: 1.2em;
   padding: 10px 25px 25px; }
 article .content h1 {
   clear: both;
@@ -183,7 +184,6 @@ article .content fieldset {
   background: #f6f6f6;
   border: 1px solid #666666;
   border-radius: 6px;
-  height: 135px;
   padding: 15px; }
 article .content fieldset legend {
   font-size: 16px;
@@ -208,6 +208,9 @@ article .content section.summary div {
 article .content section.summary div b {
   font-weight: bold;
   padding-right: 5px; }
+article .content section.summary div .processing {
+  font-weight: bold;
+  padding: 3px 0px; }
 article .content section.summary div span.success {
   /*background: -moz-linear-gradient(top, rgba(180,227,145,1) 0%, rgba(97,196,25,1) 25%, rgba(97,196,25,1) 75%, rgba(180,227,145,1) 100%);*/
   background: #b4e391;
@@ -313,6 +316,20 @@ table.summaryTable tr th, table.summaryTable tr td {
 table.summaryTable tr th {
   font-weight: bold;
   text-align: left; }
+
+.animation {
+  margin: 0px auto 0px;
+  position: relative;
+  text-align: center; }
+.animation .block {
+  background: #459E00;
+  border: 1px solid #327e04;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 20px;
+  position: relative;
+  height: 18px;
+  width: 18px; }
 
 #xml-mining {
   height: 200px;

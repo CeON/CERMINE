@@ -44,13 +44,13 @@ html, body {
 
 body {
 	background: #436d03;
-	background: -moz-linear-gradient(left center , #BFD255 0%, #6AA900 67%, #9ECB2D 100%) repeat scroll 0 0 transparent;
+	background-image: -moz-linear-gradient(left center , #BFD255 0%, #6AA900 67%, #9ECB2D 100%) repeat scroll 0 0 transparent;
 	background-image: url("../../static/images/background.png");
 	background-position: center;
 	font-family: Verdana, Arial;
 }
 
-$footer-height : 183px;
+$footer-height : 210px;
 
 .wrapper {
     height: 100%;
@@ -177,6 +177,7 @@ article {
 	.content {
 		@include border;
 		@include article-background;
+                line-height: 1.2em;
 		padding: 10px 25px 25px;
 	
 		h1 {
@@ -220,8 +221,6 @@ article {
 			background: #f6f6f6;
 			border: 1px solid #666;
 			border-radius: 6px;
-		
-			height: 135px;
 			padding: 15px;
 			
 			legend {
@@ -257,6 +256,10 @@ article {
 					font-weight: bold;
 					padding-right: 5px;
 				}
+                                .processing {
+                                    font-weight: bold;
+                                    padding: 3px 0px;
+                                }
 				span.success {
                                     @include button-success;
 				}
@@ -319,6 +322,7 @@ table#task_table {
                         font-weight: bold;
                         width: 74px;
                     }
+
                     span[status=SUCCESS] {
                             color:  #009900;
                             padding: 3px 0px;
@@ -351,15 +355,26 @@ table.summaryTable {
             font-weight: bold;
             text-align: left;
         }
-
-
-
     }
-
-
-
 }
 
+.animation {
+	margin: 0px auto 0px;
+	position: relative;
+	text-align: center;
+
+        .block {
+            background: #459E00;
+            border: 1px solid #327E04;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 20px;
+            position: relative;
+            height: 18px;
+            width: 18px;
+        }	
+
+}
 
 
 @import "xml-mining";

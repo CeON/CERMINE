@@ -47,7 +47,6 @@ public class CermineController {
 
     @RequestMapping(value = "/index.html")
     public String showHome(Model model) {
-        //you may use 'warning' to show problem.
         return "home";
     }
 

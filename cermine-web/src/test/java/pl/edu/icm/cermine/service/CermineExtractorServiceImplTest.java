@@ -44,7 +44,6 @@ public class CermineExtractorServiceImplTest {
      * Test of extractNLM method, of class CermineExtractorServiceImpl.
      */
     @Test
-    @Ignore
     public void testExtractNLM() throws Exception {
         System.out.println("extractNLM");
         InputStream is = this.getClass().getResourceAsStream("/pdf/test1.pdf");
@@ -114,7 +113,6 @@ public class CermineExtractorServiceImplTest {
      * Test of obtainExtractor method, of class CermineExtractorServiceImpl.
      */
     @Test
-    @Ignore
     public void testObtainExtractor() throws Exception {
         System.out.println("obtainExtractor");
         final CermineExtractorServiceImpl instance = new CermineExtractorServiceImpl();

@@ -17,7 +17,9 @@
 	    
 	     <article id="main">
 	     
-	     <%@include file="navigation.jsp" %>
+                <jsp:include page="navigation.jsp" >
+                    <jsp:param name="action" value="about"/>
+                </jsp:include>
 	         
 	         <div class="content">
 	         

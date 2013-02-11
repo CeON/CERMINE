@@ -26,8 +26,19 @@
  <!-- Modernizr -->
  <script src="<c:url value='/static/js/modernizr.js' />"></script>
  
+ <script src="<c:url value='/static/js/cermine.js' />"></script>
+ 
  <script src="<c:url value='/static/js/jqueryrotate.js' />"></script>
  <script src="<c:url value='/static/js/xml-mining.js' />"></script>
  <script src="<c:url value='/static/js/throw.js' />"></script>
+ 
+<!--[if lte IE 7]>
+<style>
+    article#main nav ul li {
+        display: inline;
+    }
+</style>
+<![endif]-->
+ 
  
 <link rel="icon" type="image/png" href="<c:url value='/static/images/favicon.png' />"/>

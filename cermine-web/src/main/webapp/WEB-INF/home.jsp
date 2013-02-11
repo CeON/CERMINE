@@ -30,7 +30,9 @@ $(function() {
             
             <article id="main">
             
-            	<%@include file="navigation.jsp" %>
+            	<jsp:include page="navigation.jsp" >
+                    <jsp:param name="action" value="home"/>
+                </jsp:include>
             
             	<div class="content">
             

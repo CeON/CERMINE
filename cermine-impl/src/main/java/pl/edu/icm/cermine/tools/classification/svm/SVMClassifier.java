@@ -1,8 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -13,10 +11,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.FeatureLimits;
-import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScaler;
-import pl.edu.icm.cermine.tools.classification.general.LinearScaling;
-import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.classification.general.*;
 
 /**
  * @author Pawel Szostek (p.szostek@
@@ -63,9 +58,10 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		
 		Double scaledLowerBound = 0.0;
 		Double scaledUpperBound = 1.0;
-		scaler = new FeatureVectorScaler(dimensions, scaledLowerBound, scaledUpperBound);
+        FeatureVectorScalerImpl scaler = new FeatureVectorScalerImpl(dimensions, scaledLowerBound, scaledUpperBound);
 		scaler.setStrategy(new LinearScaling());
-		
+		this.scaler = scaler;
+
 		featuresNames = (String[])featureVectorBuilder.getFeatureNames().toArray(new String[0]);
 		
 		param = getDefaultParam();
@@ -201,79 +197,40 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	{
 		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
 				.getResourceAsStream(modelFilePath));
-		BufferedReader modelFile = new BufferedReader(modelISR);
-		
-		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
-				.getResourceAsStream(rangeFilePath));
-		BufferedReader rangeFile = new BufferedReader(rangeISR);
-		loadModel(modelFile, rangeFile);
+		BufferedReader modelReader = new BufferedReader(modelISR);
+
+        BufferedReader rangeReader = null;
+        if (rangeFilePath != null) {
+            InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
+                    .getResourceAsStream(rangeFilePath));
+            rangeReader = new BufferedReader(rangeISR);
+        }
+		loadModel(modelReader, rangeReader);
 	}
-	
-	public void loadModel(BufferedReader modelFile, BufferedReader rangeFile) throws IOException
+
+	public void loadModel(BufferedReader modelReader, BufferedReader rangeReader) throws IOException
 	{
-		Double feature_min, feature_max;
-		if(rangeFile.read() == 'x') {
-			rangeFile.readLine();		// pass the '\n' after 'x'
-            String line = rangeFile.readLine();
-            if (line == null) {
-                line = "";
+        if (rangeReader == null) {
+            this.scaler = new FeatureVectorScalerNoOp();
+        } else {
+            FeatureVectorScalerImpl scaler =
+                    FeatureVectorScalerImpl.fromRangeReader(rangeReader);
+
+            if(scaler.getLimits().length != featureVectorBuilder.size()) {
+                throw new IllegalArgumentException("Supplied .range file has "
+                        + "wrong number of features (got " + scaler.getLimits().length
+                        + ", expected " + featureVectorBuilder.size() + " )");
             }
-			StringTokenizer st = new StringTokenizer(line);
-			Double scaledLowerBound = Double.parseDouble(st.nextToken());
-			Double scaledUpperBound = Double.parseDouble(st.nextToken());
-			if(scaledLowerBound != 0 || scaledUpperBound != 1) {
-				throw new RuntimeException("Feature lower bound and upper bound must"
-						+ "be set in range file to resepctively 0 and 1");
-			}
-			String restore_line = null;
-			List<FeatureLimits> limits = new ArrayList<FeatureLimits>();
-			while((restore_line = rangeFile.readLine())!=null)
-			{
-				StringTokenizer st2 = new StringTokenizer(restore_line);
-				st2.nextToken(); //discard feature index
-				feature_min = Double.parseDouble(st2.nextToken());
-				feature_max = Double.parseDouble(st2.nextToken());
-				FeatureLimits newLimit = new FeatureLimits(feature_min, feature_max);
-				limits.add(newLimit);
-			}
-			if(limits.size() != featureVectorBuilder.size()) {
-				throw new IllegalArgumentException("Supplied .range file has "
-						+ "wrong number of features (got " + limits.size() 
-						+ ", expected " + featureVectorBuilder.size() + " )");
-			}
-			scaler = new FeatureVectorScaler(limits.size(), scaledLowerBound, scaledUpperBound);
-			scaler.setStrategy(new LinearScaling());
-			scaler.setFeatureLimits(limits);
-		} else {
-			throw new RuntimeException("y scaling not supported");
-		}
-		rangeFile.close();
-		model = svm.svm_load_model(modelFile);
+
+            this.scaler = scaler;
+        }
+
+		this.model = svm.svm_load_model(modelReader);
 	}
 
 	public void saveModel(String modelPath) throws IOException
 	{
-		BufferedWriter fp_save = null;
-		try {
-			Formatter formatter = new Formatter(new StringBuilder());
-			fp_save = new BufferedWriter(new FileWriter(modelPath + ".range"));
-
-			Double lower = 0.0;
-			Double upper = 1.0;
-
-			formatter.format("x\n");
-			formatter.format("%.16g %.16g\n", lower, upper);
-			for(Integer i=0 ; i<featureVectorBuilder.size() ; ++i) {
-				formatter.format("%d %.16g %.16g\n", i, scaler.getLimits()[i].getMin(), scaler.getLimits()[i].getMax());
-			}
-			
-			fp_save.write(formatter.toString());
-		} finally {
-			if(fp_save != null) {
-				fp_save.close();
-			}
-		}
-		
+		scaler.saveRangeFile(modelPath + ".range");
 		svm.svm_save_model(modelPath, model);
 	}
 	

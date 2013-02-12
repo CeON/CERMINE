@@ -3,6 +3,7 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom.Element;
 import org.jdom.filter.Filter;
@@ -47,12 +48,12 @@ public class Enhancers {
     
     //author
     public static void addAuthor(Element metadata, String author, List<String> refs) {
-        addContributor(metadata, author, TAG_AUTHOR, refs);
+        addContributor(metadata, cleanLigatures(author), TAG_AUTHOR, refs);
     }
     
     //editor
     static void addEditor(Element metadata, String editor) {
-        addContributor(metadata, editor, TAG_EDITOR, null);
+        addContributor(metadata, cleanLigatures(editor), TAG_EDITOR, null);
     }
     
     //email
@@ -79,7 +80,7 @@ public class Enhancers {
         
         if (author != null && one) {
             Element em = new Element(TAG_EMAIL);
-            em.setText(email);
+            em.setText(cleanLigatures(email));
             author.addContent(em);
         }
     }
@@ -87,13 +88,13 @@ public class Enhancers {
     //keywords
     public static void addKeyword(Element metadata, String keyword) {
         String[] path = {TAG_FRONT, TAG_ARTICLE_META, TAG_KWD_GROUP, TAG_KWD};
-        addValue(metadata, path, keyword);
+        addValue(metadata, path, cleanLigatures(keyword));
     }
     
     //abstract
     public static void setAbstract(Element metadata, String description) {
         String[] path = {TAG_FRONT, TAG_ARTICLE_META, TAG_ABSTRACT, TAG_P};
-        setValue(metadata, path, description);
+        setValue(metadata, path, clean(description));
     }
     
     //accepted date
@@ -109,12 +110,12 @@ public class Enhancers {
             List children = element.getChildren(TAG_AFF);
             if ((id == null || id.isEmpty()) && TAG_AUTHOR.equals(element.getAttributeValue(TAG_CONTRIB_TYPE))) {
                 Element aff = new Element(TAG_AFF);
-                aff.setText(affiliation);
+                aff.setText(cleanLigatures(affiliation));
                 element.addContent(aff);
             }
             for (Object child : children) {
                 if (child instanceof Element && id.equals(((Element)child).getText())) {
-                    ((Element)child).setText(affiliation);
+                    ((Element)child).setText(cleanLigatures(affiliation));
                 }
             }
         }
@@ -129,7 +130,7 @@ public class Enhancers {
     //journal
     public static void setJournal(Element metadata, String journal) {
         String[] path = {TAG_FRONT, TAG_JOURNAL_META, TAG_JOURNAL_TITLE_GROUP, TAG_JOURNAL_TITLE};
-        setValue(metadata, path, journal);
+        setValue(metadata, path, cleanLigatures(journal));
     }
     
     //journal issn
@@ -159,7 +160,7 @@ public class Enhancers {
     //publisher
     public static void setPublisher(Element metadata, String publisher) {
         String[] path = {TAG_FRONT, TAG_JOURNAL_META, TAG_PUBLISHER, TAG_PUBLISHER_NAME};
-        setValue(metadata, path, publisher);
+        setValue(metadata, path, cleanLigatures(publisher));
     }
     
     //received date
@@ -175,7 +176,7 @@ public class Enhancers {
     //article title
     public static void setTitle(Element metadata, String title) {
         String[] path = {TAG_FRONT, TAG_ARTICLE_META, TAG_TITLE_GROUP, TAG_ARTICLE_TITLE};
-        Enhancers.setValue(metadata, path, title);
+        Enhancers.setValue(metadata, path, cleanLigatures(title));
     }
     
     //volume
@@ -310,6 +311,32 @@ public class Enhancers {
         setValue(date, ypath, year);
     }
 
+    private static String cleanLigatures(String str) {
+        return str.replaceAll("\uFB00", "ff")
+                  .replaceAll("\uFB01", "fi")
+                  .replaceAll("\uFB02", "fl")
+                  .replaceAll("\uFB03", "ffi")
+                  .replaceAll("\uFB04", "ffl")
+                  .replaceAll("\uFB05", "ft")
+                  .replaceAll("\uFB06", "st");
+    }
+    
+    private static String cleanHyphenation(String str) {
+        String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
+        Pattern p = Pattern.compile("([^" + hyphenList + "]*\\S+)[" + hyphenList + "]\n", Pattern.DOTALL);
+        Matcher m = p.matcher(str);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, m.group(1));
+        }
+        m.appendTail(sb);
+        return sb.toString().replaceAll("\n", " ");
+    }
+    
+    private static String clean(String str) {
+        return cleanHyphenation(cleanLigatures(str));
+    }
+    
     
     private static final String TAG_ABSTRACT            = "abstract";
     private static final String TAG_ACCEPTED            = "accepted";

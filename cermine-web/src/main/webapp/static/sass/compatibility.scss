@@ -1,0 +1,69 @@
+
+@mixin gradient-radial($color-start, $color-end){
+    background: $color-end;
+    background: -moz-radial-gradient(center, ellipse cover, $color-start, $color-end); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop($color-end), color-stop($color-start)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, $color-start,$color-end); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, $color-start ,$color-end); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, $color-start,$color-end); /* IE10+ */
+    background: radial-gradient(ellipse at center, $color-start,$color-end); /* W3C */
+}
+@mixin gradient-radial-ie($color-start, $color-end){
+    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='")
+    + ie-hex-str($color-start)
+    + unquote("', endColorstr='")
+    + ie-hex-str($color-end)
+    + unquote("',GradientType=1)");
+}
+
+@mixin gradient-linear($color-start, $color-end){
+    background: $color-end;
+    background: -moz-linear-gradient(top, $color-start , $color-end); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop($color-start), color-stop($color-end)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,$color-start, $color-end); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, $color-start, $color-end); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, $color-start, $color-end); /* IE10+ */
+    background: linear-gradient(to bottom, $color-start, $color-end); /* W3C */
+}
+
+@mixin gradient-linear-four($color-1, $color-2, $color-3, $color-4){
+    background: $color-4;
+    background: -moz-linear-gradient(top, $color-1, $color-2, $color-3, $color-4); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop($color-1), color-stop($color-2), color-stop($color-3), color-stop($color-4)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,$color-1, $color-2, $color-3, $color-4); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, $color-1, $color-2, $color-3, $color-4); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, $color-1, $color-2, $color-3, $color-4); /* IE10+ */
+    background: linear-gradient(to bottom, $color-1, $color-2, $color-3, $color-4); /* W3C */
+    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='")
+    + ie-hex-str($color-1)
+    + unquote("', endColorstr='")
+    + ie-hex-str($color-4)
+    + unquote("',GradientType=0)");
+}
+
+
+.no-opacity  {
+    $background: rgba(200, 200, 200,1);
+
+    article {
+        background: $background;
+    }
+    footer {
+        background: $background;
+    }
+}
+
+.no-cssgradients {
+    article{
+        &#main nav ul li a {
+            &:hover {
+                color: white;
+                font-style: italic;
+            }
+        }
+    }
+}
+
+
+
+

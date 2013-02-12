@@ -5,10 +5,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -30,9 +34,11 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 public class CermineExtractorServiceImpl implements CermineExtractorService {
 
     int threadPoolSize = 4;
+    int maxQueueForBatch = 0;
     Logger log = LoggerFactory.getLogger(CermineExtractorServiceImpl.class);
     List<PdfNLMContentExtractor> extractors;
     ExecutorService processingExecutor;
+    ExecutorService batchProcessingExecutor;
     @Autowired
     TaskManager taskManager;
 
@@ -43,6 +49,13 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
     public void init() {
         try {
             processingExecutor = Executors.newFixedThreadPool(threadPoolSize);
+            ArrayBlockingQueue<Runnable> q = null;
+            if (maxQueueForBatch > 0) {
+                q = new ArrayBlockingQueue<Runnable>(maxQueueForBatch);
+            } else {
+                q = new ArrayBlockingQueue<Runnable>(100000);
+            }
+            batchProcessingExecutor = new ThreadPoolExecutor(threadPoolSize, threadPoolSize, 1, TimeUnit.DAYS, q);
             extractors = new ArrayList<PdfNLMContentExtractor>();
             for (int i = 0; i < threadPoolSize; i++) {
                 extractors.add(new PdfNLMContentExtractor());
@@ -61,6 +74,14 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         this.threadPoolSize = threadPoolSize;
     }
 
+    public int getMaxQueueForBatch() {
+        return maxQueueForBatch;
+    }
+
+    public void setMaxQueueForBatch(int maxQueueForBatch) {
+        this.maxQueueForBatch = maxQueueForBatch;
+    }
+
 //    public TaskManager getTaskManager() {
 //        return taskManager;
 //    }
@@ -69,17 +90,24 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
 //        this.taskManager = taskManager;
 //    }
     @Override
-    public ExtractionResult extractNLM(InputStream is) throws AnalysisException {
+    public ExtractionResult extractNLM(InputStream is) throws AnalysisException, ServiceException {
+        log.debug("Starting extractNLM task...");
         ExtractionResult res = new ExtractionResult();
         res.setSubmit(new Date());
-        Future<ExtractionResult> future = processingExecutor.submit(new SimpleExtractionCallable(is, res));
-        Thread.yield();
+        log.debug("submitting extractNLM task...");
         try {
+            Future<ExtractionResult> future = batchProcessingExecutor.submit(new SimpleExtractionCallable(is, res));
+
+            Thread.yield();
+            log.debug("waiting for extractNLM task...");
             res = future.get();
+        } catch (RejectedExecutionException rje) {
+            throw new ServiceException("Queue size exceeded.");
         } catch (Exception ex) {
             log.error("Exception while executing extraction task...", ex);
             throw new RuntimeException(ex);
         }
+        log.debug("finished extractNLM task...");
         return res;
     }
 

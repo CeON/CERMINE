@@ -1,0 +1,8 @@
+.no-opacity article {
+  background: #c8c8c8; }
+.no-opacity footer {
+  background: #c8c8c8; }
+
+.no-cssgradients article#main nav ul li a:hover {
+  color: white;
+  font-style: italic; }

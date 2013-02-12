@@ -35,7 +35,7 @@ public class SVMHeaderLinesClassifier extends SVMClassifier<BxLine, BxPage, BxZo
     public SVMHeaderLinesClassifier(BufferedReader modelFile, BufferedReader rangeFile, FeatureVectorBuilder<BxLine, BxPage> featureVectorBuilder) throws AnalysisException {
 		super(featureVectorBuilder, BxZoneLabel.class);
         try {
-            loadModel(modelFile, rangeFile);
+            loadModelFromFile(modelFile, rangeFile);
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create SVM classifier!", ex);
         }
@@ -43,15 +43,15 @@ public class SVMHeaderLinesClassifier extends SVMClassifier<BxLine, BxPage, BxZo
 
 	public SVMHeaderLinesClassifier(String modelFilePath, String rangeFilePath, FeatureVectorBuilder<BxLine, BxPage> featureVectorBuilder) throws AnalysisException {
 		super(featureVectorBuilder, BxZoneLabel.class);
-		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
+		InputStreamReader modelISR = new InputStreamReader(SVMHeaderLinesClassifier.class
 				.getResourceAsStream(modelFilePath));
 		BufferedReader modelFile = new BufferedReader(modelISR);
 		
-		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
+		InputStreamReader rangeISR = new InputStreamReader(SVMHeaderLinesClassifier.class
 				.getResourceAsStream(rangeFilePath));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
         try {
-            loadModel(modelFile, rangeFile);
+            loadModelFromFile(modelFile, rangeFile);
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create SVM classifier!", ex);
         }

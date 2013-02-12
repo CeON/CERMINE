@@ -1,13 +1,17 @@
 package pl.edu.icm.cermine.evaluation;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.cli.ParseException;
+import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.BxDocsToHMMConverter;
 import pl.edu.icm.cermine.structure.HMMZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
@@ -49,6 +53,91 @@ public class HMMZoneClassificationEvaluator extends CrossvalidatingZoneClassific
 				featureVectorBuilder);
 		return zoneClassifier;
 	}
+	
+    public FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
+        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
+        vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
+                new AffiliationFeature(),
+                new AuthorFeature(),
+                new AuthorNameRelativeFeature(),
+                new BibinfoFeature(),
+                new BracketRelativeCount(),
+                new BracketedLineRelativeCount(),
+                new CharCountFeature(),
+                new CharCountRelativeFeature(),
+                new CommaCountFeature(),
+                new CommaRelativeCountFeature(),
+                new ContainsPageNumberFeature(),
+                new CuePhrasesRelativeCountFeature(),
+                new DateFeature(),
+                new DigitCountFeature(),
+                new DigitRelativeCountFeature(),
+                new DistanceFromNearestNeighbourFeature(),
+                new DotCountFeature(),
+                new DotRelativeCountFeature(),
+                new EmptySpaceRelativeFeature(),
+                new FontHeightMeanFeature(),
+                new FreeSpaceWithinZoneFeature(),
+                new FullWordsRelativeFeature(),
+                new HeightFeature(),
+                new HeightRelativeFeature(),
+                new HorizontalRelativeProminenceFeature(),
+                new IsAnywhereElseFeature(),
+                new IsFirstPageFeature(),
+                new IsFontBiggerThanNeighboursFeature(),
+                new IsGreatestFontOnPageFeature(),
+                new IsHighestOnThePageFeature(),
+                new IsItemizeFeature(),
+                new IsWidestOnThePageFeature(),
+                new IsLastButOnePageFeature(),
+                new IsLastPageFeature(),
+                new IsLeftFeature(),
+                new IsLongestOnThePageFeature(),
+                new IsLowestOnThePageFeature(),
+                new IsItemizeFeature(),
+                new IsOnSurroundingPagesFeature(),
+                new IsPageNumberFeature(),
+                new IsRightFeature(),
+        		new IsSingleWordFeature(),
+                new LineCountFeature(),
+                new LineRelativeCountFeature(),
+                new LineHeightMeanFeature(),
+                new LineWidthMeanFeature(),
+                new LineXPositionMeanFeature(),
+                new LineXPositionDiffFeature(),
+                new LineXWidthPositionDiffFeature(),
+                new LetterCountFeature(),
+                new LetterRelativeCountFeature(),
+                new LowercaseCountFeature(),
+                new LowercaseRelativeCountFeature(),
+                new PageNumberFeature(),
+                new PreviousZoneFeature(),
+                new ProportionsFeature(),
+                new PunctuationRelativeCountFeature(),
+                new ReferencesFeature(),
+                new StartsWithDigitFeature(),
+                new StartsWithHeaderFeature(),
+                new UppercaseCountFeature(),
+                new UppercaseRelativeCountFeature(),
+                new UppercaseWordCountFeature(),
+                new UppercaseWordRelativeCountFeature(),
+                new VerticalProminenceFeature(),
+                new WidthFeature(),
+                new WordCountFeature(),
+                new WordCountRelativeFeature(),
+                new WordWidthMeanFeature(),
+                new WordLengthMeanFeature(),
+                new WordLengthMedianFeature(),
+                new WhitespaceCountFeature(),
+                new WhitespaceRelativeCountLogFeature(),
+                new WidthRelativeFeature(),
+                new XPositionFeature(),
+                new XPositionRelativeFeature(),
+                new YPositionFeature(),
+                new YPositionRelativeFeature(),
+                new YearFeature()));
+        return vectorBuilder;
+    }
 	
 	public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
 		CrossvalidatingZoneClassificationEvaluator.main(args, new HMMZoneClassificationEvaluator());

@@ -1,13 +1,12 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<groupId>pl.edu.icm.cermine</groupId>
-		<artifactId>cermine-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	<properties>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>pl.edu.icm.cermine</groupId>
+        <artifactId>cermine-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <properties>
         <hadoop.version>2.0.0-mr1-cdh4.0.1</hadoop.version>
         <hadoop.common.version>2.0.0-cdh4.0.1</hadoop.common.version>
         <hadoop.client.version>2.0.0-cdh4.0.1</hadoop.client.version>
@@ -15,30 +14,30 @@
         <hbase.version>0.92.1-cdh4.0.1</hbase.version>
         <protobuf.java.version>2.4.1</protobuf.java.version>
     </properties>
-	<repositories>
-		<repository>
-			<id>google-maven-repository</id>
-			<name>Google Maven Repository</name>
-            		<url>http://google-maven-repository.googlecode.com/svn/repository/</url>
-        	</repository>
-    	</repositories>
-	<dependencies>
-		<dependency>
-			<groupId>pl.edu.icm.cermine</groupId>
-			<artifactId>cermine-api</artifactId>
-			<version>${project.version}</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>pl.edu.icm.cermine</groupId>
-			<artifactId>cermine-impl</artifactId>
-			<version>${project.version}</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>com.google.protobuf</groupId>
-			<artifactId>protobuf-java</artifactId>
-        	<version>${protobuf.java.version}</version>
+    <repositories>
+        <repository>
+            <id>google-maven-repository</id>
+            <name>Google Maven Repository</name>
+            <url>http://google-maven-repository.googlecode.com/svn/repository/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>pl.edu.icm.cermine</groupId>
+            <artifactId>cermine-api</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>pl.edu.icm.cermine</groupId>
+            <artifactId>cermine-impl</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.java.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
@@ -56,7 +55,7 @@
             <artifactId>hadoop-core</artifactId>
             <version>${hadoop.version}</version>
         </dependency>
-            <dependency>
+        <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-core</artifactId>
             <version>${hadoop.version}</version>
@@ -67,7 +66,7 @@
             <artifactId>hadoop-common</artifactId>
             <version>${hadoop.common.version}</version>
         </dependency>
-               <dependency>
+        <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>${hadoop.common.version}</version>
@@ -89,7 +88,7 @@
             <artifactId>pig</artifactId>
             <version>${pig.version}</version>
         </dependency>
-          <dependency>
+        <dependency>
             <groupId>org.apache.pig</groupId>
             <artifactId>pig</artifactId>
             <version>${pig.version}</version>
@@ -100,15 +99,18 @@
             <artifactId>pigunit</artifactId>
             <version>${pig.version}</version>
         </dependency>
-	</dependencies>
-	<groupId>pl.edu.icm.cermine</groupId>
-		<version>1.0-SNAPSHOT</version>
-		<artifactId>cermine-tools</artifactId>
-		<packaging>jar</packaging>
-		<name>CERMINE TOOLS - ${project.version}</name>
-	<url>http://maven.apache.org</url>
-
-		<build>
+    </dependencies>
+    <artifactId>cermine-tools</artifactId>
+    <packaging>jar</packaging>
+    <name>CERMINE TOOLS - ${project.version}</name>
+    <url>http://maven.apache.org</url>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -127,7 +129,41 @@
                                 </goals>
                             </execution>
                         </executions>
-                    	</plugin>
+                    </plugin>
                 </plugins>
-	</build>
+            </build>
+        </profile>
+        <profile>
+            <id>only-deps</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.12.4</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/resources/assemblies/only-deps.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <id>create-my-bundle</id>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

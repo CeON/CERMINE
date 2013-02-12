@@ -1,0 +1,391 @@
+@import "fonts";
+@import "compatibility";
+
+
+/* Sass Varaibles */
+$article-background-color: #FAF8EE; //nice egg-shell color #F5F3E5;
+$content-width: 900px;
+$font-color-dark: #000;
+
+@mixin article-background {
+	background: $article-background-color;	
+}
+
+@mixin border {
+	border-radius: 6px;
+	box-shadow: 0px 0px 3px 1px rgba(120, 120, 120, 0.85);
+}
+
+@mixin button-success {
+    /*background: -moz-linear-gradient(top, rgba(180,227,145,1) 0%, rgba(97,196,25,1) 25%, rgba(97,196,25,1) 75%, rgba(180,227,145,1) 100%);*/
+    @include gradient-linear-four(rgba(180,227,145,1), rgba(97,196,25,1) 25%, rgba(97,196,25,1) 75%, rgba(180,227,145,1));
+    border: 1px solid green;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    padding: 4px;
+    text-transform: capitalize;
+}
+@mixin button-failure {
+    /*background: -moz-linear-gradient(top, rgba(254,187,187,1) 0%, #FF3333 25%, #FF3333 75%, rgba(254,144,144,1) 100%); */
+    @include gradient-linear-four(rgba(254,187,187,1) ,  #FF3333 25%, #FF3333 75%, rgba(254,144,144,1));
+    border: 1px solid red;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    padding: 4px;
+    text-transform: capitalize;
+}
+
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background: #436d03;
+	background-image: -moz-linear-gradient(left center , #BFD255 0%, #6AA900 67%, #9ECB2D 100%) repeat scroll 0 0 transparent;
+	background-image: url("../../static/images/background.png");
+	background-position: center;
+	font-family: Verdana, Arial;
+}
+
+$footer-height : 210px;
+
+.wrapper {
+    height: 100%;
+    height: auto !important;
+    margin: 0 auto $footer-height * (-1);
+    min-height: 100%;
+}
+
+.push {
+	height: $footer-height;
+}
+
+footer {
+	@include border;
+	background: none repeat scroll 0 0 rgba(220, 220, 220, 0.5);
+	
+        color: black;
+        margin: 25px auto 10px;
+        min-height: 100px;
+        padding: 8px;
+        position: relative;
+        top: 0;
+        width: $content-width;
+    
+	section {
+		@include border;
+		@include article-background;
+    	padding: 15px;
+	
+		figure {
+			padding: 0px 0px 10px;
+			text-align: center;
+			
+			img {
+				margin: 0 50px;
+				vertical-align: middle;
+			}
+		}
+		p {
+			font-size: 13px;
+			padding: 10px 0px 0px;
+                    a {
+                        color: black;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+		}
+	}
+}
+
+header {
+	color: $font-color-dark;
+	font-family: Comfortaa;
+	margin: 30px auto 0;
+	min-height: 120px;
+	width: $content-width;
+
+	h1 {
+		font-family: Comfortaa;
+		font-size: 36px;
+		margin: 10px 0px;
+	}
+	h2 {
+		font-size: 24px;
+		maring: 10px 0px;
+	}
+}
+
+article {
+	@include border;
+	background: none repeat scroll 0 0 rgba(220, 220, 220, 0.5);
+	font-size: 14px;
+	margin: 0 auto;
+	padding: 8px;
+	width: $content-width;
+	
+	&#main nav {
+		display: block;
+		text-align: center;
+	
+		ul {
+			li {
+                            &:first-child {
+                                    border-left: 0px;
+                            }
+                            border-left: 1px solid #444444;
+			    display: inline-block;
+			    font-family: Comfortaa-Bold;
+			    font-size: 18px;
+			    height: 32px;
+			    margin: 10px 0;
+			    
+			    a {
+			    	color: $font-color-dark;
+                                padding: 10px;
+                                position: relative;
+			    	text-decoration: none;
+                                top: -8px;
+                                @include gradient-radial-ie(rgba(255,255,255,1) , rgba(255,255,255,0));
+                                &:hover {
+                                    @include gradient-radial(rgba(255,255,255,1) 0%, rgba(255,255,255,0) 75%); 
+                                    @include gradient-radial-ie(rgba(255,255,255,1) , rgba(255,255,255,0));
+                                }
+                                img {
+                                    position: relative;
+                                    top: 8px;
+                                }
+
+			    	span {
+			    		left: 2px;
+    					position: relative;
+    					top: 0px;
+    					/*&:hover {
+    						text-shadow: 0 4px 4px #FFFFFF;
+    					}*/
+			    	}
+			    }
+			    
+			}
+		}
+	}
+	
+	.content {
+		@include border;
+		@include article-background;
+                line-height: 1.2em;
+		padding: 10px 25px 25px;
+	
+		h1 {
+			clear: both;
+			font-size: 18px;
+			font-weight: bold;
+			margin: 20px 0px;
+		}
+		h2 {
+			clear: both;
+			font-size: 16px;
+			font-weight: bold;
+			margin: 30px 0px 20px;
+		}
+		h3 {
+			clear: both;
+			font-size: 16px;
+			font-weight: bold;
+			margin: 20px 0px 8px;
+		}
+		ul {
+			margin: 15px 0px 15px 30px;
+			list-style: disc;
+			
+			li {
+				margin: 3px 0px;
+			}
+		}
+		#file_upload_form form {
+			margin: 20px 0px;
+			
+			input {
+				margin: 0px 10px;
+			}
+			input[type="file"] {
+				/*border: 1px solid #000;
+				box-shadow: 0 0 4px rgba(25, 0, 0, 0.4) inset, 0 0 0 rgba(50, 50, 50, 0.3);*/
+			}
+		}
+		fieldset {
+			background: #f6f6f6;
+			border: 1px solid #666;
+			border-radius: 6px;
+			padding: 15px;
+			
+			legend {
+				font-size: 16px;
+				font-weight: bold;
+			}
+			img.upload-image {
+				float: right;
+				right: 15px;
+				opacity: 0.5;
+				position: relative;
+				top: -12px;
+			}
+			input {
+				position: relative;
+				left: 0px;
+				top: 20px;
+			}
+			input[type="file"] {
+				border: 1px solid #000;
+				
+			}
+		}
+		section.summary {
+			padding-left: 25px;
+		
+		
+			div {
+				font-size: 14px;
+				padding: 0.5em 0;
+			
+				b {
+					font-weight: bold;
+					padding-right: 5px;
+				}
+                                .processing {
+                                    font-weight: bold;
+                                    padding: 3px 0px;
+                                }
+				span.success {
+                                    @include button-success;
+				}
+				span.failure {
+                                    @include button-failure;
+				}
+			}
+		}
+
+	
+	}
+}
+
+table#task_table {
+	$border-color: #3F3F3F;
+        $border-color-light: #eee;
+	$border-radius: 0.75em;
+	width: 100%;
+
+	tr {
+		/*border-top: 1px solid #333;*/
+	  	/*background: #eee;*/ 
+	  	
+	  	
+	  	th {
+	  		background: #3B3B3B;
+	  		/*background: -moz-linear-gradient(center top , #4F4F4F 0%, #3F3F3F 50%, #2F2F2F 100%);*/
+                        @include gradient-linear(#4F4F4F 0%, #2F2F2F 100%);
+
+	  		color: #fff;
+	  		font-weight: bold;
+	  		border-right: 1px solid $border-color-light;
+	  		&:first-child {
+	  			border-radius: $border-radius 0em 0em;
+	  		}
+	  		&:last-child {
+	  			border-radius: 0em $border-radius 0em 0em;
+	  			border-right: 0px solid $border-color;
+	  		}
+	  	}
+		th, td{
+			margin: 5px 0px;
+			padding: 8px 5px;
+		}
+		td {
+			border-right: 1px solid $border-color;
+			border-bottom: 1px solid $border-color;
+			text-align: left;
+                        &:first-child { 
+	  			border-left: 1px solid $border-color;
+	  		}
+			&:last-child {
+				border-right: 1px solid $border-color;
+			}
+		}
+		td.status {
+                    text-align: center;
+                    span {
+                        display: inline-block;
+                        font-weight: bold;
+                        width: 74px;
+                    }
+
+                    span[status=SUCCESS] {
+                            color:  #009900;
+                            padding: 3px 0px;
+
+                    }
+                    span[status=FAILURE] {
+                            color: #990000;
+                            padding: 3px 0px;
+                    }
+                }
+	}
+
+	tr.success {
+		
+	
+	}
+	tr.failure {
+		
+	}
+}
+
+table.summaryTable {
+    margin: 10px 0px 0px;
+
+    tr {
+        th, td {
+            padding: 6px 0px;
+        }
+        th {
+            font-weight: bold;
+            text-align: left;
+        }
+    }
+}
+
+.animation {
+	margin: 0px auto 0px;
+	position: relative;
+	text-align: center;
+
+        .block {
+            background: #459E00;
+            border: 1px solid #327E04;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 20px;
+            position: relative;
+            height: 18px;
+            width: 18px;
+        }	
+
+}
+
+
+@import "xml-mining";
+
+.ui-widget .ui-state-error {
+	margin: 1em 0em;
+	p {
+		padding: 0.7em;
+	}
+}
+
+
+
+

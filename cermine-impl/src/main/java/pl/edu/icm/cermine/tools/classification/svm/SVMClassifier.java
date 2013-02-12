@@ -1,6 +1,9 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -193,28 +196,38 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		return weights;
 	}
 
-	public void loadModel(String modelFilePath, String rangeFilePath) throws IOException
+	public void loadModelFromResources(String modelFilePath, String rangeFilePath) throws IOException
 	{
-		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
+		InputStreamReader modelISR = new InputStreamReader(SVMClassifier.class
 				.getResourceAsStream(modelFilePath));
-		BufferedReader modelReader = new BufferedReader(modelISR);
+		BufferedReader modelFile = new BufferedReader(modelISR);
 
-        BufferedReader rangeReader = null;
+        BufferedReader rangeFile = null;
         if (rangeFilePath != null) {
             InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
                     .getResourceAsStream(rangeFilePath));
-            rangeReader = new BufferedReader(rangeISR);
+            rangeFile = new BufferedReader(rangeISR);
         }
-		loadModel(modelReader, rangeReader);
+		loadModelFromFile(modelFile, rangeFile);
 	}
 
-	public void loadModel(BufferedReader modelReader, BufferedReader rangeReader) throws IOException
+	public void loadModelFromFile(String modelFilePath, String rangeFilePath) throws IOException
 	{
-        if (rangeReader == null) {
+		BufferedReader modelFile = new BufferedReader(new InputStreamReader(new FileInputStream(modelFilePath)));
+		BufferedReader rangeFile = null;
+        if (rangeFilePath != null) {
+            rangeFile = new BufferedReader(new InputStreamReader(new FileInputStream(rangeFilePath)));
+        }
+		loadModelFromFile(modelFile, rangeFile);
+	}
+	
+	public void loadModelFromFile(BufferedReader modelFile, BufferedReader rangeFile) throws IOException
+	{
+        if (rangeFile == null) {
             this.scaler = new FeatureVectorScalerNoOp();
         } else {
             FeatureVectorScalerImpl scaler =
-                    FeatureVectorScalerImpl.fromRangeReader(rangeReader);
+                    FeatureVectorScalerImpl.fromRangeReader(rangeFile);
 
             if(scaler.getLimits().length != featureVectorBuilder.size()) {
                 throw new IllegalArgumentException("Supplied .range file has "
@@ -225,7 +238,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
             this.scaler = scaler;
         }
 
-		this.model = svm.svm_load_model(modelReader);
+		this.model = svm.svm_load_model(modelFile);
 	}
 
 	public void saveModel(String modelPath) throws IOException

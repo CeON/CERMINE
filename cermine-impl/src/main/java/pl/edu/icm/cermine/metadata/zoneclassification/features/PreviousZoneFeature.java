@@ -16,11 +16,7 @@ public class PreviousZoneFeature extends FeatureCalculator<BxZone, BxPage>
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {
 		if(object.hasPrev()) {
-			if(object.getPrev().getLabel() != null) {
-				return (double) object.getPrev().getLabel().ordinal();
-			} else {
-				return -2.0;
-			}
+			return (double) object.getPrev().getLabel().ordinal();
 		} else {
 			return -1.0;
 		}

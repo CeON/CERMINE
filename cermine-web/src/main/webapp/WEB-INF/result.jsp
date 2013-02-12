@@ -12,7 +12,7 @@
     });
 </script>
 
-<h2>Extraction result</h2>
+<h2>Extraction results</h2>
 
 <div id="tabs">
     <ul>
@@ -22,7 +22,8 @@
         <li><a href="#tabs-nlm">NLM</a></li>
     </ul>
     <div id="tabs-meta">
-        <p>A shored result formatted in HTML form. Please get NLM for full extraction result.</p>
+        <p>Extracted metadata formatted in HTML form. Please see NLM for full extraction results.</p>
+        <br/>
         <table class="summaryTable">
             <tr><th>Article&nbsp;title:</th><td>${meta.title}</td></tr>
             <c:forEach var="author" items="${meta.authors}">
@@ -54,7 +55,8 @@
         </table>
     </div>
     <div id="tabs-refs">
-        <p>References in HTML form. Please get NLM for full extraction result.</p>
+        <p>Bibliographic references formatted in HTML form. Please see NLM for full extraction result.</p>
+        <br/><br/>
         <ol>
         <c:forEach var="reference" items="${meta.references}">
             <li><i>${reference.abstractText}</i></li>
@@ -91,7 +93,7 @@
         </ol>
     </div>
     <div id="tabs-text">
-        <p>Full text in HTML form. Please get NLM for full extraction result.</p>
+        <p>Full text formatted in HTML form. Please see NLM for full extraction result.</p>
         ${html}
     </div>
     <div id="tabs-nlm">

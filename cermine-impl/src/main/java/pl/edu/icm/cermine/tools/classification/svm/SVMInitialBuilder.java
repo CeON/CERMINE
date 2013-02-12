@@ -10,7 +10,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import libsvm.svm_parameter;
-import pl.edu.icm.cermine.evaluation.EvaluationUtils;
+import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
@@ -57,6 +57,7 @@ public class SVMInitialBuilder {
         zoneClassifier.saveModel("svm_initial_classifier");
 		return zoneClassifier;
 	}
+
 	public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException {
         Options options = new Options();
         options.addOption("input", true, "input xml directory path");
@@ -87,7 +88,7 @@ public class SVMInitialBuilder {
         	default:
         		throw new IllegalArgumentException("Invalid kernel value provided");
         }
-        
+
 		List<BxDocument> trainingDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
 		SVMZoneClassifier classifier = getZoneClassifier(trainingDocuments, kernelType, gamma, C, degree);
 		classifier.saveModel(outFile);

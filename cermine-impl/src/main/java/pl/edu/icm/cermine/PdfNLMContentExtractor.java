@@ -67,7 +67,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     }
 
     /**
-     * Extracts content from PDF file and stored it in NLM format.
+     * Extracts content from a BxDocument and stores it in NLM format.
      * 
      * @param document
      * @return extracted content in NLM format
@@ -110,7 +110,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
     }
     
-    public void buildMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException {
+    public void buildMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException, IOException {
         metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
     }
     
@@ -125,7 +125,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     
     public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, InputStream metadataModel, 
             InputStream metadataRange, InputStream refModel, InputStream filteringModel, InputStream filteringRange, 
-            InputStream headerModel, InputStream headerRange) throws AnalysisException {
+            InputStream headerModel, InputStream headerRange) throws AnalysisException, IOException {
         structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
         metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
         referencesExtractor = new PdfNLMReferencesExtractor(refModel);

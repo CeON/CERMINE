@@ -33,7 +33,7 @@ public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel>
     public SVMContentFilter(BufferedReader modelFile, BufferedReader rangeFile, FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) throws AnalysisException {
 		super(featureVectorBuilder, BxZoneLabel.class);
         try {
-            loadModel(modelFile, rangeFile);
+            loadModelFromFile(modelFile, rangeFile);
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create SVM classifier!", ex);
         }
@@ -41,15 +41,15 @@ public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel>
 
 	public SVMContentFilter(String modelFilePath, String rangeFilePath, FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) throws AnalysisException {
 		super(featureVectorBuilder, BxZoneLabel.class);
-		InputStreamReader modelISR = new InputStreamReader(Thread.currentThread().getClass()
+		InputStreamReader modelISR = new InputStreamReader(SVMContentFilter.class
 				.getResourceAsStream(modelFilePath));
 		BufferedReader modelFile = new BufferedReader(modelISR);
 		
-		InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
+		InputStreamReader rangeISR = new InputStreamReader(SVMContentFilter.class
 				.getResourceAsStream(rangeFilePath));
 		BufferedReader rangeFile = new BufferedReader(rangeISR);
         try {
-            loadModel(modelFile, rangeFile);
+            loadModelFromFile(modelFile, rangeFile);
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create SVM classifier!", ex);
         }

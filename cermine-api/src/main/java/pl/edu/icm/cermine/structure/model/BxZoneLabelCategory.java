@@ -18,4 +18,6 @@ public enum BxZoneLabelCategory {
 	CAT_REFERENCES,
 	/** Other stuff left in the document. */
 	CAT_OTHER,
+
+	CAT_UNKNOWN,
 }

@@ -238,7 +238,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         return output;
     }
     
-    private BxPage segmentPage(BxPage page) throws AnalysisException {
+    protected BxPage segmentPage(BxPage page) throws AnalysisException {
         List<Component> components = createComponents(page);
         double orientation = computeInitialOrientation(components);
         double characterSpacing = computeCharacterSpacing(components, orientation);

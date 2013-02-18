@@ -26,14 +26,14 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     /** reading order resolver */
     private ReadingOrderResolver roResolver;
     
-    /** iniial zone classifier */
+    /** initial zone classifier */
     private ZoneClassifier initialClassifier;
 
 
     public PdfBxStructureExtractor() throws AnalysisException {
         try {
             characterExtractor = new ITextCharacterExtractor();
-            documentSegmenter = new DocstrumSegmenter();
+            documentSegmenter = new ParallelDocstrumSegmenter();
             roResolver = new HierarchicalReadingOrderResolver();
             initialClassifier = new SVMInitialZoneClassifier();
         } catch (IOException ex) {
@@ -44,7 +44,7 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     public PdfBxStructureExtractor(InputStream model, InputStream range) throws AnalysisException {
         try {
             characterExtractor = new ITextCharacterExtractor();
-            documentSegmenter = new DocstrumSegmenter();
+            documentSegmenter = new ParallelDocstrumSegmenter();
             roResolver = new HierarchicalReadingOrderResolver();
             
             InputStreamReader modelISRI = new InputStreamReader(model);

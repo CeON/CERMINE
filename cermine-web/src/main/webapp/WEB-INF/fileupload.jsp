@@ -112,7 +112,7 @@ $(function () {
         // Demo settings:
         $('#fileupload').fileupload('option', {
             //url: '//jquery-file-upload.appspot.com/',
-            maxFileSize: 5000000,
+            maxFileSize: 20000000,
             acceptFileTypes: /(\.|\/)(pdf)$/i
         });
         // Upload server status check for browsers with CORS support:

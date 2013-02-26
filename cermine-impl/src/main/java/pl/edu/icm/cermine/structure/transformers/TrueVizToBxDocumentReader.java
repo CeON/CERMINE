@@ -353,7 +353,7 @@ public class TrueVizToBxDocumentReader {
         return line;
     }
 
-    private BxZoneLabel parseClassification(Element elClassicfication) {
+    private BxZoneLabel parseClassification(Element elClassicfication) throws TransformationException {
         List<Element> eli = getChildren("Category", elClassicfication);
         Element catEl = eli.isEmpty() ? null : eli.get(0);
         if (catEl == null) {
@@ -367,18 +367,22 @@ public class TrueVizToBxDocumentReader {
         if (val == null) {
             return null;
         }
+        if (val.isEmpty()) {
+        	return BxZoneLabel.OTH_UNKNOWN;
+        }
 
         if (ZONE_LABEL_MAP.containsKey(val.toLowerCase())) {
             return ZONE_LABEL_MAP.get(val.toLowerCase());
         } else {
                 if (BxZoneLabel.valueOf(val.toUpperCase()) != null) {
                     return BxZoneLabel.valueOf(val.toUpperCase());
+                } else {
+                	throw new TransformationException("Unknown label in the input file: " + val);
                 }
         }
-        return BxZoneLabel.OTH_UNKNOWN;
     }
 
-    private BxZone parseZoneNode(Element zoneE) {
+    private BxZone parseZoneNode(Element zoneE) throws TransformationException {
         BxZone zone = new BxZone();
         if (!getChildren("Classification", zoneE).isEmpty()) {
             zone.setLabel(parseClassification(getChildren("Classification", zoneE).get(0)));
@@ -404,7 +408,7 @@ public class TrueVizToBxDocumentReader {
 
     }
 
-    private BxPage parsePageNode(Element elem) {
+    private BxPage parsePageNode(Element elem) throws TransformationException {
         BxPage page = new BxPage();
         page.setId(getOptionalChildValue("PageId", elem));
         page.setNextId(getOptionalChildValue("PageNext", elem));

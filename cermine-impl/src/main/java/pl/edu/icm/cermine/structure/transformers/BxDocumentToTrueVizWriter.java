@@ -145,7 +145,7 @@ public class BxDocumentToTrueVizWriter {
         parent.appendChild(node);
     }
 
-    private void appendZone(Document doc, Element parent, BxZone zone) {
+    private void appendZone(Document doc, Element parent, BxZone zone) throws TransformationException {
         Element node = doc.createElement("Zone");
         appendPropertyIfNotNull(doc, node, "ZoneID", zone.getId());
         appendBounds(doc, node, "ZoneCorners", zone.getBounds());
@@ -161,7 +161,7 @@ public class BxDocumentToTrueVizWriter {
             if (ZONE_LABEL_MAP.containsKey(zone.getLabel())) {
                 appendClassification(doc, node, ZONE_LABEL_MAP.get(zone.getLabel()), "");
             } else {
-                appendClassification(doc, node, zone.getLabel().toString(), "");
+            	throw new TransformationException("Writing down an unknown zone label: " + zone.getLabel());
             }
         }
         for (BxLine line: zone.getLines()) {
@@ -170,7 +170,7 @@ public class BxDocumentToTrueVizWriter {
         parent.appendChild(node);
     }
 
-    private void appendPage(Document doc, Element parent, BxPage page) {
+    private void appendPage(Document doc, Element parent, BxPage page) throws TransformationException {
         Element node = doc.createElement("Page");
         appendPropertyIfNotNull(doc, node, "PageID", page.getId());
         appendProperty(doc, node, "PageType", "");
@@ -201,7 +201,7 @@ public class BxDocumentToTrueVizWriter {
         parent.appendChild(node);
     }
 
-    private Document createDocument(List<BxPage> pages) throws ParserConfigurationException {
+    private Document createDocument(List<BxPage> pages) throws ParserConfigurationException, TransformationException {
         Document doc = TrueVizUtils.newDocumentBuilder().newDocument();
         Element root = doc.createElement("Document");
         appendProperty(doc, root, "DocID", "");
@@ -238,6 +238,7 @@ public class BxDocumentToTrueVizWriter {
     public String write(List<BxPage> objects, Object... hints) throws TransformationException {
         StringWriter sw = new StringWriter();
         write(sw, objects, hints);
+        sw.flush();
         return sw.toString();
     }
 
@@ -252,5 +253,15 @@ public class BxDocumentToTrueVizWriter {
         } catch (ParserConfigurationException ex) {
             throw new TransformationException(ex);
         }
+//    	try {
+//    		Document doc = createDocument(objects);
+//    		nu.xom.Document xomDocument = nu.xom.converters.DOMConverter.convert(doc);
+//    		String xml = xomDocument.toXML();
+//    		writer.write(xml);
+//    	} catch (IOException e) {
+//    		throw new TransformationException(e);
+//    	} catch (ParserConfigurationException e) {
+//    		throw new TransformationException(e);
+//    	}
     }
 }

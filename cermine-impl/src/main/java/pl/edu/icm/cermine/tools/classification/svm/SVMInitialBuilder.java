@@ -12,6 +12,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
+import pl.edu.icm.cermine.evaluation.tools.PenaltyCalculator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
@@ -41,8 +42,19 @@ public class SVMInitialBuilder {
         // so that in the learning examples all classes are
         // represented equally
 
-        SampleSelector<BxZoneLabel> selector = new UndersamplingSelector<BxZoneLabel>(1.0);
-        trainingSamples = selector.pickElements(trainingSamples);
+        PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
+        int[] intClasses = new int[pc.getClasses().size()];
+        double[] classesWeights = new double[pc.getClasses().size()];
+        
+        Integer labelIdx = 0;
+        for(BxZoneLabel label: pc.getClasses()) {
+        	intClasses[labelIdx] = label.ordinal();
+        	classesWeights[labelIdx] = pc.getPenaltyWeigth(label);
+        	++labelIdx;
+        }
+		
+        //SampleSelector<BxZoneLabel> selector = new UndersamplingSelector<BxZoneLabel>(1.3);
+        //trainingSamples = selector.pickElements(trainingSamples);
 
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
 		svm_parameter param = SVMZoneClassifier.getDefaultParam();
@@ -51,6 +63,8 @@ public class SVMInitialBuilder {
 		param.C = C;
 		param.degree = degree;
 		param.kernel_type = kernelType;
+		param.weight_label = intClasses;
+		param.weight = classesWeights;
 
 		zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);

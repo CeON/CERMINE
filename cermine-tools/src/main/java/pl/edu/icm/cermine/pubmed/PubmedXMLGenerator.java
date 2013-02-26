@@ -313,11 +313,11 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         //section titles
         NodeList sectionTitleNodes = (NodeList) xpath.evaluate("/article/body//title", domDoc, XPathConstants.NODESET);
         List<String> sectionTitles = XMLTools.extractTextAsList(sectionTitleNodes);
-        entries.putIf(sectionTitles, BxZoneLabel.BODY_HEADER);
+        entries.putIf(sectionTitles, BxZoneLabel.BODY_HEADING);
 
         NodeList appTitleNodes = (NodeList) xpath.evaluate("/article/back/app-group//title", domDoc, XPathConstants.NODESET);
         List<String> appTitles = XMLTools.extractTextAsList(appTitleNodes);
-        entries.putIf(appTitles, BxZoneLabel.BODY_HEADER);
+        entries.putIf(appTitles, BxZoneLabel.BODY_HEADING);
 
         //figures
         NodeList figureNodes = (NodeList) xpath.evaluate("/article/floats-wrap//fig", domDoc, XPathConstants.NODESET);
@@ -390,7 +390,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 //			entries.putIf(refString, BxZoneLabel.GEN_REFERENCES);
 //		}
         entries.putIf(StringTools.joinStrings(refStrings), BxZoneLabel.GEN_REFERENCES);
-        entries.put("references", BxZoneLabel.BODY_HEADER);
+        entries.put("references", BxZoneLabel.BODY_HEADING);
 
         System.out.println("journalTitle: " + journalTitleString);
         System.out.println("journalPublisher: " + journalPublisherString);

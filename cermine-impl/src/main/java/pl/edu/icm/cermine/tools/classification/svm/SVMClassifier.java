@@ -208,16 +208,11 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 
 	public void loadModelFromResources(String modelFilePath, String rangeFilePath) throws IOException
 	{
-		InputStreamReader modelISR = new InputStreamReader(SVMClassifier.class
-				.getResourceAsStream(modelFilePath));
+		InputStreamReader modelISR = new InputStreamReader(this.getClass().getResourceAsStream(modelFilePath));
 		BufferedReader modelFile = new BufferedReader(modelISR);
-
-        BufferedReader rangeFile = null;
-        if (rangeFilePath != null) {
-            InputStreamReader rangeISR = new InputStreamReader(SVMClassifier.class
-                    .getResourceAsStream(rangeFilePath));
-            rangeFile = new BufferedReader(rangeISR);
-        }
+		
+		InputStreamReader rangeISR = new InputStreamReader(this.getClass().getResourceAsStream(rangeFilePath));
+		BufferedReader rangeFile = new BufferedReader(rangeISR);
 		loadModelFromFile(modelFile, rangeFile);
 	}
 

@@ -46,7 +46,7 @@ public final class ContentFilterTools {
         SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
         
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
-        map.put(BxZoneLabel.BODY_HEADER, BxZoneLabel.BODY_CONTENT);
+        map.put(BxZoneLabel.BODY_HEADING, BxZoneLabel.BODY_CONTENT);
        
         trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(documents, VECTOR_BUILDER, map);
         trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);

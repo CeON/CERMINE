@@ -34,11 +34,17 @@ public class TrueVizToBxDocumentReader {
 
     static {
         ZONE_LABEL_MAP.put("abstract", BxZoneLabel.MET_ABSTRACT);
+        ZONE_LABEL_MAP.put("access_data", BxZoneLabel.MET_ACCESS_DATA);
+        ZONE_LABEL_MAP.put("acknowledgment", BxZoneLabel.BODY_ACKNOWLEDGMENT);
         ZONE_LABEL_MAP.put("affiliation", BxZoneLabel.MET_AFFILIATION);
+        ZONE_LABEL_MAP.put("attachment", BxZoneLabel.BODY_ATTACHMENT);
         ZONE_LABEL_MAP.put("author", BxZoneLabel.MET_AUTHOR);
         ZONE_LABEL_MAP.put("bib_info", BxZoneLabel.MET_BIB_INFO);
-        ZONE_LABEL_MAP.put("body", BxZoneLabel.BODY_CONTENT);
-        ZONE_LABEL_MAP.put("copyright", BxZoneLabel.OTH_COPYRIGHT);
+        ZONE_LABEL_MAP.put("biography", BxZoneLabel.MET_BIOGRAPHY);
+        ZONE_LABEL_MAP.put("body_content", BxZoneLabel.BODY_CONTENT);
+        ZONE_LABEL_MAP.put("contribution", BxZoneLabel.BODY_CONTRIBUTION);
+        ZONE_LABEL_MAP.put("conflict_statement", BxZoneLabel.BODY_CONFLICT_STMT);
+        ZONE_LABEL_MAP.put("copyright", BxZoneLabel.MET_COPYRIGHT);
         ZONE_LABEL_MAP.put("correspondence", BxZoneLabel.MET_CORRESPONDENCE);
         ZONE_LABEL_MAP.put("dates", BxZoneLabel.MET_DATES);
         ZONE_LABEL_MAP.put("editor", BxZoneLabel.MET_EDITOR);
@@ -46,8 +52,8 @@ public class TrueVizToBxDocumentReader {
         ZONE_LABEL_MAP.put("equation_label", BxZoneLabel.BODY_EQUATION_LABEL);
         ZONE_LABEL_MAP.put("figure", BxZoneLabel.BODY_FIGURE);
         ZONE_LABEL_MAP.put("figure_caption", BxZoneLabel.BODY_FIGURE_CAPTION);
-        ZONE_LABEL_MAP.put("footer", BxZoneLabel.OTH_FOOTER);
-        ZONE_LABEL_MAP.put("header", BxZoneLabel.OTH_HEADER);
+        ZONE_LABEL_MAP.put("glossary", BxZoneLabel.BODY_GLOSSARY);
+        ZONE_LABEL_MAP.put("heading", BxZoneLabel.BODY_HEADING);
         ZONE_LABEL_MAP.put("keywords", BxZoneLabel.MET_KEYWORDS);
         ZONE_LABEL_MAP.put("page_number", BxZoneLabel.OTH_PAGE_NUMBER);
         ZONE_LABEL_MAP.put("references", BxZoneLabel.REFERENCES);

@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.structure.transformers;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.DecimalFormat;
@@ -43,25 +44,32 @@ public class BxDocumentToTrueVizWriter {
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_AFFILIATION,       "affiliation");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_AUTHOR,            "author");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_BIB_INFO,          "bib_info");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_BIOGRAPHY, "biography");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_CORRESPONDENCE,    "correspondence");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_ACCESS_DATA,    "access_data");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_DATES,             "dates");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_EDITOR,            "editor");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_KEYWORDS,          "keywords");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_TITLE,             "title");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_TYPE,              "type");
-        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_CONTENT,          "body");
-        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_HEADER,          "header");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_COPYRIGHT,              "copyright");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_CONTRIBUTION,          "contribution");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_ATTACHMENT,          "attachment");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_ACKNOWLEDGMENT,          "acknowledgment");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_GLOSSARY,          "glossary");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_CONFLICT_STMT,          "conflict_statement");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_CONTENT,          "body_content");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_HEADING,          "heading");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_EQUATION,         "equation");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_EQUATION_LABEL,   "equation_label");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_FIGURE,           "figure");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_FIGURE_CAPTION,   "figure_caption");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_TABLE,            "table");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_TABLE_CAPTION,    "table_caption");
-        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_COPYRIGHT,         "copyright");
-        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_HEADER,            "header");
-        ZONE_LABEL_MAP.put(BxZoneLabel.OTH_FOOTER,            "footer");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_ATTACHMENT,    		"attachment");
         ZONE_LABEL_MAP.put(BxZoneLabel.OTH_PAGE_NUMBER,       "page_number");
         ZONE_LABEL_MAP.put(BxZoneLabel.OTH_UNKNOWN ,          "unknown");
+        ZONE_LABEL_MAP.put(BxZoneLabel.REFERENCES,          "references");
     }
     
     private void appendProperty(Document doc, Element parent, String name, String value) {

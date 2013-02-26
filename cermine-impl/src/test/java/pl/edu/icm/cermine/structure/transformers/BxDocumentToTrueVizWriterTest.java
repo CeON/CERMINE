@@ -67,9 +67,8 @@ public class BxDocumentToTrueVizWriterTest {
         p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_ABSTRACT));
         p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_AFFILIATION));
         p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_AUTHOR));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.GEN_BODY));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.OTH_FOOTER));
-        p2.addZone(new BxZone().setLabel(BxZoneLabel.OTH_HEADER));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.BODY_CONTENT));
+        p2.addZone(new BxZone().setLabel(BxZoneLabel.BODY_HEADING));
         p2.addZone(new BxZone().setLabel(BxZoneLabel.MET_TITLE));
         p2.addZone(new BxZone().setLabel(BxZoneLabel.OTH_UNKNOWN));
         p2.addZone(new BxZone());
@@ -139,12 +138,11 @@ public class BxDocumentToTrueVizWriterTest {
         assertXpathNoCase("string(/Document/Page[2]/Zone[1]/Classification/Category/@Value)", "abstract");
         assertXpathNoCase("string(/Document/Page[2]/Zone[2]/Classification/Category/@Value)", "affiliation");
         assertXpathNoCase("string(/Document/Page[2]/Zone[3]/Classification/Category/@Value)", "author");
-        assertXpathNoCase("string(/Document/Page[2]/Zone[4]/Classification/Category/@Value)", "gen_body");
-        assertXpathNoCase("string(/Document/Page[2]/Zone[5]/Classification/Category/@Value)", "footer");
-        assertXpathNoCase("string(/Document/Page[2]/Zone[6]/Classification/Category/@Value)", "header");
-        assertXpathNoCase("string(/Document/Page[2]/Zone[7]/Classification/Category/@Value)", "title");
-        assertXpathNoCase("string(/Document/Page[2]/Zone[8]/Classification/Category/@Value)", "unknown");
-        assertXpathNoCase("count(/Document/Page[2]/Zone[9]/Classification)", "0");
+        assertXpathNoCase("string(/Document/Page[2]/Zone[4]/Classification/Category/@Value)", "body_content");
+        assertXpathNoCase("string(/Document/Page[2]/Zone[5]/Classification/Category/@Value)", "heading");
+        assertXpathNoCase("string(/Document/Page[2]/Zone[6]/Classification/Category/@Value)", "title");
+        assertXpathNoCase("string(/Document/Page[2]/Zone[7]/Classification/Category/@Value)", "unknown");
+        assertXpathNoCase("count(/Document/Page[2]/Zone[8]/Classification)", "0");
     }
 
     @Test

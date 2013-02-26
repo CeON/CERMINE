@@ -7,8 +7,54 @@ import java.util.List;
 
 public class StringTools {
 
+    public static String removeOrphantSpaces(String text) {
+    	if(text.length() < 5) {
+    		return text;
+    	}
+    	StringBuilder ret = new StringBuilder();
+    	Boolean evenSpaces = true;
+    	for(int idx=0; idx<text.length(); idx+=2) {
+    		if(text.charAt(idx) != ' ') {
+    			evenSpaces = false;
+    			break;
+    		}
+    	}
+    	if (evenSpaces) {
+    		for(int idx=1; idx<text.length(); idx+=2) {
+    			ret.append(text.charAt(idx));
+    		}
+    		return ret.toString();
+    	}
+    	
+    	Boolean oddSpaces = true;
+    	for(int idx=1; idx<text.length(); idx+=2) {
+    		if(text.charAt(idx) != ' ') {
+    			oddSpaces = false;
+    			break;
+    		}
+    	}
+    	if (oddSpaces) {
+    		for(int idx=0; idx<text.length(); idx+=2) {
+    			ret.append(text.charAt(idx));
+    		}
+    		return ret.toString();
+    	}
+    	
+    	return text;
+	}
+	
+    public static String cleanLigatures(String str) {
+        return str.replaceAll("\uFB00", "ff")
+                  .replaceAll("\uFB01", "fi")
+                  .replaceAll("\uFB02", "fl")
+                  .replaceAll("\uFB03", "ffi")
+                  .replaceAll("\uFB04", "ffl")
+                  .replaceAll("\uFB05", "ft")
+                  .replaceAll("\uFB06", "st");
+    }
+
     public static List<String> tokenize(String text) {
-        List<String> roughRet = new ArrayList<String>(Arrays.asList(text.split(" |\n|,|\\. |&|;|:|\\-")));
+        List<String> roughRet = new ArrayList<String>(Arrays.asList(text.split(" |=|\\(|\\)|\n|,|\\. |&|;|:|\\-|/")));
         List<String> ret = new ArrayList<String>();
         for (String candidate : roughRet) {
             if (candidate.length() > 1) {

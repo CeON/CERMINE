@@ -7,8 +7,15 @@ package model;
 option java_package = "pl.edu.icm.cermine.pubmed.importer.model";
 option java_outer_classname = "DocumentProtos";
 
-message Document {
+message InputDocument {
 	required string key = 1;
 	optional bytes nlm = 2;
 	optional bytes pdf = 3;
+}
+
+message OutputDocument {
+	required string key = 1;
+	optional bytes nlm = 2;
+	optional bytes pdf = 3;
+	optional bytes xml = 4;
 }

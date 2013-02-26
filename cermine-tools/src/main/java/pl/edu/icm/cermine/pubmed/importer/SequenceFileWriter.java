@@ -13,22 +13,28 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
+
 import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos;
-import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document;
+import pl.edu.icm.cermine.pubmed.pig.PubmedCollectionIterator;
+import pl.edu.icm.cermine.pubmed.pig.PubmedEntry;
 
 public class SequenceFileWriter {
 
     public static void main(String[] args) throws IOException {
 
-        if (args.length != 2) {
-            System.out.println("Usage: <in_dir> <out_file>");
+        if (args.length != 2 && args.length != 4) {
+            System.out.println("Usage: <in_dir> <out_file> [-max X]");
             System.exit(1);
         }
 
         String inputDir = args[0];
         String outputSequenceFile = args[1];
+        Integer maximumPairs = 0;
+        if (args.length == 4) {
+        	maximumPairs = Integer.valueOf(args[3]);
+        }
         checkPaths(inputDir, outputSequenceFile);
-        generateSequenceFile(inputDir, outputSequenceFile);
+        generateSequenceFile(inputDir, outputSequenceFile, maximumPairs);
 
     }
 
@@ -49,7 +55,7 @@ public class SequenceFileWriter {
 
     }
 
-    private static void generateSequenceFile(String inputDir, String outputSequenceFile) throws IOException {
+    private static void generateSequenceFile(String inputDir, String outputSequenceFile, Integer maximumPairs) throws IOException {
     	SequenceFile.Writer sequenceFileWriter = createSequenceFileWriter(outputSequenceFile, BytesWritable.class, BytesWritable.class);
     	PubmedCollectionIterator iter = new PubmedCollectionIterator(inputDir);
     	Integer fileCounter = 0;
@@ -58,14 +64,17 @@ public class SequenceFileWriter {
 
     	try {
     		for(PubmedEntry item : iter) {
-    			DocumentProtos.Document.Builder documentProtosBuilder = DocumentProtos.Document.newBuilder();
+    			if(maximumPairs != 0 && maximumPairs == fileCounter) {
+    				break;
+    			}
+    			DocumentProtos.InputDocument.Builder documentProtosBuilder = DocumentProtos.InputDocument.newBuilder();
     			BytesWritable rowKeyBytesWritable = new BytesWritable();
     			BytesWritable documentBytesWritable = new BytesWritable();
 
     			++filesAfterDump;
     			File nlm = item.getNlm();
     			File pdf = item.getPdf();
-    			System.out.println(fileCounter + ": " + nlm.getName());
+    			System.out.println(fileCounter + ": " + item.getKey());
 
     			documentProtosBuilder.setKey(item.getKey());
 
@@ -87,7 +96,7 @@ public class SequenceFileWriter {
     			}
     			pdf_fis.close();
 
-    			Document d = documentProtosBuilder.build();
+    			DocumentProtos.InputDocument d = documentProtosBuilder.build();
 
     			byte[] rowBytes = item.getKey().getBytes();
     			byte[] docBytes = d.toByteArray();

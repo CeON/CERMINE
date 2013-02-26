@@ -1,8 +1,10 @@
-package pl.edu.icm.cermine.pubmed.importer;
+package pl.edu.icm.cermine.pubmed.pig;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,29 +33,32 @@ import org.apache.pig.data.DataType;
 import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 
+import com.google.protobuf.ByteString;
+
+import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos;
+
 /**
  * A Loader for Hadoop-Standard SequenceFiles. able to work with the following
  * types as keys or values: Text, IntWritable, LongWritable, FloatWritable,
  * DoubleWritable, BooleanWritable, ByteWritable
  *
  */
-public class RichSequenceFileLoader extends FileInputLoadFunc {
+public class SequenceFileLoadFunc extends FileInputLoadFunc {
 
     public static final byte BYTES_WRITABLE = 70;
     public static final byte RESULT = 80;
     
-    private SequenceFileRecordReader<Writable, Writable> reader;
-    private Writable key;
-    private Writable value;
-    private ArrayList<Object> mProtoTuple = null;
-    protected static final Log LOG = LogFactory.getLog(RichSequenceFileLoader.class);
+    private SequenceFileRecordReader<BytesWritable, BytesWritable> reader;
+    private BytesWritable key;
+    private BytesWritable value;
+    protected static final Log LOG = LogFactory.getLog(SequenceFileLoadFunc.class);
     protected TupleFactory mTupleFactory = TupleFactory.getInstance();
     protected SerializationFactory serializationFactory;
     protected byte keyType = DataType.UNKNOWN;
     protected byte valType = DataType.UNKNOWN;
+    protected List<Object> mProtoTuple = new ArrayList<Object>(3);
 
-    public RichSequenceFileLoader() {
-        mProtoTuple = new ArrayList<Object>(2);
+    public SequenceFileLoadFunc() {
     }
 
     protected void setKeyType(Class<?> keyClass) throws BackendException {
@@ -99,29 +104,6 @@ public class RichSequenceFileLoader extends FileInputLoadFunc {
         }
     }
 
-    protected Object translateWritableToPigDataType(Writable w, byte dataType) {
-        switch (dataType) {
-            case DataType.CHARARRAY:
-                return ((Text) w).toString();
-            case DataType.BYTEARRAY:
-                return ((DataByteArray) w).get();
-            case DataType.INTEGER:
-                return ((IntWritable) w).get();
-            case DataType.LONG:
-                return ((LongWritable) w).get();
-            case DataType.FLOAT:
-                return ((FloatWritable) w).get();
-            case DataType.DOUBLE:
-                return ((DoubleWritable) w).get();
-            case DataType.BYTE:
-                return ((ByteWritable) w).get();
-            case BYTES_WRITABLE:
-                return (new DataByteArray(((BytesWritable) w).copyBytes())).get();
-        }
-
-        return null;
-    }
-
     @Override
     public Tuple getNext() throws IOException {
         boolean next = false;
@@ -136,7 +118,7 @@ public class RichSequenceFileLoader extends FileInputLoadFunc {
         }
 
         key = reader.getCurrentKey();
-        value = reader.getCurrentValue();
+        value = reader.getCurrentValue(); //Writable
 
         if (keyType == DataType.UNKNOWN && key != null) {
             setKeyType(key.getClass());
@@ -144,18 +126,19 @@ public class RichSequenceFileLoader extends FileInputLoadFunc {
         if (valType == DataType.UNKNOWN && value != null) {
             setValueType(value.getClass());
         }
-
-        mProtoTuple.add(translateWritableToPigDataType(key, keyType));
-        mProtoTuple.add(translateWritableToPigDataType(value, valType));
-        Tuple t = mTupleFactory.newTuple(mProtoTuple);
+        
+        DocumentProtos.InputDocument protos = DocumentProtos.InputDocument.parseFrom(value.getBytes());
         mProtoTuple.clear();
+        mProtoTuple.add(protos.getKey());
+        mProtoTuple.add(protos.getPdf());
+        mProtoTuple.add(protos.getNlm());
+        Tuple t = mTupleFactory.newTuple(mProtoTuple);
         return t;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public InputFormat getInputFormat() throws IOException {
-        return new SequenceFileInputFormat<Writable, Writable>();
+        return new SequenceFileInputFormat<BytesWritable, BytesWritable>();
     }
 
     @SuppressWarnings("unchecked")

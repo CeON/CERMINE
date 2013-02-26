@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.pubmed.importer;
+package pl.edu.icm.cermine.pubmed.pig;
 
 import java.io.File;
 import java.util.ArrayList;

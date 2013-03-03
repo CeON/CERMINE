@@ -42,7 +42,6 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
         BxDocument output = new BxDocument();
 
-        System.out.println("PARRRL");
         BxPage[] pages = new BxPage[document.getPages().size()];
         
         ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());

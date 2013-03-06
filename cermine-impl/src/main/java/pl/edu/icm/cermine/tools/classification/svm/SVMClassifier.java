@@ -204,7 +204,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 
         BufferedReader rangeFile = null;
         if (rangeFilePath != null) {
-            InputStreamReader rangeISR = new InputStreamReader(Thread.currentThread().getClass()
+            InputStreamReader rangeISR = new InputStreamReader(SVMClassifier.class
                     .getResourceAsStream(rangeFilePath));
             rangeFile = new BufferedReader(rangeISR);
         }

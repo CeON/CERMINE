@@ -25,7 +25,7 @@ public class PdfRawTextExtractor implements DocumentTextExtractor<String> {
     
     public PdfRawTextExtractor() throws AnalysisException {
         characterExtractor = new ITextCharacterExtractor();
-        documentSegmenter = new DocstrumSegmenter();
+        documentSegmenter = new ParallelDocstrumSegmenter();
         roResolver = new HierarchicalReadingOrderResolver();
     }
     

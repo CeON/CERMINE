@@ -2,14 +2,17 @@ package pl.edu.icm.cermine;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.xml.xpath.XPathExpressionException;
+
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -40,7 +43,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
            
 
     public PdfNLMContentExtractor() throws AnalysisException {
-      //  structureExtractor = new PdfBxStructureExtractor();
+		structureExtractor = new PdfBxStructureExtractor();
         metadataExtractor = new PdfNLMMetadataExtractor();
         referencesExtractor = new PdfNLMReferencesExtractor();
         textExtractor = new PdfNLMTextExtractor();

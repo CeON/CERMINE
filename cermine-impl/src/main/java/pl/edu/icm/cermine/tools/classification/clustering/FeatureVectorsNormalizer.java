@@ -16,11 +16,11 @@ public final class FeatureVectorsNormalizer {
             double max = Double.NEGATIVE_INFINITY;
             
             for (FeatureVector vector : vectors) {
-                if (vector.getFeature(feature) < min) {
-                    min = vector.getFeature(feature);
+                if (vector.getFeatureValue(feature) < min) {
+                    min = vector.getFeatureValue(feature);
                 }
-                if (vector.getFeature(feature) > max) {
-                    max = vector.getFeature(feature);
+                if (vector.getFeatureValue(feature) > max) {
+                    max = vector.getFeatureValue(feature);
                 }
             }
             
@@ -28,7 +28,7 @@ public final class FeatureVectorsNormalizer {
                 if (max - min == 0) {
                     vector.addFeature(feature, 0);
                 } else {
-                    vector.addFeature(feature, (vector.getFeature(feature) - min) / (max - min));
+                    vector.addFeature(feature, (vector.getFeatureValue(feature) - min) / (max - min));
                 }
             }
         }

@@ -51,7 +51,7 @@ public class NLMElementToBibEntryConverter implements ModelToModelConverter<Elem
                 Element elChild = (Element) child;
                 fIndex.put(elChild, index);
                 String chText = elChild.getValue().trim().replaceAll("\\s+", " ");
-                lIndex.put(elChild, index + chText.length() - 1);
+                lIndex.put(elChild, index + chText.length());
                 int oldLength = text.length();
                 text = text.substring(chText.length()).trim();
                 index += (oldLength - text.length());

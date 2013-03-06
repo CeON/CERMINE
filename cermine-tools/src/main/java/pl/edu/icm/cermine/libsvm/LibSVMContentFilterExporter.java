@@ -1,10 +1,11 @@
-package pl.edu.icm.cermine.content.filtering;
+package pl.edu.icm.cermine.libsvm;
 
 import java.io.IOException;
 import java.util.List;
+
+import pl.edu.icm.cermine.content.filtering.ContentFilterTools;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.optimization.LibSVMExporter;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 

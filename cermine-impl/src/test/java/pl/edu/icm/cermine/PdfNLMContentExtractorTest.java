@@ -1,8 +1,11 @@
 package pl.edu.icm.cermine;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import org.custommonkey.xmlunit.Diff;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -10,10 +13,10 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**

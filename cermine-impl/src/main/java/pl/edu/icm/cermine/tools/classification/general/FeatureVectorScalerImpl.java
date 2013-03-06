@@ -43,7 +43,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 	
 	public <A extends Enum<A>> void calculateFeatureLimits(List<TrainingSample<A>> trainingElements) {
 		for(TrainingSample<A> trainingElem: trainingElements) {
-			FeatureVector fv = trainingElem.getFeatures();
+			FeatureVector fv = trainingElem.getFeatureVector();
 			Set<String> names = fv.getFeatureNames();
 
 			int featureIdx = 0;

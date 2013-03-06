@@ -16,7 +16,7 @@ public class TrainingSample<S> implements Cloneable {
         this.label = label;
     }
     
-    public FeatureVector getFeatures() {
+    public FeatureVector getFeatureVector() {
         return features;
     }
 

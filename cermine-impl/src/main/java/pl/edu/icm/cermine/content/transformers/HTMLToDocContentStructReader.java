@@ -112,4 +112,14 @@ public class HTMLToDocContentStructReader implements FormatToModelReader<Documen
         }
         return null;
     }
+
+    @Override
+    public List<DocumentContentStructure> readAll(String string, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<DocumentContentStructure> readAll(Reader reader, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

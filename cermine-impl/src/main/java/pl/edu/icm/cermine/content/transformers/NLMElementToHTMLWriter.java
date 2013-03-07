@@ -63,5 +63,15 @@ public class NLMElementToHTMLWriter implements ModelToFormatWriter<Element> {
         }
         return elements;
     }
+
+    @Override
+    public String writeAll(List<Element> objects, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void writeAll(Writer writer, List<Element> objects, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

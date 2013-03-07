@@ -146,5 +146,14 @@ public class BibEntryToNLMElementConverter implements ModelToModelConverter<BibE
        
         return element;
     }
+
+    @Override
+    public List<Element> convertAll(List<BibEntry> source, Object... hints) throws TransformationException {
+        List<Element> elements = new ArrayList<Element>(source.size());
+        for (BibEntry entry: source) {
+            elements.add(convert(entry, hints));
+        }
+        return elements;
+    }
     
 }

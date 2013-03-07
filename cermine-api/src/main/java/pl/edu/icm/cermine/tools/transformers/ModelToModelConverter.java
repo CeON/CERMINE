@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.tools.transformers;
 
+import java.util.List;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
@@ -21,4 +22,13 @@ public interface ModelToModelConverter<S, T> {
      */
     T convert(S source, Object... hints) throws TransformationException;
     
+    /**
+     * Converts source model into the target model.
+     * 
+     * @param source the list of source objects
+     * @param hints additional hints used during the conversion
+     * @return the list of converted objects
+     * @throws TransformationException 
+     */
+    List<T> convertAll(List<S> source, Object... hints) throws TransformationException;
 }

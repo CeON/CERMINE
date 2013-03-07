@@ -60,5 +60,10 @@ public class BxContentStructToDocContentStructConverter implements ModelToModelC
         
         return dcs;
     }
+
+    @Override
+    public List<DocumentContentStructure> convertAll(List<BxDocContentStructure> source, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

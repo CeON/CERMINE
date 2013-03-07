@@ -76,5 +76,10 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
             addSectionIds(section, id, i++);
         }
     }
+
+    @Override
+    public List<Element> convertAll(List<DocumentContentStructure> source, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

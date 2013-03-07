@@ -92,5 +92,10 @@ public class NLMElementToBibEntryConverter implements ModelToModelConverter<Elem
         
         return bibEntry;
     }
+
+    @Override
+    public List<BibEntry> convertAll(List<Element> source, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

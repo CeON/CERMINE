@@ -13,7 +13,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * @author estocka
  */
 public class BibTeXToBibEntryTransformerTest {
-BibTeXToBibEntryTransformer btbt;
+BibTeXToBibEntryReader btbt;
 String bibtexString;
     public BibTeXToBibEntryTransformerTest() {
     }
@@ -28,7 +28,7 @@ String bibtexString;
 
     @Before
     public void setUp() {
-        btbt = new BibTeXToBibEntryTransformer();
+        btbt = new BibTeXToBibEntryReader();
         bibtexString = "@book{Twain1876,\n"
                 + "\tauthor = {Twain, Mark},\n"
                 + "\ttitle = {The Adventures of Tom Sawyer},\n"
@@ -62,7 +62,7 @@ String bibtexString;
    }
    @Test
    public void readTest() throws TransformationException{
-        List<BibEntry> bibEntryList = btbt.read(bibtexString);
+        List<BibEntry> bibEntryList = btbt.readAll(bibtexString);
       
         assertEquals("book",bibEntryList.get(0).getType());
         assertEquals("Twain, Mark",bibEntryList.get(0).getFirstFieldValue(BibEntry.FIELD_AUTHOR));

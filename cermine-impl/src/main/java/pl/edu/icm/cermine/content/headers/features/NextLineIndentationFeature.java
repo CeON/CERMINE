@@ -29,7 +29,7 @@ public class NextLineIndentationFeature extends FeatureCalculator<BxLine, BxPage
                 break;
             }
         }
-        if (i == 0) {
+        if (i == 0 || line.getWidth() == 0) {
             return 0.0;
         }
         

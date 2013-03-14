@@ -40,6 +40,8 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
 
     @Override
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
+        computeDocumentOrientation(document);
+        
         BxDocument output = new BxDocument();
 
         BxPage[] pages = new BxPage[document.getPages().size()];

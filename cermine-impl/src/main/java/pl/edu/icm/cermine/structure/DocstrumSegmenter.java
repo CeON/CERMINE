@@ -14,220 +14,12 @@ import pl.edu.icm.cermine.structure.tools.Histogram;
  * @author krusek
  */
 public class DocstrumSegmenter implements DocumentSegmenter {
+ 
+    private double docOrientation = Double.NaN;
     
-    private static final double DISTANCE_STEP = 16.0;
-    
-    public static final double DEFAULT_ANGLE_HIST_RES = Math.toRadians(0.5);
-
-    public static final double DEFAULT_ANGLE_HIST_SMOOTH_LEN = 0.25 * Math.PI;
-
-    public static final double DEFAULT_ANGLE_HIST_SMOOTH_STDDEV = 0.0625 * Math.PI;
-
-    public static final double DEFAULT_SPACE_HIST_RES = 0.5;
-
-    public static final double DEFAULT_SPACE_HIST_SMOOTH_LEN = 2.5;
-    
-    public static final double DEFAULT_SPACE_HIST_SMOOTH_STDDEV = 0.5;
-    
-    public static final double DEFAULT_MAX_VERT_COMP_DIST = 0.67;
-
-    public static final double DEFAULT_MIN_LINE_SIZE_SCALE = 0.9;
-
-    public static final double DEFAULT_MAX_LINE_SIZE_SCALE = 2.5;
-
-    public static final double DEFAULT_MIN_HORIZONTAL_DIST = -0.5;
-
-    public static final double DEFAULT_MIN_VERTICAL_DIST = 0.0;
-
-    public static final double DEFAULT_MAX_VERTICAL_DIST = 1.2;
-
-    public static final double DEFAULT_COMP_DIST_CHAR = 4.5;
-
-    public static final double DEFAULT_WORD_DIST = 0.2;
-
-    public static final double DEFAULT_MIN_HORIZONTAL_MERGE_DIST = -3.0;
-
-    public static final double DEFAULT_MAX_VERTICAL_MERGE_DIST = 0.5;
-
-    public static final double DEFAULT_ANGLE_TOLERANCE = Math.PI / 6;
-
-    public static final int DEFAULT_NEIGHBOR_COUNT = 5;
-    
-     
-    /**
-     * Angle histogram resolution in radians per bin.
-     */
-    private double angleHistogramResolution = DEFAULT_ANGLE_HIST_RES;
-
-    /**
-     * Angle histogram smoothing window length in radians.
-     * Length of angle histogram is equal to pi.
-     */
-    private double angleHistogramSmoothingWindowLength = DEFAULT_ANGLE_HIST_SMOOTH_LEN;
-
-    /**
-     * Angle histogram gaussian smoothing window standard deviation in radians.
-     */
-    private double angleHistogramSmoothingWindowStdDeviation = DEFAULT_ANGLE_HIST_SMOOTH_STDDEV;
-
-    /**
-     * Spacing histogram resolution per bin.
-     */
-    private double spacingHistogramResolution = DEFAULT_SPACE_HIST_RES;
-
-    /**
-     * Spacing histogram smoothing window length.
-     */
-    private double spacingHistogramSmoothingWindowLength = DEFAULT_SPACE_HIST_SMOOTH_LEN;
-
-    /**
-     * Spacing histogram gaussian smoothing window standard deviation.
-     */
-    private double spacingHistogramSmoothingWindowStdDeviation = DEFAULT_SPACE_HIST_SMOOTH_STDDEV;
-    
-    /**
-     * Maximum vertical component distance multiplier used during line
-     * determination.
-     * 
-     * Maximum vertical distance between components (characters) that belong
-     * to the same line is equal to the product of this value and estimated
-     * between-line spacing.
-     */
-    private double maxVerticalComponentDistanceMultiplier = DEFAULT_MAX_VERT_COMP_DIST;
-
-    /**
-     * Minimum line size scale value.
-     *
-     * During zone determination (merging lines into zones) line height is
-     * taken into account. To achieve this, line size scale is estimated and
-     * limited to range [minLineSizeScale, maxLineSizeScale].
-     */
-    private double minLineSizeScale = DEFAULT_MIN_LINE_SIZE_SCALE;
-
-    /**
-     * Maximum line size scale value.
-     *
-     * See minLineSizeScale for more information.
-     */
-    private double maxLineSizeScale = DEFAULT_MAX_LINE_SIZE_SCALE;
-
-    /**
-     * Minimum horizontal line distance multiplier.
-     *
-     * Minimum horizontal distance between lines that belong to the same zone
-     * is equal to the product of this value and estimated within-line spacing.
-     */
-    private double minHorizontalDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_DIST;
-
-    /**
-     * Minimum vertical line distance multiplier.
-     *
-     * Minimum vertical distance between lines that belong to the same zone
-     * is equal to the product of this value and estimated between-line spacing.
-     */
-    private double minVerticalDistanceMultiplier = DEFAULT_MIN_VERTICAL_DIST;
-
-    /**
-     * Maximum vertical line distance multiplier.
-     * 
-     * Maximum vertical distance between lines that belong to the same zone
-     * is equal to the product of this value and estimated between-line spacing.
-     */
-    private double maxVerticalDistanceMultiplier = DEFAULT_MAX_VERTICAL_DIST;
-
-    /**
-     * Component distance character spacing multiplier.
-     *
-     * Maximum distance between components that belong to the same line is
-     * equal to (lineSpacing * componentDistanceLineMultiplier +
-     * characterSpacing * componentDistanceCharacterMultiplier), where
-     * lineSpacing and characterSpacing are estimated between-line and
-     * within-line spacing, respectively.
-     */
-    private double componentDistanceCharacterMultiplier = DEFAULT_COMP_DIST_CHAR;
-
-    /**
-     * Word distance multiplier.
-     *
-     * Maximum distance between components that belong to the same word is
-     * equal to the product of this value and estimated within-line spacing.
-     */
-    private double wordDistanceMultiplier = DEFAULT_WORD_DIST;
-
-    /**
-     * Minimum horizontal line merge distance multiplier.
-     *
-     * Minimum horizontal distance between lines that should be merged is equal
-     * to the product of this value and estimated within-line spacing.
-     *
-     * Because split lines do not overlap this value should be negative.
-     */
-
-    private double minHorizontalMergeDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_MERGE_DIST;
-
-    /**
-     * Maximum vertical line merge distance multiplier.
-     * 
-     * Maximum vertical distance between lines that should be merged is equal
-     * to the product of this value and estimated between-line spacing.
-     */
-
-    private double maxVerticalMergeDistanceMultiplier = DEFAULT_MAX_VERTICAL_MERGE_DIST;
-
-    /**
-     * Angle tolerance for comparisons of angles between components and angles
-     * between lines.
-     */
-    private double angleTolerance = DEFAULT_ANGLE_TOLERANCE;
-
-    /**
-     * Number of nearest-neighbors found per component.
-     */
-    private int neighborCount = DEFAULT_NEIGHBOR_COUNT;
-    
-
-    public void setSpacingHistogramResolution(double value) {
-        spacingHistogramResolution = value;
-    }
-
-    public void setSpacingHistogramSmoothingWindowLength(double value) {
-        spacingHistogramSmoothingWindowLength = value;
-    }
-    
-    public void setSpacingHistogramSmoothingWindowStdDeviation(double value) {
-        spacingHistogramSmoothingWindowStdDeviation = value;
-    }
-
-    public void setMaxLineSizeScale(double value) {
-        maxLineSizeScale = value;
-    }
-
-    public void setMaxVerticalDistanceMultiplier(double value) {
-        maxVerticalDistanceMultiplier = value;
-    }
-
-    public void setMinHorizontalDistanceMultiplier(double value) {
-        minHorizontalDistanceMultiplier = value;
-    }
-
-    public void setComponentDistanceCharacterMultiplier(double value) {
-        componentDistanceCharacterMultiplier = value;
-    }
-
-    public void setWordDistanceMultiplier(double value) {
-        wordDistanceMultiplier = value;
-    }
-
-    public void setMaxVerticalMergeDistanceMultiplier(double value) {
-        maxVerticalMergeDistanceMultiplier = value;
-    }
-
-    public void setAngleTolerance(double value) {
-        angleTolerance = value;
-    }
-
     @Override
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
+        computeDocumentOrientation(document);
         BxDocument output = new BxDocument();
         for (BxPage page: document.getPages()) {
         	BxPage segmentedPage = segmentPage(page);
@@ -238,11 +30,25 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         return output;
     }
     
+    protected void computeDocumentOrientation(BxDocument document) throws AnalysisException {
+        List<Component> components = new ArrayList<Component>();
+        for (BxPage page : document.asPages()) {
+            components.addAll(createComponents(page));
+        }
+        
+        docOrientation = computeInitialOrientation(components);
+    }
+    
     protected BxPage segmentPage(BxPage page) throws AnalysisException {
         List<Component> components = createComponents(page);
-        double orientation = computeInitialOrientation(components);
+        
+        double orientation = docOrientation;
+        if (Double.isNaN(orientation)) {
+            computeInitialOrientation(components);
+        }
         double characterSpacing = computeCharacterSpacing(components, orientation);
         double lineSpacing = computeLineSpacing(components, orientation);
+       
         List<ComponentLine> lines = determineLines(components, orientation,
                 characterSpacing * componentDistanceCharacterMultiplier,
                 lineSpacing * maxVerticalComponentDistanceMultiplier);
@@ -981,4 +787,216 @@ public class DocstrumSegmenter implements DocumentSegmenter {
 
         }
     }
+    
+    private static final double DISTANCE_STEP = 16.0;
+    
+    public static final double DEFAULT_ANGLE_HIST_RES = Math.toRadians(0.5);
+
+    public static final double DEFAULT_ANGLE_HIST_SMOOTH_LEN = 0.25 * Math.PI;
+
+    public static final double DEFAULT_ANGLE_HIST_SMOOTH_STDDEV = 0.0625 * Math.PI;
+
+    public static final double DEFAULT_SPACE_HIST_RES = 0.5;
+
+    public static final double DEFAULT_SPACE_HIST_SMOOTH_LEN = 2.5;
+    
+    public static final double DEFAULT_SPACE_HIST_SMOOTH_STDDEV = 0.5;
+    
+    public static final double DEFAULT_MAX_VERT_COMP_DIST = 0.67;
+
+    public static final double DEFAULT_MIN_LINE_SIZE_SCALE = 0.9;
+
+    public static final double DEFAULT_MAX_LINE_SIZE_SCALE = 2.5;
+
+    public static final double DEFAULT_MIN_HORIZONTAL_DIST = -0.5;
+
+    public static final double DEFAULT_MIN_VERTICAL_DIST = 0.0;
+
+    public static final double DEFAULT_MAX_VERTICAL_DIST = 1.2;
+
+    public static final double DEFAULT_COMP_DIST_CHAR = 4.5;
+
+    public static final double DEFAULT_WORD_DIST = 0.2;
+
+    public static final double DEFAULT_MIN_HORIZONTAL_MERGE_DIST = -3.0;
+
+    public static final double DEFAULT_MAX_VERTICAL_MERGE_DIST = 0.5;
+
+    public static final double DEFAULT_ANGLE_TOLERANCE = Math.PI / 6;
+
+    public static final int DEFAULT_NEIGHBOR_COUNT = 5;
+    
+     
+    /**
+     * Angle histogram resolution in radians per bin.
+     */
+    private double angleHistogramResolution = DEFAULT_ANGLE_HIST_RES;
+
+    /**
+     * Angle histogram smoothing window length in radians.
+     * Length of angle histogram is equal to pi.
+     */
+    private double angleHistogramSmoothingWindowLength = DEFAULT_ANGLE_HIST_SMOOTH_LEN;
+
+    /**
+     * Angle histogram gaussian smoothing window standard deviation in radians.
+     */
+    private double angleHistogramSmoothingWindowStdDeviation = DEFAULT_ANGLE_HIST_SMOOTH_STDDEV;
+
+    /**
+     * Spacing histogram resolution per bin.
+     */
+    private double spacingHistogramResolution = DEFAULT_SPACE_HIST_RES;
+
+    /**
+     * Spacing histogram smoothing window length.
+     */
+    private double spacingHistogramSmoothingWindowLength = DEFAULT_SPACE_HIST_SMOOTH_LEN;
+
+    /**
+     * Spacing histogram gaussian smoothing window standard deviation.
+     */
+    private double spacingHistogramSmoothingWindowStdDeviation = DEFAULT_SPACE_HIST_SMOOTH_STDDEV;
+    
+    /**
+     * Maximum vertical component distance multiplier used during line
+     * determination.
+     * 
+     * Maximum vertical distance between components (characters) that belong
+     * to the same line is equal to the product of this value and estimated
+     * between-line spacing.
+     */
+    private double maxVerticalComponentDistanceMultiplier = DEFAULT_MAX_VERT_COMP_DIST;
+
+    /**
+     * Minimum line size scale value.
+     *
+     * During zone determination (merging lines into zones) line height is
+     * taken into account. To achieve this, line size scale is estimated and
+     * limited to range [minLineSizeScale, maxLineSizeScale].
+     */
+    private double minLineSizeScale = DEFAULT_MIN_LINE_SIZE_SCALE;
+
+    /**
+     * Maximum line size scale value.
+     *
+     * See minLineSizeScale for more information.
+     */
+    private double maxLineSizeScale = DEFAULT_MAX_LINE_SIZE_SCALE;
+
+    /**
+     * Minimum horizontal line distance multiplier.
+     *
+     * Minimum horizontal distance between lines that belong to the same zone
+     * is equal to the product of this value and estimated within-line spacing.
+     */
+    private double minHorizontalDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_DIST;
+
+    /**
+     * Minimum vertical line distance multiplier.
+     *
+     * Minimum vertical distance between lines that belong to the same zone
+     * is equal to the product of this value and estimated between-line spacing.
+     */
+    private double minVerticalDistanceMultiplier = DEFAULT_MIN_VERTICAL_DIST;
+
+    /**
+     * Maximum vertical line distance multiplier.
+     * 
+     * Maximum vertical distance between lines that belong to the same zone
+     * is equal to the product of this value and estimated between-line spacing.
+     */
+    private double maxVerticalDistanceMultiplier = DEFAULT_MAX_VERTICAL_DIST;
+
+    /**
+     * Component distance character spacing multiplier.
+     *
+     * Maximum distance between components that belong to the same line is
+     * equal to (lineSpacing * componentDistanceLineMultiplier +
+     * characterSpacing * componentDistanceCharacterMultiplier), where
+     * lineSpacing and characterSpacing are estimated between-line and
+     * within-line spacing, respectively.
+     */
+    private double componentDistanceCharacterMultiplier = DEFAULT_COMP_DIST_CHAR;
+
+    /**
+     * Word distance multiplier.
+     *
+     * Maximum distance between components that belong to the same word is
+     * equal to the product of this value and estimated within-line spacing.
+     */
+    private double wordDistanceMultiplier = DEFAULT_WORD_DIST;
+
+    /**
+     * Minimum horizontal line merge distance multiplier.
+     *
+     * Minimum horizontal distance between lines that should be merged is equal
+     * to the product of this value and estimated within-line spacing.
+     *
+     * Because split lines do not overlap this value should be negative.
+     */
+
+    private double minHorizontalMergeDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_MERGE_DIST;
+
+    /**
+     * Maximum vertical line merge distance multiplier.
+     * 
+     * Maximum vertical distance between lines that should be merged is equal
+     * to the product of this value and estimated between-line spacing.
+     */
+
+    private double maxVerticalMergeDistanceMultiplier = DEFAULT_MAX_VERTICAL_MERGE_DIST;
+
+    /**
+     * Angle tolerance for comparisons of angles between components and angles
+     * between lines.
+     */
+    private double angleTolerance = DEFAULT_ANGLE_TOLERANCE;
+
+    /**
+     * Number of nearest-neighbors found per component.
+     */
+    private int neighborCount = DEFAULT_NEIGHBOR_COUNT;
+    
+
+    public void setSpacingHistogramResolution(double value) {
+        spacingHistogramResolution = value;
+    }
+
+    public void setSpacingHistogramSmoothingWindowLength(double value) {
+        spacingHistogramSmoothingWindowLength = value;
+    }
+    
+    public void setSpacingHistogramSmoothingWindowStdDeviation(double value) {
+        spacingHistogramSmoothingWindowStdDeviation = value;
+    }
+
+    public void setMaxLineSizeScale(double value) {
+        maxLineSizeScale = value;
+    }
+
+    public void setMaxVerticalDistanceMultiplier(double value) {
+        maxVerticalDistanceMultiplier = value;
+    }
+
+    public void setMinHorizontalDistanceMultiplier(double value) {
+        minHorizontalDistanceMultiplier = value;
+    }
+
+    public void setComponentDistanceCharacterMultiplier(double value) {
+        componentDistanceCharacterMultiplier = value;
+    }
+
+    public void setWordDistanceMultiplier(double value) {
+        wordDistanceMultiplier = value;
+    }
+
+    public void setMaxVerticalMergeDistanceMultiplier(double value) {
+        maxVerticalMergeDistanceMultiplier = value;
+    }
+
+    public void setAngleTolerance(double value) {
+        angleTolerance = value;
+    }
+
 }

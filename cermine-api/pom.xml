@@ -5,12 +5,12 @@
     <parent>
         <groupId>pl.edu.icm.cermine</groupId>
         <artifactId>cermine-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
    
     
     <groupId>pl.edu.icm.cermine</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
         <artifactId>cermine-api</artifactId>
         <packaging>jar</packaging>
         <name>CERMINE API - ${project.version}</name>

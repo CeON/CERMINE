@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine.bibref.transformers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -20,8 +19,8 @@ public class NLMElementToBibEntryConverterTest {
     
     private NLMElementToBibEntryConverter converter;
     
-    List<BibEntry> entries;
-    List<Element> elements;
+    private List<BibEntry> entries;
+    private List<Element> elements;
 
     @Before
     public void setUp() throws JDOMException, IOException {
@@ -32,12 +31,12 @@ public class NLMElementToBibEntryConverterTest {
     }
     
     @Test
-    public void test() throws TransformationException {
-        assertEquals(entries.size(), elements.size());
-        List<BibEntry> testEntries = new ArrayList<BibEntry>();
-        for (Element element : elements) {
-            testEntries.add(converter.convert(element));
-        }
-        assertEquals(entries, testEntries);
+    public void testConvert() throws TransformationException {
+        assertEquals(entries.get(0), converter.convert(elements.get(0)));
+    }
+    
+    @Test
+    public void testConvertAll() throws TransformationException {
+        assertEquals(entries, converter.convertAll(elements));
     }
 }

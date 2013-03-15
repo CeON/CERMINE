@@ -1,59 +1,51 @@
 package pl.edu.icm.cermine.bibref.transformers;
 
-import java.util.ArrayList;
+import java.io.StringWriter;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 import static org.junit.Assert.assertEquals;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
+import pl.edu.icm.cermine.StandardDataExamples;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.transformers.ModelToFormatWriter;
 
 /**
  *
- * @author estocka
+ * @author Dominika Tkaczyk
  */
 public class BibEntryToBibTeXWriterTest {
 
-    List<BibEntry> bibEntryList;
-    BibEntryToBibTeXWriter btbt;
+    private ModelToFormatWriter<BibEntry> writer;
+    
+    private List<BibEntry> bibEntries;
+    private List<String> bibtexEntries;
 
-    public BibEntryToBibTeXWriterTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
 
     @Before
     public void setUp() {
-        btbt = new BibEntryToBibTeXWriter();
-        BibEntry entry = new BibEntry(BibEntry.TYPE_BOOK).setField(BibEntry.FIELD_YEAR, "1876").setField(BibEntry.FIELD_AUTHOR, "Twain, Mark").setField(BibEntry.FIELD_TITLE, "The Adventures of Tom Sawyer");
-        BibEntry entry1 = new BibEntry(BibEntry.TYPE_BOOK).setField(BibEntry.FIELD_YEAR, "1876").setField(BibEntry.FIELD_AUTHOR, "Smith, John").setField(BibEntry.FIELD_TITLE, "Title_including { curly_braces} ");
-        bibEntryList = new ArrayList<BibEntry>();
-        bibEntryList.add(entry);
-        bibEntryList.add(entry1);
-    }
-
-    @After
-    public void tearDown() {
+        writer = new BibEntryToBibTeXWriter();
+        bibEntries = StandardDataExamples.getReferencesAsBibEntry();
+        bibtexEntries = StandardDataExamples.getReferencesAsBibTeX();
     }
 
     @Test
-    public void writeTest() throws TransformationException {
-        System.out.println(btbt.writeAll(bibEntryList));
-
-        assertEquals("@book{Twain1876,\n"
-                + "\tauthor = {Twain, Mark},\n"
-                + "\ttitle = {The Adventures of Tom Sawyer},\n"
-                + "\tyear = {1876},\n"
-                + "}\n\n"
-                + "@book{Smith1876,\n"
-                + "\tauthor = {Smith, John},\n"
-                + "\ttitle = {Title\\_including \\{ curly\\_braces\\} },\n"
-                + "\tyear = {1876},\n"
-                + "}\n\n", btbt.writeAll(bibEntryList));
+    public void testWrite() throws TransformationException {
+        assertEquals(bibtexEntries.get(0), writer.write(bibEntries.get(0)));
+        
+        StringWriter sw = new StringWriter();
+        writer.write(sw, bibEntries.get(0));
+        assertEquals(bibtexEntries.get(0), sw.toString());
     }
+    
+    @Test
+    public void testMultiple() throws TransformationException {
+        assertEquals(StringUtils.join(bibtexEntries, "\n\n"), writer.writeAll(bibEntries));
+        
+        StringWriter sw = new StringWriter();
+        writer.writeAll(sw, bibEntries);
+        assertEquals(StringUtils.join(bibtexEntries, "\n\n"), sw.toString());
+    }
+    
 }

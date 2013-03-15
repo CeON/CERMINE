@@ -33,7 +33,7 @@ public class BibEntryToBibTeXWriter implements ModelToFormatWriter<BibEntry> {
             sb.append(entry.toBibTeX());
             sb.append("\n\n");
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 
     @Override

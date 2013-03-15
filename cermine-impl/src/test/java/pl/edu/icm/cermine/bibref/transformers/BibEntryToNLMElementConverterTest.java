@@ -23,26 +23,33 @@ public class BibEntryToNLMElementConverterTest {
    
     private BibEntryToNLMElementConverter converter;
     
-    List<BibEntry> entries;
-    List<Element> elements;
+    private List<BibEntry> entries;
+    private List<Element> elements;
+    
+    XMLOutputter xmlOutputter;
 
     @Before
     public void setUp() throws JDOMException, IOException {
         converter = new BibEntryToNLMElementConverter();
         entries = StandardDataExamples.getReferencesAsBibEntry();
         elements = StandardDataExamples.getReferencesAsNLMElement();
+        xmlOutputter = new XMLOutputter();
     }
     
     @Test
-    public void test() throws TransformationException, SAXException, IOException {
+    public void testConvert() throws TransformationException, SAXException, IOException {
+        Element testElement = converter.convert(entries.get(0));
+        Diff diff = new Diff(xmlOutputter.outputString(elements.get(0)), xmlOutputter.outputString(testElement));
+        assertTrue(diff.similar());
+    }
+    
+    @Test
+    public void testConvertAll() throws TransformationException, SAXException, IOException {
         assertEquals(entries.size(), elements.size());
-        XMLOutputter xmlOut = new XMLOutputter();
-        int i = 0;
-        for (BibEntry entry : entries) {
-            Element testElement = converter.convert(entry);
-            Diff diff = new Diff(xmlOut.outputString(elements.get(i)), xmlOut.outputString(testElement));
+        List<Element> testElements = converter.convertAll(entries);
+        for (int i = 0; i < elements.size(); i++) {
+            Diff diff = new Diff(xmlOutputter.outputString(elements.get(i)), xmlOutputter.outputString(testElements.get(i)));
             assertTrue(diff.similar());
-            i++;
         }
     }
     

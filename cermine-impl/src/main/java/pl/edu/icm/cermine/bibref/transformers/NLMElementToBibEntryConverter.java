@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.bibref.transformers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,11 @@ public class NLMElementToBibEntryConverter implements ModelToModelConverter<Elem
 
     @Override
     public List<BibEntry> convertAll(List<Element> source, Object... hints) throws TransformationException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<BibEntry> entries = new ArrayList<BibEntry>(source.size());
+        for (Element element : source) {
+            entries.add(convert(element, hints));
+        }
+        return entries;
     }
     
 }

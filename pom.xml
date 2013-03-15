@@ -4,7 +4,7 @@
     <groupId>pl.edu.icm.cermine</groupId>
     <artifactId>cermine-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <name>CERMINE Content Extractor and Miner</name>
     <organization>
         <name>ICM, Warsaw University</name>
@@ -39,7 +39,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <execute></execute>
+                                        <execute />
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -157,4 +157,22 @@
         <slf4j.version>1.6.4</slf4j.version>
         <spring.version>3.1.0.RELEASE</spring.version>
     </properties>
+
+    <scm>
+        <connection>scm:git:ssh://git@github.com/CeON/CERMINE.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/CeON/CERMINE.git</developerConnection>
+        <url>https://github.com/CeON/CERMINE</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>kdd-releases</id>
+            <url>http://maven.ceon.pl/artifactory/kdd-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>kdd-snapshots</id>
+            <url>http://maven.ceon.pl/artifactory/kdd-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

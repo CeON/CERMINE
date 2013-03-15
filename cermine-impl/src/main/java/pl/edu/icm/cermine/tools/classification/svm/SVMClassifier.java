@@ -122,7 +122,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 
         Map<E, Double> result = new HashMap<E, Double>();
         for (int i = 0; i < probEstimates.length; ++i) {
-            result.put(enumClassObj.getEnumConstants()[i], probEstimates[i]);
+            result.put(enumClassObj.getEnumConstants()[model.label[i]], probEstimates[i]);
         }
         return result;
     }

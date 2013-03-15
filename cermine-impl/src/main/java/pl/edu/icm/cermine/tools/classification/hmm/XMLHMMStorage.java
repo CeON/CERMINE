@@ -1,5 +1,9 @@
 package pl.edu.icm.cermine.tools.classification.hmm;
 
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMEmissionProbability;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMInitialProbability;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMTransitionProbability;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import com.thoughtworks.xstream.XStream;
 import java.io.*;
 import pl.edu.icm.cermine.tools.classification.hmm.model.*;

@@ -8,7 +8,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMTrainingSample;
 
 /**
  * Bibliographic reference extraction utility class.

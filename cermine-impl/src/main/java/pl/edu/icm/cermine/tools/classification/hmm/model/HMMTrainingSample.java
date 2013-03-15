@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.tools.classification.hmm.training;
+package pl.edu.icm.cermine.tools.classification.hmm.model;
 
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;

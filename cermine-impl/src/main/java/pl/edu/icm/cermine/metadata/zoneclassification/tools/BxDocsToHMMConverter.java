@@ -12,7 +12,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMTrainingSample;
 
 /**
  * BxDocument objects to HMM training elements converter node. The observations

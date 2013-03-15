@@ -23,7 +23,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.HMMService;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMTrainingSample;
 
 /**
  * HMM-based bibliographic reference parsing example.

@@ -16,7 +16,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMTrainingSample;
 
 /*
  *  @author Pawel Szostek (p.szostek@icm.edu.pl)

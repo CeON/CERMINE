@@ -4,7 +4,6 @@ import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * Simple Hidden Markov Model transition probability implementation.

@@ -17,6 +17,8 @@ public class DocstrumSegmenter implements DocumentSegmenter {
  
     private double docOrientation = Double.NaN;
     
+    private Map<BxPage, List<Component>> componentMap = new HashMap<BxPage, List<Component>>();
+    
     @Override
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
         computeDocumentOrientation(document);
@@ -33,18 +35,19 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     protected void computeDocumentOrientation(BxDocument document) throws AnalysisException {
         List<Component> components = new ArrayList<Component>();
         for (BxPage page : document.asPages()) {
-            components.addAll(createComponents(page));
+            List<Component> pageComponents = createComponents(page);
+            componentMap.put(page, pageComponents);
+            components.addAll(pageComponents);
         }
         
         docOrientation = computeInitialOrientation(components);
     }
     
     protected BxPage segmentPage(BxPage page) throws AnalysisException {
-        List<Component> components = createComponents(page);
-        
+        List<Component> components = componentMap.get(page);
         double orientation = docOrientation;
         if (Double.isNaN(orientation)) {
-            computeInitialOrientation(components);
+            orientation = computeInitialOrientation(components);
         }
         double characterSpacing = computeCharacterSpacing(components, orientation);
         double lineSpacing = computeLineSpacing(components, orientation);

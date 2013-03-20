@@ -115,6 +115,18 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
 
+    public Map<E, Double> predictProbabilities(S object, T context) {
+        svm_node[] instance = buildDatasetForClassification(object, context);
+        double[] probEstimates = new double[enumClassObj.getEnumConstants().length];
+        svm.svm_predict_probability(model, instance, probEstimates);
+
+        Map<E, Double> result = new HashMap<E, Double>();
+        for (int i = 0; i < probEstimates.length; ++i) {
+            result.put(enumClassObj.getEnumConstants()[model.label[i]], probEstimates[i]);
+        }
+        return result;
+    }
+
 	protected svm_problem buildDatasetForTraining(List<TrainingSample<E>> trainingElements)
 	{
 		svm_problem problem = new svm_problem();

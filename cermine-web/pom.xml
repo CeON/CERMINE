@@ -41,12 +41,6 @@
         </dependency>
 
         <dependency>
-            <groupId>pl.edu.icm.cermine</groupId>
-            <artifactId>cermine-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>

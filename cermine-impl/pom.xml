@@ -13,11 +13,6 @@
     <name>CERMINE Engine Implementation - ${project.version}</name>
     <dependencies>
         <dependency>
-            <groupId>pl.edu.icm.cermine</groupId>
-            <artifactId>cermine-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>tw.edu.ntu.csie</groupId>
             <artifactId>libsvm</artifactId>
             <version>3.1</version>

@@ -24,12 +24,6 @@
     <dependencies>
         <dependency>
             <groupId>pl.edu.icm.cermine</groupId>
-            <artifactId>cermine-api</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>pl.edu.icm.cermine</groupId>
             <artifactId>cermine-impl</artifactId>
             <version>${project.version}</version>
             <type>jar</type>

@@ -212,6 +212,11 @@ public final class CitationUtils {
         List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
         for (CitationToken token : tokens) {
             FeatureVector featureVector = vectorBuilder.getFeatureVector(token, citation);
+            for (String featureName : featureVector.getFeatureNames()) {
+                if (Double.isNaN(featureVector.getFeature(featureName))) {
+                    throw new RuntimeException("Feature value is set to NaN: "+featureName);
+                }
+            }
             if (token.getText().matches("^[a-zA-Z]+$")) {
                 featureVector.addFeature(token.getText().toLowerCase(), 1);
             }

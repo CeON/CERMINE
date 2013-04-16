@@ -99,7 +99,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
     public Schema outputSchema(Schema p_input) {
     	try{
     		return Schema.generateNestedSchema(DataType.TUPLE, DataType.CHARARRAY,
-    			DataType.BYTEARRAY, DataType.BYTEARRAY, DataType.CHARARRAY);
+    			DataType.BYTEARRAY, DataType.BYTEARRAY, DataType.BYTEARRAY);
     	} catch(FrontendException e) {
     		throw new IllegalStateException(e);
     	}
@@ -136,7 +136,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 			System.exit(5);
 		}
     	BxDocumentToTrueVizWriter trueVizWriter = new BxDocumentToTrueVizWriter();
-    	String returnDoc = new String();
+    	DataByteArray returnDoc = new DataByteArray(new String()); 
     	//try {
     	//	returnDoc = null; //returnDoc = trueVizWriter.write(bxDoc.getPages());
 	//	} catch (TransformationException e) {
@@ -583,7 +583,8 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         		Collections.reverse(swLabelSim.get(zoneIdx));
 
         		List<String> entryTokens = swLabelSim.get(zoneIdx).get(0).entryTokens;
-        		if (Math.min(zoneTokens.size(), entryTokens.size()) / Math.max(zoneTokens.size(), entryTokens.size()) > 0.7
+        		if (Math.max(zoneTokens.size(), entryTokens.size()) > 0
+        				&& Math.min(zoneTokens.size(), entryTokens.size()) / Math.max(zoneTokens.size(), entryTokens.size()) > 0.7
         				&& swLabelSim.get(zoneIdx).get(0).alignment / entryTokens.size() > 0.7) {
         			curZone.setLabel(swLabelSim.get(zoneIdx).get(0).label);
         			valueSet = true;

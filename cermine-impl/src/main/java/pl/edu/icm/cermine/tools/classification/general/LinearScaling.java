@@ -24,8 +24,8 @@ public class LinearScaling implements ScalingStrategy {
 				
 				featureValue = a*featureValue+b; 
 				//assert featureValue != Double.NaN;
-				if(featureValue.isNaN()) {
-					throw new RuntimeException("Feature value is set to NaN afeter scaling. Probably an implementation bug.");
+				if (featureValue.isNaN()) {
+					throw new RuntimeException("Feature value is set to NaN: "+name);
 				}
 				newVector.addFeature(name, featureValue);
 			}

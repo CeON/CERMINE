@@ -17,6 +17,11 @@ public class XVarianceFeature extends FeatureCalculator<BxZone, BxPage> {
         for (BxLine line : zone.getLines()) {
             meanX += line.getX();
         }
+        
+        if (meanX == 0 || zone.getLines().isEmpty()) {
+            return 0;
+        }
+        
         meanX /= zone.getLines().size();
         
         double meanXDiff = 0;

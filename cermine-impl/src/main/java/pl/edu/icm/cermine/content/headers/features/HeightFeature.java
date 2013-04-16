@@ -21,6 +21,9 @@ public class HeightFeature extends FeatureCalculator<BxLine, BxPage> {
                 lineCount++;
             }
         }
+        if (lineCount == 0 || meanHeight == 0) {
+            return 0;
+        }
         meanHeight /= lineCount;
         return line.getBounds().getHeight() / meanHeight;
     }

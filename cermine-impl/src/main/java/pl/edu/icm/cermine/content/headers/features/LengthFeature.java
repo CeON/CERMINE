@@ -28,6 +28,10 @@ public class LengthFeature extends FeatureCalculator<BxLine, BxPage> {
             linesCount++;
         }
         
+        if (linesCount == 0 || avLength == 0) {
+            return 0;
+        }
+        
         avLength /= linesCount;
                 
         return line.getBounds().getWidth() / avLength;

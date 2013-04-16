@@ -20,7 +20,7 @@ public class WordsUppercaseFeature extends FeatureCalculator<BxLine, BxPage> {
                 upperWordsCount++;
             }
         }
-        return (double) upperWordsCount / (double) words.length;
+        return (words.length == 0) ? 0 : (double) upperWordsCount / (double) words.length;
     }
     
 }

@@ -12,9 +12,9 @@ public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override
 		public int compare(BxZone z1, BxZone z2) {
-			if(z1.getY() + z1.getHeight() - (z2.getY() + z2.getHeight()) > EPS) {
+			if(z1.getY() + z1.getHeight() > (z2.getY() + z2.getHeight())) {
 				return 1;
-			} else if(Math.abs(z1.getY() + z1.getHeight() - (z2.getY() + z2.getHeight())) < EPS) {
+			} else if(z1.getY() + z1.getHeight() == z2.getY() + z2.getHeight()) {
 				return 0;
 			} else {
 				return -1;

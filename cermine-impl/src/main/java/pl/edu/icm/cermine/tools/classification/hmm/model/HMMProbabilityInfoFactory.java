@@ -3,7 +3,6 @@ package pl.edu.icm.cermine.tools.classification.hmm.model;
 import java.util.HashSet;
 import java.util.List;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)

@@ -1,11 +1,12 @@
 package pl.edu.icm.cermine.bibref.parsing.examples;
 
+import com.google.common.collect.Sets;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Set;
+import java.util.List;
 import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.HMMBibReferenceParser;
@@ -22,7 +23,7 @@ import pl.edu.icm.cermine.tools.classification.hmm.HMMService;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
+import pl.edu.icm.cermine.tools.classification.hmm.model.HMMTrainingSample;
 
 /**
  * HMM-based bibliographic reference parsing example.
@@ -97,9 +98,9 @@ public final class HMMBibRefParsingExample {
         // 2. import and generate training set based on sequences and vector of features
         URL u = HMMBibRefParsingExample.class.getResource(HMM_TRAIN_FILE);
 
-        Set<Citation> citations = NlmCitationExtractor.extractCitations(new InputSource(u.openStream()));
+        List<Citation> citations = NlmCitationExtractor.extractCitations(new InputSource(u.openStream()));
         
-        HMMTrainingSample<CitationTokenLabel>[] trainingElements = CitationsToHMMConverter.convertToHMM(citations, vectorBuilder);
+        HMMTrainingSample<CitationTokenLabel>[] trainingElements = CitationsToHMMConverter.convertToHMM(Sets.newHashSet(citations), vectorBuilder);
 
 		// 3. HMM training. The resulting probabilities object should be
 		// serialized for further usage

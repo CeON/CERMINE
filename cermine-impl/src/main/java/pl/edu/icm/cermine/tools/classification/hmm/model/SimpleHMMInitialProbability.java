@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.tools.classification.hmm.model;
 
 import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import java.util.List;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 
 /**
  * Simple Hidden Markov Model initial probability implementation.

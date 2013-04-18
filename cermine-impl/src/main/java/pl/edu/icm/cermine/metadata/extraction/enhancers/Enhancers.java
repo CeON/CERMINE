@@ -322,6 +322,8 @@ public class Enhancers {
     }
     
     private static String cleanHyphenation(String str) {
+        str = str.replace("$", "\\$");
+        
         String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
         Pattern p = Pattern.compile("([^" + hyphenList + "]*\\S+)[" + hyphenList + "]\n", Pattern.DOTALL);
         Matcher m = p.matcher(str);
@@ -330,7 +332,7 @@ public class Enhancers {
             m.appendReplacement(sb, m.group(1));
         }
         m.appendTail(sb);
-        return sb.toString().replaceAll("\n", " ");
+        return sb.toString().replaceAll("\n", " ").replace("\\$", "$");
     }
     
     private static String clean(String str) {

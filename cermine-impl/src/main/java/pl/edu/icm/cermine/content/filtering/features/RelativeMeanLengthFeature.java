@@ -30,11 +30,19 @@ public class RelativeMeanLengthFeature extends FeatureCalculator<BxZone, BxPage>
             lineCount++;
         }
         
+        if (lineCount == 0) {
+            return 0;
+        }
+        
         meanTotalWidth /= lineCount;
         
         double meanZoneWidth = 0;
         for (BxLine l : zone.getLines()) {
             meanZoneWidth += l.getWidth();
+        }
+        
+        if (zone.getLines().isEmpty() || meanTotalWidth == 0) {
+            return 0;
         }
         
         return meanZoneWidth / zone.getLines().size() / meanTotalWidth;

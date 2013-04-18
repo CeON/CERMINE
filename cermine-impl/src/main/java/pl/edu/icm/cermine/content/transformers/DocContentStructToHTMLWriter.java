@@ -3,6 +3,7 @@ package pl.edu.icm.cermine.content.transformers;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.List;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -61,5 +62,15 @@ public class DocContentStructToHTMLWriter implements ModelToFormatWriter<Documen
         Element element = new Element("p");
         element.setText(paragraph.getText());
         return element;
+    }
+
+    @Override
+    public String writeAll(List<DocumentContentStructure> objects, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void writeAll(Writer writer, List<DocumentContentStructure> objects, Object... hints) throws TransformationException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

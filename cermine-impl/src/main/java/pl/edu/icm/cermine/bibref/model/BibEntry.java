@@ -175,6 +175,41 @@ public class BibEntry {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BibEntry other = (BibEntry) obj;
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
+            return false;
+        }
+        if ((this.key == null) ? (other.key != null) : !this.key.equals(other.key)) {
+            return false;
+        }
+        if ((this.text == null) ? (other.text != null) : !this.text.equals(other.text)) {
+            return false;
+        }
+        if (this.fields != other.fields && (this.fields == null || !this.fields.equals(other.fields))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 23 * hash + (this.key != null ? this.key.hashCode() : 0);
+        hash = 23 * hash + (this.text != null ? this.text.hashCode() : 0);
+        hash = 23 * hash + (this.fields != null ? this.fields.hashCode() : 0);
+        return hash;
+    }
+    
     
     /* Field constants */
     public static final String FIELD_ABSTRACT = "abstract";

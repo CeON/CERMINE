@@ -100,7 +100,6 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.hmm.HMMServiceImpl;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfo;
 import pl.edu.icm.cermine.tools.classification.hmm.model.HMMProbabilityInfoFactory;
-import pl.edu.icm.cermine.tools.classification.hmm.training.HMMTrainingSample;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /*

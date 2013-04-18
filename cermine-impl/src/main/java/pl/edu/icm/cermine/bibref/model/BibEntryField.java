@@ -42,4 +42,34 @@ public class BibEntryField {
         this.endIndex = endIndex;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BibEntryField other = (BibEntryField) obj;
+        if ((this.text == null) ? (other.text != null) : !this.text.equals(other.text)) {
+            return false;
+        }
+        if (this.startIndex != other.startIndex) {
+            return false;
+        }
+        if (this.endIndex != other.endIndex) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + (this.text != null ? this.text.hashCode() : 0);
+        hash = 53 * hash + this.startIndex;
+        hash = 53 * hash + this.endIndex;
+        return hash;
+    }
+
 }

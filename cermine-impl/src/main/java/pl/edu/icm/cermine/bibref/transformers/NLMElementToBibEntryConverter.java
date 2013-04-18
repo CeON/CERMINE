@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.bibref.transformers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class NLMElementToBibEntryConverter implements ModelToModelConverter<Elem
                 Element elChild = (Element) child;
                 fIndex.put(elChild, index);
                 String chText = elChild.getValue().trim().replaceAll("\\s+", " ");
-                lIndex.put(elChild, index + chText.length() - 1);
+                lIndex.put(elChild, index + chText.length());
                 int oldLength = text.length();
                 text = text.substring(chText.length()).trim();
                 index += (oldLength - text.length());
@@ -91,6 +92,15 @@ public class NLMElementToBibEntryConverter implements ModelToModelConverter<Elem
         }
         
         return bibEntry;
+    }
+
+    @Override
+    public List<BibEntry> convertAll(List<Element> source, Object... hints) throws TransformationException {
+        List<BibEntry> entries = new ArrayList<BibEntry>(source.size());
+        for (Element element : source) {
+            entries.add(convert(element, hints));
+        }
+        return entries;
     }
     
 }

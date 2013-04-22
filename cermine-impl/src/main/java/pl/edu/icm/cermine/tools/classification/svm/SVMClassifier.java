@@ -4,28 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import libsvm.svm;
-import libsvm.svm_model;
-import libsvm.svm_node;
-import libsvm.svm_parameter;
-import libsvm.svm_problem;
-
+import java.util.*;
+import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
-
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScaler;
-import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScalerImpl;
-import pl.edu.icm.cermine.tools.classification.general.FeatureVectorScalerNoOp;
-import pl.edu.icm.cermine.tools.classification.general.LinearScaling;
-import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.classification.general.*;
 
 /**
  * @author Pawel Szostek (p.szostek@
@@ -109,24 +96,19 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	public void buildClassifier(List<TrainingSample<E>> trainingElements) 
 	{
 		assert trainingElements.size() > 0;
-//		for(TrainingSample<E> sample: trainingElements) {
-//			System.out.println(sample.getLabel() + " "+ Arrays.asList(sample.getFeatures().getFeatures()));
-//		}
 		scaler.calculateFeatureLimits(trainingElements);
 		problem = buildDatasetForTraining(trainingElements);
-//		System.out.println(Arrays.toString(problem.x));
-//		System.out.println(Arrays.toString(problem.y));
 		model = libsvm.svm.svm_train(problem, param);
 	}
 	
-	public E predictLabel(S object, T context) {
+	public BxZoneLabel predictLabel(S object, T context) {
 		svm_node[] instance = buildDatasetForClassification(object, context);
-		Integer predictedVal = ((Double)svm.svm_predict(model, instance)).intValue();
-		return enumClassObj.getEnumConstants()[predictedVal];
+		double predictedVal = svm.svm_predict(model, instance);
+		return BxZoneLabel.values()[(int)predictedVal];
 	}
-	
-	public E predictLabel(TrainingSample<E> sample) {
-		svm_node[] instance = buildDatasetForClassification(sample.getFeatures());
+
+	public E classify(S object, T context) {
+		svm_node[] instance = buildDatasetForClassification(object, context);
 		Integer predictedVal = ((Double)svm.svm_predict(model, instance)).intValue();
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
@@ -148,7 +130,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		svm_problem problem = new svm_problem();
 		problem.l = trainingElements.size();
 		problem.x = new svm_node[problem.l][trainingElements.get(0).getFeatures().size()];
-		problem.y = new double[problem.l];
+		problem.y = new double[trainingElements.size()];
 		
 		Integer elemIdx = 0;
 		for(TrainingSample<E> trainingElem : trainingElements) {
@@ -162,16 +144,19 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 				++featureIdx;
 			}
 			problem.y[elemIdx] = trainingElem.getLabel().ordinal();
+			System.out.println("training " + trainingElem.getLabel().ordinal() + " (" + trainingElem.getLabel() + ")");
 			++elemIdx;
 		}
 		return problem;
 	}
 	
-	protected svm_node[] buildDatasetForClassification(FeatureVector fv) {
-		FeatureVector scaled = scaler.scaleFeatureVector(fv);
-		svm_node[] ret = new svm_node[featureVectorBuilder.size()];
+	protected svm_node[] buildDatasetForClassification(S object, T context)
+	{
+		svm_node[] ret = new svm_node[featureVectorBuilder.getFeatureNames().size()];
+		FeatureVector scaledFV = scaler.scaleFeatureVector(featureVectorBuilder.getFeatureVector(object, context));
+		
 		Integer featureIdx = 0;
-		for(Double val: scaled.getFeatures()) {
+		for(Double val: scaledFV.getFeatures()) {
 			svm_node cur = new svm_node();
 			cur.index = featureIdx;
 			cur.value = val;
@@ -179,11 +164,6 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 			++featureIdx;
 		}
 		return ret;
-	}
-	
-	protected svm_node[] buildDatasetForClassification(S object, T context)
-	{
-		return buildDatasetForClassification(featureVectorBuilder.getFeatureVector(object, context));
 	}
 
 	public double[] getWeights() {
@@ -265,8 +245,8 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
                         + ", expected " + featureVectorBuilder.size() + " )");
             }
 
-			this.scaler = scaler;
-		}
+            this.scaler = scaler;
+        }
 
 		this.model = svm.svm_load_model(modelFile);
 	}
@@ -279,7 +259,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	
 	public void printWeigths(FeatureVectorBuilder<BxZone, BxPage> vectorBuilder)
 	{
-		List<String> fnames = featureVectorBuilder.getFeatureNames();
+		Set<String> fnames = featureVectorBuilder.getFeatureNames();
 		Iterator<String> namesIt = fnames.iterator();
 		Iterator<Double> valueIt = (Iterator<Double>)new ArrayIterator(getWeights());
 
@@ -295,6 +275,5 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	public void setParameter(svm_parameter param) {
 		this.param = param;
 	}
-
 
 }

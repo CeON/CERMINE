@@ -26,7 +26,7 @@ public class DateComparator {
 							break;
 						}
 					}
-					if(extractedYear != null && extractedYear.equals(expectedYear)) {
+					if(extractedYear.equals(expectedYear)) {
 						return true;
 					}
 				}

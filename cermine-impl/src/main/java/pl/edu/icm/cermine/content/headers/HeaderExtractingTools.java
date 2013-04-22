@@ -14,7 +14,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampler;
+import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
 /**
@@ -57,15 +57,15 @@ public final class HeaderExtractingTools {
                 ));
     }
     
-    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException, TransformationException, CloneNotSupportedException {
+    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException, TransformationException {
         List<BxDocument> documents = EvaluationUtils.getDocumentsFromPath(trainPath);
         return toTrainingSamples(documents);
     }
 
-    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(List<BxDocument> documents) throws AnalysisException, CloneNotSupportedException {
+    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(List<BxDocument> documents) throws AnalysisException {
         List<TrainingSample<BxZoneLabel>> trainingSamples;
 
-        SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(1.0);
+        SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
         
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
         map.put(BxZoneLabel.BODY_JUNK, BxZoneLabel.BODY_CONTENT);

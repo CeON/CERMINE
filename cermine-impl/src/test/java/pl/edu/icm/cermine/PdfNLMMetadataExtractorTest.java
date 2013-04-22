@@ -12,7 +12,6 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -32,7 +31,6 @@ public class PdfNLMMetadataExtractorTest {
         extractor = new PdfNLMMetadataExtractor();
     }
     
-    @Ignore
     @Test
     public void metadataExtractionTest() throws AnalysisException, IOException, JDOMException, SAXException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
@@ -57,8 +55,6 @@ public class PdfNLMMetadataExtractorTest {
         
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         Diff diff = new Diff(outputter.outputString(expMetadata), outputter.outputString(testMetadata));
-        System.out.println(outputter.outputString(testMetadata));
-        System.out.println(outputter.outputString(expMetadata));
         assertTrue(diff.similar());
     }
 }

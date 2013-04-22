@@ -41,13 +41,17 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
         }
     }
     
-    public PdfBxStructureExtractor(BufferedReader model, BufferedReader range) throws AnalysisException {
+    public PdfBxStructureExtractor(InputStream model, InputStream range) throws AnalysisException {
         try {
             characterExtractor = new ITextCharacterExtractor();
             documentSegmenter = new ParallelDocstrumSegmenter();
             roResolver = new HierarchicalReadingOrderResolver();
             
-            initialClassifier = new SVMInitialZoneClassifier(model, range);
+            InputStreamReader modelISRI = new InputStreamReader(model);
+            BufferedReader modelFileI = new BufferedReader(modelISRI);
+            InputStreamReader rangeISRI = new InputStreamReader(range);
+            BufferedReader rangeFileI = new BufferedReader(rangeISRI);
+            initialClassifier = new SVMInitialZoneClassifier(modelFileI, rangeFileI);
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create PdfBxStructureExtractor!", ex);
         }

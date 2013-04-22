@@ -1,13 +1,9 @@
 package pl.edu.icm.cermine.evaluation.tools;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -19,13 +15,13 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults> {
 
-    private List<BxZoneLabel> possibleLabels;
+    private Set<BxZoneLabel> possibleLabels;
     private Map<LabelPair, Integer> classificationMatrix;
     private int goodRecognitions = 0;
     private int badRecognitions = 0;
 
     public ClassificationResults() {
-        possibleLabels = new ArrayList<BxZoneLabel>();
+        possibleLabels = new HashSet<BxZoneLabel>();
         classificationMatrix = new HashMap<LabelPair, Integer>();
     }
 
@@ -42,7 +38,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         }
     }
 
-    public List<BxZoneLabel> getPossibleLabels() {
+    public Set<BxZoneLabel> getPossibleLabels() {
         return possibleLabels;
     }
 
@@ -88,10 +84,6 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     	int all = 0;
     	final Double EPS = 0.00001;
 
-    	Map<BxZoneLabel, Double> classAccuracies = new HashMap<BxZoneLabel, Double>();
-    	Map<BxZoneLabel, Double> classPrecisions = new HashMap<BxZoneLabel, Double>();
-    	Map<BxZoneLabel, Double> classRecalls = new HashMap<BxZoneLabel, Double>();
-    	
     	for(BxZoneLabel label : possibleLabels) {
     		LabelPair positiveCoord = new LabelPair(label, label);
     		correctly += classificationMatrix.get(positiveCoord);
@@ -150,8 +142,9 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     
     public void printMatrix() {
         int maxLabelLength = 0;
-        Collections.sort(possibleLabels);
+
         Map<BxZoneLabel, Integer> labelLengths = new HashMap<BxZoneLabel, Integer>();
+
         for (BxZoneLabel label : possibleLabels) {
             int labelLength = label.toString().length();
             if (labelLength > maxLabelLength) {
@@ -233,25 +226,21 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         System.out.println("Good recognitions per zone type:");
         for (BxZoneLabel label1 : possibleLabels) {
             String spaces;
-        	int falsePositives = 0;
-            int truePositives = 0;
-            int falseNegatives = 0;
+            int labelGoodRecognitions = 0;
+            int labelAllRecognitions = 0;
             for (BxZoneLabel label2 : possibleLabels) {
                 LabelPair coord = new LabelPair(label1, label2);
-                if(!label1.equals(label2)) { // false positives
-                	falsePositives += classificationMatrix.get(new LabelPair(label2, label1));
+                if (label1.equals(label2)) {
+                    labelGoodRecognitions += classificationMatrix.get(coord);
                 }
-                if (label1.equals(label2)) { //
-                    truePositives += classificationMatrix.get(coord);
-                } else {
-                	falseNegatives += classificationMatrix.get(coord);
-                }
+                labelAllRecognitions += classificationMatrix.get(coord);
             }
 
-            double precision = 100.0 * (double) truePositives/(falsePositives + truePositives);
-            double recall = 100.0 * truePositives / (truePositives+falseNegatives);
             spaces = new String(new char[maxLabelLength - label1.toString().length() + 1]).replace('\0', ' ');
-            System.out.format("%s:%s%d/%d Pr=%4.2f Rcl=%4.2f", label1, spaces, truePositives, truePositives+falseNegatives, precision, recall);
+            System.out.format("%s:%s%d/%d", label1, spaces, labelGoodRecognitions, labelAllRecognitions);
+            if (labelAllRecognitions > 0) {
+                System.out.format(" (%.1f%%)", 100.0 * labelGoodRecognitions / labelAllRecognitions);
+            }
             System.out.println();
         }
         System.out.println();

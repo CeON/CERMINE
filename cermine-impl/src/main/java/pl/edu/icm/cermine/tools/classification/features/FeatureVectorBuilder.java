@@ -1,7 +1,9 @@
 package pl.edu.icm.cermine.tools.classification.features;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Feature vector builder (GoF factory pattern). The builder calculates
@@ -15,35 +17,28 @@ import java.util.List;
  */
 public class FeatureVectorBuilder<S, T> {
     
-    private List<FeatureCalculator<S, T>> featureCalculators = new ArrayList<FeatureCalculator<S, T>>();
+    private Map<String, FeatureCalculator<S, T>> featureCalculators = new HashMap<String, FeatureCalculator<S, T>>();
+
+    public void setFeatureCalculators(Collection<FeatureCalculator<S, T>> featureCalculators) {
+        for (FeatureCalculator<S, T> featureCalculator : featureCalculators) {
+            this.featureCalculators.put(featureCalculator.getFeatureName(), featureCalculator);
+        }
+    }
 
     public FeatureVector getFeatureVector(S object, T context) {
         FeatureVector featureVector = new FeatureVector();
-        for (FeatureCalculator<S, T> fc : featureCalculators) {
-            featureVector.addFeature(fc.getFeatureName(), fc.calculateFeatureValue(object, context));
+        for (String name : featureCalculators.keySet()) {
+            featureVector.addFeature(name, featureCalculators.get(name).calculateFeatureValue(object, context));
         }
         return featureVector;
     }
 
-    public List<String> getFeatureNames() {
-    	List<String> ret = new ArrayList<String>();
-    	for(FeatureCalculator<S, T> fc: featureCalculators) {
-    		ret.add(fc.getFeatureName());
-    	}
-        return ret;
+    public Set<String> getFeatureNames() {
+        return featureCalculators.keySet();
     }
     
     public int size() {
     	return featureCalculators.size();
     }
-
-	public List<FeatureCalculator<S, T>> getFeatureCalculators() {
-		return featureCalculators;
-	}
-
-	public void setFeatureCalculators(
-			List<FeatureCalculator<S, T>> featureCalculators) {
-		this.featureCalculators = featureCalculators;
-	}
     
 }

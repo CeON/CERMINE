@@ -1,9 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.features;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Simple feature vector.
@@ -12,68 +9,57 @@ import java.util.List;
  */
 public class FeatureVector implements Cloneable {
 
-    private List<String> names = new ArrayList<String>();
-    private List<Double> values = new ArrayList<Double>();
+    private Map<String, Double> features = new HashMap<String, Double>();
 
     public double getFeature(String name) {
-        if (!names.contains(name)) {
+        if (features.get(name) == null) {
             throw new IllegalArgumentException("Feature vector does not contain feature '" + name + "'.");
         }
-        return values.get(names.indexOf(name));
+        return features.get(name);
     }
 
-    public void addFeature(String name, double featureValue) {
-    	names.add(name);
-    	values.add(featureValue);
+    public void addFeature(String name, double calculateFeatureValue) {
+        features.put(name, calculateFeatureValue);
     }
 
-	public List<String> getFeatureNames() {
-		return names;
+    public Set<String> getFeatureNames() {
+        return features.keySet();
     }
     
     public String dump() {
     	StringBuilder ret = new StringBuilder();
-    	for(Integer idx=0; idx<values.size(); ++idx) {
-    		String name = names.get(idx);
+    	Set<String> keysSet = features.keySet();
+    	ArrayList<String> keys = new ArrayList<String>(keysSet);
+    	Collections.sort(keys);
+    	for(String name: keys) {
     		String shortName = (name.length() > 18 ? name.substring(0, 18) : name);
-    		ret.append(String.format("%18s: %5.2f%n", shortName, values.get(idx)));
+    		ret.append(String.format("%18s: %5.2f%n", shortName, features.get(name)));
     	}
     	return ret.toString();
     }
 
     public Integer size() {
-    	return values.size();
+    	return features.size();
     }
 
 	public Double[] getFeatures() {
-		return values.toArray(new Double[values.size()]);
+		Double[] ret = new Double[features.size()];
+		return features.values().toArray(ret);
 	}
 
-	public void setValues(Double[] values) {
-		this.values = new ArrayList<Double>(Arrays.asList(values));
-	}
-	
-	public void setNames(List<String> names) {
-		this.names = names;
-	}
-	
-	public void addValue(String name, Double value) {
-		if(name.contains(name)) {
+	public void setFeature(String name, Double value) {
+		if(!features.containsKey(name)) {
 			throw new RuntimeException("Bad feature name: " + name);
         }
-		names.add(name);
-		values.add(value);
+		features.put(name, value);
 	}
 	
 	@Override
 	public FeatureVector clone() throws CloneNotSupportedException {
         FeatureVector ret = (FeatureVector) super.clone();
-        List<Double> copiedValues = new ArrayList<Double>();
-        List<String> copiedNames = new ArrayList<String>();
-        Collections.copy(names, copiedNames);
-        Collections.copy(values, copiedValues);
-        ret.names = copiedNames;
-        ret.values = copiedValues;
+        for (String feature: features.keySet()) {
+            ret.features.put(feature, new Double(features.get(feature)));
+        }
         return ret;
 	}
 	

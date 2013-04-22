@@ -10,8 +10,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.jdom.JDOMException;
 import org.junit.Before;
-import org.junit.Ignore;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
@@ -29,7 +27,7 @@ public class KnnLogicalStructureExtractorTest extends AbstractLogicalStructureEx
        
     KnnModel<BxZoneLabel> classModel;
     KnnModel<BxZoneLabel> junkModel;
-    @Ignore
+
     @Before
     @Override
     public void setUp() throws IOException, TransformationException, AnalysisException, URISyntaxException, JDOMException {

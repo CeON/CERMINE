@@ -13,7 +13,6 @@ import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.*;
@@ -21,7 +20,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.NormalSelector;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSampler;
+import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSelector;
 
@@ -85,7 +84,7 @@ public class LibSVMExporter {
         System.out.println("Done.");
     }
     
-    public static void main(String[] args) throws ParseException, IOException, TransformationException, AnalysisException, CloneNotSupportedException {
+    public static void main(String[] args) throws ParseException, IOException, TransformationException, AnalysisException {
         Options options = new Options();
         options.addOption("under", false, "use undersampling for data selection");
         options.addOption("over", false, "use oversampling for data selection");
@@ -104,9 +103,9 @@ public class LibSVMExporter {
 
         SampleSelector<BxZoneLabel> sampler = null;
         if (line.hasOption("over")) {
-            sampler = new OversamplingSampler<BxZoneLabel>(1.0);
+            sampler = new OversamplingSelector<BxZoneLabel>(1.0);
         } else if (line.hasOption("under")) {
-            sampler = new UndersamplingSelector<BxZoneLabel>(1.0);
+            sampler = new UndersamplingSelector<BxZoneLabel>(2.0);
         } else if (line.hasOption("normal")) {
             sampler = new NormalSelector<BxZoneLabel>();
         } else {
@@ -117,15 +116,11 @@ public class LibSVMExporter {
         List<TrainingSample<BxZoneLabel>> initialTrainingElements = new ArrayList<TrainingSample<BxZoneLabel>>();
         List<TrainingSample<BxZoneLabel>> metaTrainingElements = new ArrayList<TrainingSample<BxZoneLabel>>();
         
-        HierarchicalReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
         EvaluationUtils.DocumentsIterator iter = new DocumentsIterator(inputDirPath);
         FeatureVectorBuilder<BxZone, BxPage> vectorBuilder;
         Integer docIdx = 0;
         for(BxDocument doc: iter) {
         	System.out.println(docIdx + ": " + doc.getFilename());
-        	String filename = doc.getFilename();
-        	doc = ror.resolve(doc);
-        	doc.setFilename(filename);
         	////
         	for (BxZone zone : doc.asZones()) {
         		if (zone.getLabel() != null) {

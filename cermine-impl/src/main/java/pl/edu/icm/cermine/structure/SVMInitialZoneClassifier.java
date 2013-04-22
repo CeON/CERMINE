@@ -11,12 +11,9 @@ import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
@@ -84,6 +81,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         		new IsLeftFeature(),
         		new IsLongestOnThePageFeature(),
         		new IsLowestOnThePageFeature(),
+        		new IsItemizeFeature(),
         		new IsOnSurroundingPagesFeature(),
         		new IsPageNumberFeature(),
         		new IsRightFeature(),
@@ -145,18 +143,13 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 		for(BxDocument doc: docs) {
 			System.out.println(">> " + doc.getFilename());
 			ror.resolve(doc);
-			FeatureVectorBuilder<BxZone, BxPage > fvb = SVMInitialZoneClassifier.getFeatureVectorBuilder();
-			for(BxZone zone: doc.asZones()) {
-				TrainingSample<BxZoneLabel> ts = new TrainingSample<BxZoneLabel>(fvb.getFeatureVector(zone, zone.getParent()), null);
-				System.out.println(classifier.predictLabel(ts) + " " + zone.getLabel());
-			}
+			classifier.classifyZones(doc);
 			BufferedWriter out = null;
 /*
 			try {
 				// Create file 
 				FileWriter fstream = new FileWriter(doc.getFilename());
 				out = new BufferedWriter(fstream);
-a/        zoneClassifier = new SVMInitialZoneClassifier();
 				out.write(tvw.write(doc.getPages()));
 				out.close();
 			} catch (Exception e){//Catch exception if any

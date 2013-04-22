@@ -11,8 +11,6 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import org.jdom.JDOMException;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Ignore;
 import org.junit.Test;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
 import pl.edu.icm.cermine.content.transformers.HTMLToDocContentStructReader;
@@ -48,7 +46,6 @@ public abstract class AbstractLogicalStructureExtractorTest {
         fillLists(dir+testZip, testDocuments, testHeaderStructures);
     }
 
-    @Ignore
     @Test
     public void test() throws IOException, TransformationException, AnalysisException, URISyntaxException {
         int headerCount = 0;
@@ -91,7 +88,7 @@ public abstract class AbstractLogicalStructureExtractorTest {
         System.out.println("Header Recall: " + hRecall + "%");
        
         assertTrue(hPrecission >= minHeaderPrecission);
-        assertTrue("Expected minimum " + minHeaderRecall + ", got " + hRecall ,hRecall >= minHeaderRecall);
+        assertTrue(hRecall >= minHeaderRecall);
     }
     
     protected List<ZipEntry> getEntries(ZipFile zipFile) throws URISyntaxException, ZipException, IOException {

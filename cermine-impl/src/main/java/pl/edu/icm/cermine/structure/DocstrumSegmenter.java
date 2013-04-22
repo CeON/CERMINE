@@ -109,11 +109,11 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             pageNeighborCount = components.length - 1;
         }
 
+        List<Neighbor> candidates = new ArrayList<Neighbor>();
         for (int i = 0; i < components.length; i++) {
             int start = i, end = i + 1;
             // Contains components from components array
             // from ranges [start, i) and [i+1, end)
-            List<Neighbor> candidates = new ArrayList<Neighbor>();
             double dist = Double.POSITIVE_INFINITY;
             for (double searchDist = 0; searchDist < dist; ) {
                 searchDist += DISTANCE_STEP;
@@ -136,7 +136,8 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                 }
             }
             candidates.subList(pageNeighborCount, candidates.size()).clear();
-            components[i].setNeighbors(candidates);
+            components[i].setNeighbors(new ArrayList<Neighbor>(candidates));
+            candidates.clear();
         }
     }
 

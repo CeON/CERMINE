@@ -77,6 +77,7 @@ public class SequenceFileSplitter {
     	try {
     		Configuration conf = new Configuration();
     		FileSystem fs = FileSystem.get(conf);
+    		@SuppressWarnings("deprecation")
     		SequenceFile.Reader reader = new SequenceFile.Reader(fs, new Path(inputSequenceFile), conf);
     		while(reader.next(key, value)) {
     			if(currentRecordCounter.equals(maximumPairs)) {

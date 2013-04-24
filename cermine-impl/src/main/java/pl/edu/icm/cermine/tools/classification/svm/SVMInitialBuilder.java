@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.svm;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,17 +28,8 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSelector;
 
 public class SVMInitialBuilder {
-	protected static SVMZoneClassifier getZoneClassifier(List<BxDocument> trainingDocuments, Integer kernelType, Double gamma, Double C, Integer degree) throws IOException, AnalysisException
+	protected static SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, Integer kernelType, Double gamma, Double C, Integer degree) throws IOException, AnalysisException, CloneNotSupportedException
 	{
-		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
-		for(BxDocument doc: trainingDocuments)
-			for(BxZone zone: doc.asZones())
-				zone.setLabel(zone.getLabel().getGeneralLabel());
-		
-        List<TrainingSample<BxZoneLabel>> trainingSamples;
-        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder, 
-                BxZoneLabel.getLabelToGeneralMap());
-
         // Filter the training documents
         // so that in the learning examples all classes are
         // represented equally
@@ -56,6 +48,7 @@ public class SVMInitialBuilder {
         //SampleSelector<BxZoneLabel> selector = new UndersamplingSelector<BxZoneLabel>(1.3);
         //trainingSamples = selector.pickElements(trainingSamples);
 
+        FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
 		svm_parameter param = SVMZoneClassifier.getDefaultParam();
 		param.svm_type = svm_parameter.C_SVC;
@@ -73,9 +66,9 @@ public class SVMInitialBuilder {
 		return zoneClassifier;
 	}
 
-	public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException {
+	public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException, CloneNotSupportedException {
         Options options = new Options();
-        options.addOption("input", true, "input xml directory path");
+        options.addOption("input", true, "input path");
         options.addOption("output", true, "output model path");
         options.addOption("kernel", true, "kernel type");
         options.addOption("g", true, "gamma");
@@ -84,8 +77,8 @@ public class SVMInitialBuilder {
 
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
-        if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("k") && line.hasOption("g") && line.hasOption("C") && line.hasOption("degree"))) {
-            System.err.println("Usage: <training-xml-directory path> <output model path>");
+        if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("kernel") && line.hasOption("g") && line.hasOption("C") && line.hasOption("degree"))) {
+            System.err.println("Usage: ");
             System.exit(1);
         }
 
@@ -103,9 +96,22 @@ public class SVMInitialBuilder {
         	default:
         		throw new IllegalArgumentException("Invalid kernel value provided");
         }
-
-		List<BxDocument> trainingDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
-		SVMZoneClassifier classifier = getZoneClassifier(trainingDocuments, kernelType, gamma, C, degree);
-		classifier.saveModel(outFile);
+        File input = new File(inDir);
+        if(input.isDirectory()) {
+        	List<BxDocument> trainingDocuments = EvaluationUtils.getDocumentsFromPath(inDir);
+    		FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
+            List<TrainingSample<BxZoneLabel>> trainingSamples;
+            trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(trainingDocuments, featureVectorBuilder, 
+                    BxZoneLabel.getLabelToGeneralMap());
+        	SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+        	classifier.saveModel(outFile);
+        } else {
+        	List<TrainingSample<BxZoneLabel>> trainingSamples = SVMZoneClassifier.loadProblem(inDir, SVMInitialZoneClassifier.getFeatureVectorBuilder());
+    		for(TrainingSample<BxZoneLabel> sample: trainingSamples) {
+    			sample.setLabel(sample.getLabel().getGeneralLabel());
+    		}
+        	SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+        	classifier.saveModel(outFile);
+        }
 	}
 }

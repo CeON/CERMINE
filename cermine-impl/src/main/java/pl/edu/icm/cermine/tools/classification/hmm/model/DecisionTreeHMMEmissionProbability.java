@@ -18,22 +18,22 @@ public class DecisionTreeHMMEmissionProbability<S extends Comparable<S>> impleme
     private double zeroProbabilityValue;
 
     public DecisionTreeHMMEmissionProbability(List<HMMTrainingSample<S>> trainingElements,
-                                              Set<String> featureNames) {
+                                              List<String> featureNames) {
         this(trainingElements, featureNames, 0.0);
     }
 
-    public DecisionTreeHMMEmissionProbability(List<HMMTrainingSample<S>> trainingElements, Set<String> featureNames, int decisionTreeExpand) {
+    public DecisionTreeHMMEmissionProbability(List<HMMTrainingSample<S>> trainingElements, List<String> featureNames, int decisionTreeExpand) {
         this(trainingElements, featureNames, decisionTreeExpand, 0.0);
     }
 
     public DecisionTreeHMMEmissionProbability(List<HMMTrainingSample<S>> trainingElements,
-                                              Set<String> featureNames, double zeroProbabilityValue) {
+                                              List<String> featureNames, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         decisionTree = DecisionTreeBuilder.buildDecisionTree(new HashSet<HMMTrainingSample<S>>(trainingElements), featureNames);
     }
 
     public DecisionTreeHMMEmissionProbability(List<HMMTrainingSample<S>> trainingElements,
-                                              Set<String> featureNames, int decisionTreeExpand, double zeroProbabilityValue) {
+                                              List<String> featureNames, int decisionTreeExpand, double zeroProbabilityValue) {
         this.zeroProbabilityValue = zeroProbabilityValue;
         decisionTree = DecisionTreeBuilder.buildDecisionTree(new HashSet<HMMTrainingSample<S>>(trainingElements), featureNames, decisionTreeExpand);
     }

@@ -29,7 +29,7 @@ public final class DecisionTreeBuilder {
      * @return Root of the built decision tree.
      */
     public static <S extends Comparable<S>> DecisionTree<S> buildDecisionTree(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes) {
         return DecisionTreeBuilder.buildDecisionTree(trainingSet, attributes, stopExpanding);
     }
 
@@ -44,7 +44,7 @@ public final class DecisionTreeBuilder {
      * @return Root of the built decision tree.
      */
     public static <S extends Comparable<S>> DecisionTree<S> buildDecisionTree(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes, int stopExpanding) {
         return constructNode(trainingSet, attributes, stopExpanding);
     }
 
@@ -59,7 +59,7 @@ public final class DecisionTreeBuilder {
      * @return Constructed node.
      */
     private static <S extends Comparable<S>> DecisionTree<S> constructNode(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes, int stopExpanding) {
         if (trainingSet.isEmpty()) {
             return null;
         }
@@ -77,7 +77,7 @@ public final class DecisionTreeBuilder {
             return new DecisionTree<S>(probDistribution);
         }
 
-        Set<String> newAttributes = new HashSet<String>(attributes);
+        List<String> newAttributes = new ArrayList<String>(attributes);
         newAttributes.remove(decision.testedFeature);
 
         Set<HMMTrainingSample<S>> leftElements = new HashSet<HMMTrainingSample<S>>();
@@ -108,7 +108,7 @@ public final class DecisionTreeBuilder {
      * @return The best decision.
      */
     private static <S extends Comparable<S>> NodeDecision chooseDecision(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes) {
         String bestAttribute = null;
         double bestCut = -1;
         double bestEntropyGain = 0;

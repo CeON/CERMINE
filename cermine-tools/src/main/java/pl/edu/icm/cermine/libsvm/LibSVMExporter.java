@@ -168,14 +168,5 @@ public class LibSVMExporter {
         }
 		svmInitialFile.close();
 		svmMetaFile.close();
-
-		// initialTrainingElements =
-		// sampler.pickElements(initialTrainingElements);
-		// metaTrainingElements = sampler.pickElements(metaTrainingElements);
-
-		// toLibSVM(initialTrainingElements, "initial_" + inputDirFile.getName()
-		// + ".dat");
-		// toLibSVM(metaTrainingElements, "meta_" + inputDirFile.getName() +
-		// ".dat");
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
  * Simple feature vector.
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
+ * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 public class FeatureVector implements Cloneable {
 

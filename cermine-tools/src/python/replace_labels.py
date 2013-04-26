@@ -3,12 +3,8 @@ import os
 import sys
 
 path = sys.argv[1]
-pairs = [#("abbreviations", "glossary"),
-#('conflict', 'conflict_statement'),
-('body', 'body_content'),]
-#('body_content_content', 'body_content'),
-#('header', 'heading'),
-#('HEADER', 'heading'),
+pairs = [('abbreviations', 'glossary')]
+#('access', 'access_data')]
 #('access', 'access_data')]
 
 

@@ -65,7 +65,7 @@ public class SVMInitialBuilder {
         zoneClassifier.saveModel("svm_initial_classifier");
 		return zoneClassifier;
 	}
-
+// sample parameters: -input /home/pawel/icm/xmls_v2 -output initial_svm_classifier_test -degree 3 -g 0.0325 -C 256
 	public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException, CloneNotSupportedException {
         Options options = new Options();
         options.addOption("input", true, "input path");
@@ -77,16 +77,20 @@ public class SVMInitialBuilder {
 
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
-        if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("kernel") && line.hasOption("g") && line.hasOption("C") && line.hasOption("degree"))) {
-            System.err.println("Usage: ");
+        if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("kernel") && line.hasOption("g") && line.hasOption("C") )) {
+            System.err.println("Usage: SVMInitialBuilder -input input_directory -output output_model_file -kernel K -gamma G -C c [-degree d]");
             System.exit(1);
         }
-
         Double C = Double.valueOf(line.getOptionValue("C"));
         Double gamma = Double.valueOf(line.getOptionValue("g"));
         String inDir = line.getOptionValue("input");
         String outFile = line.getOptionValue("output");
-        Integer degree = Integer.valueOf(line.getOptionValue("degree"));
+        String degreeStr = line.getOptionValue("degree");
+        Integer degree = -1;
+
+        if (degreeStr != null && !degreeStr.isEmpty()) {
+        	degree = Integer.valueOf(degreeStr);
+        }
         Integer kernelType;
         switch(Integer.valueOf(line.getOptionValue("kernel"))) {
         	case 0: kernelType = svm_parameter.LINEAR; break;
@@ -95,6 +99,10 @@ public class SVMInitialBuilder {
         	case 3: kernelType = svm_parameter.SIGMOID; break;
         	default:
         		throw new IllegalArgumentException("Invalid kernel value provided");
+        }
+        if (kernelType == svm_parameter.POLY && degree == null) {
+            System.err.println("Polynomial kernel requires the -degree option to be specified");
+            System.exit(1);
         }
         File input = new File(inDir);
         if(input.isDirectory()) {

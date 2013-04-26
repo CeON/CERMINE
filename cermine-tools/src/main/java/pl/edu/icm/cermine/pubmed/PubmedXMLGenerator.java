@@ -19,6 +19,7 @@ import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
+import org.apache.pig.tools.pigstats.PigStatusReporter;
 import org.apache.xpath.NodeSet;
 import org.jruby.compiler.ir.operands.Hash;
 import org.w3c.dom.Document;
@@ -112,6 +113,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
     		throw new IllegalStateException("Input tuple can't be empty!");
     	}
     	String keyString = (String) input.get(0);
+    	System.out.println(keyString);
     	DataByteArray nlmByteArray = (DataByteArray) input.get(1);
     	DataByteArray pdfByteArray = (DataByteArray) input.get(2);
     	BxDocument bxDoc = null;
@@ -119,30 +121,27 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
     		ByteArrayInputStream nlmIS = new ByteArrayInputStream(nlmByteArray.get());
     		ByteArrayInputStream pdfIS = new ByteArrayInputStream(pdfByteArray.get());
 			bxDoc = generateTrueViz(pdfIS, nlmIS);
-		} catch (XPathExpressionException e) {
+			System.out.println("generated trueviz");
+		} catch (Throwable e) {
+			System.err.println(keyString);
 			e.printStackTrace();
-			System.exit(1);
-		} catch (AnalysisException e) {
-			e.printStackTrace();
-			System.exit(2);
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			System.exit(3);
-		} catch (SAXException e) {
-			e.printStackTrace();
-			System.exit(4);
-		} catch (TransformationException e) {
-			e.printStackTrace();
-			System.exit(5);
 		}
     	BxDocumentToTrueVizWriter trueVizWriter = new BxDocumentToTrueVizWriter();
-    	DataByteArray returnDoc = new DataByteArray(new String()); 
-    	//try {
-    	//	returnDoc = null; //returnDoc = trueVizWriter.write(bxDoc.getPages());
-	//	} catch (TransformationException e) {
-	//		e.printStackTrace();
-	//		System.exit(6);
-	//	}
+    	DataByteArray returnDoc = null;
+    	if (bxDoc != null) {
+    		try {
+    			returnDoc = new DataByteArray(trueVizWriter.write(bxDoc.getPages()));
+    			returnDoc = null;
+    			System.out.println("wrote down trueviz");
+    			PigStatusReporter reporter = PigStatusReporter.getInstance();
+    			if (reporter != null) {
+    				reporter.getCounter("CERMINE_COUNTERS", "DOC_COUNTER").increment(1);
+    			}
+    		} catch (TransformationException e) {
+    			System.err.println(keyString);
+    			e.printStackTrace();
+    		}
+    	}
     	
     	output.set(0, keyString);
     	output.set(1, nlmByteArray);
@@ -195,6 +194,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 
         PdfBxStructureExtractor structureExtractor = new PdfBxStructureExtractor();
         BxDocument bxDoc = structureExtractor.extractStructure(pdfStream);
+        System.out.println("structure extracted");
         Integer bxDocLen = bxDoc.asZones().size();
 
         SmartHashMap entries = new SmartHashMap();

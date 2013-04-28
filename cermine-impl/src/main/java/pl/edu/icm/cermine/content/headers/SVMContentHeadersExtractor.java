@@ -54,6 +54,10 @@ public class SVMContentHeadersExtractor implements ContentHeadersExtractor {
                             contentStructure.addFirstHeaderLine(page, line);
                             lastHeaderLine = line;
                         } else if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT) || zone.getLabel().equals(BxZoneLabel.GEN_BODY)) {
+                            if (lastHeaderLine == null) {
+                                lastHeaderLine = new BxLine();
+                                contentStructure.addFirstHeaderLine(page, lastHeaderLine);
+                            }
                             contentStructure.addContentLine(lastHeaderLine, line);
                         }
                     }

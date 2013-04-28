@@ -9,7 +9,9 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
@@ -82,8 +84,8 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 processor.reset();
                 processor.processContent(ContentByteUtils.getContentBytesForPage(reader, pageNumber), resources);
             }
-            
-            return documentCreator.document;
+
+            return removeDuplicateChunks(documentCreator.document);
         } catch (InvalidPdfException ex) {
             throw new AnalysisException("Invalid PDF file", ex);
         } catch (IOException ex) {
@@ -121,6 +123,27 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 }
             }
         }
+    }
+
+    private BxDocument removeDuplicateChunks(BxDocument document) {
+        for (BxPage page : document.getPages()) {
+            List<BxChunk> chunks = page.getChunks();
+            List<BxChunk> filteredChunks = new ArrayList<BxChunk>();
+            for (BxChunk chunk : chunks) {
+                boolean duplicate = false;
+                for (BxChunk ch : filteredChunks) {
+                    if (chunk.getText().equals(ch.getText()) && chunk.getBounds().isSimilarTo(ch.getBounds(), 0.01)) {
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if (!duplicate) {
+                    filteredChunks.add(chunk);
+                }
+            }
+            page.setChunks(filteredChunks);
+        }
+        return document;
     }
 
     /**
@@ -177,6 +200,11 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 if (Float.isNaN(charWidth) || Float.isInfinite(charWidth)) {
                     charWidth = 0;
                 } 
+                                
+                if (charLeft < pageRectangle.getLeft() || charLeft + charWidth > pageRectangle.getRight()
+                        || charBottom < pageRectangle.getBottom() || charBottom + charHeight > pageRectangle.getTop()) {
+                    continue;
+                }
                 
                 BxBounds bounds = new BxBounds(charLeft, pageRectangle.getHeight() - charBottom - charHeight,
                                                charWidth, charHeight);

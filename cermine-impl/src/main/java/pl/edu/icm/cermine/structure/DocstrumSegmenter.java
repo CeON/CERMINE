@@ -25,7 +25,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         BxDocument output = new BxDocument();
         for (BxPage page: document.getPages()) {
         	BxPage segmentedPage = segmentPage(page);
-        	if(segmentedPage.getBounds() != null) {
+        	if (segmentedPage.getBounds() != null) {
         		output.addPage(segmentedPage);
         	}
         }
@@ -55,7 +55,12 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         List<ComponentLine> lines = determineLines(components, orientation,
                 characterSpacing * componentDistanceCharacterMultiplier,
                 lineSpacing * maxVerticalComponentDistanceMultiplier);
-        orientation = computeOrientation(lines);
+    
+        double lineOrientation = computeOrientation(lines);
+        if (!Double.isNaN(lineOrientation)) {
+            orientation = lineOrientation;
+        }
+        
         List<List<ComponentLine>> zones = determineZones(lines, orientation,
                 characterSpacing * minHorizontalDistanceMultiplier, Double.POSITIVE_INFINITY,
                 lineSpacing * minVerticalDistanceMultiplier, lineSpacing * maxVerticalDistanceMultiplier,

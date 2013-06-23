@@ -240,7 +240,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 
         //received date
         List<String> receivedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='received']", domDoc, XPathConstants.NODE));
-        if (!receivedDate.isEmpty()) {
+        if (!receivedDate.isEmpty() && receivedDate.size() >= 3) {
             for (String date : StringTools.produceDates(receivedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
@@ -248,7 +248,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 
         //accepted date
         List<String> acceptedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='accepted']", domDoc, XPathConstants.NODE));
-        if (!acceptedDate.isEmpty()) {
+        if (!acceptedDate.isEmpty() && acceptedDate.size() >= 3) {
             for (String date : StringTools.produceDates(acceptedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
@@ -263,7 +263,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
             Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='collection']", domDoc, XPathConstants.NODE);
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
         }
-        if (pubdateString != null && !pubdateString.isEmpty()) {
+        if (pubdateString != null && pubdateString.size() >= 3) {
             for (String date : StringTools.produceDates(pubdateString)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }

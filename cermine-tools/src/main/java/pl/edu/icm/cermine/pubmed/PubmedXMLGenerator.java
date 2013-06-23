@@ -1,8 +1,8 @@
 package pl.edu.icm.cermine.pubmed;
 
 import java.io.*;
-import java.util.*;
 import java.util.Map.Entry;
+import java.util.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,8 +10,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import org.apache.hadoop.io.BytesWritable;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.DataType;
@@ -20,14 +18,10 @@ import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
 import org.apache.pig.tools.pigstats.PigStatusReporter;
-import org.apache.xpath.NodeSet;
-import org.jruby.compiler.ir.operands.Hash;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import edu.umass.cs.mallet.base.extract.Extraction;
 import pl.edu.icm.cermine.PdfBxStructureExtractor;
 import pl.edu.icm.cermine.evaluation.tools.CosineDistance;
 import pl.edu.icm.cermine.evaluation.tools.SmithWatermanDistance;
@@ -163,7 +157,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 	
 	private void printVerbose(String string) {
 		if(verbose) {
-			printVerbose(string);
+			System.out.print(string);
 		}
 	}
 	

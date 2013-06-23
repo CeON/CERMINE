@@ -10,6 +10,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import org.apache.commons.io.FileUtils;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.DataType;
@@ -188,7 +189,6 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 
         PdfBxStructureExtractor structureExtractor = new PdfBxStructureExtractor();
         BxDocument bxDoc = structureExtractor.extractStructure(pdfStream);
-        System.out.println("structure extracted");
         Integer bxDocLen = bxDoc.asZones().size();
 
         SmartHashMap entries = new SmartHashMap();
@@ -707,30 +707,43 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         return ret;
     }
 
-    
-    
-    public static void main(String[] args) throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
+    public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: <pubmed .pdf path>");
+            System.err.println("Usage: <pubmed directory>");
             System.exit(1);
         }
-        String pdfPath = args[0];
-        String nxmlPath = StringTools.getNLMPath(pdfPath);
+	
+        File dir = new File(args[0]);
+        for (File pdfFile : FileUtils.listFiles(dir, new String[]{"pdf"}, true)) {
+            try { 
+                String pdfPath = pdfFile.getPath();
+                String nxmlPath = StringTools.getNLMPath(pdfPath);
+                
+                File nxmlFile = new File(StringTools.getTrueVizPath(nxmlPath));
+                if (nxmlFile.exists()) {
+                    continue;
+                }
+                
+                System.out.print(pdfPath+" ");
 
+                InputStream pdfStream = new FileInputStream(pdfPath);
+                InputStream nxmlStream = new FileInputStream(nxmlPath);
 
-        InputStream pdfStream = new FileInputStream(pdfPath);
-        InputStream nxmlStream = new FileInputStream(nxmlPath);
+                PubmedXMLGenerator datasetGenerator = new PubmedXMLGenerator();
+                datasetGenerator.setVerbose(false);
+                BxDocument bxDoc = datasetGenerator.generateTrueViz(pdfStream, nxmlStream);
 
-        PubmedXMLGenerator datasetGenerator = new PubmedXMLGenerator();
-        datasetGenerator.setVerbose(true);
-        BxDocument bxDoc = datasetGenerator.generateTrueViz(pdfStream, nxmlStream);
-
-        FileWriter fstream = new FileWriter(StringTools.getTrueVizPath(nxmlPath));
-        BufferedWriter out = new BufferedWriter(fstream);
-        BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-        out.write(writer.write(bxDoc.getPages()));
-        out.close();
-
+                FileWriter fstream = new FileWriter(StringTools.getTrueVizPath(nxmlPath));
+                BufferedWriter out = new BufferedWriter(fstream);
+                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                out.write(writer.write(bxDoc.getPages()));
+                out.close();
+                
+                System.out.println("done");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

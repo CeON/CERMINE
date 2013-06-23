@@ -208,6 +208,14 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 
                 BxBounds bounds = new BxBounds(charLeft, pageRectangle.getHeight() - charBottom - charHeight,
                                                charWidth, charHeight);
+                
+                if (Double.isNaN(bounds.getX()) || Double.isInfinite(bounds.getX())
+                        || Double.isNaN(bounds.getY()) || Double.isInfinite(bounds.getY())
+                        || Double.isNaN(bounds.getHeight()) || Double.isInfinite(bounds.getHeight())
+                        || Double.isNaN(bounds.getWidth()) || Double.isInfinite(bounds.getWidth())) {
+                    continue;
+                }
+                
                 actPage.addChunk(new BxChunk(bounds, text));
                 boundsBuilder.expand(bounds);
             }

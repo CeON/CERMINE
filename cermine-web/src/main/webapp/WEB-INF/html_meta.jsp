@@ -32,8 +32,6 @@
  <script src="<c:url value='/static/js/xml-mining.js' />"></script>
  <script src="<c:url value='/static/js/throw.js' />"></script>
  
- <script src="<c:url value='/static/js/ga.js' />"></script>
- 
 <!--[if lte IE 7]>
 <style>
     article#main nav ul li {

@@ -719,11 +719,11 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
                 String pdfPath = pdfFile.getPath();
                 String nxmlPath = StringTools.getNLMPath(pdfPath);
                 
-                File nxmlFile = new File(StringTools.getTrueVizPath(nxmlPath));
-                if (nxmlFile.exists()) {
+                File xmlFile = new File(StringTools.getTrueVizPath(nxmlPath));
+                if (xmlFile.exists()) {
                     continue;
                 }
-                
+
                 System.out.print(pdfPath+" ");
 
                 InputStream pdfStream = new FileInputStream(pdfPath);

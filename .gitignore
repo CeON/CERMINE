@@ -32,6 +32,5 @@ local.properties
 #generated xmls
 cermine-impl/*.xml
 
-#deploying scripts
-cermine-impl/*.sh
-cermine-tools/*.sh
+#webapp logs
+cermine-web/catalina.base*

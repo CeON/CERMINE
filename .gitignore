@@ -31,3 +31,6 @@ local.properties
 
 #generated xmls
 cermine-impl/*.xml
+
+#webapp logs
+cermine-web/catalina.base*

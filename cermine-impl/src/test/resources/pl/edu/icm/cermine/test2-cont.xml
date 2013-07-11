@@ -24,20 +24,16 @@
         </contrib>
         <contrib contrib-type="author">
           <string-name>Helen M. Burke</string-name>
-          <email>helenburke1@rcsi.ie</email>
           <aff>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland, 123 St. Stephen’s Green, Dublin 2, Ireland</aff>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Hannah M. McGee</string-name>
           <aff>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland, 123 St. Stephen’s Green, Dublin 2, Ireland</aff>
         </contrib>
-        <contrib contrib-type="editor">
-          <string-name>K. S. Sunnerhagen</string-name>
-        </contrib>
       </contrib-group>
       <article-id pub-id-type="doi">10.1155/2010/157939</article-id>
       <abstract>
-        <p>Objectives. Patient experiences of structured heart failure rehabilitation and their views on the important components of heart failure services were examined. Methods. Focus groups were conducted with fifteen participants (men, n = 12) attending one of two heart failure rehabilitation programmes. Sessions were guided by a semistructured interview schedule covering participants’ experiences of the programme, maintenance, and GP role. Focus group transcripts were analysed qualitatively. Results. Participants indicated that rehabilitation programmes substantially met their needs. Supervised exercise sessions increased confidence to resume physical activity, while peer-group interaction and supportive medical staff improved morale. However, once the programme ended, some participants’ self-care motivation lapsed, especially maintenance of an exercise routine. Patients doubted their GPs’ ability to help them manage their condition. Conclusion. Structured rehabilitation programmes are effective in enabling patients to develop lifestyle skills to live with heart failure. However, postrehabilitation maintenance interventions are necessary to sustain patients’ confidence in disease self-management.</p>
+        <p>Copyright © 2010 Nuala E. Tully et al. This is an open access article distributed under the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited. Objectives. Patient experiences of structured heart failure rehabilitation and their views on the important components of heart failure services were examined. Methods. Focus groups were conducted with fifteen participants (men, n = 12) attending one of two heart failure rehabilitation programmes. Sessions were guided by a semistructured interview schedule covering participants’ experiences of the programme, maintenance, and GP role. Focus group transcripts were analysed qualitatively. Results. Participants indicated that rehabilitation programmes substantially met their needs. Supervised exercise sessions increased confidence to resume physical activity, while peer-group interaction and supportive medical staff improved morale. However, once the programme ended, some participants’ self-care motivation lapsed, especially maintenance of an exercise routine. Patients doubted their GPs’ ability to help them manage their condition. Conclusion. Structured rehabilitation programmes are effective in enabling patients to develop lifestyle skills to live with heart failure. However, postrehabilitation maintenance interventions are necessary to sustain patients’ confidence in disease self-management.</p>
       </abstract>
       <article-id pub-id-type="hindawi-id">157939</article-id>
       <volume>2010</volume>
@@ -523,7 +519,12 @@ their quality of care, their quality of life and their self-care
 and lifestyle management. The challenge is to make such
 opportunities for education and support with heart failure
 the norm for the much wider group of heart failure patients
-who exist now and will grow in numbers into the future.</p>
+who exist now and will grow in numbers into the future.
+This research was funded by the Health Services Executive.
+The authors gratefully acknowledge the assistance of Dr. Ken
+McDonald, Ms. Bronagh Travers, Dr. Aidan Buckley, and Ms.
+Mary Sinnott for recruiting participants to the study and
+facilitating the focus group sessions.</p>
     </sec>
   </body>
   <back>
@@ -781,7 +782,7 @@ who exist now and will grow in numbers into the future.</p>
         </mixed-citation>
       </ref>
       <ref>
-          <mixed-citation>
+        <mixed-citation>
           [9]
           <string-name>
             <given-names>S.</given-names>

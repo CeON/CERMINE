@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine;
 
-import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,6 +10,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -32,7 +32,7 @@ public class PdfNLMContentExtractorTest {
     }
     
     @Test
-    public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException {
+    public void contentExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
         Element testContent;
         try {
@@ -55,6 +55,6 @@ public class PdfNLMContentExtractorTest {
         
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         Diff diff = new Diff(outputter.outputString(expContent), outputter.outputString(testContent));
-//        assertTrue(diff.similar());
+        assertTrue(diff.similar());
     }
 }

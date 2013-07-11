@@ -26,12 +26,12 @@ public final class ContentFilterTools {
     public static final FeatureVectorBuilder<BxZone, BxPage> VECTOR_BUILDER = new FeatureVectorBuilder<BxZone, BxPage>();
     static {
         VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
-                new AreaFeature(),
-                new FigureTableFeature(),
-                new GreekLettersFeature(),
-                new RelativeMeanLengthFeature(),
                 new MathSymbolsFeature(),
-                new XVarianceFeature()
+                new RelativeMeanLengthFeature(),
+                new AreaFeature(),
+                new GreekLettersFeature(),
+                new XVarianceFeature(),
+                new FigureTableFeature()
                 ));
     }
     

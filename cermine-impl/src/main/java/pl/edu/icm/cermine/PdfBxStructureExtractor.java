@@ -1,24 +1,9 @@
 package pl.edu.icm.cermine;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import java.io.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.structure.CharacterExtractor;
-import pl.edu.icm.cermine.structure.DocumentSegmenter;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.ITextCharacterExtractor;
-import pl.edu.icm.cermine.structure.ParallelDocstrumSegmenter;
-import pl.edu.icm.cermine.structure.ReadingOrderResolver;
-import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
-import pl.edu.icm.cermine.structure.ZoneClassifier;
+import pl.edu.icm.cermine.structure.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;

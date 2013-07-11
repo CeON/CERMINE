@@ -1,11 +1,7 @@
 package pl.edu.icm.cermine.tools.classification.features;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Feature vector builder (GoF factory pattern). The builder calculates feature

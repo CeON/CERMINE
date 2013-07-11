@@ -5,15 +5,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
-
 import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos;
 import pl.edu.icm.cermine.pubmed.pig.PubmedCollectionIterator;
 import pl.edu.icm.cermine.pubmed.pig.PubmedEntry;

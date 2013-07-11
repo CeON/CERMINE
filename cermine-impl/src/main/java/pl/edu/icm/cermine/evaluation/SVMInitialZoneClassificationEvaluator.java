@@ -47,7 +47,7 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         param.weight = classesWeights;
 
         zoneClassifier.buildClassifier(trainingSamples);
-//        zoneClassifier.saveModel("svm_initial_classifier");
+
         return zoneClassifier;
     }
 

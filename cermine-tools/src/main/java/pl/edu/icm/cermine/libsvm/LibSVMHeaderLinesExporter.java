@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.libsvm;
 
 import java.io.IOException;
 import java.util.List;
-
 import pl.edu.icm.cermine.content.headers.HeaderExtractingTools;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;

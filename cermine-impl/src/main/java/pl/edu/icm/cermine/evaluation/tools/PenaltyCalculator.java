@@ -3,7 +3,6 @@ package pl.edu.icm.cermine.evaluation.tools;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 

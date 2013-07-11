@@ -1,11 +1,8 @@
-/*
- * (C) 2010-2012 ICM UW. All rights reserved.
- */
 package pl.edu.icm.cermine.pubmed.pig;
 
+import com.google.protobuf.ByteString;
 import java.io.IOException;
 import java.util.Arrays;
-
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.DataType;
@@ -13,10 +10,7 @@ import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
-
 import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument;
-
-import com.google.protobuf.ByteString;
 
 /**
  *

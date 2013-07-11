@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.tools.classification.hmm.model;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 /**

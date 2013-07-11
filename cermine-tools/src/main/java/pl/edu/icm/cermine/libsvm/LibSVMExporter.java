@@ -7,14 +7,7 @@ import java.io.IOException;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
+import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -22,17 +15,10 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
+import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.sampleselection.NormalSelector;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
-import pl.edu.icm.cermine.tools.classification.sampleselection.UndersamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleFilter;
 
 public class LibSVMExporter {

@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine.structure.transformers;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.DecimalFormat;

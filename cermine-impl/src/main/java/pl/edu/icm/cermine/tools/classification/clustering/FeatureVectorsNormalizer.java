@@ -1,6 +1,5 @@
 package pl.edu.icm.cermine.tools.classification.clustering;
 
-import java.util.Set;
 import java.util.ArrayList;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;

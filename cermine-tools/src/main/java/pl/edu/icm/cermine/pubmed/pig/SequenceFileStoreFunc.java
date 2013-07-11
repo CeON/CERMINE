@@ -1,11 +1,9 @@
 package pl.edu.icm.cermine.pubmed.pig;
 
+import com.google.protobuf.ByteString;
 import java.io.IOException;
-
-import org.apache.hadoop.conf.Configuration;
+import java.util.ArrayList;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.OutputFormat;
 import org.apache.hadoop.mapreduce.RecordWriter;
@@ -13,14 +11,10 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.pig.StoreFunc;
 import org.apache.pig.backend.executionengine.ExecException;
-import org.apache.pig.data.*;
-import java.util.ArrayList;
-import org.apache.pig.impl.io.NullableText;
+import org.apache.pig.data.DataByteArray;
+import org.apache.pig.data.Tuple;
+import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.io.NullableTuple;
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileAsBinaryOutputFormat;
-
-import com.google.protobuf.ByteString;
-
 import pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos;
 
 public class SequenceFileStoreFunc extends StoreFunc {

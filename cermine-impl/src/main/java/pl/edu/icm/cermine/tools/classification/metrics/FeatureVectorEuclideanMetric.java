@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.metrics;
 
 import java.util.List;
-import java.util.Set;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 /**

@@ -55,8 +55,6 @@ public class SmithWatermanDistance {
             }
         }
 
-        Move I[][] = new Move[N_a][N_b];
-
         double temp[] = new double[4];
         // here comes the actual algorithm
 
@@ -67,23 +65,6 @@ public class SmithWatermanDistance {
                 temp[2] = H[i][j - 1] - delta;
                 temp[3] = 0.;
                 H[i][j] = findArrayMax(temp);
-//				switch(H[i][j]) {
-//					case 0:
-//						I[i][j] = Move.NN;
-//						break;
-//					case H[i][j-1]-delta:
-//						I[i][j] = Move.OMIT_S1;
-//						break;
-//					case H[i-1][j]-delta:
-//						I[i][j] = Move.OMIT_S2;
-//						break;
-//					default:
-//						if(H[i][j] > H[i-1][j-1])
-//							I[i][j] = Move.MATCH;
-//						else
-//							I[i][j] = Move.OMIT_BOTH;
-//				}
-//				System.out.println("H[" + i + "][" + j + "] " + H[i][j]);
             }
         }
         // search H for the maximal score

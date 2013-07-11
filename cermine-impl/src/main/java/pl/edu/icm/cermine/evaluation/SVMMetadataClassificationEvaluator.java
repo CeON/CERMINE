@@ -43,8 +43,6 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         param.kernel_type = svm_parameter.RBF;
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamplesOversampled);
-//        zoneClassifier.saveModel("svm_meta_classifier");
-//        zoneClassifier = new SVMMetadataZoneClassifier();
 
         return zoneClassifier;
     }

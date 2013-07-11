@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.tools.classification.svm;
+package pl.edu.icm.cermine.metadata.zoneclassification;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +18,7 @@ import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesCo
 import pl.edu.icm.cermine.tools.classification.general.DocumentsExtractor;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.general.ZipExtractor;
+import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
  *

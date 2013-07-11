@@ -4,21 +4,17 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class ZoneLocaliser {
 	
-	private BxZone zone;
 	private BxZone leftZone = null;
 	private BxZone rightZone = null;
 	private BxZone upperZone = null;
 	private BxZone lowerZone = null;
 	
 	public ZoneLocaliser(BxZone zone) {
-		this.zone = zone;
-		
         for (BxZone otherZone : zone.getParent().getZones()) {
             if (otherZone == zone) {
                 continue;
             }
             Double cx, cy, cw, ch, ox, oy, ow, oh;
-            Double newLeftProminence, newRightProminence;
 
             cx = zone.getBounds().getX();
             cy = zone.getBounds().getY();

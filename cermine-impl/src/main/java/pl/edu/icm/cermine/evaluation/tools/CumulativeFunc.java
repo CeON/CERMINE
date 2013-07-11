@@ -1,11 +1,6 @@
 package pl.edu.icm.cermine.evaluation.tools;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 public class CumulativeFunc {
 	public static Map<Double, Integer> calculate(List<Double> values) {

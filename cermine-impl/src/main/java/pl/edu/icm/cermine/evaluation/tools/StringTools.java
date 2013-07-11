@@ -79,7 +79,7 @@ public class StringTools {
     }
 
     public static String joinStrings(List<String> strings, char delim) {
-        if (strings.size() == 0) {
+        if (strings.isEmpty()) {
             return "";
         } else if (strings.size() == 1) {
             return strings.get(0);

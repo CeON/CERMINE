@@ -1,9 +1,6 @@
 package pl.edu.icm.cermine.structure;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.zip.ZipException;

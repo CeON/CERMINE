@@ -3,11 +3,9 @@ package pl.edu.icm.cermine.evaluation;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 import libsvm.svm_parameter;
-
 import org.apache.commons.cli.ParseException;
-
+import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
@@ -16,6 +14,8 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
+import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
@@ -58,4 +58,13 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
 	protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
 		return SVMMetadataZoneClassifier.getFeatureVectorBuilder();
 	}
+    
+    @Override
+    public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile) throws AnalysisException {
+        DocumentsIterator it = new DocumentsIterator(inputFile);
+        List<TrainingSample<BxZoneLabel>> samples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), 
+                    getFeatureVectorBuilder(), null);
+        return ClassificationUtils.filterElements(samples, BxZoneLabelCategory.CAT_METADATA);
+    }
+    
 }

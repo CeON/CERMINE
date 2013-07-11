@@ -6,14 +6,7 @@ import java.io.Writer;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
+import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -92,17 +85,17 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         }
     }
 
+    protected abstract List<TrainingSample<BxZoneLabel>> getSamples(String inputFile) throws AnalysisException;
+    
     public void run(String inputFile) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException {
         ClassificationResults summary = newResults();
-        List<TrainingSample<BxZoneLabel>> samples = SVMZoneClassifier.loadProblem(inputFile, getFeatureVectorBuilder());
+
+        List<TrainingSample<BxZoneLabel>> samples = getSamples(inputFile);
         List<DividedEvaluationSet> sampleSets = DividedEvaluationSet.build(samples, foldness);
         System.out.println("All training elements: " +  samples.size());
         for (int fold = 0; fold < foldness; ++fold) {
         	List<TrainingSample<BxZoneLabel>> trainingSamples = sampleSets.get(fold).getTrainingDocuments();
         	List<TrainingSample<BxZoneLabel>> testSamples = sampleSets.get(fold).getTestDocuments();
-//        	for(TrainingSample<BxZoneLabel> sample: testSamples) {
-//        		System.out.println(sample.getFeatures().getFeatures().length + " " + sample.getFeatures().getFeatureNames());
-//        	}
             System.out.println("Fold number " + fold);
         	System.out.println("Training elements " + trainingSamples.size());
             System.out.println("Test elements  " + testSamples.size());

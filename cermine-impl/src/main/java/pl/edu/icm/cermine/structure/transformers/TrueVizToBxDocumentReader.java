@@ -384,6 +384,7 @@ public class TrueVizToBxDocumentReader {
 
     private BxZone parseZoneNode(Element zoneE) throws TransformationException {
         BxZone zone = new BxZone();
+        zone.setLabel(BxZoneLabel.OTH_UNKNOWN);
         if (!getChildren("Classification", zoneE).isEmpty()) {
             zone.setLabel(parseClassification(getChildren("Classification", zoneE).get(0)));
         }

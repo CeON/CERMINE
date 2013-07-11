@@ -31,8 +31,6 @@ public class SVMLogicalStructureExtractorTest extends AbstractLogicalStructureEx
         BufferedReader br4 = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(dir+headerRange)));
 
         extractor = new SVMLogicalStructureExtractor(br1, br2, br3, br4);
-        
-        minHeaderRecall = 70.0;
     }
     
 }

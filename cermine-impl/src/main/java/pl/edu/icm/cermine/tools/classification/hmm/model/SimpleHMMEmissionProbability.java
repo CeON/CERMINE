@@ -1,8 +1,8 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
-import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import java.util.HashMap;
 import java.util.Map;
+import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 /**

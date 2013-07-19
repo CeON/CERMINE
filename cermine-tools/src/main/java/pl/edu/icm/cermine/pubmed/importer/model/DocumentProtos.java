@@ -8,7 +8,7 @@ public final class DocumentProtos {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface DocumentOrBuilder
+  public interface InputDocumentOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // required string key = 1;
@@ -23,32 +23,32 @@ public final class DocumentProtos {
     boolean hasPdf();
     com.google.protobuf.ByteString getPdf();
   }
-  public static final class Document extends
+  public static final class InputDocument extends
       com.google.protobuf.GeneratedMessage
-      implements DocumentOrBuilder {
-    // Use Document.newBuilder() to construct.
-    private Document(Builder builder) {
+      implements InputDocumentOrBuilder {
+    // Use InputDocument.newBuilder() to construct.
+    private InputDocument(Builder builder) {
       super(builder);
     }
-    private Document(boolean noInit) {}
+    private InputDocument(boolean noInit) {}
     
-    private static final Document defaultInstance;
-    public static Document getDefaultInstance() {
+    private static final InputDocument defaultInstance;
+    public static InputDocument getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Document getDefaultInstanceForType() {
+    public InputDocument getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_Document_descriptor;
+      return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_InputDocument_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_Document_fieldAccessorTable;
+      return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_InputDocument_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -167,41 +167,41 @@ public final class DocumentProtos {
       return super.writeReplace();
     }
     
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(byte[] data)
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(java.io.InputStream input)
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseDelimitedFrom(java.io.InputStream input)
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -210,7 +210,7 @@ public final class DocumentProtos {
         return null;
       }
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseDelimitedFrom(
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -221,12 +221,12 @@ public final class DocumentProtos {
         return null;
       }
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document parseFrom(
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -236,7 +236,7 @@ public final class DocumentProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document prototype) {
+    public static Builder newBuilder(pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -249,18 +249,18 @@ public final class DocumentProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.DocumentOrBuilder {
+       implements pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocumentOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_Document_descriptor;
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_InputDocument_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_Document_fieldAccessorTable;
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_InputDocument_fieldAccessorTable;
       }
       
-      // Construct using pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document.newBuilder()
+      // Construct using pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -294,24 +294,24 @@ public final class DocumentProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document.getDescriptor();
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument.getDescriptor();
       }
       
-      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document getDefaultInstanceForType() {
-        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document.getDefaultInstance();
+      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument getDefaultInstanceForType() {
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument.getDefaultInstance();
       }
       
-      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document build() {
-        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document result = buildPartial();
+      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument build() {
+        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document buildParsed()
+      private pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document result = buildPartial();
+        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -319,8 +319,8 @@ public final class DocumentProtos {
         return result;
       }
       
-      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document buildPartial() {
-        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document result = new pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document(this);
+      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument buildPartial() {
+        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument result = new pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -341,16 +341,16 @@ public final class DocumentProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document) {
-          return mergeFrom((pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document)other);
+        if (other instanceof pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument) {
+          return mergeFrom((pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document other) {
-        if (other == pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document.getDefaultInstance()) return this;
+      public Builder mergeFrom(pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument other) {
+        if (other == pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument.getDefaultInstance()) return this;
         if (other.hasKey()) {
           setKey(other.getKey());
         }
@@ -500,22 +500,590 @@ public final class DocumentProtos {
         return this;
       }
       
-      // @@protoc_insertion_point(builder_scope:model.Document)
+      // @@protoc_insertion_point(builder_scope:model.InputDocument)
     }
     
     static {
-      defaultInstance = new Document(true);
+      defaultInstance = new InputDocument(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:model.Document)
+    // @@protoc_insertion_point(class_scope:model.InputDocument)
+  }
+  
+  public interface OutputDocumentOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required string key = 1;
+    boolean hasKey();
+    String getKey();
+    
+    // optional bytes nlm = 2;
+    boolean hasNlm();
+    com.google.protobuf.ByteString getNlm();
+    
+    // optional bytes pdf = 3;
+    boolean hasPdf();
+    com.google.protobuf.ByteString getPdf();
+    
+    // optional bytes xml = 4;
+    boolean hasXml();
+    com.google.protobuf.ByteString getXml();
+  }
+  public static final class OutputDocument extends
+      com.google.protobuf.GeneratedMessage
+      implements OutputDocumentOrBuilder {
+    // Use OutputDocument.newBuilder() to construct.
+    private OutputDocument(Builder builder) {
+      super(builder);
+    }
+    private OutputDocument(boolean noInit) {}
+    
+    private static final OutputDocument defaultInstance;
+    public static OutputDocument getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public OutputDocument getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_OutputDocument_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_OutputDocument_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // required string key = 1;
+    public static final int KEY_FIELD_NUMBER = 1;
+    private java.lang.Object key_;
+    public boolean hasKey() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getKey() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          key_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getKeyBytes() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        key_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // optional bytes nlm = 2;
+    public static final int NLM_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString nlm_;
+    public boolean hasNlm() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public com.google.protobuf.ByteString getNlm() {
+      return nlm_;
+    }
+    
+    // optional bytes pdf = 3;
+    public static final int PDF_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString pdf_;
+    public boolean hasPdf() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public com.google.protobuf.ByteString getPdf() {
+      return pdf_;
+    }
+    
+    // optional bytes xml = 4;
+    public static final int XML_FIELD_NUMBER = 4;
+    private com.google.protobuf.ByteString xml_;
+    public boolean hasXml() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public com.google.protobuf.ByteString getXml() {
+      return xml_;
+    }
+    
+    private void initFields() {
+      key_ = "";
+      nlm_ = com.google.protobuf.ByteString.EMPTY;
+      pdf_ = com.google.protobuf.ByteString.EMPTY;
+      xml_ = com.google.protobuf.ByteString.EMPTY;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasKey()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getKeyBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, nlm_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, pdf_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, xml_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getKeyBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, nlm_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, pdf_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, xml_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocumentOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_OutputDocument_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.internal_static_model_OutputDocument_fieldAccessorTable;
+      }
+      
+      // Construct using pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        key_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        nlm_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        pdf_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        xml_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument.getDescriptor();
+      }
+      
+      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument getDefaultInstanceForType() {
+        return pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument.getDefaultInstance();
+      }
+      
+      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument build() {
+        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument buildPartial() {
+        pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument result = new pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.key_ = key_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.nlm_ = nlm_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.pdf_ = pdf_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.xml_ = xml_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument) {
+          return mergeFrom((pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument other) {
+        if (other == pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument.getDefaultInstance()) return this;
+        if (other.hasKey()) {
+          setKey(other.getKey());
+        }
+        if (other.hasNlm()) {
+          setNlm(other.getNlm());
+        }
+        if (other.hasPdf()) {
+          setPdf(other.getPdf());
+        }
+        if (other.hasXml()) {
+          setXml(other.getXml());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasKey()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              key_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              nlm_ = input.readBytes();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              pdf_ = input.readBytes();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              xml_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required string key = 1;
+      private java.lang.Object key_ = "";
+      public boolean hasKey() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public String getKey() {
+        java.lang.Object ref = key_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          key_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setKey(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearKey() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        key_ = getDefaultInstance().getKey();
+        onChanged();
+        return this;
+      }
+      void setKey(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
+      }
+      
+      // optional bytes nlm = 2;
+      private com.google.protobuf.ByteString nlm_ = com.google.protobuf.ByteString.EMPTY;
+      public boolean hasNlm() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public com.google.protobuf.ByteString getNlm() {
+        return nlm_;
+      }
+      public Builder setNlm(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        nlm_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearNlm() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        nlm_ = getDefaultInstance().getNlm();
+        onChanged();
+        return this;
+      }
+      
+      // optional bytes pdf = 3;
+      private com.google.protobuf.ByteString pdf_ = com.google.protobuf.ByteString.EMPTY;
+      public boolean hasPdf() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public com.google.protobuf.ByteString getPdf() {
+        return pdf_;
+      }
+      public Builder setPdf(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        pdf_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearPdf() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        pdf_ = getDefaultInstance().getPdf();
+        onChanged();
+        return this;
+      }
+      
+      // optional bytes xml = 4;
+      private com.google.protobuf.ByteString xml_ = com.google.protobuf.ByteString.EMPTY;
+      public boolean hasXml() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public com.google.protobuf.ByteString getXml() {
+        return xml_;
+      }
+      public Builder setXml(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        xml_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearXml() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        xml_ = getDefaultInstance().getXml();
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:model.OutputDocument)
+    }
+    
+    static {
+      defaultInstance = new OutputDocument(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:model.OutputDocument)
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_model_Document_descriptor;
+    internal_static_model_InputDocument_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_model_Document_fieldAccessorTable;
+      internal_static_model_InputDocument_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_model_OutputDocument_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_model_OutputDocument_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -525,24 +1093,34 @@ public final class DocumentProtos {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rpdf_nlm.proto\022\005model\"1\n\010Document\022\013\n\003ke" +
-      "y\030\001 \002(\t\022\013\n\003nlm\030\002 \001(\014\022\013\n\003pdf\030\003 \001(\014B:\n(pl." +
-      "edu.icm.cermine.pubmed.importer.modelB\016D" +
-      "ocumentProtos"
+      "\n\rpdf_nlm.proto\022\005model\"6\n\rInputDocument\022" +
+      "\013\n\003key\030\001 \002(\t\022\013\n\003nlm\030\002 \001(\014\022\013\n\003pdf\030\003 \001(\014\"D" +
+      "\n\016OutputDocument\022\013\n\003key\030\001 \002(\t\022\013\n\003nlm\030\002 \001" +
+      "(\014\022\013\n\003pdf\030\003 \001(\014\022\013\n\003xml\030\004 \001(\014B:\n(pl.edu.i" +
+      "cm.cermine.pubmed.importer.modelB\016Docume" +
+      "ntProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_model_Document_descriptor =
+          internal_static_model_InputDocument_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_model_Document_fieldAccessorTable = new
+          internal_static_model_InputDocument_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_model_Document_descriptor,
+              internal_static_model_InputDocument_descriptor,
               new java.lang.String[] { "Key", "Nlm", "Pdf", },
-              pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document.class,
-              pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.Document.Builder.class);
+              pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument.class,
+              pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.InputDocument.Builder.class);
+          internal_static_model_OutputDocument_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_model_OutputDocument_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_model_OutputDocument_descriptor,
+              new java.lang.String[] { "Key", "Nlm", "Pdf", "Xml", },
+              pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument.class,
+              pl.edu.icm.cermine.pubmed.importer.model.DocumentProtos.OutputDocument.Builder.class);
           return null;
         }
       };

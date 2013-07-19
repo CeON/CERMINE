@@ -21,8 +21,8 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  * @author Paweł Szostek
  */
 public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
-	private final static String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/svm_metadata_classifier";
-	private final static String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/svm_metadata_classifier.range";
+	private final static String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/meta_classification_svm_model";
+	private final static String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/meta_classification_svm_model.range";
 	
 	public SVMMetadataZoneClassifier() throws AnalysisException {
 		super(getFeatureVectorBuilder());
@@ -62,6 +62,7 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 						new BibinfoFeature(),
 						new CharCountFeature(),
 						new CharCountRelativeFeature(),
+						new ContributionFeature(),
 						new DateFeature(),
 						new DistanceFromNearestNeighbourFeature(),
 						new DotCountFeature(),
@@ -79,6 +80,7 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 						new IsGreatestFontOnPageFeature(),
 						new IsWidestOnThePageFeature(),
 						new KeywordsFeature(),
+						new LastButOneZoneFeature(),
 						new LineCountFeature(),
 						new LineRelativeCountFeature(),
 						new LineHeightMeanFeature(),

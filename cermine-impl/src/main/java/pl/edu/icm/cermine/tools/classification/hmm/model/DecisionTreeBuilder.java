@@ -1,7 +1,7 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
-import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import java.util.*;
+import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 /**
@@ -29,7 +29,7 @@ public final class DecisionTreeBuilder {
      * @return Root of the built decision tree.
      */
     public static <S extends Comparable<S>> DecisionTree<S> buildDecisionTree(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes) {
         return DecisionTreeBuilder.buildDecisionTree(trainingSet, attributes, stopExpanding);
     }
 
@@ -44,7 +44,7 @@ public final class DecisionTreeBuilder {
      * @return Root of the built decision tree.
      */
     public static <S extends Comparable<S>> DecisionTree<S> buildDecisionTree(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes, int stopExpanding) {
         return constructNode(trainingSet, attributes, stopExpanding);
     }
 
@@ -59,7 +59,7 @@ public final class DecisionTreeBuilder {
      * @return Constructed node.
      */
     private static <S extends Comparable<S>> DecisionTree<S> constructNode(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes, int stopExpanding) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes, int stopExpanding) {
         if (trainingSet.isEmpty()) {
             return null;
         }
@@ -77,7 +77,7 @@ public final class DecisionTreeBuilder {
             return new DecisionTree<S>(probDistribution);
         }
 
-        Set<String> newAttributes = new HashSet<String>(attributes);
+        List<String> newAttributes = new ArrayList<String>(attributes);
         newAttributes.remove(decision.testedFeature);
 
         Set<HMMTrainingSample<S>> leftElements = new HashSet<HMMTrainingSample<S>>();
@@ -108,7 +108,7 @@ public final class DecisionTreeBuilder {
      * @return The best decision.
      */
     private static <S extends Comparable<S>> NodeDecision chooseDecision(
-            Set<HMMTrainingSample<S>> trainingSet, Set<String> attributes) {
+            Set<HMMTrainingSample<S>> trainingSet, List<String> attributes) {
         String bestAttribute = null;
         double bestCut = -1;
         double bestEntropyGain = 0;
@@ -124,8 +124,8 @@ public final class DecisionTreeBuilder {
                 public int compare(HMMTrainingSample<S> t,  HMMTrainingSample<S> t1) {
                     HMMTrainingSample<S> te1 = (HMMTrainingSample<S>) t;
                     HMMTrainingSample<S> te2 = (HMMTrainingSample<S>) t1;
-                    int ret = Double.compare(te1.getObservation().getFeature(sortAttribute),
-                            te2.getObservation().getFeature(sortAttribute));
+                    int ret = Double.compare(te1.getObservation().getFeatureValue(sortAttribute),
+                            te2.getObservation().getFeatureValue(sortAttribute));
                     if (ret == 0) {
                         ret = te1.getLabel().compareTo(te2.getLabel());
                     }
@@ -148,9 +148,9 @@ public final class DecisionTreeBuilder {
                 S label2 = trainingElement2.getLabel();
 
                 if (leftCount <= i) {
-                    double feature = trainingList.get(leftCount).getObservation().getFeature(attribute);
+                    double feature = trainingList.get(leftCount).getObservation().getFeatureValue(attribute);
                     while (leftCount < trainingList.size()
-                            && trainingList.get(leftCount).getObservation().getFeature(attribute) == feature) {
+                            && trainingList.get(leftCount).getObservation().getFeatureValue(attribute) == feature) {
                         leftLabelsProb.addEvent(trainingList.get(leftCount).getLabel());
                         rightLabelsProb.removeEvent(trainingList.get(leftCount).getLabel());
                         leftCount++;
@@ -165,10 +165,10 @@ public final class DecisionTreeBuilder {
                             + rightEntropy * (double) (trainingList.size() - leftCount) / (double) (trainingList.size());
 
                     if (bestAttribute == null || entropyGain < bestEntropyGain) {
-                        double f1 = trainingElement1.getObservation().getFeature(attribute);
-                        double f2 = trainingElement2.getObservation().getFeature(attribute);
+                        double f1 = trainingElement1.getObservation().getFeatureValue(attribute);
+                        double f2 = trainingElement2.getObservation().getFeatureValue(attribute);
                         if (f1 != f2 ||
-                              f1 != trainingList.get(trainingList.size() - 1).getObservation().getFeature(attribute)) {
+                              f1 != trainingList.get(trainingList.size() - 1).getObservation().getFeatureValue(attribute)) {
                             bestAttribute = attribute;
                             bestCut = (f1 + f2) / 2;
                             bestEntropyGain = entropyGain;
@@ -197,11 +197,11 @@ public final class DecisionTreeBuilder {
         }
 
         public boolean isLeft(FeatureVector features) {
-            return features.getFeature(testedFeature) <= cut;
+            return features.getFeatureValue(testedFeature) <= cut;
         }
 
         public boolean isRight(FeatureVector features) {
-            return features.getFeature(testedFeature) > cut;
+            return features.getFeatureValue(testedFeature) > cut;
         }
 
     }

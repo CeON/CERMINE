@@ -191,17 +191,6 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                 continue;
             }
 
-            // !!!! Code below is used for debugging purposes
-
-            /*
-             * String obj1Content = null; try { obj1Content = ((BxZone)distElem.obj1).toText(); } catch (Exception e) {
-             * obj1Content = ""; } String obj2Content = null; try { obj2Content = ((BxZone)distElem.obj2).toText(); }
-             * catch (Exception e) { obj2Content = ""; } System.out.println("(" + distElem.obj1.getX() + ", " +
-             * distElem.obj1.getY() + ", " + (int)distElem.obj1.getWidth() + ", " + (int)distElem.obj1.getHeight() + ":
-             * "+ s(obj1Content)+"["+obj1Content.length()+"])" + " + (" + distElem.obj2.getX() + ", " +
-             * distElem.obj2.getY() + ", " + (int)distElem.obj2.getWidth() + ", " + (int)distElem.obj2.getHeight() + ":
-             * "+ s(obj2Content)+"["+obj2Content.length()+"]) " +distElem.dist);
-             */
             BxZoneGroup newGroup = new BxZoneGroup(distElem.getObj1(), distElem.getObj2());
             plane.remove(distElem.getObj1()).remove(distElem.getObj2());
             dists = removeDistElementsContainingObject(dists, distElem.getObj1());
@@ -213,7 +202,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
             Collections.sort(dists);
             plane.add(newGroup);
         }
-        //    System.out.println("");
+        
         assert plane.getObjects().size() == 1 : "There should be one object left at the plane after grouping";
         return (BxZoneGroup) plane.getObjects().get(0);
     }
@@ -230,14 +219,6 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         }
         return ret;
     }
-    /*
-     * private void sortTree(BxZoneGroup tree) { if(tree.getLeftChild() != null && tree.getRightChild() != null) {
-     * double leftChildDist = distFromRoot(tree.getLeftChild()); double rightChildDist =
-     * distFromRoot(tree.getRightChild()); if(rightChildDist < leftChildDist) { // swap BxObject tmp =
-     * tree.getLeftChild(); tree.setLeftChild(tree.getRightChild()); tree.setRightChild(tmp); } if(tree.getLeftChild()
-     * instanceof BxZoneGroup) { sortGroupedZones((BxZoneGroup)tree.getLeftChild()); } if(tree.getRightChild()
-     * instanceof BxZoneGroup) { sortGroupedZones((BxZoneGroup)tree.getRightChild()); } } }
-     */
 
     /**
      * Swaps children of BxZoneGroup if necessary. A group with smaller sort factor is placed to the left (leftChild).

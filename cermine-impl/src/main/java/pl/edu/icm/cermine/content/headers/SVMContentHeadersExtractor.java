@@ -38,7 +38,7 @@ public class SVMContentHeadersExtractor implements ContentHeadersExtractor {
    
     private boolean isHeader(BxLine line, BxPage page) {
         BxZoneLabel label = contentHeaderClassifier.predictLabel(line, page);
-        return label.equals(BxZoneLabel.BODY_HEADER);
+        return label.equals(BxZoneLabel.BODY_HEADING);
     }
     
     @Override

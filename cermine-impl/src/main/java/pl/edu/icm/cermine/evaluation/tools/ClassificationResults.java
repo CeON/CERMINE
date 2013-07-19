@@ -1,15 +1,7 @@
 package pl.edu.icm.cermine.evaluation.tools;
 
-import java.util.Collection;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator;
-import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Results;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 

@@ -22,7 +22,7 @@ public class HMMTrainingSample<S> extends TrainingSample<S> {
     }
 
     public FeatureVector getObservation() {
-        return getFeatures();
+        return getFeatureVector();
     }
 
     public boolean isFirst() {

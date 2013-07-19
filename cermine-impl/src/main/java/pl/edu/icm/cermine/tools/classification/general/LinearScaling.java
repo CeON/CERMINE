@@ -18,7 +18,7 @@ public class LinearScaling implements ScalingStrategy {
 			if(Math.abs(limits[featureIdx].getMax()-limits[featureIdx].getMin()) < EPS) {
 				newVector.addFeature(name, 1.0);
 			} else {
-				Double featureValue = fv.getFeature(name);
+				Double featureValue = fv.getFeatureValue(name);
 				Double a = (scaledUpperBound-scaledLowerBound)/(limits[featureIdx].getMax()-limits[featureIdx].getMin());
 				Double b = scaledLowerBound-a*limits[featureIdx].getMin();
 				

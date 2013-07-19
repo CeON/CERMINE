@@ -44,7 +44,7 @@ public class KnnContentHeadersExtractor implements ContentHeadersExtractor {
         FeatureVector featureVector = classVectorBuilder.getFeatureVector(line, page);
 
         BxZoneLabel label = classifier.classify(model, new FeatureVectorEuclideanMetric(), featureVector, knnVoters);
-        return label.equals(BxZoneLabel.BODY_HEADER);
+        return label.equals(BxZoneLabel.BODY_HEADING);
     }
     
     @Override
@@ -86,11 +86,11 @@ public class KnnContentHeadersExtractor implements ContentHeadersExtractor {
                     if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_BODY)
                             && (zone.getLabel().equals(BxZoneLabel.GEN_BODY)
                             || zone.getLabel().equals(BxZoneLabel.BODY_CONTENT) 
-                            || zone.getLabel().equals(BxZoneLabel.BODY_HEADER))) {
+                            || zone.getLabel().equals(BxZoneLabel.BODY_HEADING))) {
                         for (BxLine line : zone.getLines()) {
                             FeatureVector fv = vectorBuilder.getFeatureVector(line, page);
                             if (contentStr.containsHeaderFirstLineText(line.toText())) {
-                                model.addTrainingSample(new TrainingSample(fv, BxZoneLabel.BODY_HEADER));
+                                model.addTrainingSample(new TrainingSample(fv, BxZoneLabel.BODY_HEADING));
                             } else {
                                 model.addTrainingSample(new TrainingSample(fv, BxZoneLabel.BODY_CONTENT));
                             }

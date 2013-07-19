@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
+import java.util.StringTokenizer;
 import org.apache.commons.io.IOUtils;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
@@ -30,6 +32,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 		this.strategy = strategy;
 	}
 	
+    @Override
 	public FeatureVector scaleFeatureVector(FeatureVector fv) {
 		for(FeatureLimits l: limits) {
 			assert l.getMin() != Double.POSITIVE_INFINITY && l.getMax() != Double.NEGATIVE_INFINITY;
@@ -41,14 +44,15 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 		this.limits = featureLimits.toArray(new FeatureLimits[featureLimits.size()]);
 	}
 	
+    @Override
 	public <A extends Enum<A>> void calculateFeatureLimits(List<TrainingSample<A>> trainingElements) {
 		for(TrainingSample<A> trainingElem: trainingElements) {
-			FeatureVector fv = trainingElem.getFeatures();
-			Set<String> names = fv.getFeatureNames();
+			FeatureVector fv = trainingElem.getFeatureVector();
+			List<String> names = fv.getFeatureNames();
 
 			int featureIdx = 0;
 			for(String name: names) {
-				double val = fv.getFeature(name);
+				double val = fv.getFeatureValue(name);
 				if(val > limits[featureIdx].max) {
 					limits[featureIdx].setMax(val);
 				}
@@ -69,6 +73,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 		return limits;
 	}
 
+    @Override
     public void saveRangeFile(String path) throws IOException {
         BufferedWriter fp_save = null;
         try {

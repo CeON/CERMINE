@@ -20,7 +20,7 @@ public class SVMLogicalStructureExtractorTest extends AbstractLogicalStructureEx
     String headerModel = "header.model";
     String headerRange = "header.range";
     
-       
+    
     @Before
     @Override
     public void setUp() throws IOException, TransformationException, AnalysisException, URISyntaxException, JDOMException {

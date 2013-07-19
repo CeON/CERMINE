@@ -1,9 +1,9 @@
 package pl.edu.icm.cermine.structure;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -11,7 +11,6 @@ import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
@@ -22,8 +21,8 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
-	private final static String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/svm_initial_classifier";
-	private final static String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/svm_initial_classifier.range";
+	private final static String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/initial_classification_svm_model";
+	private final static String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/initial_classification_svm_model.range";
 	
 	public SVMInitialZoneClassifier() throws AnalysisException, IOException {
 		super(getFeatureVectorBuilder());
@@ -54,6 +53,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
                 new CharCountRelativeFeature(),
                 new CommaCountFeature(),
                 new CommaRelativeCountFeature(),
+                new ContributionFeature(),
                 new ContainsPageNumberFeature(),
         		new CuePhrasesRelativeCountFeature(),
         		new DateFeature(),
@@ -62,6 +62,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         		new DistanceFromNearestNeighbourFeature(),
         		new DotCountFeature(),
         		new DotRelativeCountFeature(),
+        		new EmailFeature(),
                 new EmptySpaceRelativeFeature(),
         		new FontHeightMeanFeature(),
         		new FreeSpaceWithinZoneFeature(),
@@ -86,6 +87,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         		new IsPageNumberFeature(),
         		new IsRightFeature(),
         		new IsSingleWordFeature(),
+        		new LastButOneZoneFeature(),
                 new LineCountFeature(),
                 new LineRelativeCountFeature(),
                 new LineHeightMeanFeature(),
@@ -137,29 +139,12 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 		SVMInitialZoneClassifier classifier = new SVMInitialZoneClassifier();
 
 		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-		BxDocumentToTrueVizWriter tvw = new BxDocumentToTrueVizWriter();
 		
 		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[0]);
 		for(BxDocument doc: docs) {
 			System.out.println(">> " + doc.getFilename());
 			ror.resolve(doc);
 			classifier.classifyZones(doc);
-			BufferedWriter out = null;
-/*
-			try {
-				// Create file 
-				FileWriter fstream = new FileWriter(doc.getFilename());
-				out = new BufferedWriter(fstream);
-				out.write(tvw.write(doc.getPages()));
-				out.close();
-			} catch (Exception e){//Catch exception if any
-				System.err.println("Error: " + e.getMessage());
-			} finally {
-				if(out != null) {
-					out.close();
-				}
-			}
-			*/
 		}
 	}
 }

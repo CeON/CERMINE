@@ -16,11 +16,11 @@ public class TrainingSample<S> implements Cloneable {
         this.label = label;
     }
     
-    public FeatureVector getFeatures() {
+    public FeatureVector getFeatureVector() {
         return features;
     }
 
-    public void setFeatures(FeatureVector features) {
+    public void setFeatureVectors(FeatureVector features) {
         this.features = features;
     }
 

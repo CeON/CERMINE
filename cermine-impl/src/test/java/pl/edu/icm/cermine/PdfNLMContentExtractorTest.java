@@ -32,7 +32,7 @@ public class PdfNLMContentExtractorTest {
     }
     
     @Test
-    public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException {
+    public void contentExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
         Element testContent;
         try {

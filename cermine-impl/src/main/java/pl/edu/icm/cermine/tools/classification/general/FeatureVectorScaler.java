@@ -1,9 +1,8 @@
 package pl.edu.icm.cermine.tools.classification.general;
 
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-
 import java.io.IOException;
 import java.util.List;
+import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 /**
  * @author Mateusz Fedoryszak (m.fedoryszak@icm.edu.pl)

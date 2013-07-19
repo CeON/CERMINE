@@ -9,94 +9,124 @@ import java.util.Map;
  * Represents a zone's function on a page.
  * 
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
- * 
  */
- 
 public enum BxZoneLabel {
     
-    /** Document's metadata. */
-	GEN_METADATA        (BxZoneLabelCategory.CAT_GENERAL),
-	
-	/** Document's body. */
-	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL),
-	
-	/** Document's references. */
-	GEN_REFERENCES      (BxZoneLabelCategory.CAT_GENERAL),
-	
-	/** Other stuff left in the document. */
-	GEN_OTHER           (BxZoneLabelCategory.CAT_GENERAL),
-	
-    /** Document's abstract. */
-    MET_ABSTRACT        (BxZoneLabelCategory.CAT_METADATA),
+    /** General zones */
     
-    /** Authors' Affiliations. */
-    MET_AFFILIATION     (BxZoneLabelCategory.CAT_METADATA),
+    /** Document's metadata */
+	GEN_METADATA        (BxZoneLabelCategory.CAT_GENERAL), //0
+	
+	/** Document's body */
+	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL), //1
+	
+	/** Document's references */
+	GEN_REFERENCES      (BxZoneLabelCategory.CAT_GENERAL), //2
+	
+	/** Other stuff left in the document */
+	GEN_OTHER           (BxZoneLabelCategory.CAT_GENERAL), //3
+	
+    
+    /** Metadata zones */
+    
+    /** Document's abstract */
+    MET_ABSTRACT        (BxZoneLabelCategory.CAT_METADATA), //4
+    
+    /** Authors' Affiliations */
+    MET_AFFILIATION     (BxZoneLabelCategory.CAT_METADATA), //5
+    
+    /** Document's access info */
+    MET_ACCESS_DATA     (BxZoneLabelCategory.CAT_METADATA), //6
+
+    /** Authors' biographies */
+    MET_BIOGRAPHY       (BxZoneLabelCategory.CAT_METADATA), //7
     
     /** Authors' names. */
-    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA),
+    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA), //8
     
-    /** A zone containing bibliographic information, such as journal, volume, year, doi, etc. */
-    MET_BIB_INFO        (BxZoneLabelCategory.CAT_METADATA),
+    /** Bibliographic information, such as journal, volume, year, doi, etc. */
+    MET_BIB_INFO        (BxZoneLabelCategory.CAT_METADATA), //9
     
-    /** Authors' correspondence information. */
-    MET_CORRESPONDENCE  (BxZoneLabelCategory.CAT_METADATA),
+    /** Authors' correspondence information */
+    MET_CORRESPONDENCE  (BxZoneLabelCategory.CAT_METADATA), //10
 
     /** When the document was received/revised/accepted/etc. */
-    MET_DATES           (BxZoneLabelCategory.CAT_METADATA),
+    MET_DATES           (BxZoneLabelCategory.CAT_METADATA), //11
     
     /** Document's editor */
-    MET_EDITOR          (BxZoneLabelCategory.CAT_METADATA),
+    MET_EDITOR          (BxZoneLabelCategory.CAT_METADATA), //12
     
     /** Keywords */
-    MET_KEYWORDS        (BxZoneLabelCategory.CAT_METADATA),
+    MET_KEYWORDS        (BxZoneLabelCategory.CAT_METADATA), //13
     
-    /** Document's title. */
-    MET_TITLE           (BxZoneLabelCategory.CAT_METADATA),
-
+    /** Document's title */
+    MET_TITLE           (BxZoneLabelCategory.CAT_METADATA), //14
+ 
     /** Document's type */
-    MET_TYPE            (BxZoneLabelCategory.CAT_METADATA),
+    MET_TYPE            (BxZoneLabelCategory.CAT_METADATA), //15
     
-    /** Document's body. */
-    BODY_CONTENT        (BxZoneLabelCategory.CAT_BODY),
+    /** Document's copyright */
+    MET_COPYRIGHT       (BxZoneLabelCategory.CAT_METADATA), //16
+
+    
+    /** Body zones */
+        
+    /** Document's body */
+    BODY_CONTENT        (BxZoneLabelCategory.CAT_BODY), //17
+    
+    /** Glossary */
+    BODY_GLOSSARY       (BxZoneLabelCategory.CAT_BODY), //18 
     
     /** Equation */
-    BODY_EQUATION       (BxZoneLabelCategory.CAT_BODY),
+    BODY_EQUATION       (BxZoneLabelCategory.CAT_BODY), //19
     
     /** Equation's label */
-    BODY_EQUATION_LABEL (BxZoneLabelCategory.CAT_BODY),
+    BODY_EQUATION_LABEL (BxZoneLabelCategory.CAT_BODY), //20
     
     /** Figure */
-    BODY_FIGURE         (BxZoneLabelCategory.CAT_BODY),
+    BODY_FIGURE         (BxZoneLabelCategory.CAT_BODY), //21
     
     /** Figure's caption */
-    BODY_FIGURE_CAPTION (BxZoneLabelCategory.CAT_BODY),
+    BODY_FIGURE_CAPTION (BxZoneLabelCategory.CAT_BODY), //22
     
-    /** Content header. */
-    BODY_HEADER         (BxZoneLabelCategory.CAT_BODY),
+    /** Content header */
+    BODY_HEADING        (BxZoneLabelCategory.CAT_BODY), //23
    
-    /** Label for tables, figures and equations */
-    BODY_JUNK           (BxZoneLabelCategory.CAT_BODY),
+    /** General label for tables, figures and equations */
+    BODY_JUNK           (BxZoneLabelCategory.CAT_BODY), //24
     
     /** Table */
-    BODY_TABLE          (BxZoneLabelCategory.CAT_BODY),
+    BODY_TABLE          (BxZoneLabelCategory.CAT_BODY), //25
     
     /** Table's caption */
-    BODY_TABLE_CAPTION  (BxZoneLabelCategory.CAT_BODY),
+    BODY_TABLE_CAPTION  (BxZoneLabelCategory.CAT_BODY), //26
+
+    /** Acknowledgments */
+    BODY_ACKNOWLEDGMENT (BxZoneLabelCategory.CAT_BODY), //27
     
-    /** Document's copyright or license */
-    OTH_COPYRIGHT       (BxZoneLabelCategory.CAT_OTHER),
+    /** Author's contributions */
+    BODY_CONTRIBUTION   (BxZoneLabelCategory.CAT_BODY), //28
     
-    OTH_HEADER          (BxZoneLabelCategory.CAT_OTHER),
+    /** Conflict statements */
+    BODY_CONFLICT_STMT  (BxZoneLabelCategory.CAT_BODY), //29
     
-    OTH_FOOTER          (BxZoneLabelCategory.CAT_OTHER),
+    /** Attachments */
+    BODY_ATTACHMENT 	(BxZoneLabelCategory.CAT_BODY), //30
+    
+    
+    /** Other zones */
     
     /** Page number */
-    OTH_PAGE_NUMBER     (BxZoneLabelCategory.CAT_OTHER),
+    OTH_PAGE_NUMBER     (BxZoneLabelCategory.CAT_OTHER), //31
     
-    /** Undetermined zone. */
-    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_UNKNOWN),
+    /** Undetermined zone */
+    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_OTHER), //32
     
-    REFERENCES (BxZoneLabelCategory.CAT_REFERENCES);
+    
+    /** References zones */
+    
+    /** References */
+    REFERENCES          (BxZoneLabelCategory.CAT_REFERENCES); //33
          
     private final BxZoneLabelCategory category;
     
@@ -107,7 +137,6 @@ public enum BxZoneLabel {
         CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_METADATA,     GEN_METADATA);
         CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_OTHER,        GEN_OTHER);
         CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_REFERENCES,   GEN_REFERENCES);
-        CATEGORY_TO_GENERAL.put(BxZoneLabelCategory.CAT_UNKNOWN,      OTH_UNKNOWN);
     }
     
     private static final Map<BxZoneLabel, BxZoneLabelCategory> GENERAL_TO_CATEGORY = 
@@ -117,7 +146,6 @@ public enum BxZoneLabel {
         GENERAL_TO_CATEGORY.put(GEN_METADATA,     BxZoneLabelCategory.CAT_METADATA);
         GENERAL_TO_CATEGORY.put(GEN_OTHER,        BxZoneLabelCategory.CAT_OTHER);
         GENERAL_TO_CATEGORY.put(GEN_REFERENCES,   BxZoneLabelCategory.CAT_REFERENCES);
-        GENERAL_TO_CATEGORY.put(OTH_UNKNOWN,       BxZoneLabelCategory.CAT_UNKNOWN);
     }
     
     private static final Map<BxZoneLabel, BxZoneLabel> LABEL_TO_GENERAL = 

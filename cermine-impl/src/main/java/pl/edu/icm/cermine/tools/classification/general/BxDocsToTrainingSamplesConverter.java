@@ -1,9 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.general;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneClassificationUtils;
 import pl.edu.icm.cermine.structure.model.*;
@@ -18,6 +15,27 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
  */
 public abstract class BxDocsToTrainingSamplesConverter {
 
+    public static List<TrainingSample<BxZoneLabel>> getZoneTrainingSamples(Iterator<BxDocument> documents, 
+            FeatureVectorBuilder<BxZone, BxPage> vectorBuilder, Map<BxZoneLabel, BxZoneLabel> labelMap) throws AnalysisException {
+        List<TrainingSample<BxZoneLabel>> trainingList = new ArrayList<TrainingSample<BxZoneLabel>>();
+
+        while (documents.hasNext()) {
+            BxDocument doc  = documents.next();
+            if (labelMap != null) {
+                ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
+            }
+
+            for (BxPage page : doc.getPages()) {
+                for (BxZone zone : page.getZones()) {
+                    FeatureVector featureVector = vectorBuilder.getFeatureVector(zone, page);
+                    TrainingSample<BxZoneLabel> element = new TrainingSample<BxZoneLabel>(featureVector, zone.getLabel());
+                    trainingList.add(element);
+                }
+            }
+        }
+        return trainingList;
+    }
+    
     public static List<TrainingSample<BxZoneLabel>> getZoneTrainingSamples(List<BxDocument> documents, 
             FeatureVectorBuilder<BxZone, BxPage> vectorBuilder, Map<BxZoneLabel, BxZoneLabel> labelMap) throws AnalysisException {
         List<TrainingSample<BxZoneLabel>> trainingList = new ArrayList<TrainingSample<BxZoneLabel>>(documents.size());

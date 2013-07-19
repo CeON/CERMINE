@@ -33,8 +33,6 @@ public class MargToTextrImporter {
         ZONE_LABEL_MAP.put("affiliation", BxZoneLabel.MET_AFFILIATION);
         ZONE_LABEL_MAP.put("author", BxZoneLabel.MET_AUTHOR);
         ZONE_LABEL_MAP.put("title", BxZoneLabel.MET_TITLE);
-        ZONE_LABEL_MAP.put("footer", BxZoneLabel.OTH_FOOTER);
-        ZONE_LABEL_MAP.put("header", BxZoneLabel.OTH_HEADER);
     }
 
     public List<BxPage> read(String string, Object... hints) throws TransformationException {

@@ -1,9 +1,9 @@
 package pl.edu.icm.cermine.tools.classification.hmm.model;
 
-import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import pl.edu.icm.cermine.structure.tools.ProbabilityDistribution;
 
 /**
  * Simple Hidden Markov Model transition probability implementation.

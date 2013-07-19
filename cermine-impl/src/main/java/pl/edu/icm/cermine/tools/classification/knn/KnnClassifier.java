@@ -86,8 +86,8 @@ public class KnnClassifier<T> {
         
         @Override
         public int compare(TrainingSample<T> ts1, TrainingSample<T> ts2) {
-            double dist1 = metric.getDistance(sample, ts1.getFeatures());
-            double dist2 = metric.getDistance(sample, ts2.getFeatures());
+            double dist1 = metric.getDistance(sample, ts1.getFeatureVector());
+            double dist2 = metric.getDistance(sample, ts2.getFeatureVector());
             if (dist1 < dist2) {
                 return -1;
             } else if (dist1 > dist2) {

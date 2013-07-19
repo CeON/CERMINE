@@ -21,7 +21,6 @@ import pl.edu.icm.cermine.PdfNLMMetadataExtractor;
 import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-
 /**
  *
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
@@ -116,9 +115,6 @@ public final class FinalMetadataExtractionEvaluation {
 
             org.jdom.Element metaElement = metadataExtractor.extractMetadata(new FileInputStream(pair.getPdf()));
             org.w3c.dom.Document extractedNlm = ElementToW3CDocument(metaElement);
-
-//        	print(outputDoc(originalNlm));
-//        	print(outputDoc(extractedNlm));
 
             String expectedTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/title-group/article-title");
             String extractedTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/title-group/article-title");
@@ -392,7 +388,7 @@ public final class FinalMetadataExtractionEvaluation {
     }
 
     private static Double calculatePrecision(List<String> expected, List<String> extracted) {
-        if (extracted.size() == 0) {
+        if (extracted.isEmpty()) {
             return .0;
         }
         Integer correct = 0;

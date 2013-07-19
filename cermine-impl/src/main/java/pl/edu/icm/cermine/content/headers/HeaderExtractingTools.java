@@ -26,21 +26,21 @@ public final class HeaderExtractingTools {
     public static final FeatureVectorBuilder<BxLine, BxPage> EXTRACT_VB = new FeatureVectorBuilder<BxLine, BxPage>();
     static {
         EXTRACT_VB.setFeatureCalculators(Arrays.<FeatureCalculator<BxLine, BxPage>>asList(
-                new DigitDotSchemaFeature(),
-                new DigitParSchemaFeature(),
-                new DoubleDigitSchemaFeature(),
-                new HeightFeature(),
-                new IndentationFeature(),
-                new IsHigherThanNeighborsFeature(),
-                new LengthFeature(),
-                new LowercaseSchemaFeature(),
-                new NextLineIndentationFeature(),
-                new PrevSpaceFeature(),
+                new WordsUppercaseFeature(),
                 new RomanDigitsSchemaFeature(),
                 new TripleDigitSchemaFeature(),
-                new UppercaseSchemaFeature(),
+                new PrevSpaceFeature(),
                 new WordsAllUppercaseFeature(),
-                new WordsUppercaseFeature()
+                new HeightFeature(),
+                new IsHigherThanNeighborsFeature(),
+                new NextLineIndentationFeature(),
+                new IndentationFeature(),
+                new DigitParSchemaFeature(),
+                new DoubleDigitSchemaFeature(),
+                new LowercaseSchemaFeature(),
+                new UppercaseSchemaFeature(), 
+                new LengthFeature(),
+                new DigitDotSchemaFeature()    
                 ));
     }
     

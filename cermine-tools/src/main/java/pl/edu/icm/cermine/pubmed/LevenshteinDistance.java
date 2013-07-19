@@ -3,7 +3,7 @@ package pl.edu.icm.cermine.pubmed;
 import java.util.ArrayList;
 import java.util.List;
 
-class LevenshteinDistance {
+public class LevenshteinDistance {
 
     public Integer compare(List<String> s1, List<String> s2) {
         int retval = 0;

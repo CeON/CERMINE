@@ -3,6 +3,8 @@ package pl.edu.icm.cermine.pubmed;
 import java.io.*;
 import java.util.Map.Entry;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -112,29 +114,34 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
     	DataByteArray nlmByteArray = (DataByteArray) input.get(1);
     	DataByteArray pdfByteArray = (DataByteArray) input.get(2);
     	BxDocument bxDoc = null;
-    	try {
-    		ByteArrayInputStream nlmIS = new ByteArrayInputStream(nlmByteArray.get());
-    		ByteArrayInputStream pdfIS = new ByteArrayInputStream(pdfByteArray.get());
-			bxDoc = generateTrueViz(pdfIS, nlmIS);
-			System.out.println("generated trueviz");
-		} catch (Throwable e) {
-			System.err.println(keyString);
-			e.printStackTrace();
-		}
+   		ByteArrayInputStream nlmIS = new ByteArrayInputStream(nlmByteArray.get());
+   		ByteArrayInputStream pdfIS = new ByteArrayInputStream(pdfByteArray.get());
+        try {
+            bxDoc = generateTrueViz(pdfIS, nlmIS);
+        } catch (AnalysisException ex) {
+            throw new IOException("Cannot generate trueviz file!", ex);
+        } catch (ParserConfigurationException ex) {
+            throw new IOException("Cannot generate trueviz file!", ex);
+        } catch (SAXException ex) {
+            throw new IOException("Cannot generate trueviz file!", ex);
+        } catch (XPathExpressionException ex) {
+            throw new IOException("Cannot generate trueviz file!", ex);
+        } catch (TransformationException ex) {
+            throw new IOException("Cannot generate trueviz file!", ex);
+        }
+
     	BxDocumentToTrueVizWriter trueVizWriter = new BxDocumentToTrueVizWriter();
     	DataByteArray returnDoc = null;
     	if (bxDoc != null) {
     		try {
     			returnDoc = new DataByteArray(trueVizWriter.write(bxDoc.getPages()));
-    			returnDoc = null;
     			System.out.println("wrote down trueviz");
-    			PigStatusReporter reporter = PigStatusReporter.getInstance();
-    			if (reporter != null) {
-    				reporter.getCounter("CERMINE_COUNTERS", "DOC_COUNTER").increment(1);
+    			PigStatusReporter pigReporter = PigStatusReporter.getInstance();
+    			if (pigReporter != null) {
+    				pigReporter.getCounter("CERMINE_COUNTERS", "DOC_COUNTER").increment(1);
     			}
-    		} catch (TransformationException e) {
-    			System.err.println(keyString);
-    			e.printStackTrace();
+    		} catch (TransformationException ex) {
+    			throw new IOException("Error!", ex);
     		}
     	}
     	
@@ -162,18 +169,6 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 		}
 	}
 	
-    private Map<BxZoneLabel, Integer> summarizeDocument(BxDocument doc) {
-    	Map<BxZoneLabel, Integer> ret = new HashMap<BxZoneLabel, Integer>();
-    	for(BxZone zone: doc.asZones()) {
-    		if(ret.containsKey(zone.getLabel())) {
-    			ret.put(zone.getLabel(), ret.get(zone.getLabel())+1);
-    		} else {
-    			ret.put(zone.getLabel(), 1);
-    		}
-    	}
-    	return ret;
-    }
-    
     public BxDocument generateTrueViz(InputStream pdfStream, InputStream nlmStream) 
     		throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
         XPath xpath = XPathFactory.newInstance().newXPath();
@@ -255,7 +250,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         }
 
         //publication date
-        List<String> pubdateString = null;
+        List<String> pubdateString;
         if (((NodeList) xpath.evaluate("/article/front/article-meta/pub-date", domDoc, XPathConstants.NODESET)).getLength() > 1) {
             Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='epub']", domDoc, XPathConstants.NODE);
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
@@ -533,8 +528,8 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
                 BxZone curZone = bxDoc.asZones().get(zoneIdx);
                 List<String> zoneTokens = StringTools.tokenize(StringTools.removeOrphantSpaces(StringTools.cleanLigatures(curZone.toText())));
 
-                Double smithSim = null;
-                Double cosSim = null;
+                Double smithSim;
+                Double cosSim;
                 if (curZone.toText().contains("www.biomedcentral.com")) {
                     //ignore
                     smithSim = 0.;
@@ -612,7 +607,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         		}
         		///////
         		if (!valueSet) {
-        			Map<BxZoneLabel, Double> cumulated = new HashMap<BxZoneLabel, Double>();
+        			Map<BxZoneLabel, Double> cumulated = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
         			for (LabelTrio trio : swLabelSim.get(zoneIdx)) {
         				if (cumulated.containsKey(trio.label)) {
         					cumulated.put(trio.label, cumulated.get(trio.label) + trio.alignment / Math.max(zoneTokens.size(), trio.entryTokens.size()));
@@ -693,18 +688,6 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
             }
         }
         return max;
-    }
-
-    private static Map<BxZoneLabel, Double> aggregate(List<LabelTrio> sims) {
-        HashMap<BxZoneLabel, Double> ret = new HashMap<BxZoneLabel, Double>();
-        for (LabelTrio trio : sims) {
-            if (ret.containsKey(trio.label)) {
-                ret.put(trio.label, ret.get(trio.label) + trio.alignment / trio.entryTokens.size());
-            } else {
-                ret.put(trio.label, trio.alignment / trio.entryTokens.size());
-            }
-        }
-        return ret;
     }
 
     public static void main(String[] args) {

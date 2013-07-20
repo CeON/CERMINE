@@ -114,6 +114,10 @@ public class SequenceFileLoadFunc extends FileInputLoadFunc {
             setValueType(value.getClass());
         }
         
+        if (value == null) {
+            return null;
+        }
+        
         DocumentProtos.InputDocument protos = DocumentProtos.InputDocument.parseFrom(value.getBytes());
         mProtoTuple.clear();
         mProtoTuple.add(protos.getKey());

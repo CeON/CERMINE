@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -37,8 +35,6 @@ public class DocumentBibZonesCorrector {
             BxDocument doc = new BxDocument().setPages(pages);
             doc.setFilename(f.getName());
            
-            Set<BxZoneLabel> set = new HashSet<BxZoneLabel>();
-
             for (BxZone z: doc.asZones()) {
                 if (!BxZoneLabel.MET_BIB_INFO.equals(z.getLabel()) &&
                         !BxZoneLabel.REFERENCES.equals(z.getLabel()) &&
@@ -71,7 +67,10 @@ public class DocumentBibZonesCorrector {
 
             File f2 = new File(outDir+doc.getFilename());
             BxDocumentToTrueVizWriter wrt = new BxDocumentToTrueVizWriter();
-            f2.createNewFile();
+            boolean created = f2.createNewFile();
+            if (!created) {
+                throw new IOException("Cannot create file: ");
+            }
             FileWriter fw = new FileWriter(f2);
             wrt.write(fw, doc.getPages());
             fw.flush();

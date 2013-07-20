@@ -17,9 +17,6 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  */
 public class MargImporterTest {
 
-    public MargImporterTest() {
-    }
-
     @Test
     public void testImporter() throws IOException,  ParserConfigurationException, SAXException,
             TransformationException {

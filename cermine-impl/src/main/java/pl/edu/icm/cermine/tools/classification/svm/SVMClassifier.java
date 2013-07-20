@@ -62,11 +62,11 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		
 		Double scaledLowerBound = 0.0;
 		Double scaledUpperBound = 1.0;
-        FeatureVectorScalerImpl scaler = new FeatureVectorScalerImpl(dimensions, scaledLowerBound, scaledUpperBound);
-		scaler.setStrategy(new LinearScaling());
-		this.scaler = scaler;
-
-		featuresNames = (String[])featureVectorBuilder.getFeatureNames().toArray(new String[0]);
+        FeatureVectorScalerImpl lScaler = new FeatureVectorScalerImpl(dimensions, scaledLowerBound, scaledUpperBound);
+		lScaler.setStrategy(new LinearScaling());
+		this.scaler = lScaler;
+		
+        featuresNames = (String[])featureVectorBuilder.getFeatureNames().toArray(new String[0]);
 		
 		param = getDefaultParam();
 	}
@@ -118,10 +118,10 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 
 	protected svm_problem buildDatasetForTraining(List<TrainingSample<E>> trainingElements)
 	{
-		svm_problem problem = new svm_problem();
-		problem.l = trainingElements.size();
-		problem.x = new svm_node[problem.l][trainingElements.get(0).getFeatureVector().size()];
-		problem.y = new double[problem.l];
+		svm_problem svmProblem = new svm_problem();
+		svmProblem.l = trainingElements.size();
+		svmProblem.x = new svm_node[svmProblem.l][trainingElements.get(0).getFeatureVector().size()];
+		svmProblem.y = new double[svmProblem.l];
 		
 		Integer elemIdx = 0;
 		for(TrainingSample<E> trainingElem : trainingElements) {
@@ -131,13 +131,13 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 				svm_node cur = new svm_node();
 				cur.index = featureIdx;
 				cur.value = val;
-				problem.x[elemIdx][featureIdx] = cur;
+				svmProblem.x[elemIdx][featureIdx] = cur;
 				++featureIdx;
 			}
-			problem.y[elemIdx] = trainingElem.getLabel().ordinal();
+			svmProblem.y[elemIdx] = trainingElem.getLabel().ordinal();
 			++elemIdx;
 		}
-		return problem;
+		return svmProblem;
 	}
 	
 	protected svm_node[] buildDatasetForClassification(FeatureVector fv) {
@@ -173,7 +173,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		for (int i = 0; i < model.SV[0].length; ++i) {
 			for (int j = 0; j < model.nr_class - 1; ++j) {
 				int index = 0;
-				int end = 0;
+				int end;
 				double acc;
 				for (int k = 0; k < model.nr_class; ++k) {
 					acc = 0.0;
@@ -224,16 +224,16 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
         if (rangeFile == null) {
             this.scaler = new FeatureVectorScalerNoOp();
         } else {
-            FeatureVectorScalerImpl scaler =
+            FeatureVectorScalerImpl lScaler =
                     FeatureVectorScalerImpl.fromRangeReader(rangeFile);
 
-            if(scaler.getLimits().length != featureVectorBuilder.size()) {
+            if (lScaler.getLimits().length != featureVectorBuilder.size()) {
                 throw new IllegalArgumentException("Supplied .range file has "
-                        + "wrong number of features (got " + scaler.getLimits().length
+                        + "wrong number of features (got " + lScaler.getLimits().length
                         + ", expected " + featureVectorBuilder.size() + " )");
             }
 
-			this.scaler = scaler;
+			this.scaler = lScaler;
 		}
 
 		this.model = svm.svm_load_model(modelFile);

@@ -16,11 +16,11 @@ public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 
 	private String coreName(String name) {
 		String[] parts = name.split("\\.");
-		String ret = "";
-		for(Integer partIdx = 0; partIdx < parts.length-1; ++partIdx) {
-			ret += parts[partIdx];
+		StringBuilder ret = new StringBuilder();
+		for (Integer partIdx = 0; partIdx < parts.length-1; ++partIdx) {
+			ret.append(parts[partIdx]);
 		}
-		return ret;
+		return ret.toString();
 	}
 
 	public PdfNlmIterator(String dirPath) {

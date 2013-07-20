@@ -16,16 +16,8 @@ public class FullWordsRelativeFeature extends AbstractFeatureCalculator<BxZone, 
 			if(ZoneClassificationUtils.isConjunction(word)) {
 				++numberOfFullWords;
 			}
-			else if(word.length() <= 2) {
-				;
-			}
-			else if(word.matches(".*\\d.*")) {
-				;
-			}
-			else if(word.matches(".*[^\\p{Alnum}].*")) {
-				;
-			} else {
-				++numberOfFullWords;
+			else if(word.length() > 2 && !word.matches(".*\\d.*") && !word.matches(".*[^\\p{Alnum}].*")) {
+    			++numberOfFullWords;
 			}
 			++numberOfWords;
 		}

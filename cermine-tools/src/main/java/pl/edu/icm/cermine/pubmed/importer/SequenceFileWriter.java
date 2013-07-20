@@ -46,7 +46,10 @@ public class SequenceFileWriter {
         }
         File outf = new File(outputSequenceFile);
         if (!outf.getParentFile().exists()) {
-            outf.getParentFile().mkdirs();
+            boolean made = outf.getParentFile().mkdirs();
+            if (!made) {
+                throw new IOException("Cannot make dirs!");
+            }
         }
 
     }

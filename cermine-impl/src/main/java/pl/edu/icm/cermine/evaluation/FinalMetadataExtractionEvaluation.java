@@ -72,14 +72,7 @@ public final class FinalMetadataExtractionEvaluation {
         dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        javax.xml.parsers.DocumentBuilder documentBuilder = null;
-
-        try {
-            documentBuilder = dbf.newDocumentBuilder();
-        } catch (javax.xml.parsers.ParserConfigurationException ex) {
-            ex.printStackTrace();
-            System.exit(1);
-        }
+        javax.xml.parsers.DocumentBuilder documentBuilder = dbf.newDocumentBuilder();
 
         SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         builder.setValidation(false);
@@ -363,7 +356,7 @@ public final class FinalMetadataExtractionEvaluation {
             return;
         }
         Boolean verbose = false;
-        String directory = null;
+        String directory;
         if (args[0].equals("-v")) {
             verbose = true;
             directory = args[1];

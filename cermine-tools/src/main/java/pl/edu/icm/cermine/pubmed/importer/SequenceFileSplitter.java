@@ -30,24 +30,28 @@ public class SequenceFileSplitter {
     private static void checkPaths(String inputSequenceFile, String outputSequenceFileDirectory) throws IOException {
         File input = new File(inputSequenceFile);
         if (!input.exists()) {
-            System.err.println("<Input file> does not exist: " + inputSequenceFile);
-            System.exit(1);
+            throw new IOException("<Input file> does not exist: " + inputSequenceFile);
         }
         File outf = new File(outputSequenceFileDirectory);
         if (!outf.getParentFile().exists()) {
-            outf.getParentFile().mkdirs();
+            boolean made = outf.getParentFile().mkdirs();
+            if (!made) {
+                throw new IOException("Cannot make directories!");
+            }
         }
         if (!outf.exists()) {
-        	outf.mkdir();
+        	boolean made = outf.mkdir();
+            if (!made) {
+                throw new IOException("Cannot make directories!");
+            }
         } else if (!outf.isDirectory()) {
-            System.err.println("<Output dir> is not a directory:" + outputSequenceFileDirectory);
-            System.exit(1);
+            throw new IOException("<Output dir> is not a directory:" + outputSequenceFileDirectory);
         }
     }
 
     private static void splitSequenceFile(String inputSequenceFile, String outputSequenceFileDirectory, Integer maximumPairs) throws IOException {
     	System.out.println("MAX " + maximumPairs);
-    	SequenceFile.Writer sequenceFileWriter = null;
+    	SequenceFile.Writer sequenceFileWriter;
     	Integer allRecordCounter = 0;
     	Integer currentRecordCounter = 0;
     	Integer outputFileCounter = 0;

@@ -24,27 +24,23 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleFilter;
 public class LibSVMExporter {
 
     public static void toLibSVM(TrainingSample<BxZoneLabel> trainingElement, BufferedWriter fileWriter) throws IOException {
-        try {
-        	if(trainingElement.getLabel() == null) {
-        		return;
-        	}
-        	fileWriter.write(String.valueOf(trainingElement.getLabel().ordinal()));
-        	fileWriter.write(" ");
+       	if(trainingElement.getLabel() == null) {
+       		return;
+       	}
+       	fileWriter.write(String.valueOf(trainingElement.getLabel().ordinal()));
+       	fileWriter.write(" ");
         	
-        	Integer featureCounter = 1;
-        	for (Double value : trainingElement.getFeatureVector().getFeatureValues()) {
-        		StringBuilder sb = new StringBuilder();
-        		Formatter formatter = new Formatter(sb, Locale.US);
-        		formatter.format("%d:%.5f", featureCounter++, value);
-        		fileWriter.write(sb.toString());
-        		fileWriter.write(" ");
-        	}
-        	fileWriter.write("\n");
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            return;
-        }
+       	Integer featureCounter = 1;
+       	for (Double value : trainingElement.getFeatureVector().getFeatureValues()) {
+       		StringBuilder sb = new StringBuilder();
+       		Formatter formatter = new Formatter(sb, Locale.US);
+       		formatter.format("%d:%.5f", featureCounter++, value);
+       		fileWriter.write(sb.toString());
+       		fileWriter.write(" ");
+       	}
+       	fileWriter.write("\n");
     }
+    
     public static void toLibSVM(List<TrainingSample<BxZoneLabel>> trainingElements, String filePath) throws IOException {
     	BufferedWriter svmDataFile = null;
         try {

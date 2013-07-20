@@ -84,16 +84,13 @@ public class EvaluationUtils {
 	            @Override
 	            public BxDocument next() {
 	                ++curIdx;
-						try {
-							return getDocument(files[curIdx]);
-						} catch (IOException e) {
-							e.printStackTrace();
-							return null;
-						} catch (TransformationException e) {
-							e.printStackTrace();
-							return null;
-						}
-						
+        			try {
+						return getDocument(files[curIdx]);
+					} catch (IOException e) {
+						return null;
+					} catch (TransformationException e) {
+						return null;
+					}
 	            }
 
 	            @Override

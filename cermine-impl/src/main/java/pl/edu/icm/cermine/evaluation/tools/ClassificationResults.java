@@ -13,14 +13,12 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     private int badRecognitions = 0;
 
     public ClassificationResults() {
-        possibleLabels = new HashSet<BxZoneLabel>();
+        possibleLabels = EnumSet.noneOf(BxZoneLabel.class);
         classificationMatrix = new HashMap<LabelPair, Integer>();
     }
 
     private void addPossibleLabel(BxZoneLabel lab) {
-        if (possibleLabels.contains(lab)) {
-            return;
-        } else {
+        if (!possibleLabels.contains(lab)) {
             for (BxZoneLabel lab2 : possibleLabels) {
                 classificationMatrix.put(new LabelPair(lab, lab2), 0);
                 classificationMatrix.put(new LabelPair(lab2, lab), 0);
@@ -88,7 +86,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     	Formatter formatter = new Formatter(System.out, Locale.US);
     	formatter.format("Accuracy = %2.2f\n", accuracy*100.0);
 
-    	Map<BxZoneLabel, Double> precisions = new HashMap<BxZoneLabel, Double>();
+    	Map<BxZoneLabel, Double> precisions = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
     	Integer pairsInvolved = 0;
     	for(BxZoneLabel predictedClass : possibleLabels) {
     		Integer correctPredictions = null;
@@ -107,10 +105,10 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     		
     	}
     	double precision = sum(precisions.values());
-    	precision /= pairsInvolved;;
+    	precision /= pairsInvolved;
     	formatter.format("Precision = %2.2f\n", precision*100.0);
     	
-    	Map<BxZoneLabel, Double> recalls = new HashMap<BxZoneLabel, Double>();
+    	Map<BxZoneLabel, Double> recalls = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
     	pairsInvolved = 0;
     	for(BxZoneLabel realClass : possibleLabels) {
     		Integer correctPredictions = null;
@@ -135,7 +133,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     public void printMatrix() {
         int maxLabelLength = 0;
 
-        Map<BxZoneLabel, Integer> labelLengths = new HashMap<BxZoneLabel, Integer>();
+        Map<BxZoneLabel, Integer> labelLengths = new EnumMap<BxZoneLabel, Integer>(BxZoneLabel.class);
 
         for (BxZoneLabel label : possibleLabels) {
             int labelLength = label.toString().length();

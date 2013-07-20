@@ -9,9 +9,11 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Test;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -28,29 +30,17 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 public class HierarchicalReadingOrderResolverTest {
 	static final private String PATH = "/pl/edu/icm/cermine/structure/";
-	//static final private String[] TEST_FILENAMES = {"13191004.xml", "09629351.xml", "10255834.xml", "11781238.xml", "1748717X.xml"};
     static final private String[] TEST_FILENAMES = {"1748717X.xml"};
  	static final private String ZIP_FILE_NAME = "roa_test_small.zip";
 	static private ZipFile zipFile;
-	
-	static {
-		URL url = HierarchicalReadingOrderResolverTest.class.getResource(PATH+ZIP_FILE_NAME);
-        URI uri = null;
-        System.out.println(url);
-		try {
-			uri = url.toURI();
-		} catch (URISyntaxException e1) {
-			e1.printStackTrace();
-			System.exit(1);
-		}
-        File file = new File(uri);
-		try {
-			zipFile = new ZipFile(file);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
+
+    @Before
+    public void setUp() throws URISyntaxException, ZipException, IOException {
+        URL url = HierarchicalReadingOrderResolverTest.class.getResource(PATH+ZIP_FILE_NAME);
+        URI uri = url.toURI();
+		File file = new File(uri);
+        zipFile = new ZipFile(file);
+    }
 
 	private BxDocument getDocumentFromZip(String filename) throws TransformationException, IOException {
 		TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();

@@ -1,7 +1,7 @@
 package pl.edu.icm.cermine.structure.tools;
 import pl.edu.icm.cermine.structure.model.BxZone;
 
-class BxZoneOrderTuple {
+public class BxZoneOrderTuple {
 	private BxZone zone;
 	private Integer order;
 

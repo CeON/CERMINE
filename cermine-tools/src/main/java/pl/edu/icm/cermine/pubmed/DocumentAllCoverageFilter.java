@@ -3,7 +3,7 @@ package pl.edu.icm.cermine.pubmed;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.cli.*;
@@ -32,7 +32,7 @@ public class DocumentAllCoverageFilter {
             BxDocument doc = new BxDocument().setPages(pages);
             doc.setFilename(f.getName());
            
-            Set<BxZoneLabel> set = new HashSet<BxZoneLabel>();
+            Set<BxZoneLabel> set = EnumSet.noneOf(BxZoneLabel.class);
             
             int all = 0;
             int good = 0;

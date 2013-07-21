@@ -443,8 +443,7 @@ public final class FinalMetadataExtractionEvaluation {
         org.jdom.Document metaDoc = new org.jdom.Document();
         metaDoc.setRootElement(elem);
         org.jdom.output.DOMOutputter domOutputter = new DOMOutputter();
-        org.w3c.dom.Document document = domOutputter.output(metaDoc);
-        return document;
+        return domOutputter.output(metaDoc);
     }
 
     static String outputDoc(Document document) throws IOException, TransformerException {

@@ -213,11 +213,6 @@ public class PubmedXMLGenerator {
 
         entries.putIf(issueString, BxZoneLabel.MET_BIB_INFO);
 
-        //first page
-        String firstPageString = (String) xpath.evaluate("/article/front/article-meta/article-id/fpage", domDoc, XPathConstants.STRING);
-        //last page
-        String lastPageString = (String) xpath.evaluate("/article/front/article-meta/article-id/lpage", domDoc, XPathConstants.STRING);
-
         List<String> authorNames = new ArrayList<String>();
         List<String> authorEmails = new ArrayList<String>();
         List<String> authorAffiliations = new ArrayList<String>();
@@ -434,7 +429,6 @@ public class PubmedXMLGenerator {
 
         printlnVerbose("ref: " + refStrings.size() + " " + refStrings);
 
-        LevenshteinDistance lev = new LevenshteinDistance();
         SmithWatermanDistance smith = new SmithWatermanDistance(.1, 0.1);
         CosineDistance cos = new CosineDistance();
 
@@ -487,8 +481,7 @@ public class PubmedXMLGenerator {
         			public int compare(LabelTrio t1, LabelTrio t2) {
         				Double simDif = t1.alignment / t1.entryTokens.size() - t2.alignment / t2.entryTokens.size();
         				if (Math.abs(simDif) < 0.0001) {
-        					Integer lenDif = t1.entryTokens.size() - t2.entryTokens.size();
-        					return -lenDif;
+        					return t2.entryTokens.size() - t1.entryTokens.size();
         				}
         				if (simDif > 0) {
         					return 1;
@@ -515,8 +508,7 @@ public class PubmedXMLGenerator {
         				public int compare(LabelTrio t1, LabelTrio t2) {
         					Double simDif = t1.alignment - t2.alignment;
         					if (Math.abs(simDif) < 0.0001) {
-        						Integer lenDif = t1.entryTokens.size() - t2.entryTokens.size();
-        						return -lenDif;
+        						return t2.entryTokens.size() - t1.entryTokens.size();
         					}
         					if (simDif > 0) {
         						return 1;

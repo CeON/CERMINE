@@ -103,7 +103,7 @@ public class TrueVizToBxDocumentReader {
         }
     }
 
-    protected <A extends Indexable<A>> List<A> reorderList(List<A> list) throws IllegalStateException{
+    protected <A extends Indexable<A>> List<A> reorderList(List<A> list) {
     	if(list.isEmpty()) {
     		return list;
     	}
@@ -375,11 +375,7 @@ public class TrueVizToBxDocumentReader {
         if (ZONE_LABEL_MAP.containsKey(val.toLowerCase())) {
             return ZONE_LABEL_MAP.get(val.toLowerCase());
         } else {
-                if (BxZoneLabel.valueOf(val.toUpperCase()) != null) {
-                    return BxZoneLabel.valueOf(val.toUpperCase());
-                } else {
-                	throw new TransformationException("Unknown label in the input file: " + val);
-                }
+            return BxZoneLabel.valueOf(val.toUpperCase());
         }
     }
 

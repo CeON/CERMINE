@@ -66,8 +66,9 @@ public class DocumentKeyZonesFilter {
             }
             
             int intcov = 0;
-            if (all > 0)
+            if (all > 0) {
                 intcov = good*100/all;
+            }
             System.out.println(doc.getFilename()+" "+set.size()+" "+intcov+" "+keys);
 
             File f2 = new File(outDir+doc.getFilename()+"."+set.size()+"."+intcov+"."+keys);

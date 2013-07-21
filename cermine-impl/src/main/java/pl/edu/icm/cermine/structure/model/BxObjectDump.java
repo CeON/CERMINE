@@ -156,7 +156,6 @@ public class BxObjectDump {
 
     protected String cutOutReference(String str) {
         String[] parts = str.split("@");
-        String addr = parts[parts.length - 1];
-        return addr;
+        return parts[parts.length - 1];
     }
 }

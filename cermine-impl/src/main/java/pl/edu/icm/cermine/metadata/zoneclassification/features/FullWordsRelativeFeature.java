@@ -21,8 +21,7 @@ public class FullWordsRelativeFeature extends AbstractFeatureCalculator<BxZone, 
 			}
 			++numberOfWords;
 		}
-		double ret = (double)numberOfFullWords/numberOfWords;
-		return ret;
+		return (double)numberOfFullWords/numberOfWords;
 	}
 
 }

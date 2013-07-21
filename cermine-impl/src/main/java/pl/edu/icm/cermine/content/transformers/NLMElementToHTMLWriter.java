@@ -50,7 +50,7 @@ public class NLMElementToHTMLWriter implements ModelToFormatWriter<Element> {
         List<Element> children = section.getChildren();
         for (Element child : children) {
             if ("title".equals(child.getName())) {
-                Element element = new Element("H"+String.valueOf(level));
+                Element element = new Element("H"+level);
                 element.setText(child.getText());
                 elements.add(element);
             } else if ("p".equals(child.getName())) {

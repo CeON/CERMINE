@@ -14,119 +14,119 @@ public enum BxZoneLabel {
     
     /** General zones */
     
-    /** Document's metadata */
-	GEN_METADATA        (BxZoneLabelCategory.CAT_GENERAL), //0
+    /** Document's metadata - 0 */
+	GEN_METADATA        (BxZoneLabelCategory.CAT_GENERAL),
 	
-	/** Document's body */
-	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL), //1
+	/** Document's body - 1 */
+	GEN_BODY            (BxZoneLabelCategory.CAT_GENERAL),
 	
-	/** Document's references */
-	GEN_REFERENCES      (BxZoneLabelCategory.CAT_GENERAL), //2
+	/** Document's references - 2 */
+	GEN_REFERENCES      (BxZoneLabelCategory.CAT_GENERAL),
 	
-	/** Other stuff left in the document */
-	GEN_OTHER           (BxZoneLabelCategory.CAT_GENERAL), //3
+	/** Other stuff left in the document - 3 */
+	GEN_OTHER           (BxZoneLabelCategory.CAT_GENERAL),
 	
     
     /** Metadata zones */
     
-    /** Document's abstract */
-    MET_ABSTRACT        (BxZoneLabelCategory.CAT_METADATA), //4
+    /** Document's abstract - 4 */
+    MET_ABSTRACT        (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Authors' Affiliations */
-    MET_AFFILIATION     (BxZoneLabelCategory.CAT_METADATA), //5
+    /** Authors' Affiliations - 5 */
+    MET_AFFILIATION     (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Document's access info */
-    MET_ACCESS_DATA     (BxZoneLabelCategory.CAT_METADATA), //6
+    /** Document's access info - 6 */
+    MET_ACCESS_DATA     (BxZoneLabelCategory.CAT_METADATA),
 
-    /** Authors' biographies */
-    MET_BIOGRAPHY       (BxZoneLabelCategory.CAT_METADATA), //7
+    /** Authors' biographies - 7 */
+    MET_BIOGRAPHY       (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Authors' names. */
-    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA), //8
+    /** Authors' names. - 8 */
+    MET_AUTHOR          (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Bibliographic information, such as journal, volume, year, doi, etc. */
-    MET_BIB_INFO        (BxZoneLabelCategory.CAT_METADATA), //9
+    /** Bibliographic information, such as journal, volume, year, doi, etc. - 9 */
+    MET_BIB_INFO        (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Authors' correspondence information */
-    MET_CORRESPONDENCE  (BxZoneLabelCategory.CAT_METADATA), //10
+    /** Authors' correspondence information - 10 */
+    MET_CORRESPONDENCE  (BxZoneLabelCategory.CAT_METADATA),
 
-    /** When the document was received/revised/accepted/etc. */
-    MET_DATES           (BxZoneLabelCategory.CAT_METADATA), //11
+    /** When the document was received/revised/accepted/etc. - 11 */
+    MET_DATES           (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Document's editor */
-    MET_EDITOR          (BxZoneLabelCategory.CAT_METADATA), //12
+    /** Document's editor - 12 */
+    MET_EDITOR          (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Keywords */
-    MET_KEYWORDS        (BxZoneLabelCategory.CAT_METADATA), //13
+    /** Keywords - 13 */
+    MET_KEYWORDS        (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Document's title */
-    MET_TITLE           (BxZoneLabelCategory.CAT_METADATA), //14
+    /** Document's title - 14 */
+    MET_TITLE           (BxZoneLabelCategory.CAT_METADATA),
  
-    /** Document's type */
-    MET_TYPE            (BxZoneLabelCategory.CAT_METADATA), //15
+    /** Document's type - 15 */
+    MET_TYPE            (BxZoneLabelCategory.CAT_METADATA),
     
-    /** Document's copyright */
-    MET_COPYRIGHT       (BxZoneLabelCategory.CAT_METADATA), //16
+    /** Document's copyright - 16 */
+    MET_COPYRIGHT       (BxZoneLabelCategory.CAT_METADATA),
 
     
     /** Body zones */
         
-    /** Document's body */
-    BODY_CONTENT        (BxZoneLabelCategory.CAT_BODY), //17
+    /** Document's body - 17 */
+    BODY_CONTENT        (BxZoneLabelCategory.CAT_BODY),
     
-    /** Glossary */
-    BODY_GLOSSARY       (BxZoneLabelCategory.CAT_BODY), //18 
+    /** Glossary - 18 */
+    BODY_GLOSSARY       (BxZoneLabelCategory.CAT_BODY),
     
-    /** Equation */
-    BODY_EQUATION       (BxZoneLabelCategory.CAT_BODY), //19
+    /** Equation - 19 */
+    BODY_EQUATION       (BxZoneLabelCategory.CAT_BODY),
     
-    /** Equation's label */
-    BODY_EQUATION_LABEL (BxZoneLabelCategory.CAT_BODY), //20
+    /** Equation's label - 20 */
+    BODY_EQUATION_LABEL (BxZoneLabelCategory.CAT_BODY),
     
-    /** Figure */
-    BODY_FIGURE         (BxZoneLabelCategory.CAT_BODY), //21
+    /** Figure - 21 */
+    BODY_FIGURE         (BxZoneLabelCategory.CAT_BODY),
     
-    /** Figure's caption */
-    BODY_FIGURE_CAPTION (BxZoneLabelCategory.CAT_BODY), //22
+    /** Figure's caption - 22 */
+    BODY_FIGURE_CAPTION (BxZoneLabelCategory.CAT_BODY),
     
-    /** Content header */
-    BODY_HEADING        (BxZoneLabelCategory.CAT_BODY), //23
+    /** Content header - 23 */
+    BODY_HEADING        (BxZoneLabelCategory.CAT_BODY),
    
-    /** General label for tables, figures and equations */
-    BODY_JUNK           (BxZoneLabelCategory.CAT_BODY), //24
+    /** General label for tables, figures and equations - 24 */
+    BODY_JUNK           (BxZoneLabelCategory.CAT_BODY),
     
-    /** Table */
-    BODY_TABLE          (BxZoneLabelCategory.CAT_BODY), //25
+    /** Table - 25 */
+    BODY_TABLE          (BxZoneLabelCategory.CAT_BODY),
     
-    /** Table's caption */
-    BODY_TABLE_CAPTION  (BxZoneLabelCategory.CAT_BODY), //26
+    /** Table's caption - 26 */
+    BODY_TABLE_CAPTION  (BxZoneLabelCategory.CAT_BODY),
 
-    /** Acknowledgments */
-    BODY_ACKNOWLEDGMENT (BxZoneLabelCategory.CAT_BODY), //27
+    /** Acknowledgments - 27 */
+    BODY_ACKNOWLEDGMENT (BxZoneLabelCategory.CAT_BODY),
     
-    /** Author's contributions */
-    BODY_CONTRIBUTION   (BxZoneLabelCategory.CAT_BODY), //28
+    /** Author's contributions - 28 */
+    BODY_CONTRIBUTION   (BxZoneLabelCategory.CAT_BODY),
     
-    /** Conflict statements */
-    BODY_CONFLICT_STMT  (BxZoneLabelCategory.CAT_BODY), //29
+    /** Conflict statements - 29 */
+    BODY_CONFLICT_STMT  (BxZoneLabelCategory.CAT_BODY),
     
-    /** Attachments */
-    BODY_ATTACHMENT 	(BxZoneLabelCategory.CAT_BODY), //30
+    /** Attachments - 30 */
+    BODY_ATTACHMENT 	(BxZoneLabelCategory.CAT_BODY),
     
     
     /** Other zones */
     
-    /** Page number */
-    OTH_PAGE_NUMBER     (BxZoneLabelCategory.CAT_OTHER), //31
+    /** Page number - 31 */
+    OTH_PAGE_NUMBER     (BxZoneLabelCategory.CAT_OTHER),
     
-    /** Undetermined zone */
-    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_OTHER), //32
+    /** Undetermined zone - 32 */
+    OTH_UNKNOWN         (BxZoneLabelCategory.CAT_OTHER),
     
     
     /** References zones */
     
-    /** References */
-    REFERENCES          (BxZoneLabelCategory.CAT_REFERENCES); //33
+    /** References - 33 */
+    REFERENCES          (BxZoneLabelCategory.CAT_REFERENCES);
          
     private final BxZoneLabelCategory category;
     

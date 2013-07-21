@@ -120,7 +120,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         return pageResults;
     }
 
-    protected BxDocument readDocument(Reader input) throws Exception {
+    protected BxDocument readDocument(Reader input) throws TransformationException {
         List<BxPage> pages = reader.read(input);
         BxDocument ret = new BxDocument();
         for (BxPage page : pages) {
@@ -134,7 +134,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         labelMap.putAll(value);
     }
 
-    protected void writeDocument(BxDocument document, Writer output) throws Exception {
+    protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
         writer.write(output, document.getPages());
     }
 

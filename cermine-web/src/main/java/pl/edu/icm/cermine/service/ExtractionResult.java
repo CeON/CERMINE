@@ -112,11 +112,11 @@ public class ExtractionResult {
     }
 
     public String getErrorMessage() {
-        String res = "";
+        String res;
         if (error != null) {
             res = error.getMessage();
             if(res==null || res.isEmpty()) {
-                res = "Exception is: "+res.getClass().toString();
+                res = "Exception is: "+error.getClass().toString();
             }
         } else {
             res = "Unknown error";

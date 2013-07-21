@@ -232,7 +232,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         ExtractionResult result;
 
         @Override
-        public ExtractionResult call() throws Exception {
+        public ExtractionResult call() {
             return performExtraction(result, input);
         }
     }

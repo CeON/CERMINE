@@ -3,8 +3,6 @@ package pl.edu.icm.cermine.pubmed;
 import java.io.*;
 import java.util.Map.Entry;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,14 +11,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.io.FileUtils;
-import org.apache.pig.EvalFunc;
-import org.apache.pig.data.DataByteArray;
-import org.apache.pig.data.DataType;
-import org.apache.pig.data.Tuple;
-import org.apache.pig.data.TupleFactory;
-import org.apache.pig.impl.logicalLayer.FrontendException;
-import org.apache.pig.impl.logicalLayer.schema.Schema;
-import org.apache.pig.tools.pigstats.PigStatusReporter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -39,7 +29,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
-public class PubmedXMLGenerator extends EvalFunc<Tuple> {
+public class PubmedXMLGenerator {
 
     private static class LabelTrio {
 
@@ -89,69 +79,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         }
     };
 
-    private Tuple output = TupleFactory.getInstance().newTuple(4);
 	private boolean verbose = false;
-
-    
-    @Override
-    public Schema outputSchema(Schema p_input) {
-    	try{
-    		return Schema.generateNestedSchema(DataType.TUPLE, DataType.CHARARRAY,
-    			DataType.BYTEARRAY, DataType.BYTEARRAY, DataType.BYTEARRAY);
-    	} catch(FrontendException e) {
-    		throw new IllegalStateException(e);
-    	}
-    }
-    
-    @Override
-    public Tuple exec(Tuple input) throws IOException {
-    	System.out.println("doc start");
-    	if(input == null || input.size() == 0) {
-    		throw new IllegalStateException("Input tuple can't be empty!");
-    	}
-    	String keyString = (String) input.get(0);
-    	System.out.println(keyString);
-    	DataByteArray nlmByteArray = (DataByteArray) input.get(1);
-    	DataByteArray pdfByteArray = (DataByteArray) input.get(2);
-    	BxDocument bxDoc = null;
-   		ByteArrayInputStream nlmIS = new ByteArrayInputStream(nlmByteArray.get());
-   		ByteArrayInputStream pdfIS = new ByteArrayInputStream(pdfByteArray.get());
-        try {
-            bxDoc = generateTrueViz(pdfIS, nlmIS);
-        } catch (AnalysisException ex) {
-            throw new IOException("Cannot generate trueviz file!", ex);
-        } catch (ParserConfigurationException ex) {
-            throw new IOException("Cannot generate trueviz file!", ex);
-        } catch (SAXException ex) {
-            throw new IOException("Cannot generate trueviz file!", ex);
-        } catch (XPathExpressionException ex) {
-            throw new IOException("Cannot generate trueviz file!", ex);
-        } catch (TransformationException ex) {
-            throw new IOException("Cannot generate trueviz file!", ex);
-        }
-
-    	BxDocumentToTrueVizWriter trueVizWriter = new BxDocumentToTrueVizWriter();
-    	DataByteArray returnDoc = null;
-    	if (bxDoc != null) {
-    		try {
-    			returnDoc = new DataByteArray(trueVizWriter.write(bxDoc.getPages()));
-    			System.out.println("wrote down trueviz");
-    			PigStatusReporter pigReporter = PigStatusReporter.getInstance();
-    			if (pigReporter != null) {
-    				pigReporter.getCounter("CERMINE_COUNTERS", "DOC_COUNTER").increment(1);
-    			}
-    		} catch (TransformationException ex) {
-    			throw new IOException("Error!", ex);
-    		}
-    	}
-    	
-    	output.set(0, keyString);
-    	output.set(1, nlmByteArray);
-    	output.set(2, pdfByteArray);
-    	output.set(3, returnDoc);
-    	System.out.println("doc end");
-    	return output;
-    }
 
 	private void setVerbose(boolean verbose) {
 		this.verbose = verbose;

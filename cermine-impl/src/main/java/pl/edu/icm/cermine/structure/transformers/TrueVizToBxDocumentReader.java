@@ -53,6 +53,7 @@ public class TrueVizToBxDocumentReader {
         ZONE_LABEL_MAP.put("figure", BxZoneLabel.BODY_FIGURE);
         ZONE_LABEL_MAP.put("figure_caption", BxZoneLabel.BODY_FIGURE_CAPTION);
         ZONE_LABEL_MAP.put("glossary", BxZoneLabel.BODY_GLOSSARY);
+        ZONE_LABEL_MAP.put("junk", BxZoneLabel.BODY_JUNK);
         ZONE_LABEL_MAP.put("heading", BxZoneLabel.BODY_HEADING);
         ZONE_LABEL_MAP.put("keywords", BxZoneLabel.MET_KEYWORDS);
         ZONE_LABEL_MAP.put("page_number", BxZoneLabel.OTH_PAGE_NUMBER);

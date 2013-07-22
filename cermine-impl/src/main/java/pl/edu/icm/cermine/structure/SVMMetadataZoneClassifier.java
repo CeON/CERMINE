@@ -1,16 +1,14 @@
 package pl.edu.icm.cermine.structure;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Arrays;
-//import pl.edu.icm.cermine.PdfBxStructureExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;

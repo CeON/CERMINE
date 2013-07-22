@@ -129,22 +129,4 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         return vectorBuilder;
 	}
 	
-	public static void main(String[] args) throws AnalysisException, TransformationException, IOException {
-		// args[0] path to xml directory
-		if(args.length != 1) {
-			System.err.println("Source directory needed!");
-			System.exit(1);
-		}
-		
-		SVMInitialZoneClassifier classifier = new SVMInitialZoneClassifier();
-
-		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-		
-		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[0]);
-		for(BxDocument doc: docs) {
-			System.out.println(">> " + doc.getFilename());
-			ror.resolve(doc);
-			classifier.classifyZones(doc);
-		}
-	}
 }

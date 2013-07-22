@@ -2,7 +2,7 @@ package pl.edu.icm.cermine.structure;
 
 import java.io.*;
 import java.util.Arrays;
-import pl.edu.icm.cermine.PdfBxStructureExtractor;
+//import pl.edu.icm.cermine.PdfBxStructureExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
@@ -133,26 +133,4 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
         return document;
     }
 
-	public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
-    	if(args.length != 1){
-    		System.err.println("USAGE: program DIR_PATH");
-    		System.exit(1);
-    	}
-    	PdfBxStructureExtractor structureExtractor = new PdfBxStructureExtractor();
-    	SVMMetadataZoneClassifier metaClassifier = new SVMMetadataZoneClassifier();
-    	File dir = new File(args[0]);
-    	for(File pdf: dir.listFiles()) {
-    		BxDocument result = structureExtractor.extractStructure(new FileInputStream(pdf));
-    		result = metaClassifier.classifyZones(result);
-    		FileWriter fstream = new FileWriter(pdf.getName() + ".xml");
-            BufferedWriter out = new BufferedWriter(fstream);
-            try {
-                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                out.write(writer.write(result.getPages()));
-                writer.write(result.getPages());
-            } finally {
-                out.close();
-            }
-    	}
-	}
 }

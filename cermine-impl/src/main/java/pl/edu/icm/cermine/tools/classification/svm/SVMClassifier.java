@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -115,6 +118,18 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		Integer predictedVal = ((Double)svm.svm_predict(model, instance)).intValue();
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
+
+    public Map<E, Double> predictProbabilities(S object, T context) {
+        svm_node[] instance = buildDatasetForClassification(object, context);
+        double[] probEstimates = new double[enumClassObj.getEnumConstants().length];
+        svm.svm_predict_probability(model, instance, probEstimates);
+
+        Map<E, Double> result = new HashMap<E, Double>();
+        for (int i = 0; i < probEstimates.length; ++i) {
+            result.put(enumClassObj.getEnumConstants()[model.label[i]], probEstimates[i]);
+        }
+        return result;
+    }
 
 	protected svm_problem buildDatasetForTraining(List<TrainingSample<E>> trainingElements)
 	{

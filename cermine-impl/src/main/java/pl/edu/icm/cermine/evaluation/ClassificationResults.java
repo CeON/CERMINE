@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.evaluation.tools;
+package pl.edu.icm.cermine.evaluation;
 
 import java.util.*;
 import pl.edu.icm.cermine.evaluation.AbstractEvaluator;

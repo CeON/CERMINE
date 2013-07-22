@@ -39,7 +39,7 @@ public abstract class AbstractLogicalStructureExtractorTest {
     List<BxDocument> testDocuments = new ArrayList<BxDocument>();
     List<DocumentContentStructure> testHeaderStructures = new ArrayList<DocumentContentStructure>();
        
-    LogicalStructureExtractor extractor;
+    LogicalStructureExtractor extractor = null;
     
 
     protected void setUp() throws IOException, TransformationException, AnalysisException, URISyntaxException, JDOMException {

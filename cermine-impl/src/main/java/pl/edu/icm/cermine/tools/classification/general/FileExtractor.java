@@ -17,8 +17,7 @@ public class FileExtractor {
         InputStreamReader isr = new InputStreamReader(inputStream);
         
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument document = new BxDocument().setPages(reader.read(isr));
-        return document;
+        return new BxDocument().setPages(reader.read(isr));
 	}
 
 }

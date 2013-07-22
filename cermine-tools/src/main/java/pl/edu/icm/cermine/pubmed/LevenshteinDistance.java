@@ -6,7 +6,7 @@ import java.util.List;
 public class LevenshteinDistance {
 
     public Integer compare(List<String> s1, List<String> s2) {
-        int retval = 0;
+        int retval;
         final int n = s1.size();
         final int m = s2.size();
         if (n == 0) {

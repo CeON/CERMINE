@@ -15,7 +15,7 @@ public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>
 		public int compare(BxZone z1, BxZone z2) {
 			if (z1.getY() + z1.getHeight() > z2.getY() + z2.getHeight()) {
 				return 1;
-			} else if (z1.getY() + z1.getHeight() == z2.getY() + z2.getHeight()) {
+			} else if (Math.abs((z1.getY() + z1.getHeight()) - (z2.getY() + z2.getHeight())) < 0.1) {
 				return 0;
 			} else {
 				return -1;

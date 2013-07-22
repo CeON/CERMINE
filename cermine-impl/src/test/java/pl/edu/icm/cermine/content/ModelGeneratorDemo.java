@@ -26,7 +26,7 @@ import pl.edu.icm.cermine.tools.classification.knn.KnnModel;
 public class ModelGeneratorDemo {
     
     public static void main(String[] args) throws TransformationException, JDOMException, IOException {
-        String trainPath = "/home/domin/newexamples/all/train/";
+        String trainPath = args[0];
         
         List<String> trainNames = new ArrayList<String>();
         List<BxDocument> trainDocuments = new ArrayList<BxDocument>();

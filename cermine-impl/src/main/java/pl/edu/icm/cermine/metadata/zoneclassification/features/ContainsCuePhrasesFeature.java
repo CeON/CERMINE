@@ -18,7 +18,6 @@ public class ContainsCuePhrasesFeature extends FeatureCalculator<BxZone, BxPage>
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         String zoneText = zone.toText().toLowerCase();
-        int count = 0;
 
         for (String cuePhrase : cuePhrases) {
             if (!zoneText.contains(cuePhrase)) {

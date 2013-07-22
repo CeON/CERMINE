@@ -133,6 +133,7 @@ the data. One researcher carried out all of the analysis and
 interpretation of the transcripts. The study protocol was
 approved by the Research Ethics Committee of the Royal
 College of Surgeons in Ireland.
+3. Results
 Themes identiﬁed from the focus group discussions included
 improvements in conﬁdence and morale, diﬃculties in
 maintaining self-care, attitudes to GP services, frustrations
@@ -148,7 +149,6 @@ consequences if they exceeded this unknown threshold.
 Participants repeatedly mentioned how the monitoring of
 their heart rate by the medical staﬀ during the exercise
 sessions provided a sense of security.
-3. Results
 I thought that maybe this thing will creep up
 behind me some day, but having done the course
 here, you’d be on a monitor and you saw your
@@ -499,7 +499,6 @@ America, vol. 33, no. 3, pp. 497–513, 1998.
 and H. Clausen, “Dying of lung cancer or cardiac failure:
 prospective qualitative interview study of patients and their
 6
-Rehabilitation Research and Practice
 carers in the community,” British Medical Journal, vol. 325, no.
 7370, pp. 929–932, 2002.
 [4] W. C. Lee, Y. E. Chavez, T. Baker, and B. R. Luce, “Economic
@@ -556,3 +555,4 @@ Journal of Cardiac Failure, vol. 11, no. 5, pp. 366–371, 2005.
 K. Dracup, “Is exercise adherence associated with clinical
 outcomes in patients with advanced heart failure?” Physician
 and Sportsmedicine, vol. 38, no. 1, pp. 28–36, 2010.
+Rehabilitation Research and Practice

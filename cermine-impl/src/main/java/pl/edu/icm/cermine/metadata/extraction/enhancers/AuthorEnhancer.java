@@ -1,15 +1,10 @@
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom.Element;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.structure.model.*;
 
 /**
  * Author enhancer.
@@ -17,6 +12,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  * This enhancer should be invoked after affiliation enhancer.
  *
  * @author krusek
+ * @author Dominika Tkaczyk
  */
 public class AuthorEnhancer extends AbstractSimpleEnhancer {
 
@@ -29,33 +25,103 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
         boolean enhanced = false;
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
-                String text = zone.toText().replaceFirst("^[Aa]uthors:", "").trim();
-                String author = null;
+                List<BxChunk> chunks = new ArrayList<BxChunk>();
+                for (BxLine l : zone.getLines()) {
+                    for (BxWord w : l.getWords()) {
+                        for (BxChunk ch : w.getChunks()) {
+                            chunks.add(ch);
+                        }
+                        chunks.add(new BxChunk(null, " "));
+                    }
+                }
+                
+                Pattern white = Pattern.compile("(\\s+)(.*)");
+                Pattern simpleRef = Pattern.compile("(\\d+|\\*|⁎|†|‡)(.*)");
+                Pattern title = Pattern.compile("(MD\\b|Prof.\\b|MS\\b|PhD\\b|Phd\\b|MPH\\b|RD\\b|LD\\b)(.*)");
+                Pattern separator = Pattern.compile("(,|;|&|•|·|Æ)(.*)");
+                Pattern andSeparator = Pattern.compile("(and\\b)(.*)");
+                
+                boolean afterSep = true;
+                int index = 0;
+                String text = zone.toText().replaceAll("\n", " ");
+                String author = "";
                 List<String> refs = new ArrayList<String>();
-                Pattern ref = Pattern.compile("\\d+|\\*|†");
-                // We have to support following cases:
-                //     Name, Name and Name
-                //     Name1, Name,1, Name,1,2
-                //     Name1*, Name1,*, Name,1*†
-                for (String part : text.split("(?=\\*|†)|,|\\band\\b|&|(?<=[^\\d])(?=[\\d])|(?<=\\d)\\s")) {
-                    part = part.trim();
-                    if (!part.isEmpty()) {
-                        if (ref.matcher(part).matches()) {
-                            if (author != null) {
-                                refs.add(part);
+                boolean auth = false;
+                
+                while (!text.isEmpty()) {
+                    Matcher whiteMatcher = white.matcher(text);
+                    Matcher simpleRefMatcher = simpleRef.matcher(text);
+                    Matcher titleMatcher = title.matcher(text);
+                    Matcher separatorMatcher = separator.matcher(text);
+                    Matcher andSeparatorMatcher = andSeparator.matcher(text);
+                    if (whiteMatcher.matches()) {
+                        index += whiteMatcher.group(1).length();
+                        text = whiteMatcher.group(2);
+                        afterSep = true;
+                        author += whiteMatcher.group(1);
+                    } else if (separatorMatcher.matches()) {
+                        index += separatorMatcher.group(1).length();
+                        text = separatorMatcher.group(2);
+                        afterSep = true;
+                        auth = false;
+                    } else if (afterSep && andSeparatorMatcher.matches()) {
+                        index += andSeparatorMatcher.group(1).length();
+                        text = andSeparatorMatcher.group(2);
+                        afterSep = true;
+                        auth = false;
+                    } else if (afterSep && titleMatcher.matches()) {
+                        index += titleMatcher.group(1).length();
+                        text = titleMatcher.group(2);
+                        afterSep = true;
+                    } else if (simpleRefMatcher.matches()) {
+                        index += simpleRefMatcher.group(1).length();
+                        text = simpleRefMatcher.group(2);
+                        afterSep = true;
+                        refs.add(simpleRefMatcher.group(1));
+                        auth = false;
+                    } else {
+                        double chunkY = chunks.get(index).getY();
+                        double chunkH = chunks.get(index).getHeight();
+                        BxLine line = chunks.get(index).getParent().getParent();
+                        double meanY = 0;
+                        double meanH = 0;
+                        int total = 0;
+                        for (BxWord w : line.getWords()) {
+                            for (BxChunk ch : w.getChunks()) {
+                                meanY += ch.getY();
+                                meanH += ch.getHeight();
+                                total++;
                             }
+                        }
+                        meanY /= total;
+                        meanH /= total;
+        
+                        if ((chunks.get(index).toText().matches("[a-f]") 
+                                || chunks.get(index).toText().matches("[^a-zA-Z0-9]"))
+                                && Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2) {
+                            index += 1;
+                            afterSep = true;
+                            refs.add(text.substring(0, 1));
+                            text = text.substring(1);
+                            auth = false;
                         } else {
-                            if (author != null) {
-                                Enhancers.addAuthor(metadata, author, refs);
+                           if (!auth && !author.trim().isEmpty()) {
+                               Enhancers.addAuthor(metadata, author.trim(), refs);
+                                author = "";
+                                refs.clear();
                             }
-                            author = part;
-                            refs.clear();
+                            auth = true;
+                            author += text.substring(0, 1);
+                            index++;
+                            text = text.substring(1);
+                            afterSep = false;
                         }
                     }
                 }
-                if (author != null) {
-                    Enhancers.addAuthor(metadata, author, refs);
+                if (!author.isEmpty()) {
+                    Enhancers.addAuthor(metadata, author.trim(), refs);
                 }
+                
                 enhanced = true;
             }
             if (enhanced) {

@@ -304,9 +304,9 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                 obj2.getY() + obj2.getHeight());
         Double dist = ((x1 - x0) * (y1 - y0) - obj1.getArea() - obj2.getArea());
 
-        Double obj1CenterX = obj1.getX() + obj1.getWidth() / 2;
+        Double obj1CenterX = obj1.getX();// + obj1.getWidth() / 2;
         Double obj1CenterY = obj1.getY() + obj1.getHeight() / 2;
-        Double obj2CenterX = obj2.getX() + obj2.getWidth() / 2;
+        Double obj2CenterX = obj2.getX();// + obj2.getWidth() / 2;
         Double obj2CenterY = obj2.getY() + obj2.getHeight() / 2;
 
         Double obj1obj2VectorCosineAbs = Math.abs((obj2CenterX - obj1CenterX) / Math.sqrt((obj2CenterX - obj1CenterX) * (obj2CenterX - obj1CenterX) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));

@@ -1,6 +1,9 @@
 package pl.edu.icm.cermine.evaluation;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +22,7 @@ import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
  */
 public class ReferenceParsingEvaluator {
 
-    public static void main(String[] args) throws FileNotFoundException, JDOMException, IOException {
+    public static void main(String[] args) throws JDOMException, IOException {
         if (args.length != 2) {
             System.err.println("USAGE: ReferenceParsingEvaluator <orig file> <test file>");
             System.exit(1);

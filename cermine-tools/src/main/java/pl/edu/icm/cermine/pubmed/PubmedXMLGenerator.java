@@ -11,14 +11,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.io.FileUtils;
-import org.apache.pig.EvalFunc;
-import org.apache.pig.data.DataByteArray;
-import org.apache.pig.data.DataType;
-import org.apache.pig.data.Tuple;
-import org.apache.pig.data.TupleFactory;
-import org.apache.pig.impl.logicalLayer.FrontendException;
-import org.apache.pig.impl.logicalLayer.schema.Schema;
-import org.apache.pig.tools.pigstats.PigStatusReporter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -37,7 +29,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
-public class PubmedXMLGenerator extends EvalFunc<Tuple> {
+public class PubmedXMLGenerator {
 
     private static class LabelTrio {
 
@@ -87,64 +79,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         }
     };
 
-    private Tuple output = TupleFactory.getInstance().newTuple(4);
 	private boolean verbose = false;
-
-    
-    @Override
-    public Schema outputSchema(Schema p_input) {
-    	try{
-    		return Schema.generateNestedSchema(DataType.TUPLE, DataType.CHARARRAY,
-    			DataType.BYTEARRAY, DataType.BYTEARRAY, DataType.BYTEARRAY);
-    	} catch(FrontendException e) {
-    		throw new IllegalStateException(e);
-    	}
-    }
-    
-    @Override
-    public Tuple exec(Tuple input) throws IOException {
-    	System.out.println("doc start");
-    	if(input == null || input.size() == 0) {
-    		throw new IllegalStateException("Input tuple can't be empty!");
-    	}
-    	String keyString = (String) input.get(0);
-    	System.out.println(keyString);
-    	DataByteArray nlmByteArray = (DataByteArray) input.get(1);
-    	DataByteArray pdfByteArray = (DataByteArray) input.get(2);
-    	BxDocument bxDoc = null;
-    	try {
-    		ByteArrayInputStream nlmIS = new ByteArrayInputStream(nlmByteArray.get());
-    		ByteArrayInputStream pdfIS = new ByteArrayInputStream(pdfByteArray.get());
-			bxDoc = generateTrueViz(pdfIS, nlmIS);
-			System.out.println("generated trueviz");
-		} catch (Throwable e) {
-			System.err.println(keyString);
-			e.printStackTrace();
-		}
-    	BxDocumentToTrueVizWriter trueVizWriter = new BxDocumentToTrueVizWriter();
-    	DataByteArray returnDoc = null;
-    	if (bxDoc != null) {
-    		try {
-    			returnDoc = new DataByteArray(trueVizWriter.write(bxDoc.getPages()));
-    			returnDoc = null;
-    			System.out.println("wrote down trueviz");
-    			PigStatusReporter reporter = PigStatusReporter.getInstance();
-    			if (reporter != null) {
-    				reporter.getCounter("CERMINE_COUNTERS", "DOC_COUNTER").increment(1);
-    			}
-    		} catch (TransformationException e) {
-    			System.err.println(keyString);
-    			e.printStackTrace();
-    		}
-    	}
-    	
-    	output.set(0, keyString);
-    	output.set(1, nlmByteArray);
-    	output.set(2, pdfByteArray);
-    	output.set(3, returnDoc);
-    	System.out.println("doc end");
-    	return output;
-    }
 
 	private void setVerbose(boolean verbose) {
 		this.verbose = verbose;
@@ -162,18 +97,6 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 		}
 	}
 	
-    private Map<BxZoneLabel, Integer> summarizeDocument(BxDocument doc) {
-    	Map<BxZoneLabel, Integer> ret = new HashMap<BxZoneLabel, Integer>();
-    	for(BxZone zone: doc.asZones()) {
-    		if(ret.containsKey(zone.getLabel())) {
-    			ret.put(zone.getLabel(), ret.get(zone.getLabel())+1);
-    		} else {
-    			ret.put(zone.getLabel(), 1);
-    		}
-    	}
-    	return ret;
-    }
-    
     public BxDocument generateTrueViz(InputStream pdfStream, InputStream nlmStream) 
     		throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
         XPath xpath = XPathFactory.newInstance().newXPath();
@@ -255,7 +178,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         }
 
         //publication date
-        List<String> pubdateString = null;
+        List<String> pubdateString;
         if (((NodeList) xpath.evaluate("/article/front/article-meta/pub-date", domDoc, XPathConstants.NODESET)).getLength() > 1) {
             Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='epub']", domDoc, XPathConstants.NODE);
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
@@ -289,11 +212,6 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         String issueString = (String) xpath.evaluate("/article/front/article-meta/article-id/issue", domDoc, XPathConstants.STRING);
 
         entries.putIf(issueString, BxZoneLabel.MET_BIB_INFO);
-
-        //first page
-        String firstPageString = (String) xpath.evaluate("/article/front/article-meta/article-id/fpage", domDoc, XPathConstants.STRING);
-        //last page
-        String lastPageString = (String) xpath.evaluate("/article/front/article-meta/article-id/lpage", domDoc, XPathConstants.STRING);
 
         List<String> authorNames = new ArrayList<String>();
         List<String> authorEmails = new ArrayList<String>();
@@ -511,7 +429,6 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
 
         printlnVerbose("ref: " + refStrings.size() + " " + refStrings);
 
-        LevenshteinDistance lev = new LevenshteinDistance();
         SmithWatermanDistance smith = new SmithWatermanDistance(.1, 0.1);
         CosineDistance cos = new CosineDistance();
 
@@ -533,8 +450,8 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
                 BxZone curZone = bxDoc.asZones().get(zoneIdx);
                 List<String> zoneTokens = StringTools.tokenize(StringTools.removeOrphantSpaces(StringTools.cleanLigatures(curZone.toText())));
 
-                Double smithSim = null;
-                Double cosSim = null;
+                Double smithSim;
+                Double cosSim;
                 if (curZone.toText().contains("www.biomedcentral.com")) {
                     //ignore
                     smithSim = 0.;
@@ -564,8 +481,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         			public int compare(LabelTrio t1, LabelTrio t2) {
         				Double simDif = t1.alignment / t1.entryTokens.size() - t2.alignment / t2.entryTokens.size();
         				if (Math.abs(simDif) < 0.0001) {
-        					Integer lenDif = t1.entryTokens.size() - t2.entryTokens.size();
-        					return -lenDif;
+        					return t2.entryTokens.size() - t1.entryTokens.size();
         				}
         				if (simDif > 0) {
         					return 1;
@@ -592,8 +508,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         				public int compare(LabelTrio t1, LabelTrio t2) {
         					Double simDif = t1.alignment - t2.alignment;
         					if (Math.abs(simDif) < 0.0001) {
-        						Integer lenDif = t1.entryTokens.size() - t2.entryTokens.size();
-        						return -lenDif;
+        						return t2.entryTokens.size() - t1.entryTokens.size();
         					}
         					if (simDif > 0) {
         						return 1;
@@ -612,7 +527,7 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
         		}
         		///////
         		if (!valueSet) {
-        			Map<BxZoneLabel, Double> cumulated = new HashMap<BxZoneLabel, Double>();
+        			Map<BxZoneLabel, Double> cumulated = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
         			for (LabelTrio trio : swLabelSim.get(zoneIdx)) {
         				if (cumulated.containsKey(trio.label)) {
         					cumulated.put(trio.label, cumulated.get(trio.label) + trio.alignment / Math.max(zoneTokens.size(), trio.entryTokens.size()));
@@ -693,18 +608,6 @@ public class PubmedXMLGenerator extends EvalFunc<Tuple> {
             }
         }
         return max;
-    }
-
-    private static Map<BxZoneLabel, Double> aggregate(List<LabelTrio> sims) {
-        HashMap<BxZoneLabel, Double> ret = new HashMap<BxZoneLabel, Double>();
-        for (LabelTrio trio : sims) {
-            if (ret.containsKey(trio.label)) {
-                ret.put(trio.label, ret.get(trio.label) + trio.alignment / trio.entryTokens.size());
-            } else {
-                ret.put(trio.label, trio.alignment / trio.entryTokens.size());
-            }
-        }
-        return ret;
     }
 
     public static void main(String[] args) {

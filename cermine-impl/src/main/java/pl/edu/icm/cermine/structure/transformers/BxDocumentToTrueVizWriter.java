@@ -66,6 +66,7 @@ public class BxDocumentToTrueVizWriter {
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_TABLE,            "table");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_TABLE_CAPTION,    "table_caption");
         ZONE_LABEL_MAP.put(BxZoneLabel.BODY_ATTACHMENT,    	  "attachment");
+        ZONE_LABEL_MAP.put(BxZoneLabel.BODY_JUNK,             "junk");
         ZONE_LABEL_MAP.put(BxZoneLabel.OTH_PAGE_NUMBER,       "page_number");
         ZONE_LABEL_MAP.put(BxZoneLabel.OTH_UNKNOWN ,          "unknown");
         ZONE_LABEL_MAP.put(BxZoneLabel.REFERENCES,            "references");

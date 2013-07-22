@@ -68,7 +68,7 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
         if (!prefix.isEmpty()) {
             prefix += "-";
         }
-        String id = prefix + String.valueOf(index);
+        String id = prefix + index;
         element.setAttribute("id", id);
         List<Element> sections = element.getChildren("sec");
         int i = 1;

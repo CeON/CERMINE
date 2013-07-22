@@ -7,7 +7,6 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
-import pl.edu.icm.cermine.evaluation.AbstractEvaluator.Detail;
 import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -35,7 +34,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             DEFAULT_LABEL_MAP.put(label, label);
         }
     }
-    private AbstractEvaluator.Detail detail;
+
     protected Integer foldness;
     private final Map<BxZoneLabel, BxZoneLabel> labelMap = DEFAULT_LABEL_MAP.clone();
     private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
@@ -72,13 +71,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             }
             String inputFile = remaining[0];
 
-            if (line.hasOption("minimal")) {
-                evaluator.detail = Detail.MINIMAL;
-            } else if (line.hasOption("compact")) {
-                evaluator.detail = Detail.COMPACT;
-            } else if (line.hasOption("full")) {
-                evaluator.detail = Detail.FULL;
-            }
             evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
             evaluator.run(inputFile);
 
@@ -128,7 +120,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         return pageResults;
     }
 
-    protected BxDocument readDocument(Reader input) throws Exception {
+    protected BxDocument readDocument(Reader input) throws TransformationException {
         List<BxPage> pages = reader.read(input);
         BxDocument ret = new BxDocument();
         for (BxPage page : pages) {
@@ -142,7 +134,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         labelMap.putAll(value);
     }
 
-    protected void writeDocument(BxDocument document, Writer output) throws Exception {
+    protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
         writer.write(output, document.getPages());
     }
 

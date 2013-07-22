@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
-import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -36,12 +34,10 @@ public class BxDocsToHMMConverter {
     public List<HMMTrainingSample<BxZoneLabel>> process(List<BxDocument> documents) throws AnalysisException {
         List<HMMTrainingSample<BxZoneLabel>> trainingList =
                 new ArrayList<HMMTrainingSample<BxZoneLabel>>(documents.size());
-        ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-        
+                
         for (BxDocument doc : documents) {
             ZoneClassificationUtils.correctPagesBounds(doc);
-            doc = ror.resolve(doc);
-
+            
             if (labelMap != null) {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }

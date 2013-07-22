@@ -3,12 +3,8 @@ package pl.edu.icm.cermine.structure;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
-import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
@@ -129,22 +125,4 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         return vectorBuilder;
 	}
 	
-	public static void main(String[] args) throws AnalysisException, TransformationException, IOException {
-		// args[0] path to xml directory
-		if(args.length != 1) {
-			System.err.println("Source directory needed!");
-			System.exit(1);
-		}
-		
-		SVMInitialZoneClassifier classifier = new SVMInitialZoneClassifier();
-
-		ReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-		
-		List<BxDocument> docs = EvaluationUtils.getDocumentsFromPath(args[0]);
-		for(BxDocument doc: docs) {
-			System.out.println(">> " + doc.getFilename());
-			ror.resolve(doc);
-			classifier.classifyZones(doc);
-		}
-	}
 }

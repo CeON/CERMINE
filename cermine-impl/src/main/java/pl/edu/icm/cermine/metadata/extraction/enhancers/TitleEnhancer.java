@@ -48,17 +48,17 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
                 titleZone = titleZone.getPrev();
             }
             
-            String title = titleZone.toText();
+            StringBuilder titleSB = new StringBuilder(titleZone.toText());
             while (titleZone.hasNext() 
                     && BxZoneLabel.MET_TITLE.equals(titleZone.getNext().getLabel())
                     && Math.abs(height-titleZone.getNext().getLines().get(0).getHeight()) < 0.5) {
                 titleZone = titleZone.getNext();
-                title += " ";
-                title += titleZone.toText();
+                titleSB.append(" ");
+                titleSB.append(titleZone.toText());
             }
 
-            if (!title.isEmpty()) {
-                Enhancers.setTitle(metadata, title.trim().replaceAll("\n", " "));
+            if (!titleSB.toString().isEmpty()) {
+                Enhancers.setTitle(metadata, titleSB.toString().trim().replaceAll("\n", " "));
                 return true;
             }
         }

@@ -491,7 +491,7 @@ public class PubmedXMLGenerator {
 
         		List<String> entryTokens = swLabelSim.get(zoneIdx).get(0).entryTokens;
         		if (Math.max(zoneTokens.size(), entryTokens.size()) > 0
-        				&& Math.min(zoneTokens.size(), entryTokens.size()) / Math.max(zoneTokens.size(), entryTokens.size()) > 0.7
+        				&& Math.min(zoneTokens.size(), entryTokens.size()) / Math.max(zoneTokens.size(), (double)entryTokens.size()) > 0.7
         				&& swLabelSim.get(zoneIdx).get(0).alignment / entryTokens.size() > 0.7) {
         			curZone.setLabel(swLabelSim.get(zoneIdx).get(0).label);
         			valueSet = true;

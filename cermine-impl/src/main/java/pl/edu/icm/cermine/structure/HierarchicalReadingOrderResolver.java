@@ -31,15 +31,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         	}
         }
     };
-    private Boolean force;
 
-    public HierarchicalReadingOrderResolver(Boolean force) {
-        this.force = force;
-    }
-
-    public HierarchicalReadingOrderResolver() {
-        this.force = true;
-    }
     static final Comparator<BxObject> X_ASCENDING_ORDER = new Comparator<BxObject>() {
 
         @Override

@@ -23,10 +23,7 @@ import pl.edu.icm.cermine.evaluation.tools.XMLTools;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneLocaliser;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
 public class PubmedXMLGenerator {
@@ -571,6 +568,29 @@ public class PubmedXMLGenerator {
         }
         printlnVerbose("=>=>=>=>=>=>=>=>=>=>=>=>=>=");
 
+        for (BxZone z: bxDoc.asZones()) {
+            if (!BxZoneLabel.MET_BIB_INFO.equals(z.getLabel()) &&
+                    !BxZoneLabel.REFERENCES.equals(z.getLabel()) &&
+                    z.getLines().size() <= 2 && 
+                    (z.toText().toLowerCase().contains("journal ")
+                    || z.toText().toLowerCase().contains("vol.")
+                    || z.toText().toLowerCase().contains("vol ")
+                    || z.toText().toLowerCase().contains("pp.")
+                    || z.toText().toLowerCase().contains("volume ")
+                    || z.toText().toLowerCase().contains("pp ")
+                    || z.toText().toLowerCase().contains("issn")
+                    || z.toText().toLowerCase().contains("doi:")
+                    || z.toText().toLowerCase().contains("doi ")
+                    || z.toText().toLowerCase().contains("citation:"))) {
+                z.setLabel(BxZoneLabel.MET_BIB_INFO);
+            } else if (!BxZoneLabel.OTH_UNKNOWN.equals(z.getLabel()) &&
+                    !BxZoneLabel.MET_BIB_INFO.equals(z.getLabel()) &&
+                    z.getLines().size() <= 2 && 
+                    (z.toText().toLowerCase().contains("page "))) {
+                z.setLabel(BxZoneLabel.OTH_UNKNOWN);
+            }
+        }
+        
         return bxDoc;
     }
 
@@ -598,18 +618,6 @@ public class PubmedXMLGenerator {
         unlabeledZones.removeAll(toBeRemoved);
     }
     
-    private static Double max(List<Double> values) {
-        Double max = Double.NEGATIVE_INFINITY;
-        for (Double val : values) {
-            if (!val.isNaN()) {
-                max = Math.min(max, val);
-            } else {
-                continue;
-            }
-        }
-        return max;
-    }
-
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println("Usage: <pubmed directory>");
@@ -635,14 +643,50 @@ public class PubmedXMLGenerator {
                 PubmedXMLGenerator datasetGenerator = new PubmedXMLGenerator();
                 datasetGenerator.setVerbose(false);
                 BxDocument bxDoc = datasetGenerator.generateTrueViz(pdfStream, nxmlStream);
+                
+                int keys = 0;
+                Set<BxZoneLabel> set = EnumSet.noneOf(BxZoneLabel.class);
+                int total = 0;
+                int known = 0;
+                for (BxZone z: bxDoc.asZones()) {
+                    total++;
+                    if (z.getLabel() != null) {
+                        known++;
+                        if (z.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_METADATA)) {
+                            set.add(z.getLabel());
+                        }
+                        if (BxZoneLabel.REFERENCES.equals(z.getLabel())) {
+                            keys = 1;
+                        }
+                    }
+                }
+                
+                if (set.contains(BxZoneLabel.MET_AFFILIATION)) {
+                    keys++;
+                }
+                if (set.contains(BxZoneLabel.MET_AUTHOR)) {
+                    keys++;
+                }
+                if (set.contains(BxZoneLabel.MET_BIB_INFO)) {
+                    keys++;
+                }
+                if (set.contains(BxZoneLabel.MET_TITLE)) {
+                    keys++;
+                }
+                int coverage = 0;
+                if (total > 0) {
+                    coverage = known*100/total;
+                }
+                System.out.print(coverage+" "+set.size()+" "+keys);
 
-                FileWriter fstream = new FileWriter(StringTools.getTrueVizPath(nxmlPath));
+                FileWriter fstream = new FileWriter(
+                        StringTools.getTrueVizPath(nxmlPath).replace(".xml", "."+coverage+"."+set.size()+"."+keys+".cerm.xml"));
                 BufferedWriter out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                 out.write(writer.write(bxDoc.getPages()));
                 out.close();
                 
-                System.out.println("done");
+                System.out.println(" done");
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -103,12 +103,10 @@ public class DistElem<E> implements Comparable<DistElem<E> >{
 	public int compareTo(DistElem<E> compareObject) {
 		if(c == compareObject.c) {
 			 return compareDouble(dist, compareObject.dist);
+		} else if (c == true) {
+            return -1;
 		} else {
-			if(c == true) {
-				return -1;
-			} else { //c == false
-				return 1;
-			}
+			return 1;
 		}
 	}
 	

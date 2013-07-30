@@ -130,10 +130,6 @@ public class CermineController {
         return new ModelAndView("tasks", "tasks", taskManager.taskList());
     }
 
-    private static ResponseEntity<List<Map<String, Object>>> uploadResponseOK(MultipartFile file, int size) {
-        return wrapResponse(fileDetails(file, size));
-    }
-
     private static ResponseEntity<List<Map<String, Object>>> wrapResponse(Map<String, Object> rBody) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN);

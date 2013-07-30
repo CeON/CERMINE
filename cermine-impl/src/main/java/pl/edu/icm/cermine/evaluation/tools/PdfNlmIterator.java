@@ -7,7 +7,7 @@ import java.util.*;
 public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 	private Integer curItemIdx = -1;
 	private List<PdfNlmPair> entries = null;
-	private final Comparator<File> ALPHABETICAL_ORDER = new Comparator<File>(){
+	private final Comparator<File> alphabeticalOrder = new Comparator<File>(){
 		@Override
 		public int compare(File o1, File o2) {
 			return o1.getName().compareTo(o2.getName());
@@ -37,17 +37,13 @@ public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 		List<File> interestingFiles = new ArrayList<File>(Arrays.asList(dir.listFiles(new FilenameFilter(){
 			@Override
 			public boolean accept(File dir, String name) {
-				if(name.endsWith(".pdf") || name.endsWith(".nxml")) {
-					return true;
-                } else {
-					return false;
-                }
+				return name.endsWith(".pdf") || name.endsWith(".nxml");
 			}
 		})));
 		if(interestingFiles.size() < 2) {
 			throw new IllegalArgumentException("There are too few files in the given directory!");
 		}
-		Collections.sort(interestingFiles, ALPHABETICAL_ORDER);
+		Collections.sort(interestingFiles, alphabeticalOrder);
 
 		entries = new ArrayList<PdfNlmPair>();
 		Integer prevIdx, curIdx;

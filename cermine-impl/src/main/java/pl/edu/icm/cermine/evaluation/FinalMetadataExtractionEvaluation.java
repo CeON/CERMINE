@@ -107,7 +107,7 @@ public final class FinalMetadataExtractionEvaluation {
             org.w3c.dom.Document originalNlm = documentBuilder.parse(new FileInputStream(pair.getNlm()));
 
             org.jdom.Element metaElement = metadataExtractor.extractMetadata(new FileInputStream(pair.getPdf()));
-            org.w3c.dom.Document extractedNlm = ElementToW3CDocument(metaElement);
+            org.w3c.dom.Document extractedNlm = elementToW3CDocument(metaElement);
 
             String expectedTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/title-group/article-title");
             String extractedTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/title-group/article-title");
@@ -439,7 +439,7 @@ public final class FinalMetadataExtractionEvaluation {
         return ret;
     }
 
-    static org.w3c.dom.Document ElementToW3CDocument(org.jdom.Element elem) throws JDOMException {
+    static org.w3c.dom.Document elementToW3CDocument(org.jdom.Element elem) throws JDOMException {
         org.jdom.Document metaDoc = new org.jdom.Document();
         metaDoc.setRootElement(elem);
         org.jdom.output.DOMOutputter domOutputter = new DOMOutputter();

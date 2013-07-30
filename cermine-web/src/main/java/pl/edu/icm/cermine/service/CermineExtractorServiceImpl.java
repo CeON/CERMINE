@@ -5,14 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import javax.annotation.PostConstruct;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -102,7 +95,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
             log.debug("waiting for extractNLM task...");
             res = future.get();
         } catch (RejectedExecutionException rje) {
-            throw new ServiceException("Queue size exceeded.");
+            throw new ServiceException("Queue size exceeded.", rje);
         } catch (Exception ex) {
             log.error("Exception while executing extraction task...", ex);
             throw new RuntimeException(ex);

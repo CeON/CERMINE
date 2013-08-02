@@ -313,7 +313,7 @@ public class PubmedXMLGenerator {
         List<String> tableCaptions = new ArrayList<String>();
         List<String> tableBodies = new ArrayList<String>();
         List<String> tableFootnotes = new ArrayList<String>();
-        //tableNodes.
+        //tableNodes
         NodeList tableNodes = (NodeList) xpath.evaluate("/article//table-wrap", domDoc, XPathConstants.NODESET);
 
         for (Integer nodeIdx = 0; nodeIdx < tableNodes.getLength(); ++nodeIdx) {
@@ -383,8 +383,6 @@ public class PubmedXMLGenerator {
                 refStrings.add(XMLTools.extractTextFromNode(refParentNode.getChildNodes().item(refIdx)));
             }
         }
-//			entries.putIf(refString, BxZoneLabel.GEN_REFERENCES);
-//		}
         entries.putIf(StringTools.joinStrings(refStrings), BxZoneLabel.REFERENCES);
         entries.put("references", BxZoneLabel.REFERENCES);
 
@@ -497,7 +495,7 @@ public class PubmedXMLGenerator {
         			valueSet = true;
         			printVerbose("0 ");
         		}
-        		///////
+
         		if (!valueSet) {
         			Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
         				
@@ -522,7 +520,7 @@ public class PubmedXMLGenerator {
         				printVerbose("1 ");
         			}
         		}
-        		///////
+
         		if (!valueSet) {
         			Map<BxZoneLabel, Double> cumulated = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
         			for (LabelTrio trio : swLabelSim.get(zoneIdx)) {
@@ -546,7 +544,7 @@ public class PubmedXMLGenerator {
         				valueSet = true;
         			}
         		}
-        		////
+
         		if(!valueSet) {
         			curZone.setLabel(null);
         		}

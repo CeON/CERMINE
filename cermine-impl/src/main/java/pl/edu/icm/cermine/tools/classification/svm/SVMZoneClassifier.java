@@ -23,9 +23,7 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
  {
     	for (BxZone zone: document.asZones()) {
-    		
-			BxZoneLabel predicted = predictLabel(zone, zone.getParent());
-//			System.out.println("predictedVal " + predicted + "( is " + zone.getLabel() + ")");
+    		BxZoneLabel predicted = predictLabel(zone, zone.getParent());
 			zone.setLabel(predicted);
 		}
 		return document;

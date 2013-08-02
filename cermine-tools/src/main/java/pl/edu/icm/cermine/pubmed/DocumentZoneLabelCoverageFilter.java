@@ -46,7 +46,7 @@ public class DocumentZoneLabelCoverageFilter {
                 intcov = good*100/all;
             }
             System.out.println(doc.getFilename()+" "+intcov);
-            //File f1 = new File(inDir+doc.getFilename());
+
             File f2 = new File(outDir+doc.getFilename()+"."+intcov);
             FileUtils.copyFile(f, f2);
         }

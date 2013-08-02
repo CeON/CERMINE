@@ -18,7 +18,7 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.*;
 
 /**
- * @author Pawel Szostek (p.szostek@
+ * @author Pawel Szostek
  * 
  * @param <S>
  *            classified object's class

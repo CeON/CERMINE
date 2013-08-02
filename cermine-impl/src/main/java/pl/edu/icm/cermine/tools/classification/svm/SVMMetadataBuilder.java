@@ -36,9 +36,6 @@ public class SVMMetadataBuilder {
             ++labelIdx;
         }
 
-//        SampleSelector<BxZoneLabel> selector = new OversamplingSampler<BxZoneLabel>(0.7);
-//        trainingSamples = selector.pickElements(trainingSamples);
-
         FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMMetadataZoneClassifier.getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
@@ -58,7 +55,6 @@ public class SVMMetadataBuilder {
         return zoneClassifier;
     }
 
-    //sample parameters: -input /home/pawel/icm/xmls_v2 -output metadata_svm_classifier_test -kernel 2 -g 0.5 -C 256
     public static void main(String[] args) throws ParseException, AnalysisException, IOException {
         Options options = new Options();
         options.addOption("input", true, "input path");

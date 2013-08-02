@@ -253,15 +253,5 @@ public class BxDocumentToTrueVizWriter {
         } catch (ParserConfigurationException ex) {
             throw new TransformationException(ex);
         }
-//    	try {
-//    		Document doc = createDocument(objects);
-//    		nu.xom.Document xomDocument = nu.xom.converters.DOMConverter.convert(doc);
-//    		String xml = xomDocument.toXML();
-//    		writer.write(xml);
-//    	} catch (IOException e) {
-//    		throw new TransformationException(e);
-//    	} catch (ParserConfigurationException e) {
-//    		throw new TransformationException(e);
-//    	}
     }
 }

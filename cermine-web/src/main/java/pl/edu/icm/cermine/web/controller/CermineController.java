@@ -88,11 +88,6 @@ public class CermineController {
         try {
             logger.debug("content length: {}", content.length);
             
-//            byte[] content = file.getBytes();
-//            if (content.length == 0) {
-//                model.addAttribute("warning", "An empty or no file sent.");
-//                return new ResponseEntity<String>("Invalid or empty file", null, HttpStatus.BAD_REQUEST);
-//            }
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.setContentType(MediaType.APPLICATION_XML);
             ExtractionResult result = extractorService.extractNLM(new ByteArrayInputStream(content));

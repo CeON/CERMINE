@@ -90,11 +90,6 @@ public class LibSVMExporter {
         String inputDirPath = line.getArgs()[0];
         File inputDirFile = new File(inputDirPath);
 
-		// List<TrainingSample<BxZoneLabel>> initialTrainingElements = new
-		// ArrayList<TrainingSample<BxZoneLabel>>();
-		// List<TrainingSample<BxZoneLabel>> metaTrainingElements = new
-		// ArrayList<TrainingSample<BxZoneLabel>>();
-        
         Integer docIdx = 0;
 
         HierarchicalReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
@@ -119,7 +114,7 @@ public class LibSVMExporter {
         	String filename = doc.getFilename();
         	doc = ror.resolve(doc);
         	doc.setFilename(filename);
-        	////
+
         	for (BxZone zone : doc.asZones()) {
         		if (zone.getLabel() != null) {
         			if (zone.getLabel().getCategory() != BxZoneLabelCategory.CAT_METADATA) {
@@ -135,11 +130,10 @@ public class LibSVMExporter {
 							BxZoneLabel.getIdentityMap());
 			newMetaSamples = metaSamplesFilter.pickElements(newMetaSamples);
         	
-        	////
 			List<TrainingSample<BxZoneLabel>> newInitialSamples = BxDocsToTrainingSamplesConverter
 					.getZoneTrainingSamples(doc, initialVectorBuilder,
 							BxZoneLabel.getLabelToGeneralMap());
-			// /
+
 			for (TrainingSample<BxZoneLabel> sample : newMetaSamples) {
 				toLibSVM(sample, svmMetaFile);
 			}

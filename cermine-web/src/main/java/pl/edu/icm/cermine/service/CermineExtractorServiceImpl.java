@@ -75,13 +75,6 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         this.maxQueueForBatch = maxQueueForBatch;
     }
 
-//    public TaskManager getTaskManager() {
-//        return taskManager;
-//    }
-//
-//    public void setTaskManager(TaskManager taskManager) {
-//        this.taskManager = taskManager;
-//    }
     @Override
     public ExtractionResult extractNLM(InputStream is) throws AnalysisException, ServiceException {
         log.debug("Starting extractNLM task...");
@@ -109,7 +102,6 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         ExtractionTask task = new ExtractionTask();
         task.setPdf(pdf);
         task.setFileName(fileName);
-//        task.setClientAddress(client);
         task.setCreationDate(new Date());
         task.setStatus(ExtractionTask.TaskStatus.CREATED);
         long id = taskManager.registerTask(task);
@@ -171,7 +163,6 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
             result.setMeta(ArticleMeta.extractNLM(doc));
             log.debug("Article meta extraction succeeded");
             result.setSucceeded(true);
-//            log.debug("Returning xml:\n {}", res);
         } catch (Exception anal) {
             log.debug("Exception from analysis: ", anal);
             result.setError(anal);

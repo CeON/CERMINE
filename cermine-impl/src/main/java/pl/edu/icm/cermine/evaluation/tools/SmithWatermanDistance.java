@@ -43,7 +43,6 @@ public class SmithWatermanDistance {
     };
 
     public Double compare(List<String> s1, List<String> s2) {
-        // string s_a=seq_a,s_b=seq_b;
         int N_a = s1.size();                     // get the actual lengths of the sequences
         int N_b = s2.size();
 

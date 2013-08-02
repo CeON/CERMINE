@@ -45,11 +45,11 @@ public class DistanceFromNearestNeighbourFeature extends FeatureCalculator<BxZon
             Integer oct;
             if (cx + cw <= ox) {
                 if (cy + ch <= oy) {
-                    oct = 4; // 0;
+                    oct = 4;
                 } else if (cy >= oy + oh) {
-                    oct = 2; // 6;
+                    oct = 2;
                 } else {
-                    oct = 3; // 7;
+                    oct = 3;
                 }
             } else if (ox + ow <= cx) {
                 if (cy + ch <= oy) {
@@ -63,7 +63,7 @@ public class DistanceFromNearestNeighbourFeature extends FeatureCalculator<BxZon
                 oct = 5;
             } else if (oy + oh <= cy) {
                 oct = 1;
-            } else { //two zones
+            } else {
                 continue;
             }
             // determine distance based on octant
@@ -95,7 +95,7 @@ public class DistanceFromNearestNeighbourFeature extends FeatureCalculator<BxZon
                 default:
                     dist = Double.MAX_VALUE;
             }
-            //minDist = Math.min(minDist, dist);
+            
             if (dist < minDist) {
                 minDist = dist;
             }

@@ -89,7 +89,6 @@ public final class MalletTrainingFileGenerator {
         }
         
         for (Citation citation : allcitations) {
-            //List<String> tokens = CitationUtils.citationToMalletInputFormat(citation, additionalFeatures);
             List<String> tokens = CitationUtils.citationToMalletInputFormat(citation);
             try {
                 for (String token : tokens) {

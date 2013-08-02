@@ -35,9 +35,6 @@ public class SVMInitialBuilder {
             ++labelIdx;
         }
 
-        //SampleSelector<BxZoneLabel> selector = new UndersamplingSelector<BxZoneLabel>(1.3);
-        //trainingSamples = selector.pickElements(trainingSamples);
-
         FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(featureVectorBuilder);
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
@@ -56,7 +53,6 @@ public class SVMInitialBuilder {
         return zoneClassifier;
     }
 
-// sample parameters: -input /home/pawel/icm/xmls_v2 -output initial_svm_classifier_test -degree 3 -g 0.0325 -C 256
     public static void main(String[] args) throws ParseException, AnalysisException, IOException, CloneNotSupportedException  {
         Options options = new Options();
         options.addOption("input", true, "input path");

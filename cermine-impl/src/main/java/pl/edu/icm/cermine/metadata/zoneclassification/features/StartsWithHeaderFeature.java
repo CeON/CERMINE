@@ -19,7 +19,6 @@ public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 		String itemizeString = "";
 		itemizeString += "|^\\d+\\.\\d+\\.\\s+\\p{Upper}.+";
 		itemizeString += "|^\\d+\\.\\s+\\p{Upper}.+";
-		//pattern += "|^(IX|IV|V?I{0,3})(\\.)?\\s*\\p{Upper}.+";
 		itemizeString += "|^\\p{Upper}\\.\\s[^\\.]+";
 		itemizeString += "|^\\p{Lower}\\)\\s+.+";
 		Pattern itemizePattern = Pattern.compile(itemizeString);
@@ -33,19 +32,13 @@ public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 		Matcher matcher2 = subpointsPattern.matcher(text);
 
 		if(matcher1.matches() || matcher2.matches()) {
-		//	System.out.println("+++");
-		//	System.out.println(object.toText());
 			return 1.0;
 		}
 		
 		if(object.getLines().size() <= 2) {			
-		//	System.out.println("---");
-		//	System.out.println(object.toText());
 			return 0;
 		}
 		if(!lineText.contains(" ") && !lineText.matches(".*\\d.*") && lineText.matches("\\p{Upper}.+")) {
-		//	System.out.println("+++");
-		//	System.out.println(object.toText());
 			return 1;
 		}
 		String[] words = lineText.split(" ");
@@ -57,13 +50,9 @@ public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 			}
 		}
 		if(capitals) {
-		//	System.out.println("+++");
-		//	System.out.println(object.toText());
 			return 1.0;
 		} 
 
-	//	System.out.println("---");
-	//	System.out.println(object.toText());
 		return 0;
 	}
 }

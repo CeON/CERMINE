@@ -124,8 +124,8 @@ public final class DecisionTreeBuilder {
                 public int compare(HMMTrainingSample<S> t,  HMMTrainingSample<S> t1) {
                     HMMTrainingSample<S> te1 = (HMMTrainingSample<S>) t;
                     HMMTrainingSample<S> te2 = (HMMTrainingSample<S>) t1;
-                    int ret = Double.compare(te1.getObservation().getFeatureValue(sortAttribute),
-                            te2.getObservation().getFeatureValue(sortAttribute));
+                    int ret = Double.compare(te1.getObservation().getValue(sortAttribute),
+                            te2.getObservation().getValue(sortAttribute));
                     if (ret == 0) {
                         ret = te1.getLabel().compareTo(te2.getLabel());
                     }
@@ -148,9 +148,9 @@ public final class DecisionTreeBuilder {
                 S label2 = trainingElement2.getLabel();
 
                 if (leftCount <= i) {
-                    double feature = trainingList.get(leftCount).getObservation().getFeatureValue(attribute);
+                    double feature = trainingList.get(leftCount).getObservation().getValue(attribute);
                     while (leftCount < trainingList.size()
-                            && trainingList.get(leftCount).getObservation().getFeatureValue(attribute) == feature) {
+                            && trainingList.get(leftCount).getObservation().getValue(attribute) == feature) {
                         leftLabelsProb.addEvent(trainingList.get(leftCount).getLabel());
                         rightLabelsProb.removeEvent(trainingList.get(leftCount).getLabel());
                         leftCount++;
@@ -165,10 +165,10 @@ public final class DecisionTreeBuilder {
                             + rightEntropy * (double) (trainingList.size() - leftCount) / (double) (trainingList.size());
 
                     if (bestAttribute == null || entropyGain < bestEntropyGain) {
-                        double f1 = trainingElement1.getObservation().getFeatureValue(attribute);
-                        double f2 = trainingElement2.getObservation().getFeatureValue(attribute);
+                        double f1 = trainingElement1.getObservation().getValue(attribute);
+                        double f2 = trainingElement2.getObservation().getValue(attribute);
                         if (f1 != f2 ||
-                              f1 != trainingList.get(trainingList.size() - 1).getObservation().getFeatureValue(attribute)) {
+                              f1 != trainingList.get(trainingList.size() - 1).getObservation().getValue(attribute)) {
                             bestAttribute = attribute;
                             bestCut = (f1 + f2) / 2;
                             bestEntropyGain = entropyGain;
@@ -197,11 +197,11 @@ public final class DecisionTreeBuilder {
         }
 
         public boolean isLeft(FeatureVector features) {
-            return features.getFeatureValue(testedFeature) <= cut;
+            return features.getValue(testedFeature) <= cut;
         }
 
         public boolean isRight(FeatureVector features) {
-            return features.getFeatureValue(testedFeature) > cut;
+            return features.getValue(testedFeature) > cut;
         }
 
     }

@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.tools.classification.metrics;
 
+import com.google.common.collect.Sets;
 import java.util.List;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
@@ -14,13 +15,17 @@ public class FeatureVectorEuclideanMetric implements FeatureVectorDistanceMetric
         double sum = 0;
         List<String> featureNames1 = vector1.getFeatureNames();
         List<String> featureNames2 = vector2.getFeatureNames();
-            
-        for (String feature : featureNames1) {
-            if (featureNames2.contains(feature)) {
-                sum += Math.pow(vector1.getFeatureValue(feature) - vector2.getFeatureValue(feature), 2);
+        
+        if (Sets.newHashSet(featureNames1).equals(Sets.newHashSet(featureNames2))) {
+            for (String feature : featureNames1) {
+                sum += Math.pow(vector1.getValue(feature) - vector2.getValue(feature), 2);
+            }
+        } else {
+            for (int i = 0; i < vector1.size(); i++) {
+                sum += Math.pow(vector1.getValue(i) - vector2.getValue(i), 2);
             }
         }
-           
+
         return Math.sqrt(sum);
     }
 }

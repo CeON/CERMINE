@@ -36,7 +36,7 @@ public class TrainingSample<S> implements Cloneable {
     public TrainingSample<S> clone() throws CloneNotSupportedException {
         TrainingSample<S> element = (TrainingSample) super.clone();
         element.label = label;
-        element.features = features.clone();
+        element.features = features.copy();
         return element;
     }
 }

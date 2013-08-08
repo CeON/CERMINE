@@ -213,7 +213,7 @@ public final class CitationUtils {
         for (CitationToken token : tokens) {
             FeatureVector featureVector = vectorBuilder.getFeatureVector(token, citation);
             for (String featureName : featureVector.getFeatureNames()) {
-                if (Double.isNaN(featureVector.getFeatureValue(featureName))) {
+                if (Double.isNaN(featureVector.getValue(featureName))) {
                     throw new RuntimeException("Feature value is set to NaN: "+featureName);
                 }
             }
@@ -231,7 +231,7 @@ public final class CitationUtils {
                
             if (i >= 2) {
                 for (String n : featureVectors.get(i-2).getFeatureNames()) {
-                    if (featureVectors.get(i-2).getFeatureValue(n) > Double.MIN_VALUE) {
+                    if (featureVectors.get(i-2).getValue(n) > Double.MIN_VALUE) {
                         stringBuilder.append(n);
                         stringBuilder.append("@-2 ");
                     }
@@ -239,21 +239,21 @@ public final class CitationUtils {
             }
             if (i >= 1) {
                 for (String n : featureVectors.get(i-1).getFeatureNames()) {
-                    if (featureVectors.get(i-1).getFeatureValue(n) > Double.MIN_VALUE) {
+                    if (featureVectors.get(i-1).getValue(n) > Double.MIN_VALUE) {
                         stringBuilder.append(n);
                         stringBuilder.append("@-1 ");
                     }
                 }
             }
             for (String n : featureVectors.get(i).getFeatureNames()) {
-                if (featureVectors.get(i).getFeatureValue(n) > Double.MIN_VALUE) {
+                if (featureVectors.get(i).getValue(n) > Double.MIN_VALUE) {
                     stringBuilder.append(n);
                     stringBuilder.append(" ");
                 }
             }
             if (i < featureVectors.size()-1) {
                 for (String n : featureVectors.get(i+1).getFeatureNames()) {
-                    if (featureVectors.get(i+1).getFeatureValue(n) > Double.MIN_VALUE) {
+                    if (featureVectors.get(i+1).getValue(n) > Double.MIN_VALUE) {
                         stringBuilder.append(n);
                         stringBuilder.append("@1 ");
                     }
@@ -261,7 +261,7 @@ public final class CitationUtils {
             }
             if (i < featureVectors.size()-2) {
                 for (String n : featureVectors.get(i+2).getFeatureNames()) {
-                    if (featureVectors.get(i+2).getFeatureValue(n) > Double.MIN_VALUE) {
+                    if (featureVectors.get(i+2).getValue(n) > Double.MIN_VALUE) {
                         stringBuilder.append(n);
                         stringBuilder.append("@2 ");
                     }

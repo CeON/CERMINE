@@ -15,13 +15,13 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel>  implements ZoneClassifier{
+    
 	public SVMZoneClassifier(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) {
 		super(featureVectorBuilder, BxZoneLabel.class);
 	}
 
 	@Override
-	public BxDocument classifyZones(BxDocument document) throws AnalysisException 
- {
+	public BxDocument classifyZones(BxDocument document) throws AnalysisException {
     	for (BxZone zone: document.asZones()) {
     		BxZoneLabel predicted = predictLabel(zone, zone.getParent());
 			zone.setLabel(predicted);
@@ -44,13 +44,11 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 			String[] parts = partsPattern.split(line);
 			BxZoneLabel label = BxZoneLabel.values()[Integer.parseInt(parts[0])];
 			FeatureVector fv = new FeatureVector();
-			List<Double> values = new ArrayList<Double>();
+            List<String> featureNames = fvb.getFeatureNames();
 			for(Integer partIdx=1; partIdx<parts.length; ++partIdx) {
 				String[] subparts = twopartPattern.split(parts[partIdx]);
-				values.add(Double.parseDouble(subparts[1]));
+                fv.addFeature(featureNames.get(partIdx-1), Double.parseDouble(subparts[1]));
 			}
-			fv.setValues(values.toArray(new Double[values.size()]));
-			fv.setNames(fvb.getFeatureNames());
 			TrainingSample<BxZoneLabel> sample = new TrainingSample<BxZoneLabel>(fv, label);
 			ret.add(sample);
 		}

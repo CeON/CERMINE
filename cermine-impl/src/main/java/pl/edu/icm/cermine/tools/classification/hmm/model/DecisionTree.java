@@ -44,11 +44,11 @@ public class DecisionTree<T> {
     }
 
     public boolean isClassifiedLeft(FeatureVector features) {
-        return !isLeaf() && features.getFeatureValue(featureName) <= featureCut;
+        return !isLeaf() && features.getValue(featureName) <= featureCut;
     }
 
     public boolean isClassifiedRight(FeatureVector features) {
-        return !isLeaf() && features.getFeatureValue(featureName) > featureCut;
+        return !isLeaf() && features.getValue(featureName) > featureCut;
     }
 
     public int getLabelCount(T label) {

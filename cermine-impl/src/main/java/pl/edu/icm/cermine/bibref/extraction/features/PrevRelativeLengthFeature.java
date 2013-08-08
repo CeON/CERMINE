@@ -8,13 +8,16 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class RelativeStartTresholdFeature extends FeatureCalculator<BxLine, BxDocumentBibReferences> {
+public class PrevRelativeLengthFeature extends FeatureCalculator<BxLine, BxDocumentBibReferences> {
 
-    private static final int LINE_INDENT_TRESHOLD = 6;
-    
     @Override
     public double calculateFeatureValue(BxLine refLine, BxDocumentBibReferences refs) {
-        return (refLine.getBounds().getX() - refs.getZone(refLine).getBounds().getX() > LINE_INDENT_TRESHOLD) ? 1 : 0;
+        if (refs.getLines().indexOf(refLine) == 0) {
+            return 0.2;
+        }
+        
+        BxLine prev = refs.getLines().get(refs.getLines().indexOf(refLine)-1);        
+        return prev.getBounds().getWidth() / refs.getZone(prev).getBounds().getWidth();
     }
     
 }

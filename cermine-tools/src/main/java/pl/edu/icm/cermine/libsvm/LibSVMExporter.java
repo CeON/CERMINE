@@ -31,7 +31,7 @@ public class LibSVMExporter {
        	fileWriter.write(" ");
         	
        	Integer featureCounter = 1;
-       	for (Double value : trainingElement.getFeatureVector().getFeatureValues()) {
+       	for (Double value : trainingElement.getFeatureVector().getValues()) {
        		StringBuilder sb = new StringBuilder();
        		Formatter formatter = new Formatter(sb, Locale.US);
        		formatter.format("%d:%.5f", featureCounter++, value);
@@ -54,7 +54,7 @@ public class LibSVMExporter {
                 svmDataFile.write(" ");
 
                 Integer featureCounter = 1;
-                for (Double value : elem.getFeatureVector().getFeatureValues()) {
+                for (Double value : elem.getFeatureVector().getValues()) {
                     StringBuilder sb = new StringBuilder();
                     Formatter formatter = new Formatter(sb, Locale.US);
                     formatter.format("%d:%.5f", featureCounter++, value);

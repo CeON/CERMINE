@@ -30,7 +30,9 @@ public class BxDocumentBibReferences {
             String normalized = line.toText().toLowerCase().replaceAll("[^a-z]", "");
             if (line.toText().length() < MAX_TITLE_LENGTH && zone.getLines().indexOf(line) == 0 && 
                     (normalized.startsWith("refer") || normalized.startsWith("biblio")
-                    || normalized.startsWith("acknowled"))) {
+                    || normalized.startsWith("acknowled") || normalized.startsWith("conclus"))) {
+                lines.clear();
+                lineZones.clear();
                 continue;
             }
             if (line.toText().replaceAll("[\\s\\u00A0]", "").isEmpty()) {

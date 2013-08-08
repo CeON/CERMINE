@@ -186,8 +186,11 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                     continue;
                 }
                 
-                float charLeft = charTri.getDescentLine().getStartPoint().get(Vector.I1) - pageRectangle.getLeft();
-                float charBottom = charTri.getDescentLine().getStartPoint().get(Vector.I2) - pageRectangle.getBottom();
+                float absoluteCharLeft = charTri.getDescentLine().getStartPoint().get(Vector.I1);
+                float absoluteCharBottom = charTri.getDescentLine().getStartPoint().get(Vector.I2);
+                
+                float charLeft = absoluteCharLeft - pageRectangle.getLeft();
+                float charBottom = absoluteCharBottom - pageRectangle.getBottom();
                 
                 float charHeight = charTri.getAscentLine().getStartPoint().get(Vector.I2) 
                         - charTri.getDescentLine().getStartPoint().get(Vector.I2);
@@ -200,9 +203,11 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 if (Float.isNaN(charWidth) || Float.isInfinite(charWidth)) {
                     charWidth = 0;
                 } 
-                                
-                if (charLeft < pageRectangle.getLeft() || charLeft + charWidth > pageRectangle.getRight()
-                        || charBottom < pageRectangle.getBottom() || charBottom + charHeight > pageRectangle.getTop()) {
+                
+                if (absoluteCharLeft < pageRectangle.getLeft() 
+                        || absoluteCharLeft + charWidth > pageRectangle.getRight()
+                        || absoluteCharBottom < pageRectangle.getBottom() 
+                        || absoluteCharBottom + charHeight > pageRectangle.getTop()) {
                     continue;
                 }
                 

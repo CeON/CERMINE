@@ -32,6 +32,7 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<Element> {
                 new IssueEnhancer(),
                 new JournalVolumeIssueWithAuthorEnhancer(),
                 new JournalVolumeIssueEnhancer(),
+                new JournalVolumePagesEnhancer(),
                 new JournalEnhancer(),
                 new EditorEnhancer(),
                 new AffiliationGeometricEnhancer(),

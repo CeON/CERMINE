@@ -32,6 +32,8 @@ import pl.edu.icm.cermine.structure.model.BxPage;
  */
 public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     
+    private static int threadsNumber = Runtime.getRuntime().availableProcessors();
+    
     class NumBxPage {
         BxPage page;
         int number;
@@ -64,7 +66,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
 
         BxPage[] pages = new BxPage[document.getPages().size()];
         
-        ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        ExecutorService exec = Executors.newFixedThreadPool(threadsNumber);
         
         ArrayList<Callable<NumBxPage>> tasks = new ArrayList<Callable<NumBxPage>>();
         int i = 0;
@@ -92,6 +94,10 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         } catch (InterruptedException ex) {
             throw new AnalysisException("Cannot segment pages!", ex);
         }
+    }
+
+    public static void setThreadsNumber(int threadsNumber) {
+        ParallelDocstrumSegmenter.threadsNumber = threadsNumber;
     }
 
 }

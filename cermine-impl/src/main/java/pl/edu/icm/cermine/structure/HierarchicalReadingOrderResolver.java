@@ -36,6 +36,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
     static final Integer GRIDSIZE = 50;
     static final Double BOXES_FLOW = 0.5;
     static final Double EPS = 0.0001;
+    static final int MAX_ZONES = 1000;
     static final Comparator<BxObject> Y_ASCENDING_ORDER = new Comparator<BxObject>() {
 
         @Override
@@ -63,6 +64,15 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         	}
         }
     };
+    
+    static final Comparator<BxObject> YX_ASCENDING_ORDER = new Comparator<BxObject>() {
+
+        @Override
+        public int compare(BxObject o1, BxObject o2) {
+            int yCompare = Y_ASCENDING_ORDER.compare(o1, o2);
+            return yCompare == 0 ? X_ASCENDING_ORDER.compare(o1, o2) : yCompare;
+        }
+    };
 
     @Override
     public BxDocument resolve(BxDocument messyDoc) {
@@ -82,7 +92,13 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                 }
                 Collections.sort(lines, Y_ASCENDING_ORDER);
             }
-            List<BxZone> orderedZones = reorderZones(zones);
+            List<BxZone> orderedZones;
+            if (zones.size() > MAX_ZONES) {
+                orderedZones = new ArrayList<BxZone>(zones);
+                Collections.sort(orderedZones, YX_ASCENDING_ORDER);
+            } else {
+                orderedZones = reorderZones(zones);
+            }
             page.setZones(orderedZones);
             orderedDoc.addPage(page);
         }
@@ -179,7 +195,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         /*
          * Distance tuples are stored sorted by ascending distance value
          */
-        List<DistElem<BxObject>> dists = new ArrayList<DistElem<BxObject>>();
+        List<DistElem<BxObject>> dists = new ArrayList<DistElem<BxObject>>(zones.size()*zones.size()/2);
         for (int idx1 = 0; idx1 < zones.size(); ++idx1) {
             for (int idx2 = idx1 + 1; idx2 < zones.size(); ++idx2) {
                 BxZone zone1 = zones.get(idx1);

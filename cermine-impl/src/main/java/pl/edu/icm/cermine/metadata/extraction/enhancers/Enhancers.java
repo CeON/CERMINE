@@ -66,7 +66,7 @@ public class Enhancers {
     
     //author
     public static void addAuthor(Element metadata, String author, List<String> refs) {
-        addContributor(metadata, cleanLigatures(author), TAG_AUTHOR, refs);
+        addContributor(metadata, cleanOther(cleanLigatures(author)), TAG_AUTHOR, refs);
     }
     
     //editor
@@ -106,7 +106,7 @@ public class Enhancers {
     //keywords
     public static void addKeyword(Element metadata, String keyword) {
         String[] path = {TAG_FRONT, TAG_ARTICLE_META, TAG_KWD_GROUP, TAG_KWD};
-        addValue(metadata, path, cleanLigatures(keyword));
+        addValue(metadata, path, cleanOther(cleanLigatures(keyword)));
     }
     
     //abstract
@@ -194,7 +194,7 @@ public class Enhancers {
     //article title
     public static void setTitle(Element metadata, String title) {
         String[] path = {TAG_FRONT, TAG_ARTICLE_META, TAG_TITLE_GROUP, TAG_ARTICLE_TITLE};
-        Enhancers.setValue(metadata, path, cleanLigatures(title));
+        Enhancers.setValue(metadata, path, cleanOther(cleanLigatures(title)));
     }
     
     //volume
@@ -329,6 +329,11 @@ public class Enhancers {
         setValue(date, ypath, year);
     }
 
+    private static String cleanOther(String str) {
+        return str.replaceAll("[’‘]", "'")
+                  .replaceAll("[–]", "-");
+    }
+    
     private static String cleanLigatures(String str) {
         return str.replaceAll("\uFB00", "ff")
                   .replaceAll("\uFB01", "fi")
@@ -336,7 +341,8 @@ public class Enhancers {
                   .replaceAll("\uFB03", "ffi")
                   .replaceAll("\uFB04", "ffl")
                   .replaceAll("\uFB05", "ft")
-                  .replaceAll("\uFB06", "st");
+                  .replaceAll("\uFB06", "st")
+                  .replaceAll("\u00E6", "ae");
     }
     
     private static String cleanHyphenation(String str) {

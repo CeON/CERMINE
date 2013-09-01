@@ -18,7 +18,9 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Lists;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
@@ -27,26 +29,33 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
  *
- * @author krusek
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class IssueEnhancer extends AbstractPatternEnhancer {
+public class JournalWithoutVolumeIssueEnhancer extends AbstractMultiPatternEnhancer {
 
-    private static final Pattern PATTERN = Pattern.compile("\\b(issue|num|no|number|n)\\.?[\\s:-]\\s*(\\d+)",
-            Pattern.CASE_INSENSITIVE);
+    private static final List<Pattern> PATTERNS = Lists.newArrayList(
+            Pattern.compile("^([A-Z][^0-9]*) (\\d{1,3})[,: ]+(\\d+)(?=[^\\d\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-]|$)"),
+            Pattern.compile("^([A-Z][^0-9]*).*[^0-9](\\d{1,3})[,: ]*\\((\\d+)\\)")
+            );
+    
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
-    public IssueEnhancer() {
-        super(PATTERN, SEARCHED_ZONE_LABELS);
+    public JournalWithoutVolumeIssueEnhancer() {
+        super(PATTERNS, SEARCHED_ZONE_LABELS);
     }
-
+    
     @Override
     protected Set<EnhancedField> getEnhancedFields() {
-        return EnumSet.of(EnhancedField.ISSUE);
+        return EnumSet.of(EnhancedField.JOURNAL);
     }
 
     @Override
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.setIssue(metadata, result.group(2));
+        Enhancers.setJournal(metadata, result.group(1).trim()
+                .replaceAll("Published as: ", "").replaceAll(",$", ""));
+        Enhancers.setVolume(metadata, result.group(2));
+        Enhancers.setIssue(metadata, result.group(3));
+       
         return true;
     }
 }

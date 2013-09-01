@@ -27,26 +27,29 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
  *
- * @author krusek
+ * @author Dominika Tkaczyk
  */
-public class IssueEnhancer extends AbstractPatternEnhancer {
+public class JournalIssnEnhancer extends AbstractPatternEnhancer {
 
-    private static final Pattern PATTERN = Pattern.compile("\\b(issue|num|no|number|n)\\.?[\\s:-]\\s*(\\d+)",
+    private static final Pattern PATTERN = Pattern.compile(
+            "([A-Z][^0-9]+)\\sISSN:?\\s*(\\d{4}[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-]\\d{3}[\\dX])\\b",
             Pattern.CASE_INSENSITIVE);
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
-    public IssueEnhancer() {
+    public JournalIssnEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);
     }
 
     @Override
     protected Set<EnhancedField> getEnhancedFields() {
-        return EnumSet.of(EnhancedField.ISSUE);
+        return EnumSet.of(EnhancedField.JOURNAL, EnhancedField.ISSN);
     }
 
     @Override
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.setIssue(metadata, result.group(2));
+        Enhancers.setJournal(metadata, result.group(1).trim()
+                .replaceAll("Published as: ", "").replaceAll(",$", ""));
+        Enhancers.setJournalIssn(metadata, result.group(2));
         return true;
     }
 }

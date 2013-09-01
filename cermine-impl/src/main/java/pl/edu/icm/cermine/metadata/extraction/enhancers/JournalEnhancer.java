@@ -45,8 +45,8 @@ public class JournalEnhancer extends AbstractPatternEnhancer {
 
     @Override
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.setJournal(metadata, result.group().trim());
-       
+        Enhancers.setJournal(metadata, result.group().trim()
+                .replaceAll("Published as: ", "").replaceAll(",$", ""));
         return true;
     }
 }

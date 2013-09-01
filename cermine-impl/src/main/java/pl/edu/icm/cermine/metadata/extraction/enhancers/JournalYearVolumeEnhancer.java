@@ -27,26 +27,30 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
  *
- * @author krusek
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class IssueEnhancer extends AbstractPatternEnhancer {
+public class JournalYearVolumeEnhancer extends AbstractPatternEnhancer {
 
-    private static final Pattern PATTERN = Pattern.compile("\\b(issue|num|no|number|n)\\.?[\\s:-]\\s*(\\d+)",
-            Pattern.CASE_INSENSITIVE);
+    private static final Pattern PATTERN = 
+            Pattern.compile("([A-Z][^0-9\\(\\)]*)\\(?(\\d{4})\\)?[\\.,: ]+[A-Z]?(\\d+)");
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
-    public IssueEnhancer() {
+    public JournalYearVolumeEnhancer() {
         super(PATTERN, SEARCHED_ZONE_LABELS);
     }
-
+    
     @Override
     protected Set<EnhancedField> getEnhancedFields() {
-        return EnumSet.of(EnhancedField.ISSUE);
+        return EnumSet.of(EnhancedField.JOURNAL, EnhancedField.PUBLISHED_DATE, EnhancedField.VOLUME);
     }
 
     @Override
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.setIssue(metadata, result.group(2));
+        Enhancers.setJournal(metadata, result.group(1).trim()
+                .replaceAll("Published as: ", "").replaceAll(",$", ""));
+        Enhancers.setYear(metadata, result.group(2));
+        Enhancers.setVolume(metadata, result.group(3));
+       
         return true;
     }
 }

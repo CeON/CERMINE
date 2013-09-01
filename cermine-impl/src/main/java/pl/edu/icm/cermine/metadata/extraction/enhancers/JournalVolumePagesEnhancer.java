@@ -33,7 +33,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class JournalVolumePagesEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = 
-            Pattern.compile("([A-Z].*)\\s*[\\( ](\\d{4})[\\),;]\\s*(\\d+):\\s*(\\d{1,5})[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-](\\d{1,5})");
+            Pattern.compile("([A-Z][^\\d]*),?\\s+(\\d+):?\\s*(\\d{1,5})[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-](\\d{1,5})");
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
     private int pages = 10;
 
@@ -54,16 +54,16 @@ public class JournalVolumePagesEnhancer extends AbstractPatternEnhancer {
     
     @Override
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.setJournal(metadata, result.group(1).trim());
-        Enhancers.setYear(metadata, result.group(2));
-        Enhancers.setVolume(metadata, result.group(3));
-        Enhancers.setIssue(metadata, result.group(3));
-        int first = Integer.parseInt(result.group(4));
-        int last = Integer.parseInt(result.group(5));
+        int first = Integer.parseInt(result.group(3));
+        int last = Integer.parseInt(result.group(4));
         if (first <= last && last - first < pages * 2) {
-            Enhancers.setPages(metadata, result.group(4), result.group(5));
+            Enhancers.setJournal(metadata, result.group(1).trim()
+                .replaceAll("Published as: ", "").replaceAll(",$", ""));
+            Enhancers.setVolume(metadata, result.group(2));
+            Enhancers.setPages(metadata, result.group(3), result.group(4));
+            return true;
         }
         
-        return true;
+        return false;
     }
 }

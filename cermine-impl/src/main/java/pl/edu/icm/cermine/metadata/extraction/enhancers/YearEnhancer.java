@@ -18,7 +18,9 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Lists;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
@@ -29,16 +31,20 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class YearEnhancer extends AbstractPatternEnhancer {
+public class YearEnhancer extends AbstractMultiPatternEnhancer {
 
-    private static final Pattern PATTERN = Pattern.compile("(\\d\\d\\d\\d)");
+    private static final List<Pattern> PATTERNS = Lists.newArrayList(
+            Pattern.compile("(?<=\\s|^)(\\d\\d\\d\\d)(?=\\s|$)"),
+            Pattern.compile("(?<=\\s|^)(\\d\\d\\d\\d)\\b"),
+            Pattern.compile("\\b(\\d\\d\\d\\d)\\b")
+            );
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     private static final int MIN_YEAR = 1800;
     private static final int MAX_YEAR = 2100;
     
     public YearEnhancer() {
-        super(PATTERN, SEARCHED_ZONE_LABELS);
+        super(PATTERNS, SEARCHED_ZONE_LABELS);
     }
     
     @Override

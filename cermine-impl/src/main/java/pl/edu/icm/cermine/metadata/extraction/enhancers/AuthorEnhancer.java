@@ -18,7 +18,11 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
-import java.util.*;
+import com.google.common.base.CharMatcher;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom.Element;
@@ -54,10 +58,12 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 }
                 
                 Pattern white = Pattern.compile("(\\s+)(.*)");
-                Pattern simpleRef = Pattern.compile("(\\d+|\\*|⁎|†|‡)(.*)");
-                Pattern title = Pattern.compile("(MD\\b|Prof.\\b|MS\\b|PhD\\b|Phd\\b|MPH\\b|RD\\b|LD\\b)(.*)");
+                Pattern simpleRef = Pattern.compile("(\\d+|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ)(.*)");
+                Pattern title = Pattern.compile("(MD|Prof.|MS|PhD|Phd|MPH|RD|LD|MB|BCh|BAO|PharmD|BSc|FRCP|PA-C|RAC|MBA|DrPH|MBChB|BM|RGN|BA|FCCP)([^a-zA-Z].*)");
+                Pattern titleEnd = Pattern.compile("(MD|Prof.|MS|PhD|Phd|MPH|RD|LD|MB|BCh|BAO|PharmD|BSc|FRCP|PA-C|RAC|MBA|DrPH|MBChB|BM|RGN|BA|FCCP)");
                 Pattern separator = Pattern.compile("(,|;|&|•|·|Æ)(.*)");
-                Pattern andSeparator = Pattern.compile("(and\\b)(.*)");
+                Pattern andSeparator = Pattern.compile("(and|AND)\\b(.*)");
+                Pattern andEndSeparator = Pattern.compile("(and|AND)");
                 
                 boolean afterSep = true;
                 int index = 0;
@@ -70,8 +76,10 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                     Matcher whiteMatcher = white.matcher(text);
                     Matcher simpleRefMatcher = simpleRef.matcher(text);
                     Matcher titleMatcher = title.matcher(text);
+                    Matcher titleEndMatcher = titleEnd.matcher(text);
                     Matcher separatorMatcher = separator.matcher(text);
                     Matcher andSeparatorMatcher = andSeparator.matcher(text);
+                    Matcher andEndSeparatorMatcher = andEndSeparator.matcher(text);
                     if (whiteMatcher.matches()) {
                         index += whiteMatcher.group(1).length();
                         text = whiteMatcher.group(2);
@@ -87,10 +95,14 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         text = andSeparatorMatcher.group(2);
                         afterSep = true;
                         auth = false;
+                    } else if (afterSep && andEndSeparatorMatcher.matches()) {
+                        text = "";
                     } else if (afterSep && titleMatcher.matches()) {
                         index += titleMatcher.group(1).length();
                         text = titleMatcher.group(2);
                         afterSep = true;
+                    } else if (afterSep && titleEndMatcher.matches()) {
+                        text = "";
                     } else if (simpleRefMatcher.matches()) {
                         index += simpleRefMatcher.group(1).length();
                         text = simpleRefMatcher.group(2);
@@ -114,17 +126,16 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         meanY /= total;
                         meanH /= total;
         
-                        if ((chunks.get(index).toText().matches("[a-f]") 
-                                || chunks.get(index).toText().matches("[^a-zA-Z0-9]"))
-                                && Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2) {
+                        if (chunks.get(index).toText().matches("[a-f]") && Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2) {
                             index += 1;
                             afterSep = true;
                             refs.add(text.substring(0, 1));
                             text = text.substring(1);
                             auth = false;
                         } else {
-                           if (!auth && !author.trim().isEmpty()) {
-                               Enhancers.addAuthor(metadata, author.trim(), refs);
+                            if (!auth && !author.trim().isEmpty()) {
+                                author = CharMatcher.WHITESPACE.trimFrom(author);
+                                Enhancers.addAuthor(metadata, author, refs);
                                 author = "";
                                 refs.clear();
                             }
@@ -136,8 +147,9 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         }
                     }
                 }
-                if (!author.isEmpty()) {
-                    Enhancers.addAuthor(metadata, author.trim(), refs);
+                if (!author.isEmpty() && !author.toLowerCase().endsWith("introduction")) {
+                    author = CharMatcher.WHITESPACE.trimFrom(author);
+                    Enhancers.addAuthor(metadata, author, refs);
                 }
                 
                 enhanced = true;

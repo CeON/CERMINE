@@ -18,14 +18,13 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import org.jdom.Element;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.structure.model.*;
 
 /**
  *
@@ -49,13 +48,57 @@ public class KeywordsEnhancer extends AbstractSimpleEnhancer {
     protected boolean enhanceMetadata(BxDocument document, Element metadata) {
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
-                String text = zone.toText().replace("\n", " ");
+                String text = zone.toText().replace("\n", "<eol>");
                 text = PREFIX.matcher(text).replaceFirst("");
-                String separator = text.indexOf(';') > -1 ? ";" : ",";
-                for (String keyword : text.split(separator)) {
+                
+                if (text.matches(".*[:;,.·—].*")) {
+                    String separator = "[:;,.·—]";
+                    for (String keyword : text.split(separator)) {
+                        Enhancers.addKeyword(metadata, keyword.trim().replaceFirst("\\.$", "").replace("-<eol>", "").replace("<eol>", " "));
+                    }
+                
+                    return true;
+                }
+                
+                List<String> keywords = new ArrayList<String>();
+                for (BxLine line : zone.getLines()) {
+                    List<BxWord> words = new ArrayList<BxWord>();
+                    for (BxWord word : line.getWords()) {
+                        words.add(word);
+                    }
+                    if (PREFIX.matcher(words.get(0).toText()).matches()) {
+                        words.remove(0);
+                    } else if (words.size() > 1 && PREFIX.matcher(words.get(0).toText()+" "+words.get(1).toText()).matches()) {
+                        words.remove(0);
+                        words.remove(0);
+                    }
+                    if (words.isEmpty()) {
+                        continue;
+                    }
+                    
+                    if (words.get(0).toText().charAt(0) >= 'a' && words.get(0).toText().charAt(0) <= 'z' && !keywords.isEmpty()) {
+                        String concat = keywords.get(keywords.size()-1)+" "+words.get(0).toText();
+                        keywords.remove(keywords.size()-1);
+                        keywords.add(concat);
+                    } else {
+                        keywords.add(words.get(0).toText());
+                    }
+                    for (BxWord word : words) {
+                        if (words.indexOf(word) < words.size() - 1) {
+                            double space = word.getNext().getX()-word.getX()-word.getWidth();
+                            if (space > 6) {
+                                keywords.add(word.getNext().toText());
+                            } else {
+                                String concat = keywords.get(keywords.size()-1)+" "+word.getNext().toText();
+                                keywords.remove(keywords.size()-1);
+                                keywords.add(concat);
+                            }
+                        }
+                    }
+                }
+                for (String keyword : keywords) {
                     Enhancers.addKeyword(metadata, keyword.trim().replaceFirst("\\.$", ""));
                 }
-                return true;
             }
         }
         return false;

@@ -28,6 +28,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+
 public class XMLTools {
 	private static XPath xpath = XPathFactory.newInstance().newXPath();
 	
@@ -54,7 +55,7 @@ public class XMLTools {
                 ret.append(extractTextFromNode(node.getChildNodes().item(childIdx)));
             }
         }
-        return ret.toString();
+        return ret.toString().replaceAll("\n", " ").replaceAll("\\s+", " ");
     }
 
     public static String extractTextFromNodes(Document doc, String path) throws XPathExpressionException {

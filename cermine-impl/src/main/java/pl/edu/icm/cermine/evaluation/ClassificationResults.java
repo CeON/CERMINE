@@ -19,7 +19,6 @@
 package pl.edu.icm.cermine.evaluation;
 
 import java.util.*;
-import pl.edu.icm.cermine.evaluation.AbstractEvaluator;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.LabelPair;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -120,7 +119,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     		if(precision > EPS) {
     			++pairsInvolved;
     		}
-    		
+            formatter.format(predictedClass+ " precision = %2.2f\n", precision*100.0);	
     	}
     	double precision = sum(precisions.values());
     	precision /= pairsInvolved;
@@ -142,6 +141,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     		if(recall > EPS) {
     			++pairsInvolved;
     		}
+            formatter.format(realClass+ " recall = %2.2f\n", recall*100.0);
     	}
     	double recall = sum(recalls.values());
     	recall /= pairsInvolved;

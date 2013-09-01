@@ -27,7 +27,7 @@ public class DateComparator {
 			List<String> expectedParts = StringTools.tokenize(expectedDate);
 			String expectedYear = null;
 			for(String part: expectedParts) {
-				if(part.length() == 4 && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
+				if(part.length() == 4 && part.matches("^\\d+$") && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
 					expectedYear = part;
 					break;
 				}
@@ -44,7 +44,7 @@ public class DateComparator {
 							break;
 						}
 					}
-					if(extractedYear.equals(expectedYear)) {
+					if (extractedYear != null && extractedYear.equals(expectedYear)) {
 						return true;
 					}
 				}
@@ -72,7 +72,7 @@ public class DateComparator {
 				}
 			}
 		}
-		if(!anyExpectedOk) {
+		if (!anyExpectedOk) {
 			return null;
 		}
 		return false;

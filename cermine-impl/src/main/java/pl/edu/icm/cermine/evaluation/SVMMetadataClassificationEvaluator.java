@@ -40,6 +40,7 @@ import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
+    
     @Override
     protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples) throws IOException, AnalysisException, CloneNotSupportedException {
 
@@ -56,9 +57,10 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMMetadataZoneClassifier.getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 0.5;
-        param.C = 256.0;
-        param.kernel_type = svm_parameter.RBF;
+        param.gamma = 0.25;
+        param.C = 32.0;
+        param.kernel_type = svm_parameter.POLY;
+        param.degree = 4;
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamplesOversampled);
 

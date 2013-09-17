@@ -40,6 +40,8 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  */
 public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     
+    private static final int MAX_REFERENCE_LENGTH = 2000;
+    
     private ACRF model;
 
     public CRFBibReferenceParser(String modelFile) throws AnalysisException {
@@ -86,6 +88,10 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
 
     @Override
 	public BibEntry parseBibReference(String text) throws AnalysisException {
+        if (text.length() > MAX_REFERENCE_LENGTH) {
+            return new BibEntry().setText(text);
+        }
+        
         if (model == null) {
             throw new AnalysisException("Model object is not set!");
         }

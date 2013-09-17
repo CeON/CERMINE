@@ -128,7 +128,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
     }
     
-    public void buildMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException, IOException {
+    public void buildMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException {
         metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
     }
     
@@ -143,7 +143,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     
     public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, InputStream metadataModel, 
             InputStream metadataRange, InputStream refModel, InputStream filteringModel, InputStream filteringRange, 
-            InputStream headerModel, InputStream headerRange) throws AnalysisException, IOException {
+            InputStream headerModel, InputStream headerRange) throws AnalysisException {
         structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
         metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
         referencesExtractor = new PdfNLMReferencesExtractor(refModel);
@@ -210,11 +210,11 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     	if(args.length != 1){
     		System.err.println("USAGE: program FILE_PATH");
     		System.exit(1);
-    	}
-
+        }
+    	
         PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
     	InputStream in = new FileInputStream(args[0]);
-    	Element result = extractor.extractContent(in);
+        Element result = extractor.extractContent(in);
             
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
     	System.out.println(outputter.outputString(result));

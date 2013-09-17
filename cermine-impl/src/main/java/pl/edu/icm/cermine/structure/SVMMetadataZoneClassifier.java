@@ -40,6 +40,8 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/meta_classification_svm_model";
 	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/meta_classification_svm_model.range";
 	
+    private static SVMMetadataZoneClassifier defaultInstance;
+    
 	public SVMMetadataZoneClassifier() throws AnalysisException {
 		super(getFeatureVectorBuilder());
         try {
@@ -133,6 +135,13 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 				);
 		return vectorBuilder;
 	}
+    
+    public static SVMMetadataZoneClassifier getDefaultInstance() throws AnalysisException, IOException {
+        if (defaultInstance == null) {
+            defaultInstance = new SVMMetadataZoneClassifier();
+        }
+        return defaultInstance;
+    }
     
     @Override
     public BxDocument classifyZones(BxDocument document) throws AnalysisException {

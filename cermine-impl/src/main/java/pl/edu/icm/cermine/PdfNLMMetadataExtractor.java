@@ -53,21 +53,29 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
     private MetadataExtractor<Element> extractor;
 
     public PdfNLMMetadataExtractor() throws AnalysisException {
-        strExtractor = new PdfBxStructureExtractor();
-        metadataClassifier = new SVMMetadataZoneClassifier();
-        extractor = new EnhancerMetadataExtractor();
+        try {
+            strExtractor = new PdfBxStructureExtractor();
+            metadataClassifier = SVMMetadataZoneClassifier.getDefaultInstance();
+            extractor = new EnhancerMetadataExtractor();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
     
-    public PdfNLMMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException, IOException {
-        strExtractor = new PdfBxStructureExtractor();
+    public PdfNLMMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException {
+        try {
+            strExtractor = new PdfBxStructureExtractor();
 
-        BufferedReader metaModelFileReader = new BufferedReader(new InputStreamReader(metadataModel));
-        BufferedReader metaRangeFileReader = new BufferedReader(new InputStreamReader(metadataRange));
-        metadataClassifier = new SVMMetadataZoneClassifier(metaModelFileReader, metaRangeFileReader);
-        metaModelFileReader.close();
-        metaRangeFileReader.close();
+            BufferedReader metaModelFileReader = new BufferedReader(new InputStreamReader(metadataModel));
+            BufferedReader metaRangeFileReader = new BufferedReader(new InputStreamReader(metadataRange));
+            metadataClassifier = new SVMMetadataZoneClassifier(metaModelFileReader, metaRangeFileReader);
+            metaModelFileReader.close();
+            metaRangeFileReader.close();
 
-        extractor = new EnhancerMetadataExtractor();
+            extractor = new EnhancerMetadataExtractor();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     public PdfNLMMetadataExtractor(DocumentStructureExtractor strExtractor, 
@@ -124,7 +132,7 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
         return res;
     }
     
-    public static void main(String[] args) throws AnalysisException, FileNotFoundException, XPathExpressionException {
+    public static void main(String[] args) throws AnalysisException, FileNotFoundException, XPathExpressionException, IOException {
         PdfNLMMetadataExtractor metadataExtractor = new PdfNLMMetadataExtractor();
         
         for (PdfNlmPair pair : new PdfNlmIterator(args[0])) {

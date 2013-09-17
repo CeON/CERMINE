@@ -53,7 +53,7 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
             characterExtractor = new ITextCharacterExtractor();
             documentSegmenter = new ParallelDocstrumSegmenter();
             roResolver = new HierarchicalReadingOrderResolver();
-            initialClassifier = new SVMInitialZoneClassifier();
+            initialClassifier = SVMInitialZoneClassifier.getDefaultInstance();
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create PdfBxStructureExtractor!", ex);
         }

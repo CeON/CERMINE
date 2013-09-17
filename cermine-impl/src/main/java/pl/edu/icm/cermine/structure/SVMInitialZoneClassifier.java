@@ -37,7 +37,9 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/initial_classification_svm_model";
 	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/initial_classification_svm_model.range";
-	
+
+    private static SVMInitialZoneClassifier defaultInstance;
+    
 	public SVMInitialZoneClassifier() throws AnalysisException, IOException {
 		super(getFeatureVectorBuilder());
 		loadModelFromResources(MODEL_FILE_PATH, RANGE_FILE_PATH);
@@ -143,4 +145,11 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         return vectorBuilder;
 	}
 	
+    public static SVMInitialZoneClassifier getDefaultInstance() throws AnalysisException, IOException {
+        if (defaultInstance == null) {
+            defaultInstance = new SVMInitialZoneClassifier();
+        }
+        return defaultInstance;
+    }
+    
 }

@@ -109,4 +109,36 @@ public class XMLTools {
         }
         return ret;
     }
+    
+    public static List<Node> extractNodes(Document doc, String path) throws XPathExpressionException {
+    	NodeList nodes = (NodeList)xpath.evaluate(path, doc, XPathConstants.NODESET);
+        List<Node> nodeList = new ArrayList<Node>();
+        for (Integer nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
+            nodeList.add(nodes.item(nodeIdx));
+        }
+    	return nodeList;
+    }
+    
+    public static List<String> extractChildrenTextFromNode(Node node, String name) throws XPathExpressionException {
+        List<String> text = new ArrayList<String>();
+        for (Integer nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
+            Node child = node.getChildNodes().item(nodeIdx);
+            if (child.getNodeName().equals(name)) {
+                text.add(child.getTextContent());
+            }
+        }
+    	return text;
+    }
+    
+    public static List<Node> extractChildrenNodesFromNode(Node node, String name) throws XPathExpressionException {
+        List<Node> nodes = new ArrayList<Node>();
+        for (Integer nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
+            Node child = node.getChildNodes().item(nodeIdx);
+            if (child.getNodeName().equals(name)) {
+                nodes.add(child);
+            }
+        }
+    	return nodes;
+    }
+    
 }

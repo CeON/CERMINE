@@ -83,7 +83,8 @@ public class NlmIterator implements Iterable<NlmPair> {
             File nextFile = interestingFiles.get(i+1);
             String name = file.getName();
             String nextName = nextFile.getName();
-			if (FilenameUtils.getBaseName(name).equals(FilenameUtils.getBaseName(nextName))) {
+			if (FilenameUtils.getBaseName(name).equals(FilenameUtils.getBaseName(nextName))
+                    && !FilenameUtils.getExtension(name).equals(FilenameUtils.getExtension(nextName))) {
 				entries.add(new NlmPair(file, nextFile));
 				i += 2;
 			} else {

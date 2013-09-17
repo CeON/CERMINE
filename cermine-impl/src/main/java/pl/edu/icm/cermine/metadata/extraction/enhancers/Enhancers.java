@@ -51,11 +51,7 @@ public class Enhancers {
         return authors;
     }
     
-    public static boolean isAffiliationIndex(String text) {
-        Pattern pattern = Pattern.compile("\\d{1,2}");
-        return pattern.matcher(text).matches();
-    }
-    
+
     //setters
     
     //article id

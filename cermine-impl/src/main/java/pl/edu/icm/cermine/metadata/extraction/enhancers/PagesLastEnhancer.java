@@ -28,31 +28,29 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
  *
- * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
+ * @author krusek
  */
-public class PagesPartialEnhancer extends AbstractPatternEnhancer {
+public class PagesLastEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile(
             "(\\d{1,5})[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-](\\d{1,5})",
             Pattern.CASE_INSENSITIVE);
-    private int pages = 10;
 
-    public PagesPartialEnhancer() {
+    public PagesLastEnhancer() {
         super(PATTERN);
         setSearchedZoneLabels(BxZoneLabel.MET_BIB_INFO);
     }
-    
+
     @Override
     protected boolean enhanceMetadata(BxDocument document, Element metadata) {
-        pages = document.getPages().size();
         return super.enhanceMetadata(document, metadata);
     }
-
+   
     @Override
     protected boolean enhanceMetadata(MatchResult result, Element metadata) {
         int first = Integer.parseInt(result.group(1));
         int last = Integer.parseInt(result.group(2));
-        if (first <= last && Math.abs(last - first + 1 - pages) <= 3) {
+        if (first <= last) {
             Enhancers.setPages(metadata, result.group(1), result.group(2));
             return true;
         } else {

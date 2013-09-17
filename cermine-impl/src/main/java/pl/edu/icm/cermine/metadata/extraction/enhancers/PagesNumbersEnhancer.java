@@ -18,10 +18,9 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jdom.Element;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -35,49 +34,76 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class PagesNumbersEnhancer extends AbstractFilterEnhancer {
 
     public PagesNumbersEnhancer() {
-        setSearchedZoneLabels(BxZoneLabel.GEN_OTHER);
+        setSearchedZoneLabels(BxZoneLabel.GEN_OTHER, BxZoneLabel.MET_BIB_INFO);
         setSearchedFirstPageOnly(false);
     }
 
     @Override
     public void enhanceMetadata(BxDocument document, Element metadata, Set<EnhancedField> enhancedFields) {
-        List<BxPage> pages = new ArrayList<BxPage>(document.getPages());
-        int shift = 0;
-        if (pages.size() >= 5) {
-            pages.remove(pages.size() - 1);
-            pages.remove(0);
-            shift = -1;
+        if (enhancedFields.contains(EnhancedField.PAGES)) {
+            return;
         }
-        Iterator<BxZone> firstPageZones = this.filterZones(pages.get(0)).iterator();
-        while (firstPageZones.hasNext()) {
-            String firstPageZone = firstPageZones.next().toText();
-            if (firstPageZone.matches("^\\d+$")) {
-                int firstPageNumber = Integer.parseInt(firstPageZone);
-                boolean found = false;
-                for (int i = 1; i < pages.size(); i++) {
-                    found = false;
-                    Iterator<BxZone> pageZones = this.filterZones(pages.get(i)).iterator();
-                    while (pageZones.hasNext()) {
-                        String pageZone = pageZones.next().toText();
-                        if (!pageZone.matches("^\\d+$")) {
-                            continue;
-                        }
-                        int pageNumber = Integer.parseInt(pageZone);
-                        if (firstPageNumber + i == pageNumber) {
-                            found = true;
-                            break;
-                        }
+        List<BxPage> pages = new ArrayList<BxPage>(document.getPages());
+        
+        Map<Integer, Set<Integer>> candidates = new HashMap<Integer, Set<Integer>>();
+        for (int i = 0; i < pages.size(); i++) {
+            candidates.put(i, new HashSet<Integer>());
+            Iterator<BxZone> pageZones = this.filterZones(pages.get(i)).iterator();
+            while (pageZones.hasNext()) {
+                BxZone zone = pageZones.next();
+                if (zone.toText().matches("^\\d+$")) {
+                    int pageNumber = Integer.parseInt(zone.toText());
+                    candidates.get(i).add(pageNumber);
+                } else if (zone.getLines().size() == 1) {
+                    Pattern p1 = Pattern.compile("^(\\d+).*$");
+                    Matcher m1 = p1.matcher(zone.toText());
+                    Pattern p2 = Pattern.compile("^.*(\\d+)$");
+                    Matcher m2 = p2.matcher(zone.toText());
+                    if (m1.matches()) {
+                        int pageNumber = Integer.parseInt(m1.group(1));
+                        candidates.get(i).add(pageNumber);
                     }
-                    if (!found) {
-                        break;
+                    if (m2.matches()) {
+                        int pageNumber = Integer.parseInt(m2.group(1));
+                        candidates.get(i).add(pageNumber);
                     }
-                }
-                if (found) {
-                    Enhancers.setPages(metadata, String.valueOf(firstPageNumber+shift), 
-                            String.valueOf(firstPageNumber+shift+document.asPages().size()-1));
                 }
             }
         }
+        
+        Map<Integer, Integer> candidates1 = new HashMap<Integer, Integer>();
+        for (int i = 0; i < pages.size(); i++) {
+            Set<Integer> actCandidates = candidates.get(i);
+            for (Integer actCand : actCandidates) {
+                int mine = actCand - i;
+                int ile = 1;
+                for (int j = i+1; j < pages.size(); j++) {
+                    if (candidates.get(j).contains(mine+j)) {
+                        candidates.get(j).remove(mine+j);
+                        ile++;
+                    }
+                }
+                if (mine > 1) {
+                    candidates1.put(mine, ile);
+                }
+            }
+        }
+        
+        int best = -1;
+        int bestarg = -1;
+        for (int index : candidates1.keySet()) {
+            if (candidates1.get(index) > best && candidates1.get(index) >= 2) {
+                bestarg = index;
+                best = candidates1.get(index);
+            }
+        }
+        
+        if (best > -1) {
+            Enhancers.setPages(metadata, String.valueOf(bestarg), 
+                            String.valueOf(bestarg+document.asPages().size()-1));
+            enhancedFields.add(EnhancedField.PAGES);
+        }
+
     }
 
 }

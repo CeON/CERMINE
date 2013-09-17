@@ -32,8 +32,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class JournalIssnEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile(
-            "([A-Z][^0-9]+)\\sISSN:?\\s*(\\d{4}[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-]\\d{3}[\\dX])\\b",
-            Pattern.CASE_INSENSITIVE);
+            "([A-Z][^0-9]+)\\s[Ii][Ss][Ss][Nn]:?\\s*(\\d{4}[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-]\\d{3}[\\dXx])\\b");
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 
     public JournalIssnEnhancer() {

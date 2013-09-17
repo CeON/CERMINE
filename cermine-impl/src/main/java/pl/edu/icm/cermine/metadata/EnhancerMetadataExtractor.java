@@ -67,6 +67,7 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<Element> {
                 new PagesEnhancer(),
                 new PagesPartialEnhancer(),
                 new PagesNumbersEnhancer(),
+                new PagesLastEnhancer(),
                 new CiteAsEnhancer(),
                 new YearEnhancer()
                 );

@@ -18,10 +18,13 @@
 
 package pl.edu.icm.cermine;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import javax.xml.xpath.XPathExpressionException;
+import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.output.Format;
@@ -207,16 +210,39 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     }
     
     public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException {
-    	if(args.length != 1){
-    		System.err.println("USAGE: program FILE_PATH");
+    	if (args.length < 1){
+    		System.err.println("USAGE: program DIR_PATH <EXTENSION>");
     		System.exit(1);
         }
-    	
-        PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
-    	InputStream in = new FileInputStream(args[0]);
-        Element result = extractor.extractContent(in);
+        
+        String extension = "cermxml";
+        if (args.length > 1) {
+            extension = args[1];
+        }
+        File dir = new File(args[0]);
+        Collection<File> files = FileUtils.listFiles(dir, new String[]{"pdf"}, true);
+    
+        int i = 0;
+        for (File file : files) {
+            File xmlF = new File(file.getPath().replaceAll("pdf$", extension));
+            if (xmlF.exists()) {
+                i++;
+                continue;
+            }
             
-        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-    	System.out.println(outputter.outputString(result));
+            System.out.println(file.getName());
+        
+            PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+            InputStream in = new FileInputStream(file);
+            Element result = extractor.extractContent(in);
+            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+            if (!xmlF.createNewFile()) {
+                System.out.println("Cannot create new file!");
+            }
+            FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
+            i++;
+            System.out.println(i+" "+i*100./files.size()+"%");
+        }
     }
+
 }

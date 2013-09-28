@@ -104,13 +104,4 @@ public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 		};
 	}
 
-	public static void main(String[] args) {
-		PdfNlmIterator iter = new PdfNlmIterator("/home/pawel/git/10");
-		Integer counter = 0;
-		for (PdfNlmPair entry : iter) {
-			System.out.println(++counter);
-			System.out.println(entry.getNlm().getName() + " ");
-			System.out.println(entry.getPdf().getName() + " ");
-		}
-	}
 }

@@ -115,25 +115,4 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
         this.roResolver = roResolver;
     }
     
-    public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
-    	if(args.length != 1){
-    		System.err.println("USAGE: program DIR_PATH");
-    		System.exit(1);
-    	}
-    	PdfBxStructureExtractor extractor = new PdfBxStructureExtractor();
-    	File dir = new File(args[0]);
-    	for(File pdf: dir.listFiles()) {
-    		BxDocument result = extractor.extractStructure(new FileInputStream(pdf));
-    		FileWriter fstream = new FileWriter(pdf.getName() + ".xml");
-            BufferedWriter out = new BufferedWriter(fstream);
-            try {
-                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                out.write(writer.write(result.getPages()));
-                writer.write(result.getPages());
-            } finally {
-                out.close();
-            }
-    	}
-    }
-   
 }

@@ -144,34 +144,4 @@ public class BxZoneTree {
         return root.correspondsTo(other.root);
     }
 
-    public static void main(String[] args) {
-        Random rand = new Random();
-        BxZoneTree tree = new BxZoneTree();
-        for (Integer i = 0; i < 100; ++i) {
-            Integer order;
-            do {
-                order = rand.nextInt() % 5;
-            } while (order < 0);
-            System.out.println("adding " + i + " " + order);
-            tree.addNode(new BxZone(), order);
-        }
-        System.out.println(tree.correspondsTo(tree));
-        BxZoneTree tree1 = new BxZoneTree();
-        BxZoneTree tree2 = new BxZoneTree();
-        BxZone zone1 = new BxZone();
-        BxZone zone2 = new BxZone();
-        BxZone zone3 = new BxZone();
-        BxZone zone4 = new BxZone();
-
-        tree1.addNode(zone1, 1);
-        tree1.addNode(zone2, 1);
-        tree1.addNode(zone3, 2);
-        tree1.addNode(zone4, 2);
-
-        tree2.addNode(zone1, 1);
-        tree2.addNode(zone2, 1);
-        tree2.addNode(zone3, 3);
-        tree2.addNode(zone4, 2);
-        System.out.println(tree1.correspondsTo(tree2));
-    }
 };

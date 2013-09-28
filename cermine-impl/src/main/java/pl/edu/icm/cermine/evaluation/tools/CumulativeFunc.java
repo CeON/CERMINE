@@ -48,14 +48,4 @@ public class CumulativeFunc {
 		return cumulated;
 	}
 	
-	public static void main(String[] args) {
-		List<Double> list = new ArrayList<Double>();
-		list.add(.1);
-		list.add(.3);
-		list.add(.4);
-		list.add(.023);
-		list.add(.4);
-		list.add(.8);
-		calculate(list);
-	}
 }

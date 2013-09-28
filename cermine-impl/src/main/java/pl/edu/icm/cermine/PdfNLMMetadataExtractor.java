@@ -132,21 +132,4 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
         return res;
     }
     
-    public static void main(String[] args) throws AnalysisException, FileNotFoundException, XPathExpressionException, IOException {
-        PdfNLMMetadataExtractor metadataExtractor = new PdfNLMMetadataExtractor();
-        
-        for (PdfNlmPair pair : new PdfNlmIterator(args[0])) {
-			Element doc = metadataExtractor.extractMetadata(new FileInputStream(pair.getPdf()));
-	    	XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-	    	System.out.println(pair.getPdf().getName());
-	    	System.out.println(outputter.outputString(doc));
-            String journalTitle = getXPathValue(doc, "article/front//journal-title");
-            String publisherName = getXPathValue(doc, "/article/front//publisher-name");
-            String articleAbstract = getXPathValue(doc, "/article/front//abstract");
-            System.out.println("Got title: " + journalTitle);
-            System.out.println("Got publisherName: " + publisherName);
-            System.out.println("Got articleAbstract: " + articleAbstract);
-			System.out.println(doc.toString());
-        }
-    }
 }

@@ -4,9 +4,9 @@
 <%@ taglib  prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib  prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<link rel="stylesheet" href="<c:url value='/static/css/reset.css' />" />
-<link rel="stylesheet" href="<c:url value='/static/css/fonts.css' />" />
-<link rel="stylesheet" href="<c:url value='/static/css/style.css' />" />
+<link rel="stylesheet" href="<c:url value='/static/css/reset.css' context='${pageContext.request.contextPath}' />" />
+<link rel="stylesheet" href="<c:url value='/static/css/fonts.css' context='${pageContext.request.contextPath}' />" />
+<link rel="stylesheet" href="<c:url value='/static/css/style.css' context='${pageContext.request.contextPath}' />" />
 
 <link rel="stylesheet" href="<c:url value='/static/jquery-ui-1.9.2.custom/css/south-street/jquery-ui-1.9.2.custom.css' />" />
 <!--<link rel="stylesheet" href="<c:url value='/static/jquery-ui-1.9.2.custom/development-bundle/themes/base/jquery.ui.all.css'/>">-->

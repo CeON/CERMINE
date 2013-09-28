@@ -18,12 +18,15 @@
 
 package pl.edu.icm.cermine.evaluation;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
@@ -34,14 +37,21 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.DOMOutputter;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
-import pl.edu.icm.cermine.PdfNLMMetadataExtractor;
 import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+
 /**
  *
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
+ */
+
+/*
+ * TODO
+ * 
+ * 2 references
  */
 public final class FinalMetadataExtractionEvaluation {
 
@@ -57,31 +67,41 @@ public final class FinalMetadataExtractionEvaluation {
         }
     }
 
-    private static class CorrectAllPair {
+    private static class PrecissonRecall {
 
-        public CorrectAllPair() {
+        public int correct;
+        public int expected;
+        public int extracted;
+        
+        public PrecissonRecall() {
             correct = 0;
-            all = 0;
+            expected = 0;
+            extracted = 0;
         }
-        public Integer correct;
-        public Integer all;
 
         @Override
         public String toString() {
-            return "[Correct: " + correct + ", all: " + all + "]";
+            return "PrecissonRecall{" + "correct=" + correct + ", expected=" + expected + ", extracted=" + extracted + '}';
         }
 
-        public Double calculateAccuracy() {
-            if (all == 0) {
+        public Double calculateRecall() {
+            if (expected == 0) {
                 return null;
             } else {
-                return (double) correct / all;
+                return (double) correct / expected;
+            }
+        }
+        
+        public Double calculatePrecission() {
+            if (extracted == 0) {
+                return null;
+            } else {
+                return (double) correct / extracted;
             }
         }
     }
 
-    public void evaluate(PdfNlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
-        PdfNLMMetadataExtractor metadataExtractor = new PdfNLMMetadataExtractor();
+    public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -98,49 +118,63 @@ public final class FinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        CorrectAllPair issn = new CorrectAllPair();
-        CorrectAllPair doi = new CorrectAllPair();
-        CorrectAllPair urn = new CorrectAllPair();
-        CorrectAllPair volume = new CorrectAllPair();
-        CorrectAllPair issue = new CorrectAllPair();
-        CorrectAllPair pages = new CorrectAllPair();
-        CorrectAllPair dateYear = new CorrectAllPair();
-        CorrectAllPair dateFull = new CorrectAllPair();
+        PrecissonRecall issn = new PrecissonRecall();
+        PrecissonRecall doi = new PrecissonRecall();
+        PrecissonRecall volume = new PrecissonRecall();
+        PrecissonRecall issue = new PrecissonRecall();
+        PrecissonRecall pages = new PrecissonRecall();
+        PrecissonRecall dateYear = new PrecissonRecall();
+        PrecissonRecall dateFull = new PrecissonRecall();
+        PrecissonRecall journalTitle = new PrecissonRecall();
 
         List<Double> abstractRates = new ArrayList<Double>(iter.size());
         List<Double> titleRates = new ArrayList<Double>(iter.size());
-        List<Double> journalTitleRates = new ArrayList<Double>(iter.size());
-        List<Double> publisherNameRates = new ArrayList<Double>(iter.size());
 
         List<Double> keywordPrecisions = new ArrayList<Double>(iter.size());
         List<Double> keywordRecalls = new ArrayList<Double>(iter.size());
 
         List<Double> authorsPrecisions = new ArrayList<Double>(iter.size());
         List<Double> authorsRecalls = new ArrayList<Double>(iter.size());
+        
+        List<Double> affPrecisions = new ArrayList<Double>(iter.size());
+        List<Double> affRecalls = new ArrayList<Double>(iter.size());
 
+        int ii = 0;
+        for (NlmPair pair : iter) {
+            ii++;
+            System.out.println("");
+            printVerbose(">>>>>>>>> "+ii);
+            
+            printVerbose(pair.getExtractedNlm().getPath());
 
-        for (PdfNlmPair pair : iter) {
-            printVerbose(">>>>>>>>> " + pair.getPdf().getName());
+            org.w3c.dom.Document originalNlm = documentBuilder.parse(new FileInputStream(pair.getOriginalNlm()));
+            org.w3c.dom.Document extractedNlm = documentBuilder.parse(new FileInputStream(pair.getExtractedNlm()));
 
-            org.w3c.dom.Document originalNlm = documentBuilder.parse(new FileInputStream(pair.getNlm()));
-
-            org.jdom.Element metaElement = metadataExtractor.extractMetadata(new FileInputStream(pair.getPdf()));
-            org.w3c.dom.Document extractedNlm = elementToW3CDocument(metaElement);
-
-            String expectedTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/title-group/article-title");
+            String expectedTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta//article-title");
             String extractedTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/title-group/article-title");
+           
+            List<Node> expectedAuthorsNodes = XMLTools.extractNodes(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/name");
+            
+            List<String> expectedAuthors = new ArrayList<String>();
+            for (Node authorNode : expectedAuthorsNodes) {
+                List<String> givenNames = XMLTools.extractChildrenTextFromNode(authorNode, "given-names");
+                List<String> surnames = XMLTools.extractChildrenTextFromNode(authorNode, "surname");
+                String author = StringUtils.join(givenNames, " ")+" "+StringUtils.join(surnames, " ");
+                author = author.replaceAll("[^a-zA-Z ]", "");
+                expectedAuthors.add(author);
+            }
+            
+            List<String> extractedAuthors1 = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/string-name");
+            List<String> extractedAuthors = new ArrayList<String>();
+            for (String author : extractedAuthors1) {
+                extractedAuthors.add(author.replaceAll("[^a-zA-Z ]", ""));
+            }
 
-            List<String> expectedAuthors = XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta/contrib-group/contrib//name");
-            List<String> extractedAuthors = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/string-name");
-
-            List<String> expectedKeywords = XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta/kwd-group/kwd");
+            List<String> expectedKeywords = XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta//kwd");
             List<String> extractedKeywords = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/kwd-group/kwd");
 
-            String expectedJournalTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta/journal-title-group/journal-title");
+            String expectedJournalTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta//journal-title");
             String extractedJournalTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/journal-meta/journal-title-group/journal-title");
-
-            String expectedPublisherName = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta/publisher/publisher-name");
-            String extractedPublisherName = XMLTools.extractTextFromNode(extractedNlm, "/article/front/journal-meta/publisher/publisher-name");
 
             String expectedAbstract = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/abstract");
             String extractedAbstract = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/abstract");
@@ -150,9 +184,6 @@ public final class FinalMetadataExtractionEvaluation {
 
             String expectedISSN = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta/issn[@pub-type='ppub']");
             String extractedISSN = XMLTools.extractTextFromNode(extractedNlm, "/article/front/journal-meta/issn[@pub-type='ppub']");
-
-            String expectedURN = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/article-id[@pub-id-type='urn']");
-            String extractedURN = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/article-id[@pub-id-type='urn']");
 
             String expectedVolume = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/volume");
             String extractedVolume = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/volume");
@@ -165,51 +196,64 @@ public final class FinalMetadataExtractionEvaluation {
 
             String expectedLPage = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/lpage");
             String extractedLPage = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/lpage");
-
+            
             List<String> expectedPubDate = XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta/pub-date");
             expectedPubDate = removeLeadingZerosFromDate(expectedPubDate);
             List<String> extractedPubDate = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/pub-date");
             extractedPubDate = removeLeadingZerosFromDate(extractedPubDate);
+            
+            Set<String> expectedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta//aff"));
+            Set<String> extractedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta//aff"));
+            List<String> expectedAffiliations = Lists.newArrayList(expectedAffiliationsSet);
+            List<String> extractedAffiliations = Lists.newArrayList(extractedAffiliationsSet);
 
-
+           
             //equality measures
             if (!expectedVolume.isEmpty()) {
                 if (expectedVolume.equals(extractedVolume)) {
                     ++volume.correct;
                 }
-                ++volume.all;
+                ++volume.expected;
+            }
+            if (!extractedVolume.isEmpty()) {
+                volume.extracted++;
             }
             if (!expectedIssue.isEmpty()) {
                 if (expectedIssue.equals(extractedIssue)) {
                     ++issue.correct;
                 }
-                ++issue.all;
+                ++issue.expected;
+            }
+            if (!extractedIssue.isEmpty()) {
+                issue.extracted++;
             }
             if (!expectedISSN.isEmpty()) {
                 if (extractedISSN.equals(expectedISSN)) {
                     ++issn.correct;
                 }
-                ++issn.all;
+                ++issn.expected;
+            }
+            if (!extractedISSN.isEmpty()) {
+                issn.extracted++;
             }
             if (!expectedDoi.isEmpty()) {
                 if (expectedDoi.equals(extractedDoi)) {
                     ++doi.correct;
                 }
-                ++doi.all;
+                ++doi.expected;
             }
-            if (!expectedURN.isEmpty()) {
-                if (expectedURN.equals(extractedURN)) {
-                    ++urn.correct;
-                }
-                ++urn.all;
+            if (!extractedDoi.isEmpty()) {
+                doi.extracted++;
             }
             if (!expectedFPage.isEmpty() && !expectedLPage.isEmpty()) {
                 if (expectedFPage.equals(extractedFPage) && expectedLPage.equals(extractedLPage)) {
                     ++pages.correct;
                 }
-                ++pages.all;
+                ++pages.expected;
             }
-
+            if (!extractedFPage.isEmpty() && !extractedLPage.isEmpty()) {
+                pages.extracted++;
+            }
 
             if (!expectedPubDate.isEmpty()) {
                 Boolean yearsMatch = DateComparator.yearsMatch(expectedPubDate, extractedPubDate);
@@ -217,23 +261,15 @@ public final class FinalMetadataExtractionEvaluation {
                     if (yearsMatch) {
                         ++dateYear.correct;
                     }
-                    ++dateYear.all;
+                    ++dateYear.expected;
                 }
-                Boolean datesMatch = DateComparator.datesMatch(expectedPubDate, extractedPubDate);
-                if (datesMatch != null) {
-                    if (datesMatch) {
-                        ++dateFull.correct;
-                    }
-                    ++dateFull.all;
-                }
+            }
+            if (!extractedPubDate.isEmpty()) {
+                dateYear.extracted++;
+                dateFull.extracted++;
             }
 
             //Smith-Waterman distance measures
-            if (expectedPublisherName.length() > 0) {
-                publisherNameRates.add(compareStringsSW(expectedPublisherName, extractedPublisherName));
-            } else {
-                publisherNameRates.add(null);
-            }
             if (expectedAbstract.length() > 0) {
                 abstractRates.add(compareStringsSW(expectedAbstract, extractedAbstract));
             } else {
@@ -244,43 +280,67 @@ public final class FinalMetadataExtractionEvaluation {
             } else {
                 titleRates.add(null);
             }
-            if (expectedJournalTitle.length() > 0) {
-                journalTitleRates.add(compareStringsSW(expectedTitle, extractedTitle));
-            } else {
-                journalTitleRates.add(null);
+            if (!expectedJournalTitle.isEmpty()) {
+                journalTitle.expected++;
             }
-
+            if (!extractedJournalTitle.isEmpty()) {
+                journalTitle.extracted++;
+                if (isSubsequence(expectedJournalTitle.replaceAll("[^a-zA-Z]", "").toLowerCase(), extractedJournalTitle.replaceAll("[^a-zA-Z]", "").toLowerCase())) {
+                    journalTitle.correct++;
+                }
+            }
+            
             //precision + recall
             if (expectedAuthors.size() > 0) {
-                authorsPrecisions.add(calculatePrecision(expectedAuthors, extractedAuthors));
                 authorsRecalls.add(calculateRecall(expectedAuthors, extractedAuthors));
             } else {
-                authorsPrecisions.add(null);
                 authorsRecalls.add(null);
             }
+            if (extractedAuthors.size() > 0) {
+                authorsPrecisions.add(calculatePrecision(expectedAuthors, extractedAuthors));
+            } else {
+                authorsPrecisions.add(null);
+            }
             if (expectedKeywords.size() > 0) {
-                keywordPrecisions.add(calculatePrecision(expectedKeywords, extractedKeywords));
                 keywordRecalls.add(calculateRecall(expectedKeywords, extractedKeywords));
             } else {
-                keywordPrecisions.add(null);
                 keywordRecalls.add(null);
             }
+            if (extractedKeywords.size() > 0) {
+                keywordPrecisions.add(calculatePrecision(expectedKeywords, extractedKeywords));
+            } else {
+                keywordPrecisions.add(null);
+            }
+            if (expectedAffiliations.size() > 0) {
+                affRecalls.add(calculateRecall(expectedAffiliations, extractedAffiliations));
+            } else {
+                affRecalls.add(null);
+            }
+            if (extractedAffiliations.size() > 0) {
+                affPrecisions.add(calculatePrecision(expectedAffiliations, extractedAffiliations));
+            } else {
+                affPrecisions.add(null);
+            }
 
+            System.out.println("");
             printVerbose(">>> Expected authors: ");
             for (String author : expectedAuthors) {
                 printVerbose(author);
             }
 
+            System.out.println("");
             printVerbose(">>> Extracted authors: ");
             for (String author : extractedAuthors) {
                 printVerbose(author);
             }
 
+            System.out.println("");
             printVerbose(">>> Expected keywords: ");
             for (String keyword : expectedKeywords) {
                 printVerbose(keyword);
             }
 
+            System.out.println("");
             printVerbose(">>> Extracted keywords: ");
             for (String keyword : extractedKeywords) {
                 printVerbose(keyword);
@@ -288,9 +348,6 @@ public final class FinalMetadataExtractionEvaluation {
 
             printVerbose(">>> Expected journal title: " + expectedJournalTitle);
             printVerbose(">>> Extracted journal title: " + extractedJournalTitle);
-
-            printVerbose(">>> Expected publisher name: " + expectedPublisherName);
-            printVerbose(">>> Extracted publisher name: " + extractedPublisherName);
 
             printVerbose(">>> Expected article title: " + expectedTitle);
             printVerbose(">>> Extracted article title: " + extractedTitle);
@@ -300,7 +357,19 @@ public final class FinalMetadataExtractionEvaluation {
 
             printVerbose(">>> Expected doi: " + expectedDoi);
             printVerbose(">>> Extracted doi: " + extractedDoi);
+            
+            printVerbose(">>> Expected issn: " + expectedISSN);
+            printVerbose(">>> Extracted issn: " + extractedISSN);
 
+            printVerbose(">>> Expected volume: " + expectedVolume);
+            printVerbose(">>> Extracted volume: " + extractedVolume);
+            
+            printVerbose(">>> Expected issue: " + expectedIssue);
+            printVerbose(">>> Extracted issue: " + extractedIssue);
+            
+            printVerbose(">>> Expected pages: " + expectedFPage + " " + expectedLPage);
+            printVerbose(">>> Extracted pages: " + extractedFPage + " " + extractedLPage);
+            
             printVerbose(">>> Expected date: ");
             for (String date : expectedPubDate) {
                 printVerbose(date);
@@ -310,21 +379,41 @@ public final class FinalMetadataExtractionEvaluation {
             for (String date : extractedPubDate) {
                 printVerbose(date);
             }
-            printVerbose("abstract " + abstractRates);
-            printVerbose("title " + titleRates);
-            printVerbose("journal title " + journalTitleRates);
-            printVerbose("publisher name rates " + publisherNameRates);
-            printVerbose("namesP " + authorsPrecisions);
-            printVerbose("namesR " + authorsRecalls);
-            printVerbose("keywordsP " + keywordPrecisions);
-            printVerbose("keywordsR " + keywordRecalls);
+            printVerbose(">>> Expected affs: ");
+            for (String aff : expectedAffiliations) {
+                printVerbose(aff);
+            }
+
+            printVerbose(">>> Extracted affs: ");
+            for (String aff : extractedAffiliations) {
+                printVerbose(aff);
+            }
+            
+            
+            printVerbose("abstract " + abstractRates.get(abstractRates.size()-1));
+            printVerbose("title " + titleRates.get(titleRates.size()-1));
+            printVerbose("journal title " + journalTitle);
+      
+            System.out.println("");
+            printVerbose("authors precission " + authorsPrecisions.get(authorsPrecisions.size()-1));
+            printVerbose("authors recall " + authorsRecalls.get(authorsPrecisions.size()-1));
+          
+            System.out.println("");
+            printVerbose("aff precission " + affPrecisions.get(affPrecisions.size()-1));
+            printVerbose("aff recall " + affRecalls.get(affPrecisions.size()-1));
+          
+            System.out.println("");
+            printVerbose("keywords precission " + keywordPrecisions.get(keywordPrecisions.size()-1));
+            printVerbose("keywords recall " + keywordRecalls.get(keywordPrecisions.size()-1));
+
             printVerbose("date years" + dateYear);
-            printVerbose("date full" + dateFull);
             printVerbose("doi" + doi);
-            printVerbose("URN" + urn);
+            printVerbose("issn" + issn);
+            printVerbose("volume" + volume);
+            printVerbose("issue" + issue);
             printVerbose("pages" + pages);
         }
-
+        
         Double value;
         System.out.println("==== Summary (" + iter.size() + " docs)====");
         if ((value = calculateAverage(abstractRates)) != null) {
@@ -333,17 +422,23 @@ public final class FinalMetadataExtractionEvaluation {
         if ((value = calculateAverage(titleRates)) != null) {
             System.out.printf("title avg (SW) \t\t\t%4.2f\n", 100 * value);
         }
-        if ((value = calculateAverage(journalTitleRates)) != null) {
-            System.out.printf("journal title avg (SW) \t\t%4.2f\n", 100 * value);
+        if ((value = journalTitle.calculatePrecission()) != null) {
+            System.out.printf("journal title precission\t\t%4.2f\n", 100 * value);
         }
-        if ((value = calculateAverage(publisherNameRates)) != null) {
-            System.out.printf("publisher name (SW) \t\t%4.2f\n", 100 * value);
+        if ((value = journalTitle.calculateRecall()) != null) {
+            System.out.printf("journal title recall\t\t%4.2f\n", 100 * value);
         }
         if ((value = calculateAverage(authorsPrecisions)) != null) {
-            System.out.printf("names precision avg (EQ)\t%4.2f\n", 100 * value);
+            System.out.printf("authors precision avg (EQ)\t%4.2f\n", 100 * value);
         }
         if ((value = calculateAverage(authorsRecalls)) != null) {
-            System.out.printf("names recall avg (EQ)\t\t%4.2f\n", 100 * value);
+            System.out.printf("authors recall avg (EQ)\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = calculateAverage(affPrecisions)) != null) {
+            System.out.printf("aff precision avg (EQ)\t%4.2f\n", 100 * value);
+        }
+        if ((value = calculateAverage(affRecalls)) != null) {
+            System.out.printf("aff recall avg (EQ)\t\t%4.2f\n", 100 * value);
         }
         if ((value = calculateAverage(keywordPrecisions)) != null) {
             System.out.printf("keywords precision avg (EQ)\t%4.2f\n", 100 * value);
@@ -351,38 +446,56 @@ public final class FinalMetadataExtractionEvaluation {
         if ((value = calculateAverage(keywordRecalls)) != null) {
             System.out.printf("keywords recall avg (EQ)\t%4.2f\n", 100 * value);
         }
-        if ((value = dateYear.calculateAccuracy()) != null) {
-            System.out.printf("date year accuracy avg\t\t%4.2f\n", 100 * value);
+        if ((value = dateYear.calculatePrecission()) != null) {
+            System.out.printf("date year precission avg\t\t%4.2f\n", 100 * value);
         }
-        if ((value = dateFull.calculateAccuracy()) != null) {
-            System.out.printf("date full accuracy avg\t\t%4.2f\n", 100 * value);
+        if ((value = dateYear.calculateRecall()) != null) {
+            System.out.printf("date year recall avg\t\t%4.2f\n", 100 * value);
         }
-        if ((value = doi.calculateAccuracy()) != null) {
-            System.out.printf("doi accuracy avg\t\t%4.2f\n", 100 * value);
+        if ((value = doi.calculatePrecission()) != null) {
+            System.out.printf("doi precission\t\t%4.2f\n", 100 * value);
         }
-        if ((value = urn.calculateAccuracy()) != null) {
-            System.out.printf("URN accuracy avg\t\t%4.2f\n", 100 * value);
+        if ((value = doi.calculateRecall()) != null) {
+            System.out.printf("doi recall\t\t%4.2f\n", 100 * value);
         }
-        if ((value = pages.calculateAccuracy()) != null) {
-            System.out.printf("pages accuracy avg\t\t%4.2f\n", 100 * value);
+        if ((value = issn.calculatePrecission()) != null) {
+            System.out.printf("issn precission\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = issn.calculateRecall()) != null) {
+            System.out.printf("issn recall\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = volume.calculatePrecission()) != null) {
+            System.out.printf("volume precission\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = volume.calculateRecall()) != null) {
+            System.out.printf("volume recall\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = issue.calculatePrecission()) != null) {
+            System.out.printf("issue precission\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = issue.calculateRecall()) != null) {
+            System.out.printf("issue recall\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = pages.calculatePrecission()) != null) {
+            System.out.printf("pages precission avg\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = pages.calculateRecall()) != null) {
+            System.out.printf("pages recall avg\t\t%4.2f\n", 100 * value);
         }
     }
 
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
-        if (args.length < 1 || args.length > 2) {
-            System.out.println("Usage: FinalEffectEvaluator [-v] <input dir>");
+        if (args.length != 3) {
+            System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
             return;
         }
-        Boolean verbose = false;
-        String directory;
-        if (args[0].equals("-v")) {
-            verbose = true;
-            directory = args[1];
-        } else {
-            directory = args[0];
-        }
+        Boolean verbose = true;
+        String directory = args[0];
+        String origExt = args[1];
+        String extrExt = args[2];
+
         FinalMetadataExtractionEvaluation e = new FinalMetadataExtractionEvaluation(verbose);
-        PdfNlmIterator iter = new PdfNlmIterator(directory);
+        NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(iter);
     }
 
@@ -404,11 +517,14 @@ public final class FinalMetadataExtractionEvaluation {
         }
         Integer correct = 0;
         CosineDistance cos = new CosineDistance();
+        
+        List<String> tmp = new ArrayList<String>(expected);
         external:
         for (String partExt : extracted) {
-            for (String partExp : expected) {
-                if (cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp)) > Math.sqrt(2) / 2) {
+            for (String partExp : tmp) {
+                if (cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp))+0.001 > Math.sqrt(2) / 2) {
                     ++correct;
+                    tmp.remove(partExp);
                     continue external;
                 }
             }
@@ -419,12 +535,14 @@ public final class FinalMetadataExtractionEvaluation {
     private static Double calculateRecall(List<String> expected, List<String> extracted) {
         Integer correct = 0;
         CosineDistance cos = new CosineDistance();
+        List<String> tmp = new ArrayList<String>(expected);
         external:
         for (String partExt : extracted) {
             internal:
-            for (String partExp : expected) {
-                if (cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp)) > Math.sqrt(2) / 2) {
+            for (String partExp : tmp) {
+                if (cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp))+0.001 > Math.sqrt(2) / 2) {
                     ++correct;
+                    tmp.remove(partExp);
                     continue external;
                 }
             }
@@ -457,6 +575,19 @@ public final class FinalMetadataExtractionEvaluation {
         return ret;
     }
 
+    static boolean isSubsequence(String str, String sub) {
+        if (sub.isEmpty()) {
+            return true;
+        }
+        if (str.isEmpty()) {
+            return false;
+        }
+        if (str.charAt(0) == sub.charAt(0)) {
+            return isSubsequence(str.substring(1), sub.substring(1));
+        }
+        return isSubsequence(str.substring(1), sub);
+    }
+    
     static org.w3c.dom.Document elementToW3CDocument(org.jdom.Element elem) throws JDOMException {
         org.jdom.Document metaDoc = new org.jdom.Document();
         metaDoc.setRootElement(elem);

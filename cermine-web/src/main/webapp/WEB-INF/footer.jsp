@@ -4,7 +4,7 @@
  <footer>
 	<section>
 		<figure>
-                    <a href="http://icm.edu.pl/"><img src="static/images/icm_logo.png" /></a>
+                    <a href="http://icm.edu.pl/"><img src="static/images/icm.png" /></a>
                     <a href="http://ceon.pl/"><img src="static/images/ceon.png" /></a>
 		</figure>
 		<p > CERMINE is a <a href="http://ceon.pl/en/research/">CeON research team</a> project. 

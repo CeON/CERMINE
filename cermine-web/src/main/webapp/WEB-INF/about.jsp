@@ -66,6 +66,29 @@
                  <h2>License</h2>
 	             <p>CERMINE is licensed under GNU Affero General Public License version 3.</p>
 	
+                 <h2>Technical details</h2>
+                 
+                 <img src="static/images/flow.png" width="70%" /><br /><br />
+                 
+                 <p>CERMINE workflow is composed of four main parts:
+                     <ul type="circle">
+                         <li>Basic structure extraction takes a PDF file on the input and produces a geometric 
+                             hierarchical structure representing the document. The structure is composed of pages, 
+                             zones, lines, words and characters. The reading order of all elements is determined. Every 
+                             zone is labelled with one of four general categories: METADATA, REFERENCES, BODY and OTHER.
+                         <li>Metadata extraction part analyses parts of the geometric hierarchical structure labelled as 
+                             METADATA and extracts a rich set of document's metadata from it.
+                         <li>References extraction part analyses parts of the geometric hierarchical structure labelled 
+                             as REFERENCES and the result is a list of document's parsed bibliographic references.
+                         <li>Text extraction part analyses parts of the geometric hierarchical structure labelled as 
+                             BODY and extracts document's body structure composed of sections, subsections and 
+                             paragraphs.
+                     </ul>
+                 </p>
+                 
+                 <p>CERMINE uses supervised and unsupervised machine-leaning techniques, such as Support Vector Machines, 
+                     K-means clustering and Conditional Random Fields.</p>
+
 			</div>
 	
 	        </article>

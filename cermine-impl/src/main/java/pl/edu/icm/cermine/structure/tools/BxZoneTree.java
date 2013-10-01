@@ -20,7 +20,6 @@ package pl.edu.icm.cermine.structure.tools;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class BxZoneTree {

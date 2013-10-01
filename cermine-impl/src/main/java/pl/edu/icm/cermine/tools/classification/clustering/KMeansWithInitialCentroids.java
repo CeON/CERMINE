@@ -134,7 +134,8 @@ public class KMeansWithInitialCentroids {
     }
 
     public void setCentroids(FeatureVector[] centroids) {
-        this.centroids = centroids;
+        this.centroids = new FeatureVector[centroids.length];
+        System.arraycopy(centroids, 0, this.centroids, 0, centroids.length);
     }
     
     /**

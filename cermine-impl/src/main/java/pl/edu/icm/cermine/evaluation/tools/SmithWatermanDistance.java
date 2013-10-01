@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.evaluation.tools;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

@@ -33,7 +33,6 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
     private static final Pattern SKIPPED_LINE_PATTERN = Pattern.compile(
             ".*(Email|Correspondence|Contributed equally):?.*",
             Pattern.CASE_INSENSITIVE);
-    private static final double EPSILON = 1e-3;
     
     private static final Pattern fullIndexPattern = Pattern.compile("\\d{1,2}|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|[a-f]");
     private static final Pattern simpleIndexPattern = Pattern.compile("\\*|∗|⁎|†|‡|§|\\{|¶|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ");
@@ -148,7 +147,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                 if (!NONAFFILIATION_PATTERN.matcher(text).matches()
                         && (isIndex(affiliationRef) || affiliationRef.isEmpty())) {
                     if (affiliationRef.isEmpty()) {
-                        affiliationRef = "aff-"+String.valueOf(emptyIndex);
+                        affiliationRef = "aff-"+emptyIndex;
                         emptyIndex++;
                     }
                     affiliations.put(affiliationRef, text);

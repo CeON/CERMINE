@@ -22,10 +22,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
@@ -120,15 +116,6 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
 
     public void setStrExtractor(DocumentStructureExtractor strExtractor) {
         this.strExtractor = strExtractor;
-    }
-    
-    private static String getXPathValue(Element nlm, String path) throws XPathExpressionException {
-    	XPath xPath = XPathFactory.newInstance().newXPath();
-        String res = (String) xPath.evaluate(path, nlm,  XPathConstants.STRING);
-        if (res != null) {
-            res = res.trim();
-        }
-        return res;
     }
     
 }

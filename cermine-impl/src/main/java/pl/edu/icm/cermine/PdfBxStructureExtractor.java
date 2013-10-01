@@ -18,13 +18,14 @@
 
 package pl.edu.icm.cermine;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
-import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
 
 /**

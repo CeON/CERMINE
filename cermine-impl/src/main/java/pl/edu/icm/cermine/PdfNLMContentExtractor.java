@@ -229,18 +229,25 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
                 i++;
                 continue;
             }
+ 
+            long start = System.currentTimeMillis();
             
             System.out.println(file.getName());
-        
+ 
             PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
             InputStream in = new FileInputStream(file);
             Element result = extractor.extractContent(in);
+
+            long end = System.currentTimeMillis();
+            float elapsed = (end - start) / 1000F;
+            
             XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
             if (!xmlF.createNewFile()) {
                 System.out.println("Cannot create new file!");
             }
             FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
             i++;
+            System.out.println("Time: " + Math.round(elapsed));
             System.out.println(i+" "+i*100./files.size()+"%");
         }
     }

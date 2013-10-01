@@ -82,9 +82,11 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
             double distance = metric.getDistance(instances.get(0), featureVector);
             if (distance > farthestDistance) {
                 farthestInstance = featureVector;
+                farthestDistance = distance;
             }
         }
-        if (lines.size() <= 1) {
+
+        if (lines.size() <= 1 || farthestDistance < 0.001) {
             return lines.toArray(new String[lines.size()]);
         }
         
@@ -99,7 +101,7 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
         if (clusters[1].contains(instances.get(0))) {
             firstInstanceClusterNum = 1;
         }
-
+        
         List<String> references = new ArrayList<String>();
         String actRef = "";
         for (int i = 0; i < lines.size(); i++) {

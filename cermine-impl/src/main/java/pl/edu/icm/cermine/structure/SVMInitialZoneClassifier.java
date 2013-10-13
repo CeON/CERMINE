@@ -23,8 +23,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
+import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
@@ -151,5 +153,16 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
         }
         return defaultInstance;
     }
+    
+    @Override
+	public BxDocument classifyZones(BxDocument document) throws AnalysisException {
+        for (BxZone zone : document.asZones()) {
+            if (zone.getLabel() == null) {
+                BxZoneLabel predicted = predictLabel(zone, zone.getParent());
+                zone.setLabel(predicted);
+            }
+        }
+        return document;
+	}
     
 }

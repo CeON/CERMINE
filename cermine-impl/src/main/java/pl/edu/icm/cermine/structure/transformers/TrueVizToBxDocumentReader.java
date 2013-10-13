@@ -345,7 +345,7 @@ public class TrueVizToBxDocumentReader {
         for (Element caE : e) {
             BxChunk ch = parseCharacterElement(caE);
             ch.setParent(word);
-            word.addChunks(ch);
+            word.addChunk(ch);
         }
         return word;
     }

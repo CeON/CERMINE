@@ -164,7 +164,7 @@ public final class BxModelUtils {
         for (BxChunk chunk : word.getChunks()) {
         	BxChunk copiedChunk = deepClone(chunk);
         	copiedChunk.setParent(copy);
-        	copy.addChunks(chunk);
+        	copy.addChunk(chunk);
         }
         return copy;
     }

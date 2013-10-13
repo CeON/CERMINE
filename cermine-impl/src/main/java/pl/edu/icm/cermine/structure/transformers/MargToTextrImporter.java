@@ -223,7 +223,7 @@ public class MargToTextrImporter {
         List<Element> e = getChildren("Character", wordE);
         for (Element caE : e) {
             BxChunk ch = parseCharacterElement(caE);
-            word.addChunks(ch);
+            word.addChunk(ch);
         }
         return word;
     }

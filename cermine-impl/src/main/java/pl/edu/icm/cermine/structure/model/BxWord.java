@@ -40,14 +40,17 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
     public BxWord setChunks(Collection<BxChunk> chunks) {
         if (chunks != null) {
             this.chunks.clear();
-            this.chunks.addAll(chunks);
+            for (BxChunk chunk : chunks) {
+                addChunk(chunk);
+            }
         }
         return this;
     }
 
-    public BxWord addChunks(BxChunk chunks) {
+    public BxWord addChunk(BxChunk chunk) {
         if (chunks != null) {
-            this.chunks.add(chunks);
+            this.chunks.add(chunk);
+            chunk.setParent(this);
         }
         return this;
     }

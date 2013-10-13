@@ -65,8 +65,8 @@ public class BxDocumentToTrueVizWriterTest {
     private BxDocument getBxDocument() {
         BxWord w = new BxWord();
         w.setBounds(new BxBounds(0, 0, 1, 1));
-        w.addChunks(new BxChunk(new BxBounds(0, 0, 1, 1), "a"));
-        w.addChunks(new BxChunk(new BxBounds(0, 0, 1, 1), "b"));
+        w.addChunk(new BxChunk(new BxBounds(0, 0, 1, 1), "a"));
+        w.addChunk(new BxChunk(new BxBounds(0, 0, 1, 1), "b"));
 
         BxLine l = new BxLine();
         l.setBounds(new BxBounds(0, 0, 1, 1));

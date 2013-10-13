@@ -125,7 +125,7 @@ public class BxToDocContentStructConverterTest {
     
     private BxLine constructLine(String text) {
         BxChunk chunk = new BxChunk(new BxBounds(), text);
-        BxWord word = new BxWord().addChunks(chunk);
+        BxWord word = new BxWord().addChunk(chunk);
         return new BxLine().addWord(word);
     }
 }

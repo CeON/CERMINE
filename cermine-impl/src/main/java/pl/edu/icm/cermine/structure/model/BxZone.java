@@ -55,7 +55,9 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     public BxZone setLines(Collection<BxLine> lines) {
         if (lines != null) {
             this.lines.clear();
-            this.lines.addAll(lines);
+            for (BxLine line : lines) {
+                addLine(line);
+            }
         }
         return this;
     }
@@ -63,6 +65,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     public BxZone addLine(BxLine line) {
         if (line != null) {
             this.lines.add(line);
+            line.setParent(this);
         }
         return this;
     }

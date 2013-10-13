@@ -46,7 +46,9 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     public BxLine setWords(Collection<BxWord> words) {
         if (words != null) {
             this.words.clear();
-            this.words.addAll(words);
+            for (BxWord word : words) {
+                addWord(word);
+            }
         }
         return this;
     }
@@ -54,6 +56,7 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     public BxLine addWord(BxWord word) {
         if (word != null) {
             this.words.add(word);
+            word.setParent(this);
         }
         return this;
     }

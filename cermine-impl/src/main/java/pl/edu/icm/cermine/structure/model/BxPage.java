@@ -41,17 +41,20 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
         return zones;
     }
 
-    public Printable setZones(Collection<BxZone> zones) {
+    public BxPage setZones(Collection<BxZone> zones) {
         if (zones != null) {
             this.zones.clear();
-            this.zones.addAll(zones);
+            for (BxZone zone : zones) {
+                addZone(zone);
+            }
         }
         return this;
     }
 
-    public Printable addZone(BxZone zone) {
+    public BxPage addZone(BxZone zone) {
         if (zone != null) {
             this.zones.add(zone);
+            zone.setParent(this);
         }
         return this;
     }

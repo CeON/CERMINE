@@ -52,7 +52,10 @@ public final class BxDocument implements Serializable {
     public BxDocument setPages(Collection<BxPage> pages) {
         if (pages != null) {
             this.pages.clear();
-            this.pages.addAll(pages);
+            curPageNumber = 0;
+            for (BxPage page : pages) {
+                addPage(page);
+            }
         }
         return this;
     }
@@ -60,6 +63,7 @@ public final class BxDocument implements Serializable {
     public BxDocument addPage(BxPage page) {
         if (page != null) {
             page.setId(Integer.toString(this.curPageNumber++));
+            page.setParent(this);
             this.pages.add(page);
         }
         return this;

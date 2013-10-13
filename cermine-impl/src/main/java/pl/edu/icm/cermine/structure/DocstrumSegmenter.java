@@ -32,7 +32,10 @@ import pl.edu.icm.cermine.structure.tools.Histogram;
  * @author krusek
  */
 public class DocstrumSegmenter implements DocumentSegmenter {
- 
+
+    public static final int MAX_ZONES_PER_PAGE = 300;
+    public static final int PAGE_MARGIN = 2;
+    
     private double docOrientation = Double.NaN;
     
     private Map<BxPage, List<Component>> componentMap = new HashMap<BxPage, List<Component>>();
@@ -88,7 +91,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         zones = mergeLines(zones, orientation,
                 Double.NEGATIVE_INFINITY, 0.0,
                 0.0, lineSpacing * maxVerticalMergeDistanceMultiplier);
-        return convertToBxModel(zones, wordDistanceMultiplier * characterSpacing);
+        return convertToBxModel(page, zones, wordDistanceMultiplier * characterSpacing);
     }
 
     /**
@@ -413,10 +416,27 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * belong to one word
      * @return BxModel page
      */
-    private BxPage convertToBxModel(List<List<ComponentLine>> zones, double wordSpacing) {
+    private BxPage convertToBxModel(BxPage origPage, List<List<ComponentLine>> zones, double wordSpacing) {
         BxPage page = new BxPage();
+        
+        int pageIndex = origPage.getParent().getPages().indexOf(origPage);
+        boolean groupped = false;
+        if (zones.size() > MAX_ZONES_PER_PAGE && pageIndex >= PAGE_MARGIN
+                && pageIndex < origPage.getParent().getPages().size() - PAGE_MARGIN) {
+            List<ComponentLine> oneZone = new ArrayList<ComponentLine>();
+            for (List<ComponentLine> zone : zones) {
+                oneZone.addAll(zone);
+            }
+            zones = new ArrayList<List<ComponentLine>>();
+            zones.add(oneZone);
+            groupped = true;
+        }
+        
         for (List<ComponentLine> lines : zones) {
             BxZone zone = new BxZone();
+            if (groupped) {
+                zone.setLabel(BxZoneLabel.GEN_OTHER);
+            }
             for (ComponentLine line : lines) {
                 zone.addLine(line.convertToBxLine(wordSpacing));
             }
@@ -733,7 +753,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                         word = new BxWord();
                     }
                 }
-                word.addChunks(component.getChunk());
+                word.addChunk(component.getChunk());
                 previousComponent = component;
             }
             BxBoundsBuilder.setBounds(word);

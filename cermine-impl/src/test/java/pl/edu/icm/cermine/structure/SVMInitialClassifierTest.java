@@ -97,6 +97,9 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 
 	@Override
 	protected BxDocument process(BxDocument doc) throws AnalysisException {
+        for (BxZone z : doc.asZones()) {
+            z.setLabel(null);
+        }
 		classifier.classifyZones(doc);
 		return doc;
 	}

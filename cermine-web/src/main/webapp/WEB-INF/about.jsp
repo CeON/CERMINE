@@ -44,6 +44,18 @@
                      techniques, which increases the maintainability of the system, as well as 
                      its ability to adapt to new document layouts.</p>
                      
+                 <h2>REST service</h2>
+                 
+                 <p>CERMINE contains a REST service that allows for executing the extraction 
+                     process by machines. REST service can be useful for digital libraries 
+                     that do not have access to a built-in method for extracting metadata 
+                     and content from documents. It can be accessed using cURL tool:</p>
+                 <br/>
+                 <pre>
+$ curl -X POST --data-binary @article.pdf
+  --header "Content-Type: application/binary" -v
+  http://cermine.ceon.pl/extract.do</pre>
+                 
                  <h2>How to cite CERMINE</h2>
 	             <p>Please cite the following paper:</p>
                  <br/>
@@ -60,8 +72,7 @@
   booktitle = {10th IAPR International Workshop on Document Analysis Systems},
   year = {2012},
   pages = {11-16}
-}
-                 </pre>
+}</pre>
                  
                  <h2>License</h2>
 	             <p>CERMINE is licensed under GNU Affero General Public License version 3.</p>

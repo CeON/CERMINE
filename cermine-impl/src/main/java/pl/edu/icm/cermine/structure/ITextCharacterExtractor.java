@@ -25,12 +25,10 @@ import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.*;
+import com.itextpdf.text.pdf.parser.Vector;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -147,16 +145,36 @@ public class ITextCharacterExtractor implements CharacterExtractor {
         for (BxPage page : document.getPages()) {
             List<BxChunk> chunks = page.getChunks();
             List<BxChunk> filteredChunks = new ArrayList<BxChunk>();
+            Map<Integer, Map<Integer, Set<BxChunk>>> chunkMap = new HashMap<Integer, Map<Integer, Set<BxChunk>>>();
             for (BxChunk chunk : chunks) {
+                int x = (int) chunk.getX();
+                int y = (int) chunk.getY();
                 boolean duplicate = false;
-                for (BxChunk ch : filteredChunks) {
-                    if (chunk.getText().equals(ch.getText()) && chunk.getBounds().isSimilarTo(ch.getBounds(), 0.01)) {
-                        duplicate = true;
-                        break;
+                duplicateSearch:
+                for (int i = x-1; i <= x+1; i++) {
+                    for (int j = y-1; j <= y+1; j++) {
+                        if (chunkMap.get(i) == null || chunkMap.get(i).get(j) == null) {
+                            continue;
+                        }
+                        for (BxChunk ch : chunkMap.get(i).get(j)) {
+                            if (chunk.getText().equals(ch.getText()) && chunk.getBounds().isSimilarTo(ch.getBounds(), 1)) {
+                                duplicate = true;
+                                break duplicateSearch;
+                            }
+                        }
                     }
                 }
                 if (!duplicate) {
                     filteredChunks.add(chunk);
+                    x = (int) chunk.getX();
+                    y = (int) chunk.getY();
+                    if (chunkMap.get(x) == null) {
+                        chunkMap.put(x, new HashMap<Integer, Set<BxChunk>>());
+                    }
+                    if (chunkMap.get(x).get(y) == null) {
+                        chunkMap.get(x).put(y, new HashSet<BxChunk>());
+                    }
+                    chunkMap.get(x).get(y).add(chunk);
                 }
             }
             page.setChunks(filteredChunks);

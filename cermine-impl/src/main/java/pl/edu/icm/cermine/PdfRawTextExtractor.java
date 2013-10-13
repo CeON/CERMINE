@@ -22,7 +22,6 @@ import java.io.InputStream;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 
 /**
  * Text extractor from PDF files. Extracted text includes 
@@ -63,6 +62,8 @@ public class PdfRawTextExtractor implements DocumentTextExtractor<String> {
     @Override
     public String extractText(InputStream stream) throws AnalysisException {
         BxDocument doc = characterExtractor.extractCharacters(stream);
+        doc = documentSegmenter.segmentDocument(doc);
+        doc = roResolver.resolve(doc);
         return extractText(doc);
     }
     
@@ -75,10 +76,7 @@ public class PdfRawTextExtractor implements DocumentTextExtractor<String> {
      */
     @Override
     public String extractText(BxDocument document) throws AnalysisException {
-        BxDocument doc = documentSegmenter.segmentDocument(document);
-        BxModelUtils.setParents(doc);
-        doc = roResolver.resolve(doc);
-        return doc.toText();
+        return document.toText();
     }
 
     public void setGlyphExtractor(CharacterExtractor glyphExtractor) {

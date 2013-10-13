@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 
 
 /**
@@ -95,7 +94,6 @@ public class PdfBxStructureExtractor implements DocumentStructureExtractor {
     public BxDocument extractStructure(InputStream stream) throws AnalysisException {
         BxDocument doc = characterExtractor.extractCharacters(stream);
         doc = documentSegmenter.segmentDocument(doc);
-        BxModelUtils.setParents(doc);
         doc = roResolver.resolve(doc);
         return initialClassifier.classifyZones(doc);
     }

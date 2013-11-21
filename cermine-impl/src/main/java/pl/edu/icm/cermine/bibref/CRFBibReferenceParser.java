@@ -43,6 +43,8 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     private static final int MAX_REFERENCE_LENGTH = 2000;
     
     private ACRF model;
+    
+    private static final String defaultModelFile = "/pl/edu/icm/cermine/bibref/acrf-small.ser.gz";
 
     public CRFBibReferenceParser(String modelFile) throws AnalysisException {
         InputStream is;
@@ -111,4 +113,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         return CitationUtils.citationToBibref(citation);
     }
   
+    public static CRFBibReferenceParser getInstance() throws AnalysisException {
+        return new CRFBibReferenceParser(CRFBibReferenceParser.class.getResourceAsStream(defaultModelFile));
+    }
 }

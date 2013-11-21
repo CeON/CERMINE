@@ -28,15 +28,13 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  */
 public class CRFBibReferenceParserTest extends AbstractBibReferenceParserTest {
     
-    protected static final String modelFile = "/pl/edu/icm/cermine/bibref/acrf-small.ser.gz";
-    
     private double minPercentage = 0.9;
     
     private CRFBibReferenceParser parser;
     
     @Before
     public void setUp() throws AnalysisException {
-        parser = new CRFBibReferenceParser(this.getClass().getResourceAsStream(modelFile));
+        parser = CRFBibReferenceParser.getInstance();
     }
 
     @Override

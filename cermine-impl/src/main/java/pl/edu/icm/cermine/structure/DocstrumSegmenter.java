@@ -35,6 +35,8 @@ public class DocstrumSegmenter implements DocumentSegmenter {
 
     public static final int MAX_ZONES_PER_PAGE = 300;
     public static final int PAGE_MARGIN = 2;
+    public static final double ORIENTATION_MARGIN = 0.2;
+    public static final int LINES_PER_PAGE_MARGIN = 100;
     
     private double docOrientation = Double.NaN;
     
@@ -77,6 +79,17 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                 characterSpacing * componentDistanceCharacterMultiplier,
                 lineSpacing * maxVerticalComponentDistanceMultiplier);
     
+        if (Math.abs(orientation) > ORIENTATION_MARGIN) {
+            List<ComponentLine> linesZero = determineLines(components, 0,
+                characterSpacing * componentDistanceCharacterMultiplier,
+                lineSpacing * maxVerticalComponentDistanceMultiplier);
+    
+            if (Math.abs(lines.size() - LINES_PER_PAGE_MARGIN) > Math.abs(linesZero.size() - LINES_PER_PAGE_MARGIN)) {
+                orientation = 0;
+                lines = linesZero;
+            }
+        }
+        
         double lineOrientation = computeOrientation(lines);
         if (!Double.isNaN(lineOrientation)) {
             orientation = lineOrientation;

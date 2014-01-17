@@ -52,8 +52,8 @@
                      and content from documents. It can be accessed using cURL tool:</p>
                  <br/>
                  <pre>
-$ curl -X POST --data-binary @article.pdf
-  --header "Content-Type: application/binary" -v
+$ curl -X POST --data-binary @article.pdf \
+  --header "Content-Type: application/binary" -v \
   http://cermine.ceon.pl/extract.do</pre>
                  
                  <h2>How to cite CERMINE</h2>

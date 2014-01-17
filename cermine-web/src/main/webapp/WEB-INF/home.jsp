@@ -58,6 +58,14 @@ $(function() {
 	                        <input type="submit" value="Upload"/>
 	                    </form>
 	                </div>
+                    
+                    <br/><br/>
+                    <p>
+                        Or process one of the example files:
+                        <a href="uploadexample.do?file=example1.pdf">Example #1</a>(<a target="_blank" href="examplepdf.html?file=example1.pdf">PDF</a>),
+                        <a href="uploadexample.do?file=example2.pdf">Example #2</a>(<a target="_blank" href="examplepdf.html?file=example2.pdf">PDF</a>),
+                        <a href="uploadexample.do?file=example3.pdf">Example #3</a>(<a target="_blank" href="examplepdf.html?file=example3.pdf">PDF</a>)
+                    </p>
                 
                 </fieldset>
                 <h2>About the service</h2>
@@ -83,7 +91,7 @@ $(function() {
 	                Uploaded file will be used only for metadata extraction, we do 
                     not store uploaded files.
 	               
-	                Accepted file format - *.pdf, maximum file size is <mark>5 MB</mark>.
+	                Accepted file format - *.pdf, maximum file size is 25 MB.
 				</p>
                 
                 <h2>License</h2>

@@ -19,12 +19,17 @@
 package pl.edu.icm.cermine.web.controller;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import static java.util.Collections.singletonList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +81,65 @@ public class CermineController {
             throw new RuntimeException("Unknown request type: " + resultType);
         }
     }
+    
+    @RequestMapping(value = "/examplepdf.html", method = RequestMethod.GET)
+    public void getExamplePDF(@RequestParam("file") String filename, HttpServletRequest request, HttpServletResponse response) { 
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            if (!filename.matches("^example\\d+\\.pdf")) {
+                throw new RuntimeException("No such example file!");
+            }
+            response.setContentType("application/pdf");
+            in = CermineController.class.getResourceAsStream("/examples/"+filename);
+            out = response.getOutputStream();
+        
+            byte[] buf = new byte[1024]; 
+            int len; 
+            while ((len = in.read(buf)) > 0) { 
+                out.write(buf, 0, len); 
+            } 
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException ex) {
+            }
+        }
+    } 
 
+    @RequestMapping(value = "/uploadexample.do", method = RequestMethod.GET)
+    public String uploadExampleFileStream(@RequestParam("file") String filename, HttpServletRequest request, Model model) {
+        if (!filename.matches("^example\\d+\\.pdf")) {
+            throw new RuntimeException("No such example file!");
+        }
+        logger.info("Got an upload request.");
+        try {
+            InputStream in = CermineController.class.getResourceAsStream("/examples/"+filename);
+        
+            byte[] content = IOUtils.toByteArray(in);
+            if (content.length == 0) {
+                model.addAttribute("warning", "An empty or no file sent.");
+                return "home";
+            }
+            logger.debug("Original filename is: " + filename);
+            filename = taskManager.getProperFilename(filename);
+            logger.debug("Created filename: " + filename);
+            long taskId = extractorService.initExtractionTask(content, filename);
+            logger.debug("Task manager is: " + taskManager);
+            return "redirect:/task.html?task=" + taskId;
+
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
     @RequestMapping(value = "/upload.do", method = RequestMethod.POST)
     public String uploadFileStream(@RequestParam("files") MultipartFile file, HttpServletRequest request, Model model) {
         logger.info("Got an upload request.");

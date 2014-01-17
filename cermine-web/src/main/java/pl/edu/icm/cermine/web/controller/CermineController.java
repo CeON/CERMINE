@@ -87,11 +87,15 @@ public class CermineController {
         InputStream in = null;
         OutputStream out = null;
         try {
-            if (!filename.matches("^example\\d+\\.pdf")) {
+            if (!filename.matches("^example\\d+\\.pdf$")) {
                 throw new RuntimeException("No such example file!");
             }
             response.setContentType("application/pdf");
             in = CermineController.class.getResourceAsStream("/examples/"+filename);
+            if (in == null) {
+                throw new RuntimeException("No such example file!");
+            }
+            
             out = response.getOutputStream();
         
             byte[] buf = new byte[1024]; 
@@ -116,12 +120,15 @@ public class CermineController {
 
     @RequestMapping(value = "/uploadexample.do", method = RequestMethod.GET)
     public String uploadExampleFileStream(@RequestParam("file") String filename, HttpServletRequest request, Model model) {
-        if (!filename.matches("^example\\d+\\.pdf")) {
+        if (!filename.matches("^example\\d+\\.pdf$")) {
             throw new RuntimeException("No such example file!");
         }
         logger.info("Got an upload request.");
         try {
             InputStream in = CermineController.class.getResourceAsStream("/examples/"+filename);
+            if (in == null) {
+                throw new RuntimeException("No such example file!");
+            }
         
             byte[] content = IOUtils.toByteArray(in);
             if (content.length == 0) {

@@ -41,6 +41,8 @@ import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMet
  */
 public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
 
+    public static final int MAX_REF_LINES_COUNT = 10000;
+    
     private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> VECTOR_BUILDER =
                 new FeatureVectorBuilder<BxLine, BxDocumentBibReferences>();
     static {
@@ -66,6 +68,7 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
     @Override
     public String[] extractBibReferences(BxDocument document) throws AnalysisException {
         BxDocumentBibReferences documentReferences = BibRefExtractionUtils.extractBibRefLines(document);
+        documentReferences.limit(MAX_REF_LINES_COUNT);
         
         List<String> lines = new ArrayList<String>();
         List<FeatureVector> instances = new ArrayList<FeatureVector>();

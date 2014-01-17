@@ -65,6 +65,12 @@ public class BxDocumentBibReferences {
     public List<BxLine> getLines() {
         return lines;
     }
+    
+    public void limit(int limit) {
+        if (lines.size() > limit) {
+            lines = lines.subList(lines.size()-limit, lines.size());
+        }
+    }
 
     public BxZone getZone(BxLine line) {
         return lineZones.get(line);

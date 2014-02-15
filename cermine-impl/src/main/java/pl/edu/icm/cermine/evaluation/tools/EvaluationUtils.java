@@ -67,7 +67,7 @@ public class EvaluationUtils {
     public static class DocumentsIterator implements Iterable<BxDocument> {
 
     	private File dir;
-    	private Integer curIdx;
+    	private int curIdx;
     	private File[] files;
 
     	public DocumentsIterator(String dirPath) {

@@ -35,12 +35,12 @@ public class CumulativeFunc {
 		}
 		Map<Double, Integer> cumulated = new HashMap<Double, Integer>();
 		cumulated.put(values.get(0), quantities.get(values.get(0)));
-		Integer prevQuantity = 0;
+		int prevQuantity = 0;
 		if(!uniqueValues.contains(0.0)) {
 			cumulated.put(0.0, 0);
 		}
 		for(Double value: uniqueValues) {
-			Integer curQuantity = quantities.get(value) + prevQuantity;
+			int curQuantity = quantities.get(value) + prevQuantity;
 			cumulated.put(value, curQuantity);
 			prevQuantity = curQuantity;
 		}

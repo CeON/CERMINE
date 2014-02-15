@@ -77,11 +77,12 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         badRecognitions += results.badRecognitions;
     }
 
-    public Double sum(Collection<Double> collection) {
-    	Double sum = 0.0;
-    	for(Double elem: collection) {
-    		sum += elem;
-    	}
+    public double sum(Collection<Double> collection) {
+    	double sum = 0.0;
+        for (Iterator<Double> it = collection.iterator(); it.hasNext();) {
+            Double elem = it.next();
+            sum += elem;
+        }
     	return sum;
     }
     
@@ -104,17 +105,17 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     	formatter.format("Accuracy = %2.2f\n", accuracy*100.0);
 
     	Map<BxZoneLabel, Double> precisions = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
-    	Integer pairsInvolved = 0;
+    	int pairsInvolved = 0;
     	for(BxZoneLabel predictedClass : possibleLabels) {
-    		Integer correctPredictions = null;
-    		Integer allPredictions = 0;
+    		int correctPredictions = 0;
+    		int allPredictions = 0;
     		for(BxZoneLabel realClass : possibleLabels) {
     			if(realClass.equals(predictedClass)) {
     				correctPredictions = classificationMatrix.get(new LabelPair(realClass, predictedClass));
     			}
     			allPredictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
     		}
-    		Double precision = (double)correctPredictions/allPredictions;
+    		double precision = (double)correctPredictions/allPredictions;
     		precisions.put(predictedClass, precision);
     		if(precision > EPS) {
     			++pairsInvolved;
@@ -128,15 +129,15 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
     	Map<BxZoneLabel, Double> recalls = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
     	pairsInvolved = 0;
     	for(BxZoneLabel realClass : possibleLabels) {
-    		Integer correctPredictions = null;
-    		Integer predictions = 0;
+    		int correctPredictions = 0;
+    		int predictions = 0;
     		for(BxZoneLabel predictedClass : possibleLabels) {
     			if(realClass.equals(predictedClass)) {
     				correctPredictions = classificationMatrix.get(new LabelPair(realClass, predictedClass));
     			}
     			predictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
     		}
-    		Double recall = (double)correctPredictions/predictions;
+    		double recall = (double)correctPredictions/predictions;
     		recalls.put(realClass, recall);
     		if(recall > EPS) {
     			++pairsInvolved;

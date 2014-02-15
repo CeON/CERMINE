@@ -47,7 +47,7 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         int[] intClasses = new int[pc.getClasses().size()];
         double[] classesWeights = new double[pc.getClasses().size()];
                 
-        Integer labelIdx = 0;
+        int labelIdx = 0;
         for(BxZoneLabel label: pc.getClasses()) {
         	intClasses[labelIdx] = label.ordinal();
         	classesWeights[labelIdx] = pc.getPenaltyWeigth(label);

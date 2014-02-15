@@ -23,10 +23,10 @@ import java.util.List;
 
 public class SmithWatermanDistance {
 
-    private Double mu;
-    private Double delta;
+    private double mu;
+    private double delta;
 
-    public SmithWatermanDistance(Double mu, Double delta) {
+    public SmithWatermanDistance(double mu, double delta) {
         this.mu = mu;
         this.delta = delta;
     }
@@ -59,7 +59,7 @@ public class SmithWatermanDistance {
         OMIT_S1, OMIT_S2, OMIT_BOTH, MATCH, NN
     };
 
-    public Double compare(List<String> s1, List<String> s2) {
+    public double compare(List<String> s1, List<String> s2) {
         int N_a = s1.size();                     // get the actual lengths of the sequences
         int N_b = s2.size();
 

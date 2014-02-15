@@ -37,16 +37,16 @@ public class CosineDistance {
         return vector;
     }
 
-    private Double vectorLength(Map<String, Integer> vector) {
-        Double ret = 0.0;
+    private double vectorLength(Map<String, Integer> vector) {
+        double ret = 0.0;
         for (Entry<String, Integer> entry : vector.entrySet()) {
             ret += entry.getValue() * entry.getValue();
         }
         return Math.sqrt(ret);
     }
 
-    private Double dotProduct(Map<String, Integer> vector1, Map<String, Integer> vector2) {
-        Double ret = 0.0;
+    private double dotProduct(Map<String, Integer> vector1, Map<String, Integer> vector2) {
+        double ret = 0.0;
         for (Entry<String, Integer> entry : vector1.entrySet()) {
             if (vector2.containsKey(entry.getKey())) {
                 ret += entry.getValue() * vector2.get(entry.getKey());
@@ -55,7 +55,7 @@ public class CosineDistance {
         return ret;
     }
 
-    public Double compare(List<String> s1, List<String> s2) {
+    public double compare(List<String> s1, List<String> s2) {
         Map<String, Integer> v1 = calculateVector(s1);
         Map<String, Integer> v2 = calculateVector(s2);
 

@@ -30,7 +30,7 @@ public class StringTools {
     		return text;
     	}
     	StringBuilder ret = new StringBuilder();
-    	Boolean evenSpaces = true;
+    	boolean evenSpaces = true;
     	for(int idx=0; idx<text.length(); idx+=2) {
     		if(text.charAt(idx) != ' ') {
     			evenSpaces = false;
@@ -44,7 +44,7 @@ public class StringTools {
     		return ret.toString();
     	}
     	
-    	Boolean oddSpaces = true;
+    	boolean oddSpaces = true;
     	for(int idx=1; idx<text.length(); idx+=2) {
     		if(text.charAt(idx) != ' ') {
     			oddSpaces = false;
@@ -82,7 +82,7 @@ public class StringTools {
         return ret;
     }
 
-    public static Integer tokLen(String text) {
+    public static int tokLen(String text) {
         return tokenize(text).size();
     }
 
@@ -103,7 +103,7 @@ public class StringTools {
             return strings.get(0);
         } else {
             StringBuilder ret = new StringBuilder();
-            for (Integer partIdx = 0; partIdx < strings.size() - 1; ++partIdx) {
+            for (int partIdx = 0; partIdx < strings.size() - 1; ++partIdx) {
                 ret.append(strings.get(partIdx)).append(delim);
             }
             ret.append(strings.get(strings.size() - 1));
@@ -123,7 +123,7 @@ public class StringTools {
             if (parts.length > 1) {
                 StringBuilder ret = new StringBuilder();
                 ret.append(parts[0]);
-                for (Integer partIdx = 1; partIdx < parts.length - 1; ++partIdx) {
+                for (int partIdx = 1; partIdx < parts.length - 1; ++partIdx) {
                     ret.append(".").append(parts[partIdx]);
                 }
                 return ret.toString();
@@ -135,7 +135,7 @@ public class StringTools {
 
     public static List<String> produceDates(List<String> date) {
         List<String> ret = new ArrayList<String>();
-        Integer monthInt = Integer.valueOf(date.get(1));
+        int monthInt = Integer.valueOf(date.get(1));
         if (monthInt >= 1 && monthInt <= 12) {
             DateFormatSymbols dfs = new DateFormatSymbols();
             String[] months = dfs.getMonths();

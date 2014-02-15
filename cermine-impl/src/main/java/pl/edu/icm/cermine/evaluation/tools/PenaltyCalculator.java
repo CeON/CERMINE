@@ -31,9 +31,9 @@ public class PenaltyCalculator {
 		this.samples = samples;
 	}
 	
-	public Double getPenaltyWeigth(BxZoneLabel label) {
-		Integer allSamples = samples.size();
-		Integer thisSamples = 0;
+	public double getPenaltyWeigth(BxZoneLabel label) {
+		int allSamples = samples.size();
+		int thisSamples = 0;
 		for(TrainingSample<BxZoneLabel> sample: samples) {
 			if(sample.getLabel() == label) {
 				++thisSamples;

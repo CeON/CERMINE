@@ -41,16 +41,16 @@ class DividedEvaluationSet {
         return testSamples;
     }
 
-    public static List<DividedEvaluationSet> build(List<TrainingSample<BxZoneLabel>> samples, Integer numberOfFolds) {
+    public static List<DividedEvaluationSet> build(List<TrainingSample<BxZoneLabel>> samples, int numberOfFolds) {
         List<TrainingSample<BxZoneLabel>> shuffledDocs = new ArrayList<TrainingSample<BxZoneLabel>>(samples.size());
         shuffledDocs.addAll(samples);
         Collections.shuffle(shuffledDocs);
         List<List<TrainingSample<BxZoneLabel>>> dividedSamples = new ArrayList<List<TrainingSample<BxZoneLabel>>>(numberOfFolds);
 
-        for (Integer fold = 0; fold < numberOfFolds; ++fold) {
-            Integer docsPerSet = shuffledDocs.size() / (numberOfFolds - fold);
+        for (int fold = 0; fold < numberOfFolds; ++fold) {
+            int docsPerSet = shuffledDocs.size() / (numberOfFolds - fold);
             dividedSamples.add(new ArrayList<TrainingSample<BxZoneLabel>>());
-            for (Integer idx = 0; idx < docsPerSet; ++idx) {
+            for (int idx = 0; idx < docsPerSet; ++idx) {
                 dividedSamples.get(dividedSamples.size() - 1).add(shuffledDocs.get(0));
                 shuffledDocs.remove(0);
             }

@@ -51,7 +51,7 @@ public class XMLTools {
                 return "";
             }
         } else {
-            for (Integer childIdx = 0; childIdx < node.getChildNodes().getLength(); ++childIdx) {
+            for (int childIdx = 0; childIdx < node.getChildNodes().getLength(); ++childIdx) {
                 ret.append(extractTextFromNode(node.getChildNodes().item(childIdx)));
             }
         }
@@ -65,7 +65,7 @@ public class XMLTools {
     
     public static String extractTextFromNodes(NodeList nodes) {
         StringBuilder ret = new StringBuilder();
-        for (Integer nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
+        for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
             Node node = nodes.item(nodeIdx);
             ret.append(extractTextFromNode(node));
         }
@@ -79,7 +79,7 @@ public class XMLTools {
     
     public static List<String> extractTextAsList(NodeList nodes) {
         List<String> ret = new ArrayList<String>();
-        for (Integer nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
+        for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
         	String extractedText = extractTextFromNode(nodes.item(nodeIdx));
         	extractedText = extractedText.trim();
         	if(!extractedText.isEmpty()) {
@@ -103,7 +103,7 @@ public class XMLTools {
         if (node.getChildNodes().getLength() == 0 && node.getNodeValue() != null) {
             ret.add(node.getNodeValue());
         } else {
-            for (Integer childIdx = 0; childIdx < node.getChildNodes().getLength(); ++childIdx) {
+            for (int childIdx = 0; childIdx < node.getChildNodes().getLength(); ++childIdx) {
                 ret.addAll(extractChildrenAsTextList(node.getChildNodes().item(childIdx)));
             }
         }
@@ -113,7 +113,7 @@ public class XMLTools {
     public static List<Node> extractNodes(Document doc, String path) throws XPathExpressionException {
     	NodeList nodes = (NodeList)xpath.evaluate(path, doc, XPathConstants.NODESET);
         List<Node> nodeList = new ArrayList<Node>();
-        for (Integer nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
+        for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
             nodeList.add(nodes.item(nodeIdx));
         }
     	return nodeList;
@@ -121,7 +121,7 @@ public class XMLTools {
     
     public static List<String> extractChildrenTextFromNode(Node node, String name) throws XPathExpressionException {
         List<String> text = new ArrayList<String>();
-        for (Integer nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
+        for (int nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
             Node child = node.getChildNodes().item(nodeIdx);
             if (child.getNodeName().equals(name)) {
                 text.add(child.getTextContent());
@@ -132,7 +132,7 @@ public class XMLTools {
     
     public static List<Node> extractChildrenNodesFromNode(Node node, String name) throws XPathExpressionException {
         List<Node> nodes = new ArrayList<Node>();
-        for (Integer nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
+        for (int nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
             Node child = node.getChildNodes().item(nodeIdx);
             if (child.getNodeName().equals(name)) {
                 nodes.add(child);

@@ -23,7 +23,7 @@ import java.io.FilenameFilter;
 import java.util.*;
 
 public class PdfNlmIterator implements Iterable<PdfNlmPair> {
-	private Integer curItemIdx = -1;
+	private int curItemIdx = -1;
 	private List<PdfNlmPair> entries = null;
 	private final Comparator<File> alphabeticalOrder = new Comparator<File>(){
 		@Override
@@ -35,7 +35,7 @@ public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 	private String coreName(String name) {
 		String[] parts = name.split("\\.");
 		StringBuilder ret = new StringBuilder();
-		for (Integer partIdx = 0; partIdx < parts.length-1; ++partIdx) {
+		for (int partIdx = 0; partIdx < parts.length-1; ++partIdx) {
 			ret.append(parts[partIdx]);
 		}
 		return ret.toString();
@@ -64,7 +64,7 @@ public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 		Collections.sort(interestingFiles, alphabeticalOrder);
 
 		entries = new ArrayList<PdfNlmPair>();
-		Integer prevIdx, curIdx;
+		int prevIdx, curIdx;
 		prevIdx = 0;
 		curIdx = 1;
 		while(curIdx < interestingFiles.size()) {
@@ -77,7 +77,7 @@ public class PdfNlmIterator implements Iterable<PdfNlmPair> {
 		}
 	}
 
-	public Integer size() {
+	public int size() {
 		return entries.size();
 	}
 

@@ -55,9 +55,9 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class FinalMetadataExtractionEvaluation {
 
-    private Boolean verbose = false;
+    private boolean verbose = false;
 
-    public FinalMetadataExtractionEvaluation(Boolean verbose) {
+    public FinalMetadataExtractionEvaluation(boolean verbose) {
         this.verbose = verbose;
     }
 
@@ -489,7 +489,7 @@ public final class FinalMetadataExtractionEvaluation {
             System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
             return;
         }
-        Boolean verbose = true;
+        boolean verbose = true;
         String directory = args[0];
         String origExt = args[1];
         String extrExt = args[2];
@@ -500,8 +500,8 @@ public final class FinalMetadataExtractionEvaluation {
     }
 
     private static Double calculateAverage(List<Double> values) {
-        Integer all = 0;
-        Double sum = .0;
+        int all = 0;
+        double sum = .0;
         for (Double value : values) {
             if (value != null) {
                 ++all;
@@ -511,11 +511,11 @@ public final class FinalMetadataExtractionEvaluation {
         return sum / all;
     }
 
-    private static Double calculatePrecision(List<String> expected, List<String> extracted) {
+    private static double calculatePrecision(List<String> expected, List<String> extracted) {
         if (extracted.isEmpty()) {
             return .0;
         }
-        Integer correct = 0;
+        int correct = 0;
         CosineDistance cos = new CosineDistance();
         
         List<String> tmp = new ArrayList<String>(expected);
@@ -532,8 +532,8 @@ public final class FinalMetadataExtractionEvaluation {
         return (double) correct / extracted.size();
     }
 
-    private static Double calculateRecall(List<String> expected, List<String> extracted) {
-        Integer correct = 0;
+    private static double calculateRecall(List<String> expected, List<String> extracted) {
+        int correct = 0;
         CosineDistance cos = new CosineDistance();
         List<String> tmp = new ArrayList<String>(expected);
         external:
@@ -550,11 +550,11 @@ public final class FinalMetadataExtractionEvaluation {
         return (double) correct / expected.size();
     }
 
-    private static Double compareStringsSW(String expectedText, String extractedText) {
+    private static double compareStringsSW(String expectedText, String extractedText) {
         List<String> expectedTokens = StringTools.tokenize(expectedText);
         List<String> extractedTokens = StringTools.tokenize(extractedText);
         SmithWatermanDistance distanceFunc = new SmithWatermanDistance(.0, .0);
-        Double distance = distanceFunc.compare(expectedTokens, extractedTokens);
+        double distance = distanceFunc.compare(expectedTokens, extractedTokens);
         return distance / (double) expectedTokens.size();
     }
 

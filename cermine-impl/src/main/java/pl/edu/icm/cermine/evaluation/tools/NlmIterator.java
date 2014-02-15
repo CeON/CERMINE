@@ -25,7 +25,7 @@ import org.apache.commons.io.FilenameUtils;
 
 public class NlmIterator implements Iterable<NlmPair> {
     
-	private Integer curItemIdx = -1;
+	private int curItemIdx = -1;
 	
     private List<NlmPair> entries = null;
     
@@ -93,7 +93,7 @@ public class NlmIterator implements Iterable<NlmPair> {
 		}
 	}
 
-	public Integer size() {
+	public int size() {
 		return entries.size();
 	}
 

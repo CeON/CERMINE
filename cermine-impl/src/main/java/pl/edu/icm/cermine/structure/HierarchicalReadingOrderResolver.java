@@ -33,9 +33,9 @@ import pl.edu.icm.cermine.structure.readingorder.TreeToListConverter;
  */
 public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
 
-    static final Integer GRIDSIZE = 50;
-    static final Double BOXES_FLOW = 0.5;
-    static final Double EPS = 0.0001;
+    static final int GRIDSIZE = 50;
+    static final double BOXES_FLOW = 0.5;
+    static final double EPS = 0.0001;
     static final int MAX_ZONES = 1000;
     static final Comparator<BxObject> Y_ASCENDING_ORDER = new Comparator<BxObject>() {
 
@@ -155,7 +155,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         firstElem.setNextId("1");
         firstElem.setNext(list.get(1));
         firstElem.setPrev(null);
-        for (Integer idx = 1; idx < list.size() - 1; ++idx) {
+        for (int idx = 1; idx < list.size() - 1; ++idx) {
             A elem = list.get(idx);
             elem.setId(Integer.toString(idx));
             elem.setNextId(Integer.toString(idx + 1));
@@ -269,8 +269,8 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         }
     }
 
-    private Boolean shouldBeSwapped(BxObject first, BxObject second) {
-        Double cx, cy, cw, ch, ox, oy, ow, oh;
+    private boolean shouldBeSwapped(BxObject first, BxObject second) {
+        double cx, cy, cw, ch, ox, oy, ow, oh;
         cx = first.getBounds().getX();
         cy = first.getBounds().getY();
         cw = first.getBounds().getWidth();
@@ -298,6 +298,11 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         } else if (oy + oh <= cy) {
             return true; //1
         } else { //two zones
+            double xdiff = ox+ow/2 - cx-cw/2;
+            double ydiff = oy+oh/2 - cy-ch/2;
+            if (xdiff + ydiff < 0) {
+                return true;
+            }
             return false;
         }
     }
@@ -312,23 +317,23 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
      * @return distance value based on objects' coordinates and physical size on a plane
      *
      */
-    private Double distance(BxObject obj1, BxObject obj2) {
+    private double distance(BxObject obj1, BxObject obj2) {
 
-        Double x0 = Math.min(obj1.getX(), obj2.getX());
-        Double y0 = Math.min(obj1.getY(), obj2.getY());
-        Double x1 = Math.max(obj1.getX() + obj1.getWidth(),
+        double x0 = Math.min(obj1.getX(), obj2.getX());
+        double y0 = Math.min(obj1.getY(), obj2.getY());
+        double x1 = Math.max(obj1.getX() + obj1.getWidth(),
                 obj2.getX() + obj2.getWidth());
-        Double y1 = Math.max(obj1.getY() + obj1.getHeight(),
+        double y1 = Math.max(obj1.getY() + obj1.getHeight(),
                 obj2.getY() + obj2.getHeight());
-        Double dist = ((x1 - x0) * (y1 - y0) - obj1.getArea() - obj2.getArea());
+        double dist = ((x1 - x0) * (y1 - y0) - obj1.getArea() - obj2.getArea());
 
-        Double obj1CenterX = obj1.getX();
-        Double obj1CenterY = obj1.getY() + obj1.getHeight() / 2;
-        Double obj2CenterX = obj2.getX();
-        Double obj2CenterY = obj2.getY() + obj2.getHeight() / 2;
+        double obj1CenterX = obj1.getX();
+        double obj1CenterY = obj1.getY() + obj1.getHeight() / 2;
+        double obj2CenterX = obj2.getX();
+        double obj2CenterY = obj2.getY() + obj2.getHeight() / 2;
 
-        Double obj1obj2VectorCosineAbs = Math.abs((obj2CenterX - obj1CenterX) / Math.sqrt((obj2CenterX - obj1CenterX) * (obj2CenterX - obj1CenterX) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));
-        final Double MAGIC_COEFF = 0.5;
+        double obj1obj2VectorCosineAbs = Math.abs((obj2CenterX - obj1CenterX) / Math.sqrt((obj2CenterX - obj1CenterX) * (obj2CenterX - obj1CenterX) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));
+        final double MAGIC_COEFF = 0.5;
         return dist * (MAGIC_COEFF + obj1obj2VectorCosineAbs);
     }
 }

@@ -97,7 +97,7 @@ public class FeatureVector {
     
     public String dump() {
     	StringBuilder ret = new StringBuilder();
-    	for(Integer idx=0; idx<size(); ++idx) {
+    	for(int idx=0; idx<size(); ++idx) {
     		String name = names.get(idx);
     		String shortName = (name.length() > 18 ? name.substring(0, 18) : name);
     		ret.append(String.format("%18s: %5.2f%n", shortName, values.get(idx)));

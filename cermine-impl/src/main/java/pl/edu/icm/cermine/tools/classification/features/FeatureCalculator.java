@@ -29,6 +29,8 @@ package pl.edu.icm.cermine.tools.classification.features;
  */
 public abstract class FeatureCalculator<S, T> {
 
+    private String featureName;
+    
     /**
      * Returns the name of the feature that can be calculated by the calculator.
      * Two different feature calculators of the same parameter types should
@@ -37,15 +39,18 @@ public abstract class FeatureCalculator<S, T> {
      * @return Feature name.
      */
     public String getFeatureName() {
-		String className = this.getClass().getName();
-		String[] classNameParts = className.split("\\.");
-		className = classNameParts[classNameParts.length-1];
+        if (featureName == null) {
+            String className = this.getClass().getName();
+            String[] classNameParts = className.split("\\.");
+            className = classNameParts[classNameParts.length-1];
 		
-		if (className.contains("Feature")) {
-			return className.replace("Feature", "");
-		} else {
-			return className;
-		}
+            if (className.contains("Feature")) {
+                featureName = className.replace("Feature", "");
+            } else {
+                featureName =  className;
+            }
+        }
+        return featureName;
 	}
 
     /**

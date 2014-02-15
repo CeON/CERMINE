@@ -186,7 +186,7 @@ public final class BxModelUtils {
     }
 
     public static BxChunk deepClone(BxChunk chunk) {
-    	return new BxChunk(chunk.getBounds(), chunk.getText());
+    	return new BxChunk(chunk.getBounds(), chunk.toText());
     }
     
     /**
@@ -351,7 +351,7 @@ public final class BxModelUtils {
     }
     
     public static boolean areEqual(BxChunk chunk1, BxChunk chunk2) {
-        if (!chunk1.getText().equals(chunk2.getText())) {
+        if (!chunk1.toText().equals(chunk2.toText())) {
             return false;
         }
         if (!chunk1.getBounds().isSimilarTo(chunk2.getBounds(), SIMILARITY_TOLERANCE)) {

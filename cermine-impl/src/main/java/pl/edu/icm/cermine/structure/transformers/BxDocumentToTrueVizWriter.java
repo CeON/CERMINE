@@ -128,7 +128,7 @@ public class BxDocumentToTrueVizWriter {
         appendPropertyIfNotNull(doc, node, "CharacterID", chunk.getId());
         appendBounds(doc, node, "CharacterCorners", chunk.getBounds());
         appendPropertyIfNotNull(doc, node, "CharacterNext", chunk.getNextId());
-        appendProperty(doc, node, "GT_Text", chunk.getText());
+        appendProperty(doc, node, "GT_Text", chunk.toText());
         parent.appendChild(node);
     }
 

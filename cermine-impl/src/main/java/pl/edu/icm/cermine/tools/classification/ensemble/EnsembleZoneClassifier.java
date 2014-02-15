@@ -46,7 +46,7 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
     @Override
     public BxDocument classifyZones(BxDocument document) throws AnalysisException {
         List<Map<BxZoneLabel, Integer>> votesForZones = new ArrayList<Map<BxZoneLabel, Integer>>(document.asZones().size());
-        for (Integer zoneIdx = 0; zoneIdx < document.asZones().size(); ++zoneIdx) {
+        for (int zoneIdx = 0; zoneIdx < document.asZones().size(); ++zoneIdx) {
             votesForZones.add(new EnumMap<BxZoneLabel, Integer>(BxZoneLabel.class));
             for (BxZoneLabel label : zoneLabels) {
                 votesForZones.get(zoneIdx).put(label, 0);
@@ -56,9 +56,9 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
         for (ZoneClassifier classifier : classifiers) {
             classifier.classifyZones(document);
 
-            for (Integer zoneIdx = 0; zoneIdx < votesForZones.size(); ++zoneIdx) {
+            for (int zoneIdx = 0; zoneIdx < votesForZones.size(); ++zoneIdx) {
                 BxZoneLabel curZoneLabel = document.asZones().get(zoneIdx).getLabel();
-                Integer votesUntilNow = votesForZones.get(zoneIdx).get(curZoneLabel);
+                int votesUntilNow = votesForZones.get(zoneIdx).get(curZoneLabel);
                 votesForZones.get(zoneIdx).put(curZoneLabel, votesUntilNow + 1);
             }
         }
@@ -74,16 +74,16 @@ public class EnsembleZoneClassifier implements ZoneClassifier {
 
     private void chooseBestLabels(List<BxZone> zones, List<Map<BxZoneLabel, Integer>> votesForZones) {
         //iterate over all the zones
-        for (Integer zoneIdx = 0; zoneIdx < zones.size(); ++zoneIdx) {
-            Integer bestLabelIdx = -1;
-            Double bestLabelVote = Double.NEGATIVE_INFINITY;
+        for (int zoneIdx = 0; zoneIdx < zones.size(); ++zoneIdx) {
+            int bestLabelIdx = -1;
+            double bestLabelVote = Double.NEGATIVE_INFINITY;
 
             //iterate over all possible labels
-            for (Integer labelIdx = 0; labelIdx < zoneLabels.size(); ++labelIdx) {
+            for (int labelIdx = 0; labelIdx < zoneLabels.size(); ++labelIdx) {
                 //check current label counter
-                Integer labelCounter = votesForZones.get(zoneIdx).get(zoneLabels.get(labelIdx));
+                int labelCounter = votesForZones.get(zoneIdx).get(zoneLabels.get(labelIdx));
                 //calculate biased counter value
-                Double labelVote = wrongClassificationCosts.get(labelIdx) * labelCounter;
+                double labelVote = wrongClassificationCosts.get(labelIdx) * labelCounter;
                 //check if it's the best one
                 if (labelVote > bestLabelVote) {
                     bestLabelIdx = labelIdx;

@@ -38,7 +38,7 @@ public class BxZoneTree {
             this.parent = parent;
         }
 
-        public BxZoneTreeNode(BxZone zone, Integer order, BxZoneTreeNode parent) {
+        public BxZoneTreeNode(BxZone zone, int order, BxZoneTreeNode parent) {
             this.tuple = new BxZoneOrderTuple(zone, order);
             this.children = new ArrayList<BxZoneTreeNode>();
             this.parent = parent;
@@ -63,7 +63,7 @@ public class BxZoneTree {
         }
 
         public BxZoneTreeNode addChild(BxZoneOrderTuple tuple) {
-            if (this.tuple.getOrder().equals(tuple.getOrder())) {
+            if (this.tuple.getOrder() == tuple.getOrder()) {
                 parent.getChildren().add(new BxZoneTreeNode(tuple, parent));
                 return parent;
             } else if (this.tuple.getOrder() > tuple.getOrder()) {
@@ -74,7 +74,7 @@ public class BxZoneTree {
                     return this;
                 } else {
                     BxZoneTreeNode lastChild = children.get(children.size() - 1);
-                    if (lastChild.getTuple().getOrder().equals(tuple.getOrder())
+                    if (lastChild.getTuple().getOrder() == tuple.getOrder()
                             || lastChild.getTuple().getOrder() > tuple.getOrder()) {
                         children.add(new BxZoneTreeNode(tuple, this));
                         return this;
@@ -85,8 +85,8 @@ public class BxZoneTree {
             }
         }
 
-        private Boolean checkChildren(BxZoneTreeNode other) {
-            for (Integer i = 0; i < getChildren().size(); ++i) {
+        private boolean checkChildren(BxZoneTreeNode other) {
+            for (int i = 0; i < getChildren().size(); ++i) {
                 if (!getChildren().get(i).correspondsTo(other.getChildren().get(i))) {
                     return false;
                 }
@@ -94,7 +94,7 @@ public class BxZoneTree {
             return true;
         }
 
-        private Boolean correspondsTo(BxZoneTreeNode other) {
+        private boolean correspondsTo(BxZoneTreeNode other) {
             if (getTuple().getZone() == null && other.getTuple().getZone() == null) {
                 if (getChildren().size() != other.getChildren().size()) {
                     return false;
@@ -130,7 +130,7 @@ public class BxZoneTree {
         root.addChild(node);
     }
 
-    public BxZoneTree addNode(BxZone zone, Integer order) {
+    public BxZoneTree addNode(BxZone zone, int order) {
         return this.addNode(new BxZoneOrderTuple(zone, order));
     }
 
@@ -139,7 +139,7 @@ public class BxZoneTree {
         return this;
     }
 
-    public Boolean correspondsTo(BxZoneTree other) {
+    public boolean correspondsTo(BxZoneTree other) {
         return root.correspondsTo(other.root);
     }
 

@@ -21,9 +21,9 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class BxZoneOrderTuple {
 	private BxZone zone;
-	private Integer order;
+	private int order;
 
-	public BxZoneOrderTuple(BxZone zone, Integer order) {
+	public BxZoneOrderTuple(BxZone zone, int order) {
 		this.zone = zone;
 		this.order = order;
 	}
@@ -34,10 +34,10 @@ public class BxZoneOrderTuple {
 	public void setZone(BxZone zone) {
 		this.zone = zone;
 	}
-	public Integer getOrder() {
+	public int getOrder() {
 		return order;
 	}
-	public void setOrder(Integer order) {
+	public void setOrder(int order) {
 		this.order = order;
 	}
 	

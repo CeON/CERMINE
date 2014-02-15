@@ -30,20 +30,13 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
 
     private static final long serialVersionUID = -6911268485662874663L;
 
-    /* text stored in the chunk */
-    private final String text;
-
     public BxChunk(BxBounds bounds, String text) {
         this.setBounds(bounds);
-        this.text = text;
+        this.setText(text);
     }
  
     public BxChunk withBounds(BxBounds bounds) {
-        return new BxChunk(bounds, text);
-    }
-
-    public String getText() {
-        return text;
+        return new BxChunk(bounds, this.getText());
     }
 
     public BxChunk withText(String text) {
@@ -51,6 +44,6 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
     }
 
     public String toText() {
-        return text;
+        return this.getText();
     }
 }

@@ -44,6 +44,7 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     }
 
     public BxLine setWords(Collection<BxWord> words) {
+        resetText();
         if (words != null) {
             this.words.clear();
             for (BxWord word : words) {
@@ -54,6 +55,7 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     }
 
     public BxLine addWord(BxWord word) {
+        resetText();
         if (word != null) {
             this.words.add(word);
             word.setParent(this);
@@ -63,16 +65,18 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
 
     @Override
     public String toText() {
-
-        StringBuilder sb = new StringBuilder();
-        boolean first = true;
-        for (BxWord w : words) {
-            if (!first) {
-                sb.append(" ");
+        if (getText() == null) {
+            StringBuilder sb = new StringBuilder();
+            boolean first = true;
+            for (BxWord w : words) {
+                if (!first) {
+                    sb.append(" ");
+                }
+                first = false;
+                sb.append(w.toText());
             }
-            first = false;
-            sb.append(w.toText());
+            setText(sb.toString());
         }
-        return sb.toString();
+        return getText();
     }
 }

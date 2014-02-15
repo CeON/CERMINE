@@ -53,6 +53,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     }
     
     public BxZone setLines(Collection<BxLine> lines) {
+        resetText();
         if (lines != null) {
             this.lines.clear();
             for (BxLine line : lines) {
@@ -63,6 +64,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     }
 
     public BxZone addLine(BxLine line) {
+        resetText();
         if (line != null) {
             this.lines.add(line);
             line.setParent(this);
@@ -75,6 +77,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     }
 
     public BxZone setChunks(Collection<BxChunk> chunks) {
+        resetText();
         if (chunks != null) {
             this.chunks.clear();
             this.chunks.addAll(chunks);
@@ -83,6 +86,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     }
 
     public BxZone addChunk(BxChunk chunk) {
+        resetText();
         if (chunk != null) {
             this.chunks.add(chunk);
         }
@@ -91,15 +95,18 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
 
     @Override
     public String toText() {
-        StringBuilder sb = new StringBuilder();
-        boolean first = true;
-        for (BxLine w : lines) {
-            if (!first) {
-                sb.append("\n");
+        if (getText() == null) {
+            StringBuilder sb = new StringBuilder();
+            boolean first = true;
+            for (BxLine w : lines) {
+                if (!first) {
+                    sb.append("\n");
+                }
+                first = false;
+                sb.append(w.toText());
             }
-            first = false;
-            sb.append(w.toText());
+            setText(sb.toString());
         }
-        return sb.toString();
+        return getText();
     }
 }

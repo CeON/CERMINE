@@ -38,6 +38,7 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
 	}
 
     public BxWord setChunks(Collection<BxChunk> chunks) {
+        resetText();
         if (chunks != null) {
             this.chunks.clear();
             for (BxChunk chunk : chunks) {
@@ -48,6 +49,7 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
     }
 
     public BxWord addChunk(BxChunk chunk) {
+        resetText();
         if (chunks != null) {
             this.chunks.add(chunk);
             chunk.setParent(this);
@@ -57,10 +59,13 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
 
     @Override
     public String toText() {
-        StringBuilder sb = new StringBuilder();
-        for (BxChunk ch : chunks) {
-            sb.append(ch.getText());
+        if (getText() == null) {
+            StringBuilder sb = new StringBuilder();
+            for (BxChunk ch : chunks) {
+                sb.append(ch.getText());
+            }
+            setText(sb.toString());
         }
-        return sb.toString();
+        return getText();
     }
 }

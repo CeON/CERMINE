@@ -45,6 +45,8 @@ public abstract class BxObject <S, T> implements Indexable<S> {
 
     private T parent;
     
+    private String text;
+    
     public void setParent(T parent) {
     	this.parent = parent;
     }
@@ -103,7 +105,7 @@ public abstract class BxObject <S, T> implements Indexable<S> {
 		return getPrev() != null;
 	}
 
-    public Double getArea() {
+    public double getArea() {
     	return (bounds.getHeight() * bounds.getWidth());
     }
 
@@ -131,4 +133,17 @@ public abstract class BxObject <S, T> implements Indexable<S> {
     public double getHeight() {
     	return bounds.getHeight();
     }
+
+    protected String getText() {
+        return text;
+    }
+
+    protected void setText(String text) {
+        this.text = text;
+    }
+    
+    protected void resetText() {
+        this.text = null;
+    }
+    
 }

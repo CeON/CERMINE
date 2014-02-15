@@ -42,6 +42,7 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     }
 
     public BxPage setZones(Collection<BxZone> zones) {
+        resetText();
         if (zones != null) {
             this.zones.clear();
             for (BxZone zone : zones) {
@@ -52,6 +53,7 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     }
 
     public BxPage addZone(BxZone zone) {
+        resetText();
         if (zone != null) {
             this.zones.add(zone);
             zone.setParent(this);
@@ -64,6 +66,7 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     }
 
     public BxPage setChunks(Collection<BxChunk> chunks) {
+        resetText();
         if (chunks != null) {
             this.chunks.clear();
             this.chunks.addAll(chunks);
@@ -72,6 +75,7 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     }
 
     public BxPage addChunk(BxChunk chunk) {
+        resetText();
         if (chunk != null) {
             this.chunks.add(chunk);
         }
@@ -80,15 +84,18 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
 
     @Override
 	public String toText() {
-        StringBuilder sb = new StringBuilder();
-        boolean first = true;
-        for (BxZone w : zones) {
-            if (!first) {
-                sb.append("\n");
+        if (getText() == null) {
+            StringBuilder sb = new StringBuilder();
+            boolean first = true;
+            for (BxZone w : zones) {
+                if (!first) {
+                    sb.append("\n");
+                }
+                first = false;
+                sb.append(w.toText());
             }
-            first = false;
-            sb.append(w.toText());
+            setText(sb.toString());
         }
-        return sb.toString();
+        return getText();
     }
 }

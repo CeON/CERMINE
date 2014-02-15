@@ -43,7 +43,7 @@ public class AuthorFeature extends FeatureCalculator<BxZone, BxPage> {
                 for (BxChunk chunk : word.getChunks()) {
                     BxBounds chb = chunk.getBounds();
                     BxBounds lb = line.getBounds();
-                    String cht = chunk.getText();
+                    String cht = chunk.toText();
                     if ((cht.matches("\\d") || cht.equals("*")) 
                             && word.getChunks().indexOf(chunk) > word.getChunks().size() - 3
                             && chb.getHeight() < 3 * lb.getHeight() / 4

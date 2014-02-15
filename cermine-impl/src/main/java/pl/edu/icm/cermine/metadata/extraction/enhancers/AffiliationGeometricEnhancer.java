@@ -93,11 +93,11 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             BxChunk chunk = iterator.next();
                             double chunkY = chunk.getY();
                             double chunkH = chunk.getHeight();
-                            if (simpleIndexPattern.matcher(chunk.getText()).matches() ||
+                            if (simpleIndexPattern.matcher(chunk.toText()).matches() ||
                                 Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2) {
                                 processor.addAffIndex(chunk.toText());
                             } else {
-                                processor.addText(chunk.getText());
+                                processor.addText(chunk.toText());
                             }
                         }
                         processor.endWord();

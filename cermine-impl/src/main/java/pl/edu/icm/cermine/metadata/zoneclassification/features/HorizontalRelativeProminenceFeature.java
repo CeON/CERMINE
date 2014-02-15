@@ -29,15 +29,15 @@ public class HorizontalRelativeProminenceFeature extends FeatureCalculator<BxZon
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        Double leftProminence = zone.getX();
-        Double rightProminence = page.getWidth() - (zone.getX() + zone.getWidth());
+        double leftProminence = zone.getX();
+        double rightProminence = page.getWidth() - (zone.getX() + zone.getWidth());
 
         for (BxZone otherZone : page.getZones()) {
             if (otherZone == zone) {
                 continue;
             }
-            Double cx, cy, cw, ch, ox, oy, ow, oh;
-            Double newLeftProminence, newRightProminence;
+            double cx, cy, cw, ch, ox, oy, ow, oh;
+            double newLeftProminence, newRightProminence;
 
             cx = zone.getBounds().getX();
             cy = zone.getBounds().getY();
@@ -57,7 +57,7 @@ public class HorizontalRelativeProminenceFeature extends FeatureCalculator<BxZon
             // __|___|__
             // 6 | 5 | 4
 
-            Integer oct;
+            int oct;
             if (cx + cw <= ox) {
                 if (cy + ch <= oy) {
                     oct = 4;
@@ -95,7 +95,7 @@ public class HorizontalRelativeProminenceFeature extends FeatureCalculator<BxZon
                 }
             }
         }
-        Double ret = (rightProminence + leftProminence + zone.getWidth()) / page.getWidth();
+        double ret = (rightProminence + leftProminence + zone.getWidth()) / page.getWidth();
         if (ret >= 0.0) {
             return ret;
         } else {

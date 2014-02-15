@@ -36,7 +36,7 @@ public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 	static final String[] MONTHS = { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 	
 	static {
-		Integer idx=0;
+		int idx=0;
 		for(String month: MONTHS) {
 			MONTH_REGEXPS[idx] = "\\d{4}" + "[ \\.-/]" + month + "[ \\.-/]" + "\\d{2}";
 			MONTH_REGEXPS[idx+12] = "\\d{2}" + "[ \\.-/]" + month + "[ \\.-/]" + "\\d{4}";

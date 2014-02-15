@@ -26,7 +26,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
-	public static final Double EPS = 10.0;
+	public static final double EPS = 10.0;
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override
 		public int compare(BxZone z1, BxZone z2) {

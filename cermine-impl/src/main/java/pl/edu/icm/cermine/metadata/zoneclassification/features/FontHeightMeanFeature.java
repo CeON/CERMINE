@@ -28,8 +28,8 @@ public class FontHeightMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        Double heightSum = 0.0;
-        Integer heightNumber = 0;
+        double heightSum = 0.0;
+        int heightNumber = 0;
         for (BxLine line : zone.getLines()) {
             for (BxWord word : line.getWords()) {
                 for (BxChunk chunk : word.getChunks()) {

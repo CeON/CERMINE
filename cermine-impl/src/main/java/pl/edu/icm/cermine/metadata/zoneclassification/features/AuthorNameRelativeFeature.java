@@ -27,7 +27,7 @@ public class AuthorNameRelativeFeature extends AbstractFeatureCalculator<BxZone,
     public double calculateFeatureValue(BxZone object, BxPage context) {
         String text = object.toText();
         String[] parts = text.split(",|and");
-        Integer numberOfNames = 0;
+        int numberOfNames = 0;
         if (parts.length == 0) {
             return 0;
         }
@@ -38,7 +38,7 @@ public class AuthorNameRelativeFeature extends AbstractFeatureCalculator<BxZone,
             }
             String[] words = part.split("\\s");
 
-            Boolean isName = true;
+            boolean isName = true;
             for (String word : words) {
                 if (word.length() == 1 && word.matches("\\*|")) {
                     continue;

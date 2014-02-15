@@ -39,7 +39,7 @@ public class IsFontBiggerThanNeighboursFeature extends FeatureCalculator<BxZone,
         }
 
         Integer thisZoneIdx = null;
-        for (Integer zoneIdx = 0; zoneIdx < pageZones.size(); ++zoneIdx) {
+        for (int zoneIdx = 0; zoneIdx < pageZones.size(); ++zoneIdx) {
             if (zone == pageZones.get(zoneIdx)) {
                 thisZoneIdx = zoneIdx;
                 break;

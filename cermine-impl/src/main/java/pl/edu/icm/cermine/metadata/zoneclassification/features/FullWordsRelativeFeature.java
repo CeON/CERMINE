@@ -28,8 +28,8 @@ public class FullWordsRelativeFeature extends AbstractFeatureCalculator<BxZone, 
 	public double calculateFeatureValue(BxZone object, BxPage context) {
 		String text = object.toText();
 		String[] words = text.split("\\s");
-		Integer numberOfWords = 0;
-		Integer numberOfFullWords = 0;
+		int numberOfWords = 0;
+		int numberOfFullWords = 0;
 		for(String word: words) {
 			if(ZoneClassificationUtils.isConjunction(word)) {
 				++numberOfFullWords;
@@ -39,7 +39,7 @@ public class FullWordsRelativeFeature extends AbstractFeatureCalculator<BxZone, 
 			}
 			++numberOfWords;
 		}
-		return (double)numberOfFullWords/numberOfWords;
+		return (double)numberOfFullWords / numberOfWords;
 	}
 
 }

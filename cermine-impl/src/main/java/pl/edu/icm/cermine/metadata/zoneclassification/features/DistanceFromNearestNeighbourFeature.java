@@ -27,21 +27,21 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class DistanceFromNearestNeighbourFeature extends FeatureCalculator<BxZone, BxPage> {
 
-    private static Double euclideanDist(Double x0, Double y0, Double x1, Double y1) {
+    private static double euclideanDist(double x0, double y0, double x1, double y1) {
         return Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
     }
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        Double minDist = Double.MAX_VALUE;
+        double minDist = Double.MAX_VALUE;
 
         for (BxZone otherZone : page.getZones()) {
             if (otherZone == zone) {
                 continue;
             }
 
-            Double dist;
-            Double cx, cy, cw, ch, ox, oy, ow, oh;
+            double dist;
+            double cx, cy, cw, ch, ox, oy, ow, oh;
             cx = zone.getBounds().getX();
             cy = zone.getBounds().getY();
             cw = zone.getBounds().getWidth();
@@ -60,7 +60,7 @@ public class DistanceFromNearestNeighbourFeature extends FeatureCalculator<BxZon
             // __|___|__
             // 6 | 5 | 4
 
-            Integer oct;
+            int oct;
             if (cx + cw <= ox) {
                 if (cy + ch <= oy) {
                     oct = 4;

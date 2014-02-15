@@ -60,7 +60,7 @@ public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 			return 1;
 		}
 		String[] words = lineText.split(" ");
-		Boolean capitals = true;
+		boolean capitals = true;
 		for(String word: words) {
 			if(!(word.matches("\\{Upper}.+") || ZoneClassificationUtils.isConjunction(word))) {
 				capitals = false;

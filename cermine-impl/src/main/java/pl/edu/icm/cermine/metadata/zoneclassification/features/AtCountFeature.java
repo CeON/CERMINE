@@ -33,7 +33,7 @@ public class AtCountFeature extends FeatureCalculator<BxZone, BxPage> {
         for (BxLine line : zone.getLines()) {
             for (BxWord word : line.getWords()) {
                 for (BxChunk chunk : word.getChunks()) {
-                    char[] arr = chunk.getText().toCharArray();
+                    char[] arr = chunk.toText().toCharArray();
                     for (int i = 0; i < arr.length; i++) {
                         if (arr[i]=='@') {
                             count++;

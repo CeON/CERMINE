@@ -34,7 +34,7 @@ public class UppercaseWordCountFeature extends FeatureCalculator<BxZone, BxPage>
             for (BxWord word : line.getWords()) {
                 StringBuilder sb = new StringBuilder();
                 for (BxChunk chunk : word.getChunks()) {
-                    sb.append(chunk.getText());
+                    sb.append(chunk.toText());
                 }
                 String s = sb.toString();
                 if (!s.isEmpty() && Character.isUpperCase(s.charAt(0))) {

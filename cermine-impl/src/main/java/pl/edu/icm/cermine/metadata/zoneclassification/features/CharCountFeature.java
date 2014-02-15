@@ -33,7 +33,7 @@ public class CharCountFeature extends FeatureCalculator<BxZone, BxPage> {
         for (BxLine line : zone.getLines()) {
             for (BxWord word : line.getWords()) {
                 for (BxChunk chunk : word.getChunks()) {
-                    count += chunk.getText().length();
+                    count += chunk.toText().length();
                 }
             }
         }

@@ -34,7 +34,7 @@ public class IsSingleWordFeature extends AbstractFeatureCalculator<BxZone, BxPag
         if (parts.length == 1) { //white characters were not found
             return 1.0;
         }
-        Boolean foundNonEmpty = false;
+        boolean foundNonEmpty = false;
         for (String part : parts) {
             if (part.length() == 0) { //empty string => ommit
                 continue;

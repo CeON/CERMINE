@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.edu.icm.cermine.ContentExtractor;
+import pl.edu.icm.cermine.PdfNLMContentExtractor;
 import pl.edu.icm.cermine.content.transformers.NLMElementToHTMLWriter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
@@ -47,7 +47,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
     int threadPoolSize = 4;
     int maxQueueForBatch = 0;
     Logger log = LoggerFactory.getLogger(CermineExtractorServiceImpl.class);
-    List<ContentExtractor> extractors;
+    List<PdfNLMContentExtractor> extractors;
     ExecutorService processingExecutor;
     ExecutorService batchProcessingExecutor;
     @Autowired
@@ -67,9 +67,9 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
                 q = new ArrayBlockingQueue<Runnable>(100000);
             }
             batchProcessingExecutor = new ThreadPoolExecutor(threadPoolSize, threadPoolSize, 1, TimeUnit.DAYS, q);
-            extractors = new ArrayList<ContentExtractor>();
+            extractors = new ArrayList<PdfNLMContentExtractor>();
             for (int i = 0; i < threadPoolSize; i++) {
-                extractors.add(new ContentExtractor());
+                extractors.add(new PdfNLMContentExtractor());
             }
         } catch (Exception ex) {
             log.error("Failed to init content extractor", ex);
@@ -130,9 +130,9 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         return id;
     }
 
-    protected ContentExtractor obtainExtractor() {
+    protected PdfNLMContentExtractor obtainExtractor() {
         log.debug("Obtaining extractor from the pool");
-        ContentExtractor res = null;
+        PdfNLMContentExtractor res = null;
         try {
             synchronized (extractors) {
                 while (extractors.isEmpty()) {
@@ -148,7 +148,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
         }
     }
 
-    protected void returnExtractor(ContentExtractor e) {
+    protected void returnExtractor(PdfNLMContentExtractor e) {
         log.debug("Returning extractor to the pool...");
         synchronized (extractors) {
             extractors.add(e);
@@ -164,13 +164,12 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
      * @return
      */
     private ExtractionResult performExtraction(ExtractionResult result, InputStream input) {
-        ContentExtractor e = null;
+        PdfNLMContentExtractor e = null;
         try {
             e = obtainExtractor();
             result.processingStart = new Date();
             log.debug("Starting extraction on the input stream...");
-            e.uploadPDF(input);
-            Element resEl = e.getNLMContent();
+            Element resEl = e.extractContent(input);
             log.debug("Extraction ok..");
             XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
             Document doc = new Document(resEl);

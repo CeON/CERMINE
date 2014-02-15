@@ -31,11 +31,11 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 	protected FeatureLimits[] limits;
-	protected Double scaledLowerBound;
-	protected Double scaledUpperBound;
+	protected double scaledLowerBound;
+	protected double scaledUpperBound;
 	protected ScalingStrategy strategy ;
 	
-	public FeatureVectorScalerImpl(Integer size, Double lowerBound, Double upperBound) {
+	public FeatureVectorScalerImpl(int size, double lowerBound, double upperBound) {
 		this.scaledLowerBound = lowerBound;
 		this.scaledUpperBound = upperBound;
 		limits = new FeatureLimits[size];
@@ -98,12 +98,12 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
             Formatter formatter = new Formatter(new StringBuilder());
             fp_save = new BufferedWriter(new FileWriter(path));
 
-            Double lower = 0.0;
-            Double upper = 1.0;
+            double lower = 0.0;
+            double upper = 1.0;
 
             formatter.format("x\n");
             formatter.format("%.16g %.16g\n", lower, upper);
-            for(Integer i = 0; i < limits.length; ++i) {
+            for(int i = 0; i < limits.length; ++i) {
                 formatter.format("%d %.16g %.16g\n", i, limits[i].getMin(), limits[i].getMax());
             }
 
@@ -117,7 +117,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 
     public static FeatureVectorScalerImpl fromRangeReader(BufferedReader rangeFile) throws IOException {
         try {
-            Double feature_min, feature_max;
+            double feature_min, feature_max;
             if(rangeFile.read() == 'x') {
                 rangeFile.readLine();		// pass the '\n' after 'x'
                 String line = rangeFile.readLine();
@@ -125,8 +125,8 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
                     line = "";
                 }
                 StringTokenizer st = new StringTokenizer(line);
-                Double scaledLowerBound = Double.parseDouble(st.nextToken());
-                Double scaledUpperBound = Double.parseDouble(st.nextToken());
+                double scaledLowerBound = Double.parseDouble(st.nextToken());
+                double scaledUpperBound = Double.parseDouble(st.nextToken());
                 if(scaledLowerBound != 0 || scaledUpperBound != 1) {
                     throw new RuntimeException("Feature lower bound and upper bound must"
                             + "be set in range file to resepctively 0 and 1");

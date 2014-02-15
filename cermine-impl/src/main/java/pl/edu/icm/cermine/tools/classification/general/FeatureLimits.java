@@ -20,22 +20,22 @@ package pl.edu.icm.cermine.tools.classification.general;
 
 public class FeatureLimits 
 {
-	public FeatureLimits(Double minValue, Double maxValue) {
+	public FeatureLimits(double minValue, double maxValue) {
 		min = minValue;
 		max = maxValue;
 	}
-	public Double getMin() {
+	public double getMin() {
 		return min;
 	}
-	public void setMin(Double min) {
+	public void setMin(double min) {
 		this.min = min;
 	}
-	public Double getMax() {
+	public double getMax() {
 		return max;
 	}
-	public void setMax(Double max) {
+	public void setMax(double max) {
 		this.max = max;
 	}
-	Double min;
-	Double max;
+	double min;
+	double max;
 }

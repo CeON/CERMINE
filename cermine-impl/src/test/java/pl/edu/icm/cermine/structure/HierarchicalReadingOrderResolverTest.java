@@ -94,7 +94,7 @@ public class HierarchicalReadingOrderResolverTest {
 				for(Integer chunkIdx=0; chunkIdx < zone1.getChunks().size(); ++chunkIdx) {
 					BxChunk chunk1 = zone1.getChunks().get(chunkIdx);
 					BxChunk chunk2 = zone2.getChunks().get(chunkIdx);
-					if(!chunk1.getText().equals(chunk2.getText()))
+					if(!chunk1.toText().equals(chunk2.toText()))
 						return false;
 				}
 			}

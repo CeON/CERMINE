@@ -24,9 +24,9 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class OversamplingSelector<S> implements SampleSelector<S> {
 
-    private Double inequalityFactor;
+    private double inequalityFactor;
 
-    public OversamplingSelector(Double inequalityFactor) {
+    public OversamplingSelector(double inequalityFactor) {
         this.inequalityFactor = inequalityFactor;
     }
 
@@ -41,7 +41,7 @@ public class OversamplingSelector<S> implements SampleSelector<S> {
             labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel()) + 1);
         }
 
-        Integer greatestClassNumber = 0;
+        int greatestClassNumber = 0;
         for (Entry<S, Integer> entry : labelCount.entrySet()) {
             if (entry.getValue() > greatestClassNumber) {
                 greatestClassNumber = entry.getValue();
@@ -65,7 +65,7 @@ public class OversamplingSelector<S> implements SampleSelector<S> {
                 Random randomGenerator = new Random();
                 List<TrainingSample<S>> chosenElements = new ArrayList<TrainingSample<S>>();
                 while (chosenElements.size() < greatestClassNumber * inequalityFactor) {
-                    Integer randInt = randomGenerator.nextInt(thisLabelElements.size());
+                    int randInt = randomGenerator.nextInt(thisLabelElements.size());
                     TrainingSample<S> randElem = thisLabelElements.get(randInt);
                     chosenElements.add(randElem);
                 }

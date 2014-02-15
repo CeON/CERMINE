@@ -24,9 +24,9 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class UndersamplingSelector<S> implements SampleSelector<S> {
 
-    private Double inequalityFactor;
+    private double inequalityFactor;
 
-    public UndersamplingSelector(Double inequalityFactor) {
+    public UndersamplingSelector(double inequalityFactor) {
         assert inequalityFactor > 1.0;
         this.inequalityFactor = inequalityFactor;
     }
@@ -42,7 +42,7 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
             labelCount.put(elem.getLabel(), labelCount.get(elem.getLabel()) + 1);
         }
 
-        Integer smallestClassNumber = Integer.MAX_VALUE;
+        int smallestClassNumber = Integer.MAX_VALUE;
         for (Entry<S, Integer> entry : labelCount.entrySet()) {
             if (entry.getValue() < smallestClassNumber) {
                 smallestClassNumber = entry.getValue();
@@ -65,7 +65,7 @@ public class UndersamplingSelector<S> implements SampleSelector<S> {
                 Random randomGenerator = new Random();
                 List<TrainingSample<S>> chosenElements = new ArrayList<TrainingSample<S>>();
                 while (chosenElements.size() < smallestClassNumber * inequalityFactor) {
-                    Integer randInt = randomGenerator.nextInt(thisLabelElements.size());
+                    int randInt = randomGenerator.nextInt(thisLabelElements.size());
                     TrainingSample<S> randElem = thisLabelElements.get(randInt);
                     if (!chosenElements.contains(randElem)) {
                         chosenElements.add(randElem);

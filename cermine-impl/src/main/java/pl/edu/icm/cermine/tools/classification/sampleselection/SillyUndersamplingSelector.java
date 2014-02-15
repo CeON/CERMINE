@@ -27,9 +27,9 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class SillyUndersamplingSelector <S> implements SampleSelector<S> {
 	private List<S> zoneLabels;
-	private Double inequalityFactor;
+	private double inequalityFactor;
 
-	public SillyUndersamplingSelector(List<S> zoneLabels, Double inequalityFactor) {
+	public SillyUndersamplingSelector(List<S> zoneLabels, double inequalityFactor) {
 		assert inequalityFactor > 1.0;
 		this.inequalityFactor = inequalityFactor;
 		this.zoneLabels = zoneLabels;

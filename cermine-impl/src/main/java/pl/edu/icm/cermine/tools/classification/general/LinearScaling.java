@@ -23,8 +23,8 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 public class LinearScaling implements ScalingStrategy {
 
 	@Override
-	public FeatureVector scaleFeatureVector(Double scaledLowerBound,
-			Double scaledUpperBound, FeatureLimits[] limits, FeatureVector fv) {
+	public FeatureVector scaleFeatureVector(double scaledLowerBound,
+			double scaledUpperBound, FeatureLimits[] limits, FeatureVector fv) {
 		final double EPS = 0.00001;
 		FeatureVector newVector = new FeatureVector();
 		
@@ -37,8 +37,8 @@ public class LinearScaling implements ScalingStrategy {
 				newVector.addFeature(name, 1.0);
 			} else {
 				Double featureValue = fv.getValue(name);
-				Double a = (scaledUpperBound-scaledLowerBound)/(limits[featureIdx].getMax()-limits[featureIdx].getMin());
-				Double b = scaledLowerBound-a*limits[featureIdx].getMin();
+				double a = (scaledUpperBound-scaledLowerBound)/(limits[featureIdx].getMax()-limits[featureIdx].getMin());
+				double b = scaledLowerBound-a*limits[featureIdx].getMin();
 				
 				featureValue = a*featureValue+b; 
 

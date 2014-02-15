@@ -79,10 +79,10 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	public SVMClassifier(FeatureVectorBuilder<S, T> featureVectorBuilder, Class<E> enumClassObj) {
 		this.featureVectorBuilder = featureVectorBuilder;
 		this.enumClassObj = enumClassObj;
-		Integer dimensions = featureVectorBuilder.size();
+		int dimensions = featureVectorBuilder.size();
 		
-		Double scaledLowerBound = 0.0;
-		Double scaledUpperBound = 1.0;
+		double scaledLowerBound = 0.0;
+		double scaledUpperBound = 1.0;
         FeatureVectorScalerImpl lScaler = new FeatureVectorScalerImpl(dimensions, scaledLowerBound, scaledUpperBound);
 		lScaler.setStrategy(new LinearScaling());
 		this.scaler = lScaler;
@@ -126,13 +126,13 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	
 	public E predictLabel(S object, T context) {
 		svm_node[] instance = buildDatasetForClassification(object, context);
-		Integer predictedVal = ((Double)svm.svm_predict(model, instance)).intValue();
+		int predictedVal = (int)svm.svm_predict(model, instance);
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
 	
 	public E predictLabel(TrainingSample<E> sample) {
 		svm_node[] instance = buildDatasetForClassification(sample.getFeatureVector());
-		Integer predictedVal = ((Double)svm.svm_predict(model, instance)).intValue();
+		int predictedVal = (int)svm.svm_predict(model, instance);
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
 
@@ -154,10 +154,10 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		svmProblem.x = new svm_node[svmProblem.l][trainingElements.get(0).getFeatureVector().size()];
 		svmProblem.y = new double[svmProblem.l];
 		
-		Integer elemIdx = 0;
+		int elemIdx = 0;
 		for(TrainingSample<E> trainingElem : trainingElements) {
 			FeatureVector scaledFV = scaler.scaleFeatureVector(trainingElem.getFeatureVector());
-			Integer featureIdx = 0;
+			int featureIdx = 0;
 			for (double val: scaledFV.getValues()) {
 				svm_node cur = new svm_node();
 				cur.index = featureIdx;
@@ -174,7 +174,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	protected svm_node[] buildDatasetForClassification(FeatureVector fv) {
 		FeatureVector scaled = scaler.scaleFeatureVector(fv);
 		svm_node[] ret = new svm_node[featureVectorBuilder.size()];
-		Integer featureIdx = 0;
+		int featureIdx = 0;
 		for (double val: scaled.getValues()) {
 			svm_node cur = new svm_node();
 			cur.index = featureIdx;

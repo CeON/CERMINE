@@ -37,7 +37,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 public class SVMInitialBuilder {
 
     protected static SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples,
-            Integer kernelType, Double gamma, Double C, Integer degree) throws IOException {
+            int kernelType, double gamma, double C, int degree) throws IOException {
         // Filter the training documents
         // so that in the learning examples all classes are
         // represented equally
@@ -46,7 +46,7 @@ public class SVMInitialBuilder {
         int[] intClasses = new int[pc.getClasses().size()];
         double[] classesWeights = new double[pc.getClasses().size()];
 
-        Integer labelIdx = 0;
+        int labelIdx = 0;
         for (BxZoneLabel label : pc.getClasses()) {
             intClasses[labelIdx] = label.ordinal();
             classesWeights[labelIdx] = pc.getPenaltyWeigth(label);

@@ -40,14 +40,14 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 public class SVMMetadataBuilder {
 
     protected static SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples,
-            Integer kernelType, Double gamma, Double C, Integer degree) throws IOException {
+            int kernelType, double gamma, double C, int degree) throws IOException {
         trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_METADATA);
 
         PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
         int[] intClasses = new int[pc.getClasses().size()];
         double[] classesWeights = new double[pc.getClasses().size()];
 
-        Integer labelIdx = 0;
+        int labelIdx = 0;
         for (BxZoneLabel label : pc.getClasses()) {
             intClasses[labelIdx] = label.ordinal();
             classesWeights[labelIdx] = pc.getPenaltyWeigth(label);

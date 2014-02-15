@@ -63,7 +63,7 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 			BxZoneLabel label = BxZoneLabel.values()[Integer.parseInt(parts[0])];
 			FeatureVector fv = new FeatureVector();
             List<String> featureNames = fvb.getFeatureNames();
-			for(Integer partIdx=1; partIdx<parts.length; ++partIdx) {
+			for(int partIdx=1; partIdx<parts.length; ++partIdx) {
 				String[] subparts = twopartPattern.split(parts[partIdx]);
                 fv.addFeature(featureNames.get(partIdx-1), Double.parseDouble(subparts[1]));
 			}

@@ -34,7 +34,7 @@ public class ZoneClassificationUtils {
 
     private static String[] conjunctions = {"and", "or", "for", "or", "nor"};
 
-    public static Boolean isConjunction(String word) {
+    public static boolean isConjunction(String word) {
         for (String conjunction : conjunctions) {
             if (conjunction.equalsIgnoreCase(word)) {
                 return true;

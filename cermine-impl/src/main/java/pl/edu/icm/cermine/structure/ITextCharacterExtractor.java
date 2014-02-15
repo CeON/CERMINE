@@ -108,7 +108,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             throw new AnalysisException("Cannot extract characters from PDF file", ex);
         }
     }
-
+    
     /**
      * Processes PDF's fonts dictionary. During the process alternative names
      * of Standard 14 Fonts are changed to the standard ones, provided that
@@ -157,7 +157,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                             continue;
                         }
                         for (BxChunk ch : chunkMap.get(i).get(j)) {
-                            if (chunk.getText().equals(ch.getText()) && chunk.getBounds().isSimilarTo(ch.getBounds(), 1)) {
+                            if (chunk.toText().equals(ch.toText()) && chunk.getBounds().isSimilarTo(ch.getBounds(), 1)) {
                                 duplicate = true;
                                 break duplicateSearch;
                             }

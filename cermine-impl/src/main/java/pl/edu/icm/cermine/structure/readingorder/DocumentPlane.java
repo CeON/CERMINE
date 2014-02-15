@@ -43,7 +43,7 @@ public class DocumentPlane {
      * Size of a grid square. If gridSize=50, then the plane is divided into squares of size 50. Each square contains
      * objects placed in a 50x50 area
      */
-    private Integer gridSize;
+    private int gridSize;
     /**
      * Redundant dictionary of objects on the plane. Allows efficient 2D space search. Keys are X-Y coordinates of a
      * grid square. Single object can be stored under several keys (depending on its physical size). Grid squares are
@@ -91,7 +91,7 @@ public class DocumentPlane {
         return objs;
     }
 
-    public DocumentPlane(List<BxZone> objectList, Integer gridSize) {
+    public DocumentPlane(List<BxZone> objectList, int gridSize) {
         this.grid = new HashMap<GridXY, List<BxObject>>();
         this.objs = new ArrayList<BxObject>();
         this.gridSize = gridSize;
@@ -104,10 +104,10 @@ public class DocumentPlane {
      * Looks for objects placed between obj1 and obj2 excluding them
      */
     public List<BxObject> findObjectsBetween(BxObject obj1, BxObject obj2) {
-        Double x0 = Math.min(obj1.getX(), obj2.getX());
-        Double y0 = Math.min(obj1.getY(), obj2.getY());
-        Double x1 = Math.max(obj1.getX() + obj1.getWidth(), obj2.getX() + obj2.getWidth());
-        Double y1 = Math.max(obj1.getY() + obj1.getHeight(), obj2.getY() + obj2.getHeight());
+        double x0 = Math.min(obj1.getX(), obj2.getX());
+        double y0 = Math.min(obj1.getY(), obj2.getY());
+        double x1 = Math.max(obj1.getX() + obj1.getWidth(), obj2.getX() + obj2.getWidth());
+        double y1 = Math.max(obj1.getY() + obj1.getHeight(), obj2.getY() + obj2.getHeight());
         assert x1 >= x0 && y1 >= y0;
         BxBounds searchBounds = new BxBounds(x0, y0, x1 - x0, y1 - y0);
         List<BxObject> objsBetween = find(searchBounds);
@@ -132,7 +132,7 @@ public class DocumentPlane {
      * Adds object to the plane
      */
     public DocumentPlane add(BxObject obj) {
-        Integer objsBefore = this.objs.size();
+        int objsBefore = this.objs.size();
         /*
          * iterate over grid squares
          */
@@ -189,15 +189,15 @@ public class DocumentPlane {
     public List<BxObject> find(BxBounds searchBounds) {
         List<BxObject> done = new ArrayList<BxObject>(); //contains already considered objects (wrt. optimization)
         List<BxObject> ret = new ArrayList<BxObject>();
-        Double x0 = searchBounds.getX();
-        Double y0 = searchBounds.getY();
-        Double y1 = searchBounds.getY() + searchBounds.getHeight();
-        Double x1 = searchBounds.getX() + searchBounds.getWidth();
+        double x0 = searchBounds.getX();
+        double y0 = searchBounds.getY();
+        double y1 = searchBounds.getY() + searchBounds.getHeight();
+        double x1 = searchBounds.getX() + searchBounds.getWidth();
         /*
          * iterate over grid squares
          */
-        for (int y = y0.intValue() / gridSize; y < ((int) (y1 + gridSize - 1)) / gridSize; ++y) {
-            for (Integer x = x0.intValue() / gridSize; x < ((int) (x1 + gridSize - 1)) / gridSize; ++x) {
+        for (int y = (int)y0 / gridSize; y < ((int) (y1 + gridSize - 1)) / gridSize; ++y) {
+            for (int x = (int)x0 / gridSize; x < ((int) (x1 + gridSize - 1)) / gridSize; ++x) {
                 GridXY xy = new GridXY(x, y);
                 if (!grid.containsKey(xy)) {
                     continue;
@@ -229,7 +229,7 @@ public class DocumentPlane {
     /**
      * Count objects stored in objects dictionary
      */
-    protected Integer elementsInGrid() {
+    protected int elementsInGrid() {
         List<BxObject> objs_ = new ArrayList<BxObject>();
         for (GridXY coord : grid.keySet()) {
             for (BxObject obj : grid.get(coord)) {

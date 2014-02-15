@@ -32,7 +32,7 @@ public class ZoneLocaliser {
             if (otherZone == zone) {
                 continue;
             }
-            Double cx, cy, cw, ch, ox, oy, ow, oh;
+            double cx, cy, cw, ch, ox, oy, ow, oh;
 
             cx = zone.getBounds().getX();
             cy = zone.getBounds().getY();
@@ -52,7 +52,7 @@ public class ZoneLocaliser {
             // __|___|__
             // 6 | 5 | 4
 
-            Integer oct;
+            int oct;
             if (cx + cw <= ox) {
                 if (cy + ch <= oy) {
                     oct = 4;

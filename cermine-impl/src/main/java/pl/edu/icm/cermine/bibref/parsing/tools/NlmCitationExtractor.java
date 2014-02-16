@@ -38,13 +38,10 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
  */
 public final class NlmCitationExtractor {
 
-    public static final String TAG_CITATION = "mixed-citation";
+    public static final List<String> TAGS_CITATION = Arrays.asList(
+            "mixed-citation", "citation");
 
     public static final String KEY_TEXT = "text";
-
-    public static final List<String> EXP_TAGS = Arrays.asList(
-            "string-name", "italic", "bold", "sup", "sub", "styled-content", "monospace", "sans-serif", "underline",
-            "xref", "inline-formula");
 
     private static final Map<String, CitationTokenLabel> TAGS_LABEL_MAP = new HashMap<String, CitationTokenLabel>();
 
@@ -84,7 +81,7 @@ public final class NlmCitationExtractor {
 
             @Override
             public boolean matches(Object object) {
-                return object instanceof Element && ((Element) object).getName().equals(TAG_CITATION);
+                return object instanceof Element && TAGS_CITATION.contains(((Element) object).getName());
             }
         });
 
@@ -124,7 +121,7 @@ public final class NlmCitationExtractor {
                         citation.addToken(token);
                     }
                     citation.appendText(contentElement.getValue());
-                } else if (EXP_TAGS.contains(contentElementName)) {
+                } else {
                     readElement(contentElement, citation);
                 }
             }

@@ -37,7 +37,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  */
 public class CiteAsEnhancer extends AbstractFilterEnhancer {
 
-    private static final String MODEL_FILE = "/pl/edu/icm/cermine/bibref/acrf-small.ser.gz";
+    private static final String MODEL_FILE = "/pl/edu/icm/cermine/bibref/acrf.ser.gz";
 
     private static final Pattern PATTERN = Pattern.compile(
             "Cite this article as: (.*)",

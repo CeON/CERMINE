@@ -53,6 +53,8 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     private Set<String> words;
 
     public CRFBibReferenceParser(String modelFile) throws AnalysisException {
+        System.setProperty("java.util.logging.config.file",
+            "edu/umass/cs/mallet/base/util/resources/logging.properties");
         InputStream is;
         ObjectInputStream ois = null;
         try {
@@ -83,6 +85,8 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     }
     
     public CRFBibReferenceParser(InputStream modelInputStream) throws AnalysisException {
+        System.setProperty("java.util.logging.config.file",
+            "edu/umass/cs/mallet/base/util/resources/logging.properties");
         ObjectInputStream ois = null;
         try {
             ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(modelInputStream)));

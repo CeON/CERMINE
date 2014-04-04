@@ -22,6 +22,7 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class StringTools {
 
@@ -137,7 +138,7 @@ public class StringTools {
         List<String> ret = new ArrayList<String>();
         int monthInt = Integer.valueOf(date.get(1));
         if (monthInt >= 1 && monthInt <= 12) {
-            DateFormatSymbols dfs = new DateFormatSymbols();
+            DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
             String[] months = dfs.getMonths();
             String month = months[monthInt - 1];
             ret.add(joinStrings(new String[]{date.get(0), month, date.get(2)}));

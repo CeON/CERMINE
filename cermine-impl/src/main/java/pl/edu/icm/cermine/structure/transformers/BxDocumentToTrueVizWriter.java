@@ -42,14 +42,14 @@ import pl.edu.icm.cermine.structure.model.*;
  */
 public class BxDocumentToTrueVizWriter {
 
+    public static final String MINIMAL_OUTPUT_SIZE = "MINIMAL_OUTPUT_SIZE";
+    
     private static final Properties OUTPUT_PROPERTIES = new Properties();
 
     static {
         OUTPUT_PROPERTIES.setProperty(OutputKeys.DOCTYPE_SYSTEM, "Trueviz.dtd");
         OUTPUT_PROPERTIES.setProperty(OutputKeys.INDENT, "yes");
     }
-
-    private static final DecimalFormat FORMAT = new DecimalFormat("0.000", new DecimalFormatSymbols(Locale.US));
 
     public static final Map<BxZoneLabel, String> ZONE_LABEL_MAP = new EnumMap<BxZoneLabel, String>(BxZoneLabel.class);
     static {
@@ -89,7 +89,7 @@ public class BxDocumentToTrueVizWriter {
         ZONE_LABEL_MAP.put(BxZoneLabel.OTH_UNKNOWN ,          "unknown");
         ZONE_LABEL_MAP.put(BxZoneLabel.REFERENCES,            "references");
     }
-    
+
     private void appendProperty(Document doc, Element parent, String name, String value) {
         Element node = doc.createElement(name);
         node.setAttribute("Value", value);
@@ -104,54 +104,62 @@ public class BxDocumentToTrueVizWriter {
         }
     }
     
-    private void appendVertex(Document doc, Element parent, double x, double y) {
+    private void appendVertex(Document doc, Element parent, double x, double y, Object... hints) {
+        DecimalFormat format = new DecimalFormat("0.000", new DecimalFormatSymbols(Locale.US));
+        if (Arrays.asList(hints).contains(MINIMAL_OUTPUT_SIZE)) {
+            format = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.US));
+        }
         Element node = doc.createElement("Vertex");
-        node.setAttribute("x", FORMAT.format(x));
-        node.setAttribute("y", FORMAT.format(y));
+        node.setAttribute("x", format.format(x));
+        node.setAttribute("y", format.format(y));
         parent.appendChild(node);
     }
 
-    private void appendBounds(Document doc, Element parent, String name, BxBounds bounds) {
+    private void appendBounds(Document doc, Element parent, String name, BxBounds bounds, Object... hints) {
         if (bounds == null) {
             bounds = new BxBounds();
         }
         Element node = doc.createElement(name);
-        appendVertex(doc, node, bounds.getX(), bounds.getY());
-        appendVertex(doc, node, bounds.getX() + bounds.getWidth(), bounds.getY());
-        appendVertex(doc, node, bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight());
-        appendVertex(doc, node, bounds.getX(), bounds.getY() + bounds.getHeight());
+        appendVertex(doc, node, bounds.getX(), bounds.getY(), hints);
+        if (!Arrays.asList(hints).contains(MINIMAL_OUTPUT_SIZE)) {
+            appendVertex(doc, node, bounds.getX() + bounds.getWidth(), bounds.getY(), hints);
+        }
+        appendVertex(doc, node, bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight(), hints);
+        if (!Arrays.asList(hints).contains(MINIMAL_OUTPUT_SIZE)) {
+            appendVertex(doc, node, bounds.getX(), bounds.getY() + bounds.getHeight(), hints);
+        }
         parent.appendChild(node);
     }
 
-    private void appendCharacter(Document doc, Element parent, BxChunk chunk) {
+    private void appendCharacter(Document doc, Element parent, BxChunk chunk, Object... hints) {
         Element node = doc.createElement("Character");
         appendPropertyIfNotNull(doc, node, "CharacterID", chunk.getId());
-        appendBounds(doc, node, "CharacterCorners", chunk.getBounds());
+        appendBounds(doc, node, "CharacterCorners", chunk.getBounds(), hints);
         appendPropertyIfNotNull(doc, node, "CharacterNext", chunk.getNextId());
         appendProperty(doc, node, "GT_Text", chunk.toText());
         parent.appendChild(node);
     }
 
-    private void appendWord(Document doc, Element parent, BxWord word) {
+    private void appendWord(Document doc, Element parent, BxWord word, Object... hints) {
         Element node = doc.createElement("Word");
         appendPropertyIfNotNull(doc, node, "WordID", word.getId());
-        appendBounds(doc, node, "WordCorners", word.getBounds());
+        appendBounds(doc, node, "WordCorners", word.getBounds(), hints);
         appendPropertyIfNotNull(doc, node, "WordNext", word.getNextId());
         appendProperty(doc, node, "WordNumChars", "");
         for (BxChunk chunk: word.getChunks()) {
-            appendCharacter(doc, node, chunk);
+            appendCharacter(doc, node, chunk, hints);
         }
         parent.appendChild(node);
     }
 
-    private void appendLine(Document doc, Element parent, BxLine line) {
+    private void appendLine(Document doc, Element parent, BxLine line, Object... hints) {
         Element node = doc.createElement("Line");
         appendPropertyIfNotNull(doc, node, "LineID", line.getId());
-        appendBounds(doc, node, "LineCorners", line.getBounds());
+        appendBounds(doc, node, "LineCorners", line.getBounds(), hints);
         appendPropertyIfNotNull(doc, node, "LineNext", line.getNextId());
         appendProperty(doc, node, "LineNumChars", "");
         for (BxWord word: line.getWords()) {
-            appendWord(doc, node, word);
+            appendWord(doc, node, word, hints);
         }
         parent.appendChild(node);
     }
@@ -163,10 +171,10 @@ public class BxDocumentToTrueVizWriter {
         parent.appendChild(node);
     }
 
-    private void appendZone(Document doc, Element parent, BxZone zone) throws TransformationException {
+    private void appendZone(Document doc, Element parent, BxZone zone, Object... hints) throws TransformationException {
         Element node = doc.createElement("Zone");
         appendPropertyIfNotNull(doc, node, "ZoneID", zone.getId());
-        appendBounds(doc, node, "ZoneCorners", zone.getBounds());
+        appendBounds(doc, node, "ZoneCorners", zone.getBounds(), hints);
         appendPropertyIfNotNull(doc, node, "ZoneNext", zone.getNextId());
         Element insetsNode = doc.createElement("ZoneInsets");
         insetsNode.setAttribute("Top", "");
@@ -176,19 +184,19 @@ public class BxDocumentToTrueVizWriter {
         node.appendChild(insetsNode);
         appendProperty(doc, node, "ZoneLines", "");
         if (zone.getLabel() != null) {
-            if (ZONE_LABEL_MAP.containsKey(zone.getLabel())) {
-                appendClassification(doc, node, ZONE_LABEL_MAP.get(zone.getLabel()), "");
+            if (ZONE_LABEL_MAP.get(zone.getLabel()) != null && !ZONE_LABEL_MAP.get(zone.getLabel()).isEmpty()) {
+                appendClassification(doc, node, ZONE_LABEL_MAP.get(zone.getLabel()).toUpperCase(), "");
             } else {
             	throw new TransformationException("Writing down an unknown zone label: " + zone.getLabel());
             }
         }
         for (BxLine line: zone.getLines()) {
-            appendLine(doc, node, line);
+            appendLine(doc, node, line, hints);
         }
         parent.appendChild(node);
     }
 
-    private void appendPage(Document doc, Element parent, BxPage page) throws TransformationException {
+    private void appendPage(Document doc, Element parent, BxPage page, Object... hints) throws TransformationException {
         Element node = doc.createElement("Page");
         appendPropertyIfNotNull(doc, node, "PageID", page.getId());
         appendProperty(doc, node, "PageType", "");
@@ -197,7 +205,7 @@ public class BxDocumentToTrueVizWriter {
         appendPropertyIfNotNull(doc, node, "PageNext", page.getNextId());
         appendProperty(doc, node, "PageZones", "");
         for (BxZone zone: page.getZones()) {
-            appendZone(doc, node, zone);
+            appendZone(doc, node, zone, hints);
         }
         parent.appendChild(node);
     }
@@ -219,7 +227,7 @@ public class BxDocumentToTrueVizWriter {
         parent.appendChild(node);
     }
 
-    private Document createDocument(List<BxPage> pages) throws ParserConfigurationException, TransformationException {
+    private Document createDocument(List<BxPage> pages, Object... hints) throws ParserConfigurationException, TransformationException {
         Document doc = TrueVizUtils.newDocumentBuilder().newDocument();
         Element root = doc.createElement("Document");
         appendProperty(doc, root, "DocID", "");
@@ -246,7 +254,7 @@ public class BxDocumentToTrueVizWriter {
         appendProperty(doc, root, "GT_Text", "");
 
         for (BxPage page: pages) {
-            appendPage(doc, root, page);
+            appendPage(doc, root, page, hints);
         }
         doc.appendChild(root);
 
@@ -262,7 +270,7 @@ public class BxDocumentToTrueVizWriter {
 
     public void write(Writer writer, List<BxPage> objects, Object... hints) throws TransformationException {
         try {
-            Document doc = createDocument(objects);
+            Document doc = createDocument(objects, hints);
             Transformer t = TransformerFactory.newInstance().newTransformer();
             t.setOutputProperties(OUTPUT_PROPERTIES);
             t.transform(new DOMSource(doc), new StreamResult(writer));

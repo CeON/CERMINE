@@ -80,9 +80,15 @@
                          ${task.result.errorMessage}</p>
                  </div>
              </div>
+             <script type="text/javascript">
+                ga('send', 'event', 'result', 'error', '${task.fileName}');
+             </script>
          </c:if>
          <c:if test="${task.succeeded}">
              <%@include file="result.jsp" %>
+             <script type="text/javascript">
+                ga('send', 'event', 'result', 'success', '${task.fileName}');
+             </script>
          </c:if>
 
 		</div>

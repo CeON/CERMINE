@@ -53,7 +53,8 @@ $(function() {
 	                </div>
 	                </c:if>
 	                <div id="file_upload_form">
-	                    <form method='POST' enctype='multipart/form-data' action='upload.do'>
+	                    <form name="submitForm" method='POST' enctype='multipart/form-data' action='upload.do' 
+                              onsubmit="var fn=document.forms['submitForm']['files'].value;ga('send', 'event', 'upload', 'file', fn);">
 	                        <input type="file" name="files"/>
 	                        <input type="submit" value="Upload"/>
 	                    </form>
@@ -62,9 +63,12 @@ $(function() {
                     <br/><br/>
                     <p>
                         Or process one of the example files:
-                        <a href="uploadexample.do?file=example1.pdf">Example #1</a>(<a target="_blank" href="examplepdf.html?file=example1.pdf">PDF</a>),
-                        <a href="uploadexample.do?file=example2.pdf">Example #2</a>(<a target="_blank" href="examplepdf.html?file=example2.pdf">PDF</a>),
-                        <a href="uploadexample.do?file=example3.pdf">Example #3</a>(<a target="_blank" href="examplepdf.html?file=example3.pdf">PDF</a>)
+                        <a href="uploadexample.do?file=example1.pdf" onclick="ga('send', 'event', 'upload', 'example', 'example1.pdf');">Example #1</a>
+                        (<a target="_blank" href="examplepdf.html?file=example1.pdf" onclick="ga('send', 'event', 'view', 'example', 'example1.pdf');" >PDF</a>),
+                        <a href="uploadexample.do?file=example2.pdf" onclick="ga('send', 'event', 'upload', 'example', 'example2.pdf');">Example #2</a>
+                        (<a target="_blank" href="examplepdf.html?file=example2.pdf" onclick="ga('send', 'event', 'view', 'example', 'example2.pdf');">PDF</a>),
+                        <a href="uploadexample.do?file=example3.pdf" onclick="ga('send', 'event', 'upload', 'example', 'example3.pdf');">Example #3</a>
+                        (<a target="_blank" href="examplepdf.html?file=example3.pdf" onclick="ga('send', 'event', 'view', 'example', 'example3.pdf');">PDF</a>)
                     </p>
                 
                 </fieldset>
@@ -105,5 +109,8 @@ $(function() {
         	<div class="push" ></div>
         </div>
         <%@include file="footer.jsp" %>
+        <script type="text/javascript">
+            ga('send', 'event', 'view', 'homepage', 'index.html');
+        </script>
 </body>
 </html>

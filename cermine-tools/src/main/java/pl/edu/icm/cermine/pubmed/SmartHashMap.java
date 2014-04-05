@@ -28,6 +28,7 @@ public class SmartHashMap extends HashMap<String, BxZoneLabel> {
 
     public SmartHashMap putIf(String string, BxZoneLabel label) {
         if (string != null && !string.isEmpty()) {
+            string = string.toLowerCase();
             put(string, label);
         }
         return this;

@@ -29,6 +29,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -135,6 +136,7 @@ public class PubmedXMLGenerator {
         Node abstractNode = (Node) xpath.evaluate("/article/front/article-meta/abstract", domDoc, XPathConstants.NODE);
         String abstractString = XMLTools.extractTextFromNode(abstractNode);
         entries.putIf("Abstract " + abstractString, BxZoneLabel.MET_ABSTRACT);
+        entries.putIf("Abstract", BxZoneLabel.MET_ABSTRACT);
 
         //title
         String titleString = (String) xpath.evaluate("/article/front/article-meta/title-group/article-title", domDoc, XPathConstants.STRING);
@@ -206,8 +208,18 @@ public class PubmedXMLGenerator {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
-
-        String extLink =(String) xpath.evaluate("/article/front/article-meta/ext-link[@ext-link-type='uri']/xlink:href", domDoc, XPathConstants.STRING);
+        pubdateString.clear();
+        if (((NodeList) xpath.evaluate("/article/front/article-meta/pub-date", domDoc, XPathConstants.NODESET)).getLength() > 1) {
+            Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='ppub']", domDoc, XPathConstants.NODE);
+            pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
+        }
+        if (pubdateString != null && pubdateString.size() >= 3) {
+            for (String date : StringTools.produceDates(pubdateString)) {
+                entries.putIf(date, BxZoneLabel.MET_DATES);
+            }
+        }
+        
+        String extLink = (String) xpath.evaluate("/article/front/article-meta/ext-link[@ext-link-type='uri']/xlink:href", domDoc, XPathConstants.STRING);
         printlnVerbose(extLink);
         entries.putIf(extLink, BxZoneLabel.MET_ACCESS_DATA);
         //keywords
@@ -220,19 +232,42 @@ public class PubmedXMLGenerator {
         entries.putIf("DOI " + doiString, BxZoneLabel.MET_BIB_INFO);
 
         //volume
-        String volumeString = (String) xpath.evaluate("/article/front/article-meta/article-id/volume", domDoc, XPathConstants.STRING);
-        entries.putIf(volumeString, BxZoneLabel.MET_BIB_INFO);
-
+        String volumeString = (String) xpath.evaluate("/article/front/article-meta/volume", domDoc, XPathConstants.STRING);
+        entries.putIf("volume "+volumeString, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf("vol "+volumeString, BxZoneLabel.MET_BIB_INFO);
+        
         //issue
-        String issueString = (String) xpath.evaluate("/article/front/article-meta/article-id/issue", domDoc, XPathConstants.STRING);
+        String issueString = (String) xpath.evaluate("/article/front/article-meta/issue", domDoc, XPathConstants.STRING);
+        entries.putIf("number "+issueString, BxZoneLabel.MET_BIB_INFO);
 
-        entries.putIf(issueString, BxZoneLabel.MET_BIB_INFO);
-
+        entries.putIf("journal", BxZoneLabel.MET_BIB_INFO);
+        entries.putIf("et al", BxZoneLabel.MET_BIB_INFO);
+               
         List<String> authorNames = new ArrayList<String>();
         List<String> authorEmails = new ArrayList<String>();
         List<String> authorAffiliations = new ArrayList<String>();
         List<String> editors = new ArrayList<String>();
 
+        //pages
+        String fPage = (String) xpath.evaluate("/article/front/article-meta/fpage", domDoc, XPathConstants.STRING);
+        String lPage = (String) xpath.evaluate("/article/front/article-meta/lpage", domDoc, XPathConstants.STRING);
+        entries.putIf("pages "+fPage+" "+lPage, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf("pp "+fPage+" "+lPage, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf(fPage, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf(lPage, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf(lPage, BxZoneLabel.OTH_PAGE_NUMBER);
+        entries.putIf(lPage, BxZoneLabel.OTH_PAGE_NUMBER);
+        try {
+            int f = Integer.valueOf(fPage);
+            int l = Integer.valueOf(lPage);
+            while (f < l) {
+                f++;
+                entries.putIf(String.valueOf(f), BxZoneLabel.OTH_PAGE_NUMBER);
+            }
+        } catch (NumberFormatException ex) {}
+        
+        entries.putIf("page of", BxZoneLabel.OTH_PAGE_NUMBER);
+        
         //editors
         NodeList editorNodes = (NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/contrib[@contrib-type='editor']", domDoc, XPathConstants.NODESET);
         for (int nodeIdx = 0; nodeIdx < editorNodes.getLength(); ++nodeIdx) {
@@ -289,7 +324,6 @@ public class PubmedXMLGenerator {
         String notesString = XMLTools.extractTextFromNode(notesNode);
         entries.putIf(notesString, BxZoneLabel.MET_CORRESPONDENCE);
         notesString = XMLTools.extractTextFromNode((Node) xpath.evaluate("/article/back/notes", domDoc, XPathConstants.NODE));
-        entries.putIf(notesString, BxZoneLabel.OTH_UNKNOWN);
 
         //article body
         NodeList paragraphNodes = (NodeList) xpath.evaluate("/article/body//p", domDoc, XPathConstants.NODESET);
@@ -303,11 +337,11 @@ public class PubmedXMLGenerator {
         //section titles
         NodeList sectionTitleNodes = (NodeList) xpath.evaluate("/article/body//title", domDoc, XPathConstants.NODESET);
         List<String> sectionTitles = XMLTools.extractTextAsList(sectionTitleNodes);
-        entries.putIf(sectionTitles, BxZoneLabel.BODY_HEADING);
+        entries.putIf(sectionTitles, BxZoneLabel.BODY_CONTENT);
 
         NodeList appTitleNodes = (NodeList) xpath.evaluate("/article/back/app-group//title", domDoc, XPathConstants.NODESET);
         List<String> appTitles = XMLTools.extractTextAsList(appTitleNodes);
-        entries.putIf(appTitles, BxZoneLabel.BODY_HEADING);
+        entries.putIf(appTitles, BxZoneLabel.BODY_CONTENT);
 
         //figures
         NodeList figureNodes = (NodeList) xpath.evaluate("/article/floats-wrap//fig", domDoc, XPathConstants.NODESET);
@@ -325,7 +359,7 @@ public class PubmedXMLGenerator {
         figureNodes = (NodeList) xpath.evaluate("/article/back/app-group//fig", domDoc, XPathConstants.NODESET);
         figureStrings.addAll(XMLTools.extractTextAsList(figureNodes));
 
-        entries.putIf(figureStrings, BxZoneLabel.BODY_FIGURE_CAPTION);
+        entries.putIf(figureStrings, BxZoneLabel.BODY_FIGURE);
 
         //tables
         List<String> tableCaptions = new ArrayList<String>();
@@ -346,9 +380,9 @@ public class PubmedXMLGenerator {
             List<String> footnotes = XMLTools.extractTextAsList((NodeList) xpath.evaluate("table-wrap-foot/fn", tableNode, XPathConstants.NODESET));
             tableFootnotes.addAll(footnotes);
 
-            entries.putIf(caption, BxZoneLabel.BODY_TABLE_CAPTION);
+            entries.putIf(caption, BxZoneLabel.BODY_TABLE);
             entries.putIf(body, BxZoneLabel.BODY_TABLE);
-            entries.putIf(footnotes, BxZoneLabel.BODY_TABLE_CAPTION);
+            entries.putIf(footnotes, BxZoneLabel.BODY_TABLE);
         }
 
         //financial disclosure
@@ -379,7 +413,7 @@ public class PubmedXMLGenerator {
         for(int nodeIdx = 0; nodeIdx < formulaNodes.getLength(); ++nodeIdx) {
         	Node curFormulaNode = formulaNodes.item(nodeIdx);
         	String label = (String) xpath.evaluate("label", curFormulaNode);
-        	entries.putIf(label, BxZoneLabel.BODY_EQUATION_LABEL);
+        	entries.putIf(label, BxZoneLabel.BODY_EQUATION);
 
         	NodeList curNodeChildren = curFormulaNode.getChildNodes();
         	List<String> formulaParts = new ArrayList<String>();
@@ -404,6 +438,14 @@ public class PubmedXMLGenerator {
         entries.putIf(StringTools.joinStrings(refStrings), BxZoneLabel.REFERENCES);
         entries.put("references", BxZoneLabel.REFERENCES);
 
+        Set<String> allBibInfos = new HashSet<String>();
+        for (Entry<String, BxZoneLabel> entry : entries.entrySet()) {
+            if (BxZoneLabel.MET_BIB_INFO.equals(entry.getValue())) {
+                allBibInfos.addAll(Arrays.asList(entry.getKey().split(" ")));
+            }
+        }
+        entries.put(StringUtils.join(allBibInfos, " "), BxZoneLabel.MET_BIB_INFO);
+        
         printlnVerbose("journalTitle: " + journalTitleString);
         printlnVerbose("journalPublisher: " + journalPublisherString);
         printlnVerbose("journalISSNPublisher: " + journalISSNString);
@@ -461,8 +503,11 @@ public class PubmedXMLGenerator {
             //iterate over zones
             for (Integer zoneIdx = 0; zoneIdx < bxDocLen; ++zoneIdx) {
                 BxZone curZone = bxDoc.asZones().get(zoneIdx);
-                List<String> zoneTokens = StringTools.tokenize(StringTools.removeOrphantSpaces(StringTools.cleanLigatures(curZone.toText())));
-
+                List<String> zoneTokens = StringTools.tokenize(
+                        StringTools.removeOrphantSpaces(
+                        StringTools.cleanLigatures(
+                        curZone.toText().toLowerCase())));
+                
                 Double smithSim;
                 Double cosSim;
                 if (curZone.toText().contains("www.biomedcentral.com")) {
@@ -484,7 +529,7 @@ public class PubmedXMLGenerator {
         	for(BxZone zone: page.getZones()) {
         		Integer zoneIdx = bxDoc.asZones().indexOf(zone);
         		BxZone curZone = bxDoc.asZones().get(zoneIdx);
-        		String zoneText = StringTools.removeOrphantSpaces(curZone.toText());
+        		String zoneText = StringTools.removeOrphantSpaces(curZone.toText().toLowerCase());
         		List<String> zoneTokens = StringTools.tokenize(zoneText);
         		Boolean valueSet = false;
 
@@ -530,7 +575,7 @@ public class PubmedXMLGenerator {
         					}
         				}
         			});
-        			Collections.reverse(swLabelSim.get(zoneIdx));
+        			Collections.reverse(swLabelSim.get(zoneIdx));                  
         			printlnVerbose("-->" + swLabelSim.get(zoneIdx).get(0).alignment / zoneTokens.size());
         			if (swLabelSim.get(zoneIdx).get(0).alignment / zoneTokens.size() > 0.5) {
         				curZone.setLabel(swLabelSim.get(zoneIdx).get(0).label);
@@ -556,13 +601,73 @@ public class PubmedXMLGenerator {
         					bestLabel = entry.getKey();
         				}
         			}
-        			if (max > 0.5){
+        			if (max >= 0.5){
         				curZone.setLabel(bestLabel);
         				printVerbose("2 ");
         				valueSet = true;
         			}
         		}
 
+                if (!valueSet) {
+                    Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
+
+        			@Override 
+        			public int compare(LabelTrio t1, LabelTrio t2) {
+        				Double simDif = t1.alignment / t1.entryTokens.size() - t2.alignment / t2.entryTokens.size();
+        				if (Math.abs(simDif) < 0.001) {
+        					return t2.entryTokens.size() - t1.entryTokens.size();
+        				}
+        				if (simDif > 0) {
+        					return 1;
+        				} else {
+        					return -1;
+        				}
+        			}
+        		});
+        		Collections.reverse(swLabelSim.get(zoneIdx));
+                List<LabelTrio> l = swLabelSim.get(zoneIdx);
+                    
+                BxZoneLabel best = null;
+                int bestScore = 0;
+                for (LabelTrio lt : l) {
+                    int i = 0;
+                    for (String zt : zoneTokens) {
+                        if (lt.entryTokens.contains(zt)) {
+                            i++;
+                        }
+                    }
+                    if (i > bestScore && i > 1) {
+                        best = lt.label;
+                        bestScore = i;
+                    }
+                }
+                if (best != null) {
+                    curZone.setLabel(best);
+                    valueSet = true;
+                } else {
+                    for (LabelTrio lt : l) {
+                        int i = 0;
+                        for (String zt : zoneTokens) {
+                            for (String j: lt.entryTokens) {
+                                if (zt.replaceAll("[^0-9a-zA-Z,;\\.!\\?]", "").equals(j.replaceAll("[^0-9a-zA-Z,;\\.!\\?]", ""))) {
+                                    i++;
+                                    break;
+                                }
+                            }
+                        }
+                        if (i > bestScore && i > 1) {
+                            best = lt.label;
+                            bestScore = i;
+                        }
+                    } 
+                }
+                
+                
+                if (best != null) {
+                        curZone.setLabel(best);
+                        valueSet = true;
+                    }
+                }
         		if(!valueSet) {
         			curZone.setLabel(null);
         		}
@@ -580,33 +685,11 @@ public class PubmedXMLGenerator {
         	do {
         		lastNumberOfUnlabeledZones = unlabeledZones.size();
         		infereLabels(unlabeledZones, zoneLocMap);
+                infereLabels(unlabeledZones, zoneLocMap);
         	} while(lastNumberOfUnlabeledZones != unlabeledZones.size());
         }
         printlnVerbose("=>=>=>=>=>=>=>=>=>=>=>=>=>=");
 
-        for (BxZone z: bxDoc.asZones()) {
-            if (!BxZoneLabel.MET_BIB_INFO.equals(z.getLabel()) &&
-                    !BxZoneLabel.REFERENCES.equals(z.getLabel()) &&
-                    z.getLines().size() <= 2 && 
-                    (z.toText().toLowerCase().contains("journal ")
-                    || z.toText().toLowerCase().contains("vol.")
-                    || z.toText().toLowerCase().contains("vol ")
-                    || z.toText().toLowerCase().contains("pp.")
-                    || z.toText().toLowerCase().contains("volume ")
-                    || z.toText().toLowerCase().contains("pp ")
-                    || z.toText().toLowerCase().contains("issn")
-                    || z.toText().toLowerCase().contains("doi:")
-                    || z.toText().toLowerCase().contains("doi ")
-                    || z.toText().toLowerCase().contains("citation:"))) {
-                z.setLabel(BxZoneLabel.MET_BIB_INFO);
-            } else if (!BxZoneLabel.OTH_UNKNOWN.equals(z.getLabel()) &&
-                    !BxZoneLabel.MET_BIB_INFO.equals(z.getLabel()) &&
-                    z.getLines().size() <= 2 && 
-                    (z.toText().toLowerCase().contains("page "))) {
-                z.setLabel(BxZoneLabel.OTH_UNKNOWN);
-            }
-        }
-        
         return bxDoc;
     }
 
@@ -625,7 +708,12 @@ public class PubmedXMLGenerator {
             		zone.setLabel(loc.getLowerZone().getLabel());
                     printVerbose("3 ");
                     toBeRemoved.add(zone);
-            	}
+            	} else if (zone.hasNext() && zone.hasPrev()
+                        && zone.getPrev().getLabel() == zone.getNext().getLabel()) {
+                    zone.setLabel(zone.getPrev().getLabel());
+                    printVerbose("3 ");
+                    toBeRemoved.add(zone);
+                }
             }
         }
         for(BxZone zone: toBeRemoved) {
@@ -650,7 +738,7 @@ public class PubmedXMLGenerator {
                 if (xmlFile.exists()) {
                     continue;
                 }
-
+                
                 System.out.print(pdfPath+" ");
 
                 InputStream pdfStream = new FileInputStream(pdfPath);
@@ -696,7 +784,7 @@ public class PubmedXMLGenerator {
                 System.out.print(coverage+" "+set.size()+" "+keys);
 
                 FileWriter fstream = new FileWriter(
-                        StringTools.getTrueVizPath(nxmlPath).replace(".xml", "."+coverage+"."+set.size()+"."+keys+".cerm.xml"));
+                        StringTools.getTrueVizPath(nxmlPath).replace(".xml", "."+coverage+".cxml"));
                 BufferedWriter out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                 out.write(writer.write(bxDoc.getPages()));

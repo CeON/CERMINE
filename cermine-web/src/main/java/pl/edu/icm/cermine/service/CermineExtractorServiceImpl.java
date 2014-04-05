@@ -151,7 +151,12 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
     protected void returnExtractor(PdfNLMContentExtractor e) {
         log.debug("Returning extractor to the pool...");
         synchronized (extractors) {
-            extractors.add(e);
+            try {
+                e = new PdfNLMContentExtractor();
+                extractors.add(e);
+            } catch (AnalysisException ex) {
+                throw new RuntimeException("Cannot create extractor!", ex);
+            }
             extractors.notify();
         }
     }

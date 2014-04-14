@@ -9,4 +9,4 @@ The code is licensed under GNU Affero General Public License version 3.
 
 How to cite CERMINE:
 
-D. Tkaczyk, L. Bolikowski, A. Czeczko, and K. Rusek. A modular metadata extraction system for born-digital articles. In 10th IAPR International Workshop on Document Analysis Systems, pages 11–16, 2012.
+Dominika Tkaczyk, Pawel Szostek, Piotr Jan Dendek, Mateusz Fedoryszak and Lukasz Bolikowski. CERMINE - automatic extraction of metadata and references from scientific literature. In 11th IAPR International Workshop on Document Analysis Systems, 2014.

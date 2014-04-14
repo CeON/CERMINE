@@ -32,7 +32,7 @@
                          <li>document's metadata, including title, authors, affiliations, 
                              abstract, keywords, journal name, volume and issue,</li>
                          <li>parsed bibliographic references</li>
-                         <li> the structure of document's sections, section titles and paragraphs.
+                         <li>the structure of document's sections, section titles and paragraphs.
                      </ul>
                  </p>
                           
@@ -59,18 +59,18 @@ $ curl -X POST --data-binary @article.pdf \
                  <h2>How to cite CERMINE</h2>
 	             <p>Please cite the following paper:</p>
                  <br/>
-                 <p>D. Tkaczyk, L. Bolikowski, A. Czeczko, and K. Rusek. A modular metadata 
-                     extraction system for born-digital articles. In 10th IAPR International
-                     Workshop on Document Analysis Systems, pages 11–16, 2012.</p>
+                 <p>Dominika Tkaczyk, Pawel Szostek, Piotr Jan Dendek, Mateusz Fedoryszak and Lukasz Bolikowski.
+                     CERMINE - automatic extraction of metadata and references from scientific literature.
+                     In 11th IAPR International Workshop on Document Analysis Systems, 2014.</p>
                  <br/>
                  <p>BibTeX:</p>
                  <br/>
                  <pre>
 @inproceedings{TkaczykBCR2012,
-  author = {Tkaczyk, Dominika and Bolikowski, Lukasz and Czeczko, Artur and Rusek, Krzysztof},
-  title = {A Modular Metadata Extraction System for Born-Digital Articles},
-  booktitle = {10th IAPR International Workshop on Document Analysis Systems},
-  year = {2012},
+  author = {Tkaczyk, Dominika and Szostek, Pawel and Dendek, Piotr Jan and Fedoryszak, Mateusz and Bolikowski, Lukasz},
+  title = {CERMINE - automatic extraction of metadata and references from scientific literature},
+  booktitle = {11th IAPR International Workshop on Document Analysis Systems},
+  year = {2014},
   pages = {11-16}
 }</pre>
                  
@@ -98,7 +98,7 @@ $ curl -X POST --data-binary @article.pdf \
                  </p>
                  
                  <p>CERMINE uses supervised and unsupervised machine-leaning techniques, such as Support Vector Machines, 
-                     K-means clustering and Conditional Random Fields.</p>
+                     K-means clustering and Conditional Random Fields. More information can be found in the <a target="_blank" href="static/docs/presentation.pdf">presentation</a>.</p>
 
 			</div>
 	

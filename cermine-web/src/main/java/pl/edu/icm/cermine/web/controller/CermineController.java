@@ -75,7 +75,7 @@ public class CermineController {
         if ("nlm".equals(resultType)) {
             String nlm = task.getResult().getNlm();
             HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.setContentType(MediaType.APPLICATION_XML);
+            responseHeaders.set("Content-Type", "application/xml;charset=utf-8");
             return new ResponseEntity<String>(nlm, responseHeaders, HttpStatus.OK);
         } else {
             throw new RuntimeException("Unknown request type: " + resultType);

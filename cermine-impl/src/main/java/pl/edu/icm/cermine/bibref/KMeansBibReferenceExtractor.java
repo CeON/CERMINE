@@ -43,6 +43,8 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
 
     public static final int MAX_REF_LINES_COUNT = 10000;
     
+    public static final int MAX_REFS_COUNT = 1000;
+    
     private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> VECTOR_BUILDER =
                 new FeatureVectorBuilder<BxLine, BxDocumentBibReferences>();
     static {
@@ -90,7 +92,11 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
         }
 
         if (lines.size() <= 1 || farthestDistance < 0.001) {
-            return lines.toArray(new String[lines.size()]);
+            if (lines.size() > MAX_REFS_COUNT) {
+                return new String[]{};
+            } else {
+                return lines.toArray(new String[lines.size()]);
+            }
         }
         
         KMeansWithInitialCentroids clusterer = new KMeansWithInitialCentroids(2);
@@ -120,6 +126,10 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
         }
         if (!actRef.isEmpty() && actRef.matches(".*[0-9].*") && actRef.matches(".*[a-zA-Z].*")) {
             references.add(actRef);
+        }
+        
+        if (references.size() > MAX_REFS_COUNT) {
+            references.clear();
         }
         
         return references.toArray(new String[references.size()]);

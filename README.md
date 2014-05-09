@@ -16,6 +16,11 @@ How to cite CERMINE:
 Using CERMINE
 -------------
 
+CERMINE can be used for:
+
+  * extracting metadata, full text and parsed references from a PDF file,
+  * extracting metadata from reference strings.
+
 **Maven dependency**
 
 CERMINE can be used in Java projects by adding the following dependency and repository to the project's *pom.xml* file:
@@ -38,6 +43,12 @@ To extract the content from a PDF file:
 	InputStream inputStream = new FileInputStream("path/to/pdf/file");
 	Element result = extractor.extractContent(inputStream);
 
+To extract metadata from a reference string:
+
+	CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
+	BibEntry reference = parser.parseBibReference(referenceText);
+
+
 **Executable JAR**
 
 Alternatively, Maven can be used to build an executable jar containing all needed classes and resources:
@@ -47,7 +58,12 @@ Alternatively, Maven can be used to build an executable jar containing all neede
 
 This will result in a file *cermine-impl-1.2-SNAPSHOT-jar-with-dependencies.jar* in *cermine-impl/target* directory. To extract the content from PDF files:
 
-	$ java -cp target/cermine-impl-1.2-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.PdfNLMContentExtractor path/to/directory/with/pdfs
+	$ java -cp target/cermine-impl-1.2-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.PdfNLMContentExtractor -path path/to/directory/with/pdfs/or/a/single/pdf
+
+To extract metadata from a reference string:
+
+	$ java -cp target/cermine-impl-1.2-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.bibref.CRFBibReferenceParser -ref "the text of the reference"
+
 
 **REST service**
 

@@ -28,13 +28,19 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
+import org.apache.commons.cli.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
  * CRF-based bibiliographic reference parser.
@@ -140,6 +146,38 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
   
     public static CRFBibReferenceParser getInstance() throws AnalysisException {
         return new CRFBibReferenceParser(CRFBibReferenceParser.class.getResourceAsStream(defaultModelFile));
+    }
+    
+    public static void main(String[] args) throws AnalysisException, TransformationException, ParseException {
+        Options options = new Options();
+        options.addOption("ref", true, "reference text");
+        options.addOption("format", true, "output format");
+        
+        CommandLineParser clParser = new GnuParser();
+        CommandLine line = clParser.parse(options, args);
+        String referenceText = line.getOptionValue("ref");
+        String outputFormat = line.getOptionValue("format");
+        
+        if (referenceText == null || (outputFormat != null && !outputFormat.equals("bibtex") && !outputFormat.equals("nlm"))) {
+       		System.err.println("Usage: CRFBibReferenceParser -ref <reference text> [-format <output format>]\n\n"
+                             + "Tool for extracting metadata from reference strings.\n\n"
+                             + "Arguments:\n"
+                             + "  -ref                  the text of the reference\n"
+                             + "  -format (optional)    the format of the output,\n"
+                             + "                        possible values: BIBTEX (default) and NLM");
+            System.exit(1);
+        }
+        
+        CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
+        BibEntry reference = parser.parseBibReference(referenceText);
+        if (outputFormat == null || outputFormat.equals("bibtex")) {
+            System.out.println(reference.toBibTeX());
+        } else {
+            BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
+            Element element = converter.convert(reference);
+            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+            System.out.println(outputter.outputString(element));
+        }
     }
     
 }

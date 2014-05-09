@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import javax.xml.xpath.XPathExpressionException;
+import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -209,46 +210,70 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         this.textExtractor = textExtractor;
     }
     
-    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException {
-    	if (args.length < 1){
+    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException {
+        Options options = new Options();
+        options.addOption("path", true, "file or directory path");
+        options.addOption("ext", true, "file extension");
+        
+        CommandLineParser clParser = new GnuParser();
+        CommandLine line = clParser.parse(options, args);
+        String path = line.getOptionValue("path");
+        String extension = "cermxml";
+        if (line.hasOption("ext")) {
+            extension = line.getOptionValue("ext");
+        }
+    	if (path == null){
     		System.err.println("USAGE: program DIR_PATH <EXTENSION>");
+            System.err.println("Usage: PdfNLMContentExtractor -path <path> [-ext <extension>]\n\n"
+                             + "Tool for extracting metadata and content from PDF files.\n\n"
+                             + "Arguments:\n"
+                             + "  -path                 path to a PDF file or directory containing PDF files\n"
+                             + "  -ext (optional)       the extension of the resulting metadata file;\n"
+                             + "                        used only if passed path is a directory");
     		System.exit(1);
         }
         
-        String extension = "cermxml";
-        if (args.length > 1) {
-            extension = args[1];
-        }
-        File dir = new File(args[0]);
-        Collection<File> files = FileUtils.listFiles(dir, new String[]{"pdf"}, true);
-    
-        int i = 0;
-        for (File file : files) {
-            File xmlF = new File(file.getPath().replaceAll("pdf$", extension));
-            if (xmlF.exists()) {
-                i++;
-                continue;
-            }
- 
-            long start = System.currentTimeMillis();
-            
-            System.out.println(file.getName());
- 
+        File file = new File(path);
+        if (file.isFile()) {
             PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
             InputStream in = new FileInputStream(file);
             Element result = extractor.extractContent(in);
-
-            long end = System.currentTimeMillis();
-            float elapsed = (end - start) / 1000F;
-            
             XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-            if (!xmlF.createNewFile()) {
-                System.out.println("Cannot create new file!");
+            System.out.println(outputter.outputString(result));
+        } else {
+        
+            Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
+    
+            int i = 0;
+            for (File pdf : files) {
+                File xmlF = new File(pdf.getPath().replaceAll("pdf$", extension));
+                if (xmlF.exists()) {
+                    i++;
+                    continue;
+                }
+ 
+                long start = System.currentTimeMillis();
+            
+                System.out.println(pdf.getName());
+ 
+                PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+                InputStream in = new FileInputStream(pdf);
+                Element result = extractor.extractContent(in);
+
+                long end = System.currentTimeMillis();
+                float elapsed = (end - start) / 1000F;
+            
+                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                if (!xmlF.createNewFile()) {
+                    System.out.println("Cannot create new file!");
+                }
+                FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
+                i++;
+                int percentage = i*100/files.size();
+                System.out.println("Extraction time: " + Math.round(elapsed) + "s");
+                System.out.println(percentage + "% done (" + i +" out of " + files.size() + ")");
+                System.out.println("");
             }
-            FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
-            i++;
-            System.out.println("Time: " + Math.round(elapsed));
-            System.out.println(i+" "+i*100./files.size()+"%");
         }
     }
 

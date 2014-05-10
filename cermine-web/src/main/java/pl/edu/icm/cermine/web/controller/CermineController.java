@@ -31,6 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
+import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
 import pl.edu.icm.cermine.service.*;
 
 /**
@@ -186,6 +192,41 @@ public class CermineController {
             return new ResponseEntity<String>("Exception: " + ex.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @RequestMapping(value = "/parse.do", method = RequestMethod.POST)
+    public ResponseEntity<String> parseSync(@RequestParam("ref") String refText, HttpServletRequest request, Model model) { 
+        try {
+            HttpHeaders responseHeaders = new HttpHeaders();
+            String response;
+            
+            String format = request.getParameter("format");
+            if (format == null) {
+                format = "bibtex";
+            }
+            format = format.toLowerCase();
+            if (!format.equals("nlm") && !format.equals("bibtex")) {
+                return new ResponseEntity<String>("Exception: format must be bibtex or nlm!", null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            
+            CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
+            BibEntry reference = parser.parseBibReference(refText);
+            if (format.equals("bibtex")) {
+                responseHeaders.setContentType(MediaType.TEXT_PLAIN);
+                response = reference.toBibTeX();
+            } else {
+                responseHeaders.setContentType(MediaType.APPLICATION_XML);
+                BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
+                Element element = converter.convert(reference);
+                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                response = outputter.outputString(element);
+            }
+            
+            return new ResponseEntity<String>(response, responseHeaders, HttpStatus.OK);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(CermineController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<String>("Exception: " + ex.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    } 
 
     @ExceptionHandler(value = NoSuchTaskException.class)
     public ModelAndView taskNotFoundHandler(NoSuchTaskException nste) {

@@ -67,8 +67,16 @@ To extract metadata from a reference string:
 
 **REST service**
 
-The third possibility is to use CERMINE's REST service with cURL tool:
+The third possibility is to use CERMINE's REST service with cURL tool.
+
+To extract the content from a PDF file:
 
 	$ curl -X POST --data-binary @article.pdf \
-	  --header "Content-Type: application/binary" -v \
+	  --header "Content-Type: application/binary"\
 	  http://cermine.ceon.pl/extract.do
+
+To extract metadata from a reference string:
+
+	$ curl -X POST --data "ref=the text of the reference" \
+	  http://cermine.ceon.pl/parse.do
+

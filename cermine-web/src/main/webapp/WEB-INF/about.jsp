@@ -98,7 +98,7 @@ $ curl -X POST --data-binary @article.pdf \
                  </p>
                  
                  <p>CERMINE uses supervised and unsupervised machine-leaning techniques, such as Support Vector Machines, 
-                     K-means clustering and Conditional Random Fields. More information can be found in the <a target="_blank" href="static/docs/presentation.pdf">presentation</a>.</p>
+                     K-means clustering and Conditional Random Fields. More information can be found in the <a target="_blank" href="static/docs/slides.pdf">presentation</a>.</p>
 
 			</div>
 	

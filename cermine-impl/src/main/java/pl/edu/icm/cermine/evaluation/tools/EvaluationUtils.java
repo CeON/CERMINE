@@ -18,9 +18,11 @@
 
 package pl.edu.icm.cermine.evaluation.tools;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -77,16 +79,8 @@ public class EvaluationUtils {
     		this.dir = new File(dirPath);
     		this.curIdx = -1;
     		
-    		this.files = dir.listFiles(new FilenameFilter(){
-				@Override
-				public boolean accept(File dir, String name) {
-					if(name.endsWith(".xml")) {
-						return true;
-					}
-					return false;
-				}
-    			
-    		});
+            List<File> list = Lists.newArrayList(FileUtils.listFiles(dir, new String[]{"cxml"}, true));
+            this.files = list.toArray(new File[]{});
     	}
     	
 		@Override

@@ -37,6 +37,7 @@ public abstract class BxDocsToTrainingSamplesConverter {
             FeatureVectorBuilder<BxZone, BxPage> vectorBuilder, Map<BxZoneLabel, BxZoneLabel> labelMap) throws AnalysisException {
         List<TrainingSample<BxZoneLabel>> trainingList = new ArrayList<TrainingSample<BxZoneLabel>>();
 
+        int i = 0;
         while (documents.hasNext()) {
             BxDocument doc  = documents.next();
             if (labelMap != null) {
@@ -50,6 +51,7 @@ public abstract class BxDocsToTrainingSamplesConverter {
                     trainingList.add(element);
                 }
             }
+            System.out.println("Converting document: "+(++i));
         }
         return trainingList;
     }

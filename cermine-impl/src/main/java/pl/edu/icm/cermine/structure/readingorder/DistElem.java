@@ -129,7 +129,7 @@ public class DistElem<E> implements Comparable<DistElem<E> >{
 	}
 	
 	private int compareDouble(double d1, double d2) {
-		double eps = new Double(1E-6);
+		double eps = 1E-6;
 		if(d1 > d2) {
 			return 1;
 		} else if(Math.abs(d1-d2) < eps) {

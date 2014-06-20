@@ -23,7 +23,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.*;
 
 /**
@@ -45,7 +45,7 @@ public class KeywordsEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
+    protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
                 String text = zone.toText().replace("\n", "<eol>");
@@ -54,7 +54,7 @@ public class KeywordsEnhancer extends AbstractSimpleEnhancer {
                 if (text.matches(".*[:;,.·—].*")) {
                     String separator = "[:;,.·—]";
                     for (String keyword : text.split(separator)) {
-                        Enhancers.addKeyword(metadata, keyword.trim().replaceFirst("\\.$", "").replace("-<eol>", "").replace("<eol>", " "));
+                        metadata.addKeyword(keyword.trim().replaceFirst("\\.$", "").replace("-<eol>", "").replace("<eol>", " "));
                     }
                 
                     return true;
@@ -97,7 +97,7 @@ public class KeywordsEnhancer extends AbstractSimpleEnhancer {
                     }
                 }
                 for (String keyword : keywords) {
-                    Enhancers.addKeyword(metadata, keyword.trim().replaceFirst("\\.$", ""));
+                    metadata.addKeyword(keyword.trim().replaceFirst("\\.$", ""));
                 }
             }
         }

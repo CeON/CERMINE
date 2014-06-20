@@ -22,7 +22,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
@@ -45,11 +45,11 @@ public class JournalVolumeIssueExtendedEnhancer extends AbstractPatternEnhancer 
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.setJournal(metadata, result.group(1).trim()
+    protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
+        metadata.setJournal(result.group(1).trim()
                 .replaceAll("Published as: ", "").replaceAll(",$", ""));
-        Enhancers.setVolume(metadata, result.group(3));
-        Enhancers.setIssue(metadata, result.group(5));
+        metadata.setVolume(result.group(3));
+        metadata.setIssue(result.group(5));
        
         return true;
     }

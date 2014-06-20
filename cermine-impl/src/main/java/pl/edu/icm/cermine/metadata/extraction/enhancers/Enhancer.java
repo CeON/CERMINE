@@ -19,7 +19,7 @@
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
 import java.util.Set;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
@@ -37,5 +37,5 @@ public interface Enhancer {
      * @param enhancedFields set of fields enhanced already enhanced by other
      * enhancers; newly enhanced fields are added be added to this set
      */
-    void enhanceMetadata(BxDocument document, Element metadata, Set<EnhancedField> enhancedFields);
+    void enhanceMetadata(BxDocument document, DocumentMetadata metadata, Set<EnhancedField> enhancedFields);
 }

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.*;
 
 /**
@@ -43,7 +43,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
+    protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         boolean enhanced = false;
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
@@ -135,7 +135,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         } else {
                             if (!auth && !author.trim().isEmpty()) {
                                 author = CharMatcher.WHITESPACE.trimFrom(author);
-                                Enhancers.addAuthor(metadata, author, refs);
+                                metadata.addAuthor(author, refs);
                                 author = "";
                                 refs.clear();
                             }
@@ -149,7 +149,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 }
                 if (!author.isEmpty() && !author.toLowerCase().endsWith("introduction")) {
                     author = CharMatcher.WHITESPACE.trimFrom(author);
-                    Enhancers.addAuthor(metadata, author, refs);
+                    metadata.addAuthor(author, refs);
                 }
                 
                 enhanced = true;

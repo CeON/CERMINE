@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -50,10 +50,10 @@ public abstract class AbstractMultiPatternEnhancer extends AbstractSimpleEnhance
         this.patterns = patterns;
     }
 
-    protected abstract boolean enhanceMetadata(MatchResult result, Element metadata);
+    protected abstract boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata);
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
+    protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         for (Pattern pattern : patterns) {
             for (BxPage page : filterPages(document)) {
                 for (BxZone zone : filterZones(page)) {
@@ -66,7 +66,7 @@ public abstract class AbstractMultiPatternEnhancer extends AbstractSimpleEnhance
         return false;
     }
   
-    protected boolean enhanceMetadata(BxZone zone, Pattern pattern, Element metadata) {
+    protected boolean enhanceMetadata(BxZone zone, Pattern pattern, DocumentMetadata metadata) {
         Matcher matcher = pattern.matcher(zone.toText());
         while (matcher.find()) {
             if (enhanceMetadata(matcher.toMatchResult(), metadata)) {

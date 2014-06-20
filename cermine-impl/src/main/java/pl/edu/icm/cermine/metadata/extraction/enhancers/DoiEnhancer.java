@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
@@ -49,8 +49,8 @@ public class DoiEnhancer extends AbstractMultiPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.addArticleId(metadata, "doi", result.group(1).replaceAll(",$", ""));
+    protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
+        metadata.addId(DocumentMetadata.ID_DOI, result.group(1).replaceAll(",$", ""));
         return true;
     }
 }

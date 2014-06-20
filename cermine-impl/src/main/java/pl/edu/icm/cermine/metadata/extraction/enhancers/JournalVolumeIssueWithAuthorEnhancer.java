@@ -18,12 +18,14 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
@@ -45,10 +47,10 @@ public class JournalVolumeIssueWithAuthorEnhancer extends AbstractPatternEnhance
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
+    protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
         String journal = result.group(1);
 
-        List<String> authors = Enhancers.getAuthorNames(metadata);
+        List<String> authors = getAuthorNames(metadata);
 
         if (authors.size() == 1) {
             journal = removeFirst(journal, authors.get(0));
@@ -62,9 +64,9 @@ public class JournalVolumeIssueWithAuthorEnhancer extends AbstractPatternEnhance
             journal = journal.replaceFirst("^.*et al\\.", "").trim();
         }
 
-        Enhancers.setJournal(metadata, journal);
-        Enhancers.setVolume(metadata, result.group(2));
-        Enhancers.setIssue(metadata, result.group(3));
+        metadata.setJournal(journal);
+        metadata.setVolume(result.group(2));
+        metadata.setIssue(result.group(3));
         
         return true;
     }
@@ -82,4 +84,11 @@ public class JournalVolumeIssueWithAuthorEnhancer extends AbstractPatternEnhance
         return journal;
     }
     
+    private List<String> getAuthorNames(DocumentMetadata metadata) {
+        List<String> authors = new ArrayList<String>();
+        for (DocumentAuthor a : metadata.getAuthors()) {
+            authors.add(a.getName());
+        }
+        return authors;
+    }
 }

@@ -21,7 +21,7 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 import com.google.common.collect.Sets;
 import java.util.*;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.*;
 
 /**
@@ -57,7 +57,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
+    protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         boolean enhanced = false;
         for (BxPage page : filterPages(document)) {
             Processor processor = new Processor();
@@ -121,12 +121,16 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                     if (index.startsWith("aff-")) {
                         index = "";
                     }
-                    Enhancers.setAffiliation(metadata, index, text);
+                    if (index == null || index.isEmpty()) {
+                        metadata.addAffiliationToAllAuthors(text);
+                    } else {
+                        metadata.setAffiliationByIndex(index, text);
+                    }
                     enhanced = true;
                 }
             }
         }
-        Enhancers.cleanAffiliations(metadata);
+
         return enhanced;
     }
 

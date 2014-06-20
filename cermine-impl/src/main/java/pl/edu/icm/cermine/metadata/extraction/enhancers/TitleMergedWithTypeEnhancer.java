@@ -20,7 +20,7 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
 import com.google.common.collect.Sets;
 import java.util.*;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -40,6 +40,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
             "debate", 
             "editorial",
             "methodology", 
+            "original article",
             "research", 
             "research article", 
             "review article", 
@@ -65,7 +66,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
+    protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
         if (zone.getLines().size() < 2) {
             return false;
         } else {
@@ -78,7 +79,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
                     text.append(" ");
                     text.append(iterator.next().toText());
                 }
-                Enhancers.setTitle(metadata, text.toString());
+                metadata.setTitle(text.toString());
                 return true;
             } else {
                 return false;
@@ -87,7 +88,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxPage page, Element metadata) {
+    protected boolean enhanceMetadata(BxPage page, DocumentMetadata metadata) {
         List<BxZone> titleZones = new ArrayList<BxZone>();
         for (BxZone zone : filterZones(page)) {
             titleZones.add(zone);

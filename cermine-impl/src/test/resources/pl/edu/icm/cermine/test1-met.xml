@@ -12,25 +12,35 @@
       <contrib-group>
         <contrib contrib-type="author">
           <string-name>Indraneel Datta</string-name>
-          <aff>Department of Surgery, University of Calgary, Calgary, Canada</aff>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Chad G Ball</string-name>
-          <aff>Department of Surgery, University of Calgary, Calgary, Canada</aff>
           <email>ball.chad@gmail.com</email>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Lucas Rudmik</string-name>
-          <aff>Department of Surgery, University of Calgary, Calgary, Canada</aff>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>S Morad Hameed</string-name>
-          <aff>Department of Surgery, University of British Columbia, Vancouver, Canada</aff>
+          <xref ref-type="aff" rid="1">1</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>John B Kortbeek</string-name>
-          <aff>Department of Surgery, University of Calgary, Calgary, Canada</aff>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
+        <aff id="0">
+          <label>0</label>
+          Department of Surgery, University of Calgary, Calgary,
+          <country>Canada</country>
+        </aff>
+        <aff id="1">
+          <label>1</label>
+          Department of Surgery, University of British Columbia,
+          <country>Vancouver, Canada</country>
+        </aff>
       </contrib-group>
       <abstract>
         <p>Deep venous thrombosis prophylaxis is essential to the appropriate management of multisystem trauma patients. Without thromboprophylaxis, the rate of venous thrombosis and subsequent pulmonary embolism is substantial. Three prophylactic modalities are common: pharmacologic anticoagulation, mechanical compression devices, and inferior vena cava filtration. A systematic review was completed using PRISMA guidelines to evaluate the potential complications of DVT prophylactic options. Level one evidence currently supports the use of low molecular weight heparins for thromboprophylaxis in the trauma patient. Unfortunately, multiple techniques are not infrequently required for complex multisystem trauma patients. Each modality has potential complications. The risks of heparin include bleeding and heparin induced thrombocytopenia. Mechanical compression devices can result in local soft tissue injury, bleeding and patient non-compliance. Inferior vena cava filters migrate, cause inferior vena cava occlusion, and penetrate the vessel wall. While the use of these techniques can be life saving, they must be appropriately utilized.</p>
@@ -42,7 +52,4 @@
       </pub-date>
     </article-meta>
   </front>
-  <back>
-    <ref-list />
-  </back>
 </article>

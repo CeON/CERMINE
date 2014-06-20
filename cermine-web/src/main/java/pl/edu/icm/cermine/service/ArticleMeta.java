@@ -19,7 +19,9 @@
 package pl.edu.icm.cermine.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -258,8 +260,19 @@ public class ArticleMeta {
         }
         return pubDate;
     }
+
+    private static Map<String, String> extractAffiliations(Document nlm, String xpath) throws JDOMException {
+        XPath xPath = XPath.newInstance(xpath);
+        List<Element> nodes = xPath.selectNodes(nlm);
+        Map<String, String> affMap = new HashMap<String, String>();
+        for (Element node : nodes) {
+            String affId = node.getAttributeValue("id");
+            affMap.put(affId, node.getValue().trim().replaceFirst(affId, "").trim());
+        }
+        return affMap;
+    }
     
-    private static List<ContributorMeta> extractContributorMeta(Document nlm, String xpath) throws JDOMException {
+    private static List<ContributorMeta> extractContributorMeta(Document nlm, String xpath, Map<String, String> affiliations) throws JDOMException {
         XPath xPath = XPath.newInstance(xpath);
         List<Element> nodes = xPath.selectNodes(nlm);
         List<ContributorMeta> authors = new ArrayList<ContributorMeta>();
@@ -273,13 +286,20 @@ public class ArticleMeta {
             }
             log.debug("Got author name: " + name);
             ContributorMeta author = new ContributorMeta(name);
-            
-            List<Element> affs = node.getChildren("aff");
-            for (Element aff : affs) {
-                log.debug("Got author affiliation: " + aff);
-                author.addAffiliations(aff.getText());
+
+            if (affiliations != null) {
+                List xrefs = node.getChildren("xref");
+                for (Object xref : xrefs) {
+                    Element xrefEl = (Element) xref;
+                    String xrefType = xrefEl.getAttributeValue("ref-type");
+                    String xrefId = xrefEl.getAttributeValue("rid");
+                    if ("aff".equals(xrefType) && xrefId != null && affiliations.get(xrefId) != null) {
+                        log.debug("Got author affiliation: " + affiliations.get(xrefId));
+                        author.addAffiliations(affiliations.get(xrefId));
+                    }
+                }
             }
-            
+           
             List<Element> emails = node.getChildren("email");
             for (Element email : emails) {
                 log.debug("Got author email: " + email);
@@ -358,8 +378,10 @@ public class ArticleMeta {
 
             res.setIssue(extractXPathValue(nlm, "/article/front/article-meta/issue"));
             
-            res.setAuthors(extractContributorMeta(nlm, "//contrib[@contrib-type='author']"));
-            res.setEditors(extractContributorMeta(nlm, "//contrib[@contrib-type='editor']"));
+            Map<String, String> affiliations = extractAffiliations(nlm, "//aff");
+            
+            res.setAuthors(extractContributorMeta(nlm, "//contrib[@contrib-type='author']", affiliations));
+            res.setEditors(extractContributorMeta(nlm, "//contrib[@contrib-type='editor']", null));
             
             res.setPubDate(extractDateValue(nlm, "//pub-date"));
             res.setReceivedDate(extractDateValue(nlm, "//history/date[@date-type='received']"));

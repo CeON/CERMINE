@@ -1,56 +1,61 @@
 <article>
   <front>
     <journal-meta>
-      <publisher>
-        <publisher-name>Hindawi Publishing Corporation</publisher-name>
-      </publisher>
       <journal-title-group>
         <journal-title>Rehabilitation Research and Practice</journal-title>
       </journal-title-group>
+      <publisher>
+        <publisher-name>Hindawi Publishing Corporation</publisher-name>
+      </publisher>
     </journal-meta>
     <article-meta>
       <title-group>
         <article-title>Patient Experiences of Structured Heart Failure Programmes</article-title>
       </title-group>
+      <article-id pub-id-type="hindawi-id">157939</article-id>
+      <article-id pub-id-type="doi">10.1155/2010/157939</article-id>
       <contrib-group>
         <contrib contrib-type="author">
           <string-name>Nuala E. Tully</string-name>
-          <aff>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland, 123 St. Stephen’s Green, Dublin 2, Ireland</aff>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Karen M. Morgan</string-name>
-          <aff>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland, 123 St. Stephen’s Green, Dublin 2, Ireland</aff>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Helen M. Burke</string-name>
-          <aff>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland, 123 St. Stephen’s Green, Dublin 2, Ireland</aff>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Hannah M. McGee</string-name>
-          <aff>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland, 123 St. Stephen’s Green, Dublin 2, Ireland</aff>
+          <xref ref-type="aff" rid="0">0</xref>
         </contrib>
+        <aff id="0">
+          <label>0</label>
+          Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland, 123 St. Stephen's Green,
+          <country>Dublin 2, Ireland</country>
+        </aff>
       </contrib-group>
-      <article-id pub-id-type="doi">10.1155/2010/157939</article-id>
       <abstract>
-        <p>Academic Editor: K. S. Sunnerhagen Objectives. Patient experiences of structured heart failure rehabilitation and their views on the important components of heart failure services were examined. Methods. Focus groups were conducted with fifteen participants (men, n = 12) attending one of two heart failure rehabilitation programmes. Sessions were guided by a semistructured interview schedule covering participants’ experiences of the programme, maintenance, and GP role. Focus group transcripts were analysed qualitatively. Results. Participants indicated that rehabilitation programmes substantially met their needs. Supervised exercise sessions increased confidence to resume physical activity, while peer-group interaction and supportive medical staff improved morale. However, once the programme ended, some participants’ self-care motivation lapsed, especially maintenance of an exercise routine. Patients doubted their GPs’ ability to help them manage their condition. Conclusion. Structured rehabilitation programmes are effective in enabling patients to develop lifestyle skills to live with heart failure. However, postrehabilitation maintenance interventions are necessary to sustain patients’ confidence in disease self-management.</p>
+        <p>Academic Editor: K. S. Sunnerhagen Objectives. Patient experiences of structured heart failure rehabilitation and their views on the important components of heart failure services were examined. Methods. Focus groups were conducted with fifteen participants (men, n = 12) attending one of two heart failure rehabilitation programmes. Sessions were guided by a semistructured interview schedule covering participants' experiences of the programme, maintenance, and GP role. Focus group transcripts were analysed qualitatively. Results. Participants indicated that rehabilitation programmes substantially met their needs. Supervised exercise sessions increased confidence to resume physical activity, while peer-group interaction and supportive medical staff improved morale. However, once the programme ended, some participants' self-care motivation lapsed, especially maintenance of an exercise routine. Patients doubted their GPs' ability to help them manage their condition. Conclusion. Structured rehabilitation programmes are effective in enabling patients to develop lifestyle skills to live with heart failure. However, postrehabilitation maintenance interventions are necessary to sustain patients' confidence in disease self-management.</p>
       </abstract>
-      <article-id pub-id-type="hindawi-id">157939</article-id>
       <volume>2010</volume>
+      <pub-date>
+        <year>2010</year>
+      </pub-date>
       <history>
-        <date date-type="received">
-          <day>9</day>
-          <month>11</month>
-          <year>2010</year>
-        </date>
         <date date-type="accepted">
           <day>25</day>
           <month>12</month>
           <year>2010</year>
         </date>
+        <date date-type="received">
+          <day>9</day>
+          <month>11</month>
+          <year>2010</year>
+        </date>
       </history>
-      <pub-date>
-        <year>2010</year>
-      </pub-date>
     </article-meta>
   </front>
   <body>
@@ -529,566 +534,566 @@ facilitating the focus group sessions.</p>
   <back>
     <ref-list>
       <ref>
-                <mixed-citation>
-                    [1]
-                    <string-name>
-                        <given-names>E.</given-names>
-                        <surname>Braunwald</surname>
-                    </string-name>
-                    , “
-                    <article-title>Shattuck lecture: cardiovascular medicine at the turn of the millennium: triumphs</article-title>
-                    , concerns, and opportunities,”
-                    <source>New England Journal of Medicine</source>
-                    , vol.
-                    <volume>337</volume>
-                    , no.
-                    <issue>19</issue>
-                    , pp.
-                    <fpage>1360</fpage>
-                    –
-                    <lpage>1369</lpage>
-                    ,
-                    <year>1997</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [2]
-                    <string-name>
-                        <given-names>R. L.</given-names>
-                        <surname>Campbell</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>R.</given-names>
-                        <surname>Banner</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>J.</given-names>
-                        <surname>Konick-McMahan</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>M. D.</given-names>
-                        <surname>Naylor</surname>
-                    </string-name>
-                    , “
-                    <article-title>Discharge planning and home follow-up of the elderly patient with heart failure,” The Nursing Clinics of North America</article-title>
-                    , vol.
-                    <volume>33</volume>
-                    , no.
-                    <issue>3</issue>
-                    , pp.
-                    <fpage>497</fpage>
-                    –
-                    <lpage>513</lpage>
-                    ,
-                    <year>1998</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [3]
-                    <string-name>
-                        <given-names>S. A.</given-names>
-                        <surname>Murray</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>K.</given-names>
-                        <surname>Boyd</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>M.</given-names>
-                        <surname>Kendall</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>A.</given-names>
-                        <surname>Worth</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>T. F.</given-names>
-                        <surname>Benton</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>H.</given-names>
-                        <surname>Clausen</surname>
-                    </string-name>
-                    , “
-                    <article-title>Dying of lung cancer or cardiac failure: prospective qualitative interview study of patients and their carers in the community</article-title>
-                    ,”
-                    <source>British Medical Journal</source>
-                    , vol.
-                    <volume>325</volume>
-                    , no.
-                    <issue>7370</issue>
-                    , pp.
-                    <fpage>929</fpage>
-                    –
-                    <lpage>932</lpage>
-                    ,
-                    <year>2002</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [4]
-                    <string-name>
-                        <given-names>W. C.</given-names>
-                        <surname>Lee</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>Y. E.</given-names>
-                        <surname>Chavez</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>T.</given-names>
-                        <surname>Baker</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>B. R.</given-names>
-                        <surname>Luce</surname>
-                    </string-name>
-                    , “
-                    <article-title>Economic burden of heart failure: a summary of recent literature</article-title>
-                    ,
-                    <source>” Heart and Lung</source>
-                    , vol.
-                    <volume>33</volume>
-                    , no.
-                    <issue>6</issue>
-                    , pp.
-                    <fpage>362</fpage>
-                    –
-                    <lpage>371</lpage>
-                    ,
-                    <year>2004</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [5]
-                    <string-name>
-                        <given-names>F. A.</given-names>
-                        <surname>Masoudi</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>J. S.</given-names>
-                        <surname>Rumsfeld</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>E. P.</given-names>
-                        <surname>Havranek</surname>
-                    </string-name>
-                    et al., “
-                    <article-title>Age, functional capacity, and health-related quality of life in patients with heart failure</article-title>
-                    ,”
-                    <source>Journal of Cardiac Failure</source>
-                    , vol.
-                    <volume>10</volume>
-                    , no.
-                    <issue>5</issue>
-                    , pp.
-                    <fpage>368</fpage>
-                    –
-                    <lpage>373</lpage>
-                    ,
-                    <year>2004</year>
-                    .
-                </mixed-citation>  
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [6]
-                    <string-name>
-                        <given-names>C.</given-names>
-                        <surname>Chan</surname>
-                    </string-name>
-                    , D. Tang, and
-                    <string-name>
-                        <given-names>A.</given-names>
-                        <surname>Jones</surname>
-                    </string-name>
-                    , “
-                    <article-title>Clinical outcomes of a cardiac rehabilitation and maintenance program for Chinese patients with congestive heart failure</article-title>
-                    ,
-                    <source>” Disability and Rehabilitation</source>
-                    , vol.
-                    <volume>30</volume>
-                    , no.
-                    <issue>17</issue>
-                    , pp.
-                    <fpage>1245</fpage>
-                    –
-                    <lpage>1253</lpage>
-                    ,
-                    <year>2008</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [7]
-                    <string-name>
-                        <given-names>P.</given-names>
-                        <surname>Colonna</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>M.</given-names>
-                        <surname>Sorino</surname>
-                    </string-name>
-                    , C. D’
-                    <article-title>Agostino et al., “Nonpharma- cologic care of heart failure: counseling, dietary restriction, rehabilitation, treatment of sleep apnea</article-title>
-                    , and ultraﬁltration,”
-                    <source>American Journal of Cardiology</source>
-                    , vol.
-                    <volume>91</volume>
-                    , no.
-                    <issue>9</issue>
-                    ,
-                    <issue>supplement 1</issue>
-                    , pp.
-                    <fpage>41</fpage>
-                    –
-                    <lpage>50</lpage>
-                    ,
-                    <year>2003</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [8]
-                    <article-title>Oﬃce of Quality Improvement, Focus Groups: A Guide to Learning the Needs of Those We Serve</article-title>
-                    , University of Wisconsin- Madison,
-                    <year>2007</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [9]
-                    <string-name>
-                        <given-names>S.</given-names>
-                        <surname>Stemler</surname>
-                    </string-name>
-                    , “
-                    <article-title>An overview of content analysis</article-title>
-                    ,
-                    <source>” Practical Assess- ment, Research &amp; Evaluation</source>
-                    , vol.
-                    <volume>7</volume>
-                    , no.
-                    <issue>17</issue>
-                    ,
-                    <year>2001</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [10]
-                    <string-name>
-                        <given-names>P.</given-names>
-                        <surname>Johansson</surname>
-                    </string-name>
-                    , U. Dahlstro¨m, and
-                    <string-name>
-                        <given-names>A.</given-names>
-                        <surname>Brostro</surname>
-                    </string-name>
-                    ¨m, “
-                    <article-title>The measure- ment and prevalence of depression in patients with chronic heart failure,” Progress in Cardiovascular Nursing</article-title>
-                    , vol.
-                    <volume>21</volume>
-                    , no.
-                    <issue>1</issue>
-                    , pp.
-                    <fpage>28</fpage>
-                    –
-                    <lpage>36</lpage>
-                    ,
-                    <year>2006</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [11]
-                    <string-name>
-                        <given-names>E.</given-names>
-                        <surname>Rideout</surname>
-                    </string-name>
-                    and
-                    <string-name>
-                        <given-names>M.</given-names>
-                        <surname>Montemuro</surname>
-                    </string-name>
-                    , “
-                    <article-title>Hope, morale and adapta- tion in patients with chronic heart failure</article-title>
-                    ,”
-                    <source>Journal of Advanced Nursing</source>
-                    , vol.
-                    <volume>11</volume>
-                    , no.
-                    <issue>4</issue>
-                    , pp.
-                    <fpage>429</fpage>
-                    –
-                    <lpage>438</lpage>
-                    ,
-                    <year>1986</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [12]
-                    <string-name>
-                        <given-names>M. J. E.</given-names>
-                        <surname>Leventhal</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>B.</given-names>
-                        <surname>Riegel</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>B.</given-names>
-                        <surname>Carlson</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>S.</given-names>
-                        <surname>De Geest</surname>
-                    </string-name>
-                    , “
-                    <article-title>Negotiating compliance in heart failure: remaining issues</article-title>
-                    and questions,”
-                    <source>European Journal of Cardiovascular Nursing</source>
-                    , vol.
-                    <volume>4</volume>
-                    , no.
-                    <issue>4</issue>
-                    , pp.
-                    <fpage>298</fpage>
-                    –
-                    <lpage>307</lpage>
-                    ,
-                    <year>2005</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [13]
-                    <string-name>
-                        <given-names>K.</given-names>
-                        <surname>Dickstein</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>A.</given-names>
-                        <surname>Cohen-Solal</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>G.</given-names>
-                        <surname>Filippatos</surname>
-                    </string-name>
-                    et al., “
-                    <article-title>ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure 2008: the Task Force for the diagnosis and treatment of acute and chronic heart failure 2008 of the European Society of Cardiology</article-title>
-                    ,”
-                    <source>European Heart Journal</source>
-                    , vol.
-                    <volume>29</volume>
-                    , no.
-                    <issue>19</issue>
-                    , pp.
-                    <fpage>2388</fpage>
-                    –
-                    <lpage>2442</lpage>
-                    ,
-                    <year>2008</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [14]
-                    <string-name>
-                        <given-names>M. F.</given-names>
-                        <surname>Piepoli</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>M.</given-names>
-                        <surname>Flather</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>A. J. S.</given-names>
-                        <surname>Coats</surname>
-                    </string-name>
-                    , “
-                    <article-title>Overview of studies of exercise training in chronic heart failure: the need for a prospective randomized multicentre European trial</article-title>
-                    ,”
-                    <source>European Heart Journal</source>
-                    , vol.
-                    <volume>19</volume>
-                    , no.
-                    <issue>6</issue>
-                    , pp.
-                    <fpage>830</fpage>
-                    –
-                    <lpage>841</lpage>
-                    ,
-                    <year>1998</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [15]
-                    <string-name>
-                        <given-names>T.</given-names>
-                        <surname>Corvera-Tindel</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>L. V.</given-names>
-                        <surname>Doering</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>T.</given-names>
-                        <surname>Gomez</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>K.</given-names>
-                        <surname>Dracup</surname>
-                    </string-name>
-                    , “
-                    <article-title>Predictors of noncompliance to exercise training in heart failure</article-title>
-                    ,
-                    <source>” The Journal of Cardiovascular Nursing</source>
-                    , vol.
-                    <volume>19</volume>
-                    , no.
-                    <issue>4</issue>
-                    , pp.
-                    <fpage>269</fpage>
-                    –
-                    <lpage>279</lpage>
-                    ,
-                    <year>2004</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [16]
-                    <string-name>
-                        <given-names>L. S.</given-names>
-                        <surname>Evangelista</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>K.</given-names>
-                        <surname>Dracup</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>V.</given-names>
-                        <surname>Erickson</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>W. J.</given-names>
-                        <surname>Mccarthy</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>M. A.</given-names>
-                        <surname>Hamilton</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>G. C.</given-names>
-                        <surname>Fonarow</surname>
-                    </string-name>
-                    , “
-                    <article-title>Validity of pedometers for measuring exercise adherence in heart failure patients</article-title>
-                    ,”
-                    <source>Journal of Cardiac Failure</source>
-                    , vol.
-                    <volume>11</volume>
-                    , no.
-                    <issue>5</issue>
-                    , pp.
-                    <fpage>366</fpage>
-                    –
-                    <lpage>371</lpage>
-                    ,
-                    <year>2005</year>
-                    .
-                </mixed-citation>
-            </ref>
-            <ref>
-                <mixed-citation>
-                    [17]
-                    <string-name>
-                        <given-names>L. S.</given-names>
-                        <surname>Evangelista</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>M. A.</given-names>
-                        <surname>Hamilton</surname>
-                    </string-name>
-                    ,
-                    <string-name>
-                        <given-names>G. C.</given-names>
-                        <surname>Fonarow</surname>
-                    </string-name>
-                    , and
-                    <string-name>
-                        <given-names>K.</given-names>
-                        <surname>Dracup</surname>
-                    </string-name>
-                    , “
-                    <article-title>Is exercise adherence associated with clinical outcomes in patients with advanced heart failure?</article-title>
-                    <source>” Physician and Sportsmedicine</source>
-                    , vol.
-                    <volume>38</volume>
-                    , no.
-                    <issue>1</issue>
-                    , pp.
-                    <fpage>28</fpage>
-                    –
-                    <lpage>36</lpage>
-                    ,
-                    <year>2010</year>
-                    .
-                </mixed-citation>
-            </ref>
-        </ref-list>
-    </back>
+        <mixed-citation>
+          [1]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Braunwald</surname>
+          </string-name>
+          , “
+          <article-title>Shattuck lecture: cardiovascular medicine at the turn of the millennium: triumphs</article-title>
+          , concerns, and opportunities,”
+          <source>New England Journal of Medicine</source>
+          , vol.
+          <volume>337</volume>
+          , no.
+          <issue>19</issue>
+          , pp.
+          <fpage>1360</fpage>
+          –
+          <lpage>1369</lpage>
+          ,
+          <year>1997</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>R. L.</given-names>
+            <surname>Campbell</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Banner</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Konick-McMahan</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>M. D.</given-names>
+            <surname>Naylor</surname>
+          </string-name>
+          , “
+          <article-title>Discharge planning and home follow-up of the elderly patient with heart failure,” The Nursing Clinics of North America</article-title>
+          , vol.
+          <volume>33</volume>
+          , no.
+          <issue>3</issue>
+          , pp.
+          <fpage>497</fpage>
+          –
+          <lpage>513</lpage>
+          ,
+          <year>1998</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [3]
+          <string-name>
+            <given-names>S. A.</given-names>
+            <surname>Murray</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Boyd</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Kendall</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Worth</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T. F.</given-names>
+            <surname>Benton</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>H.</given-names>
+            <surname>Clausen</surname>
+          </string-name>
+          , “
+          <article-title>Dying of lung cancer or cardiac failure: prospective qualitative interview study of patients and their carers in the community</article-title>
+          ,”
+          <source>British Medical Journal</source>
+          , vol.
+          <volume>325</volume>
+          , no.
+          <issue>7370</issue>
+          , pp.
+          <fpage>929</fpage>
+          –
+          <lpage>932</lpage>
+          ,
+          <year>2002</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [4]
+          <string-name>
+            <given-names>W. C.</given-names>
+            <surname>Lee</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Y. E.</given-names>
+            <surname>Chavez</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Baker</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>B. R.</given-names>
+            <surname>Luce</surname>
+          </string-name>
+          , “
+          <article-title>Economic burden of heart failure: a summary of recent literature</article-title>
+          ,
+          <source>” Heart and Lung</source>
+          , vol.
+          <volume>33</volume>
+          , no.
+          <issue>6</issue>
+          , pp.
+          <fpage>362</fpage>
+          –
+          <lpage>371</lpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [5]
+          <string-name>
+            <given-names>F. A.</given-names>
+            <surname>Masoudi</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J. S.</given-names>
+            <surname>Rumsfeld</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. P.</given-names>
+            <surname>Havranek</surname>
+          </string-name>
+          et al., “
+          <article-title>Age, functional capacity, and health-related quality of life in patients with heart failure</article-title>
+          ,”
+          <source>Journal of Cardiac Failure</source>
+          , vol.
+          <volume>10</volume>
+          , no.
+          <issue>5</issue>
+          , pp.
+          <fpage>368</fpage>
+          –
+          <lpage>373</lpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [6]
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Chan</surname>
+          </string-name>
+          , D. Tang, and
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Jones</surname>
+          </string-name>
+          , “
+          <article-title>Clinical outcomes of a cardiac rehabilitation and maintenance program for Chinese patients with congestive heart failure</article-title>
+          ,
+          <source>” Disability and Rehabilitation</source>
+          , vol.
+          <volume>30</volume>
+          , no.
+          <issue>17</issue>
+          , pp.
+          <fpage>1245</fpage>
+          –
+          <lpage>1253</lpage>
+          ,
+          <year>2008</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [7]
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Colonna</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Sorino</surname>
+          </string-name>
+          , C. D’
+          <article-title>Agostino et al., “Nonpharma- cologic care of heart failure: counseling, dietary restriction, rehabilitation, treatment of sleep apnea</article-title>
+          , and ultraﬁltration,”
+          <source>American Journal of Cardiology</source>
+          , vol.
+          <volume>91</volume>
+          , no.
+          <issue>9</issue>
+          ,
+          <issue>supplement 1</issue>
+          , pp.
+          <fpage>41</fpage>
+          –
+          <lpage>50</lpage>
+          ,
+          <year>2003</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [8]
+          <article-title>Oﬃce of Quality Improvement, Focus Groups: A Guide to Learning the Needs of Those We Serve</article-title>
+          , University of Wisconsin- Madison,
+          <year>2007</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [9]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Stemler</surname>
+          </string-name>
+          , “
+          <article-title>An overview of content analysis</article-title>
+          ,
+          <source>” Practical Assess- ment, Research &amp; Evaluation</source>
+          , vol.
+          <volume>7</volume>
+          , no.
+          <issue>17</issue>
+          ,
+          <year>2001</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [10]
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Johansson</surname>
+          </string-name>
+          , U. Dahlstro¨m, and
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Brostro</surname>
+          </string-name>
+          ¨m, “
+          <article-title>The measure- ment and prevalence of depression in patients with chronic heart failure,” Progress in Cardiovascular Nursing</article-title>
+          , vol.
+          <volume>21</volume>
+          , no.
+          <issue>1</issue>
+          , pp.
+          <fpage>28</fpage>
+          –
+          <lpage>36</lpage>
+          ,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [11]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Rideout</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Montemuro</surname>
+          </string-name>
+          , “
+          <article-title>Hope, morale and adapta- tion in patients with chronic heart failure</article-title>
+          ,”
+          <source>Journal of Advanced Nursing</source>
+          , vol.
+          <volume>11</volume>
+          , no.
+          <issue>4</issue>
+          , pp.
+          <fpage>429</fpage>
+          –
+          <lpage>438</lpage>
+          ,
+          <year>1986</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [12]
+          <string-name>
+            <given-names>M. J. E.</given-names>
+            <surname>Leventhal</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Riegel</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Carlson</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>De Geest</surname>
+          </string-name>
+          , “
+          <article-title>Negotiating compliance in heart failure: remaining issues</article-title>
+          and questions,”
+          <source>European Journal of Cardiovascular Nursing</source>
+          , vol.
+          <volume>4</volume>
+          , no.
+          <issue>4</issue>
+          , pp.
+          <fpage>298</fpage>
+          –
+          <lpage>307</lpage>
+          ,
+          <year>2005</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [13]
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Dickstein</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Cohen-Solal</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Filippatos</surname>
+          </string-name>
+          et al., “
+          <article-title>ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure 2008: the Task Force for the diagnosis and treatment of acute and chronic heart failure 2008 of the European Society of Cardiology</article-title>
+          ,”
+          <source>European Heart Journal</source>
+          , vol.
+          <volume>29</volume>
+          , no.
+          <issue>19</issue>
+          , pp.
+          <fpage>2388</fpage>
+          –
+          <lpage>2442</lpage>
+          ,
+          <year>2008</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>M. F.</given-names>
+            <surname>Piepoli</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Flather</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>A. J. S.</given-names>
+            <surname>Coats</surname>
+          </string-name>
+          , “
+          <article-title>Overview of studies of exercise training in chronic heart failure: the need for a prospective randomized multicentre European trial</article-title>
+          ,”
+          <source>European Heart Journal</source>
+          , vol.
+          <volume>19</volume>
+          , no.
+          <issue>6</issue>
+          , pp.
+          <fpage>830</fpage>
+          –
+          <lpage>841</lpage>
+          ,
+          <year>1998</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Corvera-Tindel</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L. V.</given-names>
+            <surname>Doering</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Gomez</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Dracup</surname>
+          </string-name>
+          , “
+          <article-title>Predictors of noncompliance to exercise training in heart failure</article-title>
+          ,
+          <source>” The Journal of Cardiovascular Nursing</source>
+          , vol.
+          <volume>19</volume>
+          , no.
+          <issue>4</issue>
+          , pp.
+          <fpage>269</fpage>
+          –
+          <lpage>279</lpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [16]
+          <string-name>
+            <given-names>L. S.</given-names>
+            <surname>Evangelista</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Dracup</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>V.</given-names>
+            <surname>Erickson</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W. J.</given-names>
+            <surname>Mccarthy</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M. A.</given-names>
+            <surname>Hamilton</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>G. C.</given-names>
+            <surname>Fonarow</surname>
+          </string-name>
+          , “
+          <article-title>Validity of pedometers for measuring exercise adherence in heart failure patients</article-title>
+          ,”
+          <source>Journal of Cardiac Failure</source>
+          , vol.
+          <volume>11</volume>
+          , no.
+          <issue>5</issue>
+          , pp.
+          <fpage>366</fpage>
+          –
+          <lpage>371</lpage>
+          ,
+          <year>2005</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref>
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>L. S.</given-names>
+            <surname>Evangelista</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M. A.</given-names>
+            <surname>Hamilton</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>G. C.</given-names>
+            <surname>Fonarow</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Dracup</surname>
+          </string-name>
+          , “
+          <article-title>Is exercise adherence associated with clinical outcomes in patients with advanced heart failure?</article-title>
+          <source>” Physician and Sportsmedicine</source>
+          , vol.
+          <volume>38</volume>
+          , no.
+          <issue>1</issue>
+          , pp.
+          <fpage>28</fpage>
+          –
+          <lpage>36</lpage>
+          ,
+          <year>2010</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
 </article>

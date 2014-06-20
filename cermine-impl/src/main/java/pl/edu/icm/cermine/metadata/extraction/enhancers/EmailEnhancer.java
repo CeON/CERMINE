@@ -22,7 +22,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -44,13 +45,36 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
+    protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
         Matcher matcher = PATTERN.matcher(zone.toText());
         while (matcher.find()) {
             String email = matcher.group().replaceFirst("[;\\.,]$", "");
-            Enhancers.addEmail(metadata, email);
+            addEmail(metadata, email);
         }
         return false;
     }
-       
+  
+    private void addEmail(DocumentMetadata metadata, String email) {
+        DocumentAuthor author = null;
+        boolean one = true;
+        
+        for (DocumentAuthor a : metadata.getAuthors()) {
+            String[] names = a.getName().split(" ");
+            for (String namePart : names) {
+                if (namePart.length() > 2 && email.toLowerCase().contains(namePart.toLowerCase())) {
+                    if (author == null) {
+                        author = a;
+                        break;
+                    } else {
+                        one = false;
+                    }
+                }
+            }
+        }
+        
+        if (author != null && one) {
+            author.setEmail(email);
+        }
+    }
+    
 }

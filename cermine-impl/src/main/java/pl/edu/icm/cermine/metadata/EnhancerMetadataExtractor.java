@@ -22,9 +22,9 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-import org.jdom.Element;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.extraction.enhancers.*;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
@@ -32,7 +32,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  *
  * @author krusek
  */
-public class EnhancerMetadataExtractor implements MetadataExtractor<Element> {
+public class EnhancerMetadataExtractor implements MetadataExtractor<DocumentMetadata> {
 
     private final List<Enhancer> enhancers = Arrays.<Enhancer>asList(
                 new HindawiCornerInfoEnhancer(),
@@ -59,6 +59,7 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<Element> {
                 new IssnEnhancer(),
                 new EditorEnhancer(),
                 new AffiliationGeometricEnhancer(),
+                new AffiliationCountryEnhancer(),
                 new ReceivedDateEnhancer(),
                 new AcceptedDateEnhancer(),
                 new PublishedDateEnhancer(),
@@ -88,29 +89,15 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<Element> {
     }
 
     @Override
-    public Element extractMetadata(BxDocument document) throws AnalysisException {
+    public DocumentMetadata extractMetadata(BxDocument document) throws AnalysisException {
         Set<EnhancedField> enhancedFields = EnumSet.noneOf(EnhancedField.class);
         
-        Element metadata = new Element("article");
-       
-        Element front = new Element("front");
-        metadata.addContent(front);
-        
-        Element journalMeta = new Element("journal-meta");
-        front.addContent(journalMeta);
-        
-        Element articleMeta = new Element("article-meta");
-        front.addContent(articleMeta);
-        
-        Element back = new Element("back");
-        metadata.addContent(back);
-        
-        Element refList = new Element("ref-list");
-        back.addContent(refList);
+        DocumentMetadata metadata = new DocumentMetadata();
         
         for (Enhancer enhancer : enhancers) {
             enhancer.enhanceMetadata(document, metadata, enhancedFields);
         }
+        metadata.clean();
         return metadata;
     }
 

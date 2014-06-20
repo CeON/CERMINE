@@ -22,7 +22,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -42,16 +42,16 @@ public class PagesLastEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
+    protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         return super.enhanceMetadata(document, metadata);
     }
    
     @Override
-    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
+    protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
         int first = Integer.parseInt(result.group(1));
         int last = Integer.parseInt(result.group(2));
         if (first <= last) {
-            Enhancers.setPages(metadata, result.group(1), result.group(2));
+            metadata.setPages(result.group(1), result.group(2));
             return true;
         } else {
             return false;

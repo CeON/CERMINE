@@ -22,7 +22,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -47,18 +47,27 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
+    protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         StringBuilder sb = new StringBuilder();
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
                 String[] lines = zone.toText().split("\n");
                 for (String line : lines) {
-                    if (line.toLowerCase().startsWith("keywords")
-                        || line.toLowerCase().startsWith("key words")) {
+                    String normalized = line.toLowerCase().trim();
+                    if (normalized.startsWith("abstract")
+                        || normalized.startsWith("a b s t r a c t")
+                        || normalized.startsWith("article info")) {
+                        sb = new StringBuilder();
+                    }
+                    if (normalized.startsWith("keywords")
+                        || normalized.startsWith("key words")
+                        || normalized.startsWith("introduction")
+                        || normalized.endsWith("introduction")
+                        || normalized.startsWith("this work is licensed")) {
                         break;
                     }
                     sb.append("\n");
-                    sb.append(line);
+                    sb.append(line.trim());
                 }
             }
          }
@@ -69,7 +78,7 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
             if (matcher.find()) {
                 text = text.substring(matcher.end()).trim();
             }
-            Enhancers.setAbstract(metadata, text);
+            metadata.setAbstrakt(text);
             return true;
         }
         return false;

@@ -18,7 +18,8 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 
 /**
  *
@@ -31,7 +32,7 @@ public class RevisedDateEnhancer extends AbstractDateEnhancer {
     }
 
     @Override
-    protected void enhanceMetadata(Element metadata, String day, String month, String year) {
-        Enhancers.setRevisedDate(metadata, day, month, year);
+    protected void enhanceMetadata(DocumentMetadata metadata, String day, String month, String year) {
+        metadata.setDate(DocumentDate.DATE_REVISED, day, month, year);
     }
 }

@@ -22,7 +22,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
@@ -43,8 +43,8 @@ public class ArticleIdEnhancer extends AbstractPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
-        Enhancers.addArticleId(metadata, "hindawi-id", result.group(1));
+    protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
+        metadata.addId(DocumentMetadata.ID_HINDAWI, result.group(1));
         return true;
     }
 }

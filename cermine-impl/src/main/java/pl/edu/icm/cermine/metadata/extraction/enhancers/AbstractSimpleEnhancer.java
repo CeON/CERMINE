@@ -21,7 +21,7 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 import java.util.Collection;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -42,11 +42,11 @@ public abstract class AbstractSimpleEnhancer extends AbstractFilterEnhancer {
         setSearchedZoneLabels(zoneLabels);
     }
 
-    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
+    protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
         return false;
     }
 
-    protected boolean enhanceMetadata(BxPage page, Element metadata) {
+    protected boolean enhanceMetadata(BxPage page, DocumentMetadata metadata) {
         for (BxZone zone : filterZones(page)) {
             if (enhanceMetadata(zone, metadata)) {
                 return true;
@@ -55,7 +55,7 @@ public abstract class AbstractSimpleEnhancer extends AbstractFilterEnhancer {
         return false;
     }
 
-    protected boolean enhanceMetadata(BxDocument document, Element metadata) {
+    protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         for (BxPage page : filterPages(document)) {
             if (enhanceMetadata(page, metadata)) {
                 return true;
@@ -67,7 +67,7 @@ public abstract class AbstractSimpleEnhancer extends AbstractFilterEnhancer {
     protected abstract Set<EnhancedField> getEnhancedFields();
 
     @Override
-    public void enhanceMetadata(BxDocument document, Element metadata, Set<EnhancedField> enhancedFields) {
+    public void enhanceMetadata(BxDocument document, DocumentMetadata metadata, Set<EnhancedField> enhancedFields) {
         Set<EnhancedField> fieldsToEnhance = getEnhancedFields();
         if (!CollectionUtils.containsAny(enhancedFields, fieldsToEnhance) 
                 && enhanceMetadata(document, metadata)) {

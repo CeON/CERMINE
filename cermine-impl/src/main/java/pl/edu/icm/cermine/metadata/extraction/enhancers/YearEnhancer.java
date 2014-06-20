@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
@@ -53,13 +54,15 @@ public class YearEnhancer extends AbstractMultiPatternEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(MatchResult result, Element metadata) {
+    protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
         for (int i = 1; i <= result.groupCount(); i++) {
             String year = result.group(i);
             try {
                 int y = Integer.parseInt(year);
                 if (y >= MIN_YEAR && y < MAX_YEAR) {
-                    Enhancers.setYear(metadata, year);
+                    if (metadata.getDate(DocumentDate.DATE_PUBLISHED) == null) {
+                        metadata.setDate(DocumentDate.DATE_PUBLISHED, null, null, year);
+                    }
                     return true;
                 }
             } catch (NumberFormatException e) {}

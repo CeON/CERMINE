@@ -18,8 +18,9 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Sets;
 import java.util.*;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
@@ -36,15 +37,33 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
         setSearchedFirstPageOnly(true);
     }
 
+    private Set<String> types = Sets.newHashSet(
+            "casereport", 
+            "casestudy", 
+            "clinicalstudy", 
+            "debate", 
+            "editorial",
+            "methodology", 
+            "originalarticle",
+            "research", 
+            "researcharticle", 
+            "reviewarticle", 
+            "study", 
+            "studyprotocol"
+            );
+    
     @Override
     protected Set<EnhancedField> getEnhancedFields() {
         return EnumSet.of(EnhancedField.TITLE);
     }
 
     @Override
-    protected boolean enhanceMetadata(BxPage page, Element metadata) {
+    protected boolean enhanceMetadata(BxPage page, DocumentMetadata metadata) {
         List<BxZone> titleZones = new ArrayList<BxZone>();
         for (BxZone zone : filterZones(page)) {
+            if (types.contains(zone.toText().replaceAll(" ", "").toLowerCase().trim())) {
+                continue;
+            }
             titleZones.add(zone);
         }
         Collections.sort(titleZones, new Comparator<BxZone>() {
@@ -76,7 +95,7 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
             }
 
             if (!titleSB.toString().isEmpty()) {
-                Enhancers.setTitle(metadata, titleSB.toString().trim().replaceAll("\n", " "));
+                metadata.setTitle(titleSB.toString().trim().replaceAll("\n", " "));
                 return true;
             }
         }

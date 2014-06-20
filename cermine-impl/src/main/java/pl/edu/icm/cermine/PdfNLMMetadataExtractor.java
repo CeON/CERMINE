@@ -24,8 +24,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -45,13 +48,16 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
     private ZoneClassifier metadataClassifier;
 
     /** metadata extractor from labelled zones */
-    private MetadataExtractor<Element> extractor;
+    private MetadataExtractor<DocumentMetadata> extractor;
+    
+    DocumentMetadataToNLMElementConverter converter;
 
     public PdfNLMMetadataExtractor() throws AnalysisException {
         try {
             strExtractor = new PdfBxStructureExtractor();
             metadataClassifier = SVMMetadataZoneClassifier.getDefaultInstance();
             extractor = new EnhancerMetadataExtractor();
+            converter = new DocumentMetadataToNLMElementConverter();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
@@ -68,13 +74,14 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
             metaRangeFileReader.close();
 
             extractor = new EnhancerMetadataExtractor();
+            converter = new DocumentMetadataToNLMElementConverter();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
     }
 
     public PdfNLMMetadataExtractor(DocumentStructureExtractor strExtractor, 
-    		ZoneClassifier metadataClassifier, MetadataExtractor<Element> extractor) {
+    		ZoneClassifier metadataClassifier, MetadataExtractor<DocumentMetadata> extractor) {
         this.strExtractor = strExtractor;
         this.metadataClassifier = metadataClassifier;
         this.extractor = extractor;
@@ -102,11 +109,16 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
      */
     @Override
     public Element extractMetadata(BxDocument document) throws AnalysisException {
-        BxDocument doc = metadataClassifier.classifyZones(document);
-        return extractor.extractMetadata(doc);
+        try {
+            BxDocument doc = metadataClassifier.classifyZones(document);
+            DocumentMetadata metadata = extractor.extractMetadata(doc);
+            return converter.convert(metadata);
+        } catch (TransformationException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
-    public void setExtractor(MetadataExtractor<Element> extractor) {
+    public void setExtractor(MetadataExtractor<DocumentMetadata> extractor) {
         this.extractor = extractor;
     }
 

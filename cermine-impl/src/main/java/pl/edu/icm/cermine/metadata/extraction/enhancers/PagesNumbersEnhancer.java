@@ -21,7 +21,7 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -39,7 +39,7 @@ public class PagesNumbersEnhancer extends AbstractFilterEnhancer {
     }
 
     @Override
-    public void enhanceMetadata(BxDocument document, Element metadata, Set<EnhancedField> enhancedFields) {
+    public void enhanceMetadata(BxDocument document, DocumentMetadata metadata, Set<EnhancedField> enhancedFields) {
         if (enhancedFields.contains(EnhancedField.PAGES)) {
             return;
         }
@@ -99,7 +99,7 @@ public class PagesNumbersEnhancer extends AbstractFilterEnhancer {
         }
         
         if (best > -1) {
-            Enhancers.setPages(metadata, String.valueOf(bestarg), 
+            metadata.setPages(String.valueOf(bestarg), 
                             String.valueOf(bestarg+document.asPages().size()-1));
             enhancedFields.add(EnhancedField.PAGES);
         }

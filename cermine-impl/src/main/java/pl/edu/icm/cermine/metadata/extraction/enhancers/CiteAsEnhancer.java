@@ -21,11 +21,11 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -59,7 +59,7 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
     }
 
     @Override
-    public void enhanceMetadata(BxDocument document, Element metadata, Set<EnhancedField> enhancedFields) {
+    public void enhanceMetadata(BxDocument document, DocumentMetadata metadata, Set<EnhancedField> enhancedFields) {
         if (referenceParser == null) {
             return;
         }
@@ -76,21 +76,21 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
                     if (!enhancedFields.contains(EnhancedField.JOURNAL)) {
                         String value = bibEntry.getFirstFieldValue(BibEntry.FIELD_JOURNAL);
                         if (value != null) {
-                            Enhancers.setJournal(metadata, value);
+                            metadata.setJournal(value);
                             enhancedFields.add(EnhancedField.JOURNAL);
                         }
                     }
                     if (!enhancedFields.contains(EnhancedField.VOLUME)) {
                         String value = bibEntry.getFirstFieldValue(BibEntry.FIELD_VOLUME);
                         if (value != null) {
-                            Enhancers.setVolume(metadata, value);
+                            metadata.setVolume(value);
                             enhancedFields.add(EnhancedField.VOLUME);
                         }
                     }
                     if (!enhancedFields.contains(EnhancedField.ISSUE)) {
                         String value = bibEntry.getFirstFieldValue(BibEntry.FIELD_NUMBER);
                         if (value != null) {
-                            Enhancers.setIssue(metadata, value);
+                            metadata.setIssue(value);
                             enhancedFields.add(EnhancedField.ISSUE);
                         }
                     }

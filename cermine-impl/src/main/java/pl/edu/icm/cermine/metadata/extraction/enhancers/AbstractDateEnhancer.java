@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -63,7 +63,7 @@ public abstract class AbstractDateEnhancer extends AbstractSimpleEnhancer {
     }
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
+    protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
         Matcher simpleMatcher = simplePattern.matcher(zone.toText());
         if (simpleMatcher.find()) {
             MatchResult result = simpleMatcher.toMatchResult();
@@ -97,7 +97,7 @@ public abstract class AbstractDateEnhancer extends AbstractSimpleEnhancer {
         return false;
     }
     
-    protected abstract void enhanceMetadata(Element metadata, String day, String month, String year);
+    protected abstract void enhanceMetadata(DocumentMetadata metadata, String day, String month, String year);
 
     private void createPatterns(String nameRegex) {
         StringBuilder simpleRegex = new StringBuilder();

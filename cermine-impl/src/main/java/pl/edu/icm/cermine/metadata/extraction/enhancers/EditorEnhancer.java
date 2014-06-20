@@ -22,7 +22,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -46,13 +46,13 @@ public class EditorEnhancer extends AbstractSimpleEnhancer {
     }
     
     @Override
-    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
+    protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
         String text = zone.toText();
         Matcher matcher = PREFIX_PATTERN.matcher(text);
         if (matcher.find()) {
             text = text.substring(matcher.end()).trim();
         }
-        Enhancers.addEditor(metadata, text);
+        metadata.addEditor(text);
         return true;
     }
 }

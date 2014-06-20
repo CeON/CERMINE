@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jdom.Element;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -47,10 +47,10 @@ public abstract class AbstractPatternEnhancer extends AbstractSimpleEnhancer {
         this.pattern = pattern;
     }
 
-    protected abstract boolean enhanceMetadata(MatchResult result, Element metadata);
+    protected abstract boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata);
 
     @Override
-    protected boolean enhanceMetadata(BxZone zone, Element metadata) {
+    protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
         Matcher matcher = pattern.matcher(zone.toText());
         while (matcher.find()) {
             if(enhanceMetadata(matcher.toMatchResult(), metadata)) {

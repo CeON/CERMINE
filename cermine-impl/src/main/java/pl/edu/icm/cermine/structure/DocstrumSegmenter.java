@@ -74,7 +74,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         }
         double characterSpacing = computeCharacterSpacing(components, orientation);
         double lineSpacing = computeLineSpacing(components, orientation);
-       
+
         List<ComponentLine> lines = determineLines(components, orientation,
                 characterSpacing * componentDistanceCharacterMultiplier,
                 lineSpacing * maxVerticalComponentDistanceMultiplier);
@@ -335,7 +335,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                     if (minHorizontalDistance <= hDist && hDist <= maxHorizontalDistance
                             && minVerticalDistance <= vDist && vDist <= maxVerticalDistance) {
                         sets.union(li, lj);
-                    }
+                            }
                     // Split line that needs later merging
                     else if (minHorizontalMergeDistance <= hDist && hDist <= maxHorizontalMergeDistance
                             && minVerticalMergeDistance <= vDist && vDist <= maxVerticalMergeDistance) {
@@ -874,7 +874,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
 
     public static final double DEFAULT_MAX_VERTICAL_DIST = 1.2;
 
-    public static final double DEFAULT_COMP_DIST_CHAR = 4.5;
+    public static final double DEFAULT_COMP_DIST_CHAR = 3.5;
 
     public static final double DEFAULT_WORD_DIST = 0.2;
 

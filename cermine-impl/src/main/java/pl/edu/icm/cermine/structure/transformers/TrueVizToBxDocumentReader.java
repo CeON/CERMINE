@@ -181,7 +181,7 @@ public class TrueVizToBxDocumentReader {
         }
         for (A elem : list) {
             String nextId = elem.getNextId();
-            if (nextId.equals("-1")) { /*
+            if (nextId.equals("-1") || list.indexOf(elem) == list.size()-1) { /*
                  * there is no next element
                  */
                 elem.setNext(null);

@@ -99,6 +99,15 @@ public final class FinalMetadataExtractionEvaluation {
                 return (double) correct / extracted;
             }
         }
+        
+        public Double calculateF1() {
+            Double prec = calculatePrecission();
+            Double rec = calculateRecall();
+            if (prec == null || rec == null) {
+                return null;
+            }
+            return 2 * prec * rec / (prec + rec);
+        }
     }
 
     public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
@@ -126,6 +135,8 @@ public final class FinalMetadataExtractionEvaluation {
         PrecissonRecall dateYear = new PrecissonRecall();
         PrecissonRecall dateFull = new PrecissonRecall();
         PrecissonRecall journalTitle = new PrecissonRecall();
+        PrecissonRecall title = new PrecissonRecall();
+        PrecissonRecall abstrakt = new PrecissonRecall();
 
         List<Double> abstractRates = new ArrayList<Double>(iter.size());
         List<Double> titleRates = new ArrayList<Double>(iter.size());
@@ -146,7 +157,7 @@ public final class FinalMetadataExtractionEvaluation {
             printVerbose(">>>>>>>>> "+ii);
             
             printVerbose(pair.getExtractedNlm().getPath());
-
+            
             org.w3c.dom.Document originalNlm = documentBuilder.parse(new FileInputStream(pair.getOriginalNlm()));
             org.w3c.dom.Document extractedNlm = documentBuilder.parse(new FileInputStream(pair.getExtractedNlm()));
 
@@ -275,11 +286,31 @@ public final class FinalMetadataExtractionEvaluation {
             } else {
                 abstractRates.add(null);
             }
+            if (!expectedAbstract.isEmpty()) {
+                if (compareStringsSW(expectedAbstract, extractedAbstract) >= 0.9) {
+                    ++abstrakt.correct;
+                }
+                ++abstrakt.expected;
+            }
+            if (!extractedAbstract.isEmpty()) {
+                abstrakt.extracted++;
+            }
+            
             if (expectedTitle.length() > 0) {
                 titleRates.add(compareStringsSW(expectedTitle, extractedTitle));
             } else {
                 titleRates.add(null);
             }
+            if (!expectedTitle.isEmpty()) {
+                if (compareStringsSW(expectedTitle, extractedTitle) >= 0.9) {
+                    ++title.correct;
+                }
+                ++title.expected;
+            }
+            if (!extractedTitle.isEmpty()) {
+                title.extracted++;
+            }
+            
             if (!expectedJournalTitle.isEmpty()) {
                 journalTitle.expected++;
             }
@@ -321,18 +352,18 @@ public final class FinalMetadataExtractionEvaluation {
             } else {
                 affPrecisions.add(null);
             }
+            
+                System.out.println("");
+                printVerbose(">>> Expected authors: ");
+                for (String author : expectedAuthors) {
+                    printVerbose(author);
+                }
 
-            System.out.println("");
-            printVerbose(">>> Expected authors: ");
-            for (String author : expectedAuthors) {
-                printVerbose(author);
-            }
-
-            System.out.println("");
-            printVerbose(">>> Extracted authors: ");
-            for (String author : extractedAuthors) {
-                printVerbose(author);
-            }
+                System.out.println("");
+                printVerbose(">>> Extracted authors: ");
+                for (String author : extractedAuthors) {
+                    printVerbose(author);
+                }
 
             System.out.println("");
             printVerbose(">>> Expected keywords: ");
@@ -349,11 +380,11 @@ public final class FinalMetadataExtractionEvaluation {
             printVerbose(">>> Expected journal title: " + expectedJournalTitle);
             printVerbose(">>> Extracted journal title: " + extractedJournalTitle);
 
-            printVerbose(">>> Expected article title: " + expectedTitle);
-            printVerbose(">>> Extracted article title: " + extractedTitle);
+                printVerbose(">>> Expected article title: " + expectedTitle);
+                printVerbose(">>> Extracted article title: " + extractedTitle);
 
-            printVerbose(">>> Expected article abstract: " + expectedAbstract);
-            printVerbose(">>> Extracted article abstract: " + extractedAbstract);
+                printVerbose(">>> Expected article abstract: " + expectedAbstract);
+                printVerbose(">>> Extracted article abstract: " + extractedAbstract);
 
             printVerbose(">>> Expected doi: " + expectedDoi);
             printVerbose(">>> Extracted doi: " + extractedDoi);
@@ -366,7 +397,7 @@ public final class FinalMetadataExtractionEvaluation {
             
             printVerbose(">>> Expected issue: " + expectedIssue);
             printVerbose(">>> Extracted issue: " + extractedIssue);
-            
+
             printVerbose(">>> Expected pages: " + expectedFPage + " " + expectedLPage);
             printVerbose(">>> Extracted pages: " + extractedFPage + " " + extractedLPage);
             
@@ -379,17 +410,17 @@ public final class FinalMetadataExtractionEvaluation {
             for (String date : extractedPubDate) {
                 printVerbose(date);
             }
-            printVerbose(">>> Expected affs: ");
-            for (String aff : expectedAffiliations) {
-                printVerbose(aff);
-            }
+                printVerbose(">>> Expected affs: ");
+                for (String aff : expectedAffiliations) {
+                    printVerbose(aff);
+                }
 
-            printVerbose(">>> Extracted affs: ");
-            for (String aff : extractedAffiliations) {
-                printVerbose(aff);
-            }
-            
-            
+                printVerbose(">>> Extracted affs: ");
+                for (String aff : extractedAffiliations) {
+                    printVerbose(aff);
+                }
+
+
             printVerbose("abstract " + abstractRates.get(abstractRates.size()-1));
             printVerbose("title " + titleRates.get(titleRates.size()-1));
             printVerbose("journal title " + journalTitle);
@@ -419,8 +450,20 @@ public final class FinalMetadataExtractionEvaluation {
         if ((value = calculateAverage(abstractRates)) != null) {
             System.out.printf("abstract avg (SW) \t\t%4.2f\n", 100 * value);
         }
+        if ((value = abstrakt.calculatePrecission()) != null) {
+            System.out.printf("abstract precission\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = abstrakt.calculateRecall()) != null) {
+            System.out.printf("abstract recall\t\t%4.2f\n", 100 * value);
+        }
         if ((value = calculateAverage(titleRates)) != null) {
             System.out.printf("title avg (SW) \t\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = title.calculatePrecission()) != null) {
+            System.out.printf("title precission\t\t%4.2f\n", 100 * value);
+        }
+        if ((value = title.calculateRecall()) != null) {
+            System.out.printf("title recall\t\t%4.2f\n", 100 * value);
         }
         if ((value = journalTitle.calculatePrecission()) != null) {
             System.out.printf("journal title precission\t\t%4.2f\n", 100 * value);
@@ -477,11 +520,58 @@ public final class FinalMetadataExtractionEvaluation {
             System.out.printf("issue recall\t\t%4.2f\n", 100 * value);
         }
         if ((value = pages.calculatePrecission()) != null) {
-            System.out.printf("pages precission avg\t\t%4.2f\n", 100 * value);
+            System.out.printf("pages precission\t\t%4.2f\n", 100 * value);
         }
         if ((value = pages.calculateRecall()) != null) {
-            System.out.printf("pages recall avg\t\t%4.2f\n", 100 * value);
+            System.out.printf("pages recall\t\t%4.2f\n", 100 * value);
         }
+
+        System.out.println("");
+        
+        double authorPrecision = calculateAverage(authorsPrecisions);
+        double authorRecall = calculateAverage(authorsRecalls);
+        double authorF1 = 2 * authorPrecision * authorRecall / (authorPrecision + authorRecall);
+        
+        double affiliationPrecision = calculateAverage(affPrecisions);
+        double affiliationRecall = calculateAverage(affRecalls);
+        double affiliationF1 = 2 * affiliationPrecision * affiliationRecall / (affiliationPrecision + affiliationRecall);
+
+        double keywordPrecision = calculateAverage(keywordPrecisions);
+        double keywordRecall = calculateAverage(keywordRecalls);
+        double keywordF1 = 2 * keywordPrecision * keywordRecall / (keywordPrecision + keywordRecall);
+        
+        System.out.printf("abstract F1 score\t\t%4.2f\n", 100 * abstrakt.calculateF1());
+        System.out.printf("title F1 score\t\t%4.2f\n", 100 * title.calculateF1());
+        System.out.printf("journal F1 score\t\t%4.2f\n", 100 * journalTitle.calculateF1());
+        System.out.printf("authors F1 score\t\t%4.2f\n", 100 * authorF1);
+        System.out.printf("affs F1 score\t\t%4.2f\n", 100 * affiliationF1);
+        System.out.printf("keywords F1 score\t\t%4.2f\n", 100 * keywordF1);
+        System.out.printf("year F1 score\t\t%4.2f\n", 100 * dateYear.calculateF1());
+        System.out.printf("volume F1 score\t\t%4.2f\n", 100 * volume.calculateF1());
+        System.out.printf("issue F1 score\t\t%4.2f\n", 100 * issue.calculateF1());
+        System.out.printf("doi F1 score\t\t%4.2f\n", 100 * doi.calculateF1());
+        System.out.printf("issn F1 score\t\t%4.2f\n", 100 * issn.calculateF1());
+        System.out.printf("pages F1 score\t\t%4.2f\n", 100 * pages.calculateF1());
+        
+        System.out.println("");
+        
+        double avgPrecision = (abstrakt.calculatePrecission() + title.calculatePrecission() 
+                + journalTitle.calculatePrecission() + authorPrecision + affiliationPrecision 
+                + dateYear.calculatePrecission() + volume.calculatePrecission() + issue.calculatePrecission()
+                + keywordPrecision + doi.calculatePrecission() + pages.calculatePrecission()) / 11;
+        System.out.printf("avg precision\t\t%4.2f\n", 100 * avgPrecision);
+        
+        double avgRecall = (abstrakt.calculateRecall() + title.calculateRecall() + journalTitle.calculateRecall() 
+                + authorRecall + affiliationRecall + dateYear.calculateRecall() + volume.calculateRecall() 
+                + issue.calculateRecall() + keywordRecall + doi.calculateRecall() + pages.calculateRecall()) / 11;
+        System.out.printf("avg recall\t\t%4.2f\n", 100 * avgRecall);
+        
+        double avgF1 = (abstrakt.calculateF1()+title.calculateF1()+journalTitle.calculateF1()+authorF1
+                +affiliationF1+dateYear.calculateF1()+volume.calculateF1()+issue.calculateF1()
+                +keywordF1+doi.calculateF1()+pages.calculateF1())
+                / 11;
+        System.out.printf("avg F1 score\t\t%4.2f\n", 100 * avgF1);
+        
     }
 
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {

@@ -129,7 +129,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
             return orderedZones;
         }
     }
-
+    
     /**
      * Generic function for setting IDs and creating a linked list by filling references. Used solely by
      * setIdsAndLinkTogether(). Can Handle all classes implementing Indexable interface.
@@ -327,13 +327,19 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                 obj2.getY() + obj2.getHeight());
         double dist = ((x1 - x0) * (y1 - y0) - obj1.getArea() - obj2.getArea());
 
-        double obj1CenterX = obj1.getX();
+        double obj1X = obj1.getX();
+        double obj1CenterX = obj1.getX() + obj1.getWidth() / 2;
         double obj1CenterY = obj1.getY() + obj1.getHeight() / 2;
-        double obj2CenterX = obj2.getX();
+        double obj2X = obj2.getX();
+        double obj2CenterX = obj2.getX() + obj2.getWidth() / 2;
         double obj2CenterY = obj2.getY() + obj2.getHeight() / 2;
 
-        double obj1obj2VectorCosineAbs = Math.abs((obj2CenterX - obj1CenterX) / Math.sqrt((obj2CenterX - obj1CenterX) * (obj2CenterX - obj1CenterX) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));
+        double obj1obj2VectorCosineAbsLeft = Math.abs((obj2X - obj1X) / Math.sqrt((obj2X - obj1X) * (obj2X - obj1X) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));     
+        double obj1obj2VectorCosineAbsCenter = Math.abs((obj2CenterX - obj1CenterX) / Math.sqrt((obj2CenterX - obj1CenterX) * (obj2CenterX - obj1CenterX) + (obj2CenterY - obj1CenterY) * (obj2CenterY - obj1CenterY)));
+        
+        double cosine = Math.min(obj1obj2VectorCosineAbsLeft, obj1obj2VectorCosineAbsCenter);
+        
         final double MAGIC_COEFF = 0.5;
-        return dist * (MAGIC_COEFF + obj1obj2VectorCosineAbs);
+        return dist * (MAGIC_COEFF + cosine);
     }
 }

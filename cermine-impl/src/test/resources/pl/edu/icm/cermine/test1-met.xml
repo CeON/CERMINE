@@ -33,12 +33,14 @@
         </contrib>
         <aff id="0">
           <label>0</label>
-          Department of Surgery, University of Calgary, Calgary,
+          <institution>Department of Surgery, University of Calgary</institution>
+          , Calgary,
           <country>Canada</country>
         </aff>
         <aff id="1">
           <label>1</label>
-          Department of Surgery, University of British Columbia,
+          <institution>Department of Surgery, University of British Columbia</institution>
+          ,
           <country>Vancouver, Canada</country>
         </aff>
       </contrib-group>

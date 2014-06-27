@@ -22,22 +22,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
  *
- * @author krusek
+ * @author Dominika Tkaczyk
  */
 public class AffiliationCountryEnhancer implements Enhancer {
 
-    private static List<String> countries = new ArrayList<String>();
+    private static final String COUNTRIES_FILE = "/pl/edu/icm/cermine/metadata/affiliation/countries.txt";
+    private static final String INSTITUTIONS_FILE = "/pl/edu/icm/cermine/metadata/affiliation/institutions.txt";
+    
+    private static final List<String> countries = new ArrayList<String>();
     static {
-        readCountries();
+        readHints(COUNTRIES_FILE, countries);
+    }
+    private static final List<String> institutions = new ArrayList<String>();
+    static {
+        readHints(INSTITUTIONS_FILE, institutions);
     }
     
     @Override
@@ -47,63 +52,100 @@ public class AffiliationCountryEnhancer implements Enhancer {
             
             String[] tokens = text.split("((?<=[,;])|(?=[,;]))");
             int index = 0;
-        
-            List<Integer> begin = new ArrayList<Integer>();
-            List<Integer> end = new ArrayList<Integer>();
+
+            List<Integer> fieldIndexes = new ArrayList<Integer>();
+            List<Token> fieldTokens = new ArrayList<Token>();
             
             for (String token : tokens) {
                 if (token.equals(",") || token.equals(";")) {
                     index += token.length();
                     continue;
-                }
-                
+                }   
                 if (countries.contains(normalize(token))) {
-                    begin.add(index);
-                    end.add(index+token.length());
-                } else {
+                    fieldIndexes.add(index);
+                    fieldTokens.add(new Token(index, index+token.length(), DocumentAffiliation.TAG_COUNTRY));
+                }
+                index += token.length();
+            }
+
+            index = 0;
+            for (String token : tokens) {
+                if (token.equals(",") || token.equals(";")) {
+                    index += token.length();
+                    continue;
+                }
+                if (!fieldIndexes.contains(index)) {
+                    for (String institution : institutions) {
+                        if (token.toLowerCase().contains(institution)) {
+                            fieldTokens.add(new Token(index, index+token.length(), DocumentAffiliation.TAG_INSTITUTION));
+                            break;
+                        }
+                    }
+                }
+                index += token.length();
+            }
+            
+            index = 0;
+            for (String token : tokens) {
+                if (token.equals(",") || token.equals(";")) {
+                    index += token.length();
+                    continue;
+                }
+                if (!fieldIndexes.contains(index)) {    
                     int index2 = index;
                     String[] tokens2 = token.split("((?<=[.,;()])|(?=[.,;()]))");
                     for (String token2 : tokens2) {
                         if (countries.contains(normalize(token2))) {
-                            begin.add(index2);
-                            end.add(index2+token2.length());
+                            fieldTokens.add(new Token(index2, index2+token2.length(), DocumentAffiliation.TAG_COUNTRY));
                         }
                         index2 += token2.length();
                     }
                 }
                 index += token.length();
             }
+
+            Collections.sort(fieldTokens, new Comparator<Token>() {
+
+                @Override
+                public int compare(Token t, Token t1) {
+                    return Integer.valueOf(t.begin).compareTo(Integer.valueOf(t1.begin));
+                }
+            });
             
             int bIndex = -1;
             int eIndex = -1;
-            for (int i = 0; i < begin.size(); i++) {
+            String cTag = null;
+            for (int i = 0; i < fieldTokens.size(); i++) {
                 if (bIndex == -1) {
-                    bIndex = begin.get(i);
-                    eIndex = end.get(i);
+                    bIndex = fieldTokens.get(i).begin;
+                    eIndex = fieldTokens.get(i).end;
+                    cTag = fieldTokens.get(i).tag;
                 } else {
-                    if (eIndex >= begin.get(i) || text.substring(eIndex, begin.get(i)).matches(" *[,;.()] *")) {
-                        eIndex = end.get(i);
+                    if (cTag.equals(fieldTokens.get(i).tag) && (eIndex >=  fieldTokens.get(i).begin
+                            || text.substring(eIndex, fieldTokens.get(i).begin).matches(" *[,;.()] *"))) {
+                        eIndex = fieldTokens.get(i).end;
                     } else {
-                        affiliation.addCountry(bIndex, eIndex);
-                        bIndex = -1;
-                        eIndex = -1;
+                        affiliation.addToken(bIndex, eIndex, cTag);
+                        bIndex = fieldTokens.get(i).begin;
+                        eIndex = fieldTokens.get(i).end;
+                        cTag = fieldTokens.get(i).tag;
                     }
                 }
             }
             if (bIndex != -1) {
-                affiliation.addCountry(bIndex, eIndex);
+                affiliation.addToken(bIndex, eIndex, cTag);
             }
             
         }
     }
     
-    public static void readCountries() {
-        InputStream is = AffiliationCountryEnhancer.class.getResourceAsStream("/pl/edu/icm/cermine/metadata/affiliation/countries.txt");
+    public static void readHints(String file, List<String> list) {
+        InputStream is = AffiliationCountryEnhancer.class.getResourceAsStream(file);
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
         String line;
         try {
             while((line = in.readLine()) != null) {
-                countries.add(normalize(line));
+                list.add(normalize(line));
             }
         } catch (IOException ex) {
         } finally {
@@ -117,4 +159,16 @@ public class AffiliationCountryEnhancer implements Enhancer {
         return string.toLowerCase().replaceAll("[^a-z]", "").trim();
     }
     
+    private static class Token {
+        int begin;
+        int end;
+        String tag;
+
+        public Token(int begin, int end, String tag) {
+            this.begin = begin;
+            this.end = end;
+            this.tag = tag;
+        }
+        
+    }
 }

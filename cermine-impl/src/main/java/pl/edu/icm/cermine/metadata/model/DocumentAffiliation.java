@@ -78,11 +78,15 @@ public class DocumentAffiliation {
         rawText = MetadataTools.clean(rawText);
     }
 
+    public void addInstitution(int bIndex, int eIndex){
+        addToken(bIndex, eIndex, TAG_INSTITUTION);
+    }
+    
     public void addCountry(int bIndex, int eIndex){
         addToken(bIndex, eIndex, TAG_COUNTRY);
     }
     
-    private void addToken(int bIndex, int eIndex, String tag) {
+    public void addToken(int bIndex, int eIndex, String tag) {
         List<AffiliationToken> significantTokens = new ArrayList<AffiliationToken>();
         for (AffiliationToken token : tokens) {
             if ((bIndex >= token.startIndex && bIndex < token.endIndex)
@@ -115,6 +119,7 @@ public class DocumentAffiliation {
 
         
     public static final String TAG_COUNTRY = "country";
+    public static final String TAG_INSTITUTION = "institution";
     
     
     public static class AffiliationToken {

@@ -157,6 +157,8 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
                 aff.addContent(token.getText());
             } else if (token.getTag().equals(DocumentAffiliation.TAG_COUNTRY)) {
                 addElement(aff, TAG_COUNTRY, token.getText());
+            } else if (token.getTag().equals(DocumentAffiliation.TAG_INSTITUTION)) {
+                addElement(aff, TAG_INSTITUTION, token.getText());
             }
         }
         return aff;
@@ -229,6 +231,7 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
     private static final String TAG_FPAGE                       = "fpage";
     private static final String TAG_FRONT                       = "front";
     private static final String TAG_HISTORY                     = "history";
+    private static final String TAG_INSTITUTION                 = "institution";
     private static final String TAG_ISSN                        = "issn";
     private static final String TAG_ISSUE                       = "issue";
     private static final String TAG_JOURNAL_META                = "journal-meta";

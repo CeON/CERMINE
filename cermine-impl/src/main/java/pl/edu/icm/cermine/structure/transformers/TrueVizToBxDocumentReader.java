@@ -57,8 +57,10 @@ public class TrueVizToBxDocumentReader {
         ZONE_LABEL_MAP.put("affiliation", BxZoneLabel.MET_AFFILIATION);
         ZONE_LABEL_MAP.put("attachment", BxZoneLabel.BODY_ATTACHMENT);
         ZONE_LABEL_MAP.put("author", BxZoneLabel.MET_AUTHOR);
+        ZONE_LABEL_MAP.put("author_title", BxZoneLabel.MET_TITLE_AUTHOR);
         ZONE_LABEL_MAP.put("bib_info", BxZoneLabel.MET_BIB_INFO);
         ZONE_LABEL_MAP.put("biography", BxZoneLabel.MET_BIOGRAPHY);
+        ZONE_LABEL_MAP.put("body", BxZoneLabel.BODY_CONTENT);
         ZONE_LABEL_MAP.put("body_content", BxZoneLabel.BODY_CONTENT);
         ZONE_LABEL_MAP.put("contribution", BxZoneLabel.BODY_CONTRIBUTION);
         ZONE_LABEL_MAP.put("conflict_statement", BxZoneLabel.BODY_CONFLICT_STMT);

@@ -144,8 +144,12 @@ public enum BxZoneLabel {
     /** References zones */
     
     /** References - 33 */
-    REFERENCES          (BxZoneLabelCategory.CAT_REFERENCES);
+    REFERENCES          (BxZoneLabelCategory.CAT_REFERENCES),
+    
+    /** Document's title with authors - 34 */
+    MET_TITLE_AUTHOR    (BxZoneLabelCategory.CAT_METADATA);
          
+    
     private final BxZoneLabelCategory category;
     
     private static final Map<BxZoneLabelCategory, BxZoneLabel> CATEGORY_TO_GENERAL = 

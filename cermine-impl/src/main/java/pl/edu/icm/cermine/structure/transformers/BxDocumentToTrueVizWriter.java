@@ -60,6 +60,7 @@ public class BxDocumentToTrueVizWriter {
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_ABSTRACT,          "abstract");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_AFFILIATION,       "affiliation");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_AUTHOR,            "author");
+        ZONE_LABEL_MAP.put(BxZoneLabel.MET_TITLE_AUTHOR,      "author_title");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_BIB_INFO,          "bib_info");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_BIOGRAPHY,		  "biography");
         ZONE_LABEL_MAP.put(BxZoneLabel.MET_CORRESPONDENCE,    "correspondence");

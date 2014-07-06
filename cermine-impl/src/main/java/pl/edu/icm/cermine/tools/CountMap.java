@@ -30,6 +30,15 @@ public class CountMap<T> {
     public int size() {
         return map.size();
     }
+
+    public T getMaxCountObject() {
+        if (size() == 0) {
+            return null;
+        }
+        List<Map.Entry<T, Integer>> list = Lists.newArrayList(map.entrySet());
+        list = sortEntries(list);
+        return list.get(0).getKey();
+    }
     
     public List<Map.Entry<T, Integer>> getSortedEntries() {
         List<Map.Entry<T, Integer>> list = Lists.newArrayList(map.entrySet());

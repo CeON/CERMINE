@@ -30,6 +30,8 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
 
     private static final long serialVersionUID = -6911268485662874663L;
 
+    private String fontName;
+    
     public BxChunk(BxBounds bounds, String text) {
         this.setBounds(bounds);
         this.setText(text);
@@ -41,6 +43,14 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
 
     public BxChunk withText(String text) {
         return new BxChunk(getBounds(), text);
+    }
+
+    public String getFontName() {
+        return fontName;
+    }
+
+    public void setFontName(String fontName) {
+        this.fontName = fontName;
     }
 
     public String toText() {

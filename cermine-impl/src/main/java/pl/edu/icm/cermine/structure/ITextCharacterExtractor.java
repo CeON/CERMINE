@@ -256,8 +256,10 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                         || Double.isNaN(bounds.getWidth()) || Double.isInfinite(bounds.getWidth())) {
                     continue;
                 }
-                
-                actPage.addChunk(new BxChunk(bounds, text));
+              
+                BxChunk chunk = new BxChunk(bounds, text);
+                chunk.setFontName(tri.getFont().getFullFontName()[0][3]);
+                actPage.addChunk(chunk);
                 boundsBuilder.expand(bounds);
             }
         }

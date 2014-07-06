@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 import com.google.common.collect.Sets;
 import java.util.*;
 import java.util.regex.Pattern;
+import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.*;
 
@@ -34,8 +35,8 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
             ".*(Email|Correspondence|Contributed equally):?.*",
             Pattern.CASE_INSENSITIVE);
     
-    private static final Pattern fullIndexPattern = Pattern.compile("\\d{1,2}|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|[a-f]");
-    private static final Pattern simpleIndexPattern = Pattern.compile("\\*|∗|⁎|†|‡|§|\\{|¶|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ");
+    private static final Pattern fullIndexPattern = Pattern.compile("\\d{1,2}|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|[a-f]|¹|²|³");
+    private static final Pattern simpleIndexPattern = Pattern.compile("\\*|∗|⁎|†|‡|§|\\{|¶|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|¹|²|³");
         
 
     private final Set<String> headers = Sets.newHashSet("authoraffiliations", "authordetails", "affiliations");
@@ -58,6 +59,11 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
+        Set<String> indexes = new HashSet<String>();
+        for (DocumentAuthor author : metadata.getAuthors()) {
+            indexes.addAll(author.getAffiliationRefs());
+        }
+        
         boolean enhanced = false;
         for (BxPage page : filterPages(document)) {
             Processor processor = new Processor();
@@ -117,12 +123,35 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             .replaceFirst("[Ee]mails?:.*$", "").trim()
                             .replaceFirst("[Ee]-[Mm]ails?:.*$", "").trim()
                             .replaceFirst("[\\.,;]$", "").trim();
+                    if (text.isEmpty() || !text.matches(".*[a-zA-Z].*") || text.length() < 20) {
+                        continue;
+                    }
                     String index = entry.getKey();
                     if (index.startsWith("aff-")) {
                         index = "";
                     }
                     if (index == null || index.isEmpty()) {
-                        metadata.addAffiliationToAllAuthors(text);
+                        if (text.matches("^[1-9]\\. .*") && indexes.contains(text.substring(0, 1))) {
+                            while (!text.isEmpty()) {
+                                index = text.substring(0, 1);
+                                text = text.replaceFirst("^[1-9]\\. *", "").trim();
+                                String t = text.replaceFirst(" *[1-9]\\. .*$", "");
+                                String rest = text.substring(t.length()).trim();
+                                if (!rest.isEmpty() && indexes.contains(rest.substring(0, 1))) {
+                                    if (t.length() > 20) {
+                                        metadata.setAffiliationByIndex(index, t);
+                                    }
+                                    text = rest;
+                                } else {
+                                    if (text.length() > 20) {
+                                        metadata.setAffiliationByIndex(index, text);
+                                    }
+                                    text = "";
+                                }
+                            }
+                        } else {
+                            metadata.addAffiliationToAllAuthors(text);
+                        }
                     } else {
                         metadata.setAffiliationByIndex(index, text);
                     }

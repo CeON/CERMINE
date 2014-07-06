@@ -18,15 +18,15 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Sets;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.structure.model.*;
 
 /**
  *
@@ -48,29 +48,41 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
-        StringBuilder sb = new StringBuilder();
+        List<BxLine> lines = new ArrayList<BxLine>();
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
-                String[] lines = zone.toText().split("\n");
-                for (String line : lines) {
-                    String normalized = line.toLowerCase().trim();
-                    if (normalized.startsWith("abstract")
-                        || normalized.startsWith("a b s t r a c t")
-                        || normalized.startsWith("article info")) {
-                        sb = new StringBuilder();
-                    }
-                    if (normalized.startsWith("keywords")
-                        || normalized.startsWith("key words")
-                        || normalized.startsWith("introduction")
-                        || normalized.endsWith("introduction")
-                        || normalized.startsWith("this work is licensed")) {
-                        break;
-                    }
-                    sb.append("\n");
-                    sb.append(line.trim());
+                for (BxLine line : zone.getLines()) {
+                    lines.add(line);
                 }
             }
-         }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        BxLine prev = null;
+        for (BxLine line : lines) {
+            String normalized = line.toText().toLowerCase().trim();
+            if (normalized.startsWith("abstract")
+                || normalized.startsWith("a b s t r a c t")
+                || normalized.startsWith("article info")) {
+                sb = new StringBuilder();
+            }
+            if (normalized.startsWith("keywords")
+                || normalized.startsWith("key words")
+                || normalized.equals("introduction")
+                || normalized.startsWith("this work is licensed")
+                || (normalized.length() < 20 &&
+                   (normalized.startsWith("introduction") || normalized.endsWith("introduction")))) {
+                break;
+            }
+            if (prev != null && !prev.getParent().equals(line.getParent()) &&
+                lines.indexOf(line) > 5 && prev.toText().endsWith(".") &&
+                (Math.abs(prev.getX()-line.getX()) > 5 || Sets.intersection(prev.getFontNames(), line.getFontNames()).isEmpty())) {
+                break;
+            }
+            sb.append("\n");
+            sb.append(line.toText().trim());
+            prev = line;
+        }
 
         String text = sb.toString().trim();
         if (!text.isEmpty()) {

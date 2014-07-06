@@ -35,6 +35,10 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 public class EnhancerMetadataExtractor implements MetadataExtractor<DocumentMetadata> {
 
     private final List<Enhancer> enhancers = Arrays.<Enhancer>asList(
+                new TitleAuthorSplitterEnhancer(),
+                new AuthorTitleSplitterEnhancer(),
+                new AuthorAffiliationSplitterEnhancer(),
+                new AffiliationAuthorSplitterEnhancer(),
                 new HindawiCornerInfoEnhancer(),
                 new TitleMergedWithTypeEnhancer(),
                 new TitleEnhancer(),

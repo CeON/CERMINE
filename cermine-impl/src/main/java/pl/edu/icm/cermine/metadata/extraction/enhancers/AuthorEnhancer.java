@@ -46,7 +46,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         boolean enhanced = false;
         for (BxPage page : filterPages(document)) {
-            for (BxZone zone : filterZones(page)) {
+            for (BxZone zone : filterZones(page)) {              
                 List<BxChunk> chunks = new ArrayList<BxChunk>();
                 for (BxLine l : zone.getLines()) {
                     for (BxWord w : l.getWords()) {
@@ -58,9 +58,9 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 }
                 
                 Pattern white = Pattern.compile("(\\s+)(.*)");
-                Pattern simpleRef = Pattern.compile("(\\d+|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ)(.*)");
-                Pattern title = Pattern.compile("(MD|Prof.|MS|PhD|Phd|MPH|RD|LD|MB|BCh|BAO|PharmD|BSc|FRCP|PA-C|RAC|MBA|DrPH|MBChB|BM|RGN|BA|FCCP)([^a-zA-Z].*)");
-                Pattern titleEnd = Pattern.compile("(MD|Prof.|MS|PhD|Phd|MPH|RD|LD|MB|BCh|BAO|PharmD|BSc|FRCP|PA-C|RAC|MBA|DrPH|MBChB|BM|RGN|BA|FCCP)");
+                Pattern simpleRef = Pattern.compile("(\\d+|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|¹|²|³|#|α|β|λ|ξ|ψ)(.*)");
+                Pattern title = Pattern.compile("(MD|Prof.|PhD|Phd|MPH|RD|LD|BCh|BAO|PharmD|BSc|FRCP|PA-C|RAC|MBA|DrPH|MBChB|BM|RGN|BA|FCCP)([^a-zA-Z].*)");
+                Pattern titleEnd = Pattern.compile("(MD|Prof.|PhD|Phd|MPH|RD|LD|BCh|BAO|PharmD|BSc|FRCP|PA-C|RAC|MBA|DrPH|MBChB|BM|RGN|BA|FCCP)");
                 Pattern separator = Pattern.compile("(,|;|&|•|·|Æ)(.*)");
                 Pattern andSeparator = Pattern.compile("(and|AND)\\b(.*)");
                 Pattern andEndSeparator = Pattern.compile("(and|AND)");
@@ -71,6 +71,10 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 String author = "";
                 List<String> refs = new ArrayList<String>();
                 boolean auth = false;
+                
+                if (text.toLowerCase().contains("vol") && text.toLowerCase().contains("no")) {
+                    continue;
+                }
                 
                 while (!text.isEmpty()) {
                     Matcher whiteMatcher = white.matcher(text);
@@ -135,7 +139,9 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         } else {
                             if (!auth && !author.trim().isEmpty()) {
                                 author = CharMatcher.WHITESPACE.trimFrom(author);
-                                metadata.addAuthor(author, refs);
+                                if (!author.toLowerCase().equals("article info") && author.matches(".*[a-zA-Z].*")) {
+                                    metadata.addAuthor(author, refs);
+                                }
                                 author = "";
                                 refs.clear();
                             }
@@ -149,7 +155,9 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 }
                 if (!author.isEmpty() && !author.toLowerCase().endsWith("introduction")) {
                     author = CharMatcher.WHITESPACE.trimFrom(author);
-                    metadata.addAuthor(author, refs);
+                    if (!author.toLowerCase().equals("article info") && author.matches(".*[a-zA-Z].*")) {
+                        metadata.addAuthor(author, refs);
+                    }
                 }
                 
                 enhanced = true;

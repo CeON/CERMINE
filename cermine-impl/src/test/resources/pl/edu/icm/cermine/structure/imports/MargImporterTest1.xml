@@ -53,6 +53,7 @@
 					</CharacterCorners>
 					<PointSize Value = "22"/>
 					<Style Value = "Normal"/>
+                    <Font Size="" Spacing="" Style="" Type="font-1"/>
 					<GT_Text Value = "H"/>
 				</Character>
 				<Character>
@@ -66,6 +67,7 @@
 					</CharacterCorners>
 					<PointSize Value = "22"/>
 					<Style Value = "Normal"/>
+                    <Font Size="" Spacing="" Style="" Type="font-2"/>
 					<GT_Text Value = "o"/>
 				</Character>
 				<Character>

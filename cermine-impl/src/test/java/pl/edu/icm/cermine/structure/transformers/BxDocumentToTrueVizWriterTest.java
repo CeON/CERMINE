@@ -65,8 +65,12 @@ public class BxDocumentToTrueVizWriterTest {
     private BxDocument getBxDocument() {
         BxWord w = new BxWord();
         w.setBounds(new BxBounds(0, 0, 1, 1));
-        w.addChunk(new BxChunk(new BxBounds(0, 0, 1, 1), "a"));
-        w.addChunk(new BxChunk(new BxBounds(0, 0, 1, 1), "b"));
+        BxChunk ch1 = new BxChunk(new BxBounds(0, 0, 1, 1), "a");
+        ch1.setFontName("font-1");
+        BxChunk ch2 = new BxChunk(new BxBounds(0, 0, 1, 1), "b");
+        ch2.setFontName("font-2");
+        w.addChunk(ch1);
+        w.addChunk(ch2);
 
         BxLine l = new BxLine();
         l.setBounds(new BxBounds(0, 0, 1, 1));
@@ -112,6 +116,9 @@ public class BxDocumentToTrueVizWriterTest {
 
         assertXpath("string(/Document/Page[1]/Zone[1]/Line[1]/Word[1]/Character[1]/GT_Text/@Value)", "a");
         assertXpath("string(/Document/Page[1]/Zone[1]/Line[1]/Word[1]/Character[2]/GT_Text/@Value)", "b");
+        
+        assertXpath("string(/Document/Page[1]/Zone[1]/Line[1]/Word[1]/Character[1]/Font/@Type)", "font-1");
+        assertXpath("string(/Document/Page[1]/Zone[1]/Line[1]/Word[1]/Character[2]/Font/@Type)", "font-2");
     }
 
     @Test

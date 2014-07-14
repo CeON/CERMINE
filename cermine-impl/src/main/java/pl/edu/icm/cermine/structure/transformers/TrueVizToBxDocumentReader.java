@@ -323,6 +323,11 @@ public class TrueVizToBxDocumentReader {
         chunk.setId(getOptionalChildValue("CharacterId", charE));
         chunk.setNextId(getOptionalChildValue("CharacterNext", charE));
 
+        List<Element> fonts = getChildren("Font", charE);
+        if (!fonts.isEmpty()) {
+            chunk.setFontName(fonts.get(0).getAttribute("Type"));
+        }
+        
         if (areIdsSet && (chunk.getId() == null || chunk.getNextId() == null)) {
             areIdsSet = false;
         }

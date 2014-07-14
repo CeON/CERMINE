@@ -137,6 +137,12 @@ public class BxDocumentToTrueVizWriter {
         appendPropertyIfNotNull(doc, node, "CharacterID", chunk.getId());
         appendBounds(doc, node, "CharacterCorners", chunk.getBounds(), hints);
         appendPropertyIfNotNull(doc, node, "CharacterNext", chunk.getNextId());
+        Element font = doc.createElement("Font");
+        font.setAttribute("Size", "");
+        font.setAttribute("Spacing", "");
+        font.setAttribute("Style", "");
+        font.setAttribute("Type", chunk.getFontName());
+        node.appendChild(font);
         appendProperty(doc, node, "GT_Text", chunk.toText());
         parent.appendChild(node);
     }

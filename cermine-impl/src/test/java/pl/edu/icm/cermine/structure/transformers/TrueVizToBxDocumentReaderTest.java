@@ -77,6 +77,9 @@ public class TrueVizToBxDocumentReaderTest {
        assertTrue(contains);
        assertTrue(rightText);
        assertTrue(rightSize);
+       
+       assertEquals("font-1", page.getZones().get(0).getLines().get(0).getWords().get(0).getChunks().get(0).getFontName());
+       assertEquals("font-2", page.getZones().get(0).getLines().get(0).getWords().get(0).getChunks().get(1).getFontName());
     }
 
 	private BxDocument getDocumentFromZipFile(String zipFilename, String filename) throws TransformationException, IOException, URISyntaxException {
@@ -163,4 +166,5 @@ public class TrueVizToBxDocumentReaderTest {
     
     }
 
+    
 }

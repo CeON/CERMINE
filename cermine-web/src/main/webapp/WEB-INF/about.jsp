@@ -66,12 +66,12 @@ $ curl -X POST --data-binary @article.pdf \
                  <p>BibTeX:</p>
                  <br/>
                  <pre>
-@inproceedings{TkaczykBCR2012,
+@inproceedings{TkaczykSDFB201,
   author = {Tkaczyk, Dominika and Szostek, Pawel and Dendek, Piotr Jan and Fedoryszak, Mateusz and Bolikowski, Lukasz},
   title = {CERMINE - automatic extraction of metadata and references from scientific literature},
   booktitle = {11th IAPR International Workshop on Document Analysis Systems},
   year = {2014},
-  pages = {11-16}
+  pages = {217-221}
 }</pre>
                  
                  <h2>License</h2>

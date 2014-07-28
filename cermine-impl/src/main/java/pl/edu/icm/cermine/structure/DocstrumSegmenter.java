@@ -405,6 +405,24 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                 if (minHorizontalDistance <= hDist && hDist <= maxHorizontalDistance
                         && minVerticalDistance <= vDist && vDist <= maxVerticalDistance) {
                     sets.union(li, lj);
+                } else if (minVerticalDistance <= vDist && vDist <= maxVerticalDistance
+                        && Math.abs(hDist-Math.min(li.getLength(), lj.getLength())) < 0.1) {
+                    boolean componentOverlap = false;
+                    int overlappingCount = 0;
+                    for (Component ci : li.getComponents()) {
+                        for (Component cj : lj.getComponents()) {
+                            double dist = ci.overlappingDistance(cj, orientation);
+                            if (dist > 2) {
+                                componentOverlap = true;
+                            }
+                            if (dist > 0) {
+                                overlappingCount++;
+                            }
+                        }
+                    }
+                    if (!componentOverlap && overlappingCount <= 2) {
+                        sets.union(li, lj);
+                    }
                 }
             }
         }
@@ -560,6 +578,18 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             } else {
                 return Math.atan2(c.getY() - getY(), c.getX() - getX());
             }
+        }
+        
+        public double overlappingDistance(Component other, double orientation) {
+            double[] xs = new double[4];
+            double s = Math.sin(-orientation), c = Math.cos(-orientation);
+            xs[0] = c * x - s * y;
+            xs[1] = c * (x+chunk.getWidth()) - s * (y+chunk.getHeight());
+            xs[2] = c * other.x - s * other.y;
+            xs[3] = c * (other.x+other.chunk.getWidth()) - s * (other.y+other.chunk.getHeight());
+            boolean overlapping = xs[1] >= xs[2] && xs[3] >= xs[0];
+            Arrays.sort(xs);
+            return Math.abs(xs[2] - xs[1]) * (overlapping ? 1 : -1);
         }
     }
 

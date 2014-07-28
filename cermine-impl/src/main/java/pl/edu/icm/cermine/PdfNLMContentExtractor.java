@@ -31,6 +31,8 @@ import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
+import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
@@ -136,6 +138,12 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
     }
     
+    public void buildMetadataExtractor(ZoneClassifier zoneClassifier) throws AnalysisException {
+        PdfNLMMetadataExtractor extractor = new PdfNLMMetadataExtractor();
+        extractor.setMetadataClassifier(zoneClassifier);
+        metadataExtractor = extractor;
+    }
+    
     public void buildReferencesExtractor(InputStream refModel) throws AnalysisException {
         referencesExtractor = new PdfNLMReferencesExtractor(refModel);
     }
@@ -214,6 +222,8 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         Options options = new Options();
         options.addOption("path", true, "file or directory path");
         options.addOption("ext", true, "file extension");
+        options.addOption("modelmeta", true, "path to metadata classifier model");
+        options.addOption("modelinit", true, "path to initial classifier model");
         
         CommandLineParser clParser = new GnuParser();
         CommandLine line = clParser.parse(options, args);
@@ -222,20 +232,42 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         if (line.hasOption("ext")) {
             extension = line.getOptionValue("ext");
         }
+        String modelMeta = null;
+        String modelMetaRange = null;
+        if (line.hasOption("modelmeta")) {
+            modelMeta = line.getOptionValue("modelmeta");
+            modelMetaRange = line.getOptionValue("modelmeta")+".range";
+        }
+        String modelInit = null;
+        String modelInitRange = null;
+        if (line.hasOption("modelinit")) {
+            modelInit = line.getOptionValue("modelinit");
+            modelInitRange = line.getOptionValue("modelinit")+".range";
+        }
     	if (path == null){
-    		System.err.println("USAGE: program DIR_PATH <EXTENSION>");
-            System.err.println("Usage: PdfNLMContentExtractor -path <path> [-ext <extension>]\n\n"
+            System.err.println("Usage: PdfNLMContentExtractor -path <path> [optional parameters]\n\n"
                              + "Tool for extracting metadata and content from PDF files.\n\n"
                              + "Arguments:\n"
-                             + "  -path                 path to a PDF file or directory containing PDF files\n"
-                             + "  -ext (optional)       the extension of the resulting metadata file;\n"
-                             + "                        used only if passed path is a directory");
+                             + "  -path                     path to a PDF file or directory containing PDF files\n"
+                             + "  -ext (optional)           the extension of the resulting metadata file;\n"
+                             + "                            used only if passed path is a directory\n"
+                             + "  -modelmeta (optional)     the path to the metadata classifier model file\n"
+                             + "  -modelinit (optional)     the path to the initial classifier model file\n");
     		System.exit(1);
         }
-        
+ 
         File file = new File(path);
         if (file.isFile()) {
             PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+            if ("alt-humanities".equals(modelMeta)) {
+                extractor.buildMetadataExtractor(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+            }
+            if (modelMeta != null) {
+                extractor.buildMetadataExtractor(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+            }
+            if (modelInit != null) {
+                extractor.buildStructureExtractor(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+            }
             InputStream in = new FileInputStream(file);
             Element result = extractor.extractContent(in);
             XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -257,6 +289,15 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
                 System.out.println(pdf.getName());
  
                 PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+                if ("alt-humanities".equals(modelMeta)) {
+                    extractor.buildMetadataExtractor(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+                }
+                if (modelMeta != null) {
+                    extractor.buildMetadataExtractor(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+                }
+                if (modelInit != null) {
+                    extractor.buildStructureExtractor(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+                }
                 InputStream in = new FileInputStream(pdf);
                 Element result = extractor.extractContent(in);
 

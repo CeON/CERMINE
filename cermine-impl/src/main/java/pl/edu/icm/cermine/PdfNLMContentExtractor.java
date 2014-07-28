@@ -261,8 +261,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
             PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
             if ("alt-humanities".equals(modelMeta)) {
                 extractor.buildMetadataExtractor(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
-            }
-            if (modelMeta != null) {
+            } else if (modelMeta != null) {
                 extractor.buildMetadataExtractor(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
             }
             if (modelInit != null) {
@@ -291,8 +290,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
                 PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
                 if ("alt-humanities".equals(modelMeta)) {
                     extractor.buildMetadataExtractor(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
-                }
-                if (modelMeta != null) {
+                } else if (modelMeta != null) {
                     extractor.buildMetadataExtractor(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
                 }
                 if (modelInit != null) {

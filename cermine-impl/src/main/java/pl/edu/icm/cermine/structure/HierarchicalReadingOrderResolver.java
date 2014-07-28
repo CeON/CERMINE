@@ -35,7 +35,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
 
     static final int GRIDSIZE = 50;
     static final double BOXES_FLOW = 0.5;
-    static final double EPS = 0.0001;
+    static final double EPS = 0.01;
     static final int MAX_ZONES = 1000;
     static final Comparator<BxObject> Y_ASCENDING_ORDER = new Comparator<BxObject>() {
 
@@ -87,10 +87,13 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                     for (BxWord word : words) {
                         List<BxChunk> chunks = word.getChunks();
                         Collections.sort(chunks, X_ASCENDING_ORDER);
+                        word.resetText();
                     }
                     Collections.sort(words, X_ASCENDING_ORDER);
+                    line.resetText();
                 }
-                Collections.sort(lines, Y_ASCENDING_ORDER);
+                Collections.sort(lines, YX_ASCENDING_ORDER);
+                zone.resetText();
             }
             List<BxZone> orderedZones;
             if (zones.size() > MAX_ZONES) {
@@ -100,6 +103,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                 orderedZones = reorderZones(zones);
             }
             page.setZones(orderedZones);
+            page.resetText();
             orderedDoc.addPage(page);
         }
         setIdsAndLinkTogether(orderedDoc);

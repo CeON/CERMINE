@@ -43,12 +43,7 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
     private static SVMMetadataZoneClassifier defaultInstance;
     
 	public SVMMetadataZoneClassifier() throws AnalysisException {
-		super(getFeatureVectorBuilder());
-        try {
-            loadModelFromResources(MODEL_FILE_PATH, RANGE_FILE_PATH);
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot create SVM classifier!", ex);
-        }
+		this(MODEL_FILE_PATH, RANGE_FILE_PATH, true);
 	}
 	
 	public SVMMetadataZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
@@ -61,9 +56,17 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 	}
 
 	public SVMMetadataZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException {
+		this(modelFilePath, rangeFilePath, false);
+	}
+    
+    public SVMMetadataZoneClassifier(String modelFilePath, String rangeFilePath, boolean fromResources) throws AnalysisException {
 		super(getFeatureVectorBuilder());
         try {
-            loadModelFromFile(modelFilePath, rangeFilePath);
+            if (fromResources) {
+                loadModelFromResources(modelFilePath, rangeFilePath);
+            } else {
+                loadModelFromFile(modelFilePath, rangeFilePath);
+            }
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create SVM classifier!", ex);
         }

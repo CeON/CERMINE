@@ -142,7 +142,7 @@ public abstract class BxObject <S, T> implements Indexable<S> {
         this.text = text;
     }
     
-    protected void resetText() {
+    public void resetText() {
         this.text = null;
     }
     

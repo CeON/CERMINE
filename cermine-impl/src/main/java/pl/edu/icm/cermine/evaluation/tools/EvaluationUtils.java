@@ -68,18 +68,22 @@ public class EvaluationUtils {
     
     public static class DocumentsIterator implements Iterable<BxDocument> {
 
-    	private File dir;
+       	private File dir;
     	private int curIdx;
     	private File[] files;
-
-    	public DocumentsIterator(String dirPath) {
+        
+        public DocumentsIterator(String dirPath) {
+            this(dirPath, "cxml");
+        }
+        
+        public DocumentsIterator(String dirPath, String extension) {
 			if(!dirPath.endsWith(File.separator)) {
 				dirPath += File.separator;
 			}
     		this.dir = new File(dirPath);
     		this.curIdx = -1;
     		
-            List<File> list = Lists.newArrayList(FileUtils.listFiles(dir, new String[]{"cxml"}, true));
+            List<File> list = Lists.newArrayList(FileUtils.listFiles(dir, new String[]{extension}, true));
             this.files = list.toArray(new File[]{});
     	}
     	

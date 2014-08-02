@@ -48,6 +48,7 @@ public abstract class BxDocsToTrainingSamplesConverter {
                 for (BxZone zone : page.getZones()) {
                     FeatureVector featureVector = vectorBuilder.getFeatureVector(zone, page);
                     TrainingSample<BxZoneLabel> element = new TrainingSample<BxZoneLabel>(featureVector, zone.getLabel());
+                    element.setData(zone.toText());
                     trainingList.add(element);
                 }
             }

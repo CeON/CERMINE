@@ -28,6 +28,8 @@ public class TrainingSample<S> implements Cloneable {
     
     private FeatureVector features;
     private S label;
+    
+    private String data;
   
     public TrainingSample(FeatureVector features, S label) {
         this.features = features;
@@ -57,4 +59,13 @@ public class TrainingSample<S> implements Cloneable {
         element.features = features.copy();
         return element;
     }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+    
 }

@@ -254,4 +254,51 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
         }
         System.out.println();
     }
+
+    public double getMeanF1Score() {
+        Map<BxZoneLabel, Double> precisions = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
+    	for(BxZoneLabel predictedClass : possibleLabels) {
+    		int correctPredictions = 0;
+    		int allPredictions = 0;
+    		for(BxZoneLabel realClass : possibleLabels) {
+    			if(realClass.equals(predictedClass)) {
+    				correctPredictions = classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    			}
+    			allPredictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    		}
+    		double precision = (double)correctPredictions/allPredictions;
+            if (allPredictions == 0) {
+                precision = 1;
+            }
+    		precisions.put(predictedClass, precision);	
+    	}
+    	
+    	Map<BxZoneLabel, Double> recalls = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
+    	
+    	for(BxZoneLabel realClass : possibleLabels) {
+    		int correctPredictions = 0;
+    		int predictions = 0;
+    		for(BxZoneLabel predictedClass : possibleLabels) {
+    			if(realClass.equals(predictedClass)) {
+    				correctPredictions = classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    			}
+    			predictions += classificationMatrix.get(new LabelPair(realClass, predictedClass));
+    		}
+    		double recall = (double)correctPredictions/predictions;
+            if (predictions == 0) {
+                recall = 1;
+            }
+    		recalls.put(realClass, recall);
+    	}
+
+        double f1score = 0;
+        for(BxZoneLabel l : possibleLabels) {
+            double f1 = 2*precisions.get(l)*recalls.get(l)/(precisions.get(l)+recalls.get(l));
+            System.out.println("F1 "+l +" "+f1);
+            f1score += f1;
+        }
+        f1score /= possibleLabels.size();
+        System.out.println("Mean F1 "+f1score);
+        return f1score;
+    }
 }

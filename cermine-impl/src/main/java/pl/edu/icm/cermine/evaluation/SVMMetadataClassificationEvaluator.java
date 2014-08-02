@@ -24,6 +24,7 @@ import java.util.Map;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
+import pl.edu.icm.cermine.evaluation.tools.PenaltyCalculator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
@@ -35,14 +36,13 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
-import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
     
     @Override
-    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples) throws IOException, AnalysisException, CloneNotSupportedException {
+    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree) 
+            throws IOException, AnalysisException, CloneNotSupportedException {
 
         Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
         for (TrainingSample<BxZoneLabel> sample : trainingSamples) {
@@ -50,19 +50,31 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
         		sample.setLabel(labelMapper.get(sample.getLabel()));
             }
         }
+       
+        PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
+        int[] intClasses = new int[pc.getClasses().size()];
+        double[] classesWeights = new double[pc.getClasses().size()];
 
-        SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
-        List<TrainingSample<BxZoneLabel>> trainingSamplesOversampled = selector.pickElements(trainingSamples);
-
+        int labelIdx = 0;
+        for (BxZoneLabel label : pc.getClasses()) {
+            intClasses[labelIdx] = label.ordinal();
+            classesWeights[labelIdx] = pc.getPenaltyWeigth(label);
+            ++labelIdx;
+        }
+       
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMMetadataZoneClassifier.getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 0.25;
-        param.C = 32.0;
-        param.kernel_type = svm_parameter.POLY;
-        param.degree = 4;
+        param.gamma = gamma;
+        param.C = C;
+        System.out.println(degree);
+        param.degree = degree;
+        param.kernel_type = kernelType;
+        param.weight = classesWeights;
+        param.weight_label = intClasses;
+        
         zoneClassifier.setParameter(param);
-        zoneClassifier.buildClassifier(trainingSamplesOversampled);
+        zoneClassifier.buildClassifier(trainingSamples);
 
         return zoneClassifier;
     }
@@ -78,8 +90,8 @@ public class SVMMetadataClassificationEvaluator extends CrossvalidatingZoneClass
 	}
     
     @Override
-    public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile) throws AnalysisException {
-        DocumentsIterator it = new DocumentsIterator(inputFile);
+    public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException {
+        DocumentsIterator it = new DocumentsIterator(inputFile, ext);
         List<TrainingSample<BxZoneLabel>> samples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), 
                     getFeatureVectorBuilder(), null);
         return ClassificationUtils.filterElements(samples, BxZoneLabelCategory.CAT_METADATA);

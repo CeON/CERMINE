@@ -24,6 +24,7 @@ import java.io.Writer;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import libsvm.svm_parameter;
 import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -67,6 +68,13 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         options.addOption("minimal", false, "print only final summary");
         options.addOption("full", false, "print all possible messages");
 
+        options.addOption("kernel", true, "kernel type");
+        options.addOption("g", true, "gamma");
+        options.addOption("C", true, "C");
+        options.addOption("degree", true, "degree");
+        
+        options.addOption("ext", true, "ext");
+        
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
 
@@ -88,18 +96,35 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             }
             String inputFile = remaining[0];
 
+            Double C = Double.valueOf(line.getOptionValue("C"));
+            Double gamma = Double.valueOf(line.getOptionValue("g"));
+            String degreeStr = line.getOptionValue("degree");
+            Integer degree = -1;
+            if (degreeStr != null && !degreeStr.isEmpty()) {
+                degree = Integer.valueOf(degreeStr);
+            }
+            Integer kernelType;
+            switch(Integer.valueOf(line.getOptionValue("kernel"))) {
+                case 0: kernelType = svm_parameter.LINEAR; break;
+                case 1: kernelType = svm_parameter.POLY; break;
+                case 2: kernelType = svm_parameter.RBF; break;
+                case 3: kernelType = svm_parameter.SIGMOID; break;
+                default:
+                    throw new IllegalArgumentException("Invalid kernel value provided");
+            }
+            
             evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-            evaluator.run(inputFile);
+            evaluator.run(inputFile, line.getOptionValue("ext"), kernelType, gamma, C, degree);
 
         }
     }
 
-    protected abstract List<TrainingSample<BxZoneLabel>> getSamples(String inputFile) throws AnalysisException;
+    protected abstract List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException;
     
-    public void run(String inputFile) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException {
+    public void run(String inputFile, String ext, int kernelType, double gamma, double C, int degree) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException {
         ClassificationResults summary = newResults();
 
-        List<TrainingSample<BxZoneLabel>> samples = getSamples(inputFile);
+        List<TrainingSample<BxZoneLabel>> samples = getSamples(inputFile, ext);
         List<DividedEvaluationSet> sampleSets = DividedEvaluationSet.build(samples, foldness);
         System.out.println("All training elements: " +  samples.size());
         for (int fold = 0; fold < foldness; ++fold) {
@@ -111,20 +136,26 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 
             ClassificationResults iterationResults = newResults();
 
-            SVMZoneClassifier zoneClassifier = getZoneClassifier(trainingSamples);
+            SVMZoneClassifier zoneClassifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
 
             for (TrainingSample<BxZoneLabel> testSample : testSamples) {
             	BxZoneLabel expectedClass = testSample.getLabel();
                 BxZoneLabel inferedClass = zoneClassifier.predictLabel(testSample);
                 ClassificationResults documentResults = compareItems(expectedClass, inferedClass);
                 iterationResults.add(documentResults);
+                if (!expectedClass.equals(inferedClass)) {
+                    System.out.println("Expected " + expectedClass + ", got " + inferedClass);
+                    System.out.println(testSample.getData() + "\n");
+                }
             }
             summary.add(iterationResults);
             System.out.println("=== Single iteration summary (" + (fold + 1) + "/" + this.foldness + ")");
             printFinalResults(iterationResults);
+           
         }
         System.out.println("=== General summary (" + this.foldness + " iterations)");
         printFinalResults(summary);
+        System.out.println("F score "+summary.getMeanF1Score());
     }
 
     protected ClassificationResults newResults() {
@@ -155,7 +186,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         writer.write(output, document.getPages());
     }
 
-    protected void printItemResults(BxZone expected, BxZone actual, int itemIndex, ClassificationResults results) {
+    protected void printItemResults(BxZone expected, BxZone actual) {
         if (expected.getLabel() != actual.getLabel()) {
             System.out.println("Expected " + expected.getLabel() + ", got " + actual.getLabel());
             System.out.println(expected.toText() + "\n");
@@ -174,6 +205,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         results.printQualityMeasures();
     }
 
-    protected abstract SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples) throws AnalysisException, IOException, CloneNotSupportedException;
+    protected abstract SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree)
+            throws AnalysisException, IOException, CloneNotSupportedException;
     protected abstract FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder();
 }

@@ -38,7 +38,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
 
     @Override
-    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples) throws IOException, AnalysisException, CloneNotSupportedException {
+    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree) throws IOException, AnalysisException, CloneNotSupportedException {
         for (TrainingSample<BxZoneLabel> trainingSample : trainingSamples) {
             trainingSample.setLabel(trainingSample.getLabel().getGeneralLabel());
         }
@@ -46,24 +46,26 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
         PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
         int[] intClasses = new int[pc.getClasses().size()];
         double[] classesWeights = new double[pc.getClasses().size()];
-                
+
         int labelIdx = 0;
         for(BxZoneLabel label: pc.getClasses()) {
-        	intClasses[labelIdx] = label.ordinal();
-        	classesWeights[labelIdx] = pc.getPenaltyWeigth(label);
-        	++labelIdx;
+            intClasses[labelIdx] = label.ordinal();
+            classesWeights[labelIdx] = pc.getPenaltyWeigth(label);
+            ++labelIdx;
         }
-        
+       
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMInitialZoneClassifier.getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
-        param.gamma = 0.03125;
-        param.C = 64.0;
-        param.kernel_type = svm_parameter.POLY;
-        param.degree = 4;
-        param.weight_label = intClasses;
+        param.gamma = gamma;
+        param.C = C;
+        System.out.println(degree);
+        param.degree = degree;
+        param.kernel_type = kernelType;
         param.weight = classesWeights;
-
+        param.weight_label = intClasses;
+        
+        zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
 
         return zoneClassifier;
@@ -80,8 +82,8 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 	}
 
     @Override
-    public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile) throws AnalysisException {
-        DocumentsIterator it = new DocumentsIterator(inputFile);
+    public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException {
+        DocumentsIterator it = new DocumentsIterator(inputFile, ext);
         return BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), 
                     getFeatureVectorBuilder(),
                     BxZoneLabel.getLabelToGeneralMap());

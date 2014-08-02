@@ -24,7 +24,7 @@ import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
-class DividedEvaluationSet {
+public class DividedEvaluationSet {
 
     public DividedEvaluationSet(List<TrainingSample<BxZoneLabel>> trainingSamples, List<TrainingSample<BxZoneLabel>> testSamples) {
         this.trainingSamples = trainingSamples;

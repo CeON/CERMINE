@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.*;
@@ -42,6 +43,7 @@ public class SVMMetadataBuilder {
     protected static SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples,
             int kernelType, double gamma, double C, int degree) throws IOException {
         trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_METADATA);
+        System.out.println("Training samples "+trainingSamples.size());
 
         PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
         int[] intClasses = new int[pc.getClasses().size()];
@@ -81,11 +83,13 @@ public class SVMMetadataBuilder {
         options.addOption("g", true, "gamma");
         options.addOption("C", true, "C");
         options.addOption("degree", true, "degree");
+        options.addOption("cross", false, "");
+        options.addOption("ext", true, "degree");
 
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
         if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("kernel") && line.hasOption("g") && line.hasOption("C") )) {
-            System.err.println("Usage: SVMMetadataBuilder -input input_directory -output output_model_file -kernel K -gamma G -C c [-degree d]");
+            System.err.println("Usage: SVMMetadataBuilder -input /media/4CEE59EAEE59CCB8/testset -output /media/4CEE59EAEE59CCB8/testset/model-meta -kernel 1 -g 0.25 -C 32 -degree 4");
             System.exit(1);
         }
 
@@ -112,19 +116,60 @@ public class SVMMetadataBuilder {
             System.exit(1);
         }
 
-        File input = new File(inDir);
-        List<TrainingSample<BxZoneLabel>> trainingSamples;
-        if (input.isDirectory()) {
-            DocumentsIterator it = new DocumentsIterator(inDir);
-            FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
-            trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
-                    BxZoneLabel.getIdentityMap());
-        } else {
-            trainingSamples = SVMZoneClassifier.loadProblem(inDir, SVMMetadataZoneClassifier.getFeatureVectorBuilder());
+        String ext = "cxml";
+        if (line.hasOption("ext")) {
+            ext = line.getOptionValue("ext");
         }
+        
+        if (!line.hasOption("cross")) {
+            File input = new File(inDir);
+            List<TrainingSample<BxZoneLabel>> trainingSamples;
+            if (input.isDirectory()) {
+                DocumentsIterator it = new DocumentsIterator(inDir, ext);
+                FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
+                trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
+                    BxZoneLabel.getIdentityMap());
+            } else {
+                trainingSamples = SVMZoneClassifier.loadProblem(inDir, SVMMetadataZoneClassifier.getFeatureVectorBuilder());
+            }
+        
+            trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_METADATA);
+            SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+            classifier.saveModel(outFile);
+        } else {
+            int foldness = 5;
+            List<TrainingSample<BxZoneLabel>>[] trainingSamplesSet = new List[foldness];
+        
+            for (int i = 0; i < foldness; i++) {
+        
+                File input = new File(inDir+"/"+i);
+                List<TrainingSample<BxZoneLabel>> trainingSamples;
+                if (input.isDirectory()) {
+                    DocumentsIterator it = new DocumentsIterator(inDir+"/"+i, ext);
+                
+                    FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
+                    trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
+                        BxZoneLabel.getIdentityMap());
+                } else {
+                    trainingSamples = SVMZoneClassifier.loadProblem(inDir+"/"+i, SVMMetadataZoneClassifier.getFeatureVectorBuilder());
+                }
 
-        trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_METADATA);
-        SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
-        classifier.saveModel(outFile);
+                trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_METADATA);
+                trainingSamplesSet[i] = trainingSamples;
+            }
+        
+            for (int i = 0; i < foldness; i++) {
+                List<TrainingSample<BxZoneLabel>> trainingSamples = new ArrayList<TrainingSample<BxZoneLabel>>();
+                for (int j = 0; j < foldness; j++) {
+                    if (i != j) {
+                        trainingSamples.addAll(trainingSamplesSet[j]);
+                    }
+                }
+
+                SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+                classifier.saveModel(outFile+"-"+i);
+            }
+        }
     }
+    
 }

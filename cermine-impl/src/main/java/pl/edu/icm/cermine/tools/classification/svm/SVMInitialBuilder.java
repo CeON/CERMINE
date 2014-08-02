@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.tools.classification.svm;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.*;
@@ -79,11 +80,13 @@ public class SVMInitialBuilder {
         options.addOption("g", true, "gamma");
         options.addOption("C", true, "C");
         options.addOption("degree", true, "degree");
+        options.addOption("cross", false, "");
+        options.addOption("ext", true, "degree");
 
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
         if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("kernel") && line.hasOption("g") && line.hasOption("C") )) {
-            System.err.println("Usage: SVMInitialBuilder -input input_directory -output output_model_file -kernel K -gamma G -C c [-degree d]");
+            System.err.println("Usage: SVMInitialBuilder -input /media/4CEE59EAEE59CCB8/testset -output /media/4CEE59EAEE59CCB8/testset/model-init -kernel 1 -g 0.03125 -C 64 -degree 4");
             System.exit(1);
         }
         Double C = Double.valueOf(line.getOptionValue("C"));
@@ -109,22 +112,64 @@ public class SVMInitialBuilder {
             System.err.println("Polynomial kernel requires the -degree option to be specified");
             System.exit(1);
         }
-        File input = new File(inDir);
-        if (input.isDirectory()) {
-            DocumentsIterator it = new DocumentsIterator(inDir);
-            FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
-            List<TrainingSample<BxZoneLabel>> trainingSamples =
-                BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
-                    BxZoneLabel.getLabelToGeneralMap());
-            SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
-            classifier.saveModel(outFile);
-        } else {
-            List<TrainingSample<BxZoneLabel>> trainingSamples = SVMZoneClassifier.loadProblem(inDir, SVMInitialZoneClassifier.getFeatureVectorBuilder());
-            for (TrainingSample<BxZoneLabel> sample : trainingSamples) {
-                sample.setLabel(sample.getLabel().getGeneralLabel());
+        
+        String ext = "cxml";
+        if (line.hasOption("ext")) {
+            ext = line.getOptionValue("ext");
+        }
+        
+        if (!line.hasOption("cross")) {
+            File input = new File(inDir);
+            if (input.isDirectory()) {
+                DocumentsIterator it = new DocumentsIterator(inDir, ext);
+                FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
+                List<TrainingSample<BxZoneLabel>> trainingSamples =
+                    BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
+                        BxZoneLabel.getLabelToGeneralMap());
+                SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+                classifier.saveModel(outFile);
+            } else {
+                List<TrainingSample<BxZoneLabel>> trainingSamples = SVMZoneClassifier.loadProblem(inDir, SVMInitialZoneClassifier.getFeatureVectorBuilder());
+                for (TrainingSample<BxZoneLabel> sample : trainingSamples) {
+                    sample.setLabel(sample.getLabel().getGeneralLabel());
+                }
+                SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+                classifier.saveModel(outFile);
             }
-            SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
-            classifier.saveModel(outFile);
+        
+        } else {
+            int foldness = 5;
+            List<TrainingSample<BxZoneLabel>>[] trainingSamplesSet = new List[foldness];
+        
+            for (int i = 0; i < foldness; i++) {
+            
+                File input = new File(inDir+"/"+i);
+                List<TrainingSample<BxZoneLabel>> trainingSamples;
+                if (input.isDirectory()) {
+                    DocumentsIterator it = new DocumentsIterator(inDir+"/"+i, ext);
+                
+                    FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
+                    trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
+                        BxZoneLabel.getLabelToGeneralMap());
+                } else {
+                    trainingSamples = SVMZoneClassifier.loadProblem(inDir+"/"+i, SVMInitialZoneClassifier.getFeatureVectorBuilder());
+                }
+
+                trainingSamplesSet[i] = trainingSamples;
+            }
+        
+            for (int i = 0; i < foldness; i++) {
+                List<TrainingSample<BxZoneLabel>> trainingSamples = new ArrayList<TrainingSample<BxZoneLabel>>();
+                for (int j = 0; j < foldness; j++) {
+                    if (i != j) {
+                        trainingSamples.addAll(trainingSamplesSet[j]);
+                    }
+                }
+        
+                SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
+                classifier.saveModel(outFile+"-"+i);
+            }
         }
     }
+    
 }

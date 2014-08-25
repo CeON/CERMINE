@@ -26,9 +26,9 @@ object BibRefEvaluator {
   /**
    * @return first element - PubMed, second - CERMINE
    */
-  def extractFilePairs(path: File) = {
+  def extractFilePairs(path: File, ext: String) = {
     path.listFiles().groupBy(absolutePathWithoutExtension).values.flatMap { files =>
-      val expected = List("nxml", "cermxml")
+      val expected = List("nxml", ext)
       def findByExtension(files: Traversable[File])(extension: String) =
         files.find(_.getName.toLowerCase(Locale.ENGLISH).endsWith("." + extension))
 
@@ -50,7 +50,7 @@ object BibRefEvaluator {
   def extension(f: File): Option[String] = f.getName.split(".").lastOption
 
   def extractCitations(f: File) = XPathEvaluator.fromInputStream(new FileInputStream(f))
-    .asNodes("/article/back/ref-list/ref").map(extractTextContent).map(cleanWhitespaces)
+    .asNodes("//ref-list/ref").map(extractTextContent).map(cleanWhitespaces)
 
   def extractTextContent(n: Node):String = {
     def scalifyNodeList(ns: NodeList): List[Node] = {
@@ -78,8 +78,8 @@ object BibRefEvaluator {
       Some((sims.head, sims.tail.head, statistics.getMean, statistics.getStandardDeviation))
     }
 
-  def printCitationDiffs(workingDir: File) {
-    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(extractFilePairs)
+  def printCitationDiffs(workingDir: File, cermExt: String) {
+    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(x => extractFilePairs(x, cermExt))
 
     val results = for {
       (fPmc, fCermine) <- pairs
@@ -96,8 +96,8 @@ object BibRefEvaluator {
 
   case class BasicStats(path: String, precision: Double, recall: Double, isecCount: Int, cermineCount: Int, pmcCount: Int) {}
 
-  def basicStats(workingDir: File, similarityThreshold: Double) = {
-    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(extractFilePairs)
+  def basicStats(workingDir: File, similarityThreshold: Double, cermExt: String) = {
+    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(x => extractFilePairs(x, cermExt))
 
     pairs.map { case (fPmc, fCermine) =>
       val citsPmc = extractCitations(fPmc)
@@ -111,9 +111,35 @@ object BibRefEvaluator {
       BasicStats(fPmc.getParentFile.getAbsolutePath, precision, recall, isec, citsCermine.length, citsPmc.length)
     }
   }
+  
+  def basicStatsFull(workingDir: File, similarityThreshold: Double, cermExt: String) = {
+    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(x => extractFilePairs(x, cermExt))
 
-  def precisionRecall(workingDir: File, threshold: Double) = {
-    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(extractFilePairs)
+    pairs.map { case (fPmc, fCermine) =>
+      val citsPmc = extractCitations(fPmc)
+      val citsCermine = extractCitations(fCermine)
+
+      val isec = citsCermine.count(hasSimilar(similarityThreshold, citsPmc))
+
+      var precision = isec.toDouble / citsCermine.length
+      if (isec+citsCermine.length == 0) {
+        precision = 1.
+      } else if (citsCermine.length == 0) {
+        precision = 0.
+      }
+      var recall = isec.toDouble / citsPmc.length
+      if (isec+citsPmc.length == 0) {
+        recall = 1.
+      } else if (citsPmc.length == 0) {
+        recall = 0.
+      }
+
+      BasicStats(fPmc.getAbsolutePath, precision, recall, isec, citsCermine.length, citsPmc.length)
+    }
+  }
+
+  def precisionRecall(workingDir: File, threshold: Double, cermExt: String) = {
+    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(x => extractFilePairs(x, cermExt))
 
     val (precisionsRaw, recallsRaw) = pairs.map { case (fPmc, fCermine) =>
       val citsPmc = extractCitations(fPmc)
@@ -123,7 +149,7 @@ object BibRefEvaluator {
 
       val precision = isec.toDouble / citsCermine.length
       val recall = isec.toDouble / citsPmc.length
-
+        
       (precision, recall)
     }.unzip
 
@@ -135,8 +161,8 @@ object BibRefEvaluator {
 
   def cleanWhitespaces: String => String = _.replaceAll("""\s+""", " ")
 
-  def printSameCitationNumberComparison(workingDir: File) {
-    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(extractFilePairs)
+  def printSameCitationNumberComparison(workingDir: File, cermExt: String) {
+    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(x => extractFilePairs(x, cermExt))
 
     pairs
       .map{ case (fPmc, fCermine) =>
@@ -150,19 +176,19 @@ object BibRefEvaluator {
       .foreach(println)
   }
 
-  def printBasicStats(workingDir: File) {
-    basicStats(workingDir, 0.6).foreach(println)
+  def printBasicStats(workingDir: File, cermExt: String) {
+    basicStats(workingDir, 0.6, cermExt).foreach(println)
   }
 
-  def printPrecisionRecall(workingDir: File) {
-    val (precision, recall) = precisionRecall(workingDir, 0.6)
+  def printPrecisionRecall(workingDir: File, cermExt: String) {
+    val (precision, recall) = precisionRecall(workingDir, 0.6, cermExt)
     println(s"Precision: $precision")
     println(s"Recall:    $recall")
     println(s"F1:        ${2 * precision * recall / (precision + recall) }")
   }
 
-  def printStats(workingDir: File) {
-    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(extractFilePairs)
+  def printStats(workingDir: File, cermExt: String) {
+    val pairs = traverse(workingDir).filter(_.isDirectory).flatMap(x => extractFilePairs(x, cermExt))
 
     val results = for {
       (f1, f2) <- pairs
@@ -179,11 +205,14 @@ object BibRefEvaluator {
   def main(args: Array[String]) {
     val workingDir = new File(args(0))
 
-    printPrecisionRecall(workingDir)
-//
-//    if(System.getProperty("precisionRecall") != null)
-//      printPrecisionRecall(workingDir)
-//    if(System.getProperty("basicStats") != null)
-//      printBasicStats(workingDir)
+    val stats = basicStatsFull(workingDir, 0.6, args(1))
+    stats.foreach(println)
+    val precisions = stats.map(_.precision)
+    val recalls = stats.map(_.recall)
+    val f1s = stats.map(x => if (x.precision + x.recall == 0) 0 else 2 * x.precision * x.recall / (x.precision + x.recall))
+    println(s"Average precision: ${precisions.sum / precisions.length}")
+    println(s"Average recall: ${recalls.sum / recalls.length}")
+    println(s"Average F1: ${f1s.sum / f1s.length}")
+    
   }
 }

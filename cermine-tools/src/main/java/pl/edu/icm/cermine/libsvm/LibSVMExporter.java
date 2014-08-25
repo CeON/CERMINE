@@ -100,9 +100,9 @@ public class LibSVMExporter {
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
 
-        if (args.length != 1) {
+        if (args.length != 2) {
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp(" [-options] input-directory", options);
+            formatter.printHelp(" [-options] input-directory extension", options);
             System.exit(1); 
         }
         String inputDirPath = line.getArgs()[0];
@@ -111,7 +111,7 @@ public class LibSVMExporter {
         Integer docIdx = 0;
 
         HierarchicalReadingOrderResolver ror = new HierarchicalReadingOrderResolver();
-        EvaluationUtils.DocumentsIterator iter = new DocumentsIterator(inputDirPath);
+        EvaluationUtils.DocumentsIterator iter = new DocumentsIterator(inputDirPath, line.getArgs()[1]);
 
         FeatureVectorBuilder<BxZone, BxPage> metaVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
         FeatureVectorBuilder<BxZone, BxPage> initialVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();

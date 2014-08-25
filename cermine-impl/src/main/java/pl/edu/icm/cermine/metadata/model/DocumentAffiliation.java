@@ -90,7 +90,9 @@ public class DocumentAffiliation {
         List<AffiliationToken> significantTokens = new ArrayList<AffiliationToken>();
         for (AffiliationToken token : tokens) {
             if ((bIndex >= token.startIndex && bIndex < token.endIndex)
-                    || (eIndex >= token.startIndex && eIndex < token.endIndex)) {
+                    || (eIndex >= token.startIndex && eIndex < token.endIndex)
+                    || (token.startIndex >= bIndex && token.startIndex < eIndex)
+                    || (token.endIndex >= bIndex && token.endIndex < eIndex)) {
                 significantTokens.add(token);
             }
         }
@@ -100,9 +102,15 @@ public class DocumentAffiliation {
         tokens.removeAll(significantTokens);
         AffiliationToken first = significantTokens.get(0);
         AffiliationToken last = significantTokens.get(significantTokens.size()-1);
-        tokens.add(new AffiliationToken(first.startIndex, bIndex, first.getTag(), rawText.substring(first.startIndex, bIndex)));
-        tokens.add(new AffiliationToken(bIndex, eIndex, tag, rawText.substring(bIndex, eIndex)));
-        tokens.add(new AffiliationToken(eIndex, last.endIndex, last.getTag(), rawText.substring(eIndex, last.endIndex)));
+        if (bIndex > first.startIndex) {
+            tokens.add(new AffiliationToken(first.startIndex, bIndex, first.getTag(), rawText.substring(first.startIndex, bIndex)));
+        }
+        if (eIndex > bIndex) {
+            tokens.add(new AffiliationToken(bIndex, eIndex, tag, rawText.substring(bIndex, eIndex)));
+        }
+        if (last.endIndex > eIndex) {
+            tokens.add(new AffiliationToken(eIndex, last.endIndex, last.getTag(), rawText.substring(eIndex, last.endIndex)));
+        }
         
         Collections.sort(tokens, new Comparator<AffiliationToken>() {
 

@@ -29,10 +29,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
+import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
 import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
+import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
  *
@@ -40,29 +42,16 @@ import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
  */
 public class ReferenceParsingEvaluator {
 
-    public static void main(String[] args) throws JDOMException, IOException {
-        if (args.length != 2) {
-            System.err.println("USAGE: ReferenceParsingEvaluator <orig file> <test file>");
+    public static void main(String[] args) throws JDOMException, IOException, AnalysisException {
+        if (args.length != 1) {
+            System.err.println("USAGE: ReferenceParsingEvaluator <test file>");
             System.exit(1);
         }
 
-        File origFile = new File(args[0]);
-        File testFile = new File(args[1]);
+        File testFile = new File(args[0]);
 
-        List<Citation> origCitations;
         List<Citation> testCitations;
         
-        InputStream origIS = null;
-        try {
-            origIS = new FileInputStream(origFile);
-            InputSource origSource = new InputSource(origIS);
-            origCitations = NlmCitationExtractor.extractCitations(origSource);
-        } finally {
-            if (origIS != null) {
-                origIS.close();
-            }
-        }
-
         InputStream testIS = null;
         try {
             testIS = new FileInputStream(testFile);
@@ -74,20 +63,9 @@ public class ReferenceParsingEvaluator {
             }
         }
 
-        List<BibEntry> origEntries = new ArrayList<BibEntry>();
         List<BibEntry> testEntries = new ArrayList<BibEntry>();
 
         Map<String, Result> results = new HashMap<String, Result>();
-
-        for (Citation c : origCitations) {
-            BibEntry entry = CitationUtils.citationToBibref(c);
-            origEntries.add(entry);
-            for (String key : entry.getFieldKeys()) {
-                if (results.get(key) == null) {
-                    results.put(key, new Result());
-                }
-            }
-        }
 
         for (Citation c : testCitations) {
             BibEntry entry = CitationUtils.citationToBibref(c);
@@ -99,10 +77,17 @@ public class ReferenceParsingEvaluator {
             }
         }
 
-        for (int i = 0; i < origEntries.size(); i++) {
-            BibEntry orig = origEntries.get(i);
-            BibEntry test = testEntries.get(i);
+        int i = 0;
+        for (BibEntry orig : testEntries) {
 
+            CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
+            BibEntry test = parser.parseBibReference(orig.getText());
+
+            System.out.println();
+            System.out.println();
+            System.out.println(orig.toBibTeX());
+            System.out.println(test.toBibTeX());
+            
             for (String s : orig.getFieldKeys()) {
                 results.get(s).addTotalOrig(orig.getAllFieldValues(s).size());
             }
@@ -110,44 +95,26 @@ public class ReferenceParsingEvaluator {
                 results.get(s).addTotalExtr(test.getAllFieldValues(s).size());
                 List<String> origVals = orig.getAllFieldValues(s);
                 for (String testVal : test.getAllFieldValues(s)) {
+                    boolean found = false;
                     if (origVals.contains(testVal)) {
                         results.get(s).addSuccess();
                         origVals.remove(testVal);
-                    } else {
-                        String matched = null;
-                        for (String origVal : origVals) {
-                            if (testVal.contains(origVal) && origVal.length() * 3 >= testVal.length() * 2) {
-                                results.get(s).addSuperstring(1);
-                                matched = origVal;
-                                break;
-                            }
-                        }
-                        if (matched != null) {
-                            origVals.remove(matched);
-                        } else {
-                            matched = null;
-                            for (String origVal : origVals) {
-                                if (origVal.contains(testVal) && testVal.length() * 3 >= origVal.length() * 2) {
-                                    results.get(s).addSubstring(1);
-                                    matched = origVal;
-                                    break;
-                                }
-                            }
-                            if (matched != null) {
-                                origVals.remove(matched);
-                            }
-                        }
+                        found = true;
+                    }
+                    if (!found) {
+                        System.out.println("WRONG "+s);
                     }
                 }
             }
+            i++;
+            System.out.println("Tested "+i+" out of "+testEntries.size());
         }
 
         for (Entry<String, Result> entry : results.entrySet()) {
             System.out.println(entry.getKey() + ": ");
+            System.out.println("    "+entry.getValue());
             System.out.println("    Precission = " + ((double) entry.getValue().success * 100.0 / (double) entry.getValue().totalExtr));
             System.out.println("    Recall = " + ((double) entry.getValue().success * 100.0 / (double) entry.getValue().totalOrig));
-            System.out.println("    Superstring recall = " + ((double) entry.getValue().superstring * 100.0 / (double) entry.getValue().totalOrig));
-            System.out.println("    Substring recall = " + ((double) entry.getValue().substring * 100.0 / (double) entry.getValue().totalOrig));
             System.out.println("");
         }
     }
@@ -157,8 +124,6 @@ public class ReferenceParsingEvaluator {
         private int totalOrig = 0;
         private int totalExtr = 0;
         private int success = 0;
-        private int superstring = 0;
-        private int substring = 0;
 
         public void addSuccess() {
             success++;
@@ -172,12 +137,11 @@ public class ReferenceParsingEvaluator {
             this.totalExtr += totalextr;
         }
 
-        public void addSubstring(int substring) {
-            this.substring += substring;
+        @Override
+        public String toString() {
+            return "Result{" + "totalOrig=" + totalOrig + ", totalExtr=" + totalExtr + ", success=" + success + '}';
         }
-
-        public void addSuperstring(int superstring) {
-            this.superstring += superstring;
-        }
+        
     }
+
 }

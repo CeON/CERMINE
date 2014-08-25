@@ -36,10 +36,11 @@ public class DocumentShrinker {
 
     public static void main(String[] args) throws TransformationException, IOException, AnalysisException, ParseException, CloneNotSupportedException {
         String inDir = args[0];
+        String outdir = args[1];
 
         File dir = new File(inDir);
         
-        Collection<File> files = FileUtils.listFiles(dir, new String[]{"cxml"}, true);
+        Collection<File> files = FileUtils.listFiles(dir, new String[]{args[2]}, true);
         
         int i = 0;
         for (File f : files) {
@@ -47,7 +48,7 @@ public class DocumentShrinker {
             TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
             List<BxPage> pages = tvReader.read(new FileReader(f));
             
-            File newF = new File(f.getPath().replaceFirst("\\.\\d+\\.cxml", ".cxml"));
+            File newF = new File(outdir+f.getName().replaceFirst(".*-", "").replaceFirst("."+args[2], "."+args[3]));
             System.out.println(newF.getName());
             BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
             FileWriter fw = new FileWriter(newF);

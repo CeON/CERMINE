@@ -38,18 +38,27 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
     }
 
     private Set<String> types = Sets.newHashSet(
-            "casereport", 
-            "casestudy", 
-            "clinicalstudy", 
+            "case report", 
+            "case study", 
+            "clinical study", 
             "debate", 
             "editorial",
+            "forum",
+            "full research paper",
             "methodology", 
-            "originalarticle",
+            "original article",
+            "original research",
+            "primary research",
             "research", 
-            "researcharticle", 
-            "reviewarticle", 
+            "research article",
+            "research paper",
+            "review",
+            "review article",
+            "short article",
+            "short paper",
             "study", 
-            "studyprotocol"
+            "study protocol",
+            "technical note"
             );
     
     @Override
@@ -61,7 +70,11 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
     protected boolean enhanceMetadata(BxPage page, DocumentMetadata metadata) {
         List<BxZone> titleZones = new ArrayList<BxZone>();
         for (BxZone zone : filterZones(page)) {
-            if (types.contains(zone.toText().replaceAll(" ", "").toLowerCase().trim())) {
+            if (types.contains(zone.toText().toLowerCase().trim())) {
+                continue;
+            }
+            if (zone.toText().toLowerCase().startsWith("sponsored document from")
+                    || (zone.hasPrev() && zone.getPrev().getLines().size() == 1 && zone.getPrev().toText().toLowerCase().startsWith("sponsored document from"))) {
                 continue;
             }
             titleZones.add(zone);
@@ -86,12 +99,19 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
             }
             
             StringBuilder titleSB = new StringBuilder(titleZone.toText());
-            while (titleZone.hasNext() 
-                    && BxZoneLabel.MET_TITLE.equals(titleZone.getNext().getLabel())
-                    && Math.abs(height-titleZone.getNext().getLines().get(0).getHeight()) < 0.5) {
-                titleZone = titleZone.getNext();
-                titleSB.append(" ");
-                titleSB.append(titleZone.toText());
+            while (titleZone.hasNext() && Math.abs(height-titleZone.getNext().getLines().get(0).getHeight()) < 0.5) {
+                if (BxZoneLabel.MET_TITLE.equals(titleZone.getNext().getLabel())) {
+                    titleZone = titleZone.getNext();
+                    titleSB.append(" ");
+                    titleSB.append(titleZone.toText());
+                } else if (titleZone.getNext().getLines().size() == 1
+                        && titleZone.getNext().getFontNames().equals(titleZone.getFontNames())) {
+                    titleZone = titleZone.getNext();
+                    titleSB.append(" ");
+                    titleSB.append(titleZone.toText());
+                } else {
+                    break;
+                }
             }
 
             if (!titleSB.toString().isEmpty()) {

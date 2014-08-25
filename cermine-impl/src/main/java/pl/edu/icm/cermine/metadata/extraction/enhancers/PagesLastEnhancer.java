@@ -35,6 +35,7 @@ public class PagesLastEnhancer extends AbstractPatternEnhancer {
     private static final Pattern PATTERN = Pattern.compile(
             "(\\d{1,5})[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-](\\d{1,5})",
             Pattern.CASE_INSENSITIVE);
+    private int pages = 10;
 
     public PagesLastEnhancer() {
         super(PATTERN);
@@ -43,6 +44,7 @@ public class PagesLastEnhancer extends AbstractPatternEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
+        pages = document.getPages().size();
         return super.enhanceMetadata(document, metadata);
     }
    
@@ -50,7 +52,7 @@ public class PagesLastEnhancer extends AbstractPatternEnhancer {
     protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
         int first = Integer.parseInt(result.group(1));
         int last = Integer.parseInt(result.group(2));
-        if (first <= last) {
+        if (first <= last && last - first + 1 <= 2 * pages) {
             metadata.setPages(result.group(1), result.group(2));
             return true;
         } else {

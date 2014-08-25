@@ -39,13 +39,22 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
             "clinical study", 
             "debate", 
             "editorial",
+            "forum",
+            "full research paper",
             "methodology", 
             "original article",
+            "original research",
+            "primary research",
             "research", 
-            "research article", 
-            "review article", 
+            "research article",
+            "research paper",
+            "review",
+            "review article",
+            "short article",
+            "short paper",
             "study", 
-            "study protocol"
+            "study protocol",
+            "technical note"
             );
 
     public TitleMergedWithTypeEnhancer() {

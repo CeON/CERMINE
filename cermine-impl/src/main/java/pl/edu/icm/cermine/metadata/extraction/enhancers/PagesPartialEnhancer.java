@@ -52,7 +52,7 @@ public class PagesPartialEnhancer extends AbstractPatternEnhancer {
     protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
         int first = Integer.parseInt(result.group(1));
         int last = Integer.parseInt(result.group(2));
-        if (first <= last && Math.abs(last - first + 1 - pages) <= 3) {
+        if (first <= last && last - first + 1 <= 2 * pages) {
             metadata.setPages(result.group(1), result.group(2));
             return true;
         } else {

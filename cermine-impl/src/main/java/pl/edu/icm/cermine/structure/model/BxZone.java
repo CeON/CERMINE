@@ -19,9 +19,8 @@
 package pl.edu.icm.cermine.structure.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import pl.edu.icm.cermine.tools.CountMap;
 
 /**
  * Models a single zone of a page. A zone contains either lines of text
@@ -93,6 +92,28 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
         return this;
     }
 
+    public String getMostPopularFontName() {
+        CountMap<String> map = new CountMap<String>();
+        for (BxLine line : lines) {
+            for (BxWord word : line.getWords()) {
+                for (BxChunk chunk : word.getChunks()) {
+                    if (chunk.getFontName() != null) {
+                        map.add(chunk.getFontName());
+                    }
+                }
+            }
+        }
+        return map.getMaxCountObject();
+    }
+    
+    public Set<String> getFontNames() {
+        Set<String> names = new HashSet<String>();
+        for (BxLine line : lines) {
+            names.addAll(line.getFontNames());
+        }
+        return names;
+    }
+    
     @Override
     public String toText() {
         if (getText() == null) {

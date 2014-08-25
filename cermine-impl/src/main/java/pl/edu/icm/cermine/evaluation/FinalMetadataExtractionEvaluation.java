@@ -24,9 +24,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
@@ -44,64 +42,108 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
- *
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
- */
-
-/*
- * TODO
- * 
- * 2 references
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public final class FinalMetadataExtractionEvaluation {
 
-    private boolean verbose = false;
-
-    public FinalMetadataExtractionEvaluation(boolean verbose) {
-        this.verbose = verbose;
-    }
-
-    private void printVerbose(String text) {
-        if (verbose) {
-            System.out.println(text);
-        }
-    }
-
-    private static class PrecissonRecall {
+    private static class PrecisionRecall {
 
         public int correct;
         public int expected;
         public int extracted;
         
-        public PrecissonRecall() {
+        public double precision;
+        public double recall;
+        
+        public PrecisionRecall() {
             correct = 0;
             expected = 0;
             extracted = 0;
+            precision = -1.;
+            recall = -1.;
+        }
+        
+        public PrecisionRecall buildForSingle(List<MetadataSingle> metadataList) {
+            for (MetadataSingle metadata : metadataList) {
+                correct += metadata.correctSize();
+                expected += metadata.expectedSize();
+                extracted += metadata.extractedSize();
+            }
+            return this;
+        }
+        
+        public PrecisionRecall buildForList(List<MetadataList> metadataList) {
+            int precisions = 0;
+            int recalls = 0;
+            for (MetadataList metadata : metadataList) {
+                if (metadata.getPrecision() != null) {
+                    precision += metadata.getPrecision();
+                    precisions++;
+                }
+                if (metadata.getRecall() != null) {
+                    recall += metadata.getRecall();
+                    recalls++;
+                }
+            }
+            precision /= precisions;
+            recall /= recalls;
+            return this;
+        }
+        
+        public PrecisionRecall buildForRelation(List<MetadataRelation> metadataList) {
+            int precisions = 0;
+            int recalls = 0;
+            for (MetadataRelation metadata : metadataList) {
+                if (metadata.getPrecision() != null) {
+                    precision += metadata.getPrecision();
+                    precisions++;
+                }
+                if (metadata.getRecall() != null) {
+                    recall += metadata.getRecall();
+                    recalls++;
+                }
+            }
+            precision /= precisions;
+            recall /= recalls;
+            return this;
         }
 
         @Override
         public String toString() {
-            return "PrecissonRecall{" + "correct=" + correct + ", expected=" + expected + ", extracted=" + extracted + '}';
+            return "PrecisionRecall{" + "correct=" + correct + ", expected=" + expected + ", extracted=" + extracted + '}';
+        }
+        
+        public void print(String name) {
+            System.out.println(name + ": " + toString());
+            System.out.printf(name + ": precision: %4.2f" + ", recall: %4.2f" + ", F1: %4.2f\n\n",
+                    calculatePrecision() == null ? -1. : 100 * calculatePrecision(), 
+                    calculateRecall() == null ? -1. : 100 * calculateRecall(), 
+                    calculateF1() == null ? -1. : 100 * calculateF1());
         }
 
         public Double calculateRecall() {
+            if (recall != -1.) {
+                return recall;
+            }
             if (expected == 0) {
                 return null;
-            } else {
-                return (double) correct / expected;
             }
+            return (double) correct / expected;
         }
         
-        public Double calculatePrecission() {
+        public Double calculatePrecision() {
+            if (precision != -1.) {
+                return precision;
+            }
             if (extracted == 0) {
                 return null;
-            } else {
-                return (double) correct / extracted;
             }
+            return (double) correct / extracted;
         }
         
         public Double calculateF1() {
-            Double prec = calculatePrecission();
+            Double prec = calculatePrecision();
             Double rec = calculateRecall();
             if (prec == null || rec == null) {
                 return null;
@@ -127,451 +169,336 @@ public final class FinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        PrecissonRecall issn = new PrecissonRecall();
-        PrecissonRecall doi = new PrecissonRecall();
-        PrecissonRecall volume = new PrecissonRecall();
-        PrecissonRecall issue = new PrecissonRecall();
-        PrecissonRecall pages = new PrecissonRecall();
-        PrecissonRecall dateYear = new PrecissonRecall();
-        PrecissonRecall dateFull = new PrecissonRecall();
-        PrecissonRecall journalTitle = new PrecissonRecall();
-        PrecissonRecall title = new PrecissonRecall();
-        PrecissonRecall abstrakt = new PrecissonRecall();
-
-        List<Double> abstractRates = new ArrayList<Double>(iter.size());
-        List<Double> titleRates = new ArrayList<Double>(iter.size());
-
-        List<Double> keywordPrecisions = new ArrayList<Double>(iter.size());
-        List<Double> keywordRecalls = new ArrayList<Double>(iter.size());
-
-        List<Double> authorsPrecisions = new ArrayList<Double>(iter.size());
-        List<Double> authorsRecalls = new ArrayList<Double>(iter.size());
+        List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
+        List<MetadataList> authors = new ArrayList<MetadataList>();
+        List<MetadataList> affiliations = new ArrayList<MetadataList>();
+        List<MetadataRelation> authorsAffiliations = new ArrayList<MetadataRelation>();
+        List<MetadataList> emails = new ArrayList<MetadataList>();
+        List<MetadataRelation> authorsEmails = new ArrayList<MetadataRelation>();
+        List<MetadataSingle> abstracts = new ArrayList<MetadataSingle>();
+        List<MetadataList> keywords = new ArrayList<MetadataList>();
+        List<MetadataSingle> journals = new ArrayList<MetadataSingle>();
+        List<MetadataSingle> volumes = new ArrayList<MetadataSingle>();
+        List<MetadataSingle> issues = new ArrayList<MetadataSingle>();
+        List<MetadataSingle> pageRanges = new ArrayList<MetadataSingle>();
+        List<MetadataSingle> years = new ArrayList<MetadataSingle>();
+        List<MetadataSingle> dois = new ArrayList<MetadataSingle>();
+        List<MetadataSingle> issns = new ArrayList<MetadataSingle>();
         
-        List<Double> affPrecisions = new ArrayList<Double>(iter.size());
-        List<Double> affRecalls = new ArrayList<Double>(iter.size());
-
-        int ii = 0;
+        int i = 0;
         for (NlmPair pair : iter) {
-            ii++;
+            i++;
             System.out.println("");
-            printVerbose(">>>>>>>>> "+ii);
+            System.out.println(">>>>>>>>> "+i);
             
-            printVerbose(pair.getExtractedNlm().getPath());
-            
-            org.w3c.dom.Document originalNlm = documentBuilder.parse(new FileInputStream(pair.getOriginalNlm()));
-            org.w3c.dom.Document extractedNlm = documentBuilder.parse(new FileInputStream(pair.getExtractedNlm()));
+            System.out.println(pair.getExtractedNlm().getPath());
 
-            String expectedTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta//article-title");
-            String extractedTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/title-group/article-title");
-           
-            List<Node> expectedAuthorsNodes = XMLTools.extractNodes(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/name");
+            org.w3c.dom.Document originalNlm;
+            org.w3c.dom.Document extractedNlm;
+            try {
+                originalNlm = documentBuilder.parse(new FileInputStream(pair.getOriginalNlm()));
+                extractedNlm = documentBuilder.parse(new FileInputStream(pair.getExtractedNlm()));
+            } catch (SAXException ex) {
+                i--;
+                continue;
+            }
+            
+            // Document's title
+            MetadataSingle title = readMetadataSingle(originalNlm, "/article/front/article-meta//article-title",
+                                                        extractedNlm, "/article/front/article-meta//article-title");
+            titles.add(title);
+            title.correct = false;
+            String expTitleNorm = title.expectedValue.replaceAll("[^a-zA-Z0-9]", "");
+            String extrTitleNorm = title.extractedValue.replaceAll("[^a-zA-Z0-9]", "");
+            if (compareStringsSW(title.expectedValue, title.extractedValue) >= 0.9 ||
+                        (!expTitleNorm.isEmpty() && expTitleNorm.equals(extrTitleNorm))) {
+                title.correct = true;
+            }
+            title.print("title");         
+
+            // Authors
+            List<Node> expectedAuthorNodes = XMLTools.extractNodes(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author'][name]");
             
             List<String> expectedAuthors = new ArrayList<String>();
-            for (Node authorNode : expectedAuthorsNodes) {
-                List<String> givenNames = XMLTools.extractChildrenTextFromNode(authorNode, "given-names");
-                List<String> surnames = XMLTools.extractChildrenTextFromNode(authorNode, "surname");
+            for (Node authorNode : expectedAuthorNodes) {
+                List<Node> names = XMLTools.extractChildrenNodesFromNode(authorNode, "name");
+                if (names.isEmpty()) {
+                    continue;
+                }
+                Node name = names.get(0);
+                List<String> givenNames = XMLTools.extractChildrenTextFromNode(name, "given-names");
+                List<String> surnames = XMLTools.extractChildrenTextFromNode(name, "surname");
                 String author = StringUtils.join(givenNames, " ")+" "+StringUtils.join(surnames, " ");
                 author = author.replaceAll("[^a-zA-Z ]", "");
                 expectedAuthors.add(author);
             }
             
-            List<String> extractedAuthors1 = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']/string-name");
+            List<Node> extractedAuthorNodes = XMLTools.extractNodes(extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author'][string-name]");
+
             List<String> extractedAuthors = new ArrayList<String>();
-            for (String author : extractedAuthors1) {
-                extractedAuthors.add(author.replaceAll("[^a-zA-Z ]", ""));
+            for (Node authorNode : extractedAuthorNodes) {
+                List<String> names = XMLTools.extractChildrenTextFromNode(authorNode, "string-name");
+                if (names.isEmpty()) {
+                    continue;
+                }
+                extractedAuthors.add(names.get(0).replaceAll("[^a-zA-Z ]", ""));
             }
 
-            List<String> expectedKeywords = XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta//kwd");
-            List<String> extractedKeywords = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/kwd-group/kwd");
-
-            String expectedJournalTitle = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta//journal-title");
-            String extractedJournalTitle = XMLTools.extractTextFromNode(extractedNlm, "/article/front/journal-meta/journal-title-group/journal-title");
-
-            String expectedAbstract = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/abstract");
-            String extractedAbstract = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/abstract");
-
-            String expectedDoi = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/article-id[@pub-id-type='doi']");
-            String extractedDoi = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/article-id[@pub-id-type='doi']");
-
-            String expectedISSN = XMLTools.extractTextFromNode(originalNlm, "/article/front/journal-meta/issn[@pub-type='ppub']");
-            String extractedISSN = XMLTools.extractTextFromNode(extractedNlm, "/article/front/journal-meta/issn[@pub-type='ppub']");
-
-            String expectedVolume = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/volume");
-            String extractedVolume = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/volume");
-
-            String expectedIssue = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/issue");
-            String extractedIssue = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/issue");
-
-            String expectedFPage = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/fpage");
-            String extractedFPage = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/fpage");
-
-            String expectedLPage = XMLTools.extractTextFromNode(originalNlm, "/article/front/article-meta/lpage");
-            String extractedLPage = XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta/lpage");
+            MetadataList author = new MetadataList(expectedAuthors, extractedAuthors);
+            authors.add(author);
+            author.print("author");
             
+            
+            // Affiliations
+            Set<String> expectedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta//aff"));
+            Set<String> extractedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta//aff"));
+            List<String> expectedAffiliations = Lists.newArrayList(expectedAffiliationsSet);
+            List<String> extractedAffiliations = Lists.newArrayList(extractedAffiliationsSet);
+            MetadataList affiliation = new MetadataList(expectedAffiliations, extractedAffiliations);
+            affiliations.add(affiliation);
+            affiliation.print("affiliation");
+            
+            
+            // Author - Affiliation relation
+            MetadataRelation authorAffiliation = new MetadataRelation();
+            
+            List<Node> expectedAffiliationNodes = XMLTools.extractNodes(originalNlm, "/article/front/article-meta//aff[@id]");
+            Map<String, String> expectedAffiliationMap = new HashMap<String, String>();
+            for (Node expectedAffiliationNode : expectedAffiliationNodes) {
+                String id = expectedAffiliationNode.getAttributes().getNamedItem("id").getNodeValue();
+                String aff = XMLTools.extractTextFromNode(expectedAffiliationNode);
+                expectedAffiliationMap.put(id, aff);
+            }
+            
+            List<Node> extractedAffiliationNodes = XMLTools.extractNodes(extractedNlm, "/article/front/article-meta//aff[@id]");
+            Map<String, String> extractedAffiliationMap = new HashMap<String, String>();
+            for (Node extractedAffiliationNode : extractedAffiliationNodes) {
+                String id = extractedAffiliationNode.getAttributes().getNamedItem("id").getNodeValue();
+                String aff = XMLTools.extractTextFromNode(extractedAffiliationNode);
+                extractedAffiliationMap.put(id, aff);
+            }
+            
+            for (Node expectedAuthorNode : expectedAuthorNodes) {
+                String authorName = expectedAuthors.get(expectedAuthorNodes.indexOf(expectedAuthorNode));
+                List<Node> xrefs = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "xref");
+                for (Node xref : xrefs) {
+                    if (xref.getAttributes() != null && xref.getAttributes().getNamedItem("ref-type") != null
+                           && "aff".equals(xref.getAttributes().getNamedItem("ref-type").getNodeValue())) {
+                        String affId = xref.getAttributes().getNamedItem("rid").getNodeValue();
+                        for (String id : affId.split(" ")) {
+                            String aff = expectedAffiliationMap.get(id);
+                            if (aff != null) {
+                                authorAffiliation.addExpected(new StringRelation(authorName, aff));
+                            }
+                        }
+                    }
+                }
+            }
+            
+            for (Node extractedAuthorNode : extractedAuthorNodes) {
+                String authorName = extractedAuthors.get(extractedAuthorNodes.indexOf(extractedAuthorNode));
+                List<Node> xrefs = XMLTools.extractChildrenNodesFromNode(extractedAuthorNode, "xref");
+                for (Node xref : xrefs) {
+                    if ("aff".equals(xref.getAttributes().getNamedItem("ref-type").getNodeValue())) {
+                        String affId = xref.getAttributes().getNamedItem("rid").getNodeValue();
+                        for (String id : affId.split(" ")) {
+                            String aff = extractedAffiliationMap.get(id);
+                            if (aff != null) {
+                                authorAffiliation.addExtracted(new StringRelation(authorName, aff));
+                            }
+                        }
+                    }
+                }
+            }
+            
+            authorsAffiliations.add(authorAffiliation);
+            authorAffiliation.print("author - affiliation");
+            
+            
+            // Email addresses
+            MetadataList email = readMetadataList(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']//email",
+                                                    extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']//email");
+            emails.add(email);
+            email.print("email");
+            
+            
+            // Author - Email relations
+            MetadataRelation authorEmail = new MetadataRelation();
+            
+            for (Node expectedAuthorNode : expectedAuthorNodes) {
+                String authorName = expectedAuthors.get(expectedAuthorNodes.indexOf(expectedAuthorNode));
+                
+                List<Node> addresses = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "address");
+                for (Node address : addresses) {
+                    for (String emailAddress : XMLTools.extractChildrenTextFromNode(address, "email")) {
+                        authorEmail.addExpected(new StringRelation(authorName, emailAddress));
+                    }
+                }
+                for (String emailAddress : XMLTools.extractChildrenTextFromNode(expectedAuthorNode, "email")) {
+                    authorEmail.addExpected(new StringRelation(authorName, emailAddress));
+                }
+            }
+            for (Node extractedAuthorNode : extractedAuthorNodes) {
+                String authorName = extractedAuthors.get(extractedAuthorNodes.indexOf(extractedAuthorNode));
+                
+                for (String emailAddress : XMLTools.extractChildrenTextFromNode(extractedAuthorNode, "email")) {
+                    authorEmail.addExtracted(new StringRelation(authorName, emailAddress));
+                }
+            }
+            authorsEmails.add(authorEmail);
+            authorEmail.print("author - email");
+            
+            
+            // Abstract
+            MetadataSingle abstrakt = readMetadataSingle(originalNlm, "/article/front/article-meta/abstract",
+                                                        extractedNlm, "/article/front/article-meta/abstract");
+            abstracts.add(abstrakt);
+            abstrakt.correct = compareStringsSW(abstrakt.expectedValue, abstrakt.extractedValue) >= 0.9;
+            abstrakt.print("abstract");
+            
+            
+            // Keywords
+            MetadataList keyword = readMetadataList(originalNlm, "/article/front/article-meta//kwd",
+                                                    extractedNlm, "/article/front/article-meta/kwd-group/kwd");
+            keywords.add(keyword);
+            keyword.print("keywords");
+            
+            
+            // Journal title
+            MetadataSingle journal = readMetadataSingle(originalNlm, "/article/front/journal-meta//journal-title",
+                                                        extractedNlm, "/article/front/journal-meta/journal-title-group/journal-title");
+            journals.add(journal);
+            journal.correct = false;
+            if (journal.hasExpected() && journal.hasExtracted()
+                    && isSubsequence(journal.expectedValue.replaceAll("[^a-zA-Z]", "").toLowerCase(), journal.extractedValue.replaceAll("[^a-zA-Z]", "").toLowerCase())) {
+                journal.correct = true;
+            }
+            journal.print("journal title");
+            
+            
+            // Volume
+            MetadataSingle volume = readMetadataSingle(originalNlm, "/article/front/article-meta/volume",
+                                                        extractedNlm, "/article/front/article-meta/volume");
+            volumes.add(volume);
+            volume.print("volume");
+            
+            
+            // Issue            
+            MetadataSingle issue = readMetadataSingle(originalNlm, "/article/front/article-meta/issue",
+                                                        extractedNlm, "/article/front/article-meta/issue");
+            issues.add(issue);
+            issue.print("issue");
+
+            
+            // Pages range
+            MetadataSingle fPage = readMetadataSingle(originalNlm, "/article/front/article-meta/fpage",
+                                                    extractedNlm, "/article/front/article-meta/fpage");
+            MetadataSingle lPage = readMetadataSingle(originalNlm, "/article/front/article-meta/lpage",
+                                                    extractedNlm, "/article/front/article-meta/lpage");
+            String expRange = fPage.hasExpected() && lPage.hasExpected() ?
+                    fPage.expectedValue + "--" + lPage.expectedValue : "";
+            String extrRange = fPage.hasExtracted() && lPage.hasExtracted() ?
+                    fPage.extractedValue + "--" + lPage.extractedValue : "";
+            MetadataSingle pageRange = new MetadataSingle(expRange, extrRange);
+            pageRanges.add(pageRange);
+            pageRange.print("pages");
+            
+            
+            // Publication date
             List<String> expectedPubDate = XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta/pub-date");
             expectedPubDate = removeLeadingZerosFromDate(expectedPubDate);
             List<String> extractedPubDate = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/pub-date");
             extractedPubDate = removeLeadingZerosFromDate(extractedPubDate);
             
-            Set<String> expectedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta//aff"));
-            Set<String> extractedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta//aff"));
-            List<String> expectedAffiliations = Lists.newArrayList(expectedAffiliationsSet);
-            List<String> extractedAffiliations = Lists.newArrayList(extractedAffiliationsSet);
-
-           
-            //equality measures
-            if (!expectedVolume.isEmpty()) {
-                if (expectedVolume.equals(extractedVolume)) {
-                    ++volume.correct;
-                }
-                ++volume.expected;
-            }
-            if (!extractedVolume.isEmpty()) {
-                volume.extracted++;
-            }
-            if (!expectedIssue.isEmpty()) {
-                if (expectedIssue.equals(extractedIssue)) {
-                    ++issue.correct;
-                }
-                ++issue.expected;
-            }
-            if (!extractedIssue.isEmpty()) {
-                issue.extracted++;
-            }
-            if (!expectedISSN.isEmpty()) {
-                if (extractedISSN.equals(expectedISSN)) {
-                    ++issn.correct;
-                }
-                ++issn.expected;
-            }
-            if (!extractedISSN.isEmpty()) {
-                issn.extracted++;
-            }
-            if (!expectedDoi.isEmpty()) {
-                if (expectedDoi.equals(extractedDoi)) {
-                    ++doi.correct;
-                }
-                ++doi.expected;
-            }
-            if (!extractedDoi.isEmpty()) {
-                doi.extracted++;
-            }
-            if (!expectedFPage.isEmpty() && !expectedLPage.isEmpty()) {
-                if (expectedFPage.equals(extractedFPage) && expectedLPage.equals(extractedLPage)) {
-                    ++pages.correct;
-                }
-                ++pages.expected;
-            }
-            if (!extractedFPage.isEmpty() && !extractedLPage.isEmpty()) {
-                pages.extracted++;
-            }
-
-            if (!expectedPubDate.isEmpty()) {
-                Boolean yearsMatch = DateComparator.yearsMatch(expectedPubDate, extractedPubDate);
-                if (yearsMatch != null) {
-                    if (yearsMatch) {
-                        ++dateYear.correct;
-                    }
-                    ++dateYear.expected;
-                }
-            }
-            if (!extractedPubDate.isEmpty()) {
-                dateYear.extracted++;
-                dateFull.extracted++;
-            }
-
-            //Smith-Waterman distance measures
-            if (expectedAbstract.length() > 0) {
-                abstractRates.add(compareStringsSW(expectedAbstract, extractedAbstract));
-            } else {
-                abstractRates.add(null);
-            }
-            if (!expectedAbstract.isEmpty()) {
-                if (compareStringsSW(expectedAbstract, extractedAbstract) >= 0.9) {
-                    ++abstrakt.correct;
-                }
-                ++abstrakt.expected;
-            }
-            if (!extractedAbstract.isEmpty()) {
-                abstrakt.extracted++;
-            }
+            MetadataSingle year = new MetadataSingle(StringUtils.join(expectedPubDate, "---"),
+                    StringUtils.join(extractedPubDate, "---"));
+            year.correct = DateComparator.yearsMatch(expectedPubDate, extractedPubDate);
+            years.add(year);
+            year.print("year");
             
-            if (expectedTitle.length() > 0) {
-                titleRates.add(compareStringsSW(expectedTitle, extractedTitle));
-            } else {
-                titleRates.add(null);
-            }
-            if (!expectedTitle.isEmpty()) {
-                if (compareStringsSW(expectedTitle, extractedTitle) >= 0.9) {
-                    ++title.correct;
-                }
-                ++title.expected;
-            }
-            if (!extractedTitle.isEmpty()) {
-                title.extracted++;
-            }
             
-            if (!expectedJournalTitle.isEmpty()) {
-                journalTitle.expected++;
-            }
-            if (!extractedJournalTitle.isEmpty()) {
-                journalTitle.extracted++;
-                if (isSubsequence(expectedJournalTitle.replaceAll("[^a-zA-Z]", "").toLowerCase(), extractedJournalTitle.replaceAll("[^a-zA-Z]", "").toLowerCase())) {
-                    journalTitle.correct++;
-                }
-            }
+            // DOI
+            MetadataSingle doi = readMetadataSingle(originalNlm, "/article/front/article-meta/article-id[@pub-id-type='doi']",
+                                                        extractedNlm, "/article/front/article-meta/article-id[@pub-id-type='doi']");
+            dois.add(doi);
+            doi.print("DOI");
             
-            //precision + recall
-            if (expectedAuthors.size() > 0) {
-                authorsRecalls.add(calculateRecall(expectedAuthors, extractedAuthors));
-            } else {
-                authorsRecalls.add(null);
-            }
-            if (extractedAuthors.size() > 0) {
-                authorsPrecisions.add(calculatePrecision(expectedAuthors, extractedAuthors));
-            } else {
-                authorsPrecisions.add(null);
-            }
-            if (expectedKeywords.size() > 0) {
-                keywordRecalls.add(calculateRecall(expectedKeywords, extractedKeywords));
-            } else {
-                keywordRecalls.add(null);
-            }
-            if (extractedKeywords.size() > 0) {
-                keywordPrecisions.add(calculatePrecision(expectedKeywords, extractedKeywords));
-            } else {
-                keywordPrecisions.add(null);
-            }
-            if (expectedAffiliations.size() > 0) {
-                affRecalls.add(calculateRecall(expectedAffiliations, extractedAffiliations));
-            } else {
-                affRecalls.add(null);
-            }
-            if (extractedAffiliations.size() > 0) {
-                affPrecisions.add(calculatePrecision(expectedAffiliations, extractedAffiliations));
-            } else {
-                affPrecisions.add(null);
-            }
             
-                System.out.println("");
-                printVerbose(">>> Expected authors: ");
-                for (String author : expectedAuthors) {
-                    printVerbose(author);
-                }
-
-                System.out.println("");
-                printVerbose(">>> Extracted authors: ");
-                for (String author : extractedAuthors) {
-                    printVerbose(author);
-                }
-
-            System.out.println("");
-            printVerbose(">>> Expected keywords: ");
-            for (String keyword : expectedKeywords) {
-                printVerbose(keyword);
-            }
-
-            System.out.println("");
-            printVerbose(">>> Extracted keywords: ");
-            for (String keyword : extractedKeywords) {
-                printVerbose(keyword);
-            }
-
-            printVerbose(">>> Expected journal title: " + expectedJournalTitle);
-            printVerbose(">>> Extracted journal title: " + extractedJournalTitle);
-
-                printVerbose(">>> Expected article title: " + expectedTitle);
-                printVerbose(">>> Extracted article title: " + extractedTitle);
-
-                printVerbose(">>> Expected article abstract: " + expectedAbstract);
-                printVerbose(">>> Extracted article abstract: " + extractedAbstract);
-
-            printVerbose(">>> Expected doi: " + expectedDoi);
-            printVerbose(">>> Extracted doi: " + extractedDoi);
+            // Journal ISSN
+            MetadataSingle issn = readMetadataSingle(originalNlm, "/article/front/journal-meta/issn[@pub-type='ppub']",
+                                                        extractedNlm, "/article/front/journal-meta/issn[@pub-type='ppub']");
+            issns.add(issn);
+            issn.print("ISSN");
             
-            printVerbose(">>> Expected issn: " + expectedISSN);
-            printVerbose(">>> Extracted issn: " + extractedISSN);
-
-            printVerbose(">>> Expected volume: " + expectedVolume);
-            printVerbose(">>> Extracted volume: " + extractedVolume);
-            
-            printVerbose(">>> Expected issue: " + expectedIssue);
-            printVerbose(">>> Extracted issue: " + extractedIssue);
-
-            printVerbose(">>> Expected pages: " + expectedFPage + " " + expectedLPage);
-            printVerbose(">>> Extracted pages: " + extractedFPage + " " + extractedLPage);
-            
-            printVerbose(">>> Expected date: ");
-            for (String date : expectedPubDate) {
-                printVerbose(date);
-            }
-
-            printVerbose(">>> Extracted date: ");
-            for (String date : extractedPubDate) {
-                printVerbose(date);
-            }
-                printVerbose(">>> Expected affs: ");
-                for (String aff : expectedAffiliations) {
-                    printVerbose(aff);
-                }
-
-                printVerbose(">>> Extracted affs: ");
-                for (String aff : extractedAffiliations) {
-                    printVerbose(aff);
-                }
-
-
-            printVerbose("abstract " + abstractRates.get(abstractRates.size()-1));
-            printVerbose("title " + titleRates.get(titleRates.size()-1));
-            printVerbose("journal title " + journalTitle);
+        }
       
-            System.out.println("");
-            printVerbose("authors precission " + authorsPrecisions.get(authorsPrecisions.size()-1));
-            printVerbose("authors recall " + authorsRecalls.get(authorsPrecisions.size()-1));
-          
-            System.out.println("");
-            printVerbose("aff precission " + affPrecisions.get(affPrecisions.size()-1));
-            printVerbose("aff recall " + affRecalls.get(affPrecisions.size()-1));
-          
-            System.out.println("");
-            printVerbose("keywords precission " + keywordPrecisions.get(keywordPrecisions.size()-1));
-            printVerbose("keywords recall " + keywordRecalls.get(keywordPrecisions.size()-1));
-
-            printVerbose("date years" + dateYear);
-            printVerbose("doi" + doi);
-            printVerbose("issn" + issn);
-            printVerbose("volume" + volume);
-            printVerbose("issue" + issue);
-            printVerbose("pages" + pages);
-        }
-        
-        Double value;
         System.out.println("==== Summary (" + iter.size() + " docs)====");
-        if ((value = calculateAverage(abstractRates)) != null) {
-            System.out.printf("abstract avg (SW) \t\t%4.2f\n", 100 * value);
-        }
-        if ((value = abstrakt.calculatePrecission()) != null) {
-            System.out.printf("abstract precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = abstrakt.calculateRecall()) != null) {
-            System.out.printf("abstract recall\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = calculateAverage(titleRates)) != null) {
-            System.out.printf("title avg (SW) \t\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = title.calculatePrecission()) != null) {
-            System.out.printf("title precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = title.calculateRecall()) != null) {
-            System.out.printf("title recall\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = journalTitle.calculatePrecission()) != null) {
-            System.out.printf("journal title precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = journalTitle.calculateRecall()) != null) {
-            System.out.printf("journal title recall\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = calculateAverage(authorsPrecisions)) != null) {
-            System.out.printf("authors precision avg (EQ)\t%4.2f\n", 100 * value);
-        }
-        if ((value = calculateAverage(authorsRecalls)) != null) {
-            System.out.printf("authors recall avg (EQ)\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = calculateAverage(affPrecisions)) != null) {
-            System.out.printf("aff precision avg (EQ)\t%4.2f\n", 100 * value);
-        }
-        if ((value = calculateAverage(affRecalls)) != null) {
-            System.out.printf("aff recall avg (EQ)\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = calculateAverage(keywordPrecisions)) != null) {
-            System.out.printf("keywords precision avg (EQ)\t%4.2f\n", 100 * value);
-        }
-        if ((value = calculateAverage(keywordRecalls)) != null) {
-            System.out.printf("keywords recall avg (EQ)\t%4.2f\n", 100 * value);
-        }
-        if ((value = dateYear.calculatePrecission()) != null) {
-            System.out.printf("date year precission avg\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = dateYear.calculateRecall()) != null) {
-            System.out.printf("date year recall avg\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = doi.calculatePrecission()) != null) {
-            System.out.printf("doi precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = doi.calculateRecall()) != null) {
-            System.out.printf("doi recall\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = issn.calculatePrecission()) != null) {
-            System.out.printf("issn precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = issn.calculateRecall()) != null) {
-            System.out.printf("issn recall\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = volume.calculatePrecission()) != null) {
-            System.out.printf("volume precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = volume.calculateRecall()) != null) {
-            System.out.printf("volume recall\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = issue.calculatePrecission()) != null) {
-            System.out.printf("issue precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = issue.calculateRecall()) != null) {
-            System.out.printf("issue recall\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = pages.calculatePrecission()) != null) {
-            System.out.printf("pages precission\t\t%4.2f\n", 100 * value);
-        }
-        if ((value = pages.calculateRecall()) != null) {
-            System.out.printf("pages recall\t\t%4.2f\n", 100 * value);
-        }
+        
+        PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+        titlePR.print("Title");
 
-        System.out.println("");
-        
-        double authorPrecision = calculateAverage(authorsPrecisions);
-        double authorRecall = calculateAverage(authorsRecalls);
-        double authorF1 = 2 * authorPrecision * authorRecall / (authorPrecision + authorRecall);
-        
-        double affiliationPrecision = calculateAverage(affPrecisions);
-        double affiliationRecall = calculateAverage(affRecalls);
-        double affiliationF1 = 2 * affiliationPrecision * affiliationRecall / (affiliationPrecision + affiliationRecall);
+        PrecisionRecall authorsPR = new PrecisionRecall().buildForList(authors);
+        authorsPR.print("Authors");
 
-        double keywordPrecision = calculateAverage(keywordPrecisions);
-        double keywordRecall = calculateAverage(keywordRecalls);
-        double keywordF1 = 2 * keywordPrecision * keywordRecall / (keywordPrecision + keywordRecall);
+        PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
+        affiliationsPR.print("Affiliations");
         
-        System.out.printf("abstract F1 score\t\t%4.2f\n", 100 * abstrakt.calculateF1());
-        System.out.printf("title F1 score\t\t%4.2f\n", 100 * title.calculateF1());
-        System.out.printf("journal F1 score\t\t%4.2f\n", 100 * journalTitle.calculateF1());
-        System.out.printf("authors F1 score\t\t%4.2f\n", 100 * authorF1);
-        System.out.printf("affs F1 score\t\t%4.2f\n", 100 * affiliationF1);
-        System.out.printf("keywords F1 score\t\t%4.2f\n", 100 * keywordF1);
-        System.out.printf("year F1 score\t\t%4.2f\n", 100 * dateYear.calculateF1());
-        System.out.printf("volume F1 score\t\t%4.2f\n", 100 * volume.calculateF1());
-        System.out.printf("issue F1 score\t\t%4.2f\n", 100 * issue.calculateF1());
-        System.out.printf("doi F1 score\t\t%4.2f\n", 100 * doi.calculateF1());
-        System.out.printf("issn F1 score\t\t%4.2f\n", 100 * issn.calculateF1());
-        System.out.printf("pages F1 score\t\t%4.2f\n", 100 * pages.calculateF1());
+        PrecisionRecall authorsAffiliationsPR = new PrecisionRecall().buildForRelation(authorsAffiliations);
+        authorsAffiliationsPR.print("Author - affiliation");
         
-        System.out.println("");
+        PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
+        emailsPR.print("Emails");
+
+        PrecisionRecall authorsEmailsPR = new PrecisionRecall().buildForRelation(authorsEmails);
+        authorsEmailsPR.print("Author - email");
         
-        double avgPrecision = (abstrakt.calculatePrecission() + title.calculatePrecission() 
-                + journalTitle.calculatePrecission() + authorPrecision + affiliationPrecision 
-                + dateYear.calculatePrecission() + volume.calculatePrecission() + issue.calculatePrecission()
-                + keywordPrecision + doi.calculatePrecission() + pages.calculatePrecission()) / 11;
-        System.out.printf("avg precision\t\t%4.2f\n", 100 * avgPrecision);
+        PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
+        abstractPR.print("Abstract");
         
-        double avgRecall = (abstrakt.calculateRecall() + title.calculateRecall() + journalTitle.calculateRecall() 
-                + authorRecall + affiliationRecall + dateYear.calculateRecall() + volume.calculateRecall() 
-                + issue.calculateRecall() + keywordRecall + doi.calculateRecall() + pages.calculateRecall()) / 11;
-        System.out.printf("avg recall\t\t%4.2f\n", 100 * avgRecall);
+        PrecisionRecall keywordsPR = new PrecisionRecall().buildForList(keywords);
+        keywordsPR.print("Keywords");
         
-        double avgF1 = (abstrakt.calculateF1()+title.calculateF1()+journalTitle.calculateF1()+authorF1
-                +affiliationF1+dateYear.calculateF1()+volume.calculateF1()+issue.calculateF1()
-                +keywordF1+doi.calculateF1()+pages.calculateF1())
-                / 11;
-        System.out.printf("avg F1 score\t\t%4.2f\n", 100 * avgF1);
+        PrecisionRecall journalPR = new PrecisionRecall().buildForSingle(journals);
+        journalPR.print("Journal");
+
+        PrecisionRecall volumePR = new PrecisionRecall().buildForSingle(volumes);
+        volumePR.print("Volume");
+
+        PrecisionRecall issuePR = new PrecisionRecall().buildForSingle(issues);
+        issuePR.print("Issue");
+
+        PrecisionRecall pageRangePR = new PrecisionRecall().buildForSingle(pageRanges);
+        pageRangePR.print("Pages");
         
+        PrecisionRecall yearPR = new PrecisionRecall().buildForSingle(years);
+        yearPR.print("Year");
+        
+        PrecisionRecall doiPR = new PrecisionRecall().buildForSingle(dois);
+        doiPR.print("DOI");
+        
+        PrecisionRecall issnPR = new PrecisionRecall().buildForSingle(issns);
+        issnPR.print("ISSN");
+
+        List<PrecisionRecall> results = Lists.newArrayList(
+                titlePR, authorsPR, affiliationsPR, emailsPR, abstractPR, 
+                keywordsPR, journalPR, volumePR, issuePR, pageRangePR, yearPR,
+                doiPR/*, issnPR*/);
+        
+        double avgPrecision = 0;
+        double avgRecall = 0;
+        double avgF1 = 0;
+        for (PrecisionRecall result : results) {
+            avgPrecision += result.calculatePrecision();
+            avgRecall += result.calculateRecall();
+            avgF1 += result.calculateF1();
+        }
+        avgPrecision /= results.size();
+        avgRecall /= results.size();
+        avgF1 /= results.size();
+  
+        System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
+        System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
+        System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
     }
 
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
@@ -579,26 +506,13 @@ public final class FinalMetadataExtractionEvaluation {
             System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
             return;
         }
-        boolean verbose = true;
         String directory = args[0];
         String origExt = args[1];
         String extrExt = args[2];
 
-        FinalMetadataExtractionEvaluation e = new FinalMetadataExtractionEvaluation(verbose);
+        FinalMetadataExtractionEvaluation e = new FinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(iter);
-    }
-
-    private static Double calculateAverage(List<Double> values) {
-        int all = 0;
-        double sum = .0;
-        for (Double value : values) {
-            if (value != null) {
-                ++all;
-                sum += value;
-            }
-        }
-        return sum / all;
     }
 
     private static double calculatePrecision(List<String> expected, List<String> extracted) {
@@ -641,11 +555,11 @@ public final class FinalMetadataExtractionEvaluation {
     }
 
     private static double compareStringsSW(String expectedText, String extractedText) {
-        List<String> expectedTokens = StringTools.tokenize(expectedText);
-        List<String> extractedTokens = StringTools.tokenize(extractedText);
+        List<String> expectedTokens = StringTools.tokenize(expectedText.trim());
+        List<String> extractedTokens = StringTools.tokenize(extractedText.trim());
         SmithWatermanDistance distanceFunc = new SmithWatermanDistance(.0, .0);
         double distance = distanceFunc.compare(expectedTokens, extractedTokens);
-        return distance / (double) expectedTokens.size();
+        return 2*distance / (double) (expectedTokens.size()+extractedTokens.size());
     }
 
     static List<String> removeLeadingZerosFromDate(List<String> strings) {
@@ -686,7 +600,7 @@ public final class FinalMetadataExtractionEvaluation {
     }
 
     static String outputDoc(Document document) throws IOException, TransformerException {
-        OutputFormat format = new OutputFormat(document); //document is an instance of org.w3c.dom.Document
+        OutputFormat format = new OutputFormat(document);
         format.setLineWidth(65);
         format.setIndenting(true);
         format.setIndent(2);
@@ -695,4 +609,242 @@ public final class FinalMetadataExtractionEvaluation {
         serializer.serialize(document);
         return out.toString();
     }
+    
+    private MetadataSingle readMetadataSingle(org.w3c.dom.Document originalNlm, String originalXPath, 
+            org.w3c.dom.Document extractedNlm, String extractedXPath) throws XPathExpressionException {
+        String expected = XMLTools.extractTextFromNode(originalNlm, originalXPath).trim();
+        String extracted = XMLTools.extractTextFromNode(extractedNlm, extractedXPath).trim();
+        return new MetadataSingle(expected, extracted);
+    }
+
+    private MetadataList readMetadataList(org.w3c.dom.Document originalNlm, String originalXPath, 
+            org.w3c.dom.Document extractedNlm, String extractedXPath) throws XPathExpressionException {
+        List<String> expected = XMLTools.extractTextAsList(originalNlm, originalXPath);
+        List<String> extracted = XMLTools.extractTextAsList(extractedNlm, extractedXPath);
+        return new MetadataList(expected, extracted);
+    }
+    
+    private static class MetadataSingle {
+        private String expectedValue;
+        private String extractedValue;
+        private Boolean correct;
+
+        public MetadataSingle(String expectedValue, String extractedValue) {
+            this.expectedValue = expectedValue;
+            this.extractedValue = extractedValue;
+            this.correct = null;
+        }
+
+        public boolean isCorrect() {
+            return correct == null ? expectedValue.equals(extractedValue) : correct;
+        }
+        
+        public boolean hasExpected() {
+            return expectedValue != null && !expectedValue.isEmpty();
+        }
+        
+        public boolean hasExtracted() {
+            return extractedValue != null && !extractedValue.isEmpty();
+        }
+        
+        public int expectedSize() {
+            return expectedValue == null || expectedValue.isEmpty() ? 0 : 1;
+        }
+        
+        public int extractedSize() {
+            return extractedValue == null || extractedValue.isEmpty() ? 0 : 1;
+        }
+        
+        public int correctSize() {
+            return hasExpected() && hasExtracted() && isCorrect() ? 1 : 0;
+        }
+    
+        public void print(String name) {
+            System.out.println("");
+            System.out.println("Expected " + name + ": " + expectedValue);
+            System.out.println("Extracted " + name + ": " + extractedValue);
+            System.out.println("Correct: " + (isCorrect() ? "yes" : "no"));
+        }
+        
+    }
+    
+    private static class MetadataList {
+        private List<String> expectedValue;
+        private List<String> extractedValue;
+        private Double precision = -1.;
+        private Double recall = -1.;
+
+        public MetadataList(List<String> expectedValue, List<String> extractedValue) {
+            this.expectedValue = expectedValue;
+            this.extractedValue = extractedValue;
+            this.precision = -1.;
+            this.recall = -1.;
+        }
+
+        public boolean hasExpected() {
+            return expectedValue != null && !expectedValue.isEmpty();
+        }
+        
+        public boolean hasExtracted() {
+            return extractedValue != null && !extractedValue.isEmpty();
+        }
+        
+        public Double getPrecision() {
+            if (precision != -1.) {
+                return precision;
+            }
+            if (!hasExtracted()) {
+                return null;
+            }
+            return calculatePrecision(expectedValue, extractedValue);
+        }
+        
+        public Double getRecall() {
+            if (recall != -1.) {
+                return recall;
+            }
+            if (!hasExpected()) {
+                return null;
+            }
+            return calculateRecall(expectedValue, extractedValue);
+        }
+        
+        public void print(String name) {
+            System.out.println("");
+            System.out.println("Expected " + name + ":");
+            for (String expected : expectedValue) {
+                System.out.println("    "+expected);
+            }
+            System.out.println("Extracted " + name + ":");
+            for (String extracted : extractedValue) {
+                System.out.println("    "+extracted);
+            }
+            System.out.printf("Precision: %4.2f\n", getPrecision());
+            System.out.printf("Recall: %4.2f\n", getRecall());
+        }
+        
+    }
+    
+    private static class MetadataRelation {
+        private Set<StringRelation> expectedValue = new HashSet<StringRelation>();
+        private Set<StringRelation> extractedValue = new HashSet<StringRelation>();
+
+        public void addExpected(StringRelation relation) {
+            expectedValue.add(relation);
+        }
+        
+        public void addExtracted(StringRelation relation) {
+            extractedValue.add(relation);
+        }
+        
+        public boolean hasExpected() {
+            return expectedValue != null && !expectedValue.isEmpty();
+        }
+        
+        public boolean hasExtracted() {
+            return extractedValue != null && !extractedValue.isEmpty();
+        }
+        
+        public Double getPrecision() {
+            if (!hasExtracted()) {
+                return null;
+            }
+            int correct = 0;
+            CosineDistance cos = new CosineDistance();
+            
+            List<StringRelation> tmp = new ArrayList<StringRelation>(expectedValue);
+            external:
+            for (StringRelation partExt : extractedValue) {
+                for (StringRelation partExp : tmp) {
+                    if (cos.compare(StringTools.tokenize(partExt.element1), StringTools.tokenize(partExp.element1))+0.001 > Math.sqrt(2) / 2
+                        && cos.compare(StringTools.tokenize(partExt.element2), StringTools.tokenize(partExp.element2))+0.001 > Math.sqrt(2) / 2) {
+                        ++correct;
+                        tmp.remove(partExp);
+                        continue external;
+                    }
+                }
+            }
+            return (double) correct / extractedValue.size();
+        }
+        
+        public Double getRecall() {
+            if (!hasExpected()) {
+                return null;
+            }
+            int correct = 0;
+            CosineDistance cos = new CosineDistance();
+            List<StringRelation> tmp = new ArrayList<StringRelation>(expectedValue);
+            external:
+            for (StringRelation partExt : extractedValue) {
+                internal:
+                for (StringRelation partExp : tmp) {
+                    if (cos.compare(StringTools.tokenize(partExt.element1), StringTools.tokenize(partExp.element1))+0.001 > Math.sqrt(2) / 2
+                        && cos.compare(StringTools.tokenize(partExt.element2), StringTools.tokenize(partExp.element2))+0.001 > Math.sqrt(2) / 2) {
+                        ++correct;
+                        tmp.remove(partExp);
+                        continue external;
+                    }
+                }
+            }
+            return (double) correct / expectedValue.size();
+        }
+        
+        public void print(String name) {
+            System.out.println("");
+            System.out.println("Expected " + name + ":");
+            for (StringRelation expected : expectedValue) {
+                System.out.println("    "+expected);
+            }
+            System.out.println("Extracted " + name + ":");
+            for (StringRelation extracted : extractedValue) {
+                System.out.println("    "+extracted);
+            }
+            System.out.printf("Precision: %4.2f\n", getPrecision());
+            System.out.printf("Recall: %4.2f\n", getRecall());
+        }
+        
+    }
+
+    private static class StringRelation {
+        private String element1;
+        private String element2;
+
+        public StringRelation(String element1, String element2) {
+            this.element1 = element1;
+            this.element2 = element2;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final StringRelation other = (StringRelation) obj;
+            if ((this.element1 == null) ? (other.element1 != null) : !this.element1.equals(other.element1)) {
+                return false;
+            }
+            if ((this.element2 == null) ? (other.element2 != null) : !this.element2.equals(other.element2)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 67 * hash + (this.element1 != null ? this.element1.hashCode() : 0);
+            hash = 67 * hash + (this.element2 != null ? this.element2.hashCode() : 0);
+            return hash;
+        }
+
+        @Override
+        public String toString() {
+            return element1 + " --- " + element2;
+        }
+        
+    }
+    
 }

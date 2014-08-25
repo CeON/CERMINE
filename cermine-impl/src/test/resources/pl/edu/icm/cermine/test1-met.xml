@@ -9,6 +9,7 @@
       <title-group>
         <article-title>Complications related to deep venous thrombosis prophylaxis in trauma: a systematic review of the literature</article-title>
       </title-group>
+      <article-id pub-id-type="doi">10.1186/1752-2897-4-1</article-id>
       <contrib-group>
         <contrib contrib-type="author">
           <string-name>Indraneel Datta</string-name>
@@ -50,8 +51,22 @@
       <volume>4</volume>
       <issue>1</issue>
       <pub-date>
+        <day>6</day>
+        <month>1</month>
         <year>2010</year>
       </pub-date>
+      <history>
+        <date date-type="accepted">
+          <day>6</day>
+          <month>1</month>
+          <year>2010</year>
+        </date>
+        <date date-type="received">
+          <day>2</day>
+          <month>6</month>
+          <year>2009</year>
+        </date>
+      </history>
     </article-meta>
   </front>
 </article>

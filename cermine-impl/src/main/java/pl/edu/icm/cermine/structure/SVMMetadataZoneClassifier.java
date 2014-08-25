@@ -37,14 +37,14 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  * @author Paweł Szostek
  */
 public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
-	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/meta_classification_svm_model";
-	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/meta_classification_svm_model.range";
+	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-default";
+	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-default.range";
 	
     private static SVMMetadataZoneClassifier defaultInstance;
     
 	public SVMMetadataZoneClassifier() throws AnalysisException {
 		this(MODEL_FILE_PATH, RANGE_FILE_PATH, true);
-	}
+    }
 	
 	public SVMMetadataZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
 		super(getFeatureVectorBuilder());
@@ -76,66 +76,70 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
 		vectorBuilder.setFeatureCalculators(Arrays
 				.<FeatureCalculator<BxZone, BxPage>> asList(
-						new AbstractFeature(),
-						new AffiliationFeature(),
-						new AuthorFeature(),
-						new AuthorNameRelativeFeature(),
-						new BibinfoFeature(),
-						new CharCountFeature(),
-						new CharCountRelativeFeature(),
-						new ContributionFeature(),
-						new DateFeature(),
-						new DistanceFromNearestNeighbourFeature(),
-						new DotCountFeature(),
-						new DotRelativeCountFeature(),
-						new EmailFeature(),
-						new EmptySpaceRelativeFeature(),
-						new FontHeightMeanFeature(),
-						new FreeSpaceWithinZoneFeature(),
-						new FullWordsRelativeFeature(),
-						new HeightFeature(),
-						new HeightRelativeFeature(),
-						new HorizontalRelativeProminenceFeature(),
-						new IsAfterMetTitleFeature(),
-						new IsFontBiggerThanNeighboursFeature(),
-						new IsGreatestFontOnPageFeature(),
-						new IsWidestOnThePageFeature(),
-						new KeywordsFeature(),
-						new LastButOneZoneFeature(),
-						new LineCountFeature(),
-						new LineRelativeCountFeature(),
-						new LineHeightMeanFeature(),
-						new LineWidthMeanFeature(),
-						new LineXPositionMeanFeature(),
-						new LineXWidthPositionDiffFeature(),
-						new LetterCountFeature(),
-						new LetterRelativeCountFeature(),
-						new LowercaseCountFeature(),
-						new LowercaseRelativeCountFeature(),
-						new PreviousZoneFeature(),
-						new ProportionsFeature(),
-						new PunctuationRelativeCountFeature(),
-						new UppercaseCountFeature(),
-						new UppercaseRelativeCountFeature(),
-						new UppercaseWordCountFeature(),
-						new UppercaseWordRelativeCountFeature(),
-						new VerticalProminenceFeature(),
-						new WidthFeature(),
-						new WordCountFeature(),
-						new WordCountRelativeFeature(),
-						new WordWidthMeanFeature(),
-						new WordLengthMeanFeature(),
-						new WordLengthMedianFeature(),
-						new WhitespaceCountFeature(),
-						new WhitespaceRelativeCountLogFeature(),
-						new WidthRelativeFeature(),
-						new XPositionFeature(),
-						new XPositionRelativeFeature(),
-						new YPositionFeature(),
-						new YPositionRelativeFeature(),
-						new YearFeature()
-						)
-				);
+                new AbstractFeature(),
+                new AffiliationFeature(),
+                new AuthorFeature(),
+                new AuthorNameRelativeFeature(),
+                new BibinfoFeature(),
+                new CharCountFeature(),
+                new CharCountRelativeFeature(),
+                new CommaCountFeature(),
+                new CommaRelativeCountFeature(),
+                new ContributionFeature(),
+                new DateFeature(),
+                new DigitCountFeature(),
+                new DigitRelativeCountFeature(),
+                new DistanceFromNearestNeighbourFeature(),
+                new DotCountFeature(),
+                new DotRelativeCountFeature(),
+                new EmailFeature(),
+                new EmptySpaceRelativeFeature(),
+                new FontHeightMeanFeature(),
+                new FreeSpaceWithinZoneFeature(),
+                new FullWordsRelativeFeature(),
+                new HeightFeature(),
+                new HeightRelativeFeature(),
+                new HorizontalRelativeProminenceFeature(),
+                new IsAfterMetTitleFeature(),
+                new IsFontBiggerThanNeighboursFeature(),
+                new IsGreatestFontOnPageFeature(),
+                new IsWidestOnThePageFeature(),
+                new KeywordsFeature(),
+                new LastButOneZoneFeature(),
+                new LineCountFeature(),
+				new LineRelativeCountFeature(),
+                new LineHeightMeanFeature(),
+                new LineWidthMeanFeature(),
+                new LineXPositionMeanFeature(),
+                new LineXWidthPositionDiffFeature(),
+				new LetterCountFeature(),
+				new LetterRelativeCountFeature(),
+                new LowercaseCountFeature(),
+                new LowercaseRelativeCountFeature(),
+                new PreviousZoneFeature(),
+                new ProportionsFeature(),
+                new PunctuationRelativeCountFeature(),
+                new UppercaseCountFeature(),
+                new UppercaseRelativeCountFeature(),
+                new UppercaseWordCountFeature(),
+                new UppercaseWordRelativeCountFeature(),
+                new VerticalProminenceFeature(),
+                new WidthFeature(),
+                new WordCountFeature(),
+                new WordCountRelativeFeature(),
+				new WordWidthMeanFeature(),
+                new WordLengthMeanFeature(),
+                new WordLengthMedianFeature(),
+				new WhitespaceCountFeature(),
+				new WhitespaceRelativeCountLogFeature(),
+				new WidthRelativeFeature(),
+                new XPositionFeature(),
+                new XPositionRelativeFeature(),
+                new YPositionFeature(),
+				new YPositionRelativeFeature(),
+				new YearFeature()
+				)
+			);
 		return vectorBuilder;
 	}
     

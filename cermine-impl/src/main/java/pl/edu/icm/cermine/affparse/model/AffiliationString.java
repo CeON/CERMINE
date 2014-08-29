@@ -16,4 +16,7 @@ public class AffiliationString extends TokenizedString<AffiliationLabel, Affilia
 		return AffiliationExporter.toNLM(text, tokens); // TODO FIXME Jeszcze jest jakies ID, ale poki co nie wiem skad ono sie bierze
 	}
 
+	public void calculateFeatures() {
+		AffiliationFeatureExtractor.extractFeatures(this.tokens);
+	}
 }

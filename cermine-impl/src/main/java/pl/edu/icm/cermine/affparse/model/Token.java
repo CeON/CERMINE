@@ -1,5 +1,7 @@
 package pl.edu.icm.cermine.affparse.model;
 
+import java.util.List;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 public abstract class Token<L extends Label> {
@@ -8,6 +10,7 @@ public abstract class Token<L extends Label> {
 	protected int startIndex;
 	protected int endIndex;
 	protected L label;
+	protected List<Feature> features;
 	
 	public String getText() {
 		return text;
@@ -16,13 +19,17 @@ public abstract class Token<L extends Label> {
 	public int getStartIndex() {
 		return startIndex;
 	}
-	
+
 	public int getEndIndex() {
 		return endIndex;
 	}
 
 	public L getLabel() {
 		return label;
+	}
+	
+	public void setLabel(L label) {
+		this.label = label;
 	}
 	
 	public Token(String text, int startIndex, int endIndex, L label) {

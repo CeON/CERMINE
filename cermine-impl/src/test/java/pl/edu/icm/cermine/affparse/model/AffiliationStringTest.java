@@ -2,6 +2,8 @@ package pl.edu.icm.cermine.affparse.model;
 
 import static org.junit.Assert.*;
 
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,26 @@ public class AffiliationStringTest {
 		AffiliationString instance = new AffiliationString(text);
 		
 		assertEquals(expectedTokens, instance.getTokens());
+	}
+	
+	@Test
+	public void testToNLM() {
+		String text = " Uniwersytet Śląski, Katowice ";
+		AffiliationString instance = new AffiliationString(text);
+		List<AffiliationToken> tokens = instance.getTokens();
+		int expectedSize = 4;
+		assertEquals(expectedSize, tokens.size());
+		tokens.get(0).setLabel(AffiliationLabel.INSTITUTION);
+		tokens.get(1).setLabel(AffiliationLabel.INSTITUTION);
+		tokens.get(2).setLabel(AffiliationLabel.INSTITUTION);
+		tokens.get(3).setLabel(AffiliationLabel.ADDRESS);
+		
+		Element aff = instance.toNLM();
+		XMLOutputter outputter = new XMLOutputter();
+		String actual = outputter.outputString(aff);
+		String expected = "<aff> <institution>Uniwersytet Śląski,</institution> <addr-line>Katowice</addr-line> </aff>";
+		assertEquals(expected, actual);
+		
 	}
 
 }

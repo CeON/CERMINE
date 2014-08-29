@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.affparse.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -10,8 +11,8 @@ public abstract class Token<L extends Label> {
 	protected int startIndex;
 	protected int endIndex;
 	protected L label;
-	protected List<Feature> features;
-	
+	protected List<String> features;
+
 	public String getText() {
 		return text;
 	}
@@ -32,11 +33,20 @@ public abstract class Token<L extends Label> {
 		this.label = label;
 	}
 	
+	public List<String> getFeatures() {
+		return features;
+	}
+	
+    public void addFeature(String feature) {
+    	features.add(feature);
+    }
+	
 	public Token(String text, int startIndex, int endIndex, L label) {
 		this.text = text;
 		this.startIndex = startIndex;
 		this.endIndex = endIndex;
 		this.label = label;
+		this.features = new ArrayList<String>();
 	}
 	
 	public Token(String text, int startIndex, int endIndex) {
@@ -59,4 +69,20 @@ public abstract class Token<L extends Label> {
 	            append(endIndex, rhs.endIndex).
 	            isEquals();
 	    }
+	
+	// Used for dictionary lookups
+	@SuppressWarnings("rawtypes")
+	public static <T extends Token> boolean sequenceEquals(List<T> lhs, List<T> rhs) {
+		if (lhs.size() != rhs.size()) {
+			return false;
+		}
+		
+		for (int i = 0; i < lhs.size(); i++) {
+			if (!lhs.get(i).getText().toLowerCase().equals(rhs.get(i).getText().toLowerCase())) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }

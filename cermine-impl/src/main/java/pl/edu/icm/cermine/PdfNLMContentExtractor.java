@@ -18,10 +18,7 @@
 
 package pl.edu.icm.cermine;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Collection;
 import javax.xml.xpath.XPathExpressionException;
 import org.apache.commons.cli.*;
@@ -31,9 +28,11 @@ import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
 /**
  * NLM-based content extractor from PDF files.
@@ -218,10 +217,12 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         this.textExtractor = textExtractor;
     }
     
-    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException {
+    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException, TransformationException {
         Options options = new Options();
         options.addOption("path", true, "file or directory path");
-        options.addOption("ext", true, "file extension");
+        options.addOption("ext", true, "metadata file extension");
+        options.addOption("str", false, "store structure (TrueViz) files as well");
+        options.addOption("strext", true, "structure file extension");
         options.addOption("modelmeta", true, "path to metadata classifier model");
         options.addOption("modelinit", true, "path to initial classifier model");
         
@@ -231,6 +232,11 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         String extension = "cermxml";
         if (line.hasOption("ext")) {
             extension = line.getOptionValue("ext");
+        }
+        boolean extractStr = line.hasOption("str");
+        String strExtension = "cxml";
+        if (line.hasOption("strext")) {
+            strExtension = line.getOptionValue("strext");
         }
         String modelMeta = null;
         String modelMetaRange = null;
@@ -248,11 +254,15 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
             System.err.println("Usage: PdfNLMContentExtractor -path <path> [optional parameters]\n\n"
                              + "Tool for extracting metadata and content from PDF files.\n\n"
                              + "Arguments:\n"
-                             + "  -path                     path to a PDF file or directory containing PDF files\n"
-                             + "  -ext (optional)           the extension of the resulting metadata file;\n"
+                             + "  -path <path>              path to a PDF file or directory containing PDF files\n"
+                             + "  -ext <extension>          (optional) the extension of the resulting metadata file;\n"
+                             + "                            default: \"cermxml\"; used only if passed path is a directory\n"
+                             + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
+                             + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
+                             + "  -str                      whether to store structure (TrueViz) files as well;\n"
                              + "                            used only if passed path is a directory\n"
-                             + "  -modelmeta (optional)     the path to the metadata classifier model file\n"
-                             + "  -modelinit (optional)     the path to the initial classifier model file\n");
+                             + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
+                             + "                            default: \"cxml\"; used only if passed path is a directory\n");
     		System.exit(1);
         }
  
@@ -297,7 +307,8 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
                     extractor.buildStructureExtractor(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
                 }
                 InputStream in = new FileInputStream(pdf);
-                Element result = extractor.extractContent(in);
+                BxDocument doc = extractor.structureExtractor.extractStructure(in);
+                Element result = extractor.extractContent(doc);
 
                 long end = System.currentTimeMillis();
                 float elapsed = (end - start) / 1000F;
@@ -307,6 +318,13 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
                     System.out.println("Cannot create new file!");
                 }
                 FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
+                
+                if (extractStr) {
+                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                    File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
+                    writer.write(new FileWriter(strF), doc.getPages());
+                }
+                
                 i++;
                 int percentage = i*100/files.size();
                 System.out.println("Extraction time: " + Math.round(elapsed) + "s");

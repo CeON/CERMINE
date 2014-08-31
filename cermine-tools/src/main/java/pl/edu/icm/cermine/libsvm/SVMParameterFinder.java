@@ -59,7 +59,8 @@ public abstract class SVMParameterFinder {
         options.addOption("full", false, "print all possible messages");
         options.addOption("kernel", true, "kernel type");
         options.addOption("degree", true, "degree");
-        options.addOption("ext", true, "ext");
+        options.addOption("ext", true, "file extension");
+        options.addOption("threads", true, "number of threads");
         
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
@@ -76,7 +77,7 @@ public abstract class SVMParameterFinder {
             }
 
             if (!line.hasOption("fold")) {
-                throw new ParseException("Foldness of cross-validation is not given!");
+                evaluator.foldness = 5;
             } else {
                 evaluator.foldness = Integer.valueOf(line.getOptionValue("fold"));
             }
@@ -96,17 +97,29 @@ public abstract class SVMParameterFinder {
                 default:
                     throw new IllegalArgumentException("Invalid kernel value provided");
             }
+
+            int threads = 3;
+            String threadsStr = line.getOptionValue("threads");
+            if (threadsStr != null && !threadsStr.isEmpty()) {
+                threads = Integer.valueOf(threadsStr);
+            }
+            
+            String ext = "cxml";
+            String extStr = line.getOptionValue("ext");
+            if (extStr != null && !extStr.isEmpty()) {
+                ext = extStr;
+            }
             
             evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-            evaluator.run(inputFile, line.getOptionValue("ext"), kernelType, degree);
+            evaluator.run(inputFile, ext, threads, kernelType, degree);
         }
     }
 
     protected abstract List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException;
     
-    public void run(String inputFile, String ext, int kernel, int degree) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException, InterruptedException, ExecutionException {
+    public void run(String inputFile, String ext, int threads, int kernel, int degree) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException, InterruptedException, ExecutionException {
         List<TrainingSample<BxZoneLabel>> samples = getSamples(inputFile, ext);
-        
+
         ExecutorService executor = Executors.newFixedThreadPool(3);
         CompletionService<EvaluationParams> completionService = new ExecutorCompletionService<EvaluationParams>(executor);
         
@@ -135,6 +148,7 @@ public abstract class SVMParameterFinder {
             submitted--;
         }    
         
+        executor.shutdown();
     }
 
     private static class EvaluationParams {

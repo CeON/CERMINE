@@ -85,12 +85,18 @@ public class SVMInitialBuilder {
 
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
-        if (!(line.hasOption("input") && line.hasOption("output") && line.hasOption("kernel") && line.hasOption("g") && line.hasOption("C") )) {
-            System.err.println("Usage: SVMInitialBuilder -input /media/4CEE59EAEE59CCB8/testset -output /media/4CEE59EAEE59CCB8/testset/model-init -kernel 1 -g 0.03125 -C 64 -degree 4");
+        if (!line.hasOption("input") || !line.hasOption("output")) {
+            System.err.println("Usage: SVMInitialBuilder [-kernel <kernel type>] [-d <degree>] [-g <gamma>] [-C <error cost>] [-ext <extension>] -input <input dir> -output <path>");
             System.exit(1);
         }
-        Double C = Double.valueOf(line.getOptionValue("C"));
-        Double gamma = Double.valueOf(line.getOptionValue("g"));
+        Double C = 32.;
+        if (line.hasOption("C")) {
+            C = Double.valueOf(line.getOptionValue("C"));
+        }
+        Double gamma = 0.125;
+        if (line.hasOption("g")) {
+            gamma = Double.valueOf(line.getOptionValue("g"));
+        }
         String inDir = line.getOptionValue("input");
         String outFile = line.getOptionValue("output");
         String degreeStr = line.getOptionValue("degree");
@@ -99,14 +105,16 @@ public class SVMInitialBuilder {
         if (degreeStr != null && !degreeStr.isEmpty()) {
         	degree = Integer.valueOf(degreeStr);
         }
-        Integer kernelType;
-        switch(Integer.valueOf(line.getOptionValue("kernel"))) {
-        	case 0: kernelType = svm_parameter.LINEAR; break;
-        	case 1: kernelType = svm_parameter.POLY; break;
-        	case 2: kernelType = svm_parameter.RBF; break;
-        	case 3: kernelType = svm_parameter.SIGMOID; break;
-        	default:
-        		throw new IllegalArgumentException("Invalid kernel value provided");
+        Integer kernelType = svm_parameter.RBF;
+        if (line.hasOption("kernel")) {
+            switch(Integer.valueOf(line.getOptionValue("kernel"))) {
+                case 0: kernelType = svm_parameter.LINEAR; break;
+                case 1: kernelType = svm_parameter.POLY; break;
+                case 2: kernelType = svm_parameter.RBF; break;
+                case 3: kernelType = svm_parameter.SIGMOID; break;
+                default:
+                    throw new IllegalArgumentException("Invalid kernel value provided");
+            }
         }
         if (kernelType == svm_parameter.POLY && degree == null) {
             System.err.println("Polynomial kernel requires the -degree option to be specified");

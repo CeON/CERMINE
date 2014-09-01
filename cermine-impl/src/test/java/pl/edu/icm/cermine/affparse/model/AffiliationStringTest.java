@@ -5,7 +5,10 @@ import static org.junit.Assert.*;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 import org.junit.Test;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -27,6 +30,27 @@ public class AffiliationStringTest {
 		AffiliationString instance = new AffiliationString(text);
 		
 		assertEquals(expectedTokens, instance.getTokens());
+	}
+	
+	@Test
+	public void testCalculateFeatures() {
+		String text = "Cóż ro123bić?";
+	    List<List<String>> expectedFeatures = new ArrayList<List<String>>();
+	    expectedFeatures.add(Arrays.asList("W=coz", "UpperCase"));
+	    expectedFeatures.add(Arrays.asList("W=ro"));
+	    expectedFeatures.add(Arrays.asList("Number"));
+	    expectedFeatures.add(Arrays.asList("W=bic"));
+	    expectedFeatures.add(Arrays.asList("W=?", "WeirdLetter"));
+		
+	    AffiliationString instance = new AffiliationString(text);
+		instance.calculateFeatures();
+		for (int i = 0; i < expectedFeatures.size(); i++) {
+			List<String> expected = expectedFeatures.get(i);
+			List<String> actual = instance.getTokens().get(i).getFeatures();
+			Collections.sort(expected);
+			Collections.sort(actual);
+			assertEquals(expected, actual);
+		}
 	}
 	
 	@Test

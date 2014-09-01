@@ -75,25 +75,23 @@ public abstract class DictionaryFeature {
 	}
 
 	public void addFeatures(List<AffiliationToken> tokens) {
-		Set<Integer> candidateEntries = new HashSet<Integer>();
-		for (AffiliationToken token : tokens) {
-			List<Integer> candidatesForToken = dictionary.get(token.getText().toLowerCase());
-			if (candidatesForToken != null) {
-				candidateEntries.addAll(candidatesForToken);
-			}
-		}
 		
 		boolean marked[] = new boolean[tokens.size()];
 		for (int i = 0; i < marked.length; i++) {
 			marked[i] = false;
 		}
-		
-		for (int entryId : candidateEntries) {
-			List<AffiliationToken> entry = entries.get(entryId);
-			for (int l = 0, r = entry.size(); r <= tokens.size(); l++, r++) {
-				if (Token.sequenceEquals(entry, tokens.subList(l, r))) {
-					for (int i = l; i < r; i++) {
-						marked[i] = true;
+	
+		for (int l = 0; l < tokens.size(); l++) {
+			AffiliationToken token = tokens.get(l);
+			List<Integer> candidateIds = dictionary.get(token.getText().toLowerCase());
+			if (candidateIds != null) {
+				for (int candidateId : candidateIds) {
+					List<AffiliationToken> entry = entries.get(candidateId);
+					int r = l + entry.size();
+					if (r <= tokens.size() && Token.sequenceEquals(entry, tokens.subList(l, r))) {
+						for (int i = l; i < r; i++) {
+							marked[i] = true;
+                    	}
 					}
 				}
 			}

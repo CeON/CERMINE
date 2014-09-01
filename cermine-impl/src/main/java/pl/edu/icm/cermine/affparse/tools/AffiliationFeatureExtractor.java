@@ -3,13 +3,14 @@ package pl.edu.icm.cermine.affparse.tools;
 import java.util.Arrays;
 import java.util.List;
 
+import pl.edu.icm.cermine.affparse.dictfeatures.*;
 import pl.edu.icm.cermine.affparse.features.*;
 import pl.edu.icm.cermine.affparse.model.AffiliationToken;
 
 public class AffiliationFeatureExtractor {
 
 	public static void extractFeatures(List<AffiliationToken> tokens) {
-		for (Feature feature : localFeatures) {
+		for (LocalFeature feature : localFeatures) {
 			for (AffiliationToken token : tokens) {
 				String computedFeature = feature.computeFeature(token.getText());
 				if (computedFeature != null) {
@@ -17,12 +18,27 @@ public class AffiliationFeatureExtractor {
 				}
 			}
 		}
+		for (DictionaryFeature feature : dictFeatures) {
+			feature.addFeatures(tokens);
+		}
 	}
 	
-	private static final List<Feature> localFeatures = Arrays.asList(
-			(Feature)new IsWord(),
-			(Feature)new IsNumber(),
-			(Feature)new IsUpperCase(),
-			(Feature)new WordFeature(Arrays.asList((Feature)new IsNumber()))
+	private static final List<LocalFeature> localFeatures = Arrays.<LocalFeature>asList(
+			// new IsWord(), TODO dodać ? Będzie prawie wszędzie...
+			new IsNumber(),
+			new IsUpperCase(),
+			new IsAllUpperCase(),
+			new IsSeparator(),
+			new IsNonAlphanum(),
+			new WordFeature(Arrays.asList((LocalFeature)new IsNumber()))
+			);
+	
+	private static final List<DictionaryFeature> dictFeatures = Arrays.<DictionaryFeature>asList(
+			new Address(),
+			new City(),
+			new Country(),
+			new State(),
+			new StateCode(),
+			new StopWord()
 			);
 }

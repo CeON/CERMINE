@@ -12,6 +12,6 @@ public class IsNumber extends BinaryFeature {
 		return null;
 	}
 	
-	private static final String featureString = "IsNumber";
+	private static final String featureString = "Number";
 
 }

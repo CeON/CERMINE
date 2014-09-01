@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.affparse.features;
+package pl.edu.icm.cermine.affparse.dictfeatures;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,9 +29,14 @@ public abstract class DictionaryFeature {
 	
 	private void addLine(String line) {
 		String normalizedLine = AffiliationNormalizer.normalize(line);
+		
 		List<AffiliationToken> tokens = AffiliationTokenizer
 				.tokenize(normalizedLine);
-
+		if (tokens.isEmpty()) {
+			System.err.println("Line with no ASCII characters: " + line);
+			return;
+		}
+		
 		entries.add(tokens);
 		int entryId = entries.size() - 1;
 		String tokenString = tokens.get(0).getText().toLowerCase();

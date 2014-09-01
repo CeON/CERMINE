@@ -8,4 +8,8 @@ public class AffiliationToken extends Token<AffiliationLabel> {
 	public AffiliationToken(String text, int startIndex, int endIndex) {
 		super(text, startIndex, endIndex);
 	}
+
+	public AffiliationToken(String text) {
+		super(text);
+	}
 }

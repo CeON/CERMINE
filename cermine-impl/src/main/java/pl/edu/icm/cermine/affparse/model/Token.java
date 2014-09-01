@@ -52,6 +52,10 @@ public abstract class Token<L extends Label> {
 	public Token(String text, int startIndex, int endIndex) {
 		this(text, startIndex, endIndex, null);
 	}
+
+	public Token(String text) {
+		this(text, 0, 0);
+	}
 	
 	// Ignore label for testing purposes
 	public boolean equals(Object obj) {

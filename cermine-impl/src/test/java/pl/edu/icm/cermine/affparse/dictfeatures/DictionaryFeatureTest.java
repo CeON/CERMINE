@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.affparse.features;
+package pl.edu.icm.cermine.affparse.dictfeatures;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import pl.edu.icm.cermine.affparse.dictfeatures.DictionaryFeature;
 import pl.edu.icm.cermine.affparse.model.AffiliationToken;
 import pl.edu.icm.cermine.affparse.tools.AffiliationNormalizer;
 import pl.edu.icm.cermine.affparse.tools.AffiliationTokenizer;

@@ -18,6 +18,6 @@ public abstract class TokenizedString<L extends Label, T extends Token<L>> {
 	
 	public abstract void classify() throws AnalysisException;
 	
-	public abstract Element toNLM();
+	public abstract Element toNLM() throws AnalysisException;
 	
 }

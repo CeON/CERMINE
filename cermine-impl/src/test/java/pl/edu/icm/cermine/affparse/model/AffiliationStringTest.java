@@ -6,6 +6,8 @@ import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 import org.junit.Test;
 
+import pl.edu.icm.cermine.exception.AnalysisException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,7 +56,20 @@ public class AffiliationStringTest {
 	}
 	
 	@Test
-	public void testToNLM() {
+	public void testClassify() throws AnalysisException {
+		String text = "Department of Oncology, Radiology and Clinical Immunology, Akademiska " +
+				"Sjukhuset, Uppsala, Sweden";
+		AffiliationString instance = new AffiliationString(text);
+		instance.calculateFeatures();
+		instance.classify();
+		Element aff = instance.toNLM();
+		XMLOutputter outputter = new XMLOutputter();
+		String actual = outputter.outputString(aff);
+		System.out.println(actual);
+	}
+	
+	@Test
+	public void testToNLM() throws AnalysisException {
 		String text = " Uniwersytet Śląski, Katowice ";
 		AffiliationString instance = new AffiliationString(text);
 		List<AffiliationToken> tokens = instance.getTokens();

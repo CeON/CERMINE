@@ -36,6 +36,10 @@ public abstract class Token<L extends Label> {
 	public List<String> getFeatures() {
 		return features;
 	}
+
+	public void setFeatures(List<String> features) {
+		this.features = features;
+	}
 	
     public void addFeature(String feature) {
     	features.add(feature);
@@ -56,6 +60,12 @@ public abstract class Token<L extends Label> {
 	public Token(String text) {
 		this(text, 0, 0);
 	}
+	
+	public Token() {
+		this("");
+	}
+	
+	public abstract String getValidLabel();
 	
 	// Ignore label for testing purposes
 	public boolean equals(Object obj) {

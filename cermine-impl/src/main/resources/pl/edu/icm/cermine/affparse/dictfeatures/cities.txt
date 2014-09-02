@@ -13667,26 +13667,17 @@ Ambalavao
 Alarobia
 Majuro
 RMI Capitol
-Желино
 Vinica
 Veles
 Tetovo
-Теарце
-Студеничани
 Strumica
 Struga
 Shtip
 Skopje
-Сарај
-Ресен
-Радовиш
 Prilep
 Ohrid
-Неготино
 Negotino
-Липково
 Kumanovo
-Крива Паланка
 Kochani
 Kičevo
 Kavadarci
@@ -13807,7 +13798,6 @@ Bayanhongor
 Bayanhongor
 Baruun-Urt
 Arvayheer
-Зуунмод
 Macau
 Saipan
 Saint-Joseph
@@ -19134,7 +19124,6 @@ Osmancık
 Orhangazi
 Ordu
 Oltu
-Of
 Niksar
 Nallıhan
 Mudanya
@@ -19698,7 +19687,6 @@ Bohuslav
 Bohodukhiv
 Bilhorod-Dnistrovs’kyy
 Bila Tserkva
-Бережани
 Berehove
 Berdychiv
 Berdyans’k
@@ -19721,7 +19709,6 @@ Alushta
 Alchevs’k
 Okhtyrka
 Komsomolsk
-Славутич
 Yuzhnoukrains'k
 Novoyavorivs'k
 Yumbe

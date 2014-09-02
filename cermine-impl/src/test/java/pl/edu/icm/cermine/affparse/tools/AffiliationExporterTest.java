@@ -11,11 +11,12 @@ import org.junit.Test;
 
 import pl.edu.icm.cermine.affparse.model.AffiliationLabel;
 import pl.edu.icm.cermine.affparse.model.AffiliationToken;
+import pl.edu.icm.cermine.exception.AnalysisException;
 
 public class AffiliationExporterTest {
 
 	@Test
-	public void testToNLM() {
+	public void testToNLM() throws AnalysisException {
 		//                  0         2         3         4
 		//                  0123456789012345678901234567890123456789
 		String text = " Silesian University, Katowice, Poland ";

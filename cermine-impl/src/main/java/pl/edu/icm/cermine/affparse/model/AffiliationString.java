@@ -23,7 +23,7 @@ public class AffiliationString extends TokenizedString<AffiliationLabel, Affilia
 	}
 
 	@Override
-	public Element toNLM() {
+	public Element toNLM() throws AnalysisException {
 		return AffiliationExporter.toNLM(text, tokens); // TODO FIXME Jeszcze jest jakies ID, ale poki co nie wiem skad ono sie bierze
 	}
 

@@ -24,6 +24,11 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLa
 	private ACRF model;
 	
 	public AffiliationCRFTokenClassifier(InputStream modelInputStream) throws AnalysisException {
+        System.setProperty("java.util.logging.config.file",
+            "edu/umass/cs/mallet/base/util/resources/logging.properties");
+        if (modelInputStream == null) {
+        	throw new AnalysisException("Cannot set model, input stream is null!");
+        }
         ObjectInputStream ois = null;
         try {
             ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(modelInputStream)));
@@ -69,9 +74,13 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLa
 	}
 	
     public static AffiliationCRFTokenClassifier getInstance() throws AnalysisException {
-        return new AffiliationCRFTokenClassifier(
-        		AffiliationCRFTokenClassifier.class.getResourceAsStream(DEFAULT_MODEL_FILE));
+    	if (singleton == null) {
+    		return new AffiliationCRFTokenClassifier(
+    				AffiliationCRFTokenClassifier.class.getResourceAsStream(DEFAULT_MODEL_FILE));
+    	}
+    	return singleton;
     }
 
     private static final String DEFAULT_MODEL_FILE = "acrf.ser.gz";
+    private static AffiliationCRFTokenClassifier singleton;
 }

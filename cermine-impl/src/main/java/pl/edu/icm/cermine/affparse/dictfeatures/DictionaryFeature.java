@@ -25,13 +25,13 @@ public abstract class DictionaryFeature {
 		loadDictionary();
 	}
 	
-	private void addLine(String line) {
+	private void addLine(String line, int number) {
 		String normalizedLine = AffiliationNormalizer.normalize(line);
 		
 		List<AffiliationToken> tokens = AffiliationTokenizer
 				.tokenize(normalizedLine);
 		if (tokens.isEmpty()) {
-			System.err.println("Line with no ASCII characters: " + line);
+			System.err.println("Line (" + number + ") with no ASCII characters: " + line);
 			return;
 		}
 		
@@ -55,8 +55,9 @@ public abstract class DictionaryFeature {
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
 		try {
 			String line;
+			int lineNumber = 1;
 			while ((line = in.readLine()) != null) {
-				addLine(line);
+				addLine(line, lineNumber++);
 			}
 		} catch (IOException readException) {
 			System.err.println("An exception occured when the dictionary "

@@ -12,4 +12,14 @@ public class AffiliationToken extends Token<AffiliationLabel> {
 	public AffiliationToken(String text) {
 		super(text);
 	}
+
+	public AffiliationToken() {
+		super();
+	}
+
+	// HACK
+	@Override
+	public String getValidLabel() {
+		return "INST";
+	}
 }

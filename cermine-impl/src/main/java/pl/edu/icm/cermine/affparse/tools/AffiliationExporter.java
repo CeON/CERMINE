@@ -1,7 +1,10 @@
 package pl.edu.icm.cermine.affparse.tools;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import org.jdom.Element;
+
 import pl.edu.icm.cermine.affparse.model.AffiliationToken;
 import pl.edu.icm.cermine.affparse.model.AffiliationLabel;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -9,6 +12,29 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 
 public class AffiliationExporter {
 
+	// Removes trailing commas from the tagged parts
+	public static void enhanceElement(Element element) {
+		@SuppressWarnings("unchecked")
+		List<Object> oldContent = element.getContent();
+		List<Object> newContent = new ArrayList<Object>();
+		for (Object subobject : oldContent) {
+			newContent.add(subobject);
+			// Doesn't look like good OOP but I have no other ideas.
+			if (subobject instanceof Element) { 
+				Element subelement = (Element)subobject;
+				String subtext = subelement.getText();
+				if (subtext.endsWith(",")) {
+					// NOTE Assume that there are no nested elements in "subelement"
+					// TODO maybe this should perform a test and throw an exception if this is a case
+					subelement.setText(subtext.substring(0, subtext.length() - 1));
+					newContent.add(",");
+				}
+			}
+		}
+		element.removeContent();
+		element.setContent(newContent);
+	}
+	
 	public static Element toNLM(String text, List<AffiliationToken> tokens) throws AnalysisException {
 		Element aff = new Element(TAG_AFFILIATION);
 		
@@ -48,6 +74,7 @@ public class AffiliationExporter {
         	aff.addContent(textBetween);
         }
 				
+		enhanceElement(aff);
 		return aff;
 	}
 	

@@ -31,8 +31,23 @@ public class AffiliationExporterTest {
 		Element aff = AffiliationExporter.toNLM(text, tokens);
 		XMLOutputter outputter = new XMLOutputter();
 		String actual = outputter.outputString(aff);
-		String expected = "<aff> <institution>Silesian University,</institution> <addr-line>Katowice,</addr-line> <country>Poland</country> </aff>";
+		String expected = "<aff> <institution>Silesian University</institution>, " +
+				"<addr-line>Katowice</addr-line>, " +
+				"<country>Poland</country> </aff>";
 		assertEquals(expected, actual);
 	}
-
+	
+	
+	@Test
+	public void testEnhanceElement() {
+		Element el = new Element("el");
+		Element subel = new Element("sub");
+		subel.addContent("text,");
+		el.addContent(subel);
+		AffiliationExporter.enhanceElement(el);
+		XMLOutputter outputter = new XMLOutputter();
+		String actual = outputter.outputString(el);
+		String expected = "<el><sub>text</sub>,</el>";
+		assertEquals(expected, actual);
+	}
 }

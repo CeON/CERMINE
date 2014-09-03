@@ -16,13 +16,25 @@ public abstract class Token<L extends Label> {
 	public String getText() {
 		return text;
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 	
 	public int getStartIndex() {
 		return startIndex;
 	}
+	
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
 
 	public int getEndIndex() {
 		return endIndex;
+	}
+
+	public void setEndIndex(int endIndex) {
+		this.endIndex = endIndex;
 	}
 
 	public L getLabel() {

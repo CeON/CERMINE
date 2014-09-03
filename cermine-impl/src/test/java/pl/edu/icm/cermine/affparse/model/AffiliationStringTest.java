@@ -67,8 +67,8 @@ public class AffiliationStringTest {
 		String actual = outputter.outputString(aff);
 		String expected =
 				"<aff><institution>Department of Oncology, Radiology and Clinical Immunology, " +
-				"Akademiska Sjukhuset,</institution> " + 
-				"<addr-line>Uppsala,</addr-line> " +
+				"Akademiska Sjukhuset</institution>, " + 
+				"<addr-line>Uppsala</addr-line>, " +
 				"<country>Sweden</country></aff>";
 		assertEquals(expected, actual);
 	}
@@ -88,7 +88,7 @@ public class AffiliationStringTest {
 		Element aff = instance.toNLM();
 		XMLOutputter outputter = new XMLOutputter();
 		String actual = outputter.outputString(aff);
-		String expected = "<aff> <institution>Uniwersytet Śląski,</institution> <addr-line>Katowice</addr-line> </aff>";
+		String expected = "<aff> <institution>Uniwersytet Śląski</institution>, <addr-line>Katowice</addr-line> </aff>";
 		assertEquals(expected, actual);
 		
 	}

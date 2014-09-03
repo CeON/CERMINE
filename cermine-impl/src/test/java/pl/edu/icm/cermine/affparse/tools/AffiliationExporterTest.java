@@ -28,10 +28,11 @@ public class AffiliationExporterTest {
 				new AffiliationToken("", 30, 31, AffiliationLabel.ADDRESS),
 				new AffiliationToken("", 32, 38, AffiliationLabel.COUNTRY)
 				);
-		Element aff = AffiliationExporter.toNLM(text, tokens);
+		Element aff = AffiliationExporter.toNLM("0", text, tokens);
 		XMLOutputter outputter = new XMLOutputter();
 		String actual = outputter.outputString(aff);
-		String expected = "<aff> <institution>Silesian University</institution>, " +
+		String expected = "<aff id=\"0\"><label>0</label> " +
+				"<institution>Silesian University</institution>, " +
 				"<addr-line>Katowice</addr-line>, " +
 				"<country>Poland</country> </aff>";
 		assertEquals(expected, actual);

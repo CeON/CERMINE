@@ -35,8 +35,19 @@ public class AffiliationExporter {
 		element.setContent(newContent);
 	}
 	
-	public static Element toNLM(String text, List<AffiliationToken> tokens) throws AnalysisException {
+	private static void addLabel(Element aff, String label) {
+        aff.setAttribute(ATTR_ID, label);
+        Element labelElement = new Element(TAG_LABEL);
+        labelElement.addContent(label);
+        aff.addContent(labelElement);
+	}
+	
+	public static Element toNLM(String label, String text, List<AffiliationToken> tokens)
+			throws AnalysisException {
 		Element aff = new Element(TAG_AFFILIATION);
+		if (label != null) {
+			addLabel(aff, label);
+		}
 		
 		int lastEnd = 0;
 		AffiliationLabel lastLabel = null;
@@ -78,5 +89,9 @@ public class AffiliationExporter {
 		return aff;
 	}
 	
+	// NOTE This is a copy-paste from DocumentMetadataToNLMElementConverter
 	private static final String TAG_AFFILIATION = "aff";
+    private static final String TAG_LABEL = "label";
+
+    private static final String ATTR_ID = "id";
 }

@@ -39,6 +39,6 @@ public class AffiliationFeatureExtractor {
 			new Country(false),
 			new State(false),
 			new StateCode(false),
-			new StopWord(false)
+			new StopWord(true)
 			);
 }

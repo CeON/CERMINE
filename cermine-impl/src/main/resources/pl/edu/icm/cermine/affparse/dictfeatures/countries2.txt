@@ -1,9 +1,3 @@
-US
-U. S.
-USA
-U. S. A.
-UK
-U. K.
 Afghanistan
 Albania
 Algeria
@@ -40,14 +34,11 @@ Central African Republic
 Chad
 Chile
 China
-People's Republic of China
-P. R. China
-PR China
-P R China
 Colombia
 Comoros
 Congo
 Republic of the Congo
+Congo
 Democratic Republic of the Congo
 Costa Rica
 Cote d'Ivoire
@@ -163,7 +154,6 @@ Saudi Arabia
 Senegal
 Serbia
 Montenegro
-Yugoslavia
 Federal Republic of Yugoslavia
 Seychelles
 Sierra Leone
@@ -195,14 +185,13 @@ Tuvalu
 Uganda
 Ukraine
 United Arab Emirates
-Arab Emirates
 United Kingdom
 United States
-United States of America
 Uruguay
 Uzbekistan
 Vanuatu
 Vatican City
+Holy See
 Venezuela
 Vietnam
 Yemen
@@ -235,7 +224,6 @@ Botswana
 Brasil
 Brunei
 Republika Bulgariya
-Bulgariya
 Burkina Faso
 Burundi
 Kampuchea
@@ -271,7 +259,8 @@ Eesti
 YeItyop'iya
 Fiji
 Suomi
-France or Republique Francaise
+France
+Republique Francaise
 Gabon
 The Gambia
 Sak'art'velo
@@ -293,7 +282,8 @@ Indonesia
 Iran
 Persia
 Al Iraq
-Ireland or Eire
+Ireland
+Eire
 Yisra'el
 Italia
 Jamaica
@@ -409,3 +399,17 @@ Viet Nam
 Al Yaman
 Zambia
 Zimbabwe
+US
+U. S.
+USA
+U. S. A.
+United States of America
+UK
+U. K.
+People's Republic of China
+P. R. China
+PR China
+P R China
+Arab Emirates
+Bulgariya
+Yugoslavia

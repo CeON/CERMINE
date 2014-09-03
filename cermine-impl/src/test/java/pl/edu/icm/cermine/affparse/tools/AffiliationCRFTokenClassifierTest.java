@@ -20,7 +20,7 @@ public class AffiliationCRFTokenClassifierTest {
 			tokens.add(new AffiliationToken());
 		}
 		tokens.get(0).setFeatures(Arrays.asList(
-				"W=university",
+				"W=University",
 				"Capital"
 				));
 		tokens.get(1).setFeatures(Arrays.asList(
@@ -28,7 +28,7 @@ public class AffiliationCRFTokenClassifierTest {
 				"Punct"
 				));
 		tokens.get(2).setFeatures(Arrays.asList(
-				"W=boston",
+				"W=Boston",
 				"Capital",
 				"City"
 				));
@@ -37,7 +37,7 @@ public class AffiliationCRFTokenClassifierTest {
 				"Punct"
 				));
 		tokens.get(4).setFeatures(Arrays.asList(
-				"W=usa",
+				"W=USA",
 				"AllCapital",
 				"Country"
 				));

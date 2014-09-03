@@ -22,6 +22,9 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLabel, AffiliationToken> {
 
 	private ACRF model;
+    private static final String DEFAULT_MODEL_FILE = "acrf8000.ser.gz";
+    private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
+    private static AffiliationCRFTokenClassifier singleton;
 	
 	public AffiliationCRFTokenClassifier(InputStream modelInputStream) throws AnalysisException {
         System.setProperty("java.util.logging.config.file",
@@ -54,13 +57,7 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLa
 	
 	@Override
 	public void classify(List<AffiliationToken> tokens) throws AnalysisException {
-		StringBuilder grmmInputBuilder = new StringBuilder();
-		for (AffiliationToken token : tokens) {
-			grmmInputBuilder.append(GrmmUtils.toGrmmInput(token));
-			grmmInputBuilder.append("\n");
-		}
-		
-        String data = grmmInputBuilder.toString();
+        String data = GrmmUtils.toGrmmInput(tokens, DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD);
         
         Pipe pipe = model.getInputPipe();
         InstanceList instanceList = new InstanceList(pipe);
@@ -80,7 +77,4 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLa
     	}
     	return singleton;
     }
-
-    private static final String DEFAULT_MODEL_FILE = "acrf.ser.gz";
-    private static AffiliationCRFTokenClassifier singleton;
 }

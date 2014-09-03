@@ -86,13 +86,20 @@ public abstract class Token<L extends Label> {
 	
 	// Used for dictionary lookups
 	@SuppressWarnings("rawtypes")
-	public static <T extends Token> boolean sequenceEquals(List<T> lhs, List<T> rhs) {
+	public static <T extends Token> boolean sequenceEquals(List<T> lhs, List<T> rhs,
+			boolean useLowerCase) {
 		if (lhs.size() != rhs.size()) {
 			return false;
 		}
 		
 		for (int i = 0; i < lhs.size(); i++) {
-			if (!lhs.get(i).getText().toLowerCase().equals(rhs.get(i).getText().toLowerCase())) {
+			String lhsString = lhs.get(i).getText();
+			String rhsString = rhs.get(i).getText();
+			if (useLowerCase) {
+				lhsString = lhsString.toLowerCase();
+				rhsString = rhsString.toLowerCase();
+			}
+			if (!lhsString.equals(rhsString)) {
 				return false;
 			}
 		}

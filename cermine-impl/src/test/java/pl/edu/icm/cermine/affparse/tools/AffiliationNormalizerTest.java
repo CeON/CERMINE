@@ -15,6 +15,12 @@ public class AffiliationNormalizerTest {
 		String expected = Character.toString(c) + Character.toString(acute);
 		String actual = AffiliationNormalizer.normalize(input);
 		assertEquals(expected, actual);
+		
+		char dash = 0x2014; // EM_DASH
+		input = Character.toString(dash);
+		expected = " ";
+		actual = AffiliationNormalizer.normalize(input);
+		assertEquals(expected, actual);
 	}
 
 }

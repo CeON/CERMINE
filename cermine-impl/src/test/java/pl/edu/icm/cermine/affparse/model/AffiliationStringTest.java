@@ -38,7 +38,7 @@ public class AffiliationStringTest {
 	public void testCalculateFeatures() {
 		String text = "Cóż ro123bić?";
 	    List<List<String>> expectedFeatures = new ArrayList<List<String>>();
-	    expectedFeatures.add(Arrays.asList("W=coz", "UpperCase"));
+	    expectedFeatures.add(Arrays.asList("W=Coz", "UpperCase"));
 	    expectedFeatures.add(Arrays.asList("W=ro"));
 	    expectedFeatures.add(Arrays.asList("Number"));
 	    expectedFeatures.add(Arrays.asList("W=bic"));
@@ -65,7 +65,12 @@ public class AffiliationStringTest {
 		Element aff = instance.toNLM();
 		XMLOutputter outputter = new XMLOutputter();
 		String actual = outputter.outputString(aff);
-		System.out.println(actual);
+		String expected =
+				"<aff><institution>Department of Oncology, Radiology and Clinical Immunology, " +
+				"Akademiska Sjukhuset,</institution> " + 
+				"<addr-line>Uppsala,</addr-line> " +
+				"<country>Sweden</country></aff>";
+		assertEquals(expected, actual);
 	}
 	
 	@Test

@@ -18,10 +18,12 @@ public abstract class DictionaryFeature {
 
 	private List<List<AffiliationToken>> entries;
 	private Map<String, List<Integer>> dictionary;
+	protected boolean useLowerCase;
 
-	public DictionaryFeature() {
+	public DictionaryFeature(boolean useLowerCase) {
 		entries = new ArrayList<List<AffiliationToken>>();
 		dictionary = new HashMap<String, List<Integer>>();
+		this.useLowerCase = useLowerCase;
 		loadDictionary();
 	}
 	
@@ -37,7 +39,10 @@ public abstract class DictionaryFeature {
 		
 		entries.add(tokens);
 		int entryId = entries.size() - 1;
-		String tokenString = tokens.get(0).getText().toLowerCase();
+		String tokenString = tokens.get(0).getText();
+		if (useLowerCase) {
+			tokenString = tokenString.toLowerCase();
+		}
 		
 		if (!dictionary.containsKey(tokenString)) {
 			dictionary.put(tokenString, new ArrayList<Integer>());
@@ -82,12 +87,17 @@ public abstract class DictionaryFeature {
 	
 		for (int l = 0; l < tokens.size(); l++) {
 			AffiliationToken token = tokens.get(l);
-			List<Integer> candidateIds = dictionary.get(token.getText().toLowerCase());
+			String tokenString = token.getText();
+			if (useLowerCase) {
+				tokenString = tokenString.toLowerCase();
+			}
+			List<Integer> candidateIds = dictionary.get(tokenString);
 			if (candidateIds != null) {
 				for (int candidateId : candidateIds) {
 					List<AffiliationToken> entry = entries.get(candidateId);
 					int r = l + entry.size();
-					if (r <= tokens.size() && Token.sequenceEquals(entry, tokens.subList(l, r))) {
+					if (r <= tokens.size() && Token.sequenceEquals(entry, tokens.subList(l, r),
+							useLowerCase)) {
 						for (int i = l; i < r; i++) {
 							marked[i] = true;
                     	}

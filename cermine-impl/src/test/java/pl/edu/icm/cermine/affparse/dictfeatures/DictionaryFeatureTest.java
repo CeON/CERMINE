@@ -15,6 +15,10 @@ public class DictionaryFeatureTest {
 
 	public class MockDictionaryFeature extends DictionaryFeature {
 
+		public MockDictionaryFeature(boolean useLowerCase) {
+			super(useLowerCase);
+		}
+
 		@Override
 		protected String getFeatureString() {
 			return "HIT";
@@ -24,15 +28,20 @@ public class DictionaryFeatureTest {
 		protected String getDictionaryFileName() {
 			return "mock-dictionary.txt";
 		}
+		/*
+			Elo Melo 320
+			Hejka ziomeczku, :-P
+			W chrząszczu Szczebrzeszyn.
+		 */
 		
 	}
 	
 	@Test
 	public void testAddFeatures() {
-		MockDictionaryFeature instance = new MockDictionaryFeature();
-		String text = "elo meLo  320, Elo Melo 32.0. Hejka ziómeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
-		//            "y...y.....y..n.n...n....n.nnn.y.....y........yyyyn.n.y.y..........y.............yn"
-		int expectFeature[] = {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0};
+		MockDictionaryFeature instance = new MockDictionaryFeature(false);
+		String text = "elo meLo  320, Elo Melo 32.0. Hejka ziomeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
+		//            "n...n.....n..n.n...n....n.nnn.y.....y........yyyyn.n.n.n..........n.............nn"
+		int expectFeature[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0};
 		List<AffiliationToken> tokens = AffiliationTokenizer.tokenize(
 				AffiliationNormalizer.normalize(text));
 		assertEquals(expectFeature.length, tokens.size());
@@ -43,6 +52,19 @@ public class DictionaryFeatureTest {
 					tokens.get(i).getFeatures().size());
 		}
 		
+		instance = new MockDictionaryFeature(true);
+		text = "elo meLo  320, Elo Melo 32.0. Hejka ziómeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
+		//     "y...y.....y..n.n...n....n.nnn.y.....y........yyyyn.n.y.y..........y.............yn"
+		int expectFeature2[] = {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0};
+		tokens = AffiliationTokenizer.tokenize(
+				AffiliationNormalizer.normalize(text));
+		assertEquals(expectFeature2.length, tokens.size());
+		instance.addFeatures(tokens);
+		
+		for (int i = 0; i < expectFeature2.length; i++) {
+			assertEquals("Token: " + i + " " + tokens.get(i).getText(), expectFeature2[i],
+					tokens.get(i).getFeatures().size());
+		}
 	}
 
 }

@@ -30,15 +30,15 @@ public class AffiliationFeatureExtractor {
 			new IsAllUpperCase(),
 			new IsSeparator(),
 			new IsNonAlphanum(),
-			new WordFeature(Arrays.asList((LocalFeature)new IsNumber()))
+			new WordFeature(Arrays.asList((LocalFeature)new IsNumber()), false)
 			);
 	
 	private static final List<DictionaryFeature> dictFeatures = Arrays.<DictionaryFeature>asList(
-			new Address(),
-			new City(),
-			new Country(),
-			new State(),
-			new StateCode(),
-			new StopWord()
+			new Address(true),
+			new City(false),
+			new Country(false),
+			new State(false),
+			new StateCode(false),
+			new StopWord(false)
 			);
 }

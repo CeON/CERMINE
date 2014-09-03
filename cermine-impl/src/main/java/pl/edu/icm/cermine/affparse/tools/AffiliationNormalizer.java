@@ -4,6 +4,7 @@ import java.text.Normalizer;
 
 public class AffiliationNormalizer {
 	public static String normalize(String text) {
-		return Normalizer.normalize(text, Normalizer.Form.NFKD);
+		String normalizedText = Normalizer.normalize(text, Normalizer.Form.NFKD);
+		return normalizedText.replaceAll("—", " "); // Replace EM DASHEs with spaces
 	}
 }

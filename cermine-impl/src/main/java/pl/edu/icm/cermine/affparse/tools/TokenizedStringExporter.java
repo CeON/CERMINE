@@ -7,10 +7,11 @@ import org.jdom.Element;
 
 import pl.edu.icm.cermine.affparse.model.AffiliationToken;
 import pl.edu.icm.cermine.affparse.model.AffiliationLabel;
+import pl.edu.icm.cermine.affparse.model.Token;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 
-public class AffiliationExporter {
+public abstract class TokenizedStringExporter<L, T extends Token<L>> {
 
 	// Removes trailing commas from the tagged parts
 	public static void enhanceElement(Element element) {
@@ -35,9 +36,8 @@ public class AffiliationExporter {
 		element.setContent(newContent);
 	}
 	
-	private static void addLabel(Element aff, String label) {
-        aff.setAttribute(ATTR_ID, label);
-        Element labelElement = new Element(TAG_LABEL);
+	protected static void addElement(Element parent, String tag, String text) {
+        Element element = new Element(tag);
         labelElement.addContent(label);
         aff.addContent(labelElement);
 	}

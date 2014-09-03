@@ -6,7 +6,7 @@ import org.jdom.Element;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 
-public abstract class TokenizedString<L extends Label, T extends Token<L>> {
+public abstract class TokenizedString<L, T extends Token<L>> {
 	
 	protected String text;
 	protected String label;

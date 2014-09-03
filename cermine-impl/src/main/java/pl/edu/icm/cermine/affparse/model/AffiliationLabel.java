@@ -5,7 +5,7 @@ import java.util.Map;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
 
-public enum AffiliationLabel implements Label {
+public enum AffiliationLabel {
 	INSTITUTION ("institution"),
 	ADDRESS ("addr-line"),
 	COUNTRY ("country");
@@ -17,7 +17,7 @@ public enum AffiliationLabel implements Label {
 	}
 	
 	@Override
-	public String getTag() {
+	public String toString() {
 		return tag;
 	}
 	

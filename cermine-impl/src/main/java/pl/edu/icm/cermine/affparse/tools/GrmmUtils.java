@@ -3,7 +3,6 @@ package pl.edu.icm.cermine.affparse.tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.icm.cermine.affparse.model.Label;
 import pl.edu.icm.cermine.affparse.model.Token;
 
 public class GrmmUtils {
@@ -27,7 +26,7 @@ public class GrmmUtils {
 		return builder.toString();
 	}
 	
-	private static <L extends Label, T extends Token<L>>  List<String>
+	private static <L, T extends Token<L>>  List<String>
 	neighborFeatures(int current, int offset, List<T> tokens) {
 		List<String> features = new ArrayList<String>();
 		String suffix = "";
@@ -47,7 +46,7 @@ public class GrmmUtils {
 		return features;
 	}
 	
-	public static <L extends Label, T extends Token<L>> String toGrmmInput(List<T> tokens, 
+	public static <L, T extends Token<L>> String toGrmmInput(List<T> tokens, 
 			int neighborInfluenceThreshold) {
 		StringBuilder grmmInputBuilder = new StringBuilder();
 		for (int i = 0; i < tokens.size(); i++) {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 
-public abstract class Token<L extends Label> {
+public abstract class Token<L> {
 
 	protected String text;
 	protected int startIndex;

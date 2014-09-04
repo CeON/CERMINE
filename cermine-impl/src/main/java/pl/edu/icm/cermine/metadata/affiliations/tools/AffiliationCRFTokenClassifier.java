@@ -26,7 +26,6 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLa
 	private ACRF model;
     private static final String DEFAULT_MODEL_FILE = "acrf8000.ser.gz";
     private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
-    private static AffiliationCRFTokenClassifier singleton;
 	
 	public AffiliationCRFTokenClassifier(InputStream modelInputStream) throws AnalysisException {
         System.setProperty("java.util.logging.config.file",
@@ -52,6 +51,10 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLa
             }
         }
 	}
+	
+	public AffiliationCRFTokenClassifier() throws AnalysisException {
+		this(AffiliationCRFTokenClassifier.class.getResourceAsStream(DEFAULT_MODEL_FILE));
+	}
 
 	private LineGroupIterator getLineIterator(String data) {
 		return new LineGroupIterator(new StringReader(data), Pattern.compile ("\\s*"), true);
@@ -71,12 +74,4 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLa
         }
 		
 	}
-	
-    public static AffiliationCRFTokenClassifier getInstance() throws AnalysisException {
-    	if (singleton == null) {
-    		return new AffiliationCRFTokenClassifier(
-    				AffiliationCRFTokenClassifier.class.getResourceAsStream(DEFAULT_MODEL_FILE));
-    	}
-    	return singleton;
-    }
 }

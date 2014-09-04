@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.jdom.Element;
 
-import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.parsing.model.Token;
 
 
-public abstract class TokenizedStringExporter<L, T extends Token<L>> {
+public abstract class TokenizedTextToNLMExporter {
 
 	// Removes trailing commas from the tagged parts
 	public static void enhanceElement(Element element) {
@@ -40,8 +40,8 @@ public abstract class TokenizedStringExporter<L, T extends Token<L>> {
         parent.addContent(element);
 	}
 	
-	protected static<L, T extends Token<L>> void addText(Element el, String text, List<T> tokens)
-			throws AnalysisException {
+	public static<L, T extends Token<L>> void addText(Element el, String text, List<T> tokens)
+			throws TransformationException {
 		
 		int lastEnd = 0;
 		L lastLabel = null;
@@ -49,7 +49,7 @@ public abstract class TokenizedStringExporter<L, T extends Token<L>> {
 		
 		for (T t : tokens) {
 			if (t.getLabel() == null) {
-				throw new AnalysisException("Token with no label!");
+				throw new TransformationException("Token with no label!");
 			}
 			String textBetween = text.substring(lastEnd, t.getStartIndex());
 			if (t.getLabel() != lastLabel) {

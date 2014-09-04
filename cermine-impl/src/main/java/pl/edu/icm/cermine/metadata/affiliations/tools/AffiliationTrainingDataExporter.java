@@ -14,7 +14,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationTokenizedString;
+import pl.edu.icm.cermine.metadata.affiliations.parsing.AffiliationParser;
+import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 
 // NOTE: For testing purposes only
@@ -60,8 +61,8 @@ public class AffiliationTrainingDataExporter {
             String text = null;
             writer = new PrintWriter(outputFileName, "UTF-8");
             while ((text = reader.readLine()) != null) {
-            	AffiliationTokenizedString affiliation = new AffiliationTokenizedString(text);
-            	affiliation.calculateFeatures();
+                DocumentAffiliation affiliation = new DocumentAffiliation("", text);
+                new AffiliationParser().parseAffiliation(affiliation);
             	writer.write(GrmmUtils.toGrmmInput(affiliation.getTokens(), neighborThreshold));
             	writer.write("\n");
             }

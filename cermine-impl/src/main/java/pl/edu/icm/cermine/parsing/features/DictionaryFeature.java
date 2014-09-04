@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.parsing.model.Token;
-import pl.edu.icm.cermine.parsing.tools.TextNormalizer;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
 
 public class DictionaryFeature<L, T extends Token<L>> {
@@ -18,19 +18,17 @@ public class DictionaryFeature<L, T extends Token<L>> {
 	private List<List<T>> entries;
 	private Map<String, List<Integer>> dictionary;
 	private TextTokenizer<L, T> textTokenizer;
-	private TextNormalizer textNormalizer;
 
 	private String featureString;
 	private String dictionaryFileName; 
 	private boolean useLowerCase;
 
 	public DictionaryFeature(String FeatureString, String dictionaryFileName, boolean useLowerCase,
-			TextTokenizer<L, T> tokenizer, TextNormalizer textNormalizer) {
+			TextTokenizer<L, T> tokenizer) {
 
 		entries = new ArrayList<List<T>>();
 		dictionary = new HashMap<String, List<Integer>>();
 		this.textTokenizer = tokenizer;
-		this.textNormalizer = textNormalizer;
 
 		this.featureString = FeatureString;
 		this.dictionaryFileName = dictionaryFileName;
@@ -40,7 +38,7 @@ public class DictionaryFeature<L, T extends Token<L>> {
 	}
 	
 	private void addLine(String line, int number) {
-		String normalizedLine = textNormalizer.normalize(line);
+		String normalizedLine = MetadataTools.clean(line);
 		
 		List<T> tokens = textTokenizer.tokenize(normalizedLine);
 		if (tokens.isEmpty()) {

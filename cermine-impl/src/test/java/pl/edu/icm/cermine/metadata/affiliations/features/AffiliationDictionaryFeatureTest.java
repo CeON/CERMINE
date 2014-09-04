@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationNormalizer;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 
 public class AffiliationDictionaryFeatureTest {
 
@@ -29,8 +29,8 @@ public class AffiliationDictionaryFeatureTest {
 		String text = "elo meLo  320, Elo Melo 32.0. Hejka ziomeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
 		//            "n...n.....n..n.n...n....n.nnn.y.....y........yyyyn.n.n.n..........n.............nn"
 		int expectFeature[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0};
-		List<AffiliationToken> tokens = new AffiliationTokenizer().tokenize(
-				new AffiliationNormalizer().normalize(text));
+		List<AffiliationToken> tokens = 
+				new AffiliationTokenizer().tokenize(MetadataTools.clean(text));
 		assertEquals(expectFeature.length, tokens.size());
 		featureCaseSensitive.addFeatures(tokens);
 		
@@ -42,8 +42,7 @@ public class AffiliationDictionaryFeatureTest {
 		text = "elo meLo  320, Elo Melo 32.0. Hejka ziómeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
 		//     "y...y.....y..n.n...n....n.nnn.y.....y........yyyyn.n.y.y..........y.............yn"
 		int expectFeature2[] = {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0};
-		tokens = new AffiliationTokenizer().tokenize(
-				new AffiliationNormalizer().normalize(text));
+		tokens = new AffiliationTokenizer().tokenize(MetadataTools.clean(text));
 		assertEquals(expectFeature2.length, tokens.size());
 		featureIgnoreCase.addFeatures(tokens);
 		

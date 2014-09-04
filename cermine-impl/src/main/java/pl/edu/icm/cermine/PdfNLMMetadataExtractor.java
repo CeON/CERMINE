@@ -27,6 +27,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
+import pl.edu.icm.cermine.metadata.affiliations.parsing.AffiliationParser;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
@@ -50,6 +51,9 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
     /** metadata extractor from labelled zones */
     private MetadataExtractor<DocumentMetadata> extractor;
     
+    /** affiliation parser **/
+    private AffiliationParser parser;
+    
     DocumentMetadataToNLMElementConverter converter;
 
     public PdfNLMMetadataExtractor() throws AnalysisException {
@@ -58,6 +62,7 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
             metadataClassifier = SVMMetadataZoneClassifier.getDefaultInstance();
             extractor = new EnhancerMetadataExtractor();
             converter = new DocumentMetadataToNLMElementConverter();
+            parser = new AffiliationParser();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
@@ -112,6 +117,7 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
         try {
             BxDocument doc = metadataClassifier.classifyZones(document);
             DocumentMetadata metadata = extractor.extractMetadata(doc);
+            parser.parseAffiliation(metadata.getAffiliations());
             return converter.convert(metadata);
         } catch (TransformationException ex) {
             throw new AnalysisException(ex);

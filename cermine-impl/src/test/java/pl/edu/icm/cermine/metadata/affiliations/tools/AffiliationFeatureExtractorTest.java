@@ -11,9 +11,13 @@ import org.junit.Test;
 
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationFeatureExtractor;
+import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 
 public class AffiliationFeatureExtractorTest {
 
+	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
+	private static final AffiliationFeatureExtractor extractor = new AffiliationFeatureExtractor();
+	
 	private class TokenContainer {
 		public List<AffiliationToken> tokens;
 		public List<List<String>> features;
@@ -78,8 +82,30 @@ public class AffiliationFeatureExtractorTest {
 		
 		tc.add("du", "W=du", "StopWordMulti"); // du -- a stop word
 	
-		new AffiliationFeatureExtractor().extractFeatures(tc.tokens);
+		extractor.extractFeatures(tc.tokens);
 		tc.checkFeatures();
 	}
 
+	
+	@Test
+	public void testExtractFeaturesWithDocumentAffiliation() {
+		String text = "Cóż ro123bić?";
+	    List<List<String>> expectedFeatures = new ArrayList<List<String>>();
+	    expectedFeatures.add(Arrays.asList("W=Coz", "UpperCase"));
+	    expectedFeatures.add(Arrays.asList("W=ro"));
+	    expectedFeatures.add(Arrays.asList("Number"));
+	    expectedFeatures.add(Arrays.asList("W=bic"));
+	    expectedFeatures.add(Arrays.asList("W=?", "WeirdLetter"));
+		
+	    DocumentAffiliation instance = new DocumentAffiliation("someId", text);
+	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
+		extractor.extractFeatures(instance.getTokens());
+		for (int i = 0; i < expectedFeatures.size(); i++) {
+			List<String> expected = expectedFeatures.get(i);
+			List<String> actual = instance.getTokens().get(i).getFeatures();
+			Collections.sort(expected);
+			Collections.sort(actual);
+			assertEquals(expected, actual);
+		}
+	}
 }

@@ -18,8 +18,10 @@
 
 package pl.edu.icm.cermine.metadata.tools;
 
+import java.text.Normalizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 /**
  *
@@ -30,7 +32,8 @@ public class MetadataTools {
     
     public static String cleanOther(String str) {
         return str.replaceAll("[’‘]", "'")
-                  .replaceAll("[–]", "-");
+                  .replaceAll("[–]", "-")  // EN DASH \u2013
+                  .replaceAll("[—]", "-"); // EM DASH \u2014
     }
     
     public static String cleanLigatures(String str) {
@@ -61,7 +64,8 @@ public class MetadataTools {
     public static String clean(String str) {
         if (str == null)
             return null;
-        return cleanOther(cleanHyphenation(cleanLigatures(str)));
+        String cleanedText = cleanOther(cleanHyphenation(cleanLigatures(str)));
+        return Normalizer.normalize(cleanedText, Normalizer.Form.NFKD);
     }
     
 }

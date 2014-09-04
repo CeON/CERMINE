@@ -16,6 +16,9 @@ import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.affparse.model.AffiliationString;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
+// NOTE: For testing purposes only
+// The ACRF model is prepared by some Python scripts. We use this class to check whether
+// the Java implementation exports raw strings to the GRMM format in the exactly same way.
 public class AffiliationTrainingDataExporter {
 	
 	private static final String DEFAULT_INPUT = "/home/bartek/Projects/affiliations/javatests/affs.txt";

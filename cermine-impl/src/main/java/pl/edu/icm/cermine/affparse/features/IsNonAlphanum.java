@@ -13,6 +13,6 @@ public class IsNonAlphanum extends BinaryFeature {
 		return null;
 	}
 	
-	private static final String featureString = "WeirdLetter"; // TODO zmien na "NonAlphanum"
+	private static final String featureString = "WeirdLetter"; // TODO change to "NonAlphanum"
 
 }

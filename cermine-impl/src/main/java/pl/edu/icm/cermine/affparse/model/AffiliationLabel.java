@@ -21,7 +21,6 @@ public enum AffiliationLabel {
 		return tag;
 	}
 	
-	// TODO this should be kind of an overridden abstract method, but it is static :(
 	public static AffiliationLabel createLabel(String text) throws AnalysisException {
 		if (!LABEL_MAP.containsKey(text)) {
 			throw new AnalysisException("No shuch label: " + text);

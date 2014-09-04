@@ -8,8 +8,8 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 public class AffiliationString extends TokenizedString<AffiliationLabel, AffiliationToken> {
 
 	public AffiliationString(String text, String label) {
-		this.text = AffiliationNormalizer.normalize(text);
-		this.tokens = AffiliationTokenizer.tokenize(this.text);	
+		this.text = new AffiliationNormalizer().normalize(text);
+		this.tokens = new AffiliationTokenizer().tokenize(this.text);	
 		this.label = label;
 	}
 
@@ -19,7 +19,7 @@ public class AffiliationString extends TokenizedString<AffiliationLabel, Affilia
 
 	@Override
 	public void calculateFeatures() {
-		AffiliationFeatureExtractor.extractFeatures(this.tokens);
+		new AffiliationFeatureExtractor().extractFeatures(this.tokens);
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class AffiliationString extends TokenizedString<AffiliationLabel, Affilia
 
 	@Override
 	public Element toNLM() throws AnalysisException {
-		return AffiliationExporter.toNLM(label, text, tokens); // TODO FIXME Jeszcze jest jakies ID, ale poki co nie wiem skad ono sie bierze
+		return AffiliationExporter.toNLM(label, text, tokens);
 	}
 
 }

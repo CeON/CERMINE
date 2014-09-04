@@ -29,7 +29,7 @@ public class AffiliationTokenizerTest {
 				new AffiliationToken("Kot", 18, 21)
 				);
 		
-		List<AffiliationToken> actual = AffiliationTokenizer.tokenize(input);
+		List<AffiliationToken> actual = new AffiliationTokenizer().tokenize(input);
 		
 		assertEquals(expected, actual);
 	}
@@ -37,7 +37,7 @@ public class AffiliationTokenizerTest {
 	@Test
 	public void testTokenizeNonAscii() {
 		String input = "śćdź óó";
-		input = AffiliationNormalizer.normalize(input);
+		input = new AffiliationNormalizer().normalize(input);
 		
 		//          012345678901
 		// input = "s'c'dz' o'o'"
@@ -48,7 +48,7 @@ public class AffiliationTokenizerTest {
 				new AffiliationToken("oo", 8, 12)
 				);
 		
-		List<AffiliationToken> actual = AffiliationTokenizer.tokenize(input);
+		List<AffiliationToken> actual = new AffiliationTokenizer().tokenize(input);
 		
 		assertEquals(expected, actual);
 	}

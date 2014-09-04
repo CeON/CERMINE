@@ -12,6 +12,6 @@ public class IsSeparator extends BinaryFeature {
 		return null;
 	}
 	
-	private static final String featureString = "Punct"; // TODO zmien na "Separator"
+	private static final String featureString = "Punct"; // TODO change to "Separator"
 
 }

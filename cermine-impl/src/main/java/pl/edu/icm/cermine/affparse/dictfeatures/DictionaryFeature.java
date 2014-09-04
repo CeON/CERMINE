@@ -9,29 +9,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pl.edu.icm.cermine.affparse.model.AffiliationToken; // Zaleznosc od Affiliation! FIXME
 import pl.edu.icm.cermine.affparse.model.Token;
-import pl.edu.icm.cermine.affparse.tools.AffiliationNormalizer;
-import pl.edu.icm.cermine.affparse.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.affparse.tools.Normalizer;
+import pl.edu.icm.cermine.affparse.tools.Tokenizer;
 
-public abstract class DictionaryFeature {
+public class DictionaryFeature<L, T extends Token<L>> {
 
-	private List<List<AffiliationToken>> entries;
+	private List<List<T>> entries;
 	private Map<String, List<Integer>> dictionary;
-	protected boolean useLowerCase;
+	private Tokenizer<L, T> tokenizer;
+	private Normalizer normalizer;
 
-	public DictionaryFeature(boolean useLowerCase) {
-		entries = new ArrayList<List<AffiliationToken>>();
+	private String featureString;
+	private String dictionaryFileName; 
+	private boolean useLowerCase;
+
+	public DictionaryFeature(String FeatureString, String dictionaryFileName, boolean useLowerCase,
+			Tokenizer<L, T> tokenizer, Normalizer normalizer) {
+
+		entries = new ArrayList<List<T>>();
 		dictionary = new HashMap<String, List<Integer>>();
+		this.tokenizer = tokenizer;
+		this.normalizer = normalizer;
+
+		this.featureString = FeatureString;
+		this.dictionaryFileName = dictionaryFileName;
 		this.useLowerCase = useLowerCase;
+		
 		loadDictionary();
 	}
 	
 	private void addLine(String line, int number) {
-		String normalizedLine = AffiliationNormalizer.normalize(line);
+		String normalizedLine = normalizer.normalize(line);
 		
-		List<AffiliationToken> tokens = AffiliationTokenizer
-				.tokenize(normalizedLine);
+		List<T> tokens = tokenizer.tokenize(normalizedLine);
 		if (tokens.isEmpty()) {
 			System.err.println("Line (" + number + ") with no ASCII characters: " + line);
 			return;
@@ -51,7 +62,6 @@ public abstract class DictionaryFeature {
 	}
 
 	private void loadDictionary() {
-		String dictionaryFileName = getDictionaryFileName();
 		InputStream is = getClass().getResourceAsStream(dictionaryFileName);
 		if (is == null) {
 			System.err.println("Resource not found: " + dictionaryFileName);
@@ -78,7 +88,7 @@ public abstract class DictionaryFeature {
 		}
 	}
 
-	public void addFeatures(List<AffiliationToken> tokens) {
+	public void addFeatures(List<T> tokens) {
 		
 		boolean marked[] = new boolean[tokens.size()];
 		for (int i = 0; i < marked.length; i++) {
@@ -86,7 +96,7 @@ public abstract class DictionaryFeature {
 		}
 	
 		for (int l = 0; l < tokens.size(); l++) {
-			AffiliationToken token = tokens.get(l);
+			T token = tokens.get(l);
 			String tokenString = token.getText();
 			if (useLowerCase) {
 				tokenString = tokenString.toLowerCase();
@@ -94,7 +104,7 @@ public abstract class DictionaryFeature {
 			List<Integer> candidateIds = dictionary.get(tokenString);
 			if (candidateIds != null) {
 				for (int candidateId : candidateIds) {
-					List<AffiliationToken> entry = entries.get(candidateId);
+					List<T> entry = entries.get(candidateId);
 					int r = l + entry.size();
 					if (r <= tokens.size() && Token.sequenceEquals(entry, tokens.subList(l, r),
 							useLowerCase)) {
@@ -108,12 +118,8 @@ public abstract class DictionaryFeature {
 		
 		for (int i = 0; i < marked.length; i++) {
 			if (marked[i]) {
-				tokens.get(i).addFeature(getFeatureString());
+				tokens.get(i).addFeature(featureString);
 			}
 		}
 	}
-	
-	protected abstract String getFeatureString();
-
-	protected abstract String getDictionaryFileName();
 }

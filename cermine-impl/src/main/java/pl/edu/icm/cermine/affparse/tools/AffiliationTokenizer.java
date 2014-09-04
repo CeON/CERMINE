@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import pl.edu.icm.cermine.affparse.model.AffiliationLabel;
 import pl.edu.icm.cermine.affparse.model.AffiliationToken;
 
-public class AffiliationTokenizer {
+public class AffiliationTokenizer extends Tokenizer<AffiliationLabel, AffiliationToken> {
 
 	
 	private static List<AffiliationToken> asciiTextToTokens(String text,
@@ -62,7 +63,7 @@ public class AffiliationTokenizer {
 		return substringBuilder.toString();
 	}
 	
-	public static List<AffiliationToken> tokenize(String text) {
+	public List<AffiliationToken> tokenize(String text) {
 		List<Integer> asciiIndices = getAsciiSubstringIndices(text);
 		String asciiText = getSubstring(text, asciiIndices);
 		asciiIndices.add(text.length()); // Guardian index

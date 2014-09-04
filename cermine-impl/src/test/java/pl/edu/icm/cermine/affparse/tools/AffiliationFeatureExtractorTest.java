@@ -77,7 +77,7 @@ public class AffiliationFeatureExtractorTest {
 		
 		tc.add("du", "W=du", "StopWordMulti"); // du -- a stop word
 	
-		AffiliationFeatureExtractor.extractFeatures(tc.tokens);
+		new AffiliationFeatureExtractor().extractFeatures(tc.tokens);
 		tc.checkFeatures();
 	}
 

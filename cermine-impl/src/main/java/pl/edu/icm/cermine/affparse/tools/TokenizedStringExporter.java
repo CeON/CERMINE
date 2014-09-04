@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.jdom.Element;
 
-import pl.edu.icm.cermine.affparse.model.AffiliationToken;
-import pl.edu.icm.cermine.affparse.model.AffiliationLabel;
 import pl.edu.icm.cermine.affparse.model.Token;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
@@ -38,32 +36,28 @@ public abstract class TokenizedStringExporter<L, T extends Token<L>> {
 	
 	protected static void addElement(Element parent, String tag, String text) {
         Element element = new Element(tag);
-        labelElement.addContent(label);
-        aff.addContent(labelElement);
+        element.addContent(text);
+        parent.addContent(element);
 	}
 	
-	public static Element toNLM(String label, String text, List<AffiliationToken> tokens)
+	protected static<L, T extends Token<L>> void addText(Element el, String text, List<T> tokens)
 			throws AnalysisException {
-		Element aff = new Element(TAG_AFFILIATION);
-		if (label != null) {
-			addLabel(aff, label);
-		}
 		
 		int lastEnd = 0;
-		AffiliationLabel lastLabel = null;
+		L lastLabel = null;
 		Element currentElement = null;
 		
-		for (AffiliationToken t : tokens) {
+		for (T t : tokens) {
 			if (t.getLabel() == null) {
 				throw new AnalysisException("Token with no label!");
 			}
 			String textBetween = text.substring(lastEnd, t.getStartIndex());
 			if (t.getLabel() != lastLabel) {
 				if (currentElement != null) {
-					aff.addContent(currentElement);
+					el.addContent(currentElement);
 				}
 				if (!textBetween.equals("")) {
-					aff.addContent(textBetween);
+					el.addContent(textBetween);
 				}
 				currentElement = new Element(t.getLabel().toString());
 			} else {
@@ -79,19 +73,12 @@ public abstract class TokenizedStringExporter<L, T extends Token<L>> {
 		
         String textBetween = text.substring(lastEnd, text.length());
         if (currentElement != null) {
-        	aff.addContent(currentElement);
+        	el.addContent(currentElement);
         }
         if (!textBetween.equals("")) {
-        	aff.addContent(textBetween);
+        	el.addContent(textBetween);
         }
 				
-		enhanceElement(aff);
-		return aff;
+		enhanceElement(el);
 	}
-	
-	// NOTE This is a copy-paste from DocumentMetadataToNLMElementConverter
-	private static final String TAG_AFFILIATION = "aff";
-    private static final String TAG_LABEL = "label";
-
-    private static final String ATTR_ID = "id";
 }

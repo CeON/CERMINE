@@ -46,43 +46,43 @@ public class AffiliationFeatureExtractorTest {
 		TokenContainer tc = new TokenContainer();
 		
 		tc.add("word", "W=word");
-		tc.add("123", "Number");
-		tc.add("Uppercaseword", "W=Uppercaseword", "UpperCase");
-		tc.add("ALLUPPERCASEWORD", "W=ALLUPPERCASEWORD", "AllUpperCase");
-		tc.add(",", "W=,", "Punct");
-		tc.add("@", "W=@", "WeirdLetter");
+		tc.add("123", "IsNumber");
+		tc.add("Uppercaseword", "W=Uppercaseword", "IsUpperCase");
+		tc.add("ALLUPPERCASEWORD", "W=ALLUPPERCASEWORD", "IsAllUpperCase");
+		tc.add(",", "W=,", "IsSeparator");
+		tc.add("@", "W=@", "IsNonAlphanum");
 		
-		tc.add("Maluwang", "W=Maluwang", "UpperCase"); // sole "Maluwang" is not an address keyword
+		tc.add("Maluwang", "W=Maluwang", "IsUpperCase"); // sole "Maluwang" is not an address keyword
 		
-		tc.add("Maluwang", "W=Maluwang", "UpperCase", "Address");
-		tc.add("na", "W=na", "Address");
-		tc.add("lansangan", "W=lansangan", "Address"); // maluwang na lansangan -- address keyword
+		tc.add("Maluwang", "W=Maluwang", "IsUpperCase", "KeywordAddress");
+		tc.add("na", "W=na", "KeywordAddress");
+		tc.add("lansangan", "W=lansangan", "KeywordAddress"); // maluwang na lansangan -- address keyword
 		
-		tc.add(".", "W=.", "Punct");
+		tc.add(".", "W=.", "IsSeparator");
 		
 		tc.add("les", "W=les");
 		tc.add("escaldes","W=escaldes"); // Les Escaldes -- city keyword, needs uppercase
 
-		tc.add("les", "W=les", "City");
-		tc.add("Escaldes","W=Escaldes", "City", "UpperCase"); // Les Escaldes -- city keyword, needs uppercase
+		tc.add("les", "W=les", "KeywordCity");
+		tc.add("Escaldes","W=Escaldes", "KeywordCity", "IsUpperCase"); // Les Escaldes -- city keyword, needs uppercase
 		
 		tc.add("mhm", "W=mhm");
 		
-		tc.add("U", "W=U", "Country", "UpperCase", "AllUpperCase");
-		tc.add(".", "W=.", "Punct", "Country");
-		tc.add("S", "W=S", "Country", "UpperCase", "AllUpperCase");
-		tc.add(".", "W=.", "Punct", "Country");
-		tc.add("A", "W=A", "Country", "UpperCase", "AllUpperCase");
-		tc.add(".", "W=.", "Punct", "Country"); // U.S.A -- country keyword
+		tc.add("U", "W=U", "KeywordCountry", "IsUpperCase", "IsAllUpperCase");
+		tc.add(".", "W=.", "IsSeparator", "KeywordCountry");
+		tc.add("S", "W=S", "KeywordCountry", "IsUpperCase", "IsAllUpperCase");
+		tc.add(".", "W=.", "IsSeparator", "KeywordCountry");
+		tc.add("A", "W=A", "KeywordCountry", "IsUpperCase", "IsAllUpperCase");
+		tc.add(".", "W=.", "IsSeparator", "KeywordCountry"); // U.S.A -- country keyword
 		
-		tc.add("New", "W=New", "UpperCase", "State");
-		tc.add("Hampshire", "W=Hampshire", "UpperCase", "State"); // New Hampshire -- state keyword
+		tc.add("New", "W=New", "IsUpperCase", "KeywordState");
+		tc.add("Hampshire", "W=Hampshire", "IsUpperCase", "KeywordState"); // New Hampshire -- state keyword
 		
-		tc.add("KS", "W=KS", "AllUpperCase", "StateCode"); // KS -- state code keyword
+		tc.add("KS", "W=KS", "IsAllUpperCase", "KeywordStateCode"); // KS -- state code keyword
 		
-		tc.add("du", "W=du", "StopWordMulti"); // du -- a stop word
+		tc.add("du", "W=du", "KeywordStopWord"); // du -- a stop word
 	
-		extractor.extractFeatures(tc.tokens);
+		extractor.calculateFeatures(tc.tokens);
 		tc.checkFeatures();
 	}
 
@@ -91,15 +91,15 @@ public class AffiliationFeatureExtractorTest {
 	public void testExtractFeaturesWithDocumentAffiliation() {
 		String text = "Cóż ro123bić?";
 	    List<List<String>> expectedFeatures = new ArrayList<List<String>>();
-	    expectedFeatures.add(Arrays.asList("W=Coz", "UpperCase"));
+	    expectedFeatures.add(Arrays.asList("W=Coz", "IsUpperCase"));
 	    expectedFeatures.add(Arrays.asList("W=ro"));
-	    expectedFeatures.add(Arrays.asList("Number"));
+	    expectedFeatures.add(Arrays.asList("IsNumber"));
 	    expectedFeatures.add(Arrays.asList("W=bic"));
-	    expectedFeatures.add(Arrays.asList("W=?", "WeirdLetter"));
+	    expectedFeatures.add(Arrays.asList("W=?", "IsNonAlphanum"));
 		
 	    DocumentAffiliation instance = new DocumentAffiliation("someId", text);
 	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
-		extractor.extractFeatures(instance.getTokens());
+		extractor.calculateFeatures(instance.getTokens());
 		for (int i = 0; i < expectedFeatures.size(); i++) {
 			List<String> expected = expectedFeatures.get(i);
 			List<String> actual = instance.getTokens().get(i).getFeatures();

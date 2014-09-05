@@ -32,7 +32,7 @@ public class AffiliationDictionaryFeatureTest {
 		List<AffiliationToken> tokens = 
 				new AffiliationTokenizer().tokenize(MetadataTools.clean(text));
 		assertEquals(expectFeature.length, tokens.size());
-		featureCaseSensitive.addFeatures(tokens);
+		featureCaseSensitive.calculateDictionaryFeatures(tokens);
 		
 		for (int i = 0; i < expectFeature.length; i++) {
 			assertEquals("Token: " + i + " " + tokens.get(i).getText(), expectFeature[i],
@@ -44,7 +44,7 @@ public class AffiliationDictionaryFeatureTest {
 		int expectFeature2[] = {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0};
 		tokens = new AffiliationTokenizer().tokenize(MetadataTools.clean(text));
 		assertEquals(expectFeature2.length, tokens.size());
-		featureIgnoreCase.addFeatures(tokens);
+		featureIgnoreCase.calculateDictionaryFeatures(tokens);
 		
 		for (int i = 0; i < expectFeature2.length; i++) {
 			assertEquals("Token: " + i + " " + tokens.get(i).getText(), expectFeature2[i],

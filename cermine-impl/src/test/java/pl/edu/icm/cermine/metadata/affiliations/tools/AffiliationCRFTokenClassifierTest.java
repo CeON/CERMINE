@@ -31,31 +31,30 @@ public class AffiliationCRFTokenClassifierTest {
 		}
 		tokens.get(0).setFeatures(Arrays.asList(
 				"W=University",
-				"Capital"
+				"IsUpperCase"
 				));
 		tokens.get(1).setFeatures(Arrays.asList(
 				"W=,",
-				"Punct"
+				"IsSeparator"
 				));
 		tokens.get(2).setFeatures(Arrays.asList(
 				"W=Boston",
-				"Capital",
-				"City"
+				"IsUpperCase",
+				"KeywordCity"
 				));
 		tokens.get(3).setFeatures(Arrays.asList(
 				"W=,",
-				"Punct"
+				"IsSeparator"
 				));
 		tokens.get(4).setFeatures(Arrays.asList(
 				"W=USA",
-				"AllCapital",
-				"Country"
+				"IsAllCapital",
+				"KeywordCountry"
 				));
 		new AffiliationCRFTokenClassifier().classify(tokens);
 		
 		for (AffiliationToken token : tokens) {
 			assertNotNull(token.getLabel());
-			// System.out.println(token.getLabel().getTag());
 		}
 	}
 
@@ -66,7 +65,7 @@ public class AffiliationCRFTokenClassifierTest {
 				"Sjukhuset, Uppsala, Sweden";
 	    DocumentAffiliation instance = new DocumentAffiliation("someId", text);
 	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
-	    extractor.extractFeatures(instance.getTokens());
+	    extractor.calculateFeatures(instance.getTokens());
 		new AffiliationCRFTokenClassifier().classify(instance.getTokens());
 		Element aff = new Element("aff");
 		TokenizedTextToNLMExporter.addText(aff, instance.getRawText(), instance.getTokens());

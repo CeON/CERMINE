@@ -23,7 +23,7 @@ public class AffiliationParser {
 	
 	private List<AffiliationToken> parseText(String rawText) throws AnalysisException {
 		List<AffiliationToken> tokens =  tokenizer.tokenize(rawText);	
-		featureExtractor.extractFeatures(tokens);
+		featureExtractor.calculateFeatures(tokens);
 		classifier.classify(tokens);
 		return tokens;
 	}

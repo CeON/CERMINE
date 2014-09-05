@@ -86,7 +86,7 @@ public class DictionaryFeature<L, T extends Token<L>> {
 		}
 	}
 
-	public void addFeatures(List<T> tokens) {
+	public void calculateDictionaryFeatures(List<T> tokens) {
 		
 		boolean marked[] = new boolean[tokens.size()];
 		for (int i = 0; i < marked.length; i++) {

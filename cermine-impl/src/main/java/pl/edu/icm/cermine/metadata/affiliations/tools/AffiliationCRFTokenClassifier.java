@@ -21,7 +21,7 @@ import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
 
-public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationLabel, AffiliationToken> {
+public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationToken> {
 
 	private ACRF model;
     private static final String DEFAULT_MODEL_FILE = "acrf8000.ser.gz";

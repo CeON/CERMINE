@@ -8,8 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.parsing.features.IsNumberFeature;
-import pl.edu.icm.cermine.parsing.features.WordFeatureCalculator;;
+import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 
 public class WordFeatureTest {
 
@@ -26,13 +25,15 @@ public class WordFeatureTest {
 		WordFeatureCalculator instance = new WordFeatureCalculator(
 				Arrays.<BinaryTokenFeatureCalculator>asList(new IsNumberFeature()), true);
 		
-		assertEquals("W=babamakota", instance.calculateFeatureValue(tokens.get(0), tokens));
-		assertEquals(null, instance.calculateFeatureValue(tokens.get(1), tokens));
+	    DocumentAffiliation aff = new DocumentAffiliation("someId", "");
+		
+		assertEquals("W=babamakota", instance.calculateFeatureValue(tokens.get(0), aff));
+		assertEquals(null, instance.calculateFeatureValue(tokens.get(1), aff));
 		
 		instance = new WordFeatureCalculator(
 				Arrays.<BinaryTokenFeatureCalculator>asList(new IsNumberFeature()), false);
-		assertEquals("W=BabaMaKota", instance.calculateFeatureValue(tokens.get(0), tokens));
-		assertEquals(null, instance.calculateFeatureValue(tokens.get(1), tokens));
+		assertEquals("W=BabaMaKota", instance.calculateFeatureValue(tokens.get(0), aff));
+		assertEquals(null, instance.calculateFeatureValue(tokens.get(1), aff));
 	}
 
 }

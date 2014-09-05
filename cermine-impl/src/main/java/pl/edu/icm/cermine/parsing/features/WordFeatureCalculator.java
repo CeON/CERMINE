@@ -3,6 +3,7 @@ package pl.edu.icm.cermine.parsing.features;
 import java.util.List;
 
 import pl.edu.icm.cermine.parsing.model.Token;
+import pl.edu.icm.cermine.parsing.model.TokenizedString;
 
 public class WordFeatureCalculator {
 
@@ -17,7 +18,7 @@ public class WordFeatureCalculator {
 		this.toLowerCase = toLowerCase;
 	}
 	
-    public String calculateFeatureValue(Token token, List<? extends Token> context) {
+    public String calculateFeatureValue(Token<?> token, TokenizedString<?> context) {
 		for (BinaryTokenFeatureCalculator feature : blockingFeatures) {
 			if (feature.calculateFeaturePredicate(token, context)) {
 				return null;

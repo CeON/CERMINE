@@ -89,7 +89,6 @@ public abstract class Token<L> {
 	        @SuppressWarnings("rawtypes")
 			Token rhs = (Token) obj;
 	        return new EqualsBuilder().
-	            // if deriving: appendSuper(super.equals(obj)).
 	            append(text, rhs.text).
 	            append(startIndex, rhs.startIndex).
 	            append(endIndex, rhs.endIndex).

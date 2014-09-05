@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.features.*;
 import pl.edu.icm.cermine.parsing.tools.FeatureExtractor;
 
-public class AffiliationFeatureExtractor extends FeatureExtractor<AffiliationLabel, AffiliationToken> {
+public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffiliation> {
 	
 	private static final List<BinaryTokenFeatureCalculator> binaryFeatures = 
 			Arrays.<BinaryTokenFeatureCalculator>asList(
@@ -22,8 +22,8 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<AffiliationLab
 			);
 	
 	@SuppressWarnings("unchecked")
-	private static final List<DictionaryFeature<AffiliationLabel, AffiliationToken>>
-	dictionaryFeatures = Arrays.<DictionaryFeature<AffiliationLabel, AffiliationToken>>asList(
+	private static final List<DictionaryFeatureCalculator<AffiliationToken>>
+	dictionaryFeatureCalculators = Arrays.<DictionaryFeatureCalculator<AffiliationToken>>asList(
 			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	true),
 			new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				false),
 			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			false),
@@ -37,24 +37,28 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<AffiliationLab
 					new IsNumberFeature()), false);
 
 	@Override
-	public void calculateFeatures(List<AffiliationToken> tokens) {
+	public void calculateFeatures(DocumentAffiliation affiliation) {
 		
+		List<AffiliationToken> tokens = affiliation.getTokens();
 		// TODO this can be done also with the use of FeatureVectorBuilder
 		for (AffiliationToken token : tokens) {
 			for (BinaryTokenFeatureCalculator binaryFeatureCalculator : binaryFeatures) {
-				if (binaryFeatureCalculator.calculateFeaturePredicate(token, tokens)) {
+				if (binaryFeatureCalculator.calculateFeaturePredicate(token, affiliation)) {
 					token.addFeature(binaryFeatureCalculator.getFeatureName());
 				}
 			}
-			String wordFeatureString = wordFeatureCalculator.calculateFeatureValue(token, tokens);
+			String wordFeatureString = wordFeatureCalculator.calculateFeatureValue(token,
+					affiliation);
 			if (wordFeatureString != null) {
 				token.addFeature(wordFeatureString);
 			}
 		}
 		
-		for (DictionaryFeature<AffiliationLabel, AffiliationToken> dictionaryFeatureCalculator :
-			dictionaryFeatures) {
+		for (DictionaryFeatureCalculator<AffiliationToken> dictionaryFeatureCalculator :
+			dictionaryFeatureCalculators) {
 			dictionaryFeatureCalculator.calculateDictionaryFeatures(tokens);
 		}
+		
+		affiliation.setTokens(tokens);
 	}
 }

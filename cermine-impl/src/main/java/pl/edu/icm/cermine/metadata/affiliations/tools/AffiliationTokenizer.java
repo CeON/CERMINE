@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
 
-public class AffiliationTokenizer extends TextTokenizer<AffiliationLabel, AffiliationToken> {
+public class AffiliationTokenizer extends TextTokenizer<AffiliationToken> {
 
 	
 	private static List<AffiliationToken> asciiTextToTokens(String text,

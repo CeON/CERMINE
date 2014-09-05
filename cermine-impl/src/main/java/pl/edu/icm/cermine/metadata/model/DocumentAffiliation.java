@@ -18,16 +18,18 @@
 
 package pl.edu.icm.cermine.metadata.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
+import pl.edu.icm.cermine.parsing.model.TokenizedString;
 
 /**
  *
  * @author Dominika Tkaczyk
  */
-public class DocumentAffiliation {
+public class DocumentAffiliation extends TokenizedString<AffiliationToken> {
 
     private String id;
     
@@ -45,7 +47,9 @@ public class DocumentAffiliation {
         this.id = id;
         this.index = index;
         this.rawText = MetadataTools.clean(rawText);
-        this.tokens = null;
+        // TODO Maybe this should be null, methods calling getTokens() should throw an exception
+        // when they get it?
+        this.tokens = new ArrayList<AffiliationToken>();
     }
 
     public String getId() {

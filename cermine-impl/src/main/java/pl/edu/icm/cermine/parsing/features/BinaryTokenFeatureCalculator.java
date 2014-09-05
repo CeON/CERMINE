@@ -1,15 +1,15 @@
 package pl.edu.icm.cermine.parsing.features;
 
-import java.util.List;
-
 import pl.edu.icm.cermine.parsing.model.Token;
+import pl.edu.icm.cermine.parsing.model.TokenizedString;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public abstract class BinaryTokenFeatureCalculator extends FeatureCalculator<Token, List<? extends Token>> {
+public abstract class BinaryTokenFeatureCalculator extends
+FeatureCalculator<Token<?>, TokenizedString<?>> {
 
-	public abstract boolean calculateFeaturePredicate(Token token, List<? extends Token> context);
+	public abstract boolean calculateFeaturePredicate(Token<?> token, TokenizedString<?> context);
 	
-    public double calculateFeatureValue(Token token, List<? extends Token> context) {
+    public double calculateFeatureValue(Token<?> token, TokenizedString<?> context) {
     	if (calculateFeaturePredicate(token, context)) {
     		return 1;
     	} else {

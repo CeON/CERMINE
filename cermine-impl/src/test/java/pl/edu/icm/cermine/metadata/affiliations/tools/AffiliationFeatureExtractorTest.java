@@ -82,7 +82,10 @@ public class AffiliationFeatureExtractorTest {
 		
 		tc.add("du", "W=du", "KeywordStopWord"); // du -- a stop word
 	
-		extractor.calculateFeatures(tc.tokens);
+		
+	    DocumentAffiliation instance = new DocumentAffiliation("someId", "");
+	    instance.setTokens(tc.tokens);
+		extractor.calculateFeatures(instance);
 		tc.checkFeatures();
 	}
 
@@ -99,7 +102,7 @@ public class AffiliationFeatureExtractorTest {
 		
 	    DocumentAffiliation instance = new DocumentAffiliation("someId", text);
 	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
-		extractor.calculateFeatures(instance.getTokens());
+		extractor.calculateFeatures(instance);
 		for (int i = 0; i < expectedFeatures.size(); i++) {
 			List<String> expected = expectedFeatures.get(i);
 			List<String> actual = instance.getTokens().get(i).getFeatures();

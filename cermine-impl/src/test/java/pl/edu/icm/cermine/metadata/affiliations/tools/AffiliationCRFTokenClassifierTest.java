@@ -65,7 +65,7 @@ public class AffiliationCRFTokenClassifierTest {
 				"Sjukhuset, Uppsala, Sweden";
 	    DocumentAffiliation instance = new DocumentAffiliation("someId", text);
 	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
-	    extractor.calculateFeatures(instance.getTokens());
+	    extractor.calculateFeatures(instance);
 		new AffiliationCRFTokenClassifier().classify(instance.getTokens());
 		Element aff = new Element("aff");
 		TokenizedTextToNLMExporter.addText(aff, instance.getRawText(), instance.getTokens());

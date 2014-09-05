@@ -26,7 +26,7 @@ public class GrmmUtils {
 		return builder.toString();
 	}
 	
-	private static <L, T extends Token<L>>  List<String>
+	private static <T extends Token<?>>  List<String>
 	neighborFeatures(int current, int offset, List<T> tokens) {
 		List<String> features = new ArrayList<String>();
 		String suffix = "";
@@ -46,7 +46,7 @@ public class GrmmUtils {
 		return features;
 	}
 	
-	public static <L, T extends Token<L>> String toGrmmInput(List<T> tokens, 
+	public static <T extends Token<?>> String toGrmmInput(List<T> tokens, 
 			int neighborInfluenceThreshold) {
 		StringBuilder grmmInputBuilder = new StringBuilder();
 		for (int i = 0; i < tokens.size(); i++) {

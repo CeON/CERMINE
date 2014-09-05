@@ -19,7 +19,6 @@ public class AffiliationToken extends Token<AffiliationLabel> {
 		super();
 	}
 
-	// HACK
 	@Override
 	public String getValidLabel() {
 		return "INST";

@@ -13,18 +13,18 @@ import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
 
-public class DictionaryFeature<L, T extends Token<L>> {
+public class DictionaryFeatureCalculator<T extends Token<?>> {
 
 	private List<List<T>> entries;
 	private Map<String, List<Integer>> dictionary;
-	private TextTokenizer<L, T> textTokenizer;
+	private TextTokenizer<T> textTokenizer;
 
 	private String featureString;
 	private String dictionaryFileName; 
 	private boolean useLowerCase;
 
-	public DictionaryFeature(String FeatureString, String dictionaryFileName, boolean useLowerCase,
-			TextTokenizer<L, T> tokenizer) {
+	public DictionaryFeatureCalculator(String FeatureString, String dictionaryFileName, boolean useLowerCase,
+			TextTokenizer<T> tokenizer) {
 
 		entries = new ArrayList<List<T>>();
 		dictionary = new HashMap<String, List<Integer>>();

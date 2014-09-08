@@ -41,6 +41,10 @@ public abstract class Token<L> {
 		return label;
 	}
 	
+	public abstract String getGrmmLabelString();
+
+	public abstract String getXmlLabelString();
+	
 	public void setLabel(L label) {
 		this.label = label;
 	}
@@ -77,23 +81,21 @@ public abstract class Token<L> {
 		this("");
 	}
 	
-	public abstract String getValidLabel();
-	
 	// Ignore label for testing purposes
 	public boolean equals(Object obj) {
-	       if (!(obj instanceof Token))
-	            return false;
-	        if (obj == this)
-	            return true;
+       if (!(obj instanceof Token))
+            return false;
+        if (obj == this)
+            return true;
 
-	        @SuppressWarnings("rawtypes")
-			Token rhs = (Token) obj;
-	        return new EqualsBuilder().
-	            append(text, rhs.text).
-	            append(startIndex, rhs.startIndex).
-	            append(endIndex, rhs.endIndex).
-	            isEquals();
-	    }
+        @SuppressWarnings("rawtypes")
+        Token rhs = (Token) obj;
+        return new EqualsBuilder().
+            append(text, rhs.text).
+            append(startIndex, rhs.startIndex).
+            append(endIndex, rhs.endIndex).
+            isEquals();
+    }
 	
 	// Used for dictionary lookups
 	@SuppressWarnings("rawtypes")

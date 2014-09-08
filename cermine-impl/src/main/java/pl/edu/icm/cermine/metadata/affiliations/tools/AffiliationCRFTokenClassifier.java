@@ -24,54 +24,61 @@ import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
 public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationToken> {
 
 	private ACRF model;
-    private static final String DEFAULT_MODEL_FILE = "acrf8000.ser.gz";
-    private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
-	
+	private static final String DEFAULT_MODEL_FILE = "acrfsmall.ser.gz";
+	private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
+
 	public AffiliationCRFTokenClassifier(InputStream modelInputStream) throws AnalysisException {
-        System.setProperty("java.util.logging.config.file",
-            "edu/umass/cs/mallet/base/util/resources/logging.properties");
-        if (modelInputStream == null) {
-        	throw new AnalysisException("Cannot set model, input stream is null!");
-        }
-        ObjectInputStream ois = null;
-        try {
-            ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(modelInputStream)));
-            model = (ACRF)(ois.readObject());
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        } catch (ClassNotFoundException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (IOException ex) {
-                throw new AnalysisException("Cannot set model!", ex);
-            }
-        }
+		System.setProperty("java.util.logging.config.file",
+				"edu/umass/cs/mallet/base/util/resources/logging.properties");
+		if (modelInputStream == null) {
+			throw new AnalysisException("Cannot set model, input stream is null!");
+		}
+		ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(
+					modelInputStream)));
+			model = (ACRF) (ois.readObject());
+		} catch (IOException ex) {
+			throw new AnalysisException("Cannot set model!", ex);
+		} catch (ClassNotFoundException ex) {
+			throw new AnalysisException("Cannot set model!", ex);
+		} finally {
+			try {
+				if (ois != null) {
+					ois.close();
+				}
+			} catch (IOException ex) {
+				throw new AnalysisException("Cannot set model!", ex);
+			}
+		}
 	}
-	
+
 	public AffiliationCRFTokenClassifier() throws AnalysisException {
 		this(AffiliationCRFTokenClassifier.class.getResourceAsStream(DEFAULT_MODEL_FILE));
 	}
 
 	private LineGroupIterator getLineIterator(String data) {
-		return new LineGroupIterator(new StringReader(data), Pattern.compile ("\\s*"), true);
+		return new LineGroupIterator(new StringReader(data), Pattern.compile("\\s*"), true);
 	}
-	
+
 	@Override
 	public void classify(List<AffiliationToken> tokens) throws AnalysisException {
-        String data = GrmmUtils.toGrmmInput(tokens, DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD);
-        
-        Pipe pipe = model.getInputPipe();
-        InstanceList instanceList = new InstanceList(pipe);
-        instanceList.add(getLineIterator(data)); 
-        LabelsSequence labelSequence = (LabelsSequence)model.getBestLabels(instanceList).get(0);
-           
-        for (int i = 0; i < labelSequence.size(); i++) {
-            tokens.get(i).setLabel(AffiliationLabel.createLabel(labelSequence.get(i).toString()));
-        }
+		String data = GrmmUtils.toGrmmInput(tokens, DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD);
+
+		Pipe pipe = model.getInputPipe();
+		InstanceList instanceList = new InstanceList(pipe);
+		instanceList.add(getLineIterator(data));
+		LabelsSequence labelsSequence = null;
 		
+		try {
+			labelsSequence = (LabelsSequence) model.getBestLabels(instanceList).get(0);
+		} catch (ArrayIndexOutOfBoundsException ex) {
+			throw new AnalysisException("ACRF model can't recognize some of the labels.");
+		}
+
+		for (int i = 0; i < labelsSequence.size(); i++) {
+			tokens.get(i).setLabel(AffiliationLabel.createLabel(labelsSequence.get(i).toString()));
+		}
+
 	}
 }

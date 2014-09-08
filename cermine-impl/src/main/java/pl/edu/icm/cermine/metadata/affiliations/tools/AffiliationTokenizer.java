@@ -63,6 +63,7 @@ public class AffiliationTokenizer extends TextTokenizer<AffiliationToken> {
 		return substringBuilder.toString();
 	}
 	
+	@Override
 	public List<AffiliationToken> tokenize(String text) {
 		List<Integer> asciiIndices = getAsciiSubstringIndices(text);
 		String asciiText = getSubstring(text, asciiIndices);

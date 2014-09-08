@@ -40,7 +40,6 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 	public void calculateFeatures(DocumentAffiliation affiliation) {
 		
 		List<AffiliationToken> tokens = affiliation.getTokens();
-		// TODO this can be done also with the use of FeatureVectorBuilder
 		for (AffiliationToken token : tokens) {
 			for (BinaryTokenFeatureCalculator binaryFeatureCalculator : binaryFeatures) {
 				if (binaryFeatureCalculator.calculateFeaturePredicate(token, affiliation)) {

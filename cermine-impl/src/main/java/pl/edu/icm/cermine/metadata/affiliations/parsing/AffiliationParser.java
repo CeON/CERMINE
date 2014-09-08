@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 
 public class AffiliationParser {
-	
+
 	private AffiliationTokenizer tokenizer = null;
 	private AffiliationFeatureExtractor featureExtractor = null;
 	private AffiliationCRFTokenClassifier classifier = null;
@@ -25,7 +25,7 @@ public class AffiliationParser {
 		featureExtractor.calculateFeatures(affiliation);
 		classifier.classify(affiliation.getTokens());
 	}
-	
+
 	public void parseAffiliation(List<DocumentAffiliation> affiliations) throws AnalysisException {
 		for (DocumentAffiliation aff : affiliations) {
 			parseAffiliation(aff);

@@ -51,7 +51,7 @@ public class GrmmUtils {
 		StringBuilder grmmInputBuilder = new StringBuilder();
 		for (int i = 0; i < tokens.size(); i++) {
 			List<String> features = new ArrayList<String>();
-			String label = tokens.get(i).getValidLabel();
+			String label = tokens.get(i).getGrmmLabelString();
 			
 			features.addAll(neighborFeatures(i, 0, tokens));
 			for (int j = -neighborInfluenceThreshold; j <= neighborInfluenceThreshold; j++) {

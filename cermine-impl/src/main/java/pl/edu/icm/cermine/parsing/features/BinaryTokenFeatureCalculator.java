@@ -8,7 +8,8 @@ public abstract class BinaryTokenFeatureCalculator extends
 FeatureCalculator<Token<?>, TokenizedString<?>> {
 
 	public abstract boolean calculateFeaturePredicate(Token<?> token, TokenizedString<?> context);
-	
+
+	@Override
     public double calculateFeatureValue(Token<?> token, TokenizedString<?> context) {
     	if (calculateFeaturePredicate(token, context)) {
     		return 1;

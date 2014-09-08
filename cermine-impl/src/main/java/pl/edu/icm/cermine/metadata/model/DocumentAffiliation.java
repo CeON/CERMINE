@@ -29,7 +29,7 @@ import pl.edu.icm.cermine.parsing.model.TokenizedString;
  *
  * @author Dominika Tkaczyk
  */
-public class DocumentAffiliation extends TokenizedString<AffiliationToken> {
+public class DocumentAffiliation implements TokenizedString<AffiliationToken> {
 
     private String id;
     
@@ -47,8 +47,6 @@ public class DocumentAffiliation extends TokenizedString<AffiliationToken> {
         this.id = id;
         this.index = index;
         this.rawText = MetadataTools.clean(rawText);
-        // TODO Maybe this should be null, methods calling getTokens() should throw an exception
-        // when they get it?
         this.tokens = new ArrayList<AffiliationToken>();
     }
 
@@ -82,6 +80,15 @@ public class DocumentAffiliation extends TokenizedString<AffiliationToken> {
 
 	public void setTokens(List<AffiliationToken> tokens) {
 		this.tokens = tokens;
+	}
+
+	public void addToken(AffiliationToken token) {
+		this.tokens.add(token);
+		
+	}
+
+	public void appendText(String text) {
+		this.rawText += text;
 	}
 
     void clean() {

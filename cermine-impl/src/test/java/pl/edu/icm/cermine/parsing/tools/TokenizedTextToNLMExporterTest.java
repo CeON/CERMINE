@@ -67,7 +67,7 @@ public class TokenizedTextToNLMExporterTest {
 	
 	
 	@Test
-	public void testEnhanceElement() {
+	public void testEnhanceElement() throws TransformationException {
 		Element el = new Element("el");
 		Element subel = new Element("sub");
 		subel.addContent("text,");
@@ -77,6 +77,17 @@ public class TokenizedTextToNLMExporterTest {
 		String actual = outputter.outputString(el);
 		String expected = "<el><sub>text</sub>,</el>";
 		assertEquals(expected, actual);
+	}
+
+	@Test(expected=TransformationException.class)
+	public void testEnhanceElementException() throws TransformationException {
+		Element el = new Element("el");
+		Element subel = new Element("sub");
+		Element subsubel = new Element("subsub");
+		subel.addContent("text,");
+		subel.addContent(subsubel);
+		el.addContent(subel);
+		TokenizedTextToNLMExporter.enhanceElement(el);
 	}
 	
 }

@@ -12,19 +12,20 @@ import pl.edu.icm.cermine.parsing.model.Token;
 public abstract class TokenizedTextToNLMExporter {
 
 	// Removes trailing commas from the tagged parts
-	public static void enhanceElement(Element element) {
+	public static void enhanceElement(Element element) throws TransformationException {
 		@SuppressWarnings("unchecked")
 		List<Object> oldContent = element.getContent();
 		List<Object> newContent = new ArrayList<Object>();
 		for (Object subobject : oldContent) {
 			newContent.add(subobject);
-			// Doesn't look like good OOP but I have no other ideas.
 			if (subobject instanceof Element) { 
 				Element subelement = (Element)subobject;
+				if (!subelement.getChildren().isEmpty()) {
+					throw new TransformationException("This function is not suitable for " +
+							"processing nested subelements.");
+				}
 				String subtext = subelement.getText();
 				if (subtext.endsWith(",")) {
-					// NOTE Assume that there are no nested elements in "subelement"
-					// TODO maybe this should perform a test and throw an exception if this is a case
 					subelement.setText(subtext.substring(0, subtext.length() - 1));
 					newContent.add(",");
 				}
@@ -59,7 +60,7 @@ public abstract class TokenizedTextToNLMExporter {
 				if (!textBetween.equals("")) {
 					el.addContent(textBetween);
 				}
-				currentElement = new Element(t.getLabel().toString());
+				currentElement = new Element(t.getXmlLabelString());
 			} else {
 				if (!textBetween.equals("")) {
 					currentElement.addContent(textBetween);

@@ -72,7 +72,7 @@ public class TokenizedTextToNLMExporterTest {
 		Element subel = new Element("sub");
 		subel.addContent("text,");
 		el.addContent(subel);
-		TokenizedTextToNLMExporter.enhanceElement(el);
+		TokenizedTextToNLMExporter.enhanceCommasInElement(el);
 		XMLOutputter outputter = new XMLOutputter();
 		String actual = outputter.outputString(el);
 		String expected = "<el><sub>text</sub>,</el>";
@@ -87,7 +87,7 @@ public class TokenizedTextToNLMExporterTest {
 		subel.addContent("text,");
 		subel.addContent(subsubel);
 		el.addContent(subel);
-		TokenizedTextToNLMExporter.enhanceElement(el);
+		TokenizedTextToNLMExporter.enhanceCommasInElement(el);
 	}
 	
 }

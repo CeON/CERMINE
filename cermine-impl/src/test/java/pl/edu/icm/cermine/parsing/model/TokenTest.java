@@ -29,10 +29,10 @@ public class TokenTest {
 		List<AffiliationToken> sequence4 = Arrays.asList(
 				new AffiliationToken("Bob", 19, 23)
 				);
-		assertEquals(true, Token.sequenceEquals(sequence1, sequence2, true));
-		assertEquals(false, Token.sequenceEquals(sequence1, sequence2, false));
-		assertEquals(false, Token.sequenceEquals(sequence1, sequence3, true));
-		assertEquals(false, Token.sequenceEquals(sequence1, sequence4, true));
+		assertEquals(true, Token.sequenceTextEquals(sequence1, sequence2, false));
+		assertEquals(false, Token.sequenceTextEquals(sequence1, sequence2, true));
+		assertEquals(false, Token.sequenceTextEquals(sequence1, sequence3, false));
+		assertEquals(false, Token.sequenceTextEquals(sequence1, sequence4, false));
 	}
 
 }

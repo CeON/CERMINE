@@ -5,6 +5,11 @@ import java.util.List;
 
 import pl.edu.icm.cermine.parsing.model.Token;
 
+/**
+ * Utility class for exporting feature lists to GRMM input
+ * 
+ * @author Bartosz Tarnawski
+ */
 public class GrmmUtils {
 	
 	private static final String LABEL_SEPARATOR = " ---- ";
@@ -13,6 +18,11 @@ public class GrmmUtils {
 	private static final String END_LABEL = "End";
 	private static final String CONNECTOR = "@";
 	
+	/**
+	 * @param label
+	 * @param features
+	 * @return GRMM 'timestep' representing a token with the label and the features
+	 */
 	public static String toGrmmInput(String label, List<String> features) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(label);
@@ -46,6 +56,12 @@ public class GrmmUtils {
 		return features;
 	}
 	
+	/**
+	 * @param tokens the tokens whose feature lists should be exported
+	 * @param neighborInfluenceThreshold the maximum distance of token's neighbor whose local
+	 * features will be added to the token's feature list
+	 * @return GRMM input string representing the token sequence
+	 */
 	public static <T extends Token<?>> String toGrmmInput(List<T> tokens, 
 			int neighborInfluenceThreshold) {
 		StringBuilder grmmInputBuilder = new StringBuilder();

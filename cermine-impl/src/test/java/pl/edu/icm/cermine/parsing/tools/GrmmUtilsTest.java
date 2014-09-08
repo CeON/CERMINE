@@ -28,8 +28,8 @@ public class GrmmUtilsTest {
 		AffiliationToken token2 = new AffiliationToken("sometext2");
 		token2.getFeatures().add("F3");
 		
-		String expected = "INST ---- F1 F2 Start@-1 F3@1\n" +
-				"INST ---- F3 F1@-1 F2@-1 End@1\n";
+		String expected = "TEXT ---- F1 F2 Start@-1 F3@1\n" +
+				"TEXT ---- F3 F1@-1 F2@-1 End@1\n";
 		String actual = GrmmUtils.toGrmmInput(Arrays.asList(token1, token2), 1);
 		assertEquals(expected, actual);
 	}

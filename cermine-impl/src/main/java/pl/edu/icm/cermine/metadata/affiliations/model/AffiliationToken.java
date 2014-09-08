@@ -2,6 +2,11 @@ package pl.edu.icm.cermine.metadata.affiliations.model;
 
 import pl.edu.icm.cermine.parsing.model.Token;
 
+/**
+ * Document affiliation token.
+ * 
+ * @author Bartosz Tarnawski
+ */
 public class AffiliationToken extends Token<AffiliationLabel> {
 	public AffiliationToken(String text, int startIndex, int endIndex, AffiliationLabel label) {
 		super(text, startIndex, endIndex, label);
@@ -29,7 +34,7 @@ public class AffiliationToken extends Token<AffiliationLabel> {
 	}
 
 	@Override
-	public String getXmlLabelString() {
+	public String getXmlTagString() {
 		if (label == null) {
 			return AffiliationLabel.TEXT.getXmlTag();
 		} else {

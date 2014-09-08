@@ -5,6 +5,11 @@ import java.util.Map;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
 
+/**
+ * Document affiliation label.
+ * 
+ * @author Bartosz Tarnawski
+ */
 public enum AffiliationLabel {
 	INSTITUTION("institution", "INST"),
 	ADDRESS("addr-line", "ADDR"),

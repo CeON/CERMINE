@@ -5,6 +5,12 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 
+/**
+ * Representation of a token, an atomic part of a string. Used for string parsing.
+ * 
+ * @author Bartosz Tarnawski
+ * @param <L> type of a label used for token type prediction
+ */
 public abstract class Token<L> {
 
 	protected String text;
@@ -41,9 +47,15 @@ public abstract class Token<L> {
 		return label;
 	}
 	
+	/**
+	 * @return a valid GRMM label representing the token's type
+	 */
 	public abstract String getGrmmLabelString();
 
-	public abstract String getXmlLabelString();
+	/**
+	 * @return a valid XML tag representing the token's type
+	 */
+	public abstract String getXmlTagString();
 	
 	public void setLabel(L label) {
 		this.label = label;
@@ -81,7 +93,7 @@ public abstract class Token<L> {
 		this("");
 	}
 	
-	// Ignore label for testing purposes
+	// Ignores the label, for testing purposes only
 	public boolean equals(Object obj) {
        if (!(obj instanceof Token))
             return false;
@@ -97,10 +109,17 @@ public abstract class Token<L> {
             isEquals();
     }
 	
-	// Used for dictionary lookups
+	/**
+	 * Compares text strings represented by sequences of tokens
+	 * 
+	 * @param lhs
+	 * @param rhs
+	 * @param caseSensitive
+	 * @return whether the corresponding strings are equal
+	 */
 	@SuppressWarnings("rawtypes")
-	public static <T extends Token> boolean sequenceEquals(List<T> lhs, List<T> rhs,
-			boolean useLowerCase) {
+	public static <T extends Token> boolean sequenceTextEquals(List<T> lhs, List<T> rhs,
+			boolean caseSensitive) {
 		if (lhs.size() != rhs.size()) {
 			return false;
 		}
@@ -108,7 +127,7 @@ public abstract class Token<L> {
 		for (int i = 0; i < lhs.size(); i++) {
 			String lhsString = lhs.get(i).getText();
 			String rhsString = rhs.get(i).getText();
-			if (useLowerCase) {
+			if (!caseSensitive) {
 				lhsString = lhsString.toLowerCase();
 				rhsString = rhsString.toLowerCase();
 			}

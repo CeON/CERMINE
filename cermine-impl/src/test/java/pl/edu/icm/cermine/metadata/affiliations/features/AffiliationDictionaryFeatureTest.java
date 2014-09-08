@@ -14,9 +14,9 @@ import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 public class AffiliationDictionaryFeatureTest {
 
 	private static final AffiliationDictionaryFeature featureCaseSensitive =
-			new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt", false);
-	private static final AffiliationDictionaryFeature featureIgnoreCase =
 			new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt", true);
+	private static final AffiliationDictionaryFeature featureIgnoreCase =
+			new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt", false);
 	
         /* mock-dictionary.txt content:
                 Elo Melo 320

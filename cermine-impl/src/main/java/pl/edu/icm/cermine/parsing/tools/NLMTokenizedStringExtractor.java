@@ -17,6 +17,16 @@ import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.TokenizedString;
 
+/**
+ * Generic extractor, which transform NLM XML's into the tokenized strings representation
+ * 
+ * @author Dominika Tkaczyk
+ * @author Bartosz Tarnawski
+ *
+ * @param <L> label type
+ * @param <T> token type
+ * @param <TS> tokenized string type
+ */
 public abstract class NLMTokenizedStringExtractor<L, T extends Token<L>, TS extends TokenizedString<T>> {
 	
 
@@ -26,6 +36,12 @@ public abstract class NLMTokenizedStringExtractor<L, T extends Token<L>, TS exte
 	protected abstract TS createString();
 	protected abstract TS createString(String text);
 	
+	/**
+	 * @param source the InputSoruce representing the XML document
+	 * @return tokenized string representing the source
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public List<TS> extractStrings(InputSource source) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         builder.setValidation(false);

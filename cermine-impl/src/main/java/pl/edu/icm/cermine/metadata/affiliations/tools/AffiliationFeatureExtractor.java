@@ -9,6 +9,11 @@ import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.features.*;
 import pl.edu.icm.cermine.parsing.tools.FeatureExtractor;
 
+/**
+ * Feature extractor suitable for processing affiliations.
+ * 
+ * @author Bartosz Tarnawski
+ */
 public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffiliation> {
 	
 	private static final List<BinaryTokenFeatureCalculator> binaryFeatures = 
@@ -22,14 +27,14 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 			);
 	
 	@SuppressWarnings("unchecked")
-	private static final List<DictionaryFeatureCalculator<AffiliationToken>>
-	dictionaryFeatureCalculators = Arrays.<DictionaryFeatureCalculator<AffiliationToken>>asList(
-			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	true),
-			new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				false),
-			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			false),
-			new AffiliationDictionaryFeature("KeywordState", 		"states.txt", 				false),
-			new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			false),
-			new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", true)
+	private static final List<KeywordFeatureCalculator<AffiliationToken>>
+	keywordFeatureCalculators = Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
+			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
+			new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
+			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
+			new AffiliationDictionaryFeature("KeywordState", 		"states.txt", 				true),
+			new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			true),
+			new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false)
 			);
 	
 	private static final WordFeatureCalculator wordFeatureCalculator = 
@@ -53,8 +58,8 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 			}
 		}
 		
-		for (DictionaryFeatureCalculator<AffiliationToken> dictionaryFeatureCalculator :
-			dictionaryFeatureCalculators) {
+		for (KeywordFeatureCalculator<AffiliationToken> dictionaryFeatureCalculator :
+			keywordFeatureCalculators) {
 			dictionaryFeatureCalculator.calculateDictionaryFeatures(tokens);
 		}
 		

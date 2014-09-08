@@ -8,8 +8,12 @@ import java.util.regex.Pattern;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
 
+/**
+ * Text tokenizer suitable for tokenizing affiliation strings.
+ * 
+ * @author Bartosz Tarnawski
+ */
 public class AffiliationTokenizer extends TextTokenizer<AffiliationToken> {
-
 	
 	private static List<AffiliationToken> asciiTextToTokens(String text,
 			List<Integer> asciiIndices) {

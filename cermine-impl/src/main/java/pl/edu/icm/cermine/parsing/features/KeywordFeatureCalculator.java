@@ -13,7 +13,14 @@ import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
 
-public class DictionaryFeatureCalculator<T extends Token<?>> {
+/**
+ * Class for calculating keyword features. It finds all occurrences of a keyword
+ * string in a list of tokens and adds the appropriate feature string to the corresponding tokens
+ * 
+ * @author Bartosz Tarnawski
+ * @param <T> type of tokens
+ */
+public class KeywordFeatureCalculator<T extends Token<?>> {
 
 	private List<List<T>> entries;
 	private Map<String, List<Integer>> dictionary;
@@ -21,10 +28,16 @@ public class DictionaryFeatureCalculator<T extends Token<?>> {
 
 	private String featureString;
 	private String dictionaryFileName; 
-	private boolean useLowerCase;
+	private boolean caseSensitive;
 
-	public DictionaryFeatureCalculator(String FeatureString, String dictionaryFileName, boolean useLowerCase,
-			TextTokenizer<T> tokenizer) {
+	/**
+	 * @param FeatureString the string which will be added to the matching tokens' features lists
+	 * @param dictionaryFileName the name of the dictionary to be used
+	 * @param caseSensitive whether dictionary lookups should be case sensitive
+	 * @param tokenizer used for dictionary entries splitting
+	 */
+	public KeywordFeatureCalculator(String FeatureString, String dictionaryFileName,
+			boolean caseSensitive, TextTokenizer<T> tokenizer) {
 
 		entries = new ArrayList<List<T>>();
 		dictionary = new HashMap<String, List<Integer>>();
@@ -32,7 +45,7 @@ public class DictionaryFeatureCalculator<T extends Token<?>> {
 
 		this.featureString = FeatureString;
 		this.dictionaryFileName = dictionaryFileName;
-		this.useLowerCase = useLowerCase;
+		this.caseSensitive = caseSensitive;
 		
 		loadDictionary();
 	}
@@ -49,7 +62,7 @@ public class DictionaryFeatureCalculator<T extends Token<?>> {
 		entries.add(tokens);
 		int entryId = entries.size() - 1;
 		String tokenString = tokens.get(0).getText();
-		if (useLowerCase) {
+		if (!caseSensitive) {
 			tokenString = tokenString.toLowerCase();
 		}
 		
@@ -86,6 +99,13 @@ public class DictionaryFeatureCalculator<T extends Token<?>> {
 		}
 	}
 
+	/**
+	 * Finds all occurrences of keywords from the dictionary in the text formed by the
+	 * sequence of the tokens and marks the corresponding tokens by adding an appropriate string
+	 * to their feature lists.
+	 * 
+	 * @param tokens
+	 */
 	public void calculateDictionaryFeatures(List<T> tokens) {
 		
 		boolean marked[] = new boolean[tokens.size()];
@@ -96,7 +116,7 @@ public class DictionaryFeatureCalculator<T extends Token<?>> {
 		for (int l = 0; l < tokens.size(); l++) {
 			T token = tokens.get(l);
 			String tokenString = token.getText();
-			if (useLowerCase) {
+			if (!caseSensitive) {
 				tokenString = tokenString.toLowerCase();
 			}
 			List<Integer> candidateIds = dictionary.get(tokenString);
@@ -104,8 +124,8 @@ public class DictionaryFeatureCalculator<T extends Token<?>> {
 				for (int candidateId : candidateIds) {
 					List<T> entry = entries.get(candidateId);
 					int r = l + entry.size();
-					if (r <= tokens.size() && Token.sequenceEquals(entry, tokens.subList(l, r),
-							useLowerCase)) {
+					if (r <= tokens.size() && Token.sequenceTextEquals(entry, tokens.subList(l, r),
+							caseSensitive)) {
 						for (int i = l; i < r; i++) {
 							marked[i] = true;
                     	}

@@ -21,9 +21,17 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 
-/* The ACRF model is prepared by some Python scripts. We use this class to check whether
- * the Java implementation exports raw .txt files or tagged XML
- * to the GRMM format in the exactly same way.
+/**
+ * Class for converting affiliation features to GRMM file format.
+ * It reads affiliations from an XML or text file, extracts their features and produces
+ * a valid input for ACRF model trainer. If the input file is an XML, it uses the tags as labels.
+ * 
+ * 
+ * The ACRF model is prepared by some Python scripts. We use this class to check whether
+ * the Java implementation exports raw .txt files or tagged XML to the GRMM format in the
+ * exactly same way as the Python code.
+ * 
+ * @author Bartosz Tarnawski
  */
 public class AffiliationTrainingDataExporter {
 

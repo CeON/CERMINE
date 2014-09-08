@@ -10,6 +10,11 @@ import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.tools.NLMTokenizedStringExtractor;
 
+/**
+ * NLM string extractor suitable for extracting document affiliations.
+ * 
+ * @author Bartosz Tarnawski
+ */
 public class NLMAffiliationExtractor extends
 NLMTokenizedStringExtractor<AffiliationLabel, AffiliationToken, DocumentAffiliation> {
 

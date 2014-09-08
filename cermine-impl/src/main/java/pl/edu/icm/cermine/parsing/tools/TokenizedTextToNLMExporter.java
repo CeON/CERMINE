@@ -9,10 +9,20 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.parsing.model.Token;
 
 
+/**
+ * Tokenized strings to NLM XML exporter
+ * 
+ * @author Bartosz Tarnawski
+ */
 public abstract class TokenizedTextToNLMExporter {
 
-	// Removes trailing commas from the tagged parts
-	public static void enhanceElement(Element element) throws TransformationException {
+	/**
+	 * Moves the tags in the text so that the tagged parts don't end with commas
+	 * 
+	 * @param element
+	 * @throws TransformationException
+	 */
+	public static void enhanceCommasInElement(Element element) throws TransformationException {
 		@SuppressWarnings("unchecked")
 		List<Object> oldContent = element.getContent();
 		List<Object> newContent = new ArrayList<Object>();
@@ -41,6 +51,14 @@ public abstract class TokenizedTextToNLMExporter {
         parent.addContent(element);
 	}
 	
+	/**
+	 * Adds the tagged text to the Element el
+	 * 
+	 * @param el the element to be processed
+	 * @param text the text to be added
+	 * @param tokens the tokens with information about text tagging
+	 * @throws TransformationException if any token has no label
+	 */
 	public static<L, T extends Token<L>> void addText(Element el, String text, List<T> tokens)
 			throws TransformationException {
 		
@@ -60,7 +78,7 @@ public abstract class TokenizedTextToNLMExporter {
 				if (!textBetween.equals("")) {
 					el.addContent(textBetween);
 				}
-				currentElement = new Element(t.getXmlLabelString());
+				currentElement = new Element(t.getXmlTagString());
 			} else {
 				if (!textBetween.equals("")) {
 					currentElement.addContent(textBetween);
@@ -80,6 +98,6 @@ public abstract class TokenizedTextToNLMExporter {
         	el.addContent(textBetween);
         }
 				
-		enhanceElement(el);
+		enhanceCommasInElement(el);
 	}
 }

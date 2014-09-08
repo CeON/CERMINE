@@ -21,12 +21,22 @@ import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
 
+/**
+ * Token classifier suitable for processing affiliations.
+ * 
+ * @author Dominika Tkaczyk
+ * @author Bartosz Tarnawski
+ */
 public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationToken> {
 
 	private ACRF model;
 	private static final String DEFAULT_MODEL_FILE = "acrfsmall.ser.gz";
 	private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
 
+	/**
+	 * @param modelInputStream the stream representing the ACRF model to be used
+	 * @throws AnalysisException if the model cannot be loaded
+	 */
 	public AffiliationCRFTokenClassifier(InputStream modelInputStream) throws AnalysisException {
 		System.setProperty("java.util.logging.config.file",
 				"edu/umass/cs/mallet/base/util/resources/logging.properties");
@@ -53,6 +63,11 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationTo
 		}
 	}
 
+	/**
+	 * Use the default ACRF model.
+	 * 
+	 * @throws AnalysisException
+	 */
 	public AffiliationCRFTokenClassifier() throws AnalysisException {
 		this(AffiliationCRFTokenClassifier.class.getResourceAsStream(DEFAULT_MODEL_FILE));
 	}

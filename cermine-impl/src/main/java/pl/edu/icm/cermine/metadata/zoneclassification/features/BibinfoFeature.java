@@ -34,14 +34,24 @@ public class BibinfoFeature extends FeatureCalculator<BxZone, BxPage> {
         String[] keywords = {"cite", "pages", "article", "volume", "publishing", "journal", "doi", "cite this article",
                              "citation", "issue", "issn"};
 
+        String[] otherKeywords = {"author details", "university", "department", "school", "institute", "affiliation", 
+                             "hospital", "laboratory", "faculty", "author", "abstract", "keywords", "key words",
+                             "correspondence", "editor", "address", "email"};
+
+        
         int count = 0;
         for (String keyword : keywords) {
             if (zone.toText().toLowerCase().contains(keyword)) {
-                count++;
+                count += 2;
+            }
+        }
+        for (String keyword : otherKeywords) {
+            if (count > 0 && zone.toText().toLowerCase().contains(keyword)) {
+                count--;
             }
         }
 
-        return count;
+        return (double)count / 2;
     }
 
 }

@@ -30,7 +30,8 @@ public class AffiliationFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        String[] keywords = {"author details", "university", "department", "school", "institute", "affiliation"};
+        String[] keywords = {"author details", "university", "department", "school", "affiliation", 
+                             "institute", "hospital", "laboratory", "centre", "center", "faculty"};
 
         int count = 0;
         for (String keyword : keywords) {

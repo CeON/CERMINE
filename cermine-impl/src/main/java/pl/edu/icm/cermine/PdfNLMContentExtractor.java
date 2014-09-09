@@ -58,7 +58,8 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     private boolean extractReferences = true;
     
     private boolean extractText = true;
-           
+    
+    public static int THREADS_NUMBER = 3;
 
     public PdfNLMContentExtractor() throws AnalysisException {
         structureExtractor = new PdfBxStructureExtractor();
@@ -250,6 +251,9 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
             modelInit = line.getOptionValue("modelinit");
             modelInitRange = line.getOptionValue("modelinit")+".range";
         }
+        if (line.hasOption("threads")) {
+            PdfNLMContentExtractor.THREADS_NUMBER = Integer.valueOf(line.getOptionValue("threads"));
+        }
     	if (path == null){
             System.err.println("Usage: PdfNLMContentExtractor -path <path> [optional parameters]\n\n"
                              + "Tool for extracting metadata and content from PDF files.\n\n"
@@ -262,7 +266,8 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
                              + "  -str                      whether to store structure (TrueViz) files as well;\n"
                              + "                            used only if passed path is a directory\n"
                              + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
-                             + "                            default: \"cxml\"; used only if passed path is a directory\n");
+                             + "                            default: \"cxml\"; used only if passed path is a directory\n"
+                             + "  -threads <num>            number of threads for parallel processing\n");
     		System.exit(1);
         }
  

@@ -66,6 +66,15 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         docOrientation = computeInitialOrientation(components);
     }
     
+    protected void computeDocumentOrientation(Map<BxPage, List<Component>> componentMap) throws AnalysisException {
+        this.componentMap = componentMap;
+        List<Component> components = new ArrayList<Component>();
+        for (Map.Entry<BxPage, List<Component>> entry : componentMap.entrySet()) {
+            components.addAll(entry.getValue());
+        }
+        docOrientation = computeInitialOrientation(components);
+    }
+    
     protected BxPage segmentPage(BxPage page) throws AnalysisException {
         List<Component> components = componentMap.get(page);
         double orientation = docOrientation;
@@ -113,7 +122,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * @param page page containing chunks
      * @return array of components
      */
-    private List<Component> createComponents(BxPage page) throws AnalysisException {
+    protected List<Component> createComponents(BxPage page) throws AnalysisException {
         Component[] components = new Component[page.getChunks().size()];
         for (int i = 0; i < components.length; i++) {
             try {
@@ -490,7 +499,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     /**
      * Internal representation of character.
      */
-    private static class Component {
+    protected static class Component {
 
         private final double x;
         private final double y;
@@ -562,7 +571,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
 
         public BxChunk getChunk() {
             return chunk;
-        }
+       }
 
         public List<Neighbor> getNeighbors() {
             return neighbors;
@@ -596,7 +605,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     /**
      * Class representing nearest-neighbor pair.
      */
-    private static class Neighbor {
+    protected static class Neighbor {
         
         private final double distance;
         private final double angle;
@@ -636,7 +645,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      *
      * The ordering is not consistent with equals.
      */
-    private static final class ComponentXComparator implements Comparator<Component> {
+    protected static final class ComponentXComparator implements Comparator<Component> {
 
         private ComponentXComparator() {
         }
@@ -658,7 +667,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      *
      * The ordering is not consistent with equals.
      */
-    private static final class NeighborDistanceComparator implements Comparator<Neighbor> {
+    protected static final class NeighborDistanceComparator implements Comparator<Neighbor> {
 
         private NeighborDistanceComparator() {
         }
@@ -678,7 +687,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     /**
      * Internal representation of the text line.
      */
-    private static class ComponentLine {
+    protected static class ComponentLine {
         
         private final double x0;
         private final double y0;
@@ -810,7 +819,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Filter class for neighbor objects that checks if the angle of the
      * neighbor is within specified range.
      */
-    private abstract static class AngleFilter {
+    protected abstract static class AngleFilter {
 
         private final double lowerAngle;
         private final double upperAngle;

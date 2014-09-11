@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
@@ -27,7 +28,6 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 	private TextTokenizer<T> textTokenizer;
 
 	private String featureString;
-	private String dictionaryFileName; 
 	private boolean caseSensitive;
 
 	/**
@@ -37,17 +37,16 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 	 * @param tokenizer used for dictionary entries splitting
 	 */
 	public KeywordFeatureCalculator(String FeatureString, String dictionaryFileName,
-			boolean caseSensitive, TextTokenizer<T> tokenizer) {
+			boolean caseSensitive, TextTokenizer<T> tokenizer) throws AnalysisException {
 
-		entries = new ArrayList<List<T>>();
-		dictionary = new HashMap<String, List<Integer>>();
+		this.entries = new ArrayList<List<T>>();
+		this.dictionary = new HashMap<String, List<Integer>>();
 		this.textTokenizer = tokenizer;
 
 		this.featureString = FeatureString;
-		this.dictionaryFileName = dictionaryFileName;
 		this.caseSensitive = caseSensitive;
 		
-		loadDictionary();
+		loadDictionary(dictionaryFileName);
 	}
 	
 	private void addLine(String line, int number) {
@@ -72,11 +71,10 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 		dictionary.get(tokenString).add(entryId);
 	}
 
-	private void loadDictionary() {
+	private void loadDictionary(String dictionaryFileName) throws AnalysisException {
 		InputStream is = getClass().getResourceAsStream(dictionaryFileName);
 		if (is == null) {
-			System.err.println("Resource not found: " + dictionaryFileName);
-			return;
+			throw new AnalysisException("Resource not found: " + dictionaryFileName);
 		}
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
 		try {
@@ -86,15 +84,14 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 				addLine(line, lineNumber++);
 			}
 		} catch (IOException readException) {
-			System.err.println("An exception occured when the dictionary "
+			throw new AnalysisException("An exception occured when the dictionary "
 					+ dictionaryFileName + " was being read: " + readException);
 		} finally {
 			try {
-				is.close();
+				in.close();
 			} catch (IOException closeException) {
-				System.err
-						.println("An exception occured when the stream was being closed: "
-								+ closeException);
+				throw new AnalysisException("An exception occured when the stream was being " +
+						"closed: " + closeException);
 			}
 		}
 	}

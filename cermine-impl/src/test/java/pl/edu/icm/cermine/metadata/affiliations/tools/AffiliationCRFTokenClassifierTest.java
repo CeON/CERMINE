@@ -20,7 +20,15 @@ import pl.edu.icm.cermine.parsing.tools.TokenizedTextToNLMExporter;
 public class AffiliationCRFTokenClassifierTest {
 
 	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
-	private static final AffiliationFeatureExtractor extractor = new AffiliationFeatureExtractor();
+	private static final AffiliationFeatureExtractor extractor;
+
+	static {
+		try {
+			extractor = new AffiliationFeatureExtractor();
+		} catch (AnalysisException e) {
+			throw new RuntimeException("Failed to initialize the feature extractor");
+		}
+	}
 	
 	
 	@Test

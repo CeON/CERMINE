@@ -3,6 +3,7 @@ package pl.edu.icm.cermine.metadata.affiliations.tools;
 import java.util.Arrays;
 import java.util.List;
 
+import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
@@ -15,20 +16,24 @@ import pl.edu.icm.cermine.parsing.tools.FeatureExtractor;
  * @author Bartosz Tarnawski
  */
 public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffiliation> {
+
+	private List<BinaryTokenFeatureCalculator> binaryFeatures;
+	private List<KeywordFeatureCalculator<AffiliationToken>> keywordFeatureCalculators;
+	private WordFeatureCalculator wordFeatureCalculator;
 	
-	private static final List<BinaryTokenFeatureCalculator> binaryFeatures = 
+	@SuppressWarnings("unchecked")
+	public AffiliationFeatureExtractor() throws AnalysisException {
+		binaryFeatures = 
 			Arrays.<BinaryTokenFeatureCalculator>asList(
-			// new IsWord(), TODO We could add this but it would appear almost everywhere...
 			new IsNumberFeature(),
 			new IsUpperCaseFeature(),
+			new IsAllLowerCaseFeature(),
 			new IsAllUpperCaseFeature(),
 			new IsSeparatorFeature(),
 			new IsNonAlphanumFeature()
 			);
-	
-	@SuppressWarnings("unchecked")
-	private static final List<KeywordFeatureCalculator<AffiliationToken>>
-	keywordFeatureCalculators = Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
+		
+		keywordFeatureCalculators = Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
 			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
 			new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
 			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
@@ -36,10 +41,22 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 			new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			true),
 			new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false)
 			);
-	
-	private static final WordFeatureCalculator wordFeatureCalculator = 
+		
+		wordFeatureCalculator = 
 			new WordFeatureCalculator(Arrays.<BinaryTokenFeatureCalculator>asList(
 					new IsNumberFeature()), false);
+	}
+	
+	
+	/**
+	 * @param commonWords the words that are not considered 'Rare'
+	 * @throws AnalysisException 
+	 */
+	public AffiliationFeatureExtractor(List<String> commonWords) throws AnalysisException {
+		this();
+		binaryFeatures.add(new IsRareFeature(commonWords, false));
+	}
+	
 
 	@Override
 	public void calculateFeatures(DocumentAffiliation affiliation) {

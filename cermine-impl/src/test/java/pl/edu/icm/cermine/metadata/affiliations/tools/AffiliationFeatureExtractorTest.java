@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationFeatureExtractor;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
@@ -16,7 +17,15 @@ import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 public class AffiliationFeatureExtractorTest {
 
 	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
-	private static final AffiliationFeatureExtractor extractor = new AffiliationFeatureExtractor();
+	private static final AffiliationFeatureExtractor extractor;
+
+	static {
+		try {
+			extractor = new AffiliationFeatureExtractor();
+		} catch (AnalysisException e) {
+			throw new RuntimeException("Failed to initialize the feature extractor");
+		}
+	}
 	
 	private class TokenContainer {
 		public List<AffiliationToken> tokens;

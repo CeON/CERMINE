@@ -52,6 +52,13 @@ public class TextClassifier {
 	
 	/**
 	 * @param text
+	 * @return whether the text is a single word with all letters in upper case
+	 */
+	public static boolean isAllLowerCase(String text) {
+		return !notLowerCasePattern.matcher(text).find();
+	}	
+	/**
+	 * @param text
 	 * @return whether the word is a commonly used separator ("." "," ";")
 	 */
 	public static boolean isSeparator(String text) {

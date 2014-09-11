@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
@@ -13,11 +14,20 @@ import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 
 public class AffiliationDictionaryFeatureTest {
 
-	private static final AffiliationDictionaryFeature featureCaseSensitive =
-			new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt", true);
-	private static final AffiliationDictionaryFeature featureIgnoreCase =
-			new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt", false);
+	private static final AffiliationDictionaryFeature featureCaseSensitive;
+	private static final AffiliationDictionaryFeature featureIgnoreCase;
 	
+	static {
+		try {
+			featureCaseSensitive = new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt",
+					true);
+			featureIgnoreCase = new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt",
+					false);
+		} catch (AnalysisException e) {
+			throw new RuntimeException("Failed to initialize dictionary features");
+		}
+	}
+			
         /* mock-dictionary.txt content:
                 Elo Melo 320
                 Hejka ziomeczku, :-P

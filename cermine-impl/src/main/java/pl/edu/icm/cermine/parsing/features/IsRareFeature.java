@@ -6,6 +6,7 @@ import java.util.Set;
 
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.TokenizedString;
+import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 
 /**
  * A token is considered rare if its text does not belong to the set of common words.
@@ -38,6 +39,9 @@ public class IsRareFeature extends BinaryTokenFeatureCalculator {
 	@Override
 	public boolean calculateFeaturePredicate(Token<?> token, TokenizedString<?> context) {
 		String text = token.getText();
+		if (!TextClassifier.isWord(text)) {
+			return false;
+		}
 		if (!caseSensitive) {
 			text = text.toLowerCase();
 		}

@@ -53,7 +53,6 @@ public class AffiliationTrainingDataExporter {
 
 	private static void writeAffiliation(DocumentAffiliation affiliation, PrintWriter writer,
 			int neighborThreshold) {
-		featureExtractor.calculateFeatures(affiliation);
 		writer.write(GrmmUtils.toGrmmInput(affiliation.getTokens(), neighborThreshold));
 		writer.write("\n");
 	}
@@ -161,12 +160,14 @@ public class AffiliationTrainingDataExporter {
 			featureExtractor = new AffiliationFeatureExtractor(commonWords);
 			
 			for (DocumentAffiliation affiliation : affiliations) {
+				featureExtractor.calculateFeatures(affiliation);
 				writeAffiliation(affiliation, writer, neighborThreshold);
 			}
 			
 			if (addMockText) {
 				addMockAffiliation(writer);
 			}
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

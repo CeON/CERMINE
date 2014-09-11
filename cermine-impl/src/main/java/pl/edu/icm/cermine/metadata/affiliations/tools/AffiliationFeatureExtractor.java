@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.metadata.affiliations.tools;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,22 +25,24 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 	@SuppressWarnings("unchecked")
 	public AffiliationFeatureExtractor() throws AnalysisException {
 		binaryFeatures = 
-			Arrays.<BinaryTokenFeatureCalculator>asList(
-			new IsNumberFeature(),
-			new IsUpperCaseFeature(),
-			new IsAllLowerCaseFeature(),
-			new IsAllUpperCaseFeature(),
-			new IsSeparatorFeature(),
-			new IsNonAlphanumFeature()
-			);
+			new ArrayList<BinaryTokenFeatureCalculator>(
+					Arrays.<BinaryTokenFeatureCalculator>asList(
+                        new IsNumberFeature(),
+                        new IsUpperCaseFeature(),
+                        new IsAllUpperCaseFeature(),
+                        new IsAllLowerCaseFeature()
+                        // new IsSeparatorFeature(),
+                        // new IsNonAlphanumFeature(),
+                        ));
 		
 		keywordFeatureCalculators = Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
 			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
-			new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
+			// new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
 			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
-			new AffiliationDictionaryFeature("KeywordState", 		"states.txt", 				true),
-			new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			true),
-			new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false)
+			new AffiliationDictionaryFeature("KeywordInstitution", 	"institution_keywords.txt", false)
+			// new AffiliationDictionaryFeature("KeywordState", 		"states.txt", 				true),
+			// new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			true),
+			// new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false),
 			);
 		
 		wordFeatureCalculator = 

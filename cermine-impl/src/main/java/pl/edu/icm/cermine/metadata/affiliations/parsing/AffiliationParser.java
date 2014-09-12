@@ -23,6 +23,8 @@ public class AffiliationParser {
 	private AffiliationTokenizer tokenizer = null;
 	private AffiliationFeatureExtractor featureExtractor = null;
 	private AffiliationCRFTokenClassifier classifier = null;
+	
+	private static final String COMMON_WORDS_FILE = "common-words-affiliations.txt";
 
 	
 	private List<String> loadWords(String wordsFileName) throws AnalysisException {
@@ -52,7 +54,7 @@ public class AffiliationParser {
 	}
 	
 	public AffiliationParser() throws AnalysisException {
-		List<String> commonWords = loadWords("common-words.txt");
+		List<String> commonWords = loadWords(COMMON_WORDS_FILE);
 		tokenizer = new AffiliationTokenizer();
 		featureExtractor = new AffiliationFeatureExtractor(commonWords);
 		classifier = new AffiliationCRFTokenClassifier();

@@ -10,9 +10,18 @@ import java.util.List;
 import org.junit.Test;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationFeatureExtractor;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
+import pl.edu.icm.cermine.parsing.features.BinaryTokenFeatureCalculator;
+import pl.edu.icm.cermine.parsing.features.IsAllUpperCaseFeature;
+import pl.edu.icm.cermine.parsing.features.IsNonAlphanumFeature;
+import pl.edu.icm.cermine.parsing.features.IsNumberFeature;
+import pl.edu.icm.cermine.parsing.features.IsSeparatorFeature;
+import pl.edu.icm.cermine.parsing.features.IsUpperCaseFeature;
+import pl.edu.icm.cermine.parsing.features.KeywordFeatureCalculator;
+import pl.edu.icm.cermine.parsing.features.WordFeatureCalculator;
 
 public class AffiliationFeatureExtractorTest {
 
@@ -21,7 +30,34 @@ public class AffiliationFeatureExtractorTest {
 
 	static {
 		try {
-			extractor = new AffiliationFeatureExtractor();
+			// Test all available features but IsRare, IsWord and IsAllLowerCase
+			List<BinaryTokenFeatureCalculator> binaryFeatures = 
+					Arrays.<BinaryTokenFeatureCalculator>asList(
+                new IsNumberFeature(),
+                new IsUpperCaseFeature(),
+                new IsAllUpperCaseFeature(),
+                // new IsAllLowerCaseFeature(), appears too often, too much typing
+                new IsSeparatorFeature(),
+                new IsNonAlphanumFeature()
+                );
+			
+			@SuppressWarnings("unchecked")
+			List<KeywordFeatureCalculator<AffiliationToken>> keywordFeatures = 
+					Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
+                new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
+                new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
+                new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
+                new AffiliationDictionaryFeature("KeywordInstitution", 	"institution_keywords.txt", false),
+                new AffiliationDictionaryFeature("KeywordState", 		"states.txt", 				true),
+                new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			true),
+                new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false)
+                );
+			
+			WordFeatureCalculator wordFeature = 
+					new WordFeatureCalculator(Arrays.<BinaryTokenFeatureCalculator>asList(
+							new IsNumberFeature()), false);
+			
+			extractor = new AffiliationFeatureExtractor(binaryFeatures, keywordFeatures, wordFeature);
 		} catch (AnalysisException e) {
 			throw new RuntimeException("Failed to initialize the feature extractor");
 		}

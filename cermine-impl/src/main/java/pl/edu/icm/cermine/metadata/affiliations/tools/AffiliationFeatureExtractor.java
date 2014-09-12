@@ -19,8 +19,8 @@ import pl.edu.icm.cermine.parsing.tools.FeatureExtractor;
 public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffiliation> {
 
 	private List<BinaryTokenFeatureCalculator> binaryFeatures;
-	private List<KeywordFeatureCalculator<AffiliationToken>> keywordFeatureCalculators;
-	private WordFeatureCalculator wordFeatureCalculator;
+	private List<KeywordFeatureCalculator<AffiliationToken>> keywordFeatures;
+	private WordFeatureCalculator wordFeature;
 	
 	@SuppressWarnings("unchecked")
 	public AffiliationFeatureExtractor() throws AnalysisException {
@@ -35,7 +35,7 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
                         // new IsNonAlphanumFeature(),
                         ));
 		
-		keywordFeatureCalculators = Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
+		keywordFeatures = Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
 			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
 			// new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
 			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
@@ -45,7 +45,7 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 			// new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false),
 			);
 		
-		wordFeatureCalculator = 
+		wordFeature = 
 			new WordFeatureCalculator(Arrays.<BinaryTokenFeatureCalculator>asList(
 					new IsNumberFeature()), false);
 	}
@@ -57,7 +57,15 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 	 */
 	public AffiliationFeatureExtractor(List<String> commonWords) throws AnalysisException {
 		this();
-		binaryFeatures.add(new IsRareFeature(commonWords, false));
+		binaryFeatures.add(new IsRareFeature(commonWords, true));
+	}
+	
+	public AffiliationFeatureExtractor(List<BinaryTokenFeatureCalculator> binaryFeatures,
+			List<KeywordFeatureCalculator<AffiliationToken>> keywordFeatures,
+			WordFeatureCalculator wordFeature) {
+		this.binaryFeatures = binaryFeatures;
+		this.keywordFeatures = keywordFeatures;
+		this.wordFeature = wordFeature;
 	}
 	
 
@@ -71,7 +79,7 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 					token.addFeature(binaryFeatureCalculator.getFeatureName());
 				}
 			}
-			String wordFeatureString = wordFeatureCalculator.calculateFeatureValue(token,
+			String wordFeatureString = wordFeature.calculateFeatureValue(token,
 					affiliation);
 			if (wordFeatureString != null) {
 				token.addFeature(wordFeatureString);
@@ -79,7 +87,7 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 		}
 		
 		for (KeywordFeatureCalculator<AffiliationToken> dictionaryFeatureCalculator :
-			keywordFeatureCalculators) {
+			keywordFeatures) {
 			dictionaryFeatureCalculator.calculateDictionaryFeatures(tokens);
 		}
 		

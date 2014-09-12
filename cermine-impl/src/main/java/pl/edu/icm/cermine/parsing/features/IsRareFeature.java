@@ -20,8 +20,8 @@ public class IsRareFeature extends BinaryTokenFeatureCalculator {
 	
 	
 	/**
-	 * @param setFileName
-	 * @param caseSensitive
+	 * @param commonWordsList the words that are not considered rare
+	 * @param caseSensitive whether the lookups should be case-sensitive
 	 */
 	public IsRareFeature(List<String> commonWordsList, boolean caseSensitive) {
 		this.commonWords = new HashSet<String>();

@@ -9,7 +9,7 @@ import pl.edu.icm.cermine.parsing.model.TokenizedString;
 import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 
 /**
- * A token is considered rare if its text does not belong to the set of common words.
+ * A token is considered as rare if it is word that does not belong to the set of common words.
  * 
  * @author Bartosz Tarnawski
  */
@@ -20,7 +20,7 @@ public class IsRareFeature extends BinaryTokenFeatureCalculator {
 	
 	
 	/**
-	 * @param commonWordsList the words that are not considered rare
+	 * @param commonWordsList the words that are not considered as rare
 	 * @param caseSensitive whether the lookups should be case-sensitive
 	 */
 	public IsRareFeature(List<String> commonWordsList, boolean caseSensitive) {

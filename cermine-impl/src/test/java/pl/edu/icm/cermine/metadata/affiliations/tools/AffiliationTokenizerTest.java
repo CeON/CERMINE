@@ -72,7 +72,7 @@ public class AffiliationTokenizerTest {
 				new AffiliationToken("?", 15, 16)
 				);
 				
-		DocumentAffiliation instance = new DocumentAffiliation("someId", text);
+		DocumentAffiliation instance = new DocumentAffiliation(text);
 		
 		List<AffiliationToken> actual = tokenizer.tokenize(instance.getRawText());
 		

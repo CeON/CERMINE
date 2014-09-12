@@ -30,7 +30,7 @@ import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
 public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationToken> {
 
 	private ACRF model;
-	private static final String DEFAULT_MODEL_FILE = "acrf.ser.gz";
+	private static final String DEFAULT_MODEL_FILE = "acrf-affiliations.ser.gz";
 	private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
 
 	/**
@@ -64,7 +64,7 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationTo
 	}
 
 	/**
-	 * Use the default ACRF model.
+	 * Uses the default ACRF model.
 	 * 
 	 * @throws AnalysisException
 	 */

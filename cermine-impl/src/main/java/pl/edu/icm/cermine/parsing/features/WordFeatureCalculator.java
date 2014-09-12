@@ -6,7 +6,7 @@ import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.TokenizedString;
 
 /**
- * Class producing feature strings representing a word
+ * A 'word feature' of a token is a binary feature identifying the token's text.
  * 
  * @author Bartosz Tarnawski
  */
@@ -18,7 +18,7 @@ public class WordFeatureCalculator {
 	private static final String PREFIX = "W=";
 	
 	/**
-	 * @param blockingFeatures the word feature will not be produced if a token has any of
+	 * @param blockingFeatures the word feature will not be produced if the given token has any of
 	 * these features
 	 * @param toLowerCase whether the word feature should be converted to lower case
 	 */

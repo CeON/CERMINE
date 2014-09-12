@@ -36,9 +36,10 @@ public class AffiliationFeatureExtractorTest {
                 new IsNumberFeature(),
                 new IsUpperCaseFeature(),
                 new IsAllUpperCaseFeature(),
-                // new IsAllLowerCaseFeature(), appears too often, too much typing
                 new IsSeparatorFeature(),
                 new IsNonAlphanumFeature()
+                // new IsAllLowerCaseFeature(), appears too often, too much typing
+                // new IsWord(), appears too often, too much typing
                 );
 			
 			@SuppressWarnings("unchecked")
@@ -128,7 +129,7 @@ public class AffiliationFeatureExtractorTest {
 		tc.add("du", "W=du", "KeywordStopWord"); // du -- a stop word
 	
 		
-	    DocumentAffiliation instance = new DocumentAffiliation("someId", "");
+	    DocumentAffiliation instance = new DocumentAffiliation("");
 	    instance.setTokens(tc.tokens);
 		extractor.calculateFeatures(instance);
 		tc.checkFeatures();
@@ -145,7 +146,7 @@ public class AffiliationFeatureExtractorTest {
 	    expectedFeatures.add(Arrays.asList("W=bic"));
 	    expectedFeatures.add(Arrays.asList("W=?", "IsNonAlphanum"));
 		
-	    DocumentAffiliation instance = new DocumentAffiliation("someId", text);
+	    DocumentAffiliation instance = new DocumentAffiliation(text);
 	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
 		extractor.calculateFeatures(instance);
 		for (int i = 0; i < expectedFeatures.size(); i++) {

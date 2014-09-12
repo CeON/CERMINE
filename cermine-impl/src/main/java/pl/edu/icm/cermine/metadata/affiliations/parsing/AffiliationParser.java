@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationCRFTokenClassifier;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationFeatureExtractor;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
@@ -24,7 +25,7 @@ public class AffiliationParser {
 	private AffiliationFeatureExtractor featureExtractor = null;
 	private AffiliationCRFTokenClassifier classifier = null;
 	
-	private static final String COMMON_WORDS_FILE = "common-words-affiliations.txt";
+	private static final String DEFAULT_COMMON_WORDS_FILE = "common-words-affiliations.txt";
 
 	
 	private List<String> loadWords(String wordsFileName) throws AnalysisException {
@@ -53,17 +54,23 @@ public class AffiliationParser {
 		return commonWords;
 	}
 	
-	public AffiliationParser() throws AnalysisException {
-		List<String> commonWords = loadWords(COMMON_WORDS_FILE);
+	/**
+	 * @param wordsFileName the name of the package resource to be used as the common words list
+	 * @throws AnalysisException
+	 */
+	public AffiliationParser(String wordsFileName) throws AnalysisException {
+		List<String> commonWords = loadWords(wordsFileName);
 		tokenizer = new AffiliationTokenizer();
 		featureExtractor = new AffiliationFeatureExtractor(commonWords);
 		classifier = new AffiliationCRFTokenClassifier();
 	}
+	
+	public AffiliationParser() throws AnalysisException {
+		this(DEFAULT_COMMON_WORDS_FILE);
+	}
 
 	/**
 	 * Parses an affiliation by setting predicted token labels.
-	 * The affiliation instance is assumed to be tokenized, its tokens are assumed
-	 * to hold appropriate lists of features.
 	 * 
 	 * @param affiliation
 	 * @throws AnalysisException
@@ -76,8 +83,6 @@ public class AffiliationParser {
 
 	/**
 	 * Parses affiliations by setting predicted token labels.
-	 * All affiliation instances are assumed to be tokenized, their tokens are assumed
-	 * to hold appropriate lists of features.
 	 * 
 	 * @param affiliations
 	 * @throws AnalysisException
@@ -85,6 +90,19 @@ public class AffiliationParser {
 	public void parseAffiliation(List<DocumentAffiliation> affiliations) throws AnalysisException {
 		for (DocumentAffiliation aff : affiliations) {
 			parseAffiliation(aff);
+		}
+	}
+	
+	// For testing purposes only
+	public static void main(String[] args) throws IOException, AnalysisException,
+	TransformationException {
+		AffiliationParser parser = new AffiliationParser();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		while (true) {
+			String affiliationText = br.readLine();
+			DocumentAffiliation affiliation = new DocumentAffiliation(affiliationText);
+			parser.parseAffiliation(affiliation);
+			System.out.println(affiliation.toXMLString());
 		}
 	}
 }

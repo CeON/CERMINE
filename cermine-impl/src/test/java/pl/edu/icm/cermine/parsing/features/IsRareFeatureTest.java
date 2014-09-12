@@ -22,7 +22,7 @@ public class IsRareFeatureTest {
 		AffiliationToken lowerInSet = new AffiliationToken("KOT");
 		AffiliationToken notInSet = new AffiliationToken("SZCZUR");
 		AffiliationToken notWord = new AffiliationToken("kot1");
-		DocumentAffiliation aff = new DocumentAffiliation("someId", "");
+		DocumentAffiliation aff = new DocumentAffiliation("");
 		assertEquals(false, featureCaseSensitive.calculateFeaturePredicate(inSet, aff));
 		assertEquals(true, featureCaseSensitive.calculateFeaturePredicate(lowerInSet, aff));
 		assertEquals(true, featureCaseSensitive.calculateFeaturePredicate(notInSet, aff));

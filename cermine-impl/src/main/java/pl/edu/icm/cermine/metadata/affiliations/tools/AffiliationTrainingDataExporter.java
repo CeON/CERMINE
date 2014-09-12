@@ -30,13 +30,12 @@ import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 /**
  * Class for converting affiliation features to GRMM file format. It reads
  * affiliations from an XML or text file, extracts their features and produces a
- * valid input for ACRF model trainer. If the input file is an XML, it uses the
+ * valid input for the ACRF model trainer. If the input file is an XML, it uses the
  * tags as labels.
  * 
- * 
- * The ACRF model is prepared by some Python scripts. We use this class to check
- * whether the Java implementation exports raw .txt files or tagged XML to the
- * GRMM format in the exactly same way as the Python code.
+ * This class may be used to generate the ACRF training file, as well as to check
+ * whether the Java implementation exports affiliations to the
+ * GRMM format in the exactly same way as our Python code in the prototype.
  * 
  * @author Bartosz Tarnawski
  */
@@ -109,7 +108,7 @@ public class AffiliationTrainingDataExporter {
 		List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
         String text = null;
         while ((text = reader.readLine()) != null) {
-                DocumentAffiliation affiliation = new DocumentAffiliation("", text);
+                DocumentAffiliation affiliation = new DocumentAffiliation(text);
                 affiliation.setTokens(tokenizer.tokenize(affiliation.getRawText()));
                 affiliations.add(affiliation);
         }
@@ -246,7 +245,7 @@ public class AffiliationTrainingDataExporter {
 					wordsWriter.close();
 				}
 			} catch (IOException e) {
-				throw new RuntimeException("Can't close resources");
+				throw new RuntimeException("Can't close resources!");
 			}
 		}
 	}

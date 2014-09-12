@@ -3,7 +3,7 @@ package pl.edu.icm.cermine.parsing.model;
 import java.util.List;
 
 /**
- * Representation of a tokenized string, ie. a string which is split into smaller parts (e.g. words)
+ * Representation of a tokenized string -- a string which is split into smaller parts (e.g. words).
  * 
  * @author Bartosz Tarnawski
  * @param <T> type of the tokens

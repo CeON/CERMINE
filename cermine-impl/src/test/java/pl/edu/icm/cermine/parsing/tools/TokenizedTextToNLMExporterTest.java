@@ -47,7 +47,7 @@ public class TokenizedTextToNLMExporterTest {
 	@Test
 	public void testAddTextWithDocumentAffiliation() throws TransformationException {
 		String text = " Uniwersytet Śląski, Katowice ";
-		DocumentAffiliation instance = new DocumentAffiliation("someId", text);
+		DocumentAffiliation instance = new DocumentAffiliation(text);
 		List<AffiliationToken> tokens = tokenizer.tokenize(instance.getRawText());
 		int expectedSize = 4;
 		assertEquals(expectedSize, tokens.size());

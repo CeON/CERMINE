@@ -31,15 +31,16 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
                         new IsUpperCaseFeature(),
                         new IsAllUpperCaseFeature(),
                         new IsAllLowerCaseFeature()
+                        // new IsWordFeature(),
                         // new IsSeparatorFeature(),
                         // new IsNonAlphanumFeature(),
                         ));
 		
 		keywordFeatures = Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
 			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
-			// new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
 			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
 			new AffiliationDictionaryFeature("KeywordInstitution", 	"institution_keywords.txt", false)
+			// new AffiliationDictionaryFeature("KeywordCity", 			"cities.txt", 				true),
 			// new AffiliationDictionaryFeature("KeywordState", 		"states.txt", 				true),
 			// new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			true),
 			// new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false),
@@ -79,8 +80,7 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 					token.addFeature(binaryFeatureCalculator.getFeatureName());
 				}
 			}
-			String wordFeatureString = wordFeature.calculateFeatureValue(token,
-					affiliation);
+			String wordFeatureString = wordFeature.calculateFeatureValue(token, affiliation);
 			if (wordFeatureString != null) {
 				token.addFeature(wordFeatureString);
 			}
@@ -90,7 +90,5 @@ public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffili
 			keywordFeatures) {
 			dictionaryFeatureCalculator.calculateDictionaryFeatures(tokens);
 		}
-		
-		affiliation.setTokens(tokens);
 	}
 }

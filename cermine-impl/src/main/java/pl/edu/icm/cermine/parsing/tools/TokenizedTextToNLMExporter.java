@@ -10,14 +10,14 @@ import pl.edu.icm.cermine.parsing.model.Token;
 
 
 /**
- * Tokenized strings to NLM XML exporter
+ * Tokenized strings to NLM XML exporter.
  * 
  * @author Bartosz Tarnawski
  */
 public abstract class TokenizedTextToNLMExporter {
 
 	/**
-	 * Moves the tags in the text so that the tagged parts don't end with commas
+	 * Moves the tags in the text so that the tagged parts don't end with commas.
 	 * 
 	 * @param element
 	 * @throws TransformationException

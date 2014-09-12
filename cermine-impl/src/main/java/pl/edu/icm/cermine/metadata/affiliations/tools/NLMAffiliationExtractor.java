@@ -33,11 +33,11 @@ NLMTokenizedStringExtractor<AffiliationLabel, AffiliationToken, DocumentAffiliat
 	}
 
 	protected DocumentAffiliation createString() {
-		return new DocumentAffiliation("someId", "");
+		return new DocumentAffiliation("");
 	}
 
 	protected DocumentAffiliation createString(String text) {
-		DocumentAffiliation instance = new DocumentAffiliation("someId", text);
+		DocumentAffiliation instance = new DocumentAffiliation(text);
 		instance.setTokens(tokenizer.tokenize(instance.getRawText()));
 		return instance;
 	}

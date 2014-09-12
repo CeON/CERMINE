@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 import org.junit.Test;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -15,7 +13,6 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationCRFTokenClassifier;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
-import pl.edu.icm.cermine.parsing.tools.TokenizedTextToNLMExporter;
 
 public class AffiliationCRFTokenClassifierTest {
 
@@ -71,15 +68,11 @@ public class AffiliationCRFTokenClassifierTest {
 	public void testClassifyWithDocumentAffiliation() throws AnalysisException, TransformationException {
 		String text = "Department of Oncology, Radiology and Clinical Immunology, Akademiska " +
 				"Sjukhuset, Uppsala, Sweden";
-	    DocumentAffiliation instance = new DocumentAffiliation("someId", text);
+	    DocumentAffiliation instance = new DocumentAffiliation(text);
 	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
 	    extractor.calculateFeatures(instance);
 		new AffiliationCRFTokenClassifier().classify(instance.getTokens());
-		Element aff = new Element("aff");
-		TokenizedTextToNLMExporter.addText(aff, instance.getRawText(), instance.getTokens());
-		
-		XMLOutputter outputter = new XMLOutputter();
-		String actual = outputter.outputString(aff);
+		String actual = instance.toXMLString();
 		String expected =
 				"<aff><institution>Department of Oncology, Radiology and Clinical Immunology, " +
 				"Akademiska Sjukhuset</institution>, " + 

@@ -6,7 +6,7 @@ import java.util.List;
 import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
- * Utility class for exporting feature lists to GRMM input
+ * Utility class for exporting feature lists to GRMM input.
  * 
  * @author Bartosz Tarnawski
  */

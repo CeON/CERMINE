@@ -3,7 +3,7 @@ package pl.edu.icm.cermine.parsing.tools;
 import java.util.regex.Pattern;
 
 /**
- * Utility class used for text classification
+ * Utility class used for text classification.
  * 
  * @author Bartosz Tarnawski
  */

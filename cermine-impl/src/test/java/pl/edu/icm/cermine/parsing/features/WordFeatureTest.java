@@ -25,7 +25,7 @@ public class WordFeatureTest {
 		WordFeatureCalculator instance = new WordFeatureCalculator(
 				Arrays.<BinaryTokenFeatureCalculator>asList(new IsNumberFeature()), true);
 		
-	    DocumentAffiliation aff = new DocumentAffiliation("someId", "");
+	    DocumentAffiliation aff = new DocumentAffiliation("");
 		
 		assertEquals("W=babamakota", instance.calculateFeatureValue(tokens.get(0), aff));
 		assertEquals(null, instance.calculateFeatureValue(tokens.get(1), aff));

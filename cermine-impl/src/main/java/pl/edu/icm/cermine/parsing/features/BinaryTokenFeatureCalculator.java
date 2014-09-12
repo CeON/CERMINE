@@ -5,7 +5,7 @@ import pl.edu.icm.cermine.parsing.model.TokenizedString;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 /**
- * Feature calculator which checks whether a token (representing a word) has a given feature
+ * Feature calculator which checks whether a token (representing a word) has a given feature.
  * 
  * @author Bartosz Tarnawski
  */

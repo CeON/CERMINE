@@ -18,7 +18,7 @@ import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.TokenizedString;
 
 /**
- * Generic extractor, which transform NLM XML's into the tokenized strings representation
+ * Generic extractor, which transform NLM XML's into the tokenized strings representation.
  * 
  * @author Dominika Tkaczyk
  * @author Bartosz Tarnawski

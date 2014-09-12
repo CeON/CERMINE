@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  * Representation of a token, an atomic part of a string. Used for string parsing.
  * 
  * @author Bartosz Tarnawski
- * @param <L> type of a label used for token type prediction
+ * @param <L> type of label used for token classifying
  */
 public abstract class Token<L> {
 
@@ -48,12 +48,12 @@ public abstract class Token<L> {
 	}
 	
 	/**
-	 * @return a valid GRMM label representing the token's type
+	 * @return GRMM label representing the token's type
 	 */
 	public abstract String getGrmmLabelString();
 
 	/**
-	 * @return a valid XML tag representing the token's type
+	 * @return XML tag representing the token's type
 	 */
 	public abstract String getXmlTagString();
 	

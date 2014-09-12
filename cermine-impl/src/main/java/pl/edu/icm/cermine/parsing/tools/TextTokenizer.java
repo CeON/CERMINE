@@ -5,7 +5,7 @@ import java.util.List;
 import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
- * Text tokenizer
+ * Text tokenizer.
  * 
  * @author Bartosz Tarnawski
  * @param <T> token type

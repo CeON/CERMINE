@@ -32,7 +32,7 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 
 	/**
 	 * @param FeatureString the string which will be added to the matching tokens' features lists
-	 * @param dictionaryFileName the name of the dictionary to be used
+	 * @param dictionaryFileName the name of the dictionary to be used (must be a package resource)
 	 * @param caseSensitive whether dictionary lookups should be case sensitive
 	 * @param tokenizer used for dictionary entries splitting
 	 */
@@ -90,14 +90,14 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 			try {
 				in.close();
 			} catch (IOException closeException) {
-				throw new AnalysisException("An exception occured when the stream was being " +
-						"closed: " + closeException);
+				throw new AnalysisException("An exception occured when the " + dictionaryFileName +
+						"dictionary reader was being closed: " + closeException);
 			}
 		}
 	}
 
 	/**
-	 * Finds all occurrences of keywords from the dictionary in the text formed by the
+	 * Finds all occurrences of the keywords in the text formed by the
 	 * sequence of the tokens and marks the corresponding tokens by adding an appropriate string
 	 * to their feature lists.
 	 * 

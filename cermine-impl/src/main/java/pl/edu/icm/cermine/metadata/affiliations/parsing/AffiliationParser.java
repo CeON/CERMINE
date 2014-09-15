@@ -7,19 +7,24 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jdom.Element;
+
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationCRFTokenClassifier;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationFeatureExtractor;
 import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
+import pl.edu.icm.cermine.parsing.tools.ParsableStringParser;
+import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
 
 /**
- * Affiliation parser.
+ * Affiliation parser. Processes an instance of DocumentAffiliation by
+ * generating and tagging its tokens.
  * 
  * @author Bartosz Tarnawski
  */
-public class AffiliationParser {
+public class AffiliationParser extends ParsableStringParser<DocumentAffiliation> {
 
 	private AffiliationTokenizer tokenizer = null;
 	private AffiliationFeatureExtractor featureExtractor = null;
@@ -70,27 +75,31 @@ public class AffiliationParser {
 	}
 
 	/**
-	 * Parses an affiliation by setting predicted token labels.
+	 * Sets the token list of the affiliation so that their labels
+	 * determine the tagging of its text content. 
 	 * 
 	 * @param affiliation
 	 * @throws AnalysisException
 	 */
-	public void parseAffiliation(DocumentAffiliation affiliation) throws AnalysisException {
+	public void parse(DocumentAffiliation affiliation) throws AnalysisException {
 		affiliation.setTokens(tokenizer.tokenize(affiliation.getRawText()));
 		featureExtractor.calculateFeatures(affiliation);
 		classifier.classify(affiliation.getTokens());
 	}
 
 	/**
-	 * Parses affiliations by setting predicted token labels.
-	 * 
-	 * @param affiliations
+	 * @param affiliationString string representation of the affiliation to parse
+	 * @return XML Element with the tagged affiliation in NLM format
 	 * @throws AnalysisException
+	 * @throws TransformationException 
 	 */
-	public void parseAffiliation(List<DocumentAffiliation> affiliations) throws AnalysisException {
-		for (DocumentAffiliation aff : affiliations) {
-			parseAffiliation(aff);
-		}
+	public Element parseString(String affiliationString) throws AnalysisException,
+	TransformationException {
+		DocumentAffiliation aff = new DocumentAffiliation(affiliationString);
+		parse(aff);
+		Element affElement = new Element("aff");
+		ParsableStringToNLMExporter.addText(affElement, aff.getRawText(), aff.getTokens());
+		return affElement;
 	}
 	
 	// For testing purposes only
@@ -101,7 +110,7 @@ public class AffiliationParser {
 		while (true) {
 			String affiliationText = br.readLine();
 			DocumentAffiliation affiliation = new DocumentAffiliation(affiliationText);
-			parser.parseAffiliation(affiliation);
+			parser.parse(affiliation);
 			System.out.println(affiliation.toXMLString());
 		}
 	}

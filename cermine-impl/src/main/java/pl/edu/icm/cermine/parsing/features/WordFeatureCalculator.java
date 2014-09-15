@@ -3,7 +3,7 @@ package pl.edu.icm.cermine.parsing.features;
 import java.util.List;
 
 import pl.edu.icm.cermine.parsing.model.Token;
-import pl.edu.icm.cermine.parsing.model.TokenizedString;
+import pl.edu.icm.cermine.parsing.model.ParsableString;
 
 /**
  * A 'word feature' of a token is a binary feature identifying the token's text.
@@ -34,7 +34,7 @@ public class WordFeatureCalculator {
      * @return the word represented by the token in an appropriate format or null if the token
      * has a blocking feature
      */
-    public String calculateFeatureValue(Token<?> token, TokenizedString<?> context) {
+    public String calculateFeatureValue(Token<?> token, ParsableString<?> context) {
 		for (BinaryTokenFeatureCalculator feature : blockingFeatures) {
 			if (feature.calculateFeaturePredicate(token, context)) {
 				return null;

@@ -26,7 +26,7 @@ import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
 import pl.edu.icm.cermine.metadata.model.DocumentDate;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.parsing.tools.TokenizedTextToNLMExporter;
+import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -152,16 +152,7 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
         Element aff = new Element(TAG_AFFILIATION);
         aff.setAttribute(ATTR_ID, affiliation.getId());
         addElement(aff, TAG_LABEL, affiliation.getId());
-        /*for (AffiliationToken token : affiliation.getTokens()) {
-            if (token.getTag() == null) {
-                aff.addContent(token.getText());
-            } else if (token.getTag().equals(DocumentAffiliation.TAG_COUNTRY)) {
-                addElement(aff, TAG_COUNTRY, token.getText());
-            } else if (token.getTag().equals(DocumentAffiliation.TAG_INSTITUTION)) {
-                addElement(aff, TAG_INSTITUTION, token.getText());
-            }
-        }*/
-        TokenizedTextToNLMExporter.addText(aff, affiliation.getRawText(), affiliation.getTokens());
+        ParsableStringToNLMExporter.addText(aff, affiliation.getRawText(), affiliation.getTokens());
         
         return aff;
     }

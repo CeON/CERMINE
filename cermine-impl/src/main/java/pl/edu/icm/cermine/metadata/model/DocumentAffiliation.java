@@ -27,16 +27,16 @@ import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
-import pl.edu.icm.cermine.parsing.model.TokenizedString;
-import pl.edu.icm.cermine.parsing.tools.TokenizedTextToNLMExporter;
+import pl.edu.icm.cermine.parsing.model.ParsableString;
+import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
 
 /**
- * Represents a document affiliation as a tokenized string.
+ * Represents a document affiliation as a parsable string.
  *
  * @author Dominika Tkaczyk
  * @author Bartosz Tarnawski
  */
-public class DocumentAffiliation implements TokenizedString<AffiliationToken> {
+public class DocumentAffiliation implements ParsableString<AffiliationToken> {
 
     private String id;
     
@@ -56,7 +56,7 @@ public class DocumentAffiliation implements TokenizedString<AffiliationToken> {
     
     public DocumentAffiliation(String id, String index, String rawText) {
         this.id = id;
-        this.index = index;
+        this.index = MetadataTools.clean(index);
         this.rawText = MetadataTools.clean(rawText);
         this.tokens = new ArrayList<AffiliationToken>();
     }
@@ -102,7 +102,7 @@ public class DocumentAffiliation implements TokenizedString<AffiliationToken> {
 		this.rawText += text;
 	}
 
-    void clean() {
+    public void clean() {
         index = MetadataTools.clean(index);
         rawText = MetadataTools.clean(rawText);
     }
@@ -110,7 +110,7 @@ public class DocumentAffiliation implements TokenizedString<AffiliationToken> {
     // For testing purposes only
     public String toXMLString() throws TransformationException {
 		Element aff = new Element("aff");
-		TokenizedTextToNLMExporter.addText(aff, rawText, tokens);
+		ParsableStringToNLMExporter.addText(aff, rawText, tokens);
 		XMLOutputter outputter = new XMLOutputter();
 		return outputter.outputString(aff);
     }

@@ -15,34 +15,34 @@ import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
 
 import pl.edu.icm.cermine.parsing.model.Token;
-import pl.edu.icm.cermine.parsing.model.TokenizedString;
+import pl.edu.icm.cermine.parsing.model.ParsableString;
 
 /**
- * Generic extractor, which transform NLM XML's into the tokenized strings representation.
+ * Generic extractor, which transform NLM XML's into the parsable string representation.
  * 
  * @author Dominika Tkaczyk
  * @author Bartosz Tarnawski
  *
  * @param <L> label type
  * @param <T> token type
- * @param <TS> tokenized string type
+ * @param <PS> parsable string type
  */
-public abstract class NLMTokenizedStringExtractor<L, T extends Token<L>, TS extends TokenizedString<T>> {
+public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS extends ParsableString<T>> {
 	
 
     protected abstract List<String> getTags();
     protected abstract String getKeyText();
 	protected abstract Map<String, L> getTagLabelMap();
-	protected abstract TS createString();
-	protected abstract TS createString(String text);
+	protected abstract PS createParsableString();
+	protected abstract PS createParsableString(String text);
 	
 	/**
 	 * @param source the InputSoruce representing the XML document
-	 * @return tokenized string representing the source
+	 * @return parsable string representing the source
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public List<TS> extractStrings(InputSource source) throws JDOMException, IOException {
+	public List<PS> extractStrings(InputSource source) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         builder.setValidation(false);
         builder.setFeature("http://xml.org/sax/features/validation", false);
@@ -58,22 +58,22 @@ public abstract class NLMTokenizedStringExtractor<L, T extends Token<L>, TS exte
             }
         });
 
-        List<TS> stringSet = new ArrayList<TS>();
+        List<PS> stringSet = new ArrayList<PS>();
 
         while (mixedStrings.hasNext()) {
-        	TS instance = createString();
+        	PS instance = createParsableString();
             readElement((Element) mixedStrings.next(), instance);
             stringSet.add(instance);
         }
         return stringSet;
     }
 
-    private void readElement(Element element, TS instance) {
+    private void readElement(Element element, PS instance) {
         for (Object content : element.getContent()) {
             if (content instanceof Text) {
                 String contentText = ((Text) content).getText();
                 if (!contentText.matches("^[\\s]*$")) {
-                    for (T token : createString(contentText).getTokens()) {
+                    for (T token : createParsableString(contentText).getTokens()) {
                         token.setStartIndex(token.getStartIndex() + instance.getRawText().length());
                         token.setEndIndex(token.getEndIndex() + instance.getRawText().length());
                         token.setLabel(getTagLabelMap().get(getKeyText()));
@@ -87,7 +87,7 @@ public abstract class NLMTokenizedStringExtractor<L, T extends Token<L>, TS exte
                 Element contentElement = (Element) content;
                 String contentElementName = contentElement.getName();
                 if (getTagLabelMap().containsKey(contentElementName)) {
-                    for (T token : createString(contentElement.getValue()).getTokens()) {
+                    for (T token : createParsableString(contentElement.getValue()).getTokens()) {
                         token.setStartIndex(token.getStartIndex() + instance.getRawText().length());
                         token.setEndIndex(token.getEndIndex() + instance.getRawText().length());
                         token.setLabel(getTagLabelMap().get(contentElementName));
@@ -99,5 +99,6 @@ public abstract class NLMTokenizedStringExtractor<L, T extends Token<L>, TS exte
                 }
             }
         }
+        instance.clean();
     }
 }

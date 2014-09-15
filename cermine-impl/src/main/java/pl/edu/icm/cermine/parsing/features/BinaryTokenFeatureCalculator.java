@@ -1,7 +1,7 @@
 package pl.edu.icm.cermine.parsing.features;
 
 import pl.edu.icm.cermine.parsing.model.Token;
-import pl.edu.icm.cermine.parsing.model.TokenizedString;
+import pl.edu.icm.cermine.parsing.model.ParsableString;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 /**
@@ -10,17 +10,17 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  * @author Bartosz Tarnawski
  */
 public abstract class BinaryTokenFeatureCalculator extends
-FeatureCalculator<Token<?>, TokenizedString<?>> {
+FeatureCalculator<Token<?>, ParsableString<?>> {
 
 	/**
 	 * @param token
 	 * @param context
 	 * @return whether the token in the context has the feature represented by the class
 	 */
-	public abstract boolean calculateFeaturePredicate(Token<?> token, TokenizedString<?> context);
+	public abstract boolean calculateFeaturePredicate(Token<?> token, ParsableString<?> context);
 
 	@Override
-    public double calculateFeatureValue(Token<?> token, TokenizedString<?> context) {
+    public double calculateFeatureValue(Token<?> token, ParsableString<?> context) {
     	if (calculateFeaturePredicate(token, context)) {
     		return 1;
     	} else {

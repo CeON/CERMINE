@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import pl.edu.icm.cermine.parsing.model.Token;
-import pl.edu.icm.cermine.parsing.model.TokenizedString;
+import pl.edu.icm.cermine.parsing.model.ParsableString;
 import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 
 /**
@@ -37,7 +37,7 @@ public class IsRareFeature extends BinaryTokenFeatureCalculator {
 	}
 	
 	@Override
-	public boolean calculateFeaturePredicate(Token<?> token, TokenizedString<?> context) {
+	public boolean calculateFeaturePredicate(Token<?> token, ParsableString<?> context) {
 		String text = token.getText();
 		if (!TextClassifier.isWord(text)) {
 			return false;

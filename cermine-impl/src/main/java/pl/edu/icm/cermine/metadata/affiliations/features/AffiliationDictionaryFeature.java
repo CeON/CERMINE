@@ -13,6 +13,12 @@ import pl.edu.icm.cermine.parsing.features.KeywordFeatureCalculator;
  */
 public class AffiliationDictionaryFeature extends KeywordFeatureCalculator<AffiliationToken> {
 	
+	/**
+	 * @param FeatureString the string which will be added to the matching tokens' features lists
+	 * @param dictionaryFileName the name of the dictionary to be used (must be a package resource)
+	 * @param caseSensitive whether dictionary lookups should be case sensitive
+	 * @throws AnalysisException
+	 */
 	public AffiliationDictionaryFeature(String FeatureString, String dictionaryFileName,
 			boolean caseSensitive) throws AnalysisException {
 		super(FeatureString, dictionaryFileName, caseSensitive, new AffiliationTokenizer());

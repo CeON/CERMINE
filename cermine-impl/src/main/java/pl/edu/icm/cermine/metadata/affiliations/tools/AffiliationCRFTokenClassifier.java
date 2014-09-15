@@ -75,6 +75,23 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationTo
 	private LineGroupIterator getLineIterator(String data) {
 		return new LineGroupIterator(new StringReader(data), Pattern.compile("\\s*"), true);
 	}
+	
+	
+	/**
+	 * When comma is the last token in a tagged part, its label is changed to 'TEXT'.
+	 * 
+	 * @param tokens
+	 */
+	private void enhanceLabels(List<AffiliationToken> tokens) {
+		AffiliationToken lastToken = null;
+		for (AffiliationToken token : tokens) {
+			if (lastToken != null && lastToken.getLabel() != token.getLabel() &&
+					lastToken.getText().equals(",")) {
+				lastToken.setLabel(AffiliationLabel.TEXT);
+			}
+			lastToken = token;
+		}
+	}
 
 	@Override
 	public void classify(List<AffiliationToken> tokens) throws AnalysisException {
@@ -94,6 +111,7 @@ public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationTo
 		for (int i = 0; i < labelsSequence.size(); i++) {
 			tokens.get(i).setLabel(AffiliationLabel.createLabel(labelsSequence.get(i).toString()));
 		}
-
+		
+		enhanceLabels(tokens);
 	}
 }

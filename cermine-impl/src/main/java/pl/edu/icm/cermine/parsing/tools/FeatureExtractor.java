@@ -1,19 +1,19 @@
 package pl.edu.icm.cermine.parsing.tools;
 
-import pl.edu.icm.cermine.parsing.model.TokenizedString;
+import pl.edu.icm.cermine.parsing.model.ParsableString;
 
 /**
- * Finds features of tokens in a tokenized string.
+ * Finds features of tokens in a tokenized parsable string.
  * 
  * @author Bartosz Tarnawski
- * @param <T> type of the tokenized string to process
+ * @param <PS> type of the parsable string to process
  */
-public abstract class FeatureExtractor<T extends TokenizedString<?>> {
+public abstract class FeatureExtractor<PS extends ParsableString<?>> {
 	
 	/**
-	 * Adds appropriate strings representing features to the tokens of the tokenized string.
+	 * Adds appropriate strings representing features to the tokens of the parsable string.
 	 * 
-	 * @param string the tokenized string to be processed
+	 * @param parsableString the tokenized parsable string to be processed
 	 */
-	public abstract void calculateFeatures(T string);
+	public abstract void calculateFeatures(PS parsableString);
 }

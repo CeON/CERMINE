@@ -53,7 +53,7 @@ public abstract class Token<L> {
 	public abstract String getGrmmLabelString();
 
 	/**
-	 * @return XML tag representing the token's type
+	 * @return XML tag representing the token's type or null if the token shouldn't be tagged
 	 */
 	public abstract String getXmlTagString();
 	
@@ -73,6 +73,13 @@ public abstract class Token<L> {
     	features.add(feature);
     }
 	
+	/**
+	 * @param text the normalized string corresponding to the substring(startIndex, endIndex)
+	 * of the parsable string the token belongs to
+	 * @param startIndex
+	 * @param endIndex
+	 * @param label may be null if the token is not classified yet
+	 */
 	public Token(String text, int startIndex, int endIndex, L label) {
 		this.text = text;
 		this.startIndex = startIndex;
@@ -81,6 +88,12 @@ public abstract class Token<L> {
 		this.features = new ArrayList<String>();
 	}
 	
+	/**
+	 * @param text the normalized string corresponding to the substring(startIndex, endIndex)
+	 * of the parsable string the token belongs to
+	 * @param startIndex
+	 * @param endIndex	
+	 */
 	public Token(String text, int startIndex, int endIndex) {
 		this(text, startIndex, endIndex, null);
 	}

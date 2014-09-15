@@ -217,14 +217,12 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
     private static final String TAG_ARTICLE_TITLE               = "article-title";
     private static final String TAG_CONTRIB                     = "contrib";
     private static final String TAG_CONTRIB_GROUP               = "contrib-group";
-//    private static final String TAG_COUNTRY                     = "country";
     private static final String TAG_DATE                        = "date";
     private static final String TAG_DAY                         = "day";
     private static final String TAG_EMAIL                       = "email";
     private static final String TAG_FPAGE                       = "fpage";
     private static final String TAG_FRONT                       = "front";
     private static final String TAG_HISTORY                     = "history";
-//    private static final String TAG_INSTITUTION                 = "institution";
     private static final String TAG_ISSN                        = "issn";
     private static final String TAG_ISSUE                       = "issue";
     private static final String TAG_JOURNAL_META                = "journal-meta";

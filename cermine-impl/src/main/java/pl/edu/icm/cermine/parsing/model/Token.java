@@ -106,9 +106,9 @@ public abstract class Token<L> {
 		this("");
 	}
 	
-	// Ignores the label, for testing purposes only
+	// For testing purposes only
 	public boolean equals(Object obj) {
-       if (!(obj instanceof Token))
+        if (!(obj instanceof Token))
             return false;
         if (obj == this)
             return true;
@@ -119,6 +119,7 @@ public abstract class Token<L> {
             append(text, rhs.text).
             append(startIndex, rhs.startIndex).
             append(endIndex, rhs.endIndex).
+            append(label, rhs.label).
             isEquals();
     }
 	

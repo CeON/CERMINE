@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -30,7 +31,10 @@ public class AffiliationParser extends ParsableStringParser<DocumentAffiliation>
 	private AffiliationFeatureExtractor featureExtractor = null;
 	private AffiliationCRFTokenClassifier classifier = null;
 	
-	private static final String DEFAULT_COMMON_WORDS_FILE = "common-words-affiliations.txt";
+	private static final String DEFAULT_MODEL_FILE = 
+			"/pl/edu/icm/cermine/metadata/affiliations/parsing/acrf-affiliations-pubmed.ser.gz";
+	private static final String DEFAULT_COMMON_WORDS_FILE = 
+			"/pl/edu/icm/cermine/metadata/affiliations/parsing/common-words-affiliations-pubmed.txt";
 
 	
 	private List<String> loadWords(String wordsFileName) throws AnalysisException {
@@ -61,17 +65,19 @@ public class AffiliationParser extends ParsableStringParser<DocumentAffiliation>
 	
 	/**
 	 * @param wordsFileName the name of the package resource to be used as the common words list
+	 * @param acrfFileName the name of the package resource to be used as the ACRF model
 	 * @throws AnalysisException
 	 */
-	public AffiliationParser(String wordsFileName) throws AnalysisException {
+	public AffiliationParser(String wordsFileName, String acrfFileName) throws AnalysisException {
 		List<String> commonWords = loadWords(wordsFileName);
 		tokenizer = new AffiliationTokenizer();
 		featureExtractor = new AffiliationFeatureExtractor(commonWords);
-		classifier = new AffiliationCRFTokenClassifier();
+		classifier = new AffiliationCRFTokenClassifier(
+				getClass().getResourceAsStream(acrfFileName));
 	}
 	
 	public AffiliationParser() throws AnalysisException {
-		this(DEFAULT_COMMON_WORDS_FILE);
+		this(DEFAULT_COMMON_WORDS_FILE, DEFAULT_MODEL_FILE);
 	}
 
 	/**
@@ -107,11 +113,10 @@ public class AffiliationParser extends ParsableStringParser<DocumentAffiliation>
 	TransformationException {
 		AffiliationParser parser = new AffiliationParser();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		XMLOutputter outputter = new XMLOutputter();
 		while (true) {
-			String affiliationText = br.readLine();
-			DocumentAffiliation affiliation = new DocumentAffiliation(affiliationText);
-			parser.parse(affiliation);
-			System.out.println(affiliation.toXMLString());
+			String affiliationString = br.readLine();
+			outputter.outputString(parser.parseString(affiliationString));
 		}
 	}
 }

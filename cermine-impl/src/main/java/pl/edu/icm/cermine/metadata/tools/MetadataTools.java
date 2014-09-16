@@ -44,7 +44,8 @@ public class MetadataTools {
                   .replaceAll("\uFB04", "ffl")
                   .replaceAll("\uFB05", "ft")
                   .replaceAll("\uFB06", "st")
-                  .replaceAll("\u00E6", "ae");
+                  .replaceAll("\u00E6", "ae")
+                  .replaceAll("\u0153", "oe");
     }
     
     public static String cleanHyphenation(String str) {

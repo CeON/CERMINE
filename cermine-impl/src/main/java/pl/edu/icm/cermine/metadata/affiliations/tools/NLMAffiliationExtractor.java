@@ -53,6 +53,7 @@ NLMParsableStringExtractor<AffiliationLabel, AffiliationToken, DocumentAffiliati
         TAGS_LABEL_MAP.put("addr-line",   	AffiliationLabel.ADDRESS);
         TAGS_LABEL_MAP.put("institution",   AffiliationLabel.INSTITUTION);
         TAGS_LABEL_MAP.put("country",   	AffiliationLabel.COUNTRY);
+        TAGS_LABEL_MAP.put("author",   		AffiliationLabel.AUTHOR);
         TAGS_LABEL_MAP.put("text",          AffiliationLabel.TEXT);
     }
 }

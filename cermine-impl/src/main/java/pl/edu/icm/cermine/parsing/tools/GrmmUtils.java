@@ -69,6 +69,7 @@ public class GrmmUtils {
 			List<String> features = new ArrayList<String>();
 			String label = tokens.get(i).getGrmmLabelString();
 			
+			// For better readability, we write the own features of a token first.
 			features.addAll(neighborFeatures(i, 0, tokens));
 			for (int j = -neighborInfluenceThreshold; j <= neighborInfluenceThreshold; j++) {
 				if (j != 0) {

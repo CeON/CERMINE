@@ -15,6 +15,7 @@ public enum AffiliationLabel {
 	INSTITUTION("institution", "INST"),
 	ADDRESS("addr-line", "ADDR"),
 	COUNTRY("country", "COUN"),
+	AUTHOR("author", "AUTH"),
 	TEXT("text", "TEXT");
 
 	private final String xmlTag;
@@ -61,6 +62,7 @@ public enum AffiliationLabel {
 		LABEL_MAP.put("INST", INSTITUTION);
 		LABEL_MAP.put("ADDR", ADDRESS);
 		LABEL_MAP.put("COUN", COUNTRY);
+		LABEL_MAP.put("AUTH", AUTHOR);
 		LABEL_MAP.put("TEXT", TEXT);
 	}
 

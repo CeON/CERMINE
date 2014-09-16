@@ -23,7 +23,19 @@ import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
  */
 public class KeywordFeatureCalculator<T extends Token<?>> {
 
+	// Stores keyword sequences of tokens. A token is considered to be a keyword if together
+	// with its neighbors it forms a keyword sequence.
+	// 
+	// For example: 
+	// The token "Great" is considered to be a country keyword when it is followed
+	// by "Britain" but not when it is followed by "Gatsby".
 	private List<List<T>> entries;
+	// Maps a token to the list of indices of keyword sequences in the 'entries' list which
+	// start with this token.
+	//
+	// For example:
+	// if entries.get(4) == ["United", "States"] and entries.get(7) == ["United", "Kingdom"], then
+	// dictionary.get("United") will contain 4 and 7
 	private Map<String, List<Integer>> dictionary;
 	private TextTokenizer<T> textTokenizer;
 
@@ -116,6 +128,8 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 			if (!caseSensitive) {
 				tokenString = tokenString.toLowerCase();
 			}
+			// candidateIds are indices of keyword sequences in the 'entries' list
+			// which start with the 'tokenString'.
 			List<Integer> candidateIds = dictionary.get(tokenString);
 			if (candidateIds != null) {
 				for (int candidateId : candidateIds) {

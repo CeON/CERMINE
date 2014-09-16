@@ -4,7 +4,7 @@ import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
  * Document affiliation token. Represents an atomic part of affiliation. It has a label which
- * corresponds to its type (institution, addr-line, country or text).
+ * corresponds to its type (institution, addr-line, country, author or text).
  * 
  * @author Bartosz Tarnawski
  */

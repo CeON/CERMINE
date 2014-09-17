@@ -1,13 +1,13 @@
 package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
 import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 public class AffiliationTokenizerTest {
 	
@@ -19,20 +19,20 @@ public class AffiliationTokenizerTest {
 		String input = "ko  pi_es123_@@123Kot";
 		// "ko", "pi" ,"_", "es", "123", "_", "@", "@", "123"
 		
-		List<AffiliationToken> expected = Arrays.asList(
-				new AffiliationToken("ko", 0, 2),
-				new AffiliationToken("pi", 4, 6),
-				new AffiliationToken("_", 6, 7),
-				new AffiliationToken("es", 7, 9),
-				new AffiliationToken("123", 9, 12),
-				new AffiliationToken("_", 12, 13),
-				new AffiliationToken("@", 13, 14),
-				new AffiliationToken("@", 14, 15),
-				new AffiliationToken("123", 15, 18),
-				new AffiliationToken("Kot", 18, 21)
+		List<Token<AffiliationLabel>> expected = Arrays.asList(
+				new Token<AffiliationLabel>("ko", 0, 2),
+				new Token<AffiliationLabel>("pi", 4, 6),
+				new Token<AffiliationLabel>("_", 6, 7),
+				new Token<AffiliationLabel>("es", 7, 9),
+				new Token<AffiliationLabel>("123", 9, 12),
+				new Token<AffiliationLabel>("_", 12, 13),
+				new Token<AffiliationLabel>("@", 13, 14),
+				new Token<AffiliationLabel>("@", 14, 15),
+				new Token<AffiliationLabel>("123", 15, 18),
+				new Token<AffiliationLabel>("Kot", 18, 21)
 				);
 		
-		List<AffiliationToken> actual = tokenizer.tokenize(input);
+		List<Token<AffiliationLabel>> actual = tokenizer.tokenize(input);
 		
 		assertEquals(expected, actual);
 	}
@@ -47,12 +47,12 @@ public class AffiliationTokenizerTest {
 		// input = "s'c'dz' o'o'"
 		
 		
-		List<AffiliationToken> expected = Arrays.asList(
-				new AffiliationToken("scdz", 0, 7),
-				new AffiliationToken("oo", 8, 12)
+		List<Token<AffiliationLabel>> expected = Arrays.asList(
+				new Token<AffiliationLabel>("scdz", 0, 7),
+				new Token<AffiliationLabel>("oo", 8, 12)
 				);
 		
-		List<AffiliationToken> actual = tokenizer.tokenize(input);
+		List<Token<AffiliationLabel>> actual = tokenizer.tokenize(input);
 		
 		assertEquals(expected, actual);
 	}
@@ -62,17 +62,17 @@ public class AffiliationTokenizerTest {
 		// 0123456789012345
 		// Co'z' ro123bic'?
 		String text = "Cóż ro123bić?";
-		List<AffiliationToken> expected = Arrays.asList(
-				new AffiliationToken("Coz", 0, 5),
-				new AffiliationToken("ro", 6, 8),
-				new AffiliationToken("123", 8, 11),
-				new AffiliationToken("bic", 11, 15),
-				new AffiliationToken("?", 15, 16)
+		List<Token<AffiliationLabel>> expected = Arrays.asList(
+				new Token<AffiliationLabel>("Coz", 0, 5),
+				new Token<AffiliationLabel>("ro", 6, 8),
+				new Token<AffiliationLabel>("123", 8, 11),
+				new Token<AffiliationLabel>("bic", 11, 15),
+				new Token<AffiliationLabel>("?", 15, 16)
 				);
 				
 		DocumentAffiliation instance = new DocumentAffiliation(text);
 		
-		List<AffiliationToken> actual = tokenizer.tokenize(instance.getRawText());
+		List<Token<AffiliationLabel>> actual = tokenizer.tokenize(instance.getRawText());
 		
 		assertEquals(expected, actual);
 	}

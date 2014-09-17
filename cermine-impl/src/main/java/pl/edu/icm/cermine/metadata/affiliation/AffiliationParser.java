@@ -13,9 +13,11 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationCRFTokenClassifier;
 import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationFeatureExtractor;
 import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
+import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.ParsableStringParser;
-import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
 
 /**
  * Affiliation parser. Processes an instance of DocumentAffiliation by
@@ -88,8 +90,12 @@ public class AffiliationParser implements ParsableStringParser<DocumentAffiliati
     @Override
 	public void parse(DocumentAffiliation affiliation) throws AnalysisException {
 		affiliation.setTokens(tokenizer.tokenize(affiliation.getRawText()));
+        for (Token<AffiliationLabel> t : affiliation.getTokens()) {
+            t.setLabel(AffiliationLabel.TEXT);
+        }
 		featureExtractor.calculateFeatures(affiliation);
 		classifier.classify(affiliation.getTokens());
+        affiliation.mergeTokens();
 	}
 
 	/**
@@ -103,9 +109,8 @@ public class AffiliationParser implements ParsableStringParser<DocumentAffiliati
 	TransformationException {
 		DocumentAffiliation aff = new DocumentAffiliation(affiliationString);
 		parse(aff);
-		Element affElement = new Element("aff");
-		ParsableStringToNLMExporter.addText(affElement, aff.getRawText(), aff.getTokens());
-		return affElement;
+        DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
+        return converter.convertAffiliation(aff);
 	}
 	
 	// For testing purposes only

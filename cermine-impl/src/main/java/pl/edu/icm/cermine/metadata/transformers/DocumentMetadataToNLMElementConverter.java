@@ -22,11 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
-import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
-import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
+import pl.edu.icm.cermine.metadata.model.*;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -148,12 +145,21 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
         return contributor;
     }
     
-    private Element convertAffiliation(DocumentAffiliation affiliation) throws TransformationException {
+    public Element convertAffiliation(DocumentAffiliation affiliation) throws TransformationException {
         Element aff = new Element(TAG_AFFILIATION);
         aff.setAttribute(ATTR_ID, affiliation.getId());
         addElement(aff, TAG_LABEL, affiliation.getId());
-        ParsableStringToNLMExporter.addText(aff, affiliation.getRawText(), affiliation.getTokens());
-        
+        for (Token<AffiliationLabel> token : affiliation.getTokens()) {
+            if (token.getLabel().equals(AffiliationLabel.TEXT)) {
+                aff.addContent(token.getText());
+            } else if (token.getLabel().equals(AffiliationLabel.COUN)) {
+                addElement(aff, TAG_COUNTRY, token.getText());
+            } else if (token.getLabel().equals(AffiliationLabel.INST)) {
+                addElement(aff, TAG_INSTITUTION, token.getText());
+            } else if (token.getLabel().equals(AffiliationLabel.ADDR)) {
+                addElement(aff, TAG_ADDRESS, token.getText());
+            }
+        }
         return aff;
     }
     
@@ -210,6 +216,7 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
        
 
     private static final String TAG_ABSTRACT                    = "abstract";
+    private static final String TAG_ADDRESS                     = "addr-line";
     private static final String TAG_AFFILIATION                 = "aff";
     private static final String TAG_ARTICLE                     = "article";
     private static final String TAG_ARTICLE_ID                  = "article-id";
@@ -217,12 +224,14 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
     private static final String TAG_ARTICLE_TITLE               = "article-title";
     private static final String TAG_CONTRIB                     = "contrib";
     private static final String TAG_CONTRIB_GROUP               = "contrib-group";
+    private static final String TAG_COUNTRY                     = "country";
     private static final String TAG_DATE                        = "date";
     private static final String TAG_DAY                         = "day";
     private static final String TAG_EMAIL                       = "email";
     private static final String TAG_FPAGE                       = "fpage";
     private static final String TAG_FRONT                       = "front";
     private static final String TAG_HISTORY                     = "history";
+    private static final String TAG_INSTITUTION                 = "institution";
     private static final String TAG_ISSN                        = "issn";
     private static final String TAG_ISSUE                       = "issue";
     private static final String TAG_JOURNAL_META                = "journal-meta";

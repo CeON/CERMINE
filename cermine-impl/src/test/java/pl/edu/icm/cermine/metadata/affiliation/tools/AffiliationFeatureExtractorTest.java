@@ -1,7 +1,5 @@
 package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
-import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationFeatureExtractor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,9 +8,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.affiliation.features.AffiliationDictionaryFeature;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.features.*;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 public class AffiliationFeatureExtractorTest {
 
@@ -34,8 +33,8 @@ public class AffiliationFeatureExtractorTest {
                 );
 			
 			@SuppressWarnings("unchecked")
-			List<KeywordFeatureCalculator<AffiliationToken>> keywordFeatures = 
-					Arrays.<KeywordFeatureCalculator<AffiliationToken>>asList(
+			List<KeywordFeatureCalculator<Token<AffiliationLabel>>> keywordFeatures = 
+					Arrays.<KeywordFeatureCalculator<Token<AffiliationLabel>>>asList(
                 new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
                 new AffiliationDictionaryFeature("KeywordCity", 		"cities.txt", 				true),
                 new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
@@ -56,14 +55,14 @@ public class AffiliationFeatureExtractorTest {
 	}
 	
 	private class TokenContainer {
-		public List<AffiliationToken> tokens;
+		public List<Token<AffiliationLabel>> tokens;
 		public List<List<String>> features;
 		public TokenContainer() {
-			tokens = new ArrayList<AffiliationToken>();
+			tokens = new ArrayList<Token<AffiliationLabel>>();
 			features = new ArrayList<List<String>>();
 		}
 		public void add(String text, String... expectedFeatures) {
-			tokens.add(new AffiliationToken(text));
+			tokens.add(new Token<AffiliationLabel>(text));
 			features.add(Arrays.asList(expectedFeatures));
 		}
 		public void checkFeatures() {

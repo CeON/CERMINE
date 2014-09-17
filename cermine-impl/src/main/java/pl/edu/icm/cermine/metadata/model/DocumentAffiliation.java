@@ -20,12 +20,9 @@ package pl.edu.icm.cermine.metadata.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
-import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
-import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
  * Represents a document affiliation as a parsable string.
@@ -33,7 +30,7 @@ import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
  * @author Dominika Tkaczyk
  * @author Bartosz Tarnawski
  */
-public class DocumentAffiliation implements ParsableString<AffiliationToken> {
+public class DocumentAffiliation implements ParsableString<Token<AffiliationLabel>> {
 
     private String id;
     
@@ -41,10 +38,10 @@ public class DocumentAffiliation implements ParsableString<AffiliationToken> {
     
     private String rawText;
     
-    private List<AffiliationToken> tokens;
+    private List<Token<AffiliationLabel>> tokens;
     
     public DocumentAffiliation(String rawText) {
-    	this("", rawText);
+    	this("id", rawText);
     }
 
     public DocumentAffiliation(String id, String rawText) {
@@ -55,7 +52,7 @@ public class DocumentAffiliation implements ParsableString<AffiliationToken> {
         this.id = id;
         this.index = MetadataTools.clean(index);
         this.rawText = MetadataTools.clean(rawText);
-        this.tokens = new ArrayList<AffiliationToken>();
+        this.tokens = new ArrayList<Token<AffiliationLabel>>();
     }
 
     public String getId() {
@@ -84,21 +81,50 @@ public class DocumentAffiliation implements ParsableString<AffiliationToken> {
     }
     
     @Override
-	public List<AffiliationToken> getTokens() {
+	public List<Token<AffiliationLabel>> getTokens() {
 		return tokens;
 	}
 
     @Override
-	public void setTokens(List<AffiliationToken> tokens) {
+	public void setTokens(List<Token<AffiliationLabel>> tokens) {
 		this.tokens = tokens;
 	}
 
     @Override
-	public void addToken(AffiliationToken token) {
+	public void addToken(Token<AffiliationLabel> token) {
 		this.tokens.add(token);
-		
 	}
 
+    public void mergeTokens() {
+        if (tokens == null || tokens.isEmpty()){
+            return;
+        }
+        Token<AffiliationLabel> actToken = null;
+        List<Token<AffiliationLabel>> newTokens = new ArrayList<Token<AffiliationLabel>>();
+        for (Token<AffiliationLabel> token : tokens) {
+            if (actToken == null){
+                actToken = new Token<AffiliationLabel>(token.getText(), token.getStartIndex(), token.getEndIndex(), token.getLabel());
+                
+            } else if (actToken.getLabel().equals(token.getLabel())) {
+                actToken.setEndIndex(token.getEndIndex());
+            } else {
+                newTokens.add(actToken);
+                actToken = new Token<AffiliationLabel>(token.getText(), token.getStartIndex(), token.getEndIndex(), token.getLabel());
+            }
+        }
+        newTokens.add(actToken);
+        for (Token<AffiliationLabel> token : newTokens) {
+            int i = newTokens.indexOf(token);
+            if (i + 1 == newTokens.size()) {
+                token.setEndIndex(rawText.length());
+            } else {
+                token.setEndIndex(newTokens.get(i+1).getStartIndex());
+            }
+            token.setText(rawText.substring(token.getStartIndex(), token.getEndIndex()));
+        }
+        tokens = newTokens;
+    }
+    
     @Override
 	public void appendText(String text) {
 		this.rawText += text;
@@ -109,12 +135,5 @@ public class DocumentAffiliation implements ParsableString<AffiliationToken> {
         index = MetadataTools.clean(index);
         rawText = MetadataTools.clean(rawText);
     }
-    
-    // For testing purposes only
-    public String toXMLString() throws TransformationException {
-		Element aff = new Element("aff");
-		ParsableStringToNLMExporter.addText(aff, rawText, tokens);
-		XMLOutputter outputter = new XMLOutputter();
-		return outputter.outputString(aff);
-    }
+
 }

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
 
@@ -21,7 +21,7 @@ import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
  * @author Dominika Tkaczyk
  * @author Bartosz Tarnawski
  */
-public class AffiliationCRFTokenClassifier implements TokenClassifier<AffiliationToken> {
+public class AffiliationCRFTokenClassifier implements TokenClassifier<Token<AffiliationLabel>> {
 
 	private ACRF model;
 	private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
@@ -77,9 +77,9 @@ public class AffiliationCRFTokenClassifier implements TokenClassifier<Affiliatio
 	 * 
 	 * @param tokens
 	 */
-	private void enhanceLabels(List<AffiliationToken> tokens) {
-		AffiliationToken lastToken = null;
-		for (AffiliationToken token : tokens) {
+	private void enhanceLabels(List<Token<AffiliationLabel>> tokens) {
+		Token<AffiliationLabel> lastToken = null;
+		for (Token<AffiliationLabel> token : tokens) {
 			if (lastToken != null && lastToken.getLabel() != token.getLabel() &&
 					lastToken.getText().equals(",")) {
 				lastToken.setLabel(AffiliationLabel.TEXT);
@@ -89,7 +89,12 @@ public class AffiliationCRFTokenClassifier implements TokenClassifier<Affiliatio
 	}
 
 	@Override
-	public void classify(List<AffiliationToken> tokens) throws AnalysisException {
+	public void classify(List<Token<AffiliationLabel>> tokens) throws AnalysisException {
+        for (Token<AffiliationLabel> token : tokens) {
+            if (token.getLabel() == null) {
+                token.setLabel(AffiliationLabel.TEXT);
+            }
+        }
 		String data = GrmmUtils.toGrmmInput(tokens, DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD);
 
 		Pipe pipe = model.getInputPipe();
@@ -104,7 +109,7 @@ public class AffiliationCRFTokenClassifier implements TokenClassifier<Affiliatio
 		}
 
 		for (int i = 0; i < labelsSequence.size(); i++) {
-			tokens.get(i).setLabel(AffiliationLabel.createLabel(labelsSequence.get(i).toString()));
+			tokens.get(i).setLabel(AffiliationLabel.valueOf(labelsSequence.get(i).toString()));
 		}
 		
 		enhanceLabels(tokens);

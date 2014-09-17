@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 public class IsRareFeatureTest {
 
@@ -15,10 +16,10 @@ public class IsRareFeatureTest {
 	
 	@Test
 	public void testCalculateFeaturePredicate() {
-		AffiliationToken inSet = new AffiliationToken("kot");
-		AffiliationToken lowerInSet = new AffiliationToken("KOT");
-		AffiliationToken notInSet = new AffiliationToken("SZCZUR");
-		AffiliationToken notWord = new AffiliationToken("kot1");
+		Token<AffiliationLabel> inSet = new Token<AffiliationLabel>("kot");
+		Token<AffiliationLabel> lowerInSet = new Token<AffiliationLabel>("KOT");
+		Token<AffiliationLabel> notInSet = new Token<AffiliationLabel>("SZCZUR");
+		Token<AffiliationLabel> notWord = new Token<AffiliationLabel>("kot1");
 		DocumentAffiliation aff = new DocumentAffiliation("");
 		assertEquals(false, featureCaseSensitive.calculateFeaturePredicate(inSet, aff));
 		assertEquals(true, featureCaseSensitive.calculateFeaturePredicate(lowerInSet, aff));

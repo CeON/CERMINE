@@ -6,8 +6,9 @@ import org.apache.commons.cli.*;
 import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 
@@ -58,7 +59,7 @@ public class AffiliationTrainingDataExporter {
         List<String> commonWords = new ArrayList<String>();
         
         for (DocumentAffiliation affiliation : affiliations) {
-                for (AffiliationToken token: affiliation.getTokens()) {
+                for (Token<AffiliationLabel> token: affiliation.getTokens()) {
                         String text = token.getText();
                         if (!TextClassifier.isWord(text)) {
                         	continue;

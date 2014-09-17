@@ -66,7 +66,7 @@ public class GrmmUtils {
 		StringBuilder grmmInputBuilder = new StringBuilder();
 		for (int i = 0; i < tokens.size(); i++) {
 			List<String> features = new ArrayList<String>();
-			String label = tokens.get(i).getGrmmLabelString();
+			String label = tokens.get(i).getLabel().toString();
 			
 			// For better readability, we write the own features of a token first.
 			features.addAll(neighborFeatures(i, 0, tokens));

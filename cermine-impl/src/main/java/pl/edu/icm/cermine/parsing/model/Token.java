@@ -10,7 +10,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  * @author Bartosz Tarnawski
  * @param <L> type of label used for token classifying
  */
-public abstract class Token<L> {
+public class Token<L> {
 
 	protected String text;
 	protected int startIndex;
@@ -46,17 +46,7 @@ public abstract class Token<L> {
 		return label;
 	}
 	
-	/**
-	 * @return GRMM label representing the token's type
-	 */
-	public abstract String getGrmmLabelString();
-
-	/**
-	 * @return XML tag representing the token's type or null if the token shouldn't be tagged
-	 */
-	public abstract String getXmlTagString();
-	
-	public void setLabel(L label) {
+    public void setLabel(L label) {
 		this.label = label;
 	}
 	
@@ -162,4 +152,10 @@ public abstract class Token<L> {
 		
 		return true;
 	}
+
+    @Override
+    public String toString() {
+        return "Token{" + "text=" + text + ", startIndex=" + startIndex + ", endIndex=" + endIndex + ", label=" + label + '}';
+    }
+    
 }

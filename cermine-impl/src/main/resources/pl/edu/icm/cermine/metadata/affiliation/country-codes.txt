@@ -1,0 +1,478 @@
+afghanestan af
+afghanistan af
+åland islands ax
+albania al
+algeria dz
+al arabiyah as suudiyah sa
+al bahrayn bh
+al imarat al arabiyah al muttahidah ae
+al iraq iq
+al jaza'ir dz
+al kuwayt kw
+al maghrib ma
+al urdun jo
+al yaman ye
+american samoa as
+andorra ad
+angola ao
+anguilla ai
+antarctica aq
+antigua ag
+antigua and barbuda ag
+arab emirates ae
+argentina ar
+armenia am
+aruba aw
+as-sudan sd
+australia au
+austria at
+aus au
+aut at
+azarbaycan respublikasi az
+azerbaijan az
+aze az
+bahamas bs
+bahrain bh
+bangladesh bd
+barbados bb
+barbuda ag
+belarus by
+belgie be
+belgique be
+belgium be
+belice bz
+belize bz
+bel be
+benin bj
+ben bj
+bermuda bm
+bfa bf
+bharat in
+bhutan bt
+bolivia bo
+bonaire bq
+bonaire, sint eustatius and saba bq
+bosna i hercegovina ba
+bosnia ba
+bosnia and herzegovina ba
+botswana bw
+bouvet island bv
+brasil br
+brazil br
+bra br
+british indian ocean territory io
+brunei bn
+brunei darussalam bn
+bulariya bg
+bulgaria bg
+burkina faso bf
+burma mm
+burundi bi
+byelarus by
+cabo verde cv
+caicos islands tc
+cambodia kh
+cameroon cm
+cameroun cm
+canada ca
+can ca
+cape verde cv
+cayman islands ky
+central african republic cf
+ceska republika cz
+chad td
+che ch
+chile cl
+china cn
+china (people's republic of) cn
+chn cn
+choson kp
+choson-minjujuui-inmin-konghwaguk kp
+christmas island cx
+citta del vaticano va
+cocos islands cc
+cocos (keeling) islands cc
+colombia co
+col co
+comores km
+comoros km
+congo cg
+congo (democratic republic of) cd
+cook islands ck
+costa rica cr
+côte d'ivoire ci
+cote d'ivoire ci
+cri cr
+croatia hr
+cuba cu
+curaçao cw
+cyprus cy
+czech republic cz
+cze cz
+danmark
+democratic republic of the congo cg
+denmark dk
+deutschland de
+deu de
+dhivehi raajje mv
+djibouti dj
+dnk dk
+dominican republic do
+dominica dm
+drukyul bt
+ecuador ec
+eec eu
+eesti ee
+egypt eg
+eire ie
+ellas gr
+el salvador sv
+equatorial guinea gq
+eritrea er
+ertra er
+espana
+esp es
+estonia ee
+est ee
+ethiopia et
+eth et
+falkland islands fk
+falkland islands (malvinas) fk
+faroe islands fo
+federal republic of yugoslavia mk
+federated states of micronesia fm
+fiji fj
+finland fi
+fin fi
+former yugoslav republic of macedonia mk
+france fr
+fra fr
+french guiana gf
+french polynesia pf
+french southern territories tf
+futuna wf
+gabon ga
+gambia gm
+gbr uk
+georgia ge
+germany de
+ghana gh
+gibraltar gi
+grc gr
+great britain uk
+greece el
+greece gr
+greenland gl
+grenada gd
+guadeloupe gp
+guam gu
+guatemala gt
+guernsey gg
+guinea-bissau gw
+guinea ecuatorial gn
+guinea gn
+guine-bissau gw
+guinee gn
+guyana gy
+haiti ht
+hayastan am
+heard island hm
+heard island and mcdonald islands hm
+herzegovina ba
+holy see va
+holy see (vatican city state) va
+honduras hn
+hong kong hk
+hrvatska hr
+hungary hu
+hun hu
+iceland is
+idn id
+india in
+indonesia id
+ind in
+iran ir
+iran (islamic republic of) ir
+iraq iq
+ireland ie
+irl ie
+island is
+isle of man im
+isl is
+israel il
+isr il
+italia it
+italy it
+ita it
+jamaica jm
+jan mayen sj
+japan jp
+jersey je
+jordan jo
+jpn jp
+jumhurii tojikistan tj
+kampuchea kh
+kazakhstan kz
+kenya ke
+kibris cy
+kiribati ki
+korea kr
+korea (republic of) kr
+kor kr
+kosova ko
+kosovo ko
+kosovo * un resolution ko
+kuwait kw
+kypros cy
+kyrgyzstan kg
+kyrgyz respublikasy kg
+laos la
+lao people's democratic republic la
+lao (people's democratic republic) la
+latvia lv
+latvija lv
+lebanon lb
+lesotho ls
+liberia lr
+libya ly
+libyan arab jamahiriya ly
+liechtenstein li
+lietuva lt
+lithuania lt
+ltu lt
+lubnan lb
+luxembourg lu
+lux lu
+macao mo
+macedonia mk
+madagascar mg
+magyarorszag hu
+makedonija mk
+malawi mw
+malaysia my
+maldives mv
+mali ml
+malta mt
+marshall islands mh
+martinique mq
+mauritania mr
+mauritius mu
+mayotte yt
+mcdonald islands hm
+mexico mx
+mex mx
+micronesia fm
+micronesia, federated states of fm
+miquelon pm
+misr eg
+mocambique mz
+moldova md
+moldova (republic of) md
+monaco mc
+mongolia mn
+mongol uls mn
+montenegro me
+montserrat ms
+morocco ma
+mozambique mz
+muang thai th
+muritaniyah mr
+myanmar mm
+myanma naingngandaw mm
+namibia na
+nauru nr
+nederland nl
+nepal np
+netherlands antilles an
+netherlands nl
+nevis kn
+new caledonia nc
+new zealand nz
+nicaragua ni
+nigeria ng
+niger ne
+nippon jp
+niue nu
+nld nl
+norfolk island nf
+norge no
+northern mariana islands mp
+north korea kp
+norway no
+nor no
+nzl nz
+oesterreich at
+oman om
+pakistan pk
+palau pw
+palestine ps
+palestinian-administered areas ps
+panama pa
+pan pa
+papua new guinea pg
+paraguay py
+people's republic of china cn
+persia ir
+peru pe
+philippines ph
+pilipinas ph
+pitcairn pn
+poland pl
+polska pl
+pol pl
+portugal pt
+principe st
+pr china cn
+puerto rico pr
+pyf pf
+p. r. china cn
+p r china cn
+qatar qa
+qazaqstan kz
+republica dominicana do
+republic of the congo cg
+republika bulgariya bg
+republique centrafricaine cf
+republique democratique du congo cg
+republique du congo cg
+republique francaise fr
+réunion re
+romania ro
+rossiya ru
+rou ro
+russia ru
+russian federation ru
+rus ru
+rwanda rw
+r. o. c. cn
+saint barthélemy bl
+saint helena sh
+saint helena, ascension and tristan da cunha sh
+saint kitts kn
+saint kitts and nevis kn
+saint lucia lc
+saint martin mf
+saint martin (french part) mf
+saint pierre pm
+saint pierre and miquelon pm
+saint vincent vc
+saint vincent and the grenadines vc
+sak'art'velo ge
+samoa ws
+santa sede va
+san marino sm
+sao tome st
+sao tome and principe st
+sao tome e principe st
+sathalanalat paxathipatai paxaxon lao la
+saudi arabia sa
+schweiz ch
+senegal sn
+sen sn
+serbia rs
+seychelles sc
+sgp sg
+shqiperia al
+sierra leone sl
+singapore sg
+sint maarten sx
+sint maarten (dutch part) sx
+slovakia sk
+slovenia si
+slovenija si
+slovensko sk
+slv sv
+solomon islands sb
+somalia so
+south africa za
+south georgia gs
+south korea kr
+south sudan ss
+spain es
+srbija-crna gora rs
+sri lanka lk
+sudan sd
+suisse ch
+suomi fi
+suriname sr
+suriyah sy
+svalbard sj
+svalbard and jan mayen sj
+sverige se
+svizzera ch
+svk sk
+svn si
+swaziland sz
+sweden se
+swe se
+switzerland ch
+syria sy
+syrian arab republic sy
+taehan-min'guk kr
+t'ai-wan tw
+taiwan tw
+tajikistan tj
+tanzania tz
+tanzania (united republic of) tz
+tchad td
+thailand th
+the bahamas bs
+the gambia gm
+the grenadines vc
+the netherlands nl
+the south sandwich islands gs
+timor-leste tl
+tobago tt
+togo tg
+tokelau tk
+tonga to
+trinidad tt
+trinidad and tobago tt
+tunisia tn
+turkey tr
+turkiye tr
+turkmenistan tm
+turks tc
+turks and caicos islands tc
+tur tr
+tuvalu tv
+twn tw
+uganda ug
+uk uk
+ukraine ua
+ukrayina ua
+ukr ua
+uman om
+united arab emirates ae
+united kingdom gb
+united kingdom uk
+united states minor outlying islands um
+united states of america us
+united states us
+uruguay uy
+us us
+usa us
+uzbekistan uz
+uzbekiston respublikasi uz
+u. k. uk
+u. s. us
+u. s. a. us
+vanuatu vu
+vatican city va
+venezuela ve
+vietnam vn
+viet nam vn
+virgin islands vg
+virgin islands (british) vg
+virgin islands, u.s. vi
+wallis wf
+wallis and futuna wf
+western sahara eh
+yeityop'iya et
+yemen ye
+yisra'el il
+yugoslavia mk
+zaf za
+zambia zm
+zhong guo cn
+zimbabwe zw

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
 
 /**
@@ -12,12 +13,12 @@ import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
  * 
  * @author Bartosz Tarnawski
  */
-public class AffiliationTokenizer implements TextTokenizer<AffiliationToken> {
+public class AffiliationTokenizer implements TextTokenizer<Token<AffiliationLabel>> {
 	
-	private static List<AffiliationToken> asciiTextToTokens(String text,
+	private static List<Token<AffiliationLabel>> asciiTextToTokens(String text,
 			List<Integer> asciiIndices) {
 		final String DELIMITER_REGEX = "\\d+|\\W|_";
-		List<AffiliationToken>  tokens = new ArrayList<AffiliationToken>();
+		List<Token<AffiliationLabel>>  tokens = new ArrayList<Token<AffiliationLabel>>();
 		Matcher delimeterMatcher = Pattern.compile(DELIMITER_REGEX).matcher(text);
 		int lastEnd = 0;
 		
@@ -28,7 +29,7 @@ public class AffiliationTokenizer implements TextTokenizer<AffiliationToken> {
 			// skippedText may contain only letters, it may be an empty string
 			String skippedText = text.substring(lastEnd, currentStart);
 			if (!skippedText.equals("")) {
-				tokens.add(new AffiliationToken(skippedText, 
+				tokens.add(new Token<AffiliationLabel>(skippedText, 
 						asciiIndices.get(lastEnd), asciiIndices.get(currentStart)));
 			}
 
@@ -36,7 +37,7 @@ public class AffiliationTokenizer implements TextTokenizer<AffiliationToken> {
 			String matchedText = text.substring(currentStart, currentEnd);
 			// ignore whitespace
 			if (!matchedText.matches("\\s")) {
-				tokens.add(new AffiliationToken(matchedText,
+				tokens.add(new Token<AffiliationLabel>(matchedText,
 						asciiIndices.get(currentStart), asciiIndices.get(currentEnd)));
 			}
 			
@@ -45,7 +46,7 @@ public class AffiliationTokenizer implements TextTokenizer<AffiliationToken> {
 		
 		String skippedText = text.substring(lastEnd, text.length());
 		if (!skippedText.equals("")) {
-			tokens.add(new AffiliationToken(skippedText, 
+			tokens.add(new Token<AffiliationLabel>(skippedText, 
 					asciiIndices.get(lastEnd), asciiIndices.get(text.length())));
 		}
 		
@@ -95,7 +96,7 @@ public class AffiliationTokenizer implements TextTokenizer<AffiliationToken> {
 	 * @return list of tokens
 	 */
 	@Override
-	public List<AffiliationToken> tokenize(String text) {
+	public List<Token<AffiliationLabel>> tokenize(String text) {
 		List<Integer> asciiIndices = getAsciiSubstringIndices(text);
 		String asciiText = getSubstring(text, asciiIndices);
 		asciiIndices.add(text.length()); // Guardian index

@@ -1,13 +1,13 @@
 package pl.edu.icm.cermine.metadata.affiliation.features;
 
-import pl.edu.icm.cermine.metadata.affiliation.features.AffiliationDictionaryFeature;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 public class AffiliationDictionaryFeatureTest {
 
@@ -36,7 +36,7 @@ public class AffiliationDictionaryFeatureTest {
 		String text = "elo meLo  320, Elo Melo 32.0. Hejka ziomeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
 		//            "n...n.....n..n.n...n....n.nnn.y.....y........yyyyn.n.n.n..........n.............nn"
 		int expectFeature[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0};
-		List<AffiliationToken> tokens = 
+		List<Token<AffiliationLabel>> tokens = 
 				new AffiliationTokenizer().tokenize(MetadataTools.clean(text));
 		assertEquals(expectFeature.length, tokens.size());
 		featureCaseSensitive.calculateDictionaryFeatures(tokens);

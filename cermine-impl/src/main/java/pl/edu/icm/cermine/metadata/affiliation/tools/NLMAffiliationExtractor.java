@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.NLMParsableStringExtractor;
 
 /**
@@ -15,7 +15,7 @@ import pl.edu.icm.cermine.parsing.tools.NLMParsableStringExtractor;
  * @author Bartosz Tarnawski
  */
 public class NLMAffiliationExtractor extends
-NLMParsableStringExtractor<AffiliationLabel, AffiliationToken, DocumentAffiliation> {
+        NLMParsableStringExtractor<AffiliationLabel, Token<AffiliationLabel>, DocumentAffiliation> {
 
 	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
 	
@@ -54,10 +54,10 @@ NLMParsableStringExtractor<AffiliationLabel, AffiliationToken, DocumentAffiliati
     		new HashMap<String, AffiliationLabel>();
 
     static {
-        TAGS_LABEL_MAP.put("addr-line",   	AffiliationLabel.ADDRESS);
-        TAGS_LABEL_MAP.put("institution",   AffiliationLabel.INSTITUTION);
-        TAGS_LABEL_MAP.put("country",   	AffiliationLabel.COUNTRY);
-        TAGS_LABEL_MAP.put("author",   		AffiliationLabel.AUTHOR);
+        TAGS_LABEL_MAP.put("addr-line",   	AffiliationLabel.ADDR);
+        TAGS_LABEL_MAP.put("institution",   AffiliationLabel.INST);
+        TAGS_LABEL_MAP.put("country",   	AffiliationLabel.COUN);
+        TAGS_LABEL_MAP.put("author",   		AffiliationLabel.AUTH);
         TAGS_LABEL_MAP.put("text",          AffiliationLabel.TEXT);
     }
 }

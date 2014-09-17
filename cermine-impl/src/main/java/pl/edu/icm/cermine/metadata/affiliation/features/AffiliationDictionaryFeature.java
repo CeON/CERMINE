@@ -2,8 +2,9 @@ package pl.edu.icm.cermine.metadata.affiliation.features;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
-import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.parsing.features.KeywordFeatureCalculator;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 
 /**
@@ -11,7 +12,7 @@ import pl.edu.icm.cermine.parsing.features.KeywordFeatureCalculator;
  * 
  * @author Bartosz Tarnawski
  */
-public class AffiliationDictionaryFeature extends KeywordFeatureCalculator<AffiliationToken> {
+public class AffiliationDictionaryFeature extends KeywordFeatureCalculator<Token<AffiliationLabel>> {
 	
 	/**
 	 * @param FeatureString the string which will be added to the matching tokens' features lists

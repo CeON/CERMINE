@@ -23,10 +23,10 @@ import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
-import pl.edu.icm.cermine.metadata.model.DocumentAffiliation.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
 import pl.edu.icm.cermine.metadata.model.DocumentDate;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -65,7 +65,7 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
         return metadata;
     }
     
-    private Element convertArticleMetadata(DocumentMetadata source) {
+    private Element convertArticleMetadata(DocumentMetadata source) throws TransformationException {
         Element metadata = new Element(TAG_ARTICLE_META);
 
         String[] titlePath = new String[]{TAG_TITLE_GROUP, TAG_ARTICLE_TITLE};
@@ -148,19 +148,12 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
         return contributor;
     }
     
-    private Element convertAffiliation(DocumentAffiliation affiliation) {
+    private Element convertAffiliation(DocumentAffiliation affiliation) throws TransformationException {
         Element aff = new Element(TAG_AFFILIATION);
         aff.setAttribute(ATTR_ID, affiliation.getId());
         addElement(aff, TAG_LABEL, affiliation.getId());
-        for (AffiliationToken token : affiliation.getTokens()) {
-            if (token.getTag() == null) {
-                aff.addContent(token.getText());
-            } else if (token.getTag().equals(DocumentAffiliation.TAG_COUNTRY)) {
-                addElement(aff, TAG_COUNTRY, token.getText());
-            } else if (token.getTag().equals(DocumentAffiliation.TAG_INSTITUTION)) {
-                addElement(aff, TAG_INSTITUTION, token.getText());
-            }
-        }
+        ParsableStringToNLMExporter.addText(aff, affiliation.getRawText(), affiliation.getTokens());
+        
         return aff;
     }
     
@@ -224,14 +217,12 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
     private static final String TAG_ARTICLE_TITLE               = "article-title";
     private static final String TAG_CONTRIB                     = "contrib";
     private static final String TAG_CONTRIB_GROUP               = "contrib-group";
-    private static final String TAG_COUNTRY                     = "country";
     private static final String TAG_DATE                        = "date";
     private static final String TAG_DAY                         = "day";
     private static final String TAG_EMAIL                       = "email";
     private static final String TAG_FPAGE                       = "fpage";
     private static final String TAG_FRONT                       = "front";
     private static final String TAG_HISTORY                     = "history";
-    private static final String TAG_INSTITUTION                 = "institution";
     private static final String TAG_ISSN                        = "issn";
     private static final String TAG_ISSUE                       = "issue";
     private static final String TAG_JOURNAL_META                = "journal-meta";

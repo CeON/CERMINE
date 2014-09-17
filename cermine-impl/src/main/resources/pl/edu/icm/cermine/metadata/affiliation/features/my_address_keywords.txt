@@ -1,0 +1,9 @@
+street
+road
+building
+park
+way
+bldg
+place
+avenue
+drive

@@ -35,14 +35,18 @@
         <aff id="0">
           <label>0</label>
           <institution>Department of Surgery, University of Calgary</institution>
-          , Calgary,
+          ,
+          <addr-line>Calgary</addr-line>
+          ,
           <country>Canada</country>
         </aff>
         <aff id="1">
           <label>1</label>
           <institution>Department of Surgery, University of British Columbia</institution>
           ,
-          <country>Vancouver, Canada</country>
+          <addr-line>Vancouver</addr-line>
+          , 
+          <country>Canada</country>
         </aff>
       </contrib-group>
       <abstract>

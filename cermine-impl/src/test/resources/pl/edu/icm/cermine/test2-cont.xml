@@ -38,8 +38,10 @@
         <aff id="0">
           <label>0</label>
           <institution>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland</institution>
-          , 123 St. Stephen's Green,
-          <country>Dublin 2, Ireland</country>
+          ,
+          <addr-line>123 St. Stephen's Green, Dublin 2</addr-line>
+          ,
+          <country>Ireland</country>
         </aff>
       </contrib-group>
       <abstract>

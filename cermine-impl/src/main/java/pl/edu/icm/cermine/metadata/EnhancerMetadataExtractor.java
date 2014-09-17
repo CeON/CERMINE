@@ -63,7 +63,6 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<DocumentMeta
                 new IssnEnhancer(),
                 new EditorEnhancer(),
                 new AffiliationGeometricEnhancer(),
-                new AffiliationCountryEnhancer(),
                 new ReceivedDateEnhancer(),
                 new AcceptedDateEnhancer(),
                 new PublishedDateEnhancer(),

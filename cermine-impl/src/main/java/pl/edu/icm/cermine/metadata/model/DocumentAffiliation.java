@@ -19,16 +19,24 @@
 package pl.edu.icm.cermine.metadata.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
+
+import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
+import pl.edu.icm.cermine.parsing.model.ParsableString;
+import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
 
 /**
+ * Represents a document affiliation as a parsable string.
  *
  * @author Dominika Tkaczyk
+ * @author Bartosz Tarnawski
  */
-public class DocumentAffiliation {
+public class DocumentAffiliation implements ParsableString<AffiliationToken> {
 
     private String id;
     
@@ -36,7 +44,11 @@ public class DocumentAffiliation {
     
     private String rawText;
     
-    private List<AffiliationToken> tokens = new ArrayList<AffiliationToken>();
+    private List<AffiliationToken> tokens;
+    
+    public DocumentAffiliation(String rawText) {
+    	this("", rawText);
+    }
 
     public DocumentAffiliation(String id, String rawText) {
         this(id, null, rawText);
@@ -44,9 +56,9 @@ public class DocumentAffiliation {
     
     public DocumentAffiliation(String id, String index, String rawText) {
         this.id = id;
-        this.index = index;
+        this.index = MetadataTools.clean(index);
         this.rawText = MetadataTools.clean(rawText);
-        tokens.add(new AffiliationToken(0, this.rawText.length(), this.rawText));
+        this.tokens = new ArrayList<AffiliationToken>();
     }
 
     public String getId() {
@@ -72,90 +84,34 @@ public class DocumentAffiliation {
     public void setRawText(String rawText) {
         this.rawText = rawText;
     }
+    
+	public List<AffiliationToken> getTokens() {
+		return tokens;
+	}
 
-    void clean() {
+	public void setTokens(List<AffiliationToken> tokens) {
+		this.tokens = tokens;
+	}
+
+	public void addToken(AffiliationToken token) {
+		this.tokens.add(token);
+		
+	}
+
+	public void appendText(String text) {
+		this.rawText += text;
+	}
+
+    public void clean() {
         index = MetadataTools.clean(index);
         rawText = MetadataTools.clean(rawText);
     }
-
-    public void addInstitution(int bIndex, int eIndex){
-        addToken(bIndex, eIndex, TAG_INSTITUTION);
-    }
     
-    public void addCountry(int bIndex, int eIndex){
-        addToken(bIndex, eIndex, TAG_COUNTRY);
+    // For testing purposes only
+    public String toXMLString() throws TransformationException {
+		Element aff = new Element("aff");
+		ParsableStringToNLMExporter.addText(aff, rawText, tokens);
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString(aff);
     }
-    
-    public void addToken(int bIndex, int eIndex, String tag) {
-        List<AffiliationToken> significantTokens = new ArrayList<AffiliationToken>();
-        for (AffiliationToken token : tokens) {
-            if ((bIndex >= token.startIndex && bIndex < token.endIndex)
-                    || (eIndex >= token.startIndex && eIndex < token.endIndex)
-                    || (token.startIndex >= bIndex && token.startIndex < eIndex)
-                    || (token.endIndex >= bIndex && token.endIndex < eIndex)) {
-                significantTokens.add(token);
-            }
-        }
-        if (significantTokens.isEmpty()) {
-            return;
-        }
-        tokens.removeAll(significantTokens);
-        AffiliationToken first = significantTokens.get(0);
-        AffiliationToken last = significantTokens.get(significantTokens.size()-1);
-        if (bIndex > first.startIndex) {
-            tokens.add(new AffiliationToken(first.startIndex, bIndex, first.getTag(), rawText.substring(first.startIndex, bIndex)));
-        }
-        if (eIndex > bIndex) {
-            tokens.add(new AffiliationToken(bIndex, eIndex, tag, rawText.substring(bIndex, eIndex)));
-        }
-        if (last.endIndex > eIndex) {
-            tokens.add(new AffiliationToken(eIndex, last.endIndex, last.getTag(), rawText.substring(eIndex, last.endIndex)));
-        }
-        
-        Collections.sort(tokens, new Comparator<AffiliationToken>() {
-
-            @Override
-            public int compare(AffiliationToken t, AffiliationToken t1) {
-                return Integer.valueOf(t.startIndex).compareTo(t1.startIndex);
-            }
-        });
-    }
-
-    public List<AffiliationToken> getTokens() {
-        return tokens;
-    }
-
-        
-    public static final String TAG_COUNTRY = "country";
-    public static final String TAG_INSTITUTION = "institution";
-    
-    
-    public static class AffiliationToken {
-        private int startIndex;
-        private int endIndex;
-        private String tag;
-        private String text;
-
-        public AffiliationToken(int startIndex, int endIndex, String text) {
-            this.startIndex = startIndex;
-            this.endIndex = endIndex;
-            this.text = text;
-        }
-
-        public AffiliationToken(int startIndex, int endIndex, String tag, String text) {
-            this.startIndex = startIndex;
-            this.endIndex = endIndex;
-            this.tag = tag;
-            this.text = text;
-        }
-
-        public String getTag() {
-            return tag;
-        }
-
-        public String getText() {
-            return text;
-        }
-    }
-    
 }

@@ -3,9 +3,8 @@ package pl.edu.icm.cermine.parsing.features;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 
 /**

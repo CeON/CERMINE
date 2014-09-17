@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.parsing.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
@@ -107,6 +106,7 @@ public abstract class Token<L> {
 	}
 	
 	// For testing purposes only
+    @Override
 	public boolean equals(Object obj) {
         if (!(obj instanceof Token))
             return false;
@@ -121,6 +121,16 @@ public abstract class Token<L> {
             append(endIndex, rhs.endIndex).
             append(label, rhs.label).
             isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + (this.text != null ? this.text.hashCode() : 0);
+        hash = 23 * hash + this.startIndex;
+        hash = 23 * hash + this.endIndex;
+        hash = 23 * hash + (this.label != null ? this.label.hashCode() : 0);
+        return hash;
     }
 	
 	/**

@@ -1,23 +1,17 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.StringReader;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.pipe.iterator.LineGroupIterator;
 import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.types.LabelsSequence;
 import edu.umass.cs.mallet.grmm.learning.ACRF;
-
+import java.io.*;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationLabel;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
 
@@ -27,12 +21,12 @@ import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
  * @author Dominika Tkaczyk
  * @author Bartosz Tarnawski
  */
-public class AffiliationCRFTokenClassifier extends TokenClassifier<AffiliationToken> {
+public class AffiliationCRFTokenClassifier implements TokenClassifier<AffiliationToken> {
 
 	private ACRF model;
 	private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
 	private static final String DEFAULT_MODEL_FILE =
-			"/pl/edu/icm/cermine/metadata/affiliations/parsing/acrf-affiliations-pubmed.ser.gz";
+			"/pl/edu/icm/cermine/metadata/affiliation/acrf-affiliations-pubmed.ser.gz";
 
 	/**
 	 * @param modelInputStream the stream representing the ACRF model to be used

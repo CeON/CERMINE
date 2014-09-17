@@ -1,11 +1,10 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
 
 /**
@@ -13,7 +12,7 @@ import pl.edu.icm.cermine.parsing.tools.TextTokenizer;
  * 
  * @author Bartosz Tarnawski
  */
-public class AffiliationTokenizer extends TextTokenizer<AffiliationToken> {
+public class AffiliationTokenizer implements TextTokenizer<AffiliationToken> {
 	
 	private static List<AffiliationToken> asciiTextToTokens(String text,
 			List<Integer> asciiIndices) {

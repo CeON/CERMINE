@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine.parsing.tools;
 
 import java.util.List;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.parsing.model.Token;
 
@@ -11,7 +10,7 @@ import pl.edu.icm.cermine.parsing.model.Token;
  * @author Bartosz Tarnawski
  * @param <T> token type
  */
-public abstract class TokenClassifier<T extends Token<?>> {
+public interface TokenClassifier<T extends Token<?>> {
 	/**
 	 * Predicts and sets a label for each of the tokens.
 	 * The tokens are assumed to hold appropriate lists of features.
@@ -19,5 +18,5 @@ public abstract class TokenClassifier<T extends Token<?>> {
 	 * @param tokens
 	 * @throws AnalysisException
 	 */
-	public abstract void classify(List<T> tokens) throws AnalysisException; 
+	void classify(List<T> tokens) throws AnalysisException; 
 }

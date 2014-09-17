@@ -1,12 +1,11 @@
-package pl.edu.icm.cermine.metadata.affiliations.parsing;
-
-import static org.junit.Assert.*;
+package pl.edu.icm.cermine.metadata.affiliation;
 
 import org.jdom.output.XMLOutputter;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.affiliation.AffiliationParser;
 
 public class AffiliationParserTest {
 
@@ -22,7 +21,7 @@ public class AffiliationParserTest {
 				", " +
 				"<country>USA</country>" +
 				"</aff>";
-		String actual = outputter.outputString(parser.parseString(input));
+		String actual = outputter.outputString(parser.parse(input));
 		assertEquals(expected, actual);
 	}
 
@@ -42,7 +41,7 @@ public class AffiliationParserTest {
 				", " +
 				"<country>USA</country>" +
 				"</aff>";
-		String actual = outputter.outputString(parser.parseString(input));
+		String actual = outputter.outputString(parser.parse(input));
 		assertEquals(expected, actual);
 	}
 

@@ -1,13 +1,9 @@
 package pl.edu.icm.cermine.parsing.tools;
 
-import static org.junit.Assert.*;
-
 import java.util.Arrays;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 
 public class GrmmUtilsTest {
 

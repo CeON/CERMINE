@@ -1,17 +1,17 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import static org.junit.Assert.*;
-
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationFeatureExtractor;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationCRFTokenClassifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationCRFTokenClassifier;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 
 public class AffiliationCRFTokenClassifierTest {

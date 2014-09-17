@@ -1,14 +1,10 @@
 package pl.edu.icm.cermine.parsing.model;
 
-import static org.junit.Assert.*;
-
 import java.util.Arrays;
 import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.parsing.model.Token;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 
 public class TokenTest {
 

@@ -20,12 +20,9 @@ package pl.edu.icm.cermine.metadata.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
 import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
@@ -77,6 +74,7 @@ public class DocumentAffiliation implements ParsableString<AffiliationToken> {
         this.index = index;
     }
 
+    @Override
     public String getRawText() {
         return rawText;
     }
@@ -85,23 +83,28 @@ public class DocumentAffiliation implements ParsableString<AffiliationToken> {
         this.rawText = rawText;
     }
     
+    @Override
 	public List<AffiliationToken> getTokens() {
 		return tokens;
 	}
 
+    @Override
 	public void setTokens(List<AffiliationToken> tokens) {
 		this.tokens = tokens;
 	}
 
+    @Override
 	public void addToken(AffiliationToken token) {
 		this.tokens.add(token);
 		
 	}
 
+    @Override
 	public void appendText(String text) {
 		this.rawText += text;
 	}
 
+    @Override
     public void clean() {
         index = MetadataTools.clean(index);
         rawText = MetadataTools.clean(rawText);

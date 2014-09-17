@@ -1,7 +1,6 @@
 package pl.edu.icm.cermine.parsing.tools;
 
 import org.jdom.Element;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
@@ -14,7 +13,7 @@ import pl.edu.icm.cermine.parsing.model.ParsableString;
  *
  * @param <PS> parsable string type
  */
-public abstract class ParsableStringParser<PS extends ParsableString<?>> {
+public interface ParsableStringParser<PS extends ParsableString<?>> {
 	
 	/**
 	 * Sets the token list of the parsable string so that their labels
@@ -22,7 +21,7 @@ public abstract class ParsableStringParser<PS extends ParsableString<?>> {
 	 * @param text the parsable string instance to parse
 	 * @throws AnalysisException 
 	 */
-	public abstract void parse(PS text) throws AnalysisException;
+	void parse(PS text) throws AnalysisException;
 	
 	/**
 	 * @param text string to parse
@@ -30,5 +29,5 @@ public abstract class ParsableStringParser<PS extends ParsableString<?>> {
 	 * @throws TransformationException 
 	 * @throws AnalysisException 
 	 */
-	public abstract Element parseString(String text) throws AnalysisException, TransformationException;
+	Element parse(String text) throws AnalysisException, TransformationException;
 }

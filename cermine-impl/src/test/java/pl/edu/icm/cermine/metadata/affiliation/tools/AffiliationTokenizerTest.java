@@ -1,13 +1,11 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import static org.junit.Assert.*;
-
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
 import java.util.Arrays;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 

@@ -1,10 +1,8 @@
 package pl.edu.icm.cermine.parsing.tools;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-
-import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 
 public class TextClassifierTest {
 
@@ -13,9 +11,9 @@ public class TextClassifierTest {
 		String word = "BabamaKota";
 		String notWord1 = "Baba ma";
 		String notWord2 = "Baba123";
-		assertEquals(true, TextClassifier.isWord(word));
-		assertEquals(false, TextClassifier.isWord(notWord1));
-		assertEquals(false, TextClassifier.isWord(notWord2));
+		assertTrue(TextClassifier.isWord(word));
+		assertFalse(TextClassifier.isWord(notWord1));
+		assertFalse(TextClassifier.isWord(notWord2));
 	}
 
 	@Test
@@ -23,9 +21,9 @@ public class TextClassifierTest {
 		String number = "53253325";
 		String notNumber1 = "123 ";
 		String notNumber2 = "123b";
-		assertEquals(true, TextClassifier.isNumber(number));
-		assertEquals(false, TextClassifier.isNumber(notNumber1));
-		assertEquals(false, TextClassifier.isNumber(notNumber2));
+		assertTrue(TextClassifier.isNumber(number));
+		assertFalse(TextClassifier.isNumber(notNumber1));
+		assertFalse(TextClassifier.isNumber(notNumber2));
 	}
 
 	@Test
@@ -35,11 +33,11 @@ public class TextClassifierTest {
 		String notUpperCase = "aM";
 		String moreUpperCase = "MM";
 		String notWord = "Wombat1";
-		assertEquals(true, TextClassifier.isOnlyFirstUpperCase(firstUpperCase1));
-		assertEquals(true, TextClassifier.isOnlyFirstUpperCase(firstUpperCase2));
-		assertEquals(false, TextClassifier.isOnlyFirstUpperCase(notUpperCase));
-		assertEquals(false, TextClassifier.isOnlyFirstUpperCase(moreUpperCase));
-		assertEquals(false, TextClassifier.isOnlyFirstUpperCase(notWord));
+		assertTrue(TextClassifier.isOnlyFirstUpperCase(firstUpperCase1));
+		assertTrue(TextClassifier.isOnlyFirstUpperCase(firstUpperCase2));
+		assertFalse(TextClassifier.isOnlyFirstUpperCase(notUpperCase));
+		assertFalse(TextClassifier.isOnlyFirstUpperCase(moreUpperCase));
+		assertFalse(TextClassifier.isOnlyFirstUpperCase(notWord));
 	}
 
 	@Test
@@ -49,11 +47,11 @@ public class TextClassifierTest {
 		String notUpperCase = "aM";
 		String moreUpperCase = "MM";
 		String notWord = "W1";
-		assertEquals(true, TextClassifier.isAllUpperCase(firstUpperCase1));
-		assertEquals(false, TextClassifier.isAllUpperCase(firstUpperCase2));
-		assertEquals(false, TextClassifier.isAllUpperCase(notUpperCase));
-		assertEquals(true, TextClassifier.isAllUpperCase(moreUpperCase));
-		assertEquals(false, TextClassifier.isAllUpperCase(notWord));
+		assertTrue(TextClassifier.isAllUpperCase(firstUpperCase1));
+		assertFalse(TextClassifier.isAllUpperCase(firstUpperCase2));
+		assertFalse(TextClassifier.isAllUpperCase(notUpperCase));
+		assertTrue(TextClassifier.isAllUpperCase(moreUpperCase));
+		assertFalse(TextClassifier.isAllUpperCase(notWord));
 	}
 
 	@Test
@@ -63,11 +61,11 @@ public class TextClassifierTest {
 		String separator3 = ";";
 		String notSeparator = ":";
 		String twoSeparators = "..";
-		assertEquals(true, TextClassifier.isSeparator(separator1));
-		assertEquals(true, TextClassifier.isSeparator(separator2));
-		assertEquals(true, TextClassifier.isSeparator(separator3));
-		assertEquals(false, TextClassifier.isSeparator(notSeparator));
-		assertEquals(false, TextClassifier.isSeparator(twoSeparators));
+		assertTrue(TextClassifier.isSeparator(separator1));
+		assertTrue(TextClassifier.isSeparator(separator2));
+		assertTrue(TextClassifier.isSeparator(separator3));
+		assertFalse(TextClassifier.isSeparator(notSeparator));
+		assertFalse(TextClassifier.isSeparator(twoSeparators));
 	}
 	
 	@Test
@@ -76,10 +74,10 @@ public class TextClassifierTest {
 		String num = "1";
 		String sep = ",";
 		String other = "(";
-		assertEquals(false, TextClassifier.isNonAlphanumSep(alpha));
-		assertEquals(false, TextClassifier.isNonAlphanumSep(num));
-		assertEquals(false, TextClassifier.isNonAlphanumSep(sep));
-		assertEquals(true, TextClassifier.isNonAlphanumSep(other));
+		assertFalse(TextClassifier.isNonAlphanumSep(alpha));
+		assertFalse(TextClassifier.isNonAlphanumSep(num));
+		assertFalse(TextClassifier.isNonAlphanumSep(sep));
+		assertTrue(TextClassifier.isNonAlphanumSep(other));
 	}
 	
 }

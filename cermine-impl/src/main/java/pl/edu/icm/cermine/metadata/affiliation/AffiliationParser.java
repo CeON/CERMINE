@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.metadata.affiliations.parsing;
+package pl.edu.icm.cermine.metadata.affiliation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,15 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationCRFTokenClassifier;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationFeatureExtractor;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationCRFTokenClassifier;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationFeatureExtractor;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.tools.ParsableStringParser;
 import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
@@ -25,16 +23,16 @@ import pl.edu.icm.cermine.parsing.tools.ParsableStringToNLMExporter;
  * 
  * @author Bartosz Tarnawski
  */
-public class AffiliationParser extends ParsableStringParser<DocumentAffiliation> {
+public class AffiliationParser implements ParsableStringParser<DocumentAffiliation> {
 
 	private AffiliationTokenizer tokenizer = null;
 	private AffiliationFeatureExtractor featureExtractor = null;
 	private AffiliationCRFTokenClassifier classifier = null;
 	
 	private static final String DEFAULT_MODEL_FILE = 
-			"/pl/edu/icm/cermine/metadata/affiliations/parsing/acrf-affiliations-pubmed.ser.gz";
+			"/pl/edu/icm/cermine/metadata/affiliation/acrf-affiliations-pubmed.ser.gz";
 	private static final String DEFAULT_COMMON_WORDS_FILE = 
-			"/pl/edu/icm/cermine/metadata/affiliations/parsing/common-words-affiliations-pubmed.txt";
+			"/pl/edu/icm/cermine/metadata/affiliation/common-words-affiliations-pubmed.txt";
 
 	
 	private List<String> loadWords(String wordsFileName) throws AnalysisException {
@@ -87,6 +85,7 @@ public class AffiliationParser extends ParsableStringParser<DocumentAffiliation>
 	 * @param affiliation
 	 * @throws AnalysisException
 	 */
+    @Override
 	public void parse(DocumentAffiliation affiliation) throws AnalysisException {
 		affiliation.setTokens(tokenizer.tokenize(affiliation.getRawText()));
 		featureExtractor.calculateFeatures(affiliation);
@@ -99,7 +98,8 @@ public class AffiliationParser extends ParsableStringParser<DocumentAffiliation>
 	 * @throws AnalysisException
 	 * @throws TransformationException 
 	 */
-	public Element parseString(String affiliationString) throws AnalysisException,
+    @Override
+	public Element parse(String affiliationString) throws AnalysisException,
 	TransformationException {
 		DocumentAffiliation aff = new DocumentAffiliation(affiliationString);
 		parse(aff);
@@ -116,7 +116,7 @@ public class AffiliationParser extends ParsableStringParser<DocumentAffiliation>
 		XMLOutputter outputter = new XMLOutputter();
 		while (true) {
 			String affiliationString = br.readLine();
-			outputter.outputString(parser.parseString(affiliationString));
+			outputter.outputString(parser.parse(affiliationString));
 		}
 	}
 }

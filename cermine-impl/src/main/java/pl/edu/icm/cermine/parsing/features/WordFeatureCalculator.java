@@ -1,9 +1,8 @@
 package pl.edu.icm.cermine.parsing.features;
 
 import java.util.List;
-
-import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
  * A 'word feature' of a token is a binary feature identifying the token's text.

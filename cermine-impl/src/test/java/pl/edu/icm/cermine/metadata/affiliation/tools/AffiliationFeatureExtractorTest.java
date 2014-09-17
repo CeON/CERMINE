@@ -1,27 +1,18 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import static org.junit.Assert.*;
-
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationFeatureExtractor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationFeatureExtractor;
+import pl.edu.icm.cermine.metadata.affiliation.features.AffiliationDictionaryFeature;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
-import pl.edu.icm.cermine.parsing.features.BinaryTokenFeatureCalculator;
-import pl.edu.icm.cermine.parsing.features.IsAllUpperCaseFeature;
-import pl.edu.icm.cermine.parsing.features.IsNonAlphanumFeature;
-import pl.edu.icm.cermine.parsing.features.IsNumberFeature;
-import pl.edu.icm.cermine.parsing.features.IsSeparatorFeature;
-import pl.edu.icm.cermine.parsing.features.IsUpperCaseFeature;
-import pl.edu.icm.cermine.parsing.features.KeywordFeatureCalculator;
-import pl.edu.icm.cermine.parsing.features.WordFeatureCalculator;
+import pl.edu.icm.cermine.parsing.features.*;
 
 public class AffiliationFeatureExtractorTest {
 

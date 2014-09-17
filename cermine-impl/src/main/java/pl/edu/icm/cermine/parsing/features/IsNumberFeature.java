@@ -1,7 +1,7 @@
 package pl.edu.icm.cermine.parsing.features;
 
-import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
+import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.TextClassifier;
 
 /**

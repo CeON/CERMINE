@@ -1,12 +1,11 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.affiliation.features.AffiliationDictionaryFeature;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.features.*;
 import pl.edu.icm.cermine.parsing.tools.FeatureExtractor;
@@ -16,7 +15,7 @@ import pl.edu.icm.cermine.parsing.tools.FeatureExtractor;
  * 
  * @author Bartosz Tarnawski
  */
-public class AffiliationFeatureExtractor extends FeatureExtractor<DocumentAffiliation> {
+public class AffiliationFeatureExtractor implements FeatureExtractor<DocumentAffiliation> {
 
 	private List<BinaryTokenFeatureCalculator> binaryFeatures;
 	private List<KeywordFeatureCalculator<AffiliationToken>> keywordFeatures;

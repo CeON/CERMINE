@@ -1,8 +1,7 @@
-package pl.edu.icm.cermine.metadata.affiliations.model;
+package pl.edu.icm.cermine.metadata.model;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**

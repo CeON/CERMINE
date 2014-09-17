@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.parsing.tools;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import pl.edu.icm.cermine.parsing.model.Token;
 
 /**

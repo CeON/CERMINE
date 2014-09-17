@@ -8,12 +8,12 @@ import pl.edu.icm.cermine.parsing.model.ParsableString;
  * @author Bartosz Tarnawski
  * @param <PS> type of the parsable string to process
  */
-public abstract class FeatureExtractor<PS extends ParsableString<?>> {
+public interface FeatureExtractor<PS extends ParsableString<?>> {
 	
 	/**
 	 * Adds appropriate strings representing features to the tokens of the parsable string.
 	 * 
 	 * @param parsableString the tokenized parsable string to be processed
 	 */
-	public abstract void calculateFeatures(PS parsableString);
+	void calculateFeatures(PS parsableString);
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -13,9 +12,8 @@ import org.jdom.Text;
 import org.jdom.filter.Filter;
 import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
-
-import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
+import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
  * Generic extractor, which transform NLM XML's into the parsable string representation.
@@ -29,7 +27,6 @@ import pl.edu.icm.cermine.parsing.model.ParsableString;
  */
 public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS extends ParsableString<T>> {
 	
-
     protected abstract List<String> getTags();
     protected abstract String getKeyText();
 	protected abstract Map<String, L> getTagLabelMap();

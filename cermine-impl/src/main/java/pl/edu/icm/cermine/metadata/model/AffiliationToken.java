@@ -1,4 +1,4 @@
-package pl.edu.icm.cermine.metadata.affiliations.model;
+package pl.edu.icm.cermine.metadata.model;
 
 import pl.edu.icm.cermine.parsing.model.Token;
 

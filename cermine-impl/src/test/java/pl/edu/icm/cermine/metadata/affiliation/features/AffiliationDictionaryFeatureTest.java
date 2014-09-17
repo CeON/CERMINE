@@ -1,15 +1,12 @@
-package pl.edu.icm.cermine.metadata.affiliations.features;
+package pl.edu.icm.cermine.metadata.affiliation.features;
 
-import static org.junit.Assert.*;
-
+import pl.edu.icm.cermine.metadata.affiliation.features.AffiliationDictionaryFeature;
 import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.affiliations.features.AffiliationDictionaryFeature;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 
 public class AffiliationDictionaryFeatureTest {

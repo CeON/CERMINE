@@ -1,28 +1,12 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import java.io.*;
+import java.util.*;
+import org.apache.commons.cli.*;
 import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
 import pl.edu.icm.cermine.parsing.tools.TextClassifier;
@@ -44,10 +28,9 @@ public class AffiliationTrainingDataExporter {
 	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
 	private static AffiliationFeatureExtractor featureExtractor = null;
 
-
-	private static final String DEFAULT_INPUT = "/home/bartek/Projects/affiliations/javatests/affs-real-like.xml";
-	private static final String DEFAULT_OUTPUT = "/home/bartek/Projects/affiliations/javatests/features-actual-xml.txt";
-	private static final String DEFAULT_WORDS = "/home/bartek/Projects/affiliations/javatests/words-actual-xml.txt";
+	private static final String DEFAULT_INPUT = "affiliations/javatests/affs-real-like.xml";
+	private static final String DEFAULT_OUTPUT = "affiliations/javatests/features-actual-xml.txt";
+	private static final String DEFAULT_WORDS = "affiliations/javatests/words-actual-xml.txt";
 	private static final int DEFAULT_NEIGHBOR_THRESHOLD = 1;
 	private static final int DEFAULT_RARE_THRESHOLD = 25;
 	private static final String DEFAULT_INPUT_TYPE = "xml";
@@ -96,7 +79,7 @@ public class AffiliationTrainingDataExporter {
 	
 	private static List<String> loadCommonWords(BufferedReader wordsReader) throws IOException {
 		List<String> words = new ArrayList<String>();
-		String text = null;
+        String text;
         while ((text = wordsReader.readLine()) != null) {
                 words.add(text);
         }
@@ -106,7 +89,7 @@ public class AffiliationTrainingDataExporter {
 	private static List<DocumentAffiliation> loadAffiliationsFromTxt(BufferedReader reader)
 			throws IOException {
 		List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
-        String text = null;
+        String text;
         while ((text = reader.readLine()) != null) {
                 DocumentAffiliation affiliation = new DocumentAffiliation(text);
                 affiliation.setTokens(tokenizer.tokenize(affiliation.getRawText()));
@@ -204,7 +187,7 @@ public class AffiliationTrainingDataExporter {
 				throw new ParseException("Unknown input type: " + inputType);
 			}
 			
-			List <String> commonWords = null;
+			List <String> commonWords;
 			if (loadWords) {
 				commonWords = loadCommonWords(wordsReader);
 			} else {
@@ -227,9 +210,7 @@ public class AffiliationTrainingDataExporter {
 			}
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		} finally {
 			try {
 				if (reader != null) {

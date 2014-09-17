@@ -1,11 +1,9 @@
 package pl.edu.icm.cermine.parsing.tools;
 
 import java.util.List;
-
 import org.jdom.Content;
 import org.jdom.Element;
 import org.jdom.Text;
-
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.parsing.model.Token;
 

@@ -1,18 +1,15 @@
 package pl.edu.icm.cermine.parsing.tools;
 
-import static org.junit.Assert.*;
-
 import java.util.Arrays;
 import java.util.List;
-
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationLabel;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 
 public class ParsableStringToNLMExporterTest {

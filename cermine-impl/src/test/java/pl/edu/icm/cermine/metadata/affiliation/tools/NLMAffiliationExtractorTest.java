@@ -1,14 +1,12 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
-import static org.junit.Assert.*;
-
+import pl.edu.icm.cermine.metadata.affiliation.tools.NLMAffiliationExtractor;
 import java.io.IOException;
 import java.util.List;
-
 import org.jdom.JDOMException;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.xml.sax.InputSource;
-
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 

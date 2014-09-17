@@ -27,7 +27,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
-import pl.edu.icm.cermine.metadata.affiliations.parsing.AffiliationParser;
+import pl.edu.icm.cermine.metadata.affiliation.AffiliationParser;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;

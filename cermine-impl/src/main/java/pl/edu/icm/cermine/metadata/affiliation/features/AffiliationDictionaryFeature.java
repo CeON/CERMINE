@@ -1,8 +1,8 @@
-package pl.edu.icm.cermine.metadata.affiliations.features;
+package pl.edu.icm.cermine.metadata.affiliation.features;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
-import pl.edu.icm.cermine.metadata.affiliations.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.parsing.features.KeywordFeatureCalculator;
 
 

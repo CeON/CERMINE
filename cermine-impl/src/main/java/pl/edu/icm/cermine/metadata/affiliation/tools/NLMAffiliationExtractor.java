@@ -1,12 +1,11 @@
-package pl.edu.icm.cermine.metadata.affiliations.tools;
+package pl.edu.icm.cermine.metadata.affiliation.tools;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationLabel;
-import pl.edu.icm.cermine.metadata.affiliations.model.AffiliationToken;
+import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
+import pl.edu.icm.cermine.metadata.model.AffiliationToken;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.tools.NLMParsableStringExtractor;
 
@@ -20,22 +19,27 @@ NLMParsableStringExtractor<AffiliationLabel, AffiliationToken, DocumentAffiliati
 
 	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
 	
+    @Override
 	protected List<String> getTags() {
 		return TAGS_AFFILIATION;
 	}
 
+    @Override
 	protected String getKeyText() {
 		return KEY_TEXT;
 	}
 
+    @Override
 	protected Map<String, AffiliationLabel> getTagLabelMap() {
 		return TAGS_LABEL_MAP;
 	}
 
+    @Override
 	protected DocumentAffiliation createParsableString() {
 		return new DocumentAffiliation("");
 	}
 
+    @Override
 	protected DocumentAffiliation createParsableString(String text) {
 		DocumentAffiliation instance = new DocumentAffiliation(text);
 		instance.setTokens(tokenizer.tokenize(instance.getRawText()));

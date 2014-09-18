@@ -148,21 +148,21 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         return new CRFBibReferenceParser(CRFBibReferenceParser.class.getResourceAsStream(defaultModelFile));
     }
     
-    public static void main(String[] args) throws AnalysisException, TransformationException, ParseException {
+    public static void main(String[] args) throws ParseException, AnalysisException, TransformationException {
         Options options = new Options();
-        options.addOption("ref", true, "reference text");
+        options.addOption("reference", true, "reference text");
         options.addOption("format", true, "output format");
         
         CommandLineParser clParser = new GnuParser();
         CommandLine line = clParser.parse(options, args);
-        String referenceText = line.getOptionValue("ref");
+        String referenceText = line.getOptionValue("reference");
         String outputFormat = line.getOptionValue("format");
         
         if (referenceText == null || (outputFormat != null && !outputFormat.equals("bibtex") && !outputFormat.equals("nlm"))) {
        		System.err.println("Usage: CRFBibReferenceParser -ref <reference text> [-format <output format>]\n\n"
                              + "Tool for extracting metadata from reference strings.\n\n"
                              + "Arguments:\n"
-                             + "  -ref                  the text of the reference\n"
+                             + "  -reference            the text of the reference\n"
                              + "  -format (optional)    the format of the output,\n"
                              + "                        possible values: BIBTEX (default) and NLM");
             System.exit(1);

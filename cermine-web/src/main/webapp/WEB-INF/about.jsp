@@ -60,8 +60,8 @@ $ curl -X POST --data-binary @article.pdf \
 	             <p>Please cite the following paper:</p>
                  <br/>
                  <p>Dominika Tkaczyk, Pawel Szostek, Piotr Jan Dendek, Mateusz Fedoryszak and Lukasz Bolikowski.
-                     CERMINE - automatic extraction of metadata and references from scientific literature.
-                     In 11th IAPR International Workshop on Document Analysis Systems, 2014.</p>
+                     <i>CERMINE - automatic extraction of metadata and references from scientific literature</i>.
+                     In Proceedings of the 11th IAPR International Workshop on Document Analysis Systems, pages 217-221, 2014.</p>
                  <br/>
                  <p>BibTeX:</p>
                  <br/>
@@ -98,8 +98,10 @@ $ curl -X POST --data-binary @article.pdf \
                  </p>
                  
                  <p>CERMINE uses supervised and unsupervised machine-leaning techniques, such as Support Vector Machines, 
-                     K-means clustering and Conditional Random Fields. More information can be found in the <a target="_blank" href="static/docs/slides.pdf">presentation</a>.</p>
-
+                     K-means clustering and Conditional Random Fields. Content classifiers are trained on 
+                     <a target="_blank" href="http://cermine.ceon.pl/grotoap2/">GROTOAP2 dataset</a>.
+                     More information about CERMINE can be found in the <a target="_blank" href="static/docs/slides.pdf">presentation</a>.</p>
+                 
 			</div>
 	
 	        </article>

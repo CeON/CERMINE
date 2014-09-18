@@ -38,7 +38,7 @@
           ,
           <addr-line>Calgary</addr-line>
           ,
-          <country>Canada</country>
+          <country country="CA">Canada</country>
         </aff>
         <aff id="1">
           <label>1</label>
@@ -46,7 +46,7 @@
           ,
           <addr-line>Vancouver</addr-line>
           , 
-          <country>Canada</country>
+          <country country="CA">Canada</country>
         </aff>
       </contrib-group>
       <abstract>

@@ -22,8 +22,8 @@ public class NLMAffiliationExtractorTest {
         		"test-nlm-extract-affs.xml"));
         
         String[] expectedString = {
-        		"<aff id=\"id\"><label>id</label><institution>School</institution><institution>of</institution><institution>Biological</institution><institution>and</institution><institution>Chemical</institution><institution>Sciences</institution><institution>,</institution><institution>Queen</institution><institution>Mary</institution><institution>University</institution><institution>of</institution><institution>London</institution>,<addr-line>London</addr-line>,<country>UK</country></aff>",
-                "<aff id=\"id\"><label>id</label><institution>Department</institution><institution>of</institution><institution>Pathology</institution><institution>,</institution><institution>University</institution><institution>of</institution><institution>Cincinnati</institution><institution>College</institution><institution>of</institution><institution>Medicine</institution>,<country>USA</country></aff>"
+        		"<aff id=\"id\"><label>id</label><institution>School</institution><institution>of</institution><institution>Biological</institution><institution>and</institution><institution>Chemical</institution><institution>Sciences</institution><institution>,</institution><institution>Queen</institution><institution>Mary</institution><institution>University</institution><institution>of</institution><institution>London</institution>,<addr-line>London</addr-line>,<country country=\"UK\">UK</country></aff>",
+                "<aff id=\"id\"><label>id</label><institution>Department</institution><institution>of</institution><institution>Pathology</institution><institution>,</institution><institution>University</institution><institution>of</institution><institution>Cincinnati</institution><institution>College</institution><institution>of</institution><institution>Medicine</institution>,<country country=\"US\">USA</country></aff>"
         };
         
         DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();

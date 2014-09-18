@@ -18,7 +18,7 @@ public class AffiliationParserTest {
 				", " +
 				"<addr-line>Tyranosaurus Route 35, Boston, MA</addr-line>" +
 				", " +
-				"<country>USA</country>" +
+				"<country country=\"US\">USA</country>" +
 				"</aff>";
 		String actual = outputter.outputString(parser.parse(input));
 		assertEquals(expected, actual);
@@ -38,7 +38,7 @@ public class AffiliationParserTest {
 				", " +
 				"<addr-line>Tyranosaurus Route 35, Boston, MA</addr-line>" +
 				", " +
-				"<country>USA</country>" +
+				"<country country=\"US\">USA</country>" +
 				"</aff>";
 		String actual = outputter.outputString(parser.parse(input));
 		assertEquals(expected, actual);

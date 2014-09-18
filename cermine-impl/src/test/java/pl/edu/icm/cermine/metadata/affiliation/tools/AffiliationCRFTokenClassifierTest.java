@@ -3,8 +3,6 @@ package pl.edu.icm.cermine.metadata.affiliation.tools;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
@@ -12,7 +10,6 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
-import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
 import pl.edu.icm.cermine.parsing.model.Token;
 
 public class AffiliationCRFTokenClassifierTest {
@@ -73,13 +70,10 @@ public class AffiliationCRFTokenClassifierTest {
 	    instance.setTokens(tokenizer.tokenize(instance.getRawText()));
 	    extractor.calculateFeatures(instance);
 		new AffiliationCRFTokenClassifier().classify(instance.getTokens());
-        DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
-        Element element = converter.convertAffiliation(instance);
-        XMLOutputter outputter = new XMLOutputter();
-		String actual =  outputter.outputString(element);
-		
-		String expected =
-				"<aff id=\"id\"><label>id</label><institution>Department</institution><institution>of</institution><institution>Oncology</institution><institution>,</institution><institution>Radiology</institution><institution>and</institution><institution>Clinical</institution><institution>Immunology</institution><institution>,</institution><institution>Akademiska</institution><institution>Sjukhuset</institution>,<addr-line>Uppsala</addr-line>,<country>Sweden</country></aff>";
-		assertEquals(expected, actual);
+        assertEquals(AffiliationLabel.INST, instance.getTokens().get(0).getLabel());
+        assertEquals(AffiliationLabel.INST, instance.getTokens().get(1).getLabel());
+        assertEquals(AffiliationLabel.ADDR, instance.getTokens().get(12).getLabel());
+        assertEquals(AffiliationLabel.COUN, instance.getTokens().get(14).getLabel());
 	}
+
 }

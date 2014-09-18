@@ -42,7 +42,7 @@
           ,
           <addr-line>Dhaka-1000</addr-line>
           ,
-          <country>Bangladesh</country>
+          <country country="BD">Bangladesh</country>
         </aff>
         <aff id="1">
           <label>1</label>
@@ -50,7 +50,7 @@
           ,
           <addr-line>Dhaka-1000</addr-line>
           ,
-          <country>Bangladesh</country>
+          <country country="BD">Bangladesh</country>
         </aff>
         <aff id="2">
           <label>2</label>
@@ -58,7 +58,7 @@
           ,
           <addr-line>Dhaka-1000</addr-line>
           ,
-          <country>Bangladesh</country>
+          <country country="BD">Bangladesh</country>
         </aff>
       </contrib-group>
       <abstract>

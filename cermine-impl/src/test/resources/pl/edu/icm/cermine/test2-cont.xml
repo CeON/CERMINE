@@ -41,7 +41,7 @@
           ,
           <addr-line>123 St. Stephen's Green, Dublin 2</addr-line>
           ,
-          <country>Ireland</country>
+          <country country="IE">Ireland</country>
         </aff>
       </contrib-group>
       <abstract>

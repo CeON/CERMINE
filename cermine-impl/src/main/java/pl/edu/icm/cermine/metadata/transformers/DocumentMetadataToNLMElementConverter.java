@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.affiliation.tools.CountryISOCodeFinder;
 import pl.edu.icm.cermine.metadata.model.*;
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
@@ -153,7 +154,13 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
             if (token.getLabel().equals(AffiliationLabel.TEXT)) {
                 aff.addContent(token.getText());
             } else if (token.getLabel().equals(AffiliationLabel.COUN)) {
-                addElement(aff, TAG_COUNTRY, token.getText());
+                CountryISOCodeFinder finder = new CountryISOCodeFinder();
+                String isoCode = finder.getCountryISOCode(token.getText());
+                if (isoCode == null) {
+                    addElement(aff, TAG_COUNTRY, token.getText());
+                } else {
+                    addElement(aff, TAG_COUNTRY, token.getText(), ATTR_COUNTRY, isoCode);
+                }
             } else if (token.getLabel().equals(AffiliationLabel.INST)) {
                 addElement(aff, TAG_INSTITUTION, token.getText());
             } else if (token.getLabel().equals(AffiliationLabel.ADDR)) {
@@ -254,6 +261,7 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
     private static final String TAG_XREF                        = "xref";
 
     private static final String ATTR_CONTRIB_TYPE               = "contrib-type";
+    private static final String ATTR_COUNTRY                    = "country";
     private static final String ATTR_DATE_TYPE                  = "date-type";
     private static final String ATTR_ID                         = "id";
     private static final String ATTR_PUB_ID_TYPE                = "pub-id-type";

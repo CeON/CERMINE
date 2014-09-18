@@ -48,7 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
-import pl.edu.icm.cermine.metadata.affiliation.AffiliationParser;
+import pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser;
 import pl.edu.icm.cermine.service.*;
 
 /**
@@ -241,7 +241,7 @@ public class CermineController {
                     response = outputter.outputString(element);
                 }
             } else {
-                AffiliationParser parser = new AffiliationParser();
+                CRFAffiliationParser parser = new CRFAffiliationParser();
                 Element parsedAff = parser.parse(affText);
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                 response = outputter.outputString(parsedAff);

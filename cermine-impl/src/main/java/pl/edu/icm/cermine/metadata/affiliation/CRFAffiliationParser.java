@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.cli.*;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -20,12 +22,12 @@ import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.ParsableStringParser;
 
 /**
- * Affiliation parser. Processes an instance of DocumentAffiliation by
- * generating and tagging its tokens.
+ * CRF-based Affiliation parser. 
+ * Processes an instance of DocumentAffiliation by generating and tagging its tokens.
  * 
  * @author Bartosz Tarnawski
  */
-public class AffiliationParser implements ParsableStringParser<DocumentAffiliation> {
+public class CRFAffiliationParser implements ParsableStringParser<DocumentAffiliation> {
 
 	private AffiliationTokenizer tokenizer = null;
 	private AffiliationFeatureExtractor featureExtractor = null;
@@ -68,7 +70,7 @@ public class AffiliationParser implements ParsableStringParser<DocumentAffiliati
 	 * @param acrfFileName the name of the package resource to be used as the ACRF model
 	 * @throws AnalysisException
 	 */
-	public AffiliationParser(String wordsFileName, String acrfFileName) throws AnalysisException {
+	public CRFAffiliationParser(String wordsFileName, String acrfFileName) throws AnalysisException {
 		List<String> commonWords = loadWords(wordsFileName);
 		tokenizer = new AffiliationTokenizer();
 		featureExtractor = new AffiliationFeatureExtractor(commonWords);
@@ -76,7 +78,7 @@ public class AffiliationParser implements ParsableStringParser<DocumentAffiliati
 				getClass().getResourceAsStream(acrfFileName));
 	}
 	
-	public AffiliationParser() throws AnalysisException {
+	public CRFAffiliationParser() throws AnalysisException {
 		this(DEFAULT_COMMON_WORDS_FILE, DEFAULT_MODEL_FILE);
 	}
 
@@ -112,16 +114,27 @@ public class AffiliationParser implements ParsableStringParser<DocumentAffiliati
         DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
         return converter.convertAffiliation(aff);
 	}
-	
-	// For testing purposes only
-	public static void main(String[] args) throws IOException, AnalysisException,
-	TransformationException {
-		AffiliationParser parser = new AffiliationParser();
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		XMLOutputter outputter = new XMLOutputter();
-		while (true) {
-			String affiliationString = br.readLine();
-			outputter.outputString(parser.parse(affiliationString));
-		}
-	}
+    
+    public static void main(String[] args) throws ParseException, AnalysisException, TransformationException {
+        Options options = new Options();
+        options.addOption("affiliation", true, "reference text");
+        
+        CommandLineParser clParser = new GnuParser();
+        CommandLine line = clParser.parse(options, args);
+        String affiliationText = line.getOptionValue("affiliation");
+        
+        if (affiliationText == null) {
+       		System.err.println("Usage: CRFAffiliationParser -affiliation <affiliation text>\n\n"
+                             + "Tool for extracting metadata from affiliation strings.\n\n"
+                             + "Arguments:\n"
+                             + "  -affiliation            the text of the affiliation\n");
+            System.exit(1);
+        }
+        
+        CRFAffiliationParser parser = new CRFAffiliationParser();
+        Element affiliation = parser.parse(affiliationText);
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+        System.out.println(outputter.outputString(affiliation));
+    }
+
 }

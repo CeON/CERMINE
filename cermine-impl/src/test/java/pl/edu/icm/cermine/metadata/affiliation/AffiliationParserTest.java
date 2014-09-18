@@ -10,7 +10,7 @@ public class AffiliationParserTest {
 
 	@Test
 	public void testParseString() throws AnalysisException, TransformationException {
-		AffiliationParser parser = new AffiliationParser();
+		CRFAffiliationParser parser = new CRFAffiliationParser();
 		XMLOutputter outputter = new XMLOutputter();
 		String input = "Department of Dinozauring, Dino Institute, Tyranosaurus Route 35, Boston, MA, USA";
 		String expected = "<aff id=\"id\"><label>id</label>" +
@@ -26,7 +26,7 @@ public class AffiliationParserTest {
 
 	@Test
 	public void testParseStringWithAuthor() throws AnalysisException, TransformationException {
-		AffiliationParser parser = new AffiliationParser(
+		CRFAffiliationParser parser = new CRFAffiliationParser(
 				"common-words-affiliations-with-author.txt",
 				"acrf-affiliations-with-author.ser.gz");
 		XMLOutputter outputter = new XMLOutputter();

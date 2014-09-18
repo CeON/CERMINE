@@ -48,6 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.metadata.affiliation.AffiliationParser;
 import pl.edu.icm.cermine.service.*;
 
 /**
@@ -194,34 +195,59 @@ public class CermineController {
     }
     
     @RequestMapping(value = "/parse.do", method = RequestMethod.POST)
-    public ResponseEntity<String> parseSync(@RequestParam("ref") String refText, HttpServletRequest request, Model model) { 
+    public ResponseEntity<String> parseSync(HttpServletRequest request, Model model) { 
         try {
+            String refText = request.getParameter("reference");
+            if (refText == null) {
+                refText = request.getParameter("ref");
+            }
+            String affText = request.getParameter("affiliation");
+            if (affText == null) {
+                affText = request.getParameter("aff");
+            }
+            
+            if (refText == null && affText == null) {
+                return new ResponseEntity<String>(
+                        "Exception: \"reference\" or \"affiliation\" parameter has to be passed!\n", null, 
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            
             HttpHeaders responseHeaders = new HttpHeaders();
             String response;
+
+            if (refText != null) {
             
-            String format = request.getParameter("format");
-            if (format == null) {
-                format = "bibtex";
-            }
-            format = format.toLowerCase();
-            if (!format.equals("nlm") && !format.equals("bibtex")) {
-                return new ResponseEntity<String>("Exception: format must be bibtex or nlm!", null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+                String format = request.getParameter("format");
+                if (format == null) {
+                    format = "bibtex";
+                }
+                format = format.toLowerCase();
+                if (!format.equals("nlm") && !format.equals("bibtex")) {
+                    return new ResponseEntity<String>(
+                            "Exception: format must be \"bibtex\" or \"nlm\"!\n", null, 
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             
-            CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
-            BibEntry reference = parser.parseBibReference(refText);
-            if (format.equals("bibtex")) {
-                responseHeaders.setContentType(MediaType.TEXT_PLAIN);
-                response = reference.toBibTeX();
+                CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
+                BibEntry reference = parser.parseBibReference(refText);
+                if (format.equals("bibtex")) {
+                    responseHeaders.setContentType(MediaType.TEXT_PLAIN);
+                    response = reference.toBibTeX();
+                } else {
+                    responseHeaders.setContentType(MediaType.APPLICATION_XML);
+                    BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
+                    Element element = converter.convert(reference);
+                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                    response = outputter.outputString(element);
+                }
             } else {
-                responseHeaders.setContentType(MediaType.APPLICATION_XML);
-                BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
-                Element element = converter.convert(reference);
+                AffiliationParser parser = new AffiliationParser();
+                Element parsedAff = parser.parse(affText);
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                response = outputter.outputString(element);
+                response = outputter.outputString(parsedAff);
             }
             
-            return new ResponseEntity<String>(response, responseHeaders, HttpStatus.OK);
+            return new ResponseEntity<String>(response+"\n", responseHeaders, HttpStatus.OK);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(CermineController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<String>("Exception: " + ex.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR);

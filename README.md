@@ -11,7 +11,8 @@ How to cite CERMINE:
 
 	Dominika Tkaczyk, Pawel Szostek, Piotr Jan Dendek, Mateusz Fedoryszak and Lukasz Bolikowski. 
 	CERMINE - automatic extraction of metadata and references from scientific literature. 
-	In 11th IAPR International Workshop on Document Analysis Systems, 2014.
+	In Proceedings of the 11th IAPR International Workshop on Document Analysis Systems,
+	pages 217-221, 2014.
 
 Using CERMINE
 -------------
@@ -19,7 +20,8 @@ Using CERMINE
 CERMINE can be used for:
 
   * extracting metadata, full text and parsed references from a PDF file,
-  * extracting metadata from reference strings.
+  * extracting metadata from reference strings,
+  * extracting metadata from affiliation strings.
 
 **Maven dependency**
 
@@ -48,6 +50,11 @@ To extract metadata from a reference string:
 	CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
 	BibEntry reference = parser.parseBibReference(referenceText);
 
+To extract metadata from an affiliation string:
+	
+	CRFAffiliationParser parser = new CRFAffiliationParser();
+	Element affiliation = parser.parse(affiliationText);
+
 
 **Executable JAR**
 
@@ -62,7 +69,11 @@ This will result in a file *cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar*
 
 To extract metadata from a reference string:
 
-	$ java -cp target/cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.bibref.CRFBibReferenceParser -ref "the text of the reference"
+	$ java -cp target/cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.bibref.CRFBibReferenceParser -reference "the text of the reference"
+
+To extract metadata from an affiliation string:
+
+	$ java -cp target/cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser -affiliation "the text of the affiliation"
 
 
 **REST service**
@@ -77,6 +88,11 @@ To extract the content from a PDF file:
 
 To extract metadata from a reference string:
 
-	$ curl -X POST --data "ref=the text of the reference" \
+	$ curl -X POST --data "reference=the text of the reference" \
+	  http://cermine.ceon.pl/parse.do
+
+To extract metadata from an affiliation string:
+
+	$ curl -X POST --data "affiliation=the text of the affiliation" \
 	  http://cermine.ceon.pl/parse.do
 

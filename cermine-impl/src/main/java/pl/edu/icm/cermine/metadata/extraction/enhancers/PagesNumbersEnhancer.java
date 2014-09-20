@@ -51,13 +51,13 @@ public class PagesNumbersEnhancer extends AbstractFilterEnhancer {
             Iterator<BxZone> pageZones = this.filterZones(pages.get(i)).iterator();
             while (pageZones.hasNext()) {
                 BxZone zone = pageZones.next();
-                if (zone.toText().matches("^\\d+$")) {
+                if (zone.toText().matches("^\\d{1,6}$")) {
                     int pageNumber = Integer.parseInt(zone.toText());
                     candidates.get(i).add(pageNumber);
                 } else if (zone.getLines().size() == 1) {
-                    Pattern p1 = Pattern.compile("^(\\d+).*$");
+                    Pattern p1 = Pattern.compile("^(\\d{1,6}).*$");
                     Matcher m1 = p1.matcher(zone.toText());
-                    Pattern p2 = Pattern.compile("^.*(\\d+)$");
+                    Pattern p2 = Pattern.compile("^.*(\\d{1,6})$");
                     Matcher m2 = p2.matcher(zone.toText());
                     if (m1.matches()) {
                         int pageNumber = Integer.parseInt(m1.group(1));

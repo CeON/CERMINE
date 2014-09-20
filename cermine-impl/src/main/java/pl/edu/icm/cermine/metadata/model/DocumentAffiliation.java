@@ -51,7 +51,7 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
     public DocumentAffiliation(String id, String index, String rawText) {
         this.id = id;
         this.index = MetadataTools.clean(index);
-        this.rawText = MetadataTools.clean(rawText);
+        this.rawText = MetadataTools.cleanAndNormalize(rawText);
         this.tokens = new ArrayList<Token<AffiliationLabel>>();
     }
 

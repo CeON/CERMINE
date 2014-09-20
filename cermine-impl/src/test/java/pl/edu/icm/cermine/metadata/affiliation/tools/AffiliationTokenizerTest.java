@@ -40,7 +40,7 @@ public class AffiliationTokenizerTest {
 	@Test
 	public void testTokenizeNonAscii() {
 		String input = "śćdź óó";
-		input = MetadataTools.clean(input);
+		input = MetadataTools.cleanAndNormalize(input);
 		//input = new AffiliationNormalizer().normalize(input);
 		
 		//          012345678901
@@ -74,6 +74,8 @@ public class AffiliationTokenizerTest {
 		
 		List<Token<AffiliationLabel>> actual = tokenizer.tokenize(instance.getRawText());
 		
+        System.out.println(actual);
+        
 		assertEquals(expected, actual);
 	}
 

@@ -62,10 +62,13 @@ public class MetadataTools {
     }
     
     public static String clean(String str) {
-        if (str == null)
+        if (str == null) {
             return null;
-        String cleanedText = cleanOther(cleanHyphenation(cleanLigatures(str)));
-        return Normalizer.normalize(cleanedText, Normalizer.Form.NFKD);
+        }
+        return cleanOther(cleanHyphenation(cleanLigatures(str)));
     }
     
+    public static String cleanAndNormalize(String str) {
+        return Normalizer.normalize(clean(str), Normalizer.Form.NFKD);
+    }
 }

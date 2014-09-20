@@ -61,7 +61,7 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
 	}
 	
 	private void addLine(String line, int number) {
-		String normalizedLine = MetadataTools.clean(line);
+		String normalizedLine = MetadataTools.cleanAndNormalize(line);
 		
 		List<T> tokens = textTokenizer.tokenize(normalizedLine);
 		if (tokens.isEmpty()) {

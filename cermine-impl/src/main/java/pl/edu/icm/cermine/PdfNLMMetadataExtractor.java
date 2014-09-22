@@ -56,7 +56,7 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
     /** affiliation parser **/
     private ParsableStringParser<DocumentAffiliation> affiliationParser;
     
-    DocumentMetadataToNLMElementConverter converter;
+    private DocumentMetadataToNLMElementConverter converter;
 
     public PdfNLMMetadataExtractor() throws AnalysisException {
         try {
@@ -82,16 +82,20 @@ public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Elemen
 
             extractor = new EnhancerMetadataExtractor();
             converter = new DocumentMetadataToNLMElementConverter();
+            affiliationParser = new CRFAffiliationParser();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
     }
 
     public PdfNLMMetadataExtractor(DocumentStructureExtractor strExtractor, 
-    		ZoneClassifier metadataClassifier, MetadataExtractor<DocumentMetadata> extractor) {
+    		ZoneClassifier metadataClassifier, MetadataExtractor<DocumentMetadata> extractor,
+            ParsableStringParser<DocumentAffiliation> affiliationParser) {
         this.strExtractor = strExtractor;
         this.metadataClassifier = metadataClassifier;
         this.extractor = extractor;
+        this.converter = new DocumentMetadataToNLMElementConverter();
+        this.affiliationParser = affiliationParser;
     }
          
     /**

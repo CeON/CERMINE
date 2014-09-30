@@ -160,7 +160,6 @@ ghana gh
 gibraltar gi
 grc gr
 great britain uk
-greece el
 greece gr
 greenland gl
 grenada gd
@@ -444,7 +443,6 @@ ukrayina ua
 ukr ua
 uman om
 united arab emirates ae
-united kingdom gb
 united kingdom uk
 united states minor outlying islands um
 united states of america us
@@ -458,6 +456,7 @@ u. k. uk
 u. s. us
 u. s. a. us
 vanuatu vu
+vatican va
 vatican city va
 venezuela ve
 vietnam vn

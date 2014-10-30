@@ -22,10 +22,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 import org.apache.commons.io.IOUtils;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
@@ -102,9 +99,9 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
             double upper = 1.0;
 
             formatter.format("x\n");
-            formatter.format("%.16g %.16g\n", lower, upper);
+            formatter.format(Locale.ENGLISH, "%.16g %.16g\n", lower, upper);
             for(int i = 0; i < limits.length; ++i) {
-                formatter.format("%d %.16g %.16g\n", i, limits[i].getMin(), limits[i].getMax());
+                formatter.format(Locale.ENGLISH, "%d %.16g %.16g\n", i, limits[i].getMin(), limits[i].getMax());
             }
 
             fp_save.write(formatter.toString());

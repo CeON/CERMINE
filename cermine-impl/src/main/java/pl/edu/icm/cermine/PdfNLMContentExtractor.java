@@ -300,7 +300,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
  
                 long start = System.currentTimeMillis();
             
-                System.out.println(pdf.getName());
+                System.out.println(pdf.getPath());
  
                 PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
                 if ("alt-humanities".equals(modelMeta)) {

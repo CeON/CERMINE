@@ -52,6 +52,10 @@ public class ITextCharacterExtractor implements CharacterExtractor {
     private int frontPagesLimit = DEFAULT_FRONT_PAGES_LIMIT;
     
     private int backPagesLimit = DEFAULT_BACK_PAGES_LIMIT;
+
+    private static final int PAGE_GRID_SIZE = 10;
+    
+    private static final int CHUNK_DENSITY_LIMIT = 15;
     
     protected static final Map<String, PdfName> ALT_TO_STANDART_FONTS = new HashMap<String, PdfName>();
 
@@ -101,7 +105,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 processor.processContent(ContentByteUtils.getContentBytesForPage(reader, pageNumber), resources);
             }
 
-            return removeDuplicateChunks(documentCreator.document);
+            return filterComponents(removeDuplicateChunks(documentCreator.document));
         } catch (InvalidPdfException ex) {
             throw new AnalysisException("Invalid PDF file", ex);
         } catch (IOException ex) {
@@ -128,6 +132,9 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             return;
         }
         for (PdfName pdfFontName : fontsDictionary.getKeys()) {
+            if (!(fontsDictionary.get(pdfFontName) instanceof PRIndirectReference)) {
+                return;
+            }
             PRIndirectReference indRef = (PRIndirectReference) fontsDictionary.get(pdfFontName);
             PdfDictionary fontDictionary = (PdfDictionary) PdfReader.getPdfObjectRelease(indRef);
 
@@ -178,6 +185,40 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 }
             }
             page.setChunks(filteredChunks);
+        }
+        return document;
+    }
+    
+    private BxDocument filterComponents(BxDocument document) {
+        for (BxPage page : document.getPages()) {
+            BxBoundsBuilder bounds = new BxBoundsBuilder();
+            for (BxChunk ch : page.getChunks()) {
+                bounds.expand(ch.getBounds());
+            }
+        
+            double density = (double)100.0*page.getChunks().size() / (bounds.getBounds().getWidth()*bounds.getBounds().getHeight());
+            if (Double.isNaN(density) || density < CHUNK_DENSITY_LIMIT) {
+                continue;
+            }
+            
+            Map<String, List<BxChunk>> map = new HashMap<String, List<BxChunk>>();
+            for (BxChunk ch : page.getChunks()) {
+                int x = (int)ch.getX()/PAGE_GRID_SIZE;
+                int y = (int)ch.getY()/PAGE_GRID_SIZE;
+                String key = Integer.toString(x)+" "+Integer.toString(y);
+                if (map.get(key) == null) {
+                    map.put(key, new ArrayList<BxChunk>());
+                }
+                map.get(key).add(ch);
+            }
+
+            for (List<BxChunk> list : map.values()) {
+                if (list.size() > CHUNK_DENSITY_LIMIT) {
+                    for (BxChunk ch : list) {
+                        page.getChunks().remove(ch);
+                    }
+                }
+            }
         }
         return document;
     }
@@ -271,7 +312,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
         @Override
         public void renderImage(ImageRenderInfo iri) {
         }
-
+            
     }
 
     public int getBackPagesLimit() {

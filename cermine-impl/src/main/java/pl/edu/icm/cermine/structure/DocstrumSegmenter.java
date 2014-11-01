@@ -135,7 +135,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         findNeighbors(components);
         return Arrays.asList(components);
     }
-
+    
     /**
      * Performs for each component search for nearest-neighbors and stores the
      * result in component's neighbors attribute.
@@ -170,10 +170,18 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                 while (start > 0 && components[i].getX() - components[start - 1].getX() < searchDist) {
                     start--;
                     candidates.add(new Neighbor(components[start], components[i]));
+                    if (candidates.size() > pageNeighborCount) {
+                        Collections.sort(candidates, NeighborDistanceComparator.getInstance());
+                        candidates.subList(pageNeighborCount, candidates.size()).clear();
+                    }
                     newCandidatesFound = true;
                 }
                 while (end < components.length && components[end].getX() - components[i].getX() < searchDist) {
                     candidates.add(new Neighbor(components[end], components[i]));
+                    if (candidates.size() > pageNeighborCount) {
+                        Collections.sort(candidates, NeighborDistanceComparator.getInstance());
+                        candidates.subList(pageNeighborCount, candidates.size()).clear();
+                    }
                     end++;
                     newCandidatesFound = true;
                 }

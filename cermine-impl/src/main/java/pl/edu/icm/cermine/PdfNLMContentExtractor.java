@@ -226,6 +226,7 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         options.addOption("strext", true, "structure file extension");
         options.addOption("modelmeta", true, "path to metadata classifier model");
         options.addOption("modelinit", true, "path to initial classifier model");
+        options.addOption("threads", true, "number of threads used");
         
         CommandLineParser clParser = new GnuParser();
         CommandLine line = clParser.parse(options, args);

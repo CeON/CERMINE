@@ -20,11 +20,9 @@ package pl.edu.icm.cermine;
 
 import java.io.*;
 import java.util.Collection;
-import javax.xml.xpath.XPathExpressionException;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -138,7 +136,7 @@ public class PdfNLMContentExtractor {
         this.extractText = extractText;
     }
 
-    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException, TransformationException {
+    public static void main(String[] args) throws ParseException, IOException {
         Options options = new Options();
         options.addOption("path", true, "file or directory path");
         options.addOption("ext", true, "metadata file extension");
@@ -194,19 +192,23 @@ public class PdfNLMContentExtractor {
  
         File file = new File(path);
         if (file.isFile()) {
-            PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
-            if ("alt-humanities".equals(modelMeta)) {
-                extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
-            } else if (modelMeta != null) {
-                extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+            try {
+                PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+                if ("alt-humanities".equals(modelMeta)) {
+                    extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+                } else if (modelMeta != null) {
+                    extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+                }
+                if (modelInit != null) {
+                    extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+                }
+                InputStream in = new FileInputStream(file);
+                Element result = extractor.extractContent(in);
+                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                System.out.println(outputter.outputString(result));
+            } catch (AnalysisException ex) {
+                ex.printStackTrace();
             }
-            if (modelInit != null) {
-                extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
-            }
-            InputStream in = new FileInputStream(file);
-            Element result = extractor.extractContent(in);
-            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-            System.out.println(outputter.outputString(result));
         } else {
         
             Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
@@ -220,40 +222,50 @@ public class PdfNLMContentExtractor {
                 }
  
                 long start = System.currentTimeMillis();
+                float elapsed = 0;
             
                 System.out.println(pdf.getPath());
  
-                PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+                try {
+                    PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
                
-                if ("alt-humanities".equals(modelMeta)) {
-                    extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
-                } else if (modelMeta != null) {
-                    extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
-                }
-                if (modelInit != null) {
-                    extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
-                }
-                InputStream in = new FileInputStream(pdf);
-                BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
-                Element result = extractor.extractContent(doc);
+                    if ("alt-humanities".equals(modelMeta)) {
+                        extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+                    } else if (modelMeta != null) {
+                        extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+                    }
+                    if (modelInit != null) {
+                        extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+                    }
+                    InputStream in = new FileInputStream(pdf);
+                    BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
+                    Element result = extractor.extractContent(doc);
 
-                long end = System.currentTimeMillis();
-                float elapsed = (end - start) / 1000F;
+                    long end = System.currentTimeMillis();
+                    elapsed = (end - start) / 1000F;
             
-                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                if (!xmlF.createNewFile()) {
-                    System.out.println("Cannot create new file!");
-                }
-                FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
+                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                    if (!xmlF.createNewFile()) {
+                        System.out.println("Cannot create new file!");
+                    }
+                    FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
                 
-                if (extractStr) {
-                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                    File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
-                    writer.write(new FileWriter(strF), doc.getPages());
+                    if (extractStr) {
+                        BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                        File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
+                        writer.write(new FileWriter(strF), doc.getPages());
+                    }
+                } catch (AnalysisException ex) {
+                   ex.printStackTrace();
+                } catch (TransformationException ex) {
+                   ex.printStackTrace();
                 }
                 
                 i++;
                 int percentage = i*100/files.size();
+                if (elapsed == 0) {
+                    elapsed = (System.currentTimeMillis() - start) / 1000F;
+                }
                 System.out.println("Extraction time: " + Math.round(elapsed) + "s");
                 System.out.println(percentage + "% done (" + i +" out of " + files.size() + ")");
                 System.out.println("");

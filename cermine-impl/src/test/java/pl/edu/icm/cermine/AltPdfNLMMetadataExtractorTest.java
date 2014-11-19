@@ -48,7 +48,7 @@ public class AltPdfNLMMetadataExtractorTest {
     @Before
     public void setUp() throws AnalysisException, IOException {
         extractor = new PdfNLMMetadataExtractor();
-        extractor.setMetadataClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+        extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
     }
     
     @Test
@@ -56,7 +56,7 @@ public class AltPdfNLMMetadataExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
         Element testMetadata;
         try {
-            testMetadata = extractor.extractMetadata(testStream);
+            testMetadata = extractor.extractMetadataAsNLM(testStream);
         } finally {
             testStream.close();
         }

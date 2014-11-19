@@ -42,7 +42,7 @@ public class PdfNLMMetadataExtractorTest {
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test1.pdf";
     static final private String EXP_FILE = "/pl/edu/icm/cermine/test1-met.xml";
     
-    private DocumentMetadataExtractor<Element> extractor;
+    private PdfNLMMetadataExtractor extractor;
     
     @Before
     public void setUp() throws AnalysisException, IOException {
@@ -54,7 +54,7 @@ public class PdfNLMMetadataExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
         Element testMetadata;
         try {
-            testMetadata = extractor.extractMetadata(testStream);
+            testMetadata = extractor.extractMetadataAsNLM(testStream);
         } finally {
             testStream.close();
         }

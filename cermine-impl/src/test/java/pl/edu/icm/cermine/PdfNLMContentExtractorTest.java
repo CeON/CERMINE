@@ -42,7 +42,7 @@ public class PdfNLMContentExtractorTest {
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test2.pdf";
     static final private String EXP_FILE = "/pl/edu/icm/cermine/test2-cont.xml";
     
-    private DocumentContentExtractor<Element> extractor;
+    private PdfNLMContentExtractor extractor;
     
     @Before
     public void setUp() throws AnalysisException, IOException {

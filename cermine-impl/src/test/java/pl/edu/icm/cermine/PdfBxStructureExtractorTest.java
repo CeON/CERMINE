@@ -45,7 +45,7 @@ public class PdfBxStructureExtractorTest {
     static final private String EXP_FILE = "test1-str.xml";
     static final private String EXP_ZIP_FILE = "/pl/edu/icm/cermine/test1-str.xml.zip";
     
-    private DocumentStructureExtractor extractor;
+    private PdfBxStructureExtractor extractor;
     private TrueVizToBxDocumentReader reader;
     
     @Before

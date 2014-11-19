@@ -37,7 +37,7 @@ public class PdfRawTextExtractorTest {
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test2.pdf";
     static final private String EXP_FILE = "/pl/edu/icm/cermine/test2.txt";
     
-    private DocumentTextExtractor<String> extractor;
+    private PdfRawTextExtractor extractor;
     
     @Before
     public void setUp() throws AnalysisException {

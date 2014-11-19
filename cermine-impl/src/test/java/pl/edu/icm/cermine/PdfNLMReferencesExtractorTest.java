@@ -45,7 +45,7 @@ public class PdfNLMReferencesExtractorTest {
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test2.pdf";
     static final private String EXP_FILE = "/pl/edu/icm/cermine/test2-cont.xml";
     
-    private DocumentReferencesExtractor<Element> extractor;
+    private PdfNLMReferencesExtractor extractor;
     
     @Before
     public void setUp() throws AnalysisException, IOException {
@@ -57,7 +57,7 @@ public class PdfNLMReferencesExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
         Element[] testReferences;
         try {
-            testReferences = extractor.extractReferences(testStream);
+            testReferences = extractor.extractReferencesAsNLM(testStream);
         } finally {
             testStream.close();
         }

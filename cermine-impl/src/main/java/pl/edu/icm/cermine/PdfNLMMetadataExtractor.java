@@ -18,22 +18,10 @@
 
 package pl.edu.icm.cermine;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
-import pl.edu.icm.cermine.metadata.MetadataExtractor;
-import pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser;
-import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
-import pl.edu.icm.cermine.parsing.tools.ParsableStringParser;
-import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
-import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 
@@ -42,106 +30,64 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfNLMMetadataExtractor implements DocumentMetadataExtractor<Element> {
+public class PdfNLMMetadataExtractor {
 
-    /** geometric structure extractor */
-    private DocumentStructureExtractor strExtractor;
-   
-    /** metadata zone classifier */
-    private ZoneClassifier metadataClassifier;
-
-    /** metadata extractor from labelled zones */
-    private MetadataExtractor<DocumentMetadata> extractor;
+    private ComponentConfiguration conf;
     
-    /** affiliation parser **/
-    private ParsableStringParser<DocumentAffiliation> affiliationParser;
-    
-    private DocumentMetadataToNLMElementConverter converter;
-
     public PdfNLMMetadataExtractor() throws AnalysisException {
-        try {
-            strExtractor = new PdfBxStructureExtractor();
-            metadataClassifier = SVMMetadataZoneClassifier.getDefaultInstance();
-            extractor = new EnhancerMetadataExtractor();
-            converter = new DocumentMetadataToNLMElementConverter();
-            affiliationParser = new CRFAffiliationParser();
-        } catch (IOException ex) {
-            throw new AnalysisException(ex);
-        }
-    }
-    
-    public PdfNLMMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException {
-        try {
-            strExtractor = new PdfBxStructureExtractor();
-
-            BufferedReader metaModelFileReader = new BufferedReader(new InputStreamReader(metadataModel));
-            BufferedReader metaRangeFileReader = new BufferedReader(new InputStreamReader(metadataRange));
-            metadataClassifier = new SVMMetadataZoneClassifier(metaModelFileReader, metaRangeFileReader);
-            metaModelFileReader.close();
-            metaRangeFileReader.close();
-
-            extractor = new EnhancerMetadataExtractor();
-            converter = new DocumentMetadataToNLMElementConverter();
-            affiliationParser = new CRFAffiliationParser();
-        } catch (IOException ex) {
-            throw new AnalysisException(ex);
-        }
-    }
-
-    public PdfNLMMetadataExtractor(DocumentStructureExtractor strExtractor, 
-    		ZoneClassifier metadataClassifier, MetadataExtractor<DocumentMetadata> extractor,
-            ParsableStringParser<DocumentAffiliation> affiliationParser) {
-        this.strExtractor = strExtractor;
-        this.metadataClassifier = metadataClassifier;
-        this.extractor = extractor;
-        this.converter = new DocumentMetadataToNLMElementConverter();
-        this.affiliationParser = affiliationParser;
-    }
-         
-    /**
-     * Extracts metadata from PDF file and stores it in NLM format.
-     * 
-     * @param stream
-     * @return extracted metadata in NLM format
-     * @throws AnalysisException 
-     */
-    @Override
-    public Element extractMetadata(InputStream stream) throws AnalysisException {
-        BxDocument doc = strExtractor.extractStructure(stream);
-        return extractMetadata(doc);
+        conf = new ComponentConfiguration();
     }
     
     /**
-     * Extracts metadata from PDF file and stores it in NLM format.
-     * 
-     * @param document
-     * @return extracted metadata in NLM format
+     * Extracts metadata from input stream.
+     *
+     * @param stream PDF stream
+     * @return document's metadata
      * @throws AnalysisException 
      */
-    @Override
-    public Element extractMetadata(BxDocument document) throws AnalysisException {
-        try {
-            BxDocument doc = metadataClassifier.classifyZones(document);
-            DocumentMetadata metadata = extractor.extractMetadata(doc);
-    		for (DocumentAffiliation aff : metadata.getAffiliations()) {
-    			affiliationParser.parse(aff);
-    		}
-            return converter.convert(metadata);
-        } catch (TransformationException ex) {
-            throw new AnalysisException(ex);
-        }
+    public DocumentMetadata extractMetadata(InputStream stream) throws AnalysisException {
+        return ExtractionUtils.extractMetadata(conf, stream);
+    }
+    
+    /**
+     * Extracts NLM metadata from input stream.
+     * 
+     * @param stream PDF stream
+     * @return document's metadata in NLM format
+     * @throws AnalysisException 
+     */
+    public Element extractMetadataAsNLM(InputStream stream) throws AnalysisException {
+        return ExtractionUtils.extractMetadataAsNLM(conf, stream);
+    }
+    
+    /**
+     * Extracts metadata from document's structure.
+     * 
+     * @param document box structure
+     * @return document's metadata
+     * @throws AnalysisException 
+     */
+    public DocumentMetadata extractMetadata(BxDocument document) throws AnalysisException {
+        return ExtractionUtils.extractMetadata(conf, document);
+    }
+    
+    /**
+     * Extracts NLM metadata from document's structure.
+     * 
+     * @param document box structure
+     * @return document's metadata in NLM format
+     * @throws AnalysisException 
+     */
+    public Element extractMetadataAsNLM(BxDocument document) throws AnalysisException {
+        return ExtractionUtils.extractMetadataAsNLM(conf, document);
     }
 
-    public void setExtractor(MetadataExtractor<DocumentMetadata> extractor) {
-        this.extractor = extractor;
+    public ComponentConfiguration getConf() {
+        return conf;
     }
 
-    public void setMetadataClassifier(ZoneClassifier metadataClassifier) {
-        this.metadataClassifier = metadataClassifier;
-    }
-
-    public void setStrExtractor(DocumentStructureExtractor strExtractor) {
-        this.strExtractor = strExtractor;
+    public void setConf(ComponentConfiguration conf) {
+        this.conf = conf;
     }
     
 }

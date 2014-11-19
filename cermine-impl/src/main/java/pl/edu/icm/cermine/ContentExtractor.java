@@ -19,11 +19,7 @@
 package pl.edu.icm.cermine;
 
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.Collection;
 import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
@@ -34,111 +30,180 @@ import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
+import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
 /**
- * NLM-based content extractor from PDF files.
+ * Content extractor from PDF files.
+ * The extractor stores the results of the extraction in various formats.
+ * The extraction process is performed only if the requested results 
+ * is not available yet.
  *
  * @author Dominika Tkaczyk
  */
 public class ContentExtractor {
     
-    private PdfBxStructureExtractor structureExtractor;
+    private ComponentConfiguration conf;
     
-    private PdfNLMMetadataExtractor metadataExtractor;
-    
-    private PdfBibEntryReferencesExtractor referencesExtractor;
-    
-    private PdfRawTextExtractor rawTextExtractor;
-    
-    private PdfNLMTextExtractor textExtractor;
-           
-    
+    /** input PDF file */
     private InputStream pdfFile;
+    
+    /** document's geometric structure */
     private BxDocument bxDocument;
+    
+    /** document's metadata */
+    private DocumentMetadata metadata;
+    
+    /** document's metadata in NLM format */
     private Element nlmMetadata;
-    private List<BibEntry> bibEntryReferences;
+    
+    /** document's list of references */
+    private List<BibEntry> references;
+    
+    /** document's list of references in NLM format */
     private List<Element> nlmReferences;
+    
+    /** raw full text */
     private String rawFullText;
+    
+    /** full text in NLM format */
     private Element nlmFullText;
+    
+    /** extracted content in NLM format */
     private Element nlmContent;
 
-    
     public ContentExtractor() throws AnalysisException {
-        structureExtractor = new PdfBxStructureExtractor();
-        metadataExtractor = new PdfNLMMetadataExtractor();
-        referencesExtractor = new PdfBibEntryReferencesExtractor();
-        rawTextExtractor = new PdfRawTextExtractor();
-        textExtractor = new PdfNLMTextExtractor();
+        conf = new ComponentConfiguration();
     }
 
-    
+    /**
+     * Stores the input PDF stream.
+     * 
+     * @param pdfFile PDF stream
+     * @throws IOException 
+     */
     public void uploadPDF(InputStream pdfFile) throws IOException {
         this.reset();
         this.pdfFile = pdfFile;
     }
     
+    /**
+     * Extracts geometric structure.
+     * 
+     * @return geometric structure
+     * @throws AnalysisException 
+     */
     public BxDocument getBxDocument() throws AnalysisException {
         if (pdfFile == null) {
             throw new AnalysisException("No PDF document uploaded!");
         }
         if (bxDocument == null) {
-            bxDocument = structureExtractor.extractStructure(pdfFile);
+            bxDocument = ExtractionUtils.extractStructure(conf, pdfFile);
         }
         return bxDocument;
     }
     
-    public List<BibEntry> getBibEntryReferences() throws AnalysisException {
-        if (bibEntryReferences == null) {
+    /**
+     * Extracts the metadata.
+     * 
+     * @return the metadata
+     * @throws AnalysisException 
+     */
+    public DocumentMetadata getMetadata() throws AnalysisException {
+        if (metadata == null) {
             getBxDocument();
-            bibEntryReferences = Lists.newArrayList(referencesExtractor.extractReferences(bxDocument));
+            metadata = ExtractionUtils.extractMetadata(conf, bxDocument);
         }
-        return bibEntryReferences;
+        return metadata;
     }
     
-    public String getRawFullText() throws AnalysisException {
-        if (rawFullText == null) {
-            getBxDocument();
-            rawFullText = rawTextExtractor.extractText(bxDocument);
-        }
-        return rawFullText;
-    }
-  
+    /**
+     * Extracts the metadata in NLM format.
+     * 
+     * @return the metadata in NLM format
+     * @throws AnalysisException 
+     */
     public Element getNLMMetadata() throws AnalysisException {
-        if (nlmMetadata == null) {
-            getBxDocument();
-            nlmMetadata = metadataExtractor.extractMetadata(bxDocument);
+        try {
+            if (nlmMetadata == null) {
+                getMetadata();
+                DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
+                nlmMetadata = converter.convert(metadata);
+            }
+            return nlmMetadata;
+        } catch (TransformationException ex) {
+            throw new AnalysisException("Cannot extract metadata!", ex);
         }
-        return nlmMetadata;
     }
     
+    /**
+     * Extracts the references.
+     * 
+     * @return the list of references
+     * @throws AnalysisException 
+     */
+    public List<BibEntry> getReferences() throws AnalysisException {
+        if (references == null) {
+            getBxDocument();
+            references = Lists.newArrayList(ExtractionUtils.extractReferences(conf, bxDocument));
+        }
+        return references;
+    }
+    
+    /**
+     * Extracts the references in NLM format.
+     * 
+     * @return the list of references
+     * @throws AnalysisException 
+     */
     public List<Element> getNLMReferences() throws AnalysisException {
         if (nlmReferences == null) {
-            getBibEntryReferences();
-            nlmReferences = new ArrayList<Element>(bibEntryReferences.size());
-            BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
-            for (BibEntry entry : bibEntryReferences) {
-                try {
-                    nlmReferences.add(converter.convert(entry));
-                } catch (TransformationException ex) {
-                    throw new AnalysisException(ex);
-                }
-            }
+            getReferences();
+            nlmReferences = Lists.newArrayList(
+                ExtractionUtils.convertReferences(references.toArray(new BibEntry[]{})));
         }
         return nlmReferences;
     }
-    
+
+    /**
+     * Extracts raw text.
+     * 
+     * @return raw text
+     * @throws AnalysisException 
+     */
+    public String getRawFullText() throws AnalysisException {
+        if (rawFullText == null) {
+            getBxDocument();
+            rawFullText = ExtractionUtils.extractRawText(conf, bxDocument);
+        }
+        return rawFullText;
+    }
+
+    /**
+     * Extracts full text.
+     * 
+     * @return full text in NLM format
+     * @throws AnalysisException 
+     */
     public Element getNLMText() throws AnalysisException {
         if (nlmFullText == null) {
             getBxDocument();
-            nlmFullText = textExtractor.extractText(bxDocument);
+            nlmFullText = ExtractionUtils.extractTextAsNLM(conf, bxDocument);
         }
         return nlmFullText;
     }
     
+    /**
+     * Extracts full content in NLM format.
+     * 
+     * @return full content in NLM format
+     * @throws AnalysisException 
+     */
     public Element getNLMContent() throws AnalysisException {
         if (nlmContent == null) {
             getNLMMetadata();
@@ -147,8 +212,8 @@ public class ContentExtractor {
             
             nlmContent = new Element("article");
             
-            Element metadata = (Element) nlmMetadata.getChild("front").clone();
-            nlmContent.addContent(metadata);
+            Element meta = (Element) nlmMetadata.getChild("front").clone();
+            nlmContent.addContent(meta);
             
             nlmContent.addContent(nlmFullText);
             
@@ -165,10 +230,16 @@ public class ContentExtractor {
         return nlmContent;
     }
     
+    /**
+     * Resets the extraction results.
+     * 
+     * @throws IOException 
+     */
     public void reset() throws IOException {
         bxDocument = null;
+        metadata = null;
         nlmMetadata = null;
-        bibEntryReferences = null;
+        references = null;
         nlmReferences = null;
         rawFullText = null;
         nlmFullText = null;
@@ -179,30 +250,23 @@ public class ContentExtractor {
         pdfFile = null;
     }
 
-    public void setMetadataExtractor(PdfNLMMetadataExtractor metadataExtractor) {
-        this.metadataExtractor = metadataExtractor;
+    public ComponentConfiguration getConf() {
+        return conf;
     }
 
-    public void setRawTextExtractor(PdfRawTextExtractor rawTextExtractor) {
-        this.rawTextExtractor = rawTextExtractor;
-    }
-
-    public void setReferencesExtractor(PdfBibEntryReferencesExtractor referencesExtractor) {
-        this.referencesExtractor = referencesExtractor;
-    }
-
-    public void setStructureExtractor(PdfBxStructureExtractor structureExtractor) {
-        this.structureExtractor = structureExtractor;
-    }
-
-    public void setTextExtractor(PdfNLMTextExtractor textExtractor) {
-        this.textExtractor = textExtractor;
+    public void setConf(ComponentConfiguration conf) {
+        this.conf = conf;
     }
     
-    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException {
+    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException, TransformationException {
         Options options = new Options();
         options.addOption("path", true, "file or directory path");
-        options.addOption("ext", true, "file extension");
+        options.addOption("ext", true, "metadata file extension");
+        options.addOption("str", false, "store structure (TrueViz) files as well");
+        options.addOption("strext", true, "structure file extension");
+        options.addOption("modelmeta", true, "path to metadata classifier model");
+        options.addOption("modelinit", true, "path to initial classifier model");
+        options.addOption("threads", true, "number of threads used");
         
         CommandLineParser clParser = new GnuParser();
         CommandLine line = clParser.parse(options, args);
@@ -211,20 +275,55 @@ public class ContentExtractor {
         if (line.hasOption("ext")) {
             extension = line.getOptionValue("ext");
         }
+        boolean extractStr = line.hasOption("str");
+        String strExtension = "cxml";
+        if (line.hasOption("strext")) {
+            strExtension = line.getOptionValue("strext");
+        }
+        String modelMeta = null;
+        String modelMetaRange = null;
+        if (line.hasOption("modelmeta")) {
+            modelMeta = line.getOptionValue("modelmeta");
+            modelMetaRange = line.getOptionValue("modelmeta")+".range";
+        }
+        String modelInit = null;
+        String modelInitRange = null;
+        if (line.hasOption("modelinit")) {
+            modelInit = line.getOptionValue("modelinit");
+            modelInitRange = line.getOptionValue("modelinit")+".range";
+        }
+        if (line.hasOption("threads")) {
+            PdfNLMContentExtractor.THREADS_NUMBER = Integer.valueOf(line.getOptionValue("threads"));
+        }
     	if (path == null){
-    		System.err.println("USAGE: program DIR_PATH <EXTENSION>");
-            System.err.println("Usage: ContentExtractor -path <path> [-ext <extension>]\n\n"
+            System.err.println("Usage: PdfNLMContentExtractor -path <path> [optional parameters]\n\n"
                              + "Tool for extracting metadata and content from PDF files.\n\n"
                              + "Arguments:\n"
-                             + "  -path                 path to a PDF file or directory containing PDF files\n"
-                             + "  -ext (optional)       the extension of the resulting metadata file;\n"
-                             + "                        used only if passed path is a directory");
+                             + "  -path <path>              path to a PDF file or directory containing PDF files\n"
+                             + "  -ext <extension>          (optional) the extension of the resulting metadata file;\n"
+                             + "                            default: \"cermxml\"; used only if passed path is a directory\n"
+                             + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
+                             + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
+                             + "  -str                      whether to store structure (TrueViz) files as well;\n"
+                             + "                            used only if passed path is a directory\n"
+                             + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
+                             + "                            default: \"cxml\"; used only if passed path is a directory\n"
+                             + "  -threads <num>            number of threads for parallel processing\n");
     		System.exit(1);
         }
-        
+ 
         File file = new File(path);
         if (file.isFile()) {
             ContentExtractor extractor = new ContentExtractor();
+            
+            if ("alt-humanities".equals(modelMeta)) {
+                extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+            } else if (modelMeta != null) {
+                extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+            }
+            if (modelInit != null) {
+                extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+            }
             InputStream in = new FileInputStream(file);
             extractor.uploadPDF(in);
             Element result = extractor.getNLMContent();
@@ -244,11 +343,21 @@ public class ContentExtractor {
  
                 long start = System.currentTimeMillis();
             
-                System.out.println(pdf.getName());
+                System.out.println(pdf.getPath());
  
                 ContentExtractor extractor = new ContentExtractor();
+               
+                if ("alt-humanities".equals(modelMeta)) {
+                    extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+                } else if (modelMeta != null) {
+                    extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+                }
+                if (modelInit != null) {
+                    extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+                }
                 InputStream in = new FileInputStream(pdf);
                 extractor.uploadPDF(in);
+                BxDocument doc = extractor.getBxDocument();
                 Element result = extractor.getNLMContent();
 
                 long end = System.currentTimeMillis();
@@ -259,6 +368,13 @@ public class ContentExtractor {
                     System.out.println("Cannot create new file!");
                 }
                 FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
+                
+                if (extractStr) {
+                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                    File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
+                    writer.write(new FileWriter(strF), doc.getPages());
+                }
+                
                 i++;
                 int percentage = i*100/files.size();
                 System.out.println("Extraction time: " + Math.round(elapsed) + "s");

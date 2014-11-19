@@ -19,15 +19,9 @@
 package pl.edu.icm.cermine;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import org.jdom.Element;
-import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
-import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
@@ -36,62 +30,64 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfNLMReferencesExtractor implements DocumentReferencesExtractor<Element> {
+public class PdfNLMReferencesExtractor {
     
-    /** BibEntry-based references extractor */
-    private DocumentReferencesExtractor<BibEntry> extractor;
+    private ComponentConfiguration conf;
     
     public PdfNLMReferencesExtractor() throws AnalysisException {
-        extractor = new PdfBibEntryReferencesExtractor();
+        conf = new ComponentConfiguration();
     }
     
-    public PdfNLMReferencesExtractor(InputStream model) throws AnalysisException {
-        extractor = new PdfBibEntryReferencesExtractor(model);
+    /**
+     * Extracts parsed bibliographic references from a PDF file and returns them as BibEntry objects.
+     * 
+     * @param stream input stream
+     * @return parsed bibliographic references
+     * @throws AnalysisException 
+     */
+    public BibEntry[] extractReferences(InputStream stream) throws AnalysisException {
+        return ExtractionUtils.extractReferences(conf, stream);
     }
-    
-    public PdfNLMReferencesExtractor(DocumentStructureExtractor strExtractor, BibReferenceExtractor extractor, BibReferenceParser<BibEntry> parser) {
-        this.extractor = new PdfBibEntryReferencesExtractor(strExtractor, extractor, parser);
+
+    /**
+     * Extracts parsed bibliographic references from a PDF file and returns them as BibEntry objects.
+     * 
+     * @param document document's structure
+     * @return parsed bibliographic references
+     * @throws AnalysisException 
+     */
+    public BibEntry[] extractReferences(BxDocument document) throws AnalysisException {
+        return ExtractionUtils.extractReferences(conf, document);
     }
     
     /**
      * Extracts parsed bibliographic references from a PDF file and stores them in NLM format.
      * 
-     * @param stream
+     * @param stream input stream
      * @return parsed bibliographic references
      * @throws AnalysisException 
      */
-    @Override
-    public Element[] extractReferences(InputStream stream) throws AnalysisException {
-        return extractReferences(extractor.extractReferences(stream));
+    public Element[] extractReferencesAsNLM(InputStream stream) throws AnalysisException {
+        return ExtractionUtils.extractReferencesAsNLM(conf, stream);
     }
 
     /**
      * Extracts parsed bibliographic references from a PDF file and stores them in NLM format.
      * 
-     * @param document
+     * @param document document's structure
      * @return parsed bibliographic references
      * @throws AnalysisException 
      */
-    @Override
-    public Element[] extractReferences(BxDocument document) throws AnalysisException {
-        return extractReferences(extractor.extractReferences(document));
+    public Element[] extractReferencesAsNLM(BxDocument document) throws AnalysisException {
+        return ExtractionUtils.extractReferencesAsNLM(conf, document);
+    }
+
+    public ComponentConfiguration getConf() {
+        return conf;
+    }
+
+    public void setConf(ComponentConfiguration conf) {
+        this.conf = conf;
     }
     
-    private Element[] extractReferences(BibEntry[] entries) throws AnalysisException {
-        List<Element> elements = new ArrayList<Element>(entries.length);
-        BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
-        for (BibEntry entry : entries) {
-            try {
-                elements.add(converter.convert(entry));
-            } catch (TransformationException ex) {
-                throw new AnalysisException(ex);
-            }
-        }
-        return elements.toArray(new Element[entries.length]);
-    }
-
-    public void setExtractor(DocumentReferencesExtractor<BibEntry> extractor) {
-        this.extractor = extractor;
-    }
-
 }

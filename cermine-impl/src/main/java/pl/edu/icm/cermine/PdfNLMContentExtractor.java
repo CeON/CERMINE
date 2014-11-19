@@ -30,7 +30,6 @@ import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
-import pl.edu.icm.cermine.structure.ZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
@@ -39,19 +38,9 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
  *
  * @author Dominika Tkaczyk
  */
-public class PdfNLMContentExtractor implements DocumentContentExtractor<Element> {
+public class PdfNLMContentExtractor {
 
-    /** geometric structure extractor */
-    private DocumentStructureExtractor structureExtractor;
-    
-    /** document metadata extractor from geometric structure */
-    private DocumentMetadataExtractor<Element> metadataExtractor;
-    
-    /** parsed references extractor from geometric structure */
-    private DocumentReferencesExtractor<Element> referencesExtractor;
-    
-    /** logical content extractor */
-    private DocumentTextExtractor<Element> textExtractor;
+    private ComponentConfiguration conf;
     
     private boolean extractMetadata = true;
     
@@ -61,62 +50,50 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
     
     public static int THREADS_NUMBER = 3;
 
+    
     public PdfNLMContentExtractor() throws AnalysisException {
-        structureExtractor = new PdfBxStructureExtractor();
-        metadataExtractor = new PdfNLMMetadataExtractor();
-        referencesExtractor = new PdfNLMReferencesExtractor();
-        textExtractor = new PdfNLMTextExtractor();
+        conf = new ComponentConfiguration();
     }
 
-    public PdfNLMContentExtractor(DocumentStructureExtractor structureExtractor, DocumentMetadataExtractor<Element> metadataExtractor, 
-            DocumentReferencesExtractor<Element> referencesExtractor, DocumentTextExtractor<Element> textExtractor) {
-        this.structureExtractor = structureExtractor;
-        this.metadataExtractor = metadataExtractor;
-        this.referencesExtractor = referencesExtractor;
-        this.textExtractor = textExtractor;
-    }
-    
-    
     /**
      * Extracts content from PDF file and stores it in NLM format.
      * 
-     * @param stream
+     * @param stream input stream
      * @return extracted content in NLM format
      * @throws AnalysisException 
      */
-    @Override
     public Element extractContent(InputStream stream) throws AnalysisException {
-        BxDocument document = structureExtractor.extractStructure(stream);
-        return extractContent(document);
+        BxDocument doc = ExtractionUtils.extractStructure(conf, stream);
+        return extractContent(doc);
     }
 
     /**
      * Extracts content from a BxDocument and stores it in NLM format.
      * 
-     * @param document
+     * @param document document's structure
      * @return extracted content in NLM format
      * @throws AnalysisException 
      */
-    @Override
     public Element extractContent(BxDocument document) throws AnalysisException {
         Element content = new Element("article");
         
         Element metadata = new Element("front");
         if (extractMetadata) {
-            metadata = (Element) metadataExtractor.extractMetadata(document).getChild("front").clone();
+            Element meta = ExtractionUtils.extractMetadataAsNLM(conf, document);
+            metadata = (Element) meta.getChild("front").clone();
         }
         content.addContent(metadata);
         
         Element text = new Element("body");
         if (extractText) {
-            text = textExtractor.extractText(document);
+            text = ExtractionUtils.extractTextAsNLM(conf, document);
         }
         content.addContent(text);
         
         Element back = new Element("back");
         Element refList = new Element("ref-list");
         if (extractReferences) {
-            Element[] references = referencesExtractor.extractReferences(document);
+            Element[] references = ExtractionUtils.extractReferencesAsNLM(conf, document);
             for (Element ref : references) {
                 Element r = new Element("ref");
                 r.addContent(ref);
@@ -128,40 +105,15 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
 
         return content;
     }
-    
 
-    public void buildStructureExtractor(InputStream initialModel, InputStream initialRange) throws AnalysisException {
-        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
-    }
-    
-    public void buildMetadataExtractor(InputStream metadataModel, InputStream metadataRange) throws AnalysisException {
-        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
-    }
-    
-    public void buildMetadataExtractor(ZoneClassifier zoneClassifier) throws AnalysisException {
-        PdfNLMMetadataExtractor extractor = new PdfNLMMetadataExtractor();
-        extractor.setMetadataClassifier(zoneClassifier);
-        metadataExtractor = extractor;
-    }
-    
-    public void buildReferencesExtractor(InputStream refModel) throws AnalysisException {
-        referencesExtractor = new PdfNLMReferencesExtractor(refModel);
-    }
-    
-    public void buildTextExtractor(InputStream filteringModel, InputStream filteringRange, 
-            InputStream headerModel, InputStream headerRange) throws AnalysisException {
-        textExtractor = new PdfNLMTextExtractor(filteringModel, filteringRange, headerModel, headerRange);
-    }
-    
-    public PdfNLMContentExtractor(InputStream initialModel, InputStream initialRange, InputStream metadataModel, 
-            InputStream metadataRange, InputStream refModel, InputStream filteringModel, InputStream filteringRange, 
-            InputStream headerModel, InputStream headerRange) throws AnalysisException {
-        structureExtractor = new PdfBxStructureExtractor(initialModel, initialRange);
-        metadataExtractor = new PdfNLMMetadataExtractor(metadataModel, metadataRange);
-        referencesExtractor = new PdfNLMReferencesExtractor(refModel);
-        textExtractor = new PdfNLMTextExtractor(filteringModel, filteringRange, headerModel, headerRange);
+    public ComponentConfiguration getConf() {
+        return conf;
     }
 
+    public void setConf(ComponentConfiguration conf) {
+        this.conf = conf;
+    }
+    
     public boolean isExtractMetadata() {
         return extractMetadata;
     }
@@ -186,38 +138,6 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         this.extractText = extractText;
     }
 
-    public DocumentMetadataExtractor<Element> getMetadataExtractor() {
-        return metadataExtractor;
-    }
-
-    public void setMetadataExtractor(DocumentMetadataExtractor<Element> metadataExtractor) {
-        this.metadataExtractor = metadataExtractor;
-    }
-
-    public DocumentReferencesExtractor<Element> getReferencesExtractor() {
-        return referencesExtractor;
-    }
-
-    public void setReferencesExtractor(DocumentReferencesExtractor<Element> referencesExtractor) {
-        this.referencesExtractor = referencesExtractor;
-    }
-
-    public DocumentStructureExtractor getStructureExtractor() {
-        return structureExtractor;
-    }
-
-    public void setStructureExtractor(DocumentStructureExtractor structureExtractor) {
-        this.structureExtractor = structureExtractor;
-    }
-
-    public DocumentTextExtractor<Element> getTextExtractor() {
-        return textExtractor;
-    }
-
-    public void setTextExtractor(DocumentTextExtractor<Element> textExtractor) {
-        this.textExtractor = textExtractor;
-    }
-    
     public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException, TransformationException {
         Options options = new Options();
         options.addOption("path", true, "file or directory path");
@@ -276,12 +196,12 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
         if (file.isFile()) {
             PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
             if ("alt-humanities".equals(modelMeta)) {
-                extractor.buildMetadataExtractor(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+                extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
             } else if (modelMeta != null) {
-                extractor.buildMetadataExtractor(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+                extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
             }
             if (modelInit != null) {
-                extractor.buildStructureExtractor(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+                extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
             }
             InputStream in = new FileInputStream(file);
             Element result = extractor.extractContent(in);
@@ -304,16 +224,17 @@ public class PdfNLMContentExtractor implements DocumentContentExtractor<Element>
                 System.out.println(pdf.getPath());
  
                 PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+               
                 if ("alt-humanities".equals(modelMeta)) {
-                    extractor.buildMetadataExtractor(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+                    extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
                 } else if (modelMeta != null) {
-                    extractor.buildMetadataExtractor(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+                    extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
                 }
                 if (modelInit != null) {
-                    extractor.buildStructureExtractor(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
+                    extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
                 }
                 InputStream in = new FileInputStream(pdf);
-                BxDocument doc = extractor.structureExtractor.extractStructure(in);
+                BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
                 Element result = extractor.extractContent(doc);
 
                 long end = System.currentTimeMillis();

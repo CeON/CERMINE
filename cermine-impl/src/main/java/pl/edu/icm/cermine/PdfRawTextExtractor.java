@@ -20,75 +20,51 @@ package pl.edu.icm.cermine;
 
 import java.io.InputStream;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.structure.*;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
  * Text extractor from PDF files. Extracted text includes 
- * all text string found in the document in correct reading order.
+ * all text strings found in the document in correct reading order.
  *
  * @author Paweł Szostek
  * @author Dominika Tkaczyk
  */
-public class PdfRawTextExtractor implements DocumentTextExtractor<String> {
-    /** individual character extractor */
-    private CharacterExtractor characterExtractor;
+public class PdfRawTextExtractor {
     
-    /** document object segmenter */
-    private DocumentSegmenter documentSegmenter;
-    
-    /** reading order resolver */
-    private ReadingOrderResolver roResolver;
+    ComponentConfiguration conf;
     
     public PdfRawTextExtractor() throws AnalysisException {
-        characterExtractor = new ITextCharacterExtractor();
-        documentSegmenter = new ParallelDocstrumSegmenter();
-        roResolver = new HierarchicalReadingOrderResolver();
-    }
-    
-    public PdfRawTextExtractor(CharacterExtractor glyphExtractor, DocumentSegmenter pageSegmenter, ReadingOrderResolver roResolver) {
-        this.characterExtractor = glyphExtractor;
-        this.documentSegmenter = pageSegmenter;
-        this.roResolver = roResolver;
+        conf = new ComponentConfiguration();
     }
     
     /**
-     * Extracts content of a pdf to a plain text.
+     * Extracts content of a PDF as a plain text.
      * 
-     * @param stream
+     * @param stream input stream
      * @return pdf's content as plain text
      * @throws AnalysisException 
      */
-    @Override
     public String extractText(InputStream stream) throws AnalysisException {
-        BxDocument doc = characterExtractor.extractCharacters(stream);
-        doc = documentSegmenter.segmentDocument(doc);
-        doc = roResolver.resolve(doc);
-        return extractText(doc);
+        return ExtractionUtils.extractRawText(conf, stream);
     }
     
     /**
-     * Extracts content of a pdf to a plain text.
+     * Extracts content of a PDF as a plain text.
      * 
-     * @param document
+     * @param document document's structure
      * @return pdf's content as plain text
      * @throws AnalysisException 
      */
-    @Override
     public String extractText(BxDocument document) throws AnalysisException {
-        return document.toText();
+        return ExtractionUtils.extractRawText(conf, document);
     }
 
-    public void setGlyphExtractor(CharacterExtractor glyphExtractor) {
-        this.characterExtractor = glyphExtractor;
+    public ComponentConfiguration getConf() {
+        return conf;
     }
 
-    public void setPageSegmenter(DocumentSegmenter pageSegmenter) {
-        this.documentSegmenter = pageSegmenter;
-    }
-
-    public void setRoResolver(ReadingOrderResolver roResolver) {
-        this.roResolver = roResolver;
+    public void setConf(ComponentConfiguration conf) {
+        this.conf = conf;
     }
     
 }

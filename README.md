@@ -30,7 +30,7 @@ CERMINE can be used in Java projects by adding the following dependency and repo
 	<dependency>
 		<groupId>pl.edu.icm.cermine</groupId>
 		<artifactId>cermine-impl</artifactId>
-		<version>1.3-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</dependency>
 
 	<repository>
@@ -58,22 +58,24 @@ To extract metadata from an affiliation string:
 
 **Executable JAR**
 
-Alternatively, Maven can be used to build an executable jar containing all needed classes and resources:
+Alternatively, Maven can be used to build an executable JAR containing all needed classes and resources:
 
 	$ cd CERMINE/cermine-impl
 	$ mvn compile assembly:single
 
-This will result in a file *cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar* in *cermine-impl/target* directory. To extract the content from PDF files:
+This will result in a file *cermine-impl-1.4-SNAPSHOT-jar-with-dependencies.jar* in *cermine-impl/target* directory. Executable JARs can also be downloaded from [the repository](http://maven.ceon.pl/artifactory/simple/kdd-shapshots/pl/edu/icm/cermine/cermine-impl/).
 
-	$ java -cp target/cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.PdfNLMContentExtractor -path path/to/directory/with/pdfs/or/a/single/pdf
+To extract the content from PDF files:
+
+	$ java -cp target/cermine-impl-1.4-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.PdfNLMContentExtractor -path path/to/directory/with/pdfs/or/a/single/pdf
 
 To extract metadata from a reference string:
 
-	$ java -cp target/cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.bibref.CRFBibReferenceParser -reference "the text of the reference"
+	$ java -cp target/cermine-impl-1.4-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.bibref.CRFBibReferenceParser -reference "the text of the reference"
 
 To extract metadata from an affiliation string:
 
-	$ java -cp target/cermine-impl-1.3-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser -affiliation "the text of the affiliation"
+	$ java -cp target/cermine-impl-1.4-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser -affiliation "the text of the affiliation"
 
 
 **REST service**

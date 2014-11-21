@@ -24,6 +24,7 @@ import pl.edu.icm.cermine.structure.readingorder.BxZoneGroup;
 import pl.edu.icm.cermine.structure.readingorder.DistElem;
 import pl.edu.icm.cermine.structure.readingorder.DocumentPlane;
 import pl.edu.icm.cermine.structure.readingorder.TreeToListConverter;
+import pl.edu.icm.cermine.tools.Utils;
 
 /**
  * Class for setting a correct logical reading order of objects embedded in a BxDocument.
@@ -41,13 +42,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
 
         @Override
         public int compare(BxObject o1, BxObject o2) {
-        	if((o1.getY() - o2.getY()) > EPS ) {
-        		return 1;
-        	} else if(Math.abs(o1.getY() - o2.getY()) < EPS) {
-        		return 0;
-        	} else {
-        		return -1;
-        	}
+            return Utils.compareDouble(o1.getY(), o2.getY(), EPS);
         }
     };
 
@@ -55,13 +50,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
 
         @Override
         public int compare(BxObject o1, BxObject o2) {
-        	if(o1.getX()-o2.getX() > EPS) {
-        		return 1;
-        	} else if(Math.abs(o1.getX() - o2.getX()) < EPS) {
-        		return 0;
-        	} else {
-        		return -1;
-        	}
+            return Utils.compareDouble(o1.getX(), o2.getX(), EPS);
         }
     };
     

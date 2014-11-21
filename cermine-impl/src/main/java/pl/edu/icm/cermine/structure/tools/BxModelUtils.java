@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.structure.tools;
 
 import java.util.*;
 import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.tools.Utils;
 
 /**
  *
@@ -58,15 +59,11 @@ public final class BxModelUtils {
 
             @Override
             public int compare(BxZone o1, BxZone o2) {
-                int cmp = 0;
-                if (Math.abs(o1.getBounds().getY() - o2.getBounds().getY()) > tolerance) {
-                    cmp = Double.compare(o1.getBounds().getY(), o2.getBounds().getY());
+                int cmp = Utils.compareDouble(o1.getBounds().getY(), o2.getBounds().getY(), tolerance);
+                if (cmp == 0) {
+                    return Utils.compareDouble(o1.getBounds().getX(), o2.getBounds().getX(), tolerance);
                 }
-                if (cmp != 0) {
-                    return cmp;
-                } else {
-                    return Double.compare(o1.getBounds().getX(), o2.getBounds().getX());
-                }
+                return cmp;
             }
         });
     }
@@ -80,15 +77,11 @@ public final class BxModelUtils {
 
             @Override
             public int compare(BxZone o1, BxZone o2) {
-                int cmp = 0;
-                if (Math.abs(o1.getBounds().getX() - o2.getBounds().getX()) > tolerance) {
-                    cmp = Double.compare(o1.getBounds().getX(), o2.getBounds().getX());
+                int cmp = Utils.compareDouble(o1.getBounds().getX(), o2.getBounds().getX(), tolerance);
+                if (cmp == 0) {
+                    return Utils.compareDouble(o1.getBounds().getY(), o2.getBounds().getY(), tolerance);
                 }
-                if (cmp != 0) {
-                    return cmp;
-                } else {
-                    return Double.compare(o1.getBounds().getY(), o2.getBounds().getY());
-                }
+                return cmp;
             }
         });
     }

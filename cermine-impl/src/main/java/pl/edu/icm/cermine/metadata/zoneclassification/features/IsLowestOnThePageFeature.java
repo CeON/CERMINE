@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
+import pl.edu.icm.cermine.tools.Utils;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
@@ -30,13 +31,7 @@ public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override
 		public int compare(BxZone z1, BxZone z2) {
-			if(z1.getY() + z1.getHeight() > (z2.getY() + z2.getHeight())) {
-				return 1;
-			} else if (Math.abs((z1.getY() + z1.getHeight()) - (z2.getY() + z2.getHeight())) < 0.1) {
-				return 0;
-			} else {
-				return -1;
-			}
+            return Utils.compareDouble(z1.getY() + z1.getHeight(), z2.getY() + z2.getHeight(), 0.1);
 		}
 	}
 	

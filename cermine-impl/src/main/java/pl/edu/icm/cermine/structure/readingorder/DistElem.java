@@ -18,6 +18,8 @@
 
 package pl.edu.icm.cermine.structure.readingorder;
 
+import pl.edu.icm.cermine.tools.Utils;
+
 /** Tuple containing magic value c, object1, object2 and distance between them.
 *
 * @author Pawel Szostek (p.szostek@icm.edu.pl)
@@ -119,23 +121,12 @@ public class DistElem<E> implements Comparable<DistElem<E> >{
 	
 	@Override
 	public int compareTo(DistElem<E> compareObject) {
-		if(c == compareObject.c) {
-			 return compareDouble(dist, compareObject.dist);
-		} else if (c == true) {
-            return -1;
+        double eps = 1E-3;
+        if (c == compareObject.c) {
+			return Utils.compareDouble(dist, compareObject.dist, eps);
 		} else {
-			return 1;
+            return c ? -1 : 1;
 		}
 	}
-	
-	private int compareDouble(double d1, double d2) {
-		double eps = 1E-6;
-		if(d1 > d2) {
-			return 1;
-		} else if(Math.abs(d1-d2) < eps) {
-				return 0;
-		} else {
-			return -1;
-		}
-	}
+
 }

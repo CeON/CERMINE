@@ -29,6 +29,11 @@ import pl.edu.icm.cermine.bibref.KMeansBibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.content.LogicalStructureExtractor;
 import pl.edu.icm.cermine.content.SVMLogicalStructureExtractor;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
+import pl.edu.icm.cermine.content.filtering.ContentFilter;
+import pl.edu.icm.cermine.content.filtering.SVMContentFilter;
+import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
+import pl.edu.icm.cermine.content.headers.SVMContentHeadersExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
@@ -193,24 +198,78 @@ public class ComponentFactory {
     }
 
     /**
-     * The method creates an instance of a logical structure extractor.
+     * The method creates an instance of a default content filter. 
      * 
-     * @param filterModel svm filtering model
-     * @param filterRange svm filtering range
-     * @param headerModel svm header model
-     * @param headerRange svm header range
-     * @return logical structure extractor
+     * @return content filter
      * @throws AnalysisException 
      */
-    public static LogicalStructureExtractor getLogicalStructureExtractor(
-            InputStream filterModel, InputStream filterRange,
-            InputStream headerModel, InputStream headerRange) throws AnalysisException {
-        BufferedReader filterModelBR = new BufferedReader(new InputStreamReader(filterModel));
-        BufferedReader filterRangeBR = new BufferedReader(new InputStreamReader(filterRange));
-        BufferedReader headerModelBR = new BufferedReader(new InputStreamReader(headerModel));
-        BufferedReader headerRangeBR = new BufferedReader(new InputStreamReader(headerRange));
+    public static ContentFilter getContentFilter() throws AnalysisException {
+        return new SVMContentFilter();
+    }
 
-        return new SVMLogicalStructureExtractor(filterModelBR, filterRangeBR, headerModelBR, headerRangeBR);
+    /**
+     * The method creates an instance of a content filter. 
+     * 
+     * @param model svm model file
+     * @param range svm range file
+     * @return content filter
+     * @throws AnalysisException
+     * @throws IOException 
+     */
+    public static ContentFilter getContentFilter(InputStream model, InputStream range) 
+            throws AnalysisException, IOException {
+        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model));
+        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range));
+        ContentFilter filter;
+        try {
+            filter = new SVMContentFilter(modelFileBR, rangeFileBR);
+        } finally {
+            modelFileBR.close();
+            rangeFileBR.close();
+        }
+        return filter;
+    }
+    
+    /**
+     * The method creates an instance of a default content header extractor. 
+     * 
+     * @return content header extractor
+     * @throws AnalysisException 
+     */
+    public static ContentHeadersExtractor getContentHeaderExtractor() throws AnalysisException {
+        return new SVMContentHeadersExtractor();
+    }
+
+    /**
+     * The method creates an instance of a content header extractor. 
+     * 
+     * @param model svm model file
+     * @param range svm range file
+     * @return content header extractor
+     * @throws AnalysisException
+     * @throws IOException 
+     */
+    public static ContentHeadersExtractor getContentHeaderExtractor(InputStream model, InputStream range) 
+            throws AnalysisException, IOException {
+        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model));
+        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range));
+        ContentHeadersExtractor extractor;
+        try {
+            extractor = new SVMContentHeadersExtractor(modelFileBR, rangeFileBR);
+        } finally {
+            modelFileBR.close();
+            rangeFileBR.close();
+        }
+        return extractor;
+    }
+    
+    /**
+     * The method creates an instance of a default content cleaner.
+     * 
+     * @return content cleaner
+     */
+    public static ContentCleaner getContentCleaner() {
+        return new ContentCleaner();
     }
     
 }

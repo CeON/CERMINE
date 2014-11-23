@@ -23,7 +23,9 @@ import java.io.InputStream;
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.content.LogicalStructureExtractor;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
+import pl.edu.icm.cermine.content.filtering.ContentFilter;
+import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
@@ -70,10 +72,15 @@ public class ComponentConfiguration {
     /** bibliographic references parser */
     BibReferenceParser<BibEntry> bibReferenceParser;
     
-    /** table of contents extractor */
-    LogicalStructureExtractor logicalExtractor;
-
+    /** content filter */
+    ContentFilter contentFilter;
     
+    /** content header extractor */
+    ContentHeadersExtractor contentHeaderExtractor;
+    
+    /** content cleaner */
+    ContentCleaner contentCleaner;
+   
     public ComponentConfiguration() throws AnalysisException {
         try {
             characterExtractor = ComponentFactory.getCharacterExtractor();
@@ -85,7 +92,9 @@ public class ComponentConfiguration {
             affiliationParser = ComponentFactory.getAffiliationParser();
             bibReferenceExtractor = ComponentFactory.getBibReferenceExtractor();
             bibReferenceParser = ComponentFactory.getBibReferenceParser(); 
-            logicalExtractor = ComponentFactory.getLogicalStructureExtractor();
+            contentFilter = ComponentFactory.getContentFilter();
+            contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor();
+            contentCleaner = ComponentFactory.getContentCleaner();
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create ComponentConfiguration!", ex);
         }
@@ -139,15 +148,26 @@ public class ComponentConfiguration {
         this.bibReferenceParser = ComponentFactory.getBibReferenceParser(model);
     }
     
-    public void setLogicalStructureExtractor(LogicalStructureExtractor logicalExtractor) {
-        this.logicalExtractor = logicalExtractor;
-    }
-    
-    public void setLogicalStructureExtractor(InputStream filterModel, InputStream filterRange,
-            InputStream headerModel, InputStream headerRange) throws AnalysisException {
-        this.logicalExtractor = ComponentFactory.getLogicalStructureExtractor(filterModel, filterRange, headerModel, headerRange);
+    public void setContentCleaner(ContentCleaner contentCleaner) {
+        this.contentCleaner = contentCleaner;
     }
 
+    public void setContentFilter(ContentFilter contentFilter) {
+        this.contentFilter = contentFilter;
+    }
+
+    public void setContentFilter(InputStream model, InputStream range) throws AnalysisException, IOException {
+        this.contentFilter = ComponentFactory.getContentFilter(model, range);
+    }
+    
+    public void setContentHeaderExtractor(ContentHeadersExtractor contentHeaderExtractor) {
+        this.contentHeaderExtractor = contentHeaderExtractor;
+    }
+    
+    public void setContentHeaderExtractor(InputStream model, InputStream range) throws AnalysisException, IOException {
+        this.contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor(model, range);
+    }
+    
     public ParsableStringParser<DocumentAffiliation> getAffiliationParser() {
         return affiliationParser;
     }
@@ -172,10 +192,18 @@ public class ComponentConfiguration {
         return initialClassifier;
     }
 
-    public LogicalStructureExtractor getLogicalExtractor() {
-        return logicalExtractor;
+    public ContentCleaner getContentCleaner() {
+        return contentCleaner;
     }
 
+    public ContentFilter getContentFilter() {
+        return contentFilter;
+    }
+
+    public ContentHeadersExtractor getContentHeaderExtractor() {
+        return contentHeaderExtractor;
+    }
+    
     public ZoneClassifier getMetadataClassifier() {
         return metadataClassifier;
     }

@@ -29,12 +29,19 @@ import pl.edu.icm.cermine.structure.model.*;
  */
 public class SVMContentHeadersExtractor implements ContentHeadersExtractor {
 
+    private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/content/header.model";
+    private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/content/header.range";
+    
     private SVMHeaderLinesClassifier contentHeaderClassifier;
     
     private HeadersClusterizer headersClusterizer;
     
     private HeaderLinesCompletener headerLinesCompletener;
 
+    public SVMContentHeadersExtractor() throws AnalysisException {
+        this(MODEL_FILE_PATH, RANGE_FILE_PATH);
+    }
+    
     public SVMContentHeadersExtractor(SVMHeaderLinesClassifier contentHeaderClassifier) {
         this.contentHeaderClassifier = contentHeaderClassifier;
         this.headersClusterizer = new HeadersClusterizer();

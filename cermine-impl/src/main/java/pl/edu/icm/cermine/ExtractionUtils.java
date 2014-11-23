@@ -24,7 +24,9 @@ import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.content.model.BxDocContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
+import pl.edu.icm.cermine.content.transformers.BxContentStructToDocContentStructConverter;
 import pl.edu.icm.cermine.content.transformers.DocContentStructToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -153,7 +155,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         return document.toText();
     }
-    
+  
     /**
      * Extracts references from input stream.
      * 
@@ -297,7 +299,17 @@ public class ExtractionUtils {
      */
     public static DocumentContentStructure extractText(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
-        return conf.logicalExtractor.extractStructure(document);
+        System.out.println("BUJA");
+        try {
+            BxDocument doc = conf.contentFilter.filter(document);
+            BxDocContentStructure tmpContentStructure = conf.contentHeaderExtractor.extractHeaders(doc);
+            conf.contentCleaner.cleanupContent(tmpContentStructure);
+            BxContentStructToDocContentStructConverter converter = 
+                    new BxContentStructToDocContentStructConverter();
+            return converter.convert(tmpContentStructure);
+        } catch (TransformationException ex) {
+            throw new AnalysisException("Cannot extract content from the document!", ex);
+        }
     }
     
 }

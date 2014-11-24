@@ -24,6 +24,7 @@ import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.model.BxDocContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
@@ -311,6 +312,37 @@ public class ExtractionUtils {
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract content from the document!", ex);
         }
+    }
+    
+    /**
+     * Extracts raw text with labels from input stream.
+     * 
+     * @param conf extraction configuration
+     * @param stream PDF stream
+     * @return raw text with labels
+     * @throws AnalysisException 
+     */
+    public static Element extractRawTextWithLabels(ComponentConfiguration conf, InputStream stream) 
+            throws AnalysisException {
+        BxDocument doc = extractStructure(conf, stream);
+        return extractRawTextWithLabels(conf, doc);
+    }
+    
+    /**
+     * Extracts raw text with labels from document's box structure.
+     * 
+     * @param conf extraction configuration
+     * @param document document's box structure
+     * @return raw text with labels
+     * @throws AnalysisException 
+     */
+    public static Element extractRawTextWithLabels(ComponentConfiguration conf, BxDocument document) 
+            throws AnalysisException {
+        BxDocument doc = conf.metadataClassifier.classifyZones(document);
+        doc = conf.contentFilter.filter(doc);
+        BxDocContentStructure contentStr = conf.contentHeaderExtractor.extractHeaders(doc);
+        RawTextWithLabelsExtractor textExtractor = new RawTextWithLabelsExtractor();
+        return textExtractor.extractRawTextWithLabels(document, contentStr);
     }
     
 }

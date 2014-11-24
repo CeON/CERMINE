@@ -20,7 +20,7 @@ package pl.edu.icm.cermine.metadata.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.cermine.metadata.tools.MetadataTools;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 
 /**
  *
@@ -75,8 +75,8 @@ public class DocumentAuthor {
     }
 
     void clean() {
-        name = MetadataTools.clean(name);
-        email = MetadataTools.clean(email);
+        name = ContentCleaner.clean(name);
+        email = ContentCleaner.clean(email);
         for (DocumentAffiliation affiliation : affiliations){
             affiliation.clean();
         }

@@ -24,6 +24,7 @@ import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.model.BxDocContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentContentStructure;
 import pl.edu.icm.cermine.content.transformers.BxContentStructToDocContentStructConverter;
@@ -153,7 +154,7 @@ public class ExtractionUtils {
      */
     public static String extractRawText(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
-        return document.toText();
+        return ContentCleaner.cleanAll(document.toText());
     }
   
     /**

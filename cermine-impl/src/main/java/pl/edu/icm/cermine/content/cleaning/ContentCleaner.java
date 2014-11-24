@@ -20,6 +20,8 @@ package pl.edu.icm.cermine.content.cleaning;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import pl.edu.icm.cermine.content.model.BxDocContentStructure;
 import pl.edu.icm.cermine.content.model.BxDocContentStructure.BxDocContentPart;
 import pl.edu.icm.cermine.structure.model.BxLine;
@@ -134,14 +136,87 @@ public class ContentCleaner {
         }
     }
     
-    private String cleanLigatures(String str) {
+    public static String cleanOther(String str) {
+        return str.replaceAll("[’‘]", "'")
+                  .replaceAll("[–]", "-")  // EN DASH \u2013
+                  .replaceAll("[—]", "-"); // EM DASH \u2014
+    }
+    
+    public static String cleanLigatures(String str) {
         return str.replaceAll("\uFB00", "ff")
                   .replaceAll("\uFB01", "fi")
                   .replaceAll("\uFB02", "fl")
                   .replaceAll("\uFB03", "ffi")
                   .replaceAll("\uFB04", "ffl")
                   .replaceAll("\uFB05", "ft")
-                  .replaceAll("\uFB06", "st");
+                  .replaceAll("\uFB06", "st")
+                  .replaceAll("\u00E6", "ae")
+                  .replaceAll("\u0153", "oe");
+    }
+    
+    public static String clean(String str) {
+        if (str == null) {
+            return null;
+        }
+        return cleanOther(cleanLigatures(str));
+    }
+    
+    public static String cleanHyphenationAndBreaks(String str) {
+        str = str.replace("$", "\\$");
+        
+        String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
+        Pattern p = Pattern.compile("([^" + hyphenList + "]*\\S+)[" + hyphenList + "]\n", Pattern.DOTALL);
+        Matcher m = p.matcher(str);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, m.group(1));
+        }
+        m.appendTail(sb);
+        return sb.toString().replaceAll("\n", " ").replace("\\$", "$");
+    }
+    
+    public static String cleanHyphenation(String str) {
+        str = str.replaceAll(" +", " ").replaceAll("^ +", "").replaceAll(" +$", "");
+        String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
+        String[] lines = str.split("\n");
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = lines[i].replaceAll("^ +", "").replaceAll(" +$", "");
+        }
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while (i < lines.length) {
+            String line = lines[i];
+            if (i + 1 == lines.length) {
+                sb.append(line);
+                break;
+            }
+            String next = lines[i+1];
+            if (line.matches("^.*["+hyphenList+"]$")) {
+                line = line.substring(0, line.length()-1);
+                sb.append(line);
+                int idx = next.indexOf(" ");
+                if (idx < 0) {
+                    sb.append(next);
+                    i++;
+                } else {
+                    sb.append(next.substring(0, idx));
+                    lines[i+1] = next.substring(idx+1);                   
+                }
+            } else {
+                sb.append(line);
+            }
+            sb.append("\n");
+            i++;
+        }
+        return sb.toString().trim();
+    }
+    
+    public static String cleanAll(String str) {
+        return clean(cleanHyphenation(str));
+    }
+    
+    public static String cleanAllAndBreaks(String str) {
+        return clean(cleanHyphenationAndBreaks(str));
     }
 
     public void setFirstParagraphLineMinScore(double firstParagraphLineMinScore) {

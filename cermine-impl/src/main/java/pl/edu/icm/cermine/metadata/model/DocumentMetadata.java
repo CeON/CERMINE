@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import pl.edu.icm.cermine.metadata.tools.MetadataTools;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 
 /**
  *
@@ -218,9 +218,9 @@ public class DocumentMetadata {
     }
 
     public void clean() {
-        title = MetadataTools.clean(title);
+        title = ContentCleaner.cleanAllAndBreaks(title);
         for (String id : ids.keySet()) {
-            ids.put(id, MetadataTools.clean(ids.get(id)));
+            ids.put(id, ContentCleaner.clean(ids.get(id)));
         }
         for (DocumentAuthor author : authors) {
             author.clean();
@@ -228,19 +228,19 @@ public class DocumentMetadata {
         for (DocumentAuthor editor : editors) {
             editor.clean();
         }
-        abstrakt = MetadataTools.clean(abstrakt);
+        abstrakt = ContentCleaner.cleanAllAndBreaks(abstrakt);
         List<String> newKeywords = new ArrayList<String>(keywords.size());
         for (String keyword : keywords) {
-            newKeywords.add(MetadataTools.clean(keyword));
+            newKeywords.add(ContentCleaner.clean(keyword));
         }
         keywords = newKeywords;
-        journal = MetadataTools.clean(journal);
-        journalISSN = MetadataTools.clean(journalISSN);
-        volume = MetadataTools.clean(volume);
-        issue = MetadataTools.clean(issue);
-        firstPage = MetadataTools.clean(firstPage);
-        lastPage = MetadataTools.clean(lastPage);
-        publisher = MetadataTools.clean(publisher);
+        journal = ContentCleaner.clean(journal);
+        journalISSN = ContentCleaner.clean(journalISSN);
+        volume = ContentCleaner.clean(volume);
+        issue = ContentCleaner.clean(issue);
+        firstPage = ContentCleaner.clean(firstPage);
+        lastPage = ContentCleaner.clean(lastPage);
+        publisher = ContentCleaner.clean(publisher);
         for (DocumentDate date : dates.values()) {
            date.clean();
         }

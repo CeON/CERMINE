@@ -18,7 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.model;
 
-import pl.edu.icm.cermine.metadata.tools.MetadataTools;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 
 /**
  *
@@ -75,9 +75,9 @@ public class DocumentDate {
     public static final String DATE_PUBLISHED = "published";
 
     void clean() {
-        day = MetadataTools.clean(day);
-        month = MetadataTools.clean(month);
-        year = MetadataTools.clean(year);
+        day = ContentCleaner.clean(day);
+        month = ContentCleaner.clean(month);
+        year = ContentCleaner.clean(year);
     }
     
 }

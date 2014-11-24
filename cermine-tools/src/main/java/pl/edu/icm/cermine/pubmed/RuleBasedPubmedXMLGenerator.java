@@ -30,13 +30,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.evaluation.tools.CosineDistance;
 import pl.edu.icm.cermine.evaluation.tools.SmithWatermanDistance;
 import pl.edu.icm.cermine.evaluation.tools.StringTools;
 import pl.edu.icm.cermine.evaluation.tools.XMLTools;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
@@ -550,7 +550,7 @@ public class RuleBasedPubmedXMLGenerator {
                         }
                     }
 
-                    String text = MetadataTools.clean(z.toText()).toLowerCase();
+                    String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase();
                     int linesCount = z.getLines().size();
                     int pageIdx = bxDoc.getPages().indexOf(z.getParent());
                     BxLine firstLine = z.getLines().get(0);
@@ -831,7 +831,7 @@ public class RuleBasedPubmedXMLGenerator {
                 for (BxZone z : pp.getZones()) {
                     BxZoneLabel orig = z.getLabel();
 
-                    String text = MetadataTools.clean(z.toText()).toLowerCase();
+                    String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase();
                     if (BxZoneLabel.MET_AUTHOR.equals(z.getLabel()) && wasAuthor
                             && ((text.contains("email") && text.contains("@"))
                             || text.startsWith("correspondence"))) {

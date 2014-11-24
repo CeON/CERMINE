@@ -55,7 +55,7 @@ public final class TrueVizUtils {
             @Override
             public InputSource resolveEntity(String publicID, String systemID) throws SAXException {
                 if (systemID != null && systemID.endsWith("/Trueviz.dtd")) {
-                    return new InputSource(MargToTextrImporter.class.getClassLoader().getResourceAsStream(TRUEVIZ_DTD));
+                    return new InputSource(TrueVizUtils.class.getClassLoader().getResourceAsStream(TRUEVIZ_DTD));
                 }
                 // If no match, returning null makes process continue normally
                 return null;

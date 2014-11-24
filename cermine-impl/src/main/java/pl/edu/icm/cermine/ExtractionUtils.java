@@ -301,7 +301,6 @@ public class ExtractionUtils {
      */
     public static DocumentContentStructure extractText(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
-        System.out.println("BUJA");
         try {
             BxDocument doc = conf.contentFilter.filter(document);
             BxDocContentStructure tmpContentStructure = conf.contentHeaderExtractor.extractHeaders(doc);

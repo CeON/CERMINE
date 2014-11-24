@@ -24,9 +24,6 @@ import pl.edu.icm.cermine.bibref.extraction.model.BibReferenceLineLabel;
 import pl.edu.icm.cermine.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.hmm.model.HMMTrainingSample;
 
 /**
  * Bibliographic reference extraction utility class.
@@ -147,27 +144,4 @@ public final class BibRefExtractionUtils {
         return references.toArray(new String[references.size()]);
     }
 
-    public static HMMTrainingSample<BibReferenceLineLabel>[] convertToHMM(BxDocumentBibReferences[] references, 
-            FeatureVectorBuilder<BxLine, BxDocumentBibReferences> featureVectorBuilder) {
-
-        List<HMMTrainingSample<BibReferenceLineLabel>> trainingList =
-                new ArrayList<HMMTrainingSample<BibReferenceLineLabel>>();
-
-        for (BxDocumentBibReferences refs : references) {
-            HMMTrainingSample<BibReferenceLineLabel> prevToken = null;
-            for (BxLine line : refs.getLines()) {
-                FeatureVector featureVector = featureVectorBuilder.getFeatureVector(line, refs);
-                HMMTrainingSample<BibReferenceLineLabel> element =
-                        new HMMTrainingSample<BibReferenceLineLabel>(featureVector, refs.getLabel(line), prevToken == null);
-                trainingList.add(element);
-                if (prevToken != null) {
-                    prevToken.setNextLabel(refs.getLabel(line));
-                }
-                prevToken = element;
-            }
-        }
-
-        return trainingList.toArray(new HMMTrainingSample[trainingList.size()]);
-    }
-    
 }

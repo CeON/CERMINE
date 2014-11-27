@@ -137,12 +137,18 @@ public class ContentCleaner {
     }
     
     public static String cleanOther(String str) {
+        if (str == null) {
+            return null;
+        }
         return str.replaceAll("[’‘]", "'")
                   .replaceAll("[–]", "-")  // EN DASH \u2013
                   .replaceAll("[—]", "-"); // EM DASH \u2014
     }
     
     public static String cleanLigatures(String str) {
+        if (str == null) {
+            return null;
+        }
         return str.replaceAll("\uFB00", "ff")
                   .replaceAll("\uFB01", "fi")
                   .replaceAll("\uFB02", "fl")
@@ -162,6 +168,9 @@ public class ContentCleaner {
     }
     
     public static String cleanHyphenationAndBreaks(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.replace("$", "\\$");
         
         String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
@@ -176,6 +185,9 @@ public class ContentCleaner {
     }
     
     public static String cleanHyphenation(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.replaceAll(" +", " ").replaceAll("^ +", "").replaceAll(" +$", "");
         String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
         String[] lines = str.split("\n");
@@ -212,10 +224,16 @@ public class ContentCleaner {
     }
     
     public static String cleanAll(String str) {
+        if (str == null) {
+            return null;
+        }
         return clean(cleanHyphenation(str));
     }
     
     public static String cleanAllAndBreaks(String str) {
+        if (str == null) {
+            return null;
+        }
         return clean(cleanHyphenationAndBreaks(str));
     }
 

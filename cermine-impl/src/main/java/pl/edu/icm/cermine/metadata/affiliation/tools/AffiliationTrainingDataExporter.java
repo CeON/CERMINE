@@ -87,9 +87,9 @@ public class AffiliationTrainingDataExporter {
                 }
         }
         
-        for (String key : occurences.keySet()) {
-                if (occurences.get(key) > rareThreshold) {
-                        commonWords.add(key);
+        for (Map.Entry<String, Integer> entry : occurences.entrySet()) {
+                if (entry.getValue() > rareThreshold) {
+                        commonWords.add(entry.getKey());
                 }
         }
         

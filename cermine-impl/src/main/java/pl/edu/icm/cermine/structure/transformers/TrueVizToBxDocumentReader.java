@@ -390,7 +390,7 @@ public class TrueVizToBxDocumentReader {
             return null;
         }
         String val = catEl.getAttribute("Value");
-        if (val == null) {
+        if (val.isEmpty()) {
             return null;
         }
         if (val.isEmpty()) {

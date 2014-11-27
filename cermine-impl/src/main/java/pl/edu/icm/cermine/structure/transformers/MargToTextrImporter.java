@@ -252,7 +252,7 @@ public class MargToTextrImporter {
             return null;
         }
         String val = catEl.getAttribute("Value");
-        if (val == null) {
+        if (val.isEmpty()) {
             return null;
         }
         if (ZONE_LABEL_MAP.containsKey(val.toLowerCase())) {

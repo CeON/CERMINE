@@ -112,7 +112,7 @@ public class ContentExtractorTest {
         }
         
         assertEquals(testContent.trim(), expectedContent.toString().trim());
-        assertTrue(testContent == extractor.getRawFullText());
+        assertEquals(testContent, extractor.getRawFullText());
     }
 
     @Test

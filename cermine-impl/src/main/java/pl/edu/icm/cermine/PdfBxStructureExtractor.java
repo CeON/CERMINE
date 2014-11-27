@@ -78,7 +78,7 @@ public class PdfBxStructureExtractor {
         
         String path = parser.getPath();
         String strExtension = parser.getBxExtension();
-        parser.setThreadsNumber();
+        PdfNLMContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);

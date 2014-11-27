@@ -84,11 +84,18 @@ public class CommandLineOptionsParser {
             InputStream modelRangeIS = null;
             try {
                 modelIS = new FileInputStream(model);
-                modelRangeIS = new FileInputStream(modelRange);
-                conf.setMetadataZoneClassifier(modelIS, modelRangeIS);
+                try {
+                    modelRangeIS = new FileInputStream(modelRange);
+                    conf.setMetadataZoneClassifier(modelIS, modelRangeIS);
+                } finally {
+                    if (modelRangeIS != null) {
+                       modelRangeIS.close();
+                    }
+                }
             } finally {
-                modelIS.close();
-                modelRangeIS.close();
+                if (modelIS != null) {
+                    modelIS.close();
+                }
             }
         }
     }
@@ -101,19 +108,27 @@ public class CommandLineOptionsParser {
             InputStream modelRangeIS = null;
             try {
                 modelIS = new FileInputStream(model);
-                modelRangeIS = new FileInputStream(modelRange);
-                conf.setInitialZoneClassifier(modelIS, modelRangeIS);
+                try {
+                    modelRangeIS = new FileInputStream(modelRange);
+                    conf.setInitialZoneClassifier(modelIS, modelRangeIS);
+                } finally {
+                    if (modelRangeIS != null) {
+                       modelRangeIS.close();
+                    }
+                }
             } finally {
-                modelIS.close();
-                modelRangeIS.close();
+                if (modelIS != null) {
+                    modelIS.close();
+                }
             }
         }
     }
     
-    public void setThreadsNumber() {
+    public int getThreadsNumber() {
         if (commandLine.hasOption("threads")) {
-            PdfNLMContentExtractor.THREADS_NUMBER = Integer.valueOf(commandLine.getOptionValue("threads"));
+            return Integer.valueOf(commandLine.getOptionValue("threads"));
         }
+        return PdfNLMContentExtractor.THREADS_NUMBER;
     }
 
     private String getStringOptionValue(String defaultValue, String name) {

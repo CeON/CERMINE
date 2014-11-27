@@ -18,7 +18,13 @@
 
 package pl.edu.icm.cermine;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FileUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -65,6 +71,80 @@ public class PdfRawTextExtractor {
 
     public void setConf(ComponentConfiguration conf) {
         this.conf = conf;
+    }
+    
+    public static void main(String[] args) throws ParseException, IOException {
+        CommandLineOptionsParser parser = new CommandLineOptionsParser();
+        if (!parser.parse(args)) {
+            System.err.println(
+                    "Usage: PdfRawTextExtractor -path <path> [optional parameters]\n\n"
+                  + "Tool for extracting full text in the right reading order from PDF files.\n\n"
+                  + "Arguments:\n"
+                  + "  -path <path>              path to a PDF file or directory containing PDF files\n"
+                  + "  -ext <extension>          (optional) the extension of the resulting text file;\n"
+                  + "                            default: \"cermtxt\"; used only if passed path is a directory\n"
+                  + "  -threads <num>            number of threads for parallel processing\n");
+            System.exit(1);
+        }
+        
+        String path = parser.getPath();
+        String extension = parser.getTextExtension();
+        parser.setThreadsNumber();
+ 
+        File file = new File(path);
+        if (file.isFile()) {
+            try {
+                PdfRawTextExtractor extractor = new PdfRawTextExtractor();
+                InputStream in = new FileInputStream(file);
+                String result = extractor.extractText(in);
+                System.out.println(result);
+            } catch (AnalysisException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+        
+            Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
+    
+            int i = 0;
+            for (File pdf : files) {
+                File xmlF = new File(pdf.getPath().replaceAll("pdf$", extension));
+                if (xmlF.exists()) {
+                    i++;
+                    continue;
+                }
+ 
+                long start = System.currentTimeMillis();
+                float elapsed = 0;
+            
+                System.out.println(pdf.getPath());
+ 
+                try {
+                    PdfRawTextExtractor extractor = new PdfRawTextExtractor();
+                    InputStream in = new FileInputStream(pdf);
+                    BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
+                    String result = extractor.extractText(doc);
+
+                    long end = System.currentTimeMillis();
+                    elapsed = (end - start) / 1000F;
+ 
+                    if (!xmlF.createNewFile()) {
+                        System.out.println("Cannot create new file!");
+                    }
+                    FileUtils.writeStringToFile(xmlF, result);
+                } catch (AnalysisException ex) {
+                   ex.printStackTrace();
+                }
+                
+                i++;
+                int percentage = i*100/files.size();
+                if (elapsed == 0) {
+                    elapsed = (System.currentTimeMillis() - start) / 1000F;
+                }
+                System.out.println("Extraction time: " + Math.round(elapsed) + "s");
+                System.out.println(percentage + "% done (" + i +" out of " + files.size() + ")");
+                System.out.println("");
+            }
+        }
     }
     
 }

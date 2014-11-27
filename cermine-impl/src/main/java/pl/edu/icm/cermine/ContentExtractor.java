@@ -22,11 +22,9 @@ import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Collection;
 import java.util.List;
-import javax.xml.xpath.XPathExpressionException;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
@@ -34,7 +32,6 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
-import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
@@ -258,77 +255,46 @@ public class ContentExtractor {
         this.conf = conf;
     }
     
-    public static void main(String[] args) throws AnalysisException, XPathExpressionException, JDOMException, IOException, ParseException, TransformationException {
-        Options options = new Options();
-        options.addOption("path", true, "file or directory path");
-        options.addOption("ext", true, "metadata file extension");
-        options.addOption("str", false, "store structure (TrueViz) files as well");
-        options.addOption("strext", true, "structure file extension");
-        options.addOption("modelmeta", true, "path to metadata classifier model");
-        options.addOption("modelinit", true, "path to initial classifier model");
-        options.addOption("threads", true, "number of threads used");
+    public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
+        CommandLineOptionsParser parser = new CommandLineOptionsParser();
+        if (!parser.parse(args)) {
+            System.err.println(
+                    "Usage: ContentExtractor -path <path> [optional parameters]\n\n"
+                  + "Tool for extracting metadata and content from PDF files.\n\n"
+                  + "Arguments:\n"
+                  + "  -path <path>              path to a PDF file or directory containing PDF files\n"
+                  + "  -ext <extension>          (optional) the extension of the resulting metadata file;\n"
+                  + "                            default: \"cermxml\"; used only if passed path is a directory\n"
+                  + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
+                  + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
+                  + "  -str                      whether to store structure (TrueViz) files as well;\n"
+                  + "                            used only if passed path is a directory\n"
+                  + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
+                  + "                            default: \"cxml\"; used only if passed path is a directory\n"
+                  + "  -threads <num>            number of threads for parallel processing\n");
+            System.exit(1);
+        }
         
-        CommandLineParser clParser = new GnuParser();
-        CommandLine line = clParser.parse(options, args);
-        String path = line.getOptionValue("path");
-        String extension = "cermxml";
-        if (line.hasOption("ext")) {
-            extension = line.getOptionValue("ext");
-        }
-        boolean extractStr = line.hasOption("str");
-        String strExtension = "cxml";
-        if (line.hasOption("strext")) {
-            strExtension = line.getOptionValue("strext");
-        }
-        String modelMeta = null;
-        String modelMetaRange = null;
-        if (line.hasOption("modelmeta")) {
-            modelMeta = line.getOptionValue("modelmeta");
-            modelMetaRange = line.getOptionValue("modelmeta")+".range";
-        }
-        String modelInit = null;
-        String modelInitRange = null;
-        if (line.hasOption("modelinit")) {
-            modelInit = line.getOptionValue("modelinit");
-            modelInitRange = line.getOptionValue("modelinit")+".range";
-        }
-        if (line.hasOption("threads")) {
-            PdfNLMContentExtractor.THREADS_NUMBER = Integer.valueOf(line.getOptionValue("threads"));
-        }
-    	if (path == null){
-            System.err.println("Usage: PdfNLMContentExtractor -path <path> [optional parameters]\n\n"
-                             + "Tool for extracting metadata and content from PDF files.\n\n"
-                             + "Arguments:\n"
-                             + "  -path <path>              path to a PDF file or directory containing PDF files\n"
-                             + "  -ext <extension>          (optional) the extension of the resulting metadata file;\n"
-                             + "                            default: \"cermxml\"; used only if passed path is a directory\n"
-                             + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
-                             + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
-                             + "  -str                      whether to store structure (TrueViz) files as well;\n"
-                             + "                            used only if passed path is a directory\n"
-                             + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
-                             + "                            default: \"cxml\"; used only if passed path is a directory\n"
-                             + "  -threads <num>            number of threads for parallel processing\n");
-    		System.exit(1);
-        }
+        String path = parser.getPath();
+        String extension = parser.getNLMExtension();
+        boolean extractStr = parser.extractStructure();
+        String strExtension = parser.getBxExtension();
+        parser.setThreadsNumber();
  
         File file = new File(path);
         if (file.isFile()) {
-            ContentExtractor extractor = new ContentExtractor();
-            
-            if ("alt-humanities".equals(modelMeta)) {
-                extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
-            } else if (modelMeta != null) {
-                extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
+            try {
+                ContentExtractor extractor = new ContentExtractor();
+                parser.updateMetadataModel(extractor.getConf());
+                parser.updateInitialModel(extractor.getConf());
+                InputStream in = new FileInputStream(file);
+                extractor.uploadPDF(in);
+                Element result = extractor.getNLMContent();
+                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                System.out.println(outputter.outputString(result));
+            } catch (AnalysisException ex) {
+                ex.printStackTrace();
             }
-            if (modelInit != null) {
-                extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
-            }
-            InputStream in = new FileInputStream(file);
-            extractor.uploadPDF(in);
-            Element result = extractor.getNLMContent();
-            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-            System.out.println(outputter.outputString(result));
         } else {
         
             Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
@@ -342,37 +308,37 @@ public class ContentExtractor {
                 }
  
                 long start = System.currentTimeMillis();
+                float elapsed = 0;
             
                 System.out.println(pdf.getPath());
  
-                ContentExtractor extractor = new ContentExtractor();
-               
-                if ("alt-humanities".equals(modelMeta)) {
-                    extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
-                } else if (modelMeta != null) {
-                    extractor.getConf().setMetadataZoneClassifier(new FileInputStream(modelMeta), new FileInputStream(modelMetaRange));
-                }
-                if (modelInit != null) {
-                    extractor.getConf().setInitialZoneClassifier(new FileInputStream(modelInit), new FileInputStream(modelInitRange));
-                }
-                InputStream in = new FileInputStream(pdf);
-                extractor.uploadPDF(in);
-                BxDocument doc = extractor.getBxDocument();
-                Element result = extractor.getNLMContent();
+                try {
+                    ContentExtractor extractor = new ContentExtractor();
+                    parser.updateMetadataModel(extractor.getConf());
+                    parser.updateInitialModel(extractor.getConf());
+                    InputStream in = new FileInputStream(pdf);
+                    extractor.uploadPDF(in);
+                    BxDocument doc = extractor.getBxDocument();
+                    Element result = extractor.getNLMContent();
 
-                long end = System.currentTimeMillis();
-                float elapsed = (end - start) / 1000F;
+                    long end = System.currentTimeMillis();
+                    elapsed = (end - start) / 1000F;
             
-                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                if (!xmlF.createNewFile()) {
-                    System.out.println("Cannot create new file!");
-                }
-                FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
+                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                    if (!xmlF.createNewFile()) {
+                        System.out.println("Cannot create new file!");
+                    }
+                    FileUtils.writeStringToFile(xmlF, outputter.outputString(result));            
                 
-                if (extractStr) {
-                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                    File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
-                    writer.write(new FileWriter(strF), doc.getPages());
+                    if (extractStr) {
+                        BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                        File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
+                        writer.write(new FileWriter(strF), doc.getPages());
+                    }
+                } catch (AnalysisException ex) {
+                   ex.printStackTrace();
+                } catch (TransformationException ex) {
+                   ex.printStackTrace();
                 }
                 
                 i++;

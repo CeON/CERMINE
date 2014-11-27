@@ -41,7 +41,6 @@ public final class MalletTrainingFileGenerator {
 
         File dir = new File(nlmDir);
         FileWriter writer = null;
-        FileWriter writer2 = null;
         try {
             List<Citation> allcitations = new ArrayList<Citation>();
 
@@ -107,7 +106,7 @@ public final class MalletTrainingFileGenerator {
             }
 
             writer = new FileWriter(outFile);
-            writer2 = new FileWriter(outFile2);
+            FileWriter writer2 = new FileWriter(outFile2);
 
             for (String s : additionalFeatures) {
                 writer2.write(s);
@@ -119,15 +118,11 @@ public final class MalletTrainingFileGenerator {
             int ind = 0;
             for (Citation citation : allcitations) {
                 List<String> tokens = CitationUtils.citationToMalletInputFormat(citation, additionalFeatures);
-                try {
-                    for (String token : tokens) {
-                        writer.write(token);
-                        writer.write("\n");
-                    }
+                for (String token : tokens) {
+                    writer.write(token);
                     writer.write("\n");
-                } finally {
-                   // writer.close();
                 }
+                writer.write("\n");
                 ind++;
             }
 

@@ -14,6 +14,10 @@ How to cite CERMINE:
 	In Proceedings of the 11th IAPR International Workshop on Document Analysis Systems,
 	pages 217-221, 2014.
 
+DOI of CERMINE release 1.4: 
+
+[![DOI](https://zenodo.org/badge/9577/CeON/CERMINE.svg)](http://dx.doi.org/10.5281/zenodo.14714)
+
 Using CERMINE
 -------------
 

@@ -24,6 +24,7 @@ import java.util.List;
 import pl.edu.icm.cermine.bibref.extraction.features.*;
 import pl.edu.icm.cermine.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.cermine.bibref.extraction.tools.BibRefExtractionUtils;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxLine;
@@ -78,7 +79,7 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
         FeatureVector farthestInstance = null;
         double farthestDistance = 0;
         for (BxLine line : documentReferences.getLines()) {
-            lines.add(line.toText());
+            lines.add(ContentCleaner.clean(line.toText()));
             FeatureVector featureVector = VECTOR_BUILDER.getFeatureVector(line, documentReferences);
             instances.add(featureVector);
             if (farthestInstance == null) {
@@ -120,7 +121,12 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
                 }
                 actRef = lines.get(i);
             } else {
-                actRef += " ";
+                String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
+                if (actRef.matches(".*[a-zA-Z]["+hyphenList+"]")) {
+                    actRef = actRef.substring(0, actRef.length()-1);
+                } else {
+                    actRef += " ";
+                }
                 actRef += lines.get(i);
             }
         }

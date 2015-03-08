@@ -72,6 +72,10 @@ public class BibEntryToNLMElementConverter implements ModelToModelConverter<BibE
         
         int lastIndex = 0;
         for (BibEntryField field : fields) {
+            if (field.getStartIndex() < 0) {
+                continue;
+            }
+
             String fieldText = text.substring(field.getStartIndex(), field.getEndIndex());
             if (field.getStartIndex() != lastIndex) {
                 element.addContent(text.substring(lastIndex, field.getStartIndex()));

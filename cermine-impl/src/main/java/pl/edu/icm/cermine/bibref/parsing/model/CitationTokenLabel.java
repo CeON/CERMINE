@@ -34,6 +34,7 @@ public enum CitationTokenLabel {
     CONF_FIRST,
     CONTENT,
     CONTENT_FIRST,
+    DOI,
     EDITION,
     GIVENNAME,
     GIVENNAME_FIRST,

@@ -120,6 +120,15 @@ public abstract class AbstractBibReferenceParserTest {
             .addField(BibEntry.FIELD_NUMBER, "4")
             .addField(BibEntry.FIELD_YEAR, "1990")
             .addField(BibEntry.FIELD_PAGES, "409--419"),
+        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .setText("Garijo, D., & Gil, Y. (2011). A new approach for publishing workflows: abstractions, standards, and linked data. In Proceedings of the 6th workshop on Workflows in support of large-scale science: 47–56. DOI: 10.1145/2110497.2110504")
+            .addField(BibEntry.FIELD_AUTHOR, "Garijo, D.")
+            .addField(BibEntry.FIELD_AUTHOR, "Gil, Y.")
+            .addField(BibEntry.FIELD_DOI, "10.1145/2110497.2110504")
+            .addField(BibEntry.FIELD_JOURNAL, "In Proceedings of the 6th")
+            .addField(BibEntry.FIELD_PAGES, "47--56")
+            .addField(BibEntry.FIELD_TITLE, "A new approach for publishing workflows: abstractions, standards, and linked data")
+            .addField(BibEntry.FIELD_YEAR, "2011"),
     };
 
     @Test

@@ -19,6 +19,8 @@
 package pl.edu.icm.cermine.bibref.parsing.tools;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
@@ -157,8 +159,18 @@ public final class CitationUtils {
 
         String text = citation.getText();
         BibEntry bibEntry = new BibEntry(BibEntry.TYPE_ARTICLE);
-        bibEntry.setText(text);
+        String lcText = text.toLowerCase();
 
+        if (lcText.contains("tech report") || lcText.contains("technical report")) {
+            bibEntry.setType(BibEntry.TYPE_TECHREPORT);
+        } else if (lcText.contains("proceeding") || lcText.contains("conference")
+                || lcText.contains("workshop") || lcText.contains("proc. ") 
+                || lcText.contains("conf. ")) {
+            bibEntry.setType(BibEntry.TYPE_PROCEEDINGS);
+        }
+
+        bibEntry.setText(text);
+        
         int i = 0;
         while (i < tokens.size()) {
             CitationToken actToken = tokens.get(i);
@@ -214,7 +226,13 @@ public final class CitationUtils {
                 }
             }
         }
-
+        
+        Pattern doiPattern = Pattern.compile(".*(10\\.\\d{4}/\\S+).*");
+        Matcher m = doiPattern.matcher(text);
+        if (m.matches()) {
+            bibEntry.addField(BibEntry.FIELD_DOI, m.group(1));
+        }
+        
         return bibEntry;
     }
     

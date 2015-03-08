@@ -119,6 +119,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             .replaceFirst("[Cc]orresponding [Aa]uthor.*$", "").trim()
                             .replaceFirst("Full list of author information.*$", "").trim()
                             .replaceFirst(" and$", "").trim()
+                            .replaceFirst("\\{[^\\{\\}]+\\}@.*$", "").trim()
                             .replaceFirst("\\S+@.*$", "").trim()
                             .replaceFirst("[Ee]mails?:.*$", "").trim()
                             .replaceFirst("[Ee]-[Mm]ails?:.*$", "").trim()

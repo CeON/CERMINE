@@ -68,11 +68,11 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
                     } else {
                         one = false;
                     }
-                }
             }
         }
+        }
         
-        if (author != null && one) {
+        if (author != null && one && author.getEmail() == null) {
             author.setEmail(email);
         }
     }

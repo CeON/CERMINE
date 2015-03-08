@@ -44,7 +44,8 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
     }
 
     private static final Set<String> keywords = Sets.newHashSet(
-            "department", "departament", "university", "institute", "school", "college", "univ."
+            "department", "departament", "university", "institute", "school", "college", 
+            "univ.", "instituto", "facultad", "universidad"
             );
     
     @Override
@@ -72,7 +73,7 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
             BxLine prev = null;
             for (BxLine line : zone.getLines()) {
                 String lineText = line.toText().toLowerCase();
-                if (prev != null && Sets.intersection(prev.getFontNames(), line.getFontNames()).isEmpty()) {
+                if (prev != null && !prev.getMostPopularFontName().equals(line.getMostPopularFontName())) {
                     for (String keyword : keywords) {
                         if (lineText.contains(keyword)) {
                             wasAff = true;

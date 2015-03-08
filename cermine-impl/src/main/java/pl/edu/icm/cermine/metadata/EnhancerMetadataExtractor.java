@@ -39,6 +39,7 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<DocumentMeta
                 new AuthorTitleSplitterEnhancer(),
                 new AuthorAffiliationSplitterEnhancer(),
                 new AffiliationAuthorSplitterEnhancer(),
+                new AuthorAffiliationGeometricEnhancer(),
                 new HindawiCornerInfoEnhancer(),
                 new TitleMergedWithTypeEnhancer(),
                 new TitleEnhancer(),

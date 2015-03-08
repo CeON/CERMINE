@@ -131,6 +131,15 @@ public class DocumentMetadata {
         author.setAffiliationRefs(affiliationIndexes);
         authors.add(author);
     }
+    
+    public void addAuthor(String authorName, List<String> affiliationIndexes, String email) {
+        DocumentAuthor author = new DocumentAuthor(authorName);
+        author.setAffiliationRefs(affiliationIndexes);
+        if (email != null && !email.isEmpty()) {
+            author.setEmail(email);
+        }
+        authors.add(author);
+    }
 
     public List<DocumentAuthor> getAuthors() {
         return authors;

@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
@@ -75,5 +76,9 @@ public class CountryISOCodeFinder {
             return countryCodes.get(country.toLowerCase().replaceAll("[^a-zA-Z]", ""));
         }
 	}
+    
+    public Set<String> getCountries() {
+        return countryCodes.keySet();
+    }
 
 }

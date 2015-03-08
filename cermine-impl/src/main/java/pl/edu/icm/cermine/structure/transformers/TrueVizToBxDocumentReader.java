@@ -62,6 +62,7 @@ public class TrueVizToBxDocumentReader {
         ZONE_LABEL_MAP.put("biography", BxZoneLabel.MET_BIOGRAPHY);
         ZONE_LABEL_MAP.put("body", BxZoneLabel.BODY_CONTENT);
         ZONE_LABEL_MAP.put("body_content", BxZoneLabel.BODY_CONTENT);
+        ZONE_LABEL_MAP.put("category", BxZoneLabel.MET_CATEGORY);
         ZONE_LABEL_MAP.put("contribution", BxZoneLabel.BODY_CONTRIBUTION);
         ZONE_LABEL_MAP.put("conflict_statement", BxZoneLabel.BODY_CONFLICT_STMT);
         ZONE_LABEL_MAP.put("copyright", BxZoneLabel.MET_COPYRIGHT);
@@ -80,6 +81,7 @@ public class TrueVizToBxDocumentReader {
         ZONE_LABEL_MAP.put("references", BxZoneLabel.REFERENCES);
         ZONE_LABEL_MAP.put("table", BxZoneLabel.BODY_TABLE);
         ZONE_LABEL_MAP.put("table_caption", BxZoneLabel.BODY_TABLE_CAPTION);
+        ZONE_LABEL_MAP.put("terms", BxZoneLabel.MET_TERMS);
         ZONE_LABEL_MAP.put("title", BxZoneLabel.MET_TITLE);
         ZONE_LABEL_MAP.put("type", BxZoneLabel.MET_TYPE);
         ZONE_LABEL_MAP.put("unknown", BxZoneLabel.OTH_UNKNOWN);

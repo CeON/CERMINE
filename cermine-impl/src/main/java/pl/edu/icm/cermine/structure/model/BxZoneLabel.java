@@ -147,8 +147,13 @@ public enum BxZoneLabel {
     REFERENCES          (BxZoneLabelCategory.CAT_REFERENCES),
     
     /** Document's title with authors - 34 */
-    MET_TITLE_AUTHOR    (BxZoneLabelCategory.CAT_METADATA);
+    MET_TITLE_AUTHOR    (BxZoneLabelCategory.CAT_METADATA),
          
+    /** 35 */
+    MET_CATEGORY        (BxZoneLabelCategory.CAT_METADATA),
+    
+    /** 36 */
+    MET_TERMS           (BxZoneLabelCategory.CAT_METADATA);
     
     private final BxZoneLabelCategory category;
     

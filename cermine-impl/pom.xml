@@ -12,6 +12,10 @@
     <packaging>jar</packaging>
     <name>CERMINE Engine Implementation - ${project.version}</name>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <profiles>
         <profile>
             <id>full</id>

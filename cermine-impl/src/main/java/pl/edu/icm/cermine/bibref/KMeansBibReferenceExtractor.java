@@ -45,6 +45,8 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
     public static final int MAX_REF_LINES_COUNT = 10000;
     
     public static final int MAX_REFS_COUNT = 1000;
+
+    public static final int MAX_REF_LENGTH = 1500;
     
     private static final FeatureVectorBuilder<BxLine, BxDocumentBibReferences> VECTOR_BUILDER =
                 new FeatureVectorBuilder<BxLine, BxDocumentBibReferences>();
@@ -116,7 +118,8 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
         String actRef = "";
         for (int i = 0; i < lines.size(); i++) {
             if (clusters[firstInstanceClusterNum].contains(instances.get(i))) {
-                if (!actRef.isEmpty() && actRef.matches(".*[0-9].*") && actRef.matches(".*[a-zA-Z].*")) {
+                if (!actRef.isEmpty() && actRef.matches(".*[0-9].*") && actRef.matches(".*[a-zA-Z].*")
+			&& actRef.length() < MAX_REF_LENGTH) {
                     references.add(actRef);
                 }
                 actRef = lines.get(i);
@@ -130,7 +133,8 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
                 actRef += lines.get(i);
             }
         }
-        if (!actRef.isEmpty() && actRef.matches(".*[0-9].*") && actRef.matches(".*[a-zA-Z].*")) {
+        if (!actRef.isEmpty() && actRef.matches(".*[0-9].*") && actRef.matches(".*[a-zA-Z].*")
+		&& actRef.length() < MAX_REF_LENGTH) {
             references.add(actRef);
         }
         

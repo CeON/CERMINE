@@ -32,7 +32,7 @@ import pl.edu.icm.cermine.structure.model.*;
  */
 public class KeywordsEnhancer extends AbstractSimpleEnhancer {
 
-    private static final Pattern PREFIX = Pattern.compile("^key\\s?words[:-]?", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PREFIX = Pattern.compile("^key\\s?words[:-—]?|^index terms[:-—]?", Pattern.CASE_INSENSITIVE);
 
     public KeywordsEnhancer() {
         setSearchedZoneLabels(EnumSet.of(BxZoneLabel.MET_KEYWORDS));

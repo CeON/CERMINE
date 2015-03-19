@@ -30,7 +30,7 @@ public class KeywordsFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        String[] keywords = {"keywords", "key words"};
+        String[] keywords = {"keywords", "key words", "index terms"};
 
         for (String keyword : keywords) {
             if (zone.toText().toLowerCase().startsWith(keyword)) {

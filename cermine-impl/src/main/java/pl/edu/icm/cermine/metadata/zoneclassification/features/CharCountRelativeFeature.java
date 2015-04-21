@@ -48,10 +48,7 @@ public class CharCountRelativeFeature extends FeatureCalculator<BxZone, BxPage> 
                 }
             }
         }
-        if(((double) count / (double) pCount)<0.0) {
-        	System.out.println(count);
-        	System.out.println(pCount);
-        }
+
         return (double) count / (double) pCount;
     }
 }

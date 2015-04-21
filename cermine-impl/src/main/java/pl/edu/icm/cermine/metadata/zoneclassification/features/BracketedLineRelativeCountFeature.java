@@ -23,14 +23,7 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
-public class BracketedLineRelativeCount extends FeatureCalculator<BxZone, BxPage> {
-
-    private static String featureName = "BracketedRelativeLineCount";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
+public class BracketedLineRelativeCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {

@@ -74,4 +74,4 @@ public class VerticalProminenceFeature extends FeatureCalculator<BxZone, BxPage>
             }
         }
     }
-};
+}

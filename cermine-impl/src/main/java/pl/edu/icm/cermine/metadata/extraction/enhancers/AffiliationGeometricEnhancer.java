@@ -34,7 +34,13 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
     private static final Pattern SKIPPED_LINE_PATTERN = Pattern.compile(
             ".*(Email|Correspondence|Contributed equally):?.*",
             Pattern.CASE_INSENSITIVE);
-    
+    private static final Pattern EMAIL_SIMPLE_LINE_PATTERN = Pattern.compile(
+            "\\S+@[^,\\s]+",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern EMAIL_LINE_PATTERN = Pattern.compile(
+            "[\\{\\[]([^,\\s]+, ?)+[^,\\s]+ ?[\\}\\]]?@\\S+",
+            Pattern.CASE_INSENSITIVE);
+       
     private static final Pattern fullIndexPattern = Pattern.compile("\\d{1,2}|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|[a-f]|¹|²|³");
     private static final Pattern simpleIndexPattern = Pattern.compile("\\*|∗|⁎|†|‡|§|\\{|¶|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|¹|²|³");
         
@@ -68,6 +74,9 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
         for (BxPage page : filterPages(document)) {
             Processor processor = new Processor();
             for (BxZone zone : filterZones(page)) {
+                if (zone.getY() > page.getHeight() / 2 && zone.hasPrev() && zone.getPrev().toText().equals("Keywords")) {
+                    continue;
+                }
                 boolean firstLine = true;
                 for (BxLine line : zone.getLines()) {
                     if (firstLine) {
@@ -76,7 +85,9 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             continue;
                         }
                     }
-                    if (SKIPPED_LINE_PATTERN.matcher(line.toText()).matches()) {
+                    if (SKIPPED_LINE_PATTERN.matcher(line.toText()).matches()
+                            || EMAIL_SIMPLE_LINE_PATTERN.matcher(line.toText()).matches()
+                            || EMAIL_LINE_PATTERN.matcher(line.toText()).matches()) {
                         continue;
                     }
                     
@@ -117,14 +128,17 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                     String text = entry.getValue();
                     text = text.trim()
                             .replaceFirst("[Cc]orresponding [Aa]uthor.*$", "").trim()
+                            .replaceFirst("[Cc]opyright is held by.*$", "").trim()
                             .replaceFirst("Full list of author information.*$", "").trim()
                             .replaceFirst(" and$", "").trim()
-                            .replaceFirst("\\{[^\\{\\}]+\\}@.*$", "").trim()
                             .replaceFirst("\\S+@.*$", "").trim()
                             .replaceFirst("[Ee]mails?:.*$", "").trim()
                             .replaceFirst("[Ee]-[Mm]ails?:.*$", "").trim()
+                            .replaceFirst("http://.*$", "").trim()
+                            .replaceFirst("www\\..*$", "").trim()
+                            .replaceFirst("Acknowledgements.*$", "").trim()
                             .replaceFirst("[\\.,;]$", "").trim();
-                    if (text.isEmpty() || !text.matches(".*[a-zA-Z].*") || text.length() < 20) {
+                    if (text.isEmpty() || !text.matches(".*[a-zA-Z].*") || text.length() < 12) {
                         continue;
                     }
                     String index = entry.getKey();

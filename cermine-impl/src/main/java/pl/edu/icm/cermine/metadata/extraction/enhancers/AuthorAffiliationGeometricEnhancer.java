@@ -67,14 +67,23 @@ public class AuthorAffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
         
         int ind = 0;
         for (BxZone zone : filterZones(page)) {
+            if (zone.getY() > page.getHeight() / 2 && zone.hasPrev() && zone.getPrev().toText().equals("Keywords")) {
+                continue;
+            }
             String authorText = zone.getLines().get(0).toText();
+            String emailText = null;
             StringBuilder sb = new StringBuilder();
             int j = zone.getLines().size();
             for (int i = 1; i < zone.getLines().size(); i++) {
                 String lineText = zone.getLines().get(i).toText();
                 if (lineText.matches(".*@.*")) {
-                    j = i;
-                    break;
+                    if (i == 1) {
+                        emailText = lineText;
+                        continue;
+                    } else {
+                        j = i;
+                        break;
+                    }
                 }
                 if (lineText.endsWith("-")) {
                     sb.append(lineText.replaceAll("-$", ""));
@@ -87,19 +96,21 @@ public class AuthorAffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                 }
             }
             String affText = sb.toString().trim().replaceAll(",$", "");
+
+            if (emailText == null) {
+                sb = new StringBuilder();
             
-            sb = new StringBuilder();
-            
-            for (int i = j; i < zone.getLines().size(); i++) {
-                String lineText = zone.getLines().get(i).toText();
-                if (lineText.endsWith("-")) {
-                    sb.append(lineText.replaceAll("-$", ""));
-                } else {
-                    sb.append(lineText);
-                    sb.append(" ");
+                for (int i = j; i < zone.getLines().size(); i++) {
+                    String lineText = zone.getLines().get(i).toText();
+                    if (lineText.endsWith("-")) {
+                        sb.append(lineText.replaceAll("-$", ""));
+                    } else {
+                        sb.append(lineText);
+                        sb.append(" ");
+                    }
                 }
+                emailText = sb.toString().trim();
             }
-            String emailText = sb.toString().trim();
             
             if (authorText.isEmpty() || affText.isEmpty()) {
                 continue;

@@ -44,8 +44,8 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
     }
 
     private static final Set<String> keywords = Sets.newHashSet(
-            "department", "departament", "university", "institute", "school", "college", 
-            "univ.", "instituto", "facultad", "universidad"
+            "department", "departament", "universit", "institute", "school", "college", 
+            "univ.", "instituto", "facultad", "universidad", "center", "labs"
             );
     
     @Override
@@ -55,7 +55,17 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
                 return false;
             }
         }
-        
+        boolean inLine = false;
+        for (BxZone zone1 : filterZones(document.getPages().get(0))) {
+            for (BxZone zone2 : filterZones(document.getPages().get(0))) {
+                if (!zone1.equals(zone2) && Math.abs(zone1.getY()-zone2.getY()) < 10) {
+                    inLine = true;
+                }
+            }
+        }
+        if (inLine) {
+            return false;
+        }
         ReadingOrderResolver roResolver = new HierarchicalReadingOrderResolver();
         
         BxZone toDel = null;
@@ -73,7 +83,9 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
             BxLine prev = null;
             for (BxLine line : zone.getLines()) {
                 String lineText = line.toText().toLowerCase();
-                if (prev != null && !prev.getMostPopularFontName().equals(line.getMostPopularFontName())) {
+                if (prev != null && 
+                        (!prev.getMostPopularFontName().equals(line.getMostPopularFontName())
+                        || prev.getHeight() - line.getHeight() > 1)) {
                     for (String keyword : keywords) {
                         if (lineText.contains(keyword)) {
                             wasAff = true;

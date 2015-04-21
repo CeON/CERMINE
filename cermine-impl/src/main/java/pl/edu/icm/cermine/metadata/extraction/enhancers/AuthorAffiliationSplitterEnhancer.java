@@ -43,7 +43,8 @@ public class AuthorAffiliationSplitterEnhancer extends AbstractSimpleEnhancer {
     }
 
     private static final Set<String> keywords = Sets.newHashSet(
-            "department", "departament", "university", "institute", "school", "college", "univ."
+            "department", "departament", "universit", "institute", "school", "college", 
+            "univ.", "instituto", "facultad", "universidad", "center", "labs"
             );
     
     @Override

@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.metadata.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
@@ -52,6 +53,11 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
     public DocumentAffiliation(String id, String index, String rawText) {
         this.id = id;
         this.index = ContentCleaner.clean(index);
+        if (rawText.matches(".+ \\([^\\(\\)]*\\)$")) {
+            rawText = StringUtils.reverse(rawText).replaceFirst("\\)", "")
+                    .replaceFirst("\\( ", " ,");
+            rawText = StringUtils.reverse(rawText);
+        }
         this.rawText = MetadataTools.cleanAndNormalize(rawText);
         this.tokens = new ArrayList<Token<AffiliationLabel>>();
     }

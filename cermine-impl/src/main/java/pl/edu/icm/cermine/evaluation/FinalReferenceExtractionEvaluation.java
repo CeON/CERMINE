@@ -162,7 +162,8 @@ public final class FinalReferenceExtractionEvaluation {
             List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");//cermxml, pdfx
 //            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//listBibl/biblStruct");//tei
 //            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//citationList/citation/rawString");//parscit
-    
+//            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "/pdf/reference");//pdf-extract
+        
             List<String> originalRefs = new ArrayList<String>();
             List<String> extractedRefs = new ArrayList<String>();
             

@@ -52,6 +52,16 @@
         <filter-name>RequestLoggerFilter</filter-name>
         <url-pattern>/*</url-pattern>
    </filter-mapping>
+   
+   <filter>
+        <filter-name>SimpleCORSFilter</filter-name>
+        <filter-class>pl.edu.icm.cermine.web.controller.SimpleCORSFilter</filter-class>
+   </filter>
+	  
+   <filter-mapping>
+	  <filter-name>SimpleCORSFilter</filter-name>
+	  <url-pattern>*.do</url-pattern>
+   </filter-mapping>
 
     <!-- javamelody
     <filter>

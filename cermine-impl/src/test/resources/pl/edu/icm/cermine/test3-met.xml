@@ -13,28 +13,34 @@
         <contrib contrib-type="author">
           <string-name>Farzana Alam</string-name>
           <xref ref-type="aff" rid="2">2</xref>
+          <xref ref-type="aff" rid="3">3</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Mohammad S. Rahman</string-name>
           <xref ref-type="aff" rid="1">1</xref>
+          <xref ref-type="aff" rid="3">3</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Md. Shahanur Alam</string-name>
           <xref ref-type="aff" rid="2">2</xref>
+          <xref ref-type="aff" rid="3">3</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Md. Khalid Hossain</string-name>
           <xref ref-type="aff" rid="1">1</xref>
+          <xref ref-type="aff" rid="3">3</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Md. Aslam Hossain</string-name>
           <xref ref-type="aff" rid="1">1</xref>
+          <xref ref-type="aff" rid="3">3</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Mohammad A. Rashid</string-name>
           <email>rashidma@univdhaka.edu</email>
           <xref ref-type="aff" rid="0">0</xref>
           <xref ref-type="aff" rid="1">1</xref>
+          <xref ref-type="aff" rid="3">3</xref>
         </contrib>
         <aff id="0">
           <label>0</label>
@@ -59,6 +65,12 @@
           <addr-line>Dhaka-1000</addr-line>
           ,
           <country country="BD">Bangladesh</country>
+        </aff>
+        <aff id="3">
+          <label>3</label>
+          <institution>Hassan, D.Z. 2000. Some plants of Sundarbans</institution>
+          ,
+          <addr-line>1</addr-line>
         </aff>
       </contrib-group>
       <abstract>

@@ -18,13 +18,13 @@
 
 package pl.edu.icm.cermine.evaluation;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.apache.commons.io.FileUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.structure.DocstrumSegmenter;
 import pl.edu.icm.cermine.structure.DocumentSegmenter;
 import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
@@ -40,12 +40,9 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  */
 public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocument, BxDocument, BxPage, SegmentationEvaluator.Results> {
 
-    private static final String DEFAULT_CONFIGURATION_PATH =
-            "pl/edu/icm/cermine/metadata/evaluation/segmentation-configuration.xml";
-
     private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
     
-    private DocumentSegmenter pageSegmenter;
+    private DocumentSegmenter pageSegmenter = new DocstrumSegmenter();
 
     private final Set<BxZoneLabel> ignoredLabels = EnumSet.noneOf(BxZoneLabel.class);
 
@@ -368,6 +365,27 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
     
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
-        main("SegmentationEvaluator", args, DEFAULT_CONFIGURATION_PATH);
+        
+        SegmentationEvaluator evaluator = new SegmentationEvaluator();
+        evaluator.ignoredLabels.add(BxZoneLabel.BODY_TABLE);
+        evaluator.ignoredLabels.add(BxZoneLabel.BODY_FIGURE);
+        evaluator.ignoredLabels.add(BxZoneLabel.BODY_EQUATION);
+        
+        File file = new File(args[0]);
+        Collection<File> files = FileUtils.listFiles(file, new String[]{"xml"}, true);
+        Results results = evaluator.newResults();
+        int i= 0;
+
+        for (File filee : files) {
+            System.out.println(filee.getName());
+            FileReader reader = new FileReader(filee);
+            BxDocument origDoc = evaluator.prepareExpectedDocument(evaluator.readDocument(reader));
+            BxDocument testDoc = evaluator.prepareActualDocument(origDoc);
+            Results docRes = evaluator.compareDocuments(origDoc, testDoc);
+            results.add(docRes);
+            
+            System.out.println(++i);
+        }
+        results.printSummary();
     }
 }

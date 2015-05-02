@@ -29,13 +29,6 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
  */
 public class LineHeightMaxMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 
-    private static String featureName = "LineHeightMaxMeanRelative";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
-
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         double zoneMean = 0;

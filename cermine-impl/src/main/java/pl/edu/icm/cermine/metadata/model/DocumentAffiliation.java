@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.model;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
@@ -143,4 +144,22 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
         rawText = ContentCleaner.cleanAllAndBreaks(rawText);
     }
 
+    public String getOrganization() {
+        for (Token<AffiliationLabel> token : tokens) {
+            if (token.getLabel().equals(AffiliationLabel.INST)) {
+                return Normalizer.normalize(token.getText(), Normalizer.Form.NFC);
+            }
+        }
+        return null;
+    }
+    
+    public String getCountry() {
+        for (Token<AffiliationLabel> token : tokens) {
+            if (token.getLabel().equals(AffiliationLabel.COUN)) {
+                return token.getText().replaceAll("[^ a-zA-Z]$", "");
+            }
+        }
+        return null;
+    }
+    
 }

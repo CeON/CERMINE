@@ -45,6 +45,7 @@ public class CommandLineOptionsParser {
         options.addOption("modelmeta", true, "path to metadata classifier model");
         options.addOption("modelinit", true, "path to initial classifier model");
         options.addOption("threads", true, "number of threads used");
+        options.addOption("output", true, "output path");
     }
     
     public boolean parse(String[] args) throws ParseException {
@@ -56,6 +57,10 @@ public class CommandLineOptionsParser {
 
     public String getPath() {
         return commandLine.getOptionValue("path");
+    }
+
+    public String getOutput() {
+        return commandLine.getOptionValue("output");
     }
     
     public String getNLMExtension() {

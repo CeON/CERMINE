@@ -241,6 +241,7 @@ public class CermineController {
                     response = outputter.outputString(element);
                 }
             } else {
+                responseHeaders.setContentType(MediaType.APPLICATION_XML);
                 CRFAffiliationParser parser = new CRFAffiliationParser();
                 Element parsedAff = parser.parse(affText);
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());

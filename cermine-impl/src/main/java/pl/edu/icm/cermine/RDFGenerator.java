@@ -22,8 +22,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DC;
-import com.hp.hpl.jena.vocabulary.VCARD;
 import com.hp.hpl.jena.vocabulary.DCTerms;
+import com.hp.hpl.jena.vocabulary.VCARD;
 import java.io.*;
 import java.util.Collection;
 import org.apache.commons.cli.ParseException;
@@ -34,7 +34,6 @@ import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxZone;
 
 /**
  * NLM-based content extractor from PDF files.
@@ -94,9 +93,6 @@ public class RDFGenerator {
                 
                 BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
 
-                for (BxZone z : doc.asZones()) {
-                    System.out.println(z.toText());
-                }
                 DocumentMetadata metadata = ExtractionUtils.extractMetadata(extractor.getConf(), doc);
                 BibEntry[] references = ExtractionUtils.extractReferences(extractor.getConf(), doc);
 
@@ -107,6 +103,7 @@ public class RDFGenerator {
                 Resource volumeRes = model.createResource(volumeURI);
                 Resource docRes = model.createResource(docURI);
                 docRes.addProperty(DC.source, volumeRes);
+                docRes.addProperty(DC.identifier, prefix + volume + "/" + docName + ".pdf");
                 String title = metadata.getTitle();
                 if (title == null) {
                     title = "";
@@ -117,13 +114,13 @@ public class RDFGenerator {
                 int autId = 0;
                 for (DocumentAuthor docAuthor : metadata.getAuthors()) {
                     for (DocumentAffiliation docAffiliation : docAuthor.getAffiliations()) {
-                        String affURI = prefix + "affiliation/#" + volDoc + "_" + affId;
-                        String autURI = prefix + "author/#" + docAuthor.getName().replaceAll("\\s", "-");
+                        String affURI = prefix + "affiliation/" + volDoc + "_" + affId;
+                        String autURI = prefix + "author/" + docAuthor.getName().replaceAll("\\s", "-");
                         String countryName = docAffiliation.getCountry();
                         if (countryName == null) {
                             countryName = "";
                         }
-                        String countryURI = prefix + "country/#" + countryName.replaceAll("\\s", "-");
+                        String countryURI = prefix + "country/" + countryName.replaceAll("\\s", "-");
                         String org = docAffiliation.getOrganization();
                         if (org == null) {
                             org = "";
@@ -147,8 +144,7 @@ public class RDFGenerator {
 
                 int citId = 0;
                 for (BibEntry reference : references) {
-                    System.out.println(reference.toBibTeX());
-                    String citURI = prefix + "citation/#" + volDoc + "_" + citId;
+                    String citURI = prefix + "citation/" + volDoc + "_" + citId;
                     title = reference.getFirstFieldValue(BibEntry.FIELD_TITLE);
                     if (title == null) {
                         title = "";

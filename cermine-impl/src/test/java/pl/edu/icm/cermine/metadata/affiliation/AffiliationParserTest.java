@@ -26,6 +26,26 @@ import pl.edu.icm.cermine.exception.TransformationException;
 
 public class AffiliationParserTest {
 
+    @Test
+	public void testEmpty() throws AnalysisException, TransformationException {
+		CRFAffiliationParser parser = new CRFAffiliationParser();
+		XMLOutputter outputter = new XMLOutputter();
+		String input = "";
+		String expected = "<aff id=\"id\"><label>id</label></aff>";
+		String actual = outputter.outputString(parser.parse(input));
+		assertEquals(expected, actual);
+	}
+    
+    @Test
+	public void testOriental() throws AnalysisException, TransformationException {
+		CRFAffiliationParser parser = new CRFAffiliationParser();
+		XMLOutputter outputter = new XMLOutputter();
+		String input = "山梨大学大学院医学工学総合研究部　社会医学講座";
+		String expected = "<aff id=\"id\"><label>id</label></aff>";
+		String actual = outputter.outputString(parser.parse(input));
+		assertEquals(expected, actual);
+	}
+    
 	@Test
 	public void testParseString() throws AnalysisException, TransformationException {
 		CRFAffiliationParser parser = new CRFAffiliationParser();

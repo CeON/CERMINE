@@ -108,6 +108,9 @@ public class AffiliationCRFTokenClassifier implements TokenClassifier<Token<Affi
 
 	@Override
 	public void classify(List<Token<AffiliationLabel>> tokens) throws AnalysisException {
+        if (tokens == null || tokens.isEmpty()) {
+            return;
+        }
         for (Token<AffiliationLabel> token : tokens) {
             if (token.getLabel() == null) {
                 token.setLabel(AffiliationLabel.TEXT);

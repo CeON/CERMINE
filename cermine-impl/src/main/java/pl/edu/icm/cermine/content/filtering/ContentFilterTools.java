@@ -22,10 +22,10 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import pl.edu.icm.cermine.content.filtering.features.*;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
@@ -44,12 +44,70 @@ public final class ContentFilterTools {
     public static final FeatureVectorBuilder<BxZone, BxPage> VECTOR_BUILDER = new FeatureVectorBuilder<BxZone, BxPage>();
     static {
         VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
-                new MathSymbolsFeature(),
-                new RelativeMeanLengthFeature(),
-                new AreaFeature(),
-                new GreekLettersFeature(),
-                new XVarianceFeature(),
-                new FigureTableFeature()
+            new AcknowledgementFeature(),
+            new FigureFeature(),
+            new ContributionFeature(),
+            new CorrespondenceFeature(),
+            new AffiliationFeature(),
+            new AuthorFeature(),
+            new ContainsPageNumberFeature(),
+            new IsWidestOnThePageFeature(),
+            new LicenseFeature(),
+            new IsAnywhereElseFeature(),
+            new FigureTableFeature(),
+            new IsLeftFeature(),
+            new BracketedLineRelativeCountFeature(),
+            new IsOnSurroundingPagesFeature(),
+            new IsLowestOnThePageFeature(),
+            new IsFirstPageFeature(),
+            new BibinfoFeature(),
+            new IsFontBiggerThanNeighboursFeature(),
+            new IsLongestOnThePageFeature(),
+            new YearFeature(),
+            new ReferencesFeature(),
+            new IsSingleWordFeature(),
+            new DigitCountFeature(),
+            new ContainsCuePhrasesFeature(),
+            new CuePhrasesRelativeCountFeature(),
+            new BracketCountFeature(),
+            new PageNumberFeature(),
+            new BracketRelativeCountFeature(),
+            new StartsWithDigitFeature(),
+            new DotCountFeature(),
+            new AuthorNameRelativeFeature(),
+            new LineHeightMaxMeanFeature(),
+            new LineCountFeature(),
+            new LineXPositionDiffFeature(),
+            new UppercaseWordCountFeature(),
+            new LineXPositionMeanFeature(),
+            new UppercaseCountFeature(),
+            new CommaCountFeature(),
+            new XVarianceFeature(),
+            new CommaRelativeCountFeature(),
+            new UppercaseWordRelativeCountFeature(),
+            new DotRelativeCountFeature(),
+            new FullWordsRelativeFeature(),
+            new LowercaseCountFeature(),
+            new DigitRelativeCountFeature(),
+            new WordLengthMeanFeature(),
+            new LastButOneZoneFeature(),
+            new PunctuationRelativeCountFeature(),
+            new UppercaseRelativeCountFeature(),
+            new LineXWidthPositionDiffFeature(),
+            new LineRelativeCountFeature(),
+            new PreviousZoneFeature(),
+            new XPositionFeature(),
+            new LineHeightMeanFeature(),
+            new HorizontalRelativeProminenceFeature(),
+            new DistanceFromNearestNeighbourFeature(),
+            new EmptySpaceFeature(),
+            new EmptySpaceRelativeFeature(),
+            new VerticalProminenceFeature(),
+            new YPositionFeature(),
+            new YPositionRelativeFeature(),
+            new LineWidthMeanFeature(),
+            new ProportionsFeature(),
+            new RelativeMeanLengthFeature()
                 ));
     }
     

@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.*;
@@ -271,7 +269,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 		svm.svm_save_model(modelPath, model);
 	}
 	
-	public void printWeigths(FeatureVectorBuilder<BxZone, BxPage> vectorBuilder) {
+	public void printWeigths(FeatureVectorBuilder<S, T> vectorBuilder) {
 		List<String> fnames = featureVectorBuilder.getFeatureNames();
 		Iterator<String> namesIt = fnames.iterator();
 		Iterator<Double> valueIt = (Iterator<Double>)new ArrayIterator(getWeights());

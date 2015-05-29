@@ -18,22 +18,30 @@
 
 package pl.edu.icm.cermine.content.headers.features;
 
+import java.util.List;
+import java.util.Map;
 import pl.edu.icm.cermine.structure.model.BxLine;
-import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 /**
  *
- * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
+ * @author Jasiek
  */
-public class PrevEndsWithDotFeature extends FeatureCalculator<BxLine, BxPage> {
-
-    @Override
-    public double calculateFeatureValue(BxLine line, BxPage page) {
-        if (!line.hasPrev()) {
-            return 0;
-        }
-        return (line.getPrev().toText().endsWith(".")) ? 1 : 0;
-    }
+public class StartingFontCodeFeature extends FeatureCalculator<BxLine, BxZone> {
+    String[] fontNames;
     
+    public StartingFontCodeFeature(List<Map.Entry<String, Integer>> fontNames2) {
+        String[] fontNamesTmp = new String[fontNames2.size()];
+        for(int i = 0; i < fontNamesTmp.length; i++)
+            fontNamesTmp[i] = fontNames2.get(i).getKey();
+        fontNames = fontNamesTmp;
+    }
+       
+    @Override
+    public double calculateFeatureValue(BxLine object, BxZone context) {
+        String fn = object.getMostPopularFontName();
+        return (double) 0;
+    }
+
 }

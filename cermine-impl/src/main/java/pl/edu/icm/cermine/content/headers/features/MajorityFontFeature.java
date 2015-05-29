@@ -19,21 +19,25 @@
 package pl.edu.icm.cermine.content.headers.features;
 
 import pl.edu.icm.cermine.structure.model.BxLine;
-import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 /**
  *
- * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
+ * @author Jasiek
  */
-public class PrevEndsWithDotFeature extends FeatureCalculator<BxLine, BxPage> {
+public class MajorityFontFeature extends FeatureCalculator<BxLine, BxZone> {
+    private String mostPopularFont;
 
-    @Override
-    public double calculateFeatureValue(BxLine line, BxPage page) {
-        if (!line.hasPrev()) {
-            return 0;
-        }
-        return (line.getPrev().toText().endsWith(".")) ? 1 : 0;
+    public MajorityFontFeature(String mostPopularFont) {
+        this.mostPopularFont = mostPopularFont;
     }
     
+    @Override
+    public double calculateFeatureValue(BxLine object, BxZone context) {
+        String fn = object.getMostPopularFontName();
+        if (mostPopularFont == null) return 0;
+        return (fn.equals(mostPopularFont) ? 1 : 0);
+    }
+
 }

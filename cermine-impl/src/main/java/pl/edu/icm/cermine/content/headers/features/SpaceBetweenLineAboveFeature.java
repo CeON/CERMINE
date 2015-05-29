@@ -20,39 +20,20 @@ package pl.edu.icm.cermine.content.headers.features;
 
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 /**
  *
  * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
  */
-public class PrevSpaceFeature extends FeatureCalculator<BxLine, BxPage> {
+public class SpaceBetweenLineAboveFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
-    public double calculateFeatureValue(BxLine line, BxPage page) {
-        if (!line.hasPrev() || line.getPrev().getY() > line.getY()) {
-            return 0;
-        }
-        
-        double space = line.getY() - line.getPrev().getY();
-        
-        BxLine l = line;
-        int i = 0;
-        while (l.hasPrev()) {
-            l = l.getPrev();
-            if (!l.hasPrev()) {
-                break;
-            }
-            if (i >= 4 || l.getPrev().getY() > l.getY()) {
-                break;
-            }
-            if (l.getY() - l.getPrev().getY() > space) {
-                space = l.getY() - l.getPrev().getY();
-            }
-            i++;
-        }
-                
-        return (Math.abs(space - line.getY() + line.getPrev().getY()) < 0.1) ? 1 : 0;
+    public double calculateFeatureValue(BxLine object, BxPage context) {
+        if (object.getPrev() == null || !object.getPrev().getParent().getLabel().equals(BxZoneLabel.BODY_CONTENT)) // cos innego w okolicy
+            return -2; 
+        double space = object.getBounds().getY() - object.getPrev().getBounds().getY() - object.getPrev().getBounds().getHeight(); // uwaga na nulle w getPrev (!?)
+        return (space < 0 ? -1 : space);
     }
-    
 }

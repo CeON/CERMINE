@@ -18,41 +18,21 @@
 
 package pl.edu.icm.cermine.content.headers.features;
 
+import java.util.regex.Pattern;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 
 /**
  *
- * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
+ * @author Jasiek
  */
-public class PrevSpaceFeature extends FeatureCalculator<BxLine, BxPage> {
-
+public class ContainsInterpunctionInsideFeature extends FeatureCalculator<BxLine, BxPage> {
+    // Zaplanowane dla wyłapania linii typu mieszanego (SN)
     @Override
-    public double calculateFeatureValue(BxLine line, BxPage page) {
-        if (!line.hasPrev() || line.getPrev().getY() > line.getY()) {
-            return 0;
-        }
-        
-        double space = line.getY() - line.getPrev().getY();
-        
-        BxLine l = line;
-        int i = 0;
-        while (l.hasPrev()) {
-            l = l.getPrev();
-            if (!l.hasPrev()) {
-                break;
-            }
-            if (i >= 4 || l.getPrev().getY() > l.getY()) {
-                break;
-            }
-            if (l.getY() - l.getPrev().getY() > space) {
-                space = l.getY() - l.getPrev().getY();
-            }
-            i++;
-        }
-                
-        return (Math.abs(space - line.getY() + line.getPrev().getY()) < 0.1) ? 1 : 0;
+    public double calculateFeatureValue(BxLine line, BxPage context) {
+        String text = line.toText();
+        return Pattern.matches("^.+[\\.:]\\s.+$", text) ? 1 : 0;
     }
     
 }

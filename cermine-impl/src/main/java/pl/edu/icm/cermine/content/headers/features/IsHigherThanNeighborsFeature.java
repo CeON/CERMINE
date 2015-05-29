@@ -29,11 +29,6 @@ import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
 public class IsHigherThanNeighborsFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
-    public String getFeatureName() {
-        return "IsHeigherThanNeighbors";
-    }
-    
-    @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {
         double score = 0;
 

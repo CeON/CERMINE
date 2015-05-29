@@ -19,9 +19,8 @@
 package pl.edu.icm.cermine.structure.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import pl.edu.icm.cermine.tools.CountMap;
 
 /**
  * Models a document containing pages.
@@ -141,4 +140,31 @@ public final class BxDocument implements Serializable {
     	}
     	return ret;
     }
+    
+    public String getMostPopularFontName() {
+        CountMap<String> map = new CountMap<String>();
+        for (BxPage page : pages) {
+            for (BxZone zone : page.getZones()) {
+                for (BxLine line : zone.getLines()) {
+                    for (BxWord word : line.getWords()) {
+                        for (BxChunk chunk : word.getChunks()) {
+                            if (chunk.getFontName() != null) {
+                                map.add(chunk.getFontName());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return map.getMaxCountObject();
+    }
+    
+    public Set<String> getFontNames() {
+        Set<String> names = new HashSet<String>();
+        for (BxPage page : pages) {
+            names.addAll(page.getFontNames());
+        }
+        return names;
+    }
+    
 }

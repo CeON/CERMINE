@@ -19,9 +19,8 @@
 package pl.edu.icm.cermine.structure.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import pl.edu.icm.cermine.tools.CountMap;
 
 /**
  * Models a word containing text chunks.
@@ -57,6 +56,28 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
         return this;
     }
 
+    @Override
+    public String getMostPopularFontName() {
+        CountMap<String> map = new CountMap<String>();
+        for (BxChunk chunk : chunks) {
+            if (chunk.getFontName() != null) {
+                map.add(chunk.getFontName());
+            }
+        }
+        return map.getMaxCountObject();
+    }
+    
+    @Override
+    public Set<String> getFontNames() {
+        Set<String> names = new HashSet<String>();
+        for (BxChunk chunk : chunks) {
+            if (chunk.getFontName() != null) {
+                names.add(chunk.getFontName());
+            }
+        }
+        return names;
+    }
+    
     @Override
     public String toText() {
         if (getText() == null) {

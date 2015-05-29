@@ -62,6 +62,7 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
         return this;
     }
     
+    @Override
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();
         for (BxWord word : words) {
@@ -74,14 +75,11 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
         return map.getMaxCountObject();
     }
     
+    @Override
     public Set<String> getFontNames() {
         Set<String> names = new HashSet<String>();
         for (BxWord word : words) {
-            for (BxChunk chunk : word.getChunks()) {
-                if (chunk.getFontName() != null) {
-                    names.add(chunk.getFontName());
-                }
-            }
+            names.addAll(word.getFontNames());
         }
         return names;
     }

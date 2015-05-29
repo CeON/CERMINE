@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.readingorder;
 
+import java.util.Set;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxObject;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -89,5 +90,15 @@ public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
         assert y1 >= y0;
         this.setBounds(new BxBounds(x0, y0, x1 - x0, y1 - y0));
         return this;
+    }
+
+    @Override
+    public String getMostPopularFontName() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<String> getFontNames() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

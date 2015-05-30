@@ -27,12 +27,11 @@ import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.KMeansBibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.content.LogicalStructureExtractor;
-import pl.edu.icm.cermine.content.SVMLogicalStructureExtractor;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.filtering.SVMContentFilter;
 import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
+import pl.edu.icm.cermine.content.headers.HeuristicContentHeadersExtractor;
 import pl.edu.icm.cermine.content.headers.SVMContentHeadersExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
@@ -187,15 +186,6 @@ public class ComponentFactory {
     public static BibReferenceParser<BibEntry> getBibReferenceParser(InputStream model) throws AnalysisException {
         return new CRFBibReferenceParser(model);
     }
-    
-    /**
-     * The method creates an instance of a default logical structure extractor.
-     * 
-     * @return logical structure extractor
-     */
-    public static LogicalStructureExtractor getLogicalStructureExtractor() throws AnalysisException {
-        return new SVMLogicalStructureExtractor();
-    }
 
     /**
      * The method creates an instance of a default content filter. 
@@ -237,7 +227,7 @@ public class ComponentFactory {
      * @throws AnalysisException 
      */
     public static ContentHeadersExtractor getContentHeaderExtractor() throws AnalysisException {
-        return new SVMContentHeadersExtractor();
+        return new HeuristicContentHeadersExtractor();
     }
 
     /**

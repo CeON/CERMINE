@@ -260,6 +260,17 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
                 && Math.abs(indentationPopulation.getZScore(line.getX())) < outlIndentZScore) {
             return true;
         }
+        int i = 0;
+        BxLine actLine = line;
+        while (actLine.hasNext()) {
+            actLine = actLine.getNext();
+            if (actLine.toText().matches("[A-Z].*")) {
+                break;
+            }
+            if (i++ == maxHeaderLineCount) {
+                return true;
+            }
+        }
         return false;
     }
         
@@ -281,7 +292,9 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
        
     private static final int MAX_SIMILAR_LINES_COUNT = 50;
     
+    private static final int MAX_HEADER_LINE_COUNT = 5;
     
+            
     private double candMaxLengthZScore = CAND_MAX_LENGTH_ZSCORE;
     
     private double candMaxLengthZScore2 = CAND_MAX_LENGTH_ZSCORE_2;
@@ -299,5 +312,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     private double maxHeightSimilarity = MAX_HEIGHT_SIMILARITY;
 
     private int maxSimilarLinesCount = MAX_SIMILAR_LINES_COUNT;
+    
+    private int maxHeaderLineCount = MAX_HEADER_LINE_COUNT;
     
 }

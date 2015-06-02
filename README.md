@@ -1,6 +1,8 @@
 Content ExtRactor and MINEr
 ===========================
 
+[![Join the chat at https://gitter.im/CeON/CERMINE](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CeON/CERMINE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 CERMINE is a Java library and a web service ([cermine.ceon.pl](http://cermine.ceon.pl/)) for extracting metadata
 and content from PDF files containing academic publications.
 CERMINE is written in Java at [Centre for Open Science](http://ceon.pl/en/research/) at [Interdisciplinary Centre for Mathematical and Computational Modelling](http://www.icm.edu.pl/), [University of Warsaw](http://www.uw.edu.pl/).

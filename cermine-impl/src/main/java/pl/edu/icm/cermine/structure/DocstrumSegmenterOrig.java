@@ -220,7 +220,6 @@ public class DocstrumSegmenterOrig implements DocumentSegmenter {
     }
 
     private double computeSpacing(List<Component> components) {
-        System.out.println("SPACE");
         double maxDistance = Double.NEGATIVE_INFINITY;
         for (Component component : components) {
             for (Neighbor neighbor : component.getNeighbors()) {

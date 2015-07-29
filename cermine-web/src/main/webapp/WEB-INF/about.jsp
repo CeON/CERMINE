@@ -57,21 +57,24 @@ $ curl -X POST --data-binary @article.pdf \
   http://cermine.ceon.pl/extract.do</pre>
                  
                  <h2>How to cite CERMINE</h2>
-	             <p>Please cite the following paper:</p>
+	             <p>Please cite <a target="_blank" href="http://link.springer.com/article/10.1007%2Fs10032-015-0249-8">the following paper</a>:</p>
                  <br/>
-                 <p>Dominika Tkaczyk, Pawel Szostek, Piotr Jan Dendek, Mateusz Fedoryszak and Lukasz Bolikowski.
-                     <i>CERMINE - automatic extraction of metadata and references from scientific literature</i>.
-                     In Proceedings of the 11th IAPR International Workshop on Document Analysis Systems, pages 217-221, 2014.</p>
+                 <p>Dominika Tkaczyk, Pawel Szostek, Mateusz Fedoryszak, Piotr Jan Dendek and Lukasz Bolikowski.
+                     <i>CERMINE: automatic extraction of structured metadata from scientific literature</i>.
+                     In International Journal on Document Analysis and Recognition, pp. 1-19, 2015.</p>
                  <br/>
                  <p>BibTeX:</p>
                  <br/>
                  <pre>
-@inproceedings{TkaczykSDFB201,
-  author = {Tkaczyk, Dominika and Szostek, Pawel and Dendek, Piotr Jan and Fedoryszak, Mateusz and Bolikowski, Lukasz},
-  title = {CERMINE - automatic extraction of metadata and references from scientific literature},
-  booktitle = {11th IAPR International Workshop on Document Analysis Systems},
-  year = {2014},
-  pages = {217-221}
+@article{
+  author={Tkaczyk, Dominika and Szostek, Pawel and Fedoryszak, Mateusz and Dendek, Piotr Jan and Bolikowski, Lukasz},
+  title={CERMINE: automatic extraction of structured metadata from scientific literature},
+  journal={International Journal on Document Analysis and Recognition (IJDAR)},
+  issn={1433-2833},
+  publisher={Springer Berlin Heidelberg},
+  year={2015},
+  doi={10.1007/s10032-015-0249-8},
+  pages={1-19},
 }</pre>
                  
                  <h2>License</h2>

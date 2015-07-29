@@ -38,7 +38,7 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  *
  * @author krusek
  */
-public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocument, BxDocument, BxPage, SegmentationEvaluator.Results> {
+public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocument, BxDocument, BxDocument, SegmentationEvaluator.Results> {
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
     
@@ -84,11 +84,15 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
 
     @Override
-    protected Results compareItems(BxPage expected, BxPage actual) {
+    protected Results compareItems(BxDocument expected, BxDocument actual) {
         Results results = new Results();
-        results.zoneLevel = compareZones(expected, actual);
-        results.lineLevel = compareLines(expected, actual);
-        results.wordLevel = compareWords(expected, actual);
+        for (int i = 0; i < expected.asPages().size(); i++) {
+            BxPage expPage = expected.asPages().get(i);
+            BxPage actPage = actual.asPages().get(i);
+            results.zoneLevel.add(compareZones(expPage, actPage));
+            results.lineLevel.add(compareLines(expPage, actPage));
+            results.wordLevel.add(compareWords(expPage, actPage));
+        }
         return results;
     }
 
@@ -107,7 +111,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
 
     @Override
-    protected void printItemResults(BxPage expected, BxPage actual, int idx, Results results) {
+    protected void printItemResults(BxDocument expected, BxDocument actual, int idx, Results results) {
     	printItemResults(idx, results);
     }
     
@@ -154,13 +158,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
                             if (actualWord.getChunks().size() == expectedWord.getChunks().size()) {
                                 results.matched++;
                             }
-                            else {
-                                results.merged++;
-                            }
                         }
-                    }
-                    else {
-                        results.splitted++;
                     }
                     results.all++;
                 }
@@ -191,13 +189,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
                         if (BxModelUtils.countChunks(actualLine) == BxModelUtils.countChunks(expectedLine)) {
                             results.matched++;
                         }
-                        else {
-                            results.merged++;
-                        }
                     }
-                }
-                else {
-                    results.splitted++;
                 }
                 results.all++;
             }
@@ -208,7 +200,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
     private LevelResults compareZones(BxPage expected, BxPage actual) {
         Map<BxChunk, BxZone> map = BxModelUtils.mapChunksToZones(actual);
-
+        
         LevelResults results = new LevelResults();
         for (BxZone expectedZone : expected.getZones()) {
             if (ignoredLabels.contains(expectedZone.getLabel())) {
@@ -227,13 +219,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
                     if (BxModelUtils.countChunks(actualZone) == BxModelUtils.countChunks(expectedZone)) {
                         results.matched++;
                     }
-                    else {
-                        results.merged++;
-                    }
                 }
-            }
-            else {
-                results.splitted++;
             }
             results.all++;
         }
@@ -243,14 +229,14 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
 	@Override
 	protected BxDocument prepareActualDocument(BxDocument document) throws AnalysisException {
-	    document = BxModelUtils.deepClone(document);
+        document = BxModelUtils.deepClone(document);
 	    preprocessDocument(document);
 	    return processDocument(document);
 	}
 
 	@Override
 	protected BxDocument prepareExpectedDocument(BxDocument document) throws AnalysisException {
-		resolver.resolve(document);
+        resolver.resolve(document);
 		return document;
 	}
 
@@ -265,8 +251,27 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 	}
 
 	@Override
-	protected Iterator<BxPage> iterateItems(BxDocument document) {
-	    return document.getPages().iterator();
+	protected Iterator<BxDocument> iterateItems(final BxDocument document) {
+        return new Iterator<BxDocument>() {
+            private boolean used = false;
+            
+            @Override
+            public boolean hasNext() {
+                return !used;
+            }
+
+            @Override
+            public BxDocument next() {
+                used = true;
+                return document;
+            }
+
+            @Override
+            public void remove() {
+                used = true;
+            }
+        
+        };
 	}
 
 	public static class Results implements AbstractEvaluator.Results<Results> {
@@ -321,25 +326,21 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
 
     public static class LevelResults {
-        private int all;
-        private int matched;
-        private int splitted;
-        private int merged;
+        private int all = 0;
+        private int matched = 0;
 
         public void add(LevelResults results) {
             all += results.all;
             matched += results.matched;
-            splitted += results.splitted;
-            merged += results.merged;
         }
 
         public void printResults(Formatter formatter) {
-            formatter.format(" %8d %8d %8d %8d %7.2f%% |",
-                    all, matched, splitted, merged, getScore() * 100);
+            formatter.format(" %8d %8d %7.2f%% |",
+                    all, matched, getScore() * 100);
         }
 
         public static void printHeader() {
-            System.out.print("   All    Matched  Splitted  Merged   Score   |");
+            System.out.print("   All    Matched  Score   |");
         }
 
         public static void printSeparator() {
@@ -349,8 +350,6 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         public void printSummary(Formatter formatter) {
             formatter.format("      * all      : %8d%n", all);
             formatter.format("      * matched  : %8d%n", matched);
-            formatter.format("      * splitted : %8d%n", splitted);
-            formatter.format("      * merged   : %8d%n", merged);
             formatter.format("      * score    : %7.2f%%%n", getScore() * 100);
         }
 
@@ -374,18 +373,35 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         File file = new File(args[0]);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"xml"}, true);
         Results results = evaluator.newResults();
-        int i= 0;
+        int i = 0;
 
+        double zoneScores = 0;
+        double lineScores = 0;
+        double wordScores = 0;
+        BxDocument origDoc;
+        BxDocument testDoc;
+        FileReader reader;
         for (File filee : files) {
+            System.out.println(new Date(System.currentTimeMillis()));
             System.out.println(filee.getName());
-            FileReader reader = new FileReader(filee);
-            BxDocument origDoc = evaluator.prepareExpectedDocument(evaluator.readDocument(reader));
-            BxDocument testDoc = evaluator.prepareActualDocument(origDoc);
+            
+            reader = new FileReader(filee);
+            origDoc = evaluator.prepareExpectedDocument(evaluator.readDocument(reader));
+            testDoc = evaluator.prepareActualDocument(origDoc);
             Results docRes = evaluator.compareDocuments(origDoc, testDoc);
             results.add(docRes);
-            
+            zoneScores += results.zoneLevel.getScore();
+            lineScores += results.lineLevel.getScore();
+            wordScores += results.wordLevel.getScore();
             System.out.println(++i);
         }
+        zoneScores /= i;
+        lineScores /= i;
+        wordScores /= i;
+        System.out.println("Documents: " + i);
+        System.out.println("Average zone score: " + zoneScores);
+        System.out.println("Average line score: " + lineScores);
+        System.out.println("Average word score: " + wordScores);
         results.printSummary();
     }
 }

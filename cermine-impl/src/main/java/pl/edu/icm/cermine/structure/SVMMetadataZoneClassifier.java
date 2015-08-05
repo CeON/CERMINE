@@ -76,6 +76,7 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
 		vectorBuilder.setFeatureCalculators(Arrays
 				.<FeatureCalculator<BxZone, BxPage>> asList(
+                new LineHeightMaxMeanFeature(),
                 new KeywordsFeature(),
                 new IsRightFeature(),
                 new BibinfoFeature(),
@@ -126,7 +127,8 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
                 new YPositionFeature(),
                 new YPositionRelativeFeature(),
                 new LineWidthMeanFeature(),
-                new ProportionsFeature()
+                new ProportionsFeature(),
+                new RelativeMeanLengthFeature()
 				)
 			);
 		return vectorBuilder;

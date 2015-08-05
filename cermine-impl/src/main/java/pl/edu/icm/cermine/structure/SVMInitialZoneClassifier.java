@@ -61,7 +61,6 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 	{
 		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
-                new BracketCountFeature(),
                 new AbstractFeature(),
                 new IsSingleWordFeature(),
                 new AtRelativeCountFeature(),
@@ -91,6 +90,7 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
                 new CommaRelativeCountFeature(),
                 new LowercaseCountFeature(),
                 new LastButOneZoneFeature(),
+                new XVarianceFeature(),
                 new FullWordsRelativeFeature(),
                 new DotRelativeCountFeature(),
                 new UppercaseWordRelativeCountFeature(),
@@ -107,13 +107,14 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
                 new HorizontalRelativeProminenceFeature(),
                 new EmptySpaceFeature(),
                 new DistanceFromNearestNeighbourFeature(),
-                new EmptySpaceRelativeFeature(),
                 new VerticalProminenceFeature(),
+                new AreaFeature(),
                 new YPositionFeature(),
                 new YPositionRelativeFeature(),
                 new WordWidthMeanFeature(),
                 new LineWidthMeanFeature(),
-                new ProportionsFeature()
+                new ProportionsFeature(),
+                new RelativeMeanLengthFeature()
                 ));
         return vectorBuilder;
 	}

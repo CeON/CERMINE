@@ -97,18 +97,18 @@ public class SVMMetadataBuilder {
         if (line.hasOption("C")){
             C = Double.valueOf(line.getOptionValue("C"));
         }
-        Double gamma = 0.125;
+        Double gamma = 0.03125;
         if (line.hasOption("g")){
             gamma = Double.valueOf(line.getOptionValue("g"));
         }
         String inDir = line.getOptionValue("input");
         String outFile = line.getOptionValue("output");
         String degreeStr = line.getOptionValue("degree");
-        Integer degree = -1;
+        Integer degree = 3;
         if (degreeStr != null && !degreeStr.isEmpty()) {
         	degree = Integer.valueOf(degreeStr);
         }
-        Integer kernelType = svm_parameter.RBF;
+        Integer kernelType = svm_parameter.POLY;
         if (line.hasOption("kernel")) {
             switch(Integer.valueOf(line.getOptionValue("kernel"))) {
                 case 0: kernelType = svm_parameter.LINEAR; break;

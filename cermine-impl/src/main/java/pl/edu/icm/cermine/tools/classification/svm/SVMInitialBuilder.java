@@ -89,11 +89,11 @@ public class SVMInitialBuilder {
             System.err.println("Usage: SVMInitialBuilder [-kernel <kernel type>] [-d <degree>] [-g <gamma>] [-C <error cost>] [-ext <extension>] -input <input dir> -output <path>");
             System.exit(1);
         }
-        Double C = 32.;
+        Double C = 16.;
         if (line.hasOption("C")) {
             C = Double.valueOf(line.getOptionValue("C"));
         }
-        Double gamma = 0.125;
+        Double gamma = 1.;
         if (line.hasOption("g")) {
             gamma = Double.valueOf(line.getOptionValue("g"));
         }

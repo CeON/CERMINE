@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
@@ -43,82 +42,130 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 public class ReferenceParsingEvaluator {
 
     public static void main(String[] args) throws JDOMException, IOException, AnalysisException {
-        if (args.length != 1) {
-            System.err.println("USAGE: ReferenceParsingEvaluator <test file>");
+        if (args.length != 3) {
+            System.err.println("USAGE: ReferenceParsingEvaluator <foldness> <model_path> <test_path>");
             System.exit(1);
         }
-
-        File testFile = new File(args[0]);
-
-        List<Citation> testCitations;
         
-        InputStream testIS = null;
-        try {
-            testIS = new FileInputStream(testFile);
-            InputSource testSource = new InputSource(testIS);
-            testCitations = NlmCitationExtractor.extractCitations(testSource);
-        } finally {
-            if (testIS != null) {
-                testIS.close();
-            }
-        }
+        int foldness = Integer.parseInt(args[0]);
+        String modelPathSuffix = args[1];
+        String testPathSuffix = args[2];
 
-        List<BibEntry> testEntries = new ArrayList<BibEntry>();
-
-        Map<String, Result> results = new HashMap<String, Result>();
-
-        for (Citation c : testCitations) {
-            BibEntry entry = CitationUtils.citationToBibref(c);
-            testEntries.add(entry);
-            for (String key : entry.getFieldKeys()) {
-                if (results.get(key) == null) {
-                    results.put(key, new Result());
-                }
-            }
-        }
-
-        int i = 0;
-        for (BibEntry orig : testEntries) {
-
-            CRFBibReferenceParser parser = CRFBibReferenceParser.getInstance();
-            BibEntry test = parser.parseBibReference(orig.getText());
-
-            System.out.println();
-            System.out.println();
-            System.out.println(orig.toBibTeX());
-            System.out.println(test.toBibTeX());
+        Map<String, List<Result>> results = new HashMap<String, List<Result>>();
+        
+        for (int i = 0; i < foldness; i++) {
+            System.out.println("Fold "+i);
+            String modelPath = modelPathSuffix + i;
+            CRFBibReferenceParser parser = new CRFBibReferenceParser(modelPath);
             
-            for (String s : orig.getFieldKeys()) {
-                results.get(s).addTotalOrig(orig.getAllFieldValues(s).size());
+            String testPath = testPathSuffix + i;
+
+            File testFile = new File(testPath);
+            List<Citation> testCitations;
+        
+            InputStream testIS = null;
+            try {
+                testIS = new FileInputStream(testFile);
+                InputSource testSource = new InputSource(testIS);
+                testCitations = NlmCitationExtractor.extractCitations(testSource);
+            } finally {
+                if (testIS != null) {
+                    testIS.close();
+                }
             }
-            for (String s : test.getFieldKeys()) {
-                results.get(s).addTotalExtr(test.getAllFieldValues(s).size());
-                List<String> origVals = orig.getAllFieldValues(s);
-                for (String testVal : test.getAllFieldValues(s)) {
-                    boolean found = false;
-                    if (origVals.contains(testVal)) {
-                        results.get(s).addSuccess();
-                        origVals.remove(testVal);
-                        found = true;
-                    }
-                    if (!found) {
-                        System.out.println("WRONG "+s);
+            
+            System.out.println(testCitations.size());
+            
+            List<BibEntry> testEntries = new ArrayList<BibEntry>();
+
+            for (Citation c : testCitations) {
+                BibEntry entry = CitationUtils.citationToBibref(c);
+                testEntries.add(entry);
+                for (String key : entry.getFieldKeys()) {
+                    if (results.get(key) == null) {
+                        results.put(key, new ArrayList<Result>());
                     }
                 }
             }
-            i++;
-            System.out.println("Tested "+i+" out of "+testEntries.size());
-        }
+            
+            int j = 0;
+            for (BibEntry orig : testEntries) {
+                BibEntry test = parser.parseBibReference(orig.getText());
 
-        for (Entry<String, Result> entry : results.entrySet()) {
-            System.out.println(entry.getKey() + ": ");
-            System.out.println("    "+entry.getValue());
-            System.out.println("    Precission = " + ((double) entry.getValue().success * 100.0 / (double) entry.getValue().totalExtr));
-            System.out.println("    Recall = " + ((double) entry.getValue().success * 100.0 / (double) entry.getValue().totalOrig));
+                System.out.println();
+                System.out.println();
+                System.out.println(orig.toBibTeX());
+                System.out.println(test.toBibTeX());
+            
+                Map<String, Result> map = new HashMap<String, Result>();
+                for (String s : orig.getFieldKeys()) {
+                    if (map.get(s) == null) {
+                        map.put(s, new Result());
+                    }
+                    map.get(s).addOrig(orig.getAllFieldValues(s).size());
+                }
+                for (String s : test.getFieldKeys()) {
+                    if (map.get(s) == null) {
+                        map.put(s, new Result());
+                    }
+                    map.get(s).addExtr(test.getAllFieldValues(s).size());
+                }
+                for (String s : test.getFieldKeys()) {
+                    List<String> origVals = orig.getAllFieldValues(s);
+                    for (String testVal : test.getAllFieldValues(s)) {
+                        boolean found = false;
+                        if (origVals.contains(testVal)) {
+                            map.get(s).addSuccess();
+                            origVals.remove(testVal);
+                            found = true;
+                        }
+                        if (!found) {
+                            System.out.println("WRONG "+s);
+                        }
+                    }
+                }
+                
+                for (String s : map.keySet()) {
+                    System.out.println("");
+                    System.out.println(s);
+                    System.out.println(map.get(s));
+                    System.out.println(map.get(s).getPrecision());
+                    System.out.println(map.get(s).getRecall());
+                    results.get(s).add(map.get(s));
+                }
+                
+                j++;
+                System.out.println("Tested "+j+" out of "+testEntries.size());
+            }
+            
+        }
+        
+        for (String s : results.keySet()) {
             System.out.println("");
+            System.out.println(s);
+            System.out.println(results.get(s).size());
+            double precision = 0;
+            int precisionCount = 0;
+            double recall = 0;
+            int recallCount = 0;
+            for (Result r : results.get(s)) {
+                if (r.getPrecision() != null) {
+                    precision += r.getPrecision();
+                    precisionCount++;
+                }
+                if (r.getRecall() != null) {
+                    recall += r.getRecall();
+                    recallCount++;
+                }
+            }
+            System.out.println("Precision count "+precisionCount);
+            System.out.println("Mean precision "+(precision / precisionCount));
+            System.out.println("Recall count "+recallCount);
+            System.out.println("Mean recall "+(recall / recallCount));
+            
         }
     }
-
+    
     private static class Result {
 
         private int totalOrig = 0;
@@ -129,12 +176,20 @@ public class ReferenceParsingEvaluator {
             success++;
         }
 
-        public void addTotalOrig(int totalorig) {
+        public void addOrig(int totalorig) {
             this.totalOrig += totalorig;
         }
 
-        public void addTotalExtr(int totalextr) {
+        public void addExtr(int totalextr) {
             this.totalExtr += totalextr;
+        }
+
+        public Double getPrecision() {
+            return (totalExtr == 0) ? null : (double) success / totalExtr;
+        }
+        
+        public Double getRecall() {
+            return (totalOrig == 0) ? null : (double) success / totalOrig;
         }
 
         @Override

@@ -35,7 +35,7 @@ import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesCo
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
-public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
+public class SVMInitialClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
 
     @Override
     protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree) throws IOException, AnalysisException, CloneNotSupportedException {
@@ -73,7 +73,7 @@ public class SVMInitialZoneClassificationEvaluator extends CrossvalidatingZoneCl
 
 	public static void main(String[] args) 
 			throws ParseException, AnalysisException, IOException, TransformationException, CloneNotSupportedException {
-		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialZoneClassificationEvaluator());
+		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialClassificationEvaluator());
 	}
 
 	@Override

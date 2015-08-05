@@ -18,9 +18,13 @@
 
 package pl.edu.icm.cermine.bibref.parsing.tools;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
@@ -236,7 +240,7 @@ public final class CitationUtils {
         return bibEntry;
     }
     
-    public static List<String> citationToMalletInputFormat(Citation citation, Set<String> words) {
+    public static List<String> citationToMalletInputFormat(Citation citation) {
         List<String> trainingExamples = new ArrayList<String>();
 
         FeatureVectorBuilder vectorBuilder = FeatureList.VECTOR_BUILDER;
@@ -250,7 +254,9 @@ public final class CitationUtils {
                     throw new RuntimeException("Feature value is set to NaN: "+featureName);
                 }
             }
-            if (words.contains(token.getText().toLowerCase())) {
+            if (CRFBibReferenceParser.getWords() == null) {
+                featureVector.addFeature(token.getText().toLowerCase(), 1);
+            } else if (CRFBibReferenceParser.getWords().contains(token.getText().toLowerCase())) {
                 featureVector.addFeature(token.getText().toLowerCase(), 1);
             }
             featureVectors.add(featureVector);

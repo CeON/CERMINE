@@ -49,13 +49,13 @@ public final class NlmCitationExtractor {
         TAGS_LABEL_MAP.put("article-title",   CitationTokenLabel.ARTICLE_TITLE);
         TAGS_LABEL_MAP.put("conf-name",       CitationTokenLabel.CONF);
         TAGS_LABEL_MAP.put("named-content",   CitationTokenLabel.CONTENT);
-        TAGS_LABEL_MAP.put("edition",         CitationTokenLabel.EDITION);
+        TAGS_LABEL_MAP.put("edition",         CitationTokenLabel.TEXT);
         TAGS_LABEL_MAP.put("given-names",     CitationTokenLabel.GIVENNAME);
         TAGS_LABEL_MAP.put("issue",           CitationTokenLabel.ISSUE);
         TAGS_LABEL_MAP.put("fpage",           CitationTokenLabel.PAGEF);
         TAGS_LABEL_MAP.put("lpage",           CitationTokenLabel.PAGEL);
-        TAGS_LABEL_MAP.put("publisher-loc",   CitationTokenLabel.PUBLISHER_LOC);
-        TAGS_LABEL_MAP.put("publisher-name",  CitationTokenLabel.PUBLISHER_NAME);
+        TAGS_LABEL_MAP.put("publisher-loc",   CitationTokenLabel.TEXT);
+        TAGS_LABEL_MAP.put("publisher-name",  CitationTokenLabel.TEXT);
         TAGS_LABEL_MAP.put("sc",              CitationTokenLabel.SC);
         TAGS_LABEL_MAP.put("series",          CitationTokenLabel.SERIES);
         TAGS_LABEL_MAP.put("source",          CitationTokenLabel.SOURCE);

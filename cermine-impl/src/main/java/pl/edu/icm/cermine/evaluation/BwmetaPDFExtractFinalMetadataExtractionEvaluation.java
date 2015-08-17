@@ -37,7 +37,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class PDFExtractFinalMetadataExtractionEvaluation {
+public final class BwmetaPDFExtractFinalMetadataExtractionEvaluation {
 
     public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
@@ -77,7 +77,7 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
             }
             
             // Document's title
-            MetadataSingle title = new MetadataSingle(originalNlm, "/article/front/article-meta//article-title",
+            MetadataSingle title = new MetadataSingle(originalNlm, "/bwmeta/element/name[not(@type)]",
                                                         extractedNlm, "/pdf/title");
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
@@ -119,7 +119,7 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         String origExt = args[1];
         String extrExt = args[2];
 
-        PDFExtractFinalMetadataExtractionEvaluation e = new PDFExtractFinalMetadataExtractionEvaluation();
+        BwmetaPDFExtractFinalMetadataExtractionEvaluation e = new BwmetaPDFExtractFinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(iter);
     }

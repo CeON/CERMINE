@@ -20,9 +20,19 @@ package pl.edu.icm.cermine.evaluation.tools;
 
 import com.google.common.collect.Lists;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
+import org.jdom.JDOMException;
+import org.jdom.output.DOMOutputter;
+import org.w3c.dom.Document;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -117,5 +127,157 @@ public class EvaluationUtils {
 		}
     	
     }
-   
+  
+    public static double compareStringsSW(String expectedText, String extractedText) {
+        List<String> expectedTokens = StringTools.tokenize(expectedText.trim());
+        List<String> extractedTokens = StringTools.tokenize(extractedText.trim());
+        SmithWatermanDistance distanceFunc = new SmithWatermanDistance(.0, .0);
+        double distance = distanceFunc.compare(expectedTokens, extractedTokens);
+        return 2*distance / (double) (expectedTokens.size()+extractedTokens.size());
+    }
+
+    public static List<String> removeLeadingZerosFromDate(List<String> strings) {
+        List<String> ret = new ArrayList<String>();
+        for (String string : strings) {
+            String[] parts = string.split("\\s");
+            if (parts.length > 1) {
+                List<String> newDate = new ArrayList<String>();
+                for (String part : parts) {
+                    newDate.add(part.replaceFirst("^0+(?!$)", ""));
+                }
+                ret.add(StringUtils.join(newDate, " "));
+            } else {
+                ret.add(string);
+            }
+        }
+        return ret;
+    }
+
+    public static boolean isSubsequence(String str, String sub) {
+        if (sub.isEmpty()) {
+            return true;
+        }
+        if (str.isEmpty()) {
+            return false;
+        }
+        if (str.charAt(0) == sub.charAt(0)) {
+            return isSubsequence(str.substring(1), sub.substring(1));
+        }
+        return isSubsequence(str.substring(1), sub);
+    }
+    
+    public static Comparator<String> defaultComparator =
+        new Comparator<String>() {
+
+        @Override
+        public int compare(String t1, String t2) {
+            return t1.trim().replaceAll(" +", " ").compareToIgnoreCase(t2.trim().replaceAll(" +", " "));
+        }
+    };
+    
+    public static Comparator<String> cosineComparator() {
+        return cosineComparator(0.7);
+    }
+    
+    public static Comparator<String> cosineComparator(final double threshold) {
+        return new Comparator<String>() {
+
+        @Override
+        public int compare(String t1, String t2) {
+            if (new CosineDistance().compare(StringTools.tokenize(t1), StringTools.tokenize(t2)) > threshold) {
+                return 0;
+            }
+            return t1.compareToIgnoreCase(t2);
+        }
+    };
+    }
+    
+    public static Comparator<String> swComparator =
+        new Comparator<String>() {
+
+        @Override
+        public int compare(String t1, String t2) {
+            String t1Norm = t1.replaceAll("[^a-zA-Z0-9]", "");
+            String t2Norm = t2.replaceAll("[^a-zA-Z0-9]", "");
+            if (compareStringsSW(t1, t2) >= .9 ||
+                    (!t1Norm.isEmpty() && t1Norm.equals(t2Norm))) {
+                return 0;
+            }
+            return t1.compareToIgnoreCase(t2);
+        }
+    };
+    
+    public static Comparator<String> authorComparator =
+        new Comparator<String>() {
+
+        @Override
+        public int compare(String t1, String t2) {
+            if (t1.toLowerCase().replaceAll("[^a-z]", "").equals(t2.toLowerCase().replaceAll("[^a-z]", ""))) {
+                return 0;
+            }
+            return t1.trim().compareToIgnoreCase(t2.trim());
+        }
+    };
+    
+    public static Comparator<String> emailComparator =
+        new Comparator<String>() {
+
+        @Override
+        public int compare(String t1, String t2) {
+            String t1Norm = t1.toLowerCase().replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
+            String t2Norm = t1.toLowerCase().replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
+            
+            if (t1Norm.equals(t2Norm)) {
+                return 0;
+            }
+            return t1.trim().compareToIgnoreCase(t2.trim());
+        }
+    };
+        
+    public static Comparator<String> journalComparator =
+        new Comparator<String>() {
+
+        @Override
+        public int compare(String t1, String t2) {
+            if (EvaluationUtils.isSubsequence(t1.toLowerCase().replaceAll("[^a-z]", ""), t2.toLowerCase().replaceAll("[^a-z]", ""))) {
+                return 0;
+            }
+            return t1.trim().compareToIgnoreCase(t2.trim());
+        }
+    };
+
+    public static Comparator<String> yearComparator =
+        new Comparator<String>() {
+
+        @Override
+        public int compare(String t1, String t2) {
+            List<String> expected = Arrays.asList(t1.split("---"));
+            List<String> extracted = Arrays.asList(t2.split("---"));
+            Boolean match = DateComparator.yearsMatch(expected, extracted);
+            if (match != null && match) {
+                return 0;
+            }
+            return t1.trim().compareToIgnoreCase(t2.trim());
+        }
+    };
+    
+ 
+    public static org.w3c.dom.Document elementToW3CDocument(org.jdom.Element elem) throws JDOMException {
+        org.jdom.Document metaDoc = new org.jdom.Document();
+        metaDoc.setRootElement(elem);
+        org.jdom.output.DOMOutputter domOutputter = new DOMOutputter();
+        return domOutputter.output(metaDoc);
+    }
+
+    public static String outputDoc(Document document) throws IOException, TransformerException {
+        OutputFormat format = new OutputFormat(document);
+        format.setLineWidth(65);
+        format.setIndenting(true);
+        format.setIndent(2);
+        Writer out = new StringWriter();
+        XMLSerializer serializer = new XMLSerializer(out, format);
+        serializer.serialize(document);
+        return out.toString();
+    }
+    
 }

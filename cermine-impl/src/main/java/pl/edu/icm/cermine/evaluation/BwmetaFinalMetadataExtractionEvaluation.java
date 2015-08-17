@@ -30,7 +30,6 @@ import org.apache.commons.lang.StringUtils;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.evaluation.tools.MetadataRelation.StringRelation;
 import pl.edu.icm.cermine.evaluation.tools.*;
@@ -41,7 +40,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class GrobidFinalMetadataExtractionEvaluation {
+public final class BwmetaFinalMetadataExtractionEvaluation {
 
     public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
@@ -74,7 +73,7 @@ public final class GrobidFinalMetadataExtractionEvaluation {
         List<MetadataSingle> pageRanges = new ArrayList<MetadataSingle>();
         List<MetadataSingle> years = new ArrayList<MetadataSingle>();
         List<MetadataSingle> dois = new ArrayList<MetadataSingle>();
-       
+        
         int i = 0;
         for (NlmPair pair : iter) {
             i++;
@@ -94,30 +93,30 @@ public final class GrobidFinalMetadataExtractionEvaluation {
             }
             
             // Document's title
-            MetadataSingle title = new MetadataSingle(originalNlm, "/article/front/article-meta//article-title",
-                                                        extractedNlm, "//teiHeader//titleStmt/title");
+            MetadataSingle title = new MetadataSingle(originalNlm, "/bwmeta/element/name[not(@type)]",
+                                                        extractedNlm, "/article/front/article-meta//article-title");
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
             title.print("title");         
 
             
             // Abstract
-            MetadataSingle abstrakt = new MetadataSingle(originalNlm, "/article/front/article-meta/abstract",
-                                                        extractedNlm, "//teiHeader//abstract/p");
+            MetadataSingle abstrakt = new MetadataSingle(originalNlm, "/bwmeta/element/description[@type='abstract']",
+                                                        extractedNlm, "/article/front/article-meta/abstract");
             abstrakt.setComp(EvaluationUtils.swComparator);
             abstracts.add(abstrakt);
             abstrakt.print("abstract");
             
             
             // Keywords
-            MetadataList keyword = new MetadataList(originalNlm, "/article/front/article-meta//kwd",
-                                                    extractedNlm, "//teiHeader//keywords//term");
+            MetadataList keyword = new MetadataList(originalNlm, "/bwmeta/element/tags[@type='keyword']/tag",
+                                                    extractedNlm, "/article/front/article-meta/kwd-group/kwd");
             keywords.add(keyword);
             keyword.print("keywords");
             
             
             // Authors
-            List<Node> expectedAuthorNodes = XMLTools.extractNodes(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author'][name]");
+            List<Node> expectedAuthorNodes = XMLTools.extractNodes(originalNlm, "/bwmeta/element/contributor[@role='author']");
             
             List<String> expectedAuthors = new ArrayList<String>();
             for (Node authorNode : expectedAuthorNodes) {
@@ -125,117 +124,117 @@ public final class GrobidFinalMetadataExtractionEvaluation {
                 if (names.isEmpty()) {
                     continue;
                 }
-                Node name = names.get(0);
-                List<String> givenNames = XMLTools.extractChildrenTextFromNode(name, "given-names");
-                List<String> surnames = XMLTools.extractChildrenTextFromNode(name, "surname");
-                String author = StringUtils.join(givenNames, " ")+" "+StringUtils.join(surnames, " ");
-                expectedAuthors.add(author);
+                for (Node n : names) {
+                    if (n.getAttributes().getNamedItem("type") != null
+                            && n.getAttributes().getNamedItem("type").getTextContent().equals("canonical")) {
+                        expectedAuthors.add(n.getTextContent());
+                        break;
+                    }
+                }
             }
-
-            List<Node> extractedAuthorNodes = XMLTools.extractNodes(extractedNlm, "//teiHeader//sourceDesc/biblStruct//author/persName");
+  
+            List<Node> extractedAuthorNodes = XMLTools.extractNodes(extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author'][string-name]");
 
             List<String> extractedAuthors = new ArrayList<String>();
             for (Node authorNode : extractedAuthorNodes) {
-                List<String> givenNames = XMLTools.extractChildrenTextFromNode(authorNode, "forename");
-                List<String> surnames = XMLTools.extractChildrenTextFromNode(authorNode, "surname");
-                String author = StringUtils.join(givenNames, " ")+" "+StringUtils.join(surnames, " ");
-                extractedAuthors.add(author);
+                List<String> names = XMLTools.extractChildrenTextFromNode(authorNode, "string-name");
+                if (names.isEmpty()) {
+                    continue;
+                }
+                extractedAuthors.add(names.get(0));
             }
 
             MetadataList author = new MetadataList(expectedAuthors, extractedAuthors);
             author.setComp(EvaluationUtils.authorComparator);
             authors.add(author);
             author.print("author");
-
-    
+            
+            
             // Affiliations
-            Set<String> expectedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta//aff"));
-            Set<String> extractedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(extractedNlm, "//teiHeader//sourceDesc/biblStruct//author/affiliation"));
+            Set<String> expectedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(originalNlm, "/bwmeta/element/affiliation/text"));
+            Set<String> extractedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta//aff"));
             List<String> expectedAffiliations = Lists.newArrayList(expectedAffiliationsSet);
             List<String> extractedAffiliations = Lists.newArrayList(extractedAffiliationsSet);
             MetadataList affiliation = new MetadataList(expectedAffiliations, extractedAffiliations);
             affiliation.setComp(EvaluationUtils.cosineComparator());
             affiliations.add(affiliation);
             affiliation.print("affiliation");
- 
-
+            
+            
             // Author - Affiliation relation
             MetadataRelation authorAffiliation = new MetadataRelation();
             authorAffiliation.setComp1(EvaluationUtils.authorComparator);
             authorAffiliation.setComp2(EvaluationUtils.cosineComparator());
-
-            List<Node> expectedAffiliationNodes = XMLTools.extractNodes(originalNlm, "/article/front/article-meta//aff[@id]");
+            
+            List<Node> expectedAffiliationNodes = XMLTools.extractNodes(originalNlm, "/bwmeta/element/affiliation");
             Map<String, String> expectedAffiliationMap = new HashMap<String, String>();
             for (Node expectedAffiliationNode : expectedAffiliationNodes) {
                 String id = expectedAffiliationNode.getAttributes().getNamedItem("id").getNodeValue();
-                String aff = XMLTools.extractTextFromNode(expectedAffiliationNode);
+                String aff = XMLTools.extractChildrenTextFromNode(expectedAffiliationNode, "text").get(0);
                 expectedAffiliationMap.put(id, aff);
             }
-
+            
+            List<Node> extractedAffiliationNodes = XMLTools.extractNodes(extractedNlm, "/article/front/article-meta//aff[@id]");
+            Map<String, String> extractedAffiliationMap = new HashMap<String, String>();
+            for (Node extractedAffiliationNode : extractedAffiliationNodes) {
+                String id = extractedAffiliationNode.getAttributes().getNamedItem("id").getNodeValue();
+                String aff = XMLTools.extractTextFromNode(extractedAffiliationNode);
+                extractedAffiliationMap.put(id, aff);
+            }
+            
             for (Node expectedAuthorNode : expectedAuthorNodes) {
-                String authorName = expectedAuthors.get(expectedAuthorNodes.indexOf(expectedAuthorNode));
-                List<Node> xrefs = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "xref");
+                String authorName = null;
+
+                List<Node> names = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "name");
+                if (names.isEmpty()) {
+                    continue;
+                }
+                for (Node n : names) {
+                    if (n.getAttributes().getNamedItem("type") != null
+                            && n.getAttributes().getNamedItem("type").getTextContent().equals("canonical")) {
+                        authorName = n.getTextContent();
+                        break;
+                    }
+                }
+
+                if (authorName == null) continue;
+                
+                List<Node> xrefs = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "affiliation-ref");
                 for (Node xref : xrefs) {
-                    if (xref.getAttributes() != null && xref.getAttributes().getNamedItem("ref-type") != null
-                           && "aff".equals(xref.getAttributes().getNamedItem("ref-type").getNodeValue())) {
+                    String affId = xref.getAttributes().getNamedItem("ref").getNodeValue();
+                    String aff = expectedAffiliationMap.get(affId);
+                    if (aff != null)
+                        authorAffiliation.addExpected(new StringRelation(authorName, aff));
+                }
+            }
+            
+            for (Node extractedAuthorNode : extractedAuthorNodes) {
+                String authorName = extractedAuthors.get(extractedAuthorNodes.indexOf(extractedAuthorNode));
+                List<Node> xrefs = XMLTools.extractChildrenNodesFromNode(extractedAuthorNode, "xref");
+                for (Node xref : xrefs) {
+                    if ("aff".equals(xref.getAttributes().getNamedItem("ref-type").getNodeValue())) {
                         String affId = xref.getAttributes().getNamedItem("rid").getNodeValue();
                         for (String id : affId.split(" ")) {
-                            String aff = expectedAffiliationMap.get(id);
+                            String aff = extractedAffiliationMap.get(id);
                             if (aff != null) {
-                                authorAffiliation.addExpected(new StringRelation(authorName, aff));
+                                authorAffiliation.addExtracted(new StringRelation(authorName, aff));
                             }
                         }
                     }
                 }
             }
-
-            extractedAuthorNodes = XMLTools.extractNodes(extractedNlm,
-                    "//teiHeader//sourceDesc/biblStruct//author/persName");
-
-            for (Node authorNode : extractedAuthorNodes) {
-
-                List<String> givenNames = XMLTools.extractChildrenTextFromNode(authorNode, "forename");
-                List<String> surnames = XMLTools.extractChildrenTextFromNode(authorNode, "surname");
-                String a = StringUtils.join(givenNames, " ")+" "+StringUtils.join(surnames, " ");
-
-                Node n = authorNode.getParentNode();
-                NodeList nl = n.getChildNodes();
-                for (int iu = 0; iu < nl.getLength(); iu++) {
-                    Node aff = nl.item(iu);
-                    if ("affiliation".equals(aff.getNodeName())) {
-                        String aw = XMLTools.extractTextFromNode(aff);
-                        authorAffiliation.addExtracted(new StringRelation(a, aw));
-                    }
-                }
-           
-            }
-
+            
             authorsAffiliations.add(authorAffiliation);
             authorAffiliation.print("author - affiliation");
-
-            double autF1 = 0;
-            if (author.getPrecision() != null && author.getRecall() != null) {
-                autF1 = 2./(1./author.getPrecision()+1./author.getRecall());
-            }
-            double affF1 = 0;
-            if (affiliation.getPrecision() != null && affiliation.getRecall() != null) {
-                affF1 = 2./(1./affiliation.getPrecision()+1./affiliation.getRecall());
-            }
-            double aufF1 = 0;
-            if (authorAffiliation.getPrecision() != null && authorAffiliation.getRecall() != null) {
-                aufF1 = 2./(1./authorAffiliation.getPrecision()+1./authorAffiliation.getRecall());
-            }
-
-            System.out.println("TOTL "+autF1+","+affF1+","+aufF1);
-
-       
+            
+ 
             // Email addresses
-            MetadataList email = new MetadataList(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']//email",
-                                                    extractedNlm, "//teiHeader//sourceDesc/biblStruct//author/email");
+            MetadataList email = new MetadataList(originalNlm, "/bwmeta/element/contributor[@role='author']/attribute[@key='contact-email']/value",
+                                                    extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']//email");
             email.setComp(EvaluationUtils.emailComparator);
             emails.add(email);
             email.print("email");
-
+            
             
             // Author - Email relations
             MetadataRelation authorEmail = new MetadataRelation();
@@ -243,96 +242,71 @@ public final class GrobidFinalMetadataExtractionEvaluation {
             authorEmail.setComp2(EvaluationUtils.emailComparator);
             
             for (Node expectedAuthorNode : expectedAuthorNodes) {
-                String authorName = expectedAuthors.get(expectedAuthorNodes.indexOf(expectedAuthorNode));
+                String authorName = null;
+
+                List<Node> names = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "name");
+                if (names.isEmpty()) {
+                    continue;
+                }
+                for (Node n : names) {
+                    if (n.getAttributes().getNamedItem("type") != null
+                            && n.getAttributes().getNamedItem("type").getTextContent().equals("canonical")) {
+                        authorName = n.getTextContent();//.replaceAll("[^a-zA-Z]", "");
+                        break;
+                    }
+                }
+
+                if (authorName == null) continue;
                 
-                List<Node> addresses = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "address");
+                List<Node> addresses = XMLTools.extractChildrenNodesFromNode(expectedAuthorNode, "attribute");
                 for (Node address : addresses) {
-                    for (String emailAddress : XMLTools.extractChildrenTextFromNode(address, "email")) {
-                        authorEmail.addExpected(new StringRelation(authorName, emailAddress));
+                    if ("contact-email".equals(address.getAttributes().getNamedItem("key").getNodeValue())) {
+                        String ema = XMLTools.extractChildrenTextFromNode(address, "value").get(0);
+                        authorEmail.addExpected(new StringRelation(authorName, ema));
                     }
                 }
-                for (String emailAddress : XMLTools.extractChildrenTextFromNode(expectedAuthorNode, "email")) {
-                    authorEmail.addExpected(new StringRelation(authorName, emailAddress));
+            }
+            for (Node extractedAuthorNode : extractedAuthorNodes) {
+                String authorName = extractedAuthors.get(extractedAuthorNodes.indexOf(extractedAuthorNode));
+                
+                for (String emailAddress : XMLTools.extractChildrenTextFromNode(extractedAuthorNode, "email")) {
+                    authorEmail.addExtracted(new StringRelation(authorName, emailAddress));
                 }
             }
-            
-            
-            extractedAuthorNodes = XMLTools.extractNodes(extractedNlm,
-                    "//teiHeader//sourceDesc/biblStruct//author/persName");
-
-            for (Node authorNode : extractedAuthorNodes) {
-
-                List<String> givenNames = XMLTools.extractChildrenTextFromNode(authorNode, "forename");
-                List<String> surnames = XMLTools.extractChildrenTextFromNode(authorNode, "surname");
-                String a = StringUtils.join(givenNames, " ")+" "+StringUtils.join(surnames, " ");
-
-                Node n = authorNode.getParentNode();
-                NodeList nl = n.getChildNodes();
-                for (int iu = 0; iu < nl.getLength(); iu++) {
-                    Node aff = nl.item(iu);
-                    if ("email".equals(aff.getNodeName())) {
-                        String aw = XMLTools.extractTextFromNode(aff);
-                        authorEmail.addExtracted(new StringRelation(a, aw));
-                    }
-                }
-           
-            }
-                        
             authorsEmails.add(authorEmail);
             authorEmail.print("author - email");
 
-                        
-            // Publication date
-            List<String> expectedPubDate = XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta/pub-date");
-            expectedPubDate = EvaluationUtils.removeLeadingZerosFromDate(expectedPubDate);
-            List<Node> extractedPubDates = XMLTools.extractNodes(extractedNlm, "//teiHeader//date[@type='published']");
-            List<String> extractedPubDate = Lists.newArrayList();
-            if (!extractedPubDates.isEmpty()) {
-                Node pubDate = extractedPubDates.get(0);
-                String date = pubDate.getTextContent();
-                if (pubDate.getAttributes().getNamedItem("when") != null) {
-                    date = pubDate.getAttributes().getNamedItem("when").getTextContent();
-                }
-                extractedPubDate = Lists.newArrayList(date.split("-"));
-                extractedPubDate = EvaluationUtils.removeLeadingZerosFromDate(extractedPubDate);
-            }
-            
-            MetadataSingle year = new MetadataSingle(StringUtils.join(expectedPubDate, "---"),
-                    StringUtils.join(extractedPubDate, "---"));
-            year.setComp(EvaluationUtils.yearComparator);
-            years.add(year);
-            year.print("year");
-  
             
             // Journal title
-            MetadataSingle journal = new MetadataSingle(originalNlm, "/article/front/journal-meta//journal-title",
-                                                        extractedNlm, "//monogr/title[@level='j' and @type='main']");
+            MetadataSingle journal = new MetadataSingle(originalNlm, "/bwmeta/element/structure/ancestor[@level='bwmeta1.level.hierarchy_Journal_Journal']/name[@type='canonical']",
+                                                        extractedNlm, "/article/front/journal-meta/journal-title-group/journal-title");
             journal.setComp(EvaluationUtils.journalComparator);
             journals.add(journal);
             journal.print("journal title");
-
+            
             
             // Volume
-            MetadataSingle volume = new MetadataSingle(originalNlm, "/article/front/article-meta/volume",
-                                                        extractedNlm, "//monogr/imprint/biblScope[@unit='volume']");
+            MetadataSingle volume = new MetadataSingle(originalNlm, "/bwmeta/element/structure/ancestor[@level='bwmeta1.level.hierarchy_Journal_Volume']/name[@type='canonical']",
+                                                        extractedNlm, "/article/front/article-meta/volume");
             volumes.add(volume);
             volume.print("volume");
-
+            
             
             // Issue            
-            MetadataSingle issue = new MetadataSingle(originalNlm, "/article/front/article-meta/issue",
-                                                        extractedNlm, "//monogr/imprint/biblScope[@unit='issue']");
+            MetadataSingle issue = new MetadataSingle(originalNlm, "/bwmeta/element/structure/ancestor[@level='bwmeta1.level.hierarchy_Journal_Number']/name[@type='canonical']",
+                                                        extractedNlm, "/article/front/article-meta/issue");
             issues.add(issue);
             issue.print("issue");
 
             
             // Pages range
-            MetadataSingle fPage = new MetadataSingle(originalNlm, "/article/front/article-meta/fpage",
-                                                    extractedNlm, "//monogr/imprint/biblScope[@unit='page']/@from");
-            MetadataSingle lPage = new MetadataSingle(originalNlm, "/article/front/article-meta/lpage",
-                                                    extractedNlm, "//monogr/imprint/biblScope[@unit='page']/@to");
-            String expRange = fPage.hasExpected() && lPage.hasExpected() ?
-                    fPage.getExpectedValue() + "--" + lPage.getExpectedValue() : "";
+            MetadataSingle fPage = new MetadataSingle(originalNlm, "/bwmeta/element/structure/current[@level='bwmeta1.level.hierarchy_Journal_Article']/@position",
+                                                    extractedNlm, "/article/front/article-meta/fpage");
+            MetadataSingle lPage = new MetadataSingle(originalNlm, "/bwmeta/element/structure/current[@level='bwmeta1.level.hierarchy_Journal_Article']/@position",
+                                                    extractedNlm, "/article/front/article-meta/lpage");
+            String expRange = fPage.hasExpected() ?
+                    fPage.getExpectedValue().replaceAll("-", "--") : "";
+            
             String extrRange = fPage.hasExtracted() && lPage.hasExtracted() ?
                     fPage.getExtractedValue() + "--" + lPage.getExtractedValue() : "";
             MetadataSingle pageRange = new MetadataSingle(expRange, extrRange);
@@ -340,9 +314,22 @@ public final class GrobidFinalMetadataExtractionEvaluation {
             pageRange.print("pages");
             
             
+            // Publication date
+            List<String> expectedPubDate = XMLTools.extractTextAsList(originalNlm, "/bwmeta/element/structure/ancestor[@level='bwmeta1.level.hierarchy_Journal_Year']/name[@type='canonical']");
+            expectedPubDate = EvaluationUtils.removeLeadingZerosFromDate(expectedPubDate);
+            List<String> extractedPubDate = XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta/pub-date");
+            extractedPubDate = EvaluationUtils.removeLeadingZerosFromDate(extractedPubDate);
+            
+            MetadataSingle year = new MetadataSingle(StringUtils.join(expectedPubDate, "---"),
+                    StringUtils.join(extractedPubDate, "---"));
+            year.setComp(EvaluationUtils.yearComparator);
+            years.add(year);
+            year.print("year");
+            
+            
             // DOI
-            MetadataSingle doi = new MetadataSingle(originalNlm, "/article/front/article-meta/article-id[@pub-id-type='doi']",
-                                                        extractedNlm, "//teiHeader//idno[@type='DOI']");
+            MetadataSingle doi = new MetadataSingle(originalNlm, "/bwmeta/element/id[@scheme='bwmeta1.id-class.DOI']/@value",
+                                                        extractedNlm, "/article/front/article-meta/article-id[@pub-id-type='doi']");
             dois.add(doi);
             doi.print("DOI");
         }
@@ -363,13 +350,13 @@ public final class GrobidFinalMetadataExtractionEvaluation {
 
         PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
         affiliationsPR.print("Affiliations");
-
+        
         PrecisionRecall authorsAffiliationsPR = new PrecisionRecall().buildForRelation(authorsAffiliations);
         authorsAffiliationsPR.print("Author - affiliation");
         
         PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
         emailsPR.print("Emails");
-     
+
         PrecisionRecall authorsEmailsPR = new PrecisionRecall().buildForRelation(authorsEmails);
         authorsEmailsPR.print("Author - email");
         
@@ -384,7 +371,7 @@ public final class GrobidFinalMetadataExtractionEvaluation {
 
         PrecisionRecall pageRangePR = new PrecisionRecall().buildForSingle(pageRanges);
         pageRangePR.print("Pages");
- 
+        
         PrecisionRecall yearPR = new PrecisionRecall().buildForSingle(years);
         yearPR.print("Year");
         
@@ -393,7 +380,8 @@ public final class GrobidFinalMetadataExtractionEvaluation {
 
         List<PrecisionRecall> results = Lists.newArrayList(
                 titlePR, authorsPR, affiliationsPR, emailsPR, abstractPR, 
-                keywordsPR, yearPR, doiPR);
+                keywordsPR, journalPR, volumePR, issuePR, pageRangePR, yearPR,
+                doiPR);
         
         double avgPrecision = 0;
         double avgRecall = 0;
@@ -421,7 +409,7 @@ public final class GrobidFinalMetadataExtractionEvaluation {
         String origExt = args[1];
         String extrExt = args[2];
 
-        GrobidFinalMetadataExtractionEvaluation e = new GrobidFinalMetadataExtractionEvaluation();
+        BwmetaFinalMetadataExtractionEvaluation e = new BwmetaFinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(iter);
     }

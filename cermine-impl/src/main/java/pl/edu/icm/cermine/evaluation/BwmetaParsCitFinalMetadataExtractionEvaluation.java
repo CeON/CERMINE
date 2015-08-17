@@ -28,7 +28,6 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
-import org.apache.commons.lang.StringUtils;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Node;
@@ -41,7 +40,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class ParsCitFinalMetadataExtractionEvaluation {
+public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
 
     public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
@@ -86,15 +85,15 @@ public final class ParsCitFinalMetadataExtractionEvaluation {
             }
             
             // Document's title
-            MetadataList title = new MetadataList(originalNlm, "/article/front/article-meta//article-title",
+            MetadataList title = new MetadataList(originalNlm, "/bwmeta/element/name[not(@type)]",
                                                         extractedNlm, "//algorithm[@name='ParsHed']//title");
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
             title.print("title");
-       
+
             
             // Authors
-            List<Node> expectedAuthorNodes = XMLTools.extractNodes(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author'][name]");
+            List<Node> expectedAuthorNodes = XMLTools.extractNodes(originalNlm, "/bwmeta/element/contributor[@role='author']");
             
             List<String> expectedAuthors = new ArrayList<String>();
             for (Node authorNode : expectedAuthorNodes) {
@@ -102,11 +101,13 @@ public final class ParsCitFinalMetadataExtractionEvaluation {
                 if (names.isEmpty()) {
                     continue;
                 }
-                Node name = names.get(0);
-                List<String> givenNames = XMLTools.extractChildrenTextFromNode(name, "given-names");
-                List<String> surnames = XMLTools.extractChildrenTextFromNode(name, "surname");
-                String author = StringUtils.join(givenNames, " ")+" "+StringUtils.join(surnames, " ");
-                expectedAuthors.add(author);
+                for (Node n : names) {
+                    if (n.getAttributes().getNamedItem("type") != null
+                            && n.getAttributes().getNamedItem("type").getTextContent().equals("canonical")) {
+                        expectedAuthors.add(n.getTextContent());//.replaceAll("[^a-zA-Z]", ""));
+                        break;
+                    }
+                }
             }
 
             List<Node> extractedAuthorNodes = XMLTools.extractNodes(extractedNlm, "//algorithm[@name='ParsHed']//author");
@@ -124,7 +125,7 @@ public final class ParsCitFinalMetadataExtractionEvaluation {
             
             
             // Affiliations
-            Set<String> expectedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(originalNlm, "/article/front/article-meta//aff"));
+            Set<String> expectedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(originalNlm, "/bwmeta/element/affiliation/text"));
             Set<String> extractedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(extractedNlm, "//algorithm[@name='ParsHed']//affiliation"));
             List<String> expectedAffiliations = Lists.newArrayList(expectedAffiliationsSet);
             List<String> extractedAffiliations = Lists.newArrayList(extractedAffiliationsSet);
@@ -135,7 +136,7 @@ public final class ParsCitFinalMetadataExtractionEvaluation {
             
            
             // Email addresses
-            MetadataList email = new MetadataList(originalNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']//email",
+            MetadataList email = new MetadataList(originalNlm, "/bwmeta/element/contributor[@role='author']/attribute[@key='contact-email']/value",
                                                     extractedNlm, "//algorithm[@name='ParsHed']//email");
             email.setComp(EvaluationUtils.emailComparator);
             emails.add(email);
@@ -143,7 +144,7 @@ public final class ParsCitFinalMetadataExtractionEvaluation {
             
 
             // Abstract
-            MetadataList abstrakt = new MetadataList(originalNlm, "/article/front/article-meta/abstract",
+            MetadataList abstrakt = new MetadataList(originalNlm, "/bwmeta/element/description[@type='abstract']",
                                                         extractedNlm, "//algorithm[@name='ParsHed']//abstract");
             abstrakt.setComp(EvaluationUtils.swComparator);
             abstracts.add(abstrakt);
@@ -151,7 +152,7 @@ public final class ParsCitFinalMetadataExtractionEvaluation {
             
             
             // Keywords
-            MetadataList keyword = new MetadataList(originalNlm, "/article/front/article-meta//kwd",
+            MetadataList keyword = new MetadataList(originalNlm, "/bwmeta/element/tags[@type='keyword']/tag",
                                                     extractedNlm, "//algorithm[@name='ParsHed']//keyword");
             keywords.add(keyword);
             keyword.print("keywords");
@@ -207,7 +208,7 @@ public final class ParsCitFinalMetadataExtractionEvaluation {
         String origExt = args[1];
         String extrExt = args[2];
 
-        ParsCitFinalMetadataExtractionEvaluation e = new ParsCitFinalMetadataExtractionEvaluation();
+        BwmetaParsCitFinalMetadataExtractionEvaluation e = new BwmetaParsCitFinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(iter);
     }

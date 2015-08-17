@@ -23,23 +23,24 @@ import java.util.List;
 public class DateComparator {
 	
 	public static Boolean yearsMatch(List<String> expected, List<String> extracted) {
-		for(String expectedDate: expected) {
+        for (String expectedDate: expected) {
 			List<String> expectedParts = StringTools.tokenize(expectedDate);
 			String expectedYear = null;
-			for(String part: expectedParts) {
-				if(part.length() == 4 && part.matches("^\\d+$") && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
+			for (String part: expectedParts) {
+				if (part.length() == 4 && part.matches("^\\d+$") && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
 					expectedYear = part;
 					break;
 				}
 			}
-			if(expectedYear == null) {
+			if (expectedYear == null) {
 				return null;
 			} else {
 				String extractedYear = null;
 				for(String extractedDate: extracted) {
 					List<String> extractedParts = StringTools.tokenize(extractedDate);
 					for(String part: extractedParts) {
-						if(part.length() == 4 && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
+						if (part.length() == 4 && part.matches("^[0-9]+$") &&
+                            Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
 							extractedYear = part;
 							break;
 						}
@@ -55,19 +56,19 @@ public class DateComparator {
 	
 	public static Boolean datesMatch(List<String> expected, List<String> extracted) {
 		Boolean anyExpectedOk = false;
-		for(String expectedDate: expected) {
+		for (String expectedDate: expected) {
 			List<String> expectedParts = StringTools.tokenize(expectedDate);
-			if(expectedParts.size() == 1) {
+			if (expectedParts.size() == 1) {
 				continue;
 			}
 			anyExpectedOk = true;
 
-			for(String extractedDate: extracted) {
+			for (String extractedDate: extracted) {
 				List<String> extractedParts = StringTools.tokenize(extractedDate);
-				if(extractedParts.size() == 1) {
+				if (extractedParts.size() == 1) {
 					continue;
 				}
-				if(new CosineDistance().compare(expectedParts, extractedParts)  > 0.95) {
+				if (new CosineDistance().compare(expectedParts, extractedParts) > 0.95) {
 					return true;
 				}
 			}

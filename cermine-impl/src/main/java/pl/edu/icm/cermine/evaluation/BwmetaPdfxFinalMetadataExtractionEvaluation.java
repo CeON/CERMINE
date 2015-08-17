@@ -37,7 +37,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class PDFExtractFinalMetadataExtractionEvaluation {
+public final class BwmetaPdfxFinalMetadataExtractionEvaluation {
 
     public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
@@ -57,7 +57,10 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
         List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
-
+        List<MetadataList> emails = new ArrayList<MetadataList>();
+        List<MetadataSingle> abstracts = new ArrayList<MetadataSingle>();
+        List<MetadataSingle> dois = new ArrayList<MetadataSingle>();
+        
         int i = 0;
         for (NlmPair pair : iter) {
             i++;
@@ -77,12 +80,34 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
             }
             
             // Document's title
-            MetadataSingle title = new MetadataSingle(originalNlm, "/article/front/article-meta//article-title",
-                                                        extractedNlm, "/pdf/title");
+            MetadataSingle title = new MetadataSingle(originalNlm, "/bwmeta/element/name[not(@type)]",
+                                                        extractedNlm, "//article-title[@class='DoCO:Title']");
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
             title.print("title");         
 
+            
+            // Email addresses
+            MetadataList email = new MetadataList(originalNlm, "/bwmeta/element/contributor[@role='author']/attribute[@key='contact-email']/value",
+                                                    extractedNlm, "//email");
+            email.setComp(EvaluationUtils.emailComparator);
+            emails.add(email);
+            email.print("email");
+            
+            
+            // Abstract
+            MetadataSingle abstrakt = new MetadataSingle(originalNlm, "/bwmeta/element/description[@type='abstract']",
+                                                        extractedNlm, "//abstract[@class='DoCO:Abstract']");
+            abstrakt.setComp(EvaluationUtils.swComparator);
+            abstracts.add(abstrakt);
+            abstrakt.print("abstract");
+
+            
+            // DOI
+            MetadataSingle doi = new MetadataSingle(originalNlm, "/bwmeta/element/id[@scheme='bwmeta1.id-class.DOI']/@value",
+                                                        extractedNlm, "/pdfx/meta/doi");
+            dois.add(doi);
+            doi.print("DOI");
         }
       
         System.out.println("==== Summary (" + iter.size() + " docs)====");
@@ -90,8 +115,17 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
         titlePR.print("Title");
 
+        PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
+        emailsPR.print("Emails");
+      
+        PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
+        abstractPR.print("Abstract");
+
+        PrecisionRecall doiPR = new PrecisionRecall().buildForSingle(dois);
+        doiPR.print("DOI");
+        
         List<PrecisionRecall> results = Lists.newArrayList(
-                titlePR);
+                titlePR, emailsPR, abstractPR, doiPR);
         
         double avgPrecision = 0;
         double avgRecall = 0;
@@ -119,7 +153,7 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         String origExt = args[1];
         String extrExt = args[2];
 
-        PDFExtractFinalMetadataExtractionEvaluation e = new PDFExtractFinalMetadataExtractionEvaluation();
+        BwmetaPdfxFinalMetadataExtractionEvaluation e = new BwmetaPdfxFinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(iter);
     }

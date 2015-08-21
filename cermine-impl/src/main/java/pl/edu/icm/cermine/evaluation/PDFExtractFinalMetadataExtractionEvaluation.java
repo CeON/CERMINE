@@ -28,6 +28,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -39,7 +40,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class PDFExtractFinalMetadataExtractionEvaluation {
 
-    public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
+    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -57,15 +58,25 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
         List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
+        List<MetadataList> references = new ArrayList<MetadataList>();
 
+        if (mode == 1) {
+            System.out.println("path,pextr_title,pextr_title_sw,pextr_refs,one");
+        }
+        
         int i = 0;
         for (NlmPair pair : iter) {
             i++;
-            System.out.println("");
-            System.out.println(">>>>>>>>> "+i);
-            
-            System.out.println(pair.getExtractedNlm().getPath());
 
+            if (mode == 0) {
+                System.out.println("");
+                System.out.println(">>>>>>>>> "+i);
+                System.out.println(pair.getExtractedNlm().getPath());
+            }
+            if (mode == 1) {
+                System.out.print(pair.getOriginalNlm().getPath()+",");
+            }
+   
             org.w3c.dom.Document originalNlm;
             org.w3c.dom.Document extractedNlm;
             try {
@@ -81,47 +92,80 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
                                                         extractedNlm, "/pdf/title");
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
-            title.print("title");         
+            title.print(mode, "title");         
+            
+            
+            //references
+            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//ref-list/ref");
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "/pdf/reference");
+        
+            List<String> originalRefs = new ArrayList<String>();
+            List<String> extractedRefs = new ArrayList<String>();
+            for (Node originalRefNode : originalRefNodes) {
+                originalRefs.add(XMLTools.extractTextFromNode(originalRefNode).trim());
+            }
+            for (Node extractedRefNode : extractedRefNodes) {
+                extractedRefs.add(XMLTools.extractTextFromNode(extractedRefNode).trim());
+            }
+            
+            MetadataList refs = new MetadataList(originalRefs, extractedRefs);
+            refs.setComp(EvaluationUtils.cosineComparator(0.6));
+            
+            references.add(refs);
+            refs.print(mode, "references");
+            
+            if (mode == 1) {
+                System.out.println("1");
+            }
 
         }
-      
-        System.out.println("==== Summary (" + iter.size() + " docs)====");
-        
-        PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
-        titlePR.print("Title");
 
-        List<PrecisionRecall> results = Lists.newArrayList(
-                titlePR);
+        if (mode == 0) {
+            System.out.println("==== Summary (" + iter.size() + " docs)====");
         
-        double avgPrecision = 0;
-        double avgRecall = 0;
-        double avgF1 = 0;
-        for (PrecisionRecall result : results) {
-            avgPrecision += result.calculatePrecision();
-            avgRecall += result.calculateRecall();
-            avgF1 += result.calculateF1();
-        }
-        avgPrecision /= results.size();
-        avgRecall /= results.size();
-        avgF1 /= results.size();
+            PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+            titlePR.print("Title");
+
+            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            refsPR.print("References");
+        
+            List<PrecisionRecall> results = Lists.newArrayList(
+                titlePR, refsPR);
+        
+            double avgPrecision = 0;
+            double avgRecall = 0;
+            double avgF1 = 0;
+            for (PrecisionRecall result : results) {
+                avgPrecision += result.calculatePrecision();
+                avgRecall += result.calculateRecall();
+                avgF1 += result.calculateF1();
+            }
+            avgPrecision /= results.size();
+            avgRecall /= results.size();
+            avgF1 /= results.size();
   
-        System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
-        System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
-        System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+            System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
+            System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
+            System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+        }
     }
 
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
-        if (args.length != 3) {
+        if (args.length != 3 && args.length != 4) {
             System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
             return;
         }
         String directory = args[0];
         String origExt = args[1];
         String extrExt = args[2];
+        int mode = 0;
+        if (args.length == 4 && args[3].equals("csv")) {
+            mode = 1;
+        }
 
         PDFExtractFinalMetadataExtractionEvaluation e = new PDFExtractFinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
-        e.evaluate(iter);
+        e.evaluate(mode, iter);
     }
 
 }

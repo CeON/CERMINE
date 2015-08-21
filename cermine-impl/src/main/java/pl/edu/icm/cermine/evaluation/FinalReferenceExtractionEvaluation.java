@@ -38,7 +38,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class FinalReferenceExtractionEvaluation {
 
-    public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, XPathExpressionException, TransformerException {
+    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, XPathExpressionException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -57,13 +57,21 @@ public final class FinalReferenceExtractionEvaluation {
         
         List<MetadataList> references = new ArrayList<MetadataList>();
         
+        if (mode == 1) {
+            System.out.println("path,gro_refs,one");
+        }
+        
         int i = 0;
         for (NlmPair pair : iter) {
             i++;
-            System.out.println("");
-            System.out.println(">>>>>>>>> "+i);
-            
-            System.out.println(pair.getExtractedNlm().getPath());
+            if (mode == 0) {
+                System.out.println("");
+                System.out.println(">>>>>>>>> "+i);
+                System.out.println(pair.getExtractedNlm().getPath());
+            }
+            if (mode == 1) {
+                System.out.print(pair.getOriginalNlm().getPath()+",");
+            }
             
             org.w3c.dom.Document originalNlm;
             org.w3c.dom.Document extractedNlm;
@@ -78,8 +86,8 @@ public final class FinalReferenceExtractionEvaluation {
 //            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//ref-list/ref"); //nxml
             List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value"); //bwmeta
             
-            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");//cermine, pdfx
-//            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//listBibl/biblStruct");//grobid
+//            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");//cermine, pdfx
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//listBibl/biblStruct");//grobid
 //           List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//citationList/citation/rawString");//parscit
 //            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "/pdf/reference");//pdf-extract
         
@@ -97,27 +105,37 @@ public final class FinalReferenceExtractionEvaluation {
             refs.setComp(EvaluationUtils.cosineComparator(0.6));
             
             references.add(refs);
-            refs.print("references");
+            refs.print(mode, "references");
+            
+            if (mode == 1) {
+                System.out.println("1");
+            }
         }
       
-        System.out.println("==== Summary (" + iter.size() + " docs)====");
+        if (mode == 0) {
+            System.out.println("==== Summary (" + iter.size() + " docs)====");
 
-        PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
-        refsPR.print("Mean on docs");
+            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            refsPR.print("Mean on docs");
+        }
     }
 
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
-        if (args.length != 3) {
+        if (args.length != 3 && args.length != 4) {
             System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
             return;
         }
         String directory = args[0];
         String origExt = args[1];
         String extrExt = args[2];
+        int mode = 0;
+        if (args.length == 4 && args[3].equals("csv")) {
+            mode = 1;
+        }
 
         FinalReferenceExtractionEvaluation e = new FinalReferenceExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
-        e.evaluate(iter);
+        e.evaluate(mode, iter);
     }
 
 }

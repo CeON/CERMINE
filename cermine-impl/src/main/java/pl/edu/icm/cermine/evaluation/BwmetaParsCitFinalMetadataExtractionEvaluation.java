@@ -42,7 +42,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
 
-    public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
+    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -59,20 +59,30 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        List<MetadataList> titles = new ArrayList<MetadataList>();
+        List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
         List<MetadataList> authors = new ArrayList<MetadataList>();
         List<MetadataList> affiliations = new ArrayList<MetadataList>();
         List<MetadataList> emails = new ArrayList<MetadataList>();
-        List<MetadataList> abstracts = new ArrayList<MetadataList>();
+        List<MetadataSingle> abstracts = new ArrayList<MetadataSingle>();
         List<MetadataList> keywords = new ArrayList<MetadataList>();
+        List<MetadataList> references = new ArrayList<MetadataList>();
+
+        if (mode == 1) {
+            System.out.println("path,pcit_title,pcit_title_sw,pcit_abstract,pcit_abstract_sw,pcit_keywords,"+
+                "pcit_authors,pcit_affs,pcit_email,pcit_refs,one");
+        }
         
         int i = 0;
         for (NlmPair pair : iter) {
             i++;
-            System.out.println("");
-            System.out.println(">>>>>>>>> "+i);
-            
-            System.out.println(pair.getExtractedNlm().getPath());
+            if (mode == 0) {
+                System.out.println("");
+                System.out.println(">>>>>>>>> "+i);
+                System.out.println(pair.getExtractedNlm().getPath());
+            }
+            if (mode == 1) {
+                System.out.print(pair.getOriginalNlm().getPath()+",");
+            }
 
             org.w3c.dom.Document originalNlm;
             org.w3c.dom.Document extractedNlm;
@@ -84,13 +94,62 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
                 continue;
             }
             
-            // Document's title
-            MetadataList title = new MetadataList(originalNlm, "/bwmeta/element/name[not(@type)]",
-                                                        extractedNlm, "//algorithm[@name='ParsHed']//title");
+                        
+            // Title
+            String expectedTitle = XMLTools.extractTextFromNode(originalNlm, "/bwmeta/element/name[not(@type)]");
+            List<Node> extractedTitleNodes = XMLTools.extractNodes(extractedNlm, "//algorithm[@name='ParsHed']//title");
+            String extractedTitle = null;
+            double confidence = 0;
+            for (Node extractedTitleNode : extractedTitleNodes) {
+                if (extractedTitle == null) {
+                    extractedTitle = extractedTitleNode.getTextContent();
+                }
+                Node conf = extractedTitleNode.getAttributes().getNamedItem("confidence");
+                if (conf != null) {
+                    double actConf = Double.valueOf(conf.getNodeValue());
+                    if (actConf > confidence) {
+                        confidence = actConf;
+                        extractedTitle = extractedTitleNode.getTextContent();
+                    }
+                }
+            }
+            
+            MetadataSingle title = new MetadataSingle(expectedTitle, extractedTitle);
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
-            title.print("title");
+            title.print(mode, "title");
 
+            
+            // Abstract
+            String expectedAbstract = XMLTools.extractTextFromNode(originalNlm, "/bwmeta/element/description[@type='abstract']");
+            List<Node> extractedAbstractNodes = XMLTools.extractNodes(extractedNlm, "//algorithm[@name='ParsHed']//abstract");
+            String extractedAbstract = null;
+            confidence = 0;
+            for (Node extractedAbstractNode : extractedAbstractNodes) {
+                if (extractedAbstract == null) {
+                    extractedAbstract = extractedAbstractNode.getTextContent();
+                }
+                Node conf = extractedAbstractNode.getAttributes().getNamedItem("confidence");
+                if (conf != null) {
+                    double actConf = Double.valueOf(conf.getNodeValue());
+                    if (actConf > confidence) {
+                        confidence = actConf;
+                        extractedAbstract = extractedAbstractNode.getTextContent();
+                    }
+                }
+            }
+            MetadataSingle abstrakt = new MetadataSingle(expectedAbstract, extractedAbstract);
+            abstrakt.setComp(EvaluationUtils.swComparator);
+            abstracts.add(abstrakt);
+            abstrakt.print(mode, "abstract");
+            
+            
+            // Keywords
+            MetadataList keyword = new MetadataList(originalNlm, "/bwmeta/element/tags[@type='keyword']/tag",
+                                                    extractedNlm, "//algorithm[@name='ParsHed']//keyword");
+            keywords.add(keyword);
+            keyword.print(mode, "keywords");
+            
             
             // Authors
             List<Node> expectedAuthorNodes = XMLTools.extractNodes(originalNlm, "/bwmeta/element/contributor[@role='author']");
@@ -121,7 +180,7 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
             MetadataList author = new MetadataList(expectedAuthors, extractedAuthors);
             author.setComp(EvaluationUtils.authorComparator);
             authors.add(author);
-            author.print("author");
+            author.print(mode, "author");
             
             
             // Affiliations
@@ -132,7 +191,7 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
             MetadataList affiliation = new MetadataList(expectedAffiliations, extractedAffiliations);
             affiliation.setComp(EvaluationUtils.cosineComparator());
             affiliations.add(affiliation);
-            affiliation.print("affiliation");
+            affiliation.print(mode, "affiliation");
             
            
             // Email addresses
@@ -140,77 +199,95 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
                                                     extractedNlm, "//algorithm[@name='ParsHed']//email");
             email.setComp(EvaluationUtils.emailComparator);
             emails.add(email);
-            email.print("email");
+            email.print(mode, "email");
             
 
-            // Abstract
-            MetadataList abstrakt = new MetadataList(originalNlm, "/bwmeta/element/description[@type='abstract']",
-                                                        extractedNlm, "//algorithm[@name='ParsHed']//abstract");
-            abstrakt.setComp(EvaluationUtils.swComparator);
-            abstracts.add(abstrakt);
-            abstrakt.print("abstract");
+            //references
+            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value");
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//citationList/citation/rawString");
+        
+            List<String> originalRefs = new ArrayList<String>();
+            List<String> extractedRefs = new ArrayList<String>();
+            for (Node originalRefNode : originalRefNodes) {
+                originalRefs.add(XMLTools.extractTextFromNode(originalRefNode).trim());
+            }
+            for (Node extractedRefNode : extractedRefNodes) {
+                extractedRefs.add(XMLTools.extractTextFromNode(extractedRefNode).trim());
+            }
             
+            MetadataList refs = new MetadataList(originalRefs, extractedRefs);
+            refs.setComp(EvaluationUtils.cosineComparator(0.6));
             
-            // Keywords
-            MetadataList keyword = new MetadataList(originalNlm, "/bwmeta/element/tags[@type='keyword']/tag",
-                                                    extractedNlm, "//algorithm[@name='ParsHed']//keyword");
-            keywords.add(keyword);
-            keyword.print("keywords");
+            references.add(refs);
+            refs.print(mode, "references");
+            
+            if (mode == 1) {
+                System.out.println("1");
+            }
         }
-      
-        System.out.println("==== Summary (" + iter.size() + " docs)====");
+
+        if (mode == 0) {
+            System.out.println("==== Summary (" + iter.size() + " docs)====");
         
-        PrecisionRecall titlePR = new PrecisionRecall().buildForList(titles);
-        titlePR.print("Title");
+            PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+            titlePR.print("Title");
 
-        PrecisionRecall abstractPR = new PrecisionRecall().buildForList(abstracts);
-        abstractPR.print("Abstract");
+            PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
+            abstractPR.print("Abstract");
         
-        PrecisionRecall keywordsPR = new PrecisionRecall().buildForList(keywords);
-        keywordsPR.print("Keywords");
+            PrecisionRecall keywordsPR = new PrecisionRecall().buildForList(keywords);
+            keywordsPR.print("Keywords");
         
-        PrecisionRecall authorsPR = new PrecisionRecall().buildForList(authors);
-        authorsPR.print("Authors");
+            PrecisionRecall authorsPR = new PrecisionRecall().buildForList(authors);
+            authorsPR.print("Authors");
 
-        PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
-        affiliationsPR.print("Affiliations");
+            PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
+            affiliationsPR.print("Affiliations");
 
-        PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
-        emailsPR.print("Emails");
+            PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
+            emailsPR.print("Emails");
 
-        List<PrecisionRecall> results = Lists.newArrayList(
+            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            refsPR.print("References");
+        
+            List<PrecisionRecall> results = Lists.newArrayList(
                 titlePR, authorsPR, affiliationsPR, emailsPR, abstractPR, 
                 keywordsPR);
         
-        double avgPrecision = 0;
-        double avgRecall = 0;
-        double avgF1 = 0;
-        for (PrecisionRecall result : results) {
-            avgPrecision += result.calculatePrecision();
-            avgRecall += result.calculateRecall();
-            avgF1 += result.calculateF1();
-        }
-        avgPrecision /= results.size();
-        avgRecall /= results.size();
-        avgF1 /= results.size();
+            double avgPrecision = 0;
+            double avgRecall = 0;
+            double avgF1 = 0;
+            for (PrecisionRecall result : results) {
+                avgPrecision += result.calculatePrecision();
+                avgRecall += result.calculateRecall();
+                avgF1 += result.calculateF1();
+            }
+            avgPrecision /= results.size();
+            avgRecall /= results.size();
+            avgF1 /= results.size();
   
-        System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
-        System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
-        System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+            System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
+            System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
+            System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+        }
     }
 
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
-        if (args.length != 3) {
+        if (args.length != 3 && args.length != 4) {
             System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
             return;
         }
         String directory = args[0];
         String origExt = args[1];
         String extrExt = args[2];
+        int mode = 0;
+        if (args.length == 4 && args[3].equals("csv")) {
+            mode = 1;
+        }
 
         BwmetaParsCitFinalMetadataExtractionEvaluation e = new BwmetaParsCitFinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
-        e.evaluate(iter);
+        e.evaluate(mode, iter);
     }
 
 }

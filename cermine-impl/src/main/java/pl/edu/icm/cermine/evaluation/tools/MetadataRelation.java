@@ -99,6 +99,19 @@ public class MetadataRelation {
         recall =  (double) correct / expectedValue.size();
         return recall;
     }
+    
+    public Double getF1() {
+        if (getPrecision() == null && getRecall() == null) {
+            return null;
+        }
+        if (getPrecision() == null || getRecall() == null) {
+            return null;
+        }
+        if (getPrecision() + getRecall() == 0) {
+            return 0.;
+        }
+        return 2*getPrecision()*getRecall()/(getPrecision()+getRecall());
+    }
 
     public void setComp1(Comparator<String> comp1) {
         this.comp1 = comp1;
@@ -108,18 +121,32 @@ public class MetadataRelation {
         this.comp2 = comp2;
     }
     
-    public void print(String name) {
-        System.out.println("");
-        System.out.println("Expected " + name + ":");
-        for (StringRelation expected : expectedValue) {
-            System.out.println("    " + expected);
+    public void print(int mode, String name) {
+        if (mode == 0) {
+            System.out.println("");
+            System.out.println("Expected " + name + ":");
+            for (StringRelation expected : expectedValue) {
+                System.out.println("    " + expected);
+            }
+            System.out.println("Extracted " + name + ":");
+            for (StringRelation extracted : extractedValue) {
+                System.out.println("    " + extracted);
+            }
+            System.out.printf("Precision: %4.2f\n", getPrecision());
+            System.out.printf("Recall: %4.2f\n", getRecall());
         }
-        System.out.println("Extracted " + name + ":");
-        for (StringRelation extracted : extractedValue) {
-            System.out.println("    " + extracted);
+        if (mode == 1) {
+            Double f1 = getF1();
+            if (f1 == null) {
+                f1 = 0.;
+            }
+            if (f1.isNaN()) {
+                System.out.println(getPrecision());
+                System.out.println(getRecall());
+            }
+            System.out.print(hasExpected() || hasExtracted()? f1 : "null");
+            System.out.print(",");
         }
-        System.out.printf("Precision: %4.2f\n", getPrecision());
-        System.out.printf("Recall: %4.2f\n", getRecall());
     }
 
     public static class StringRelation {

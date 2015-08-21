@@ -1,3 +1,20 @@
+/**
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2013 ICM-UW
+ *
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package pl.edu.icm.cermine.evaluation.tools;
 
@@ -88,18 +105,45 @@ public class MetadataList {
         return recall;
     }
 
-    public void print(String name) {
-        System.out.println("");
-        System.out.println("Expected " + name + ":");
-        for (String expected : expectedValue) {
-            System.out.println("    " + expected);
+    public Double getF1() {
+        if (getPrecision() == null && getRecall() == null) {
+            return null;
         }
-        System.out.println("Extracted " + name + ":");
-        for (String extracted : extractedValue) {
-            System.out.println("    " + extracted);
+        if (getPrecision() == null || getRecall() == null) {
+            return null;
         }
-        System.out.printf("Precision: %4.2f\n", getPrecision());
-        System.out.printf("Recall: %4.2f\n", getRecall());
+        if (getPrecision() + getRecall() == 0) {
+            return 0.;
+        }
+        return 2*getPrecision()*getRecall()/(getPrecision()+getRecall());
+    }
+    
+    public void print(int mode, String name) {
+        if (mode == 0) {
+            System.out.println("");
+            System.out.println("Expected " + name + ":");
+            for (String expected : expectedValue) {
+                System.out.println("    " + expected);
+            }
+            System.out.println("Extracted " + name + ":");
+            for (String extracted : extractedValue) {
+                System.out.println("    " + extracted);
+            }
+            System.out.printf("Precision: %4.2f\n", getPrecision());
+            System.out.printf("Recall: %4.2f\n", getRecall());
+        }
+        if (mode == 1) {
+            Double f1 = getF1();
+            if (f1 == null) {
+                f1 = 0.;
+            }
+            if (f1.isNaN()) {
+                System.out.println(getPrecision());
+                System.out.println(getRecall());
+            }
+            System.out.print(hasExpected() || hasExtracted()? f1 : "null");
+            System.out.print(",");
+        }
     }
 
     public void setComp(Comparator<String> comp) {

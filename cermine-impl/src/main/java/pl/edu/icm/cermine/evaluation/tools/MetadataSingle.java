@@ -1,3 +1,21 @@
+/**
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2013 ICM-UW
+ *
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package pl.edu.icm.cermine.evaluation.tools;
 
 import java.util.Comparator;
@@ -27,7 +45,7 @@ public class MetadataSingle {
         if (correct != null) {
             return correct;
         }
-        correct = comp.compare(expectedValue, extractedValue) == 0;
+        correct = hasExpected() && hasExtracted() && comp.compare(expectedValue, extractedValue) == 0;
         return correct;
     }
 
@@ -40,15 +58,15 @@ public class MetadataSingle {
     }
 
     public int expectedSize() {
-        return expectedValue == null || expectedValue.isEmpty() ? 0 : 1;
+        return hasExpected() ? 1 : 0;
     }
 
     public int extractedSize() {
-        return extractedValue == null || extractedValue.isEmpty() ? 0 : 1;
+        return hasExtracted() ? 1 : 0;
     }
 
     public int correctSize() {
-        return hasExpected() && hasExtracted() && isCorrect() ? 1 : 0;
+        return isCorrect() ? 1 : 0;
     }
 
     public String getExpectedValue() {
@@ -71,11 +89,26 @@ public class MetadataSingle {
         this.comp = comp;
     }
     
-    public void print(String name) {
-        System.out.println("");
-        System.out.println("Expected " + name + ": " + expectedValue);
-        System.out.println("Extracted " + name + ": " + extractedValue);
-        System.out.println("Correct: " + (isCorrect() ? "yes" : "no"));
+    public void print(int mode, String name) {
+        if (mode == 0) {
+            System.out.println("");
+            System.out.println("Expected " + name + ": " + expectedValue);
+            System.out.println("Extracted " + name + ": " + extractedValue);
+            System.out.println("Correct: " + (isCorrect() ? "yes" : "no"));
+        }
+        if (mode == 1) {
+            System.out.print(hasExpected() || hasExtracted()? correctSize() : "null");
+            System.out.print(",");
+            if ("title".equals(name) || "abstract".equals(name)) {
+                System.out.print(hasExpected() || hasExtracted() ? 
+                        EvaluationUtils.compareStringsSW(
+                            getExpectedValue() == null ? " " : getExpectedValue(), 
+                            getExtractedValue() == null ? " " : getExtractedValue()) 
+                        : "null");
+                System.out.print(",");
+            }
+        }
+        
     }
     
 }

@@ -42,7 +42,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class BwmetaFinalMetadataExtractionEvaluation {
 
-    public void evaluate(NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
+    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -73,15 +73,26 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
         List<MetadataSingle> pageRanges = new ArrayList<MetadataSingle>();
         List<MetadataSingle> years = new ArrayList<MetadataSingle>();
         List<MetadataSingle> dois = new ArrayList<MetadataSingle>();
+        List<MetadataList> references = new ArrayList<MetadataList>();
+
+        if (mode == 1) {
+            System.out.println("path,cerm_title,cerm_title_sw,cerm_abstract,cerm_abstract_sw,cerm_keywords,"+
+                "cerm_authors,cerm_affs,cerm_autaff,cerm_email,cerm_autemail,cerm_journal,cerm_volume,cerm_issue,"+
+                "cerm_pages,cerm_year,cerm_doi,cerm_refs,one");
+        }        
         
         int i = 0;
         for (NlmPair pair : iter) {
             i++;
-            System.out.println("");
-            System.out.println(">>>>>>>>> "+i);
+            if (mode == 0) {
+                System.out.println("");
+                System.out.println(">>>>>>>>> "+i);
+                System.out.println(pair.getExtractedNlm().getPath());
+            }
+            if (mode == 1) {
+                System.out.print(pair.getOriginalNlm().getPath()+",");
+            }
             
-            System.out.println(pair.getExtractedNlm().getPath());
-
             org.w3c.dom.Document originalNlm;
             org.w3c.dom.Document extractedNlm;
             try {
@@ -97,7 +108,7 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
                                                         extractedNlm, "/article/front/article-meta//article-title");
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
-            title.print("title");         
+            title.print(mode, "title");         
 
             
             // Abstract
@@ -105,14 +116,14 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
                                                         extractedNlm, "/article/front/article-meta/abstract");
             abstrakt.setComp(EvaluationUtils.swComparator);
             abstracts.add(abstrakt);
-            abstrakt.print("abstract");
+            abstrakt.print(mode, "abstract");
             
             
             // Keywords
             MetadataList keyword = new MetadataList(originalNlm, "/bwmeta/element/tags[@type='keyword']/tag",
                                                     extractedNlm, "/article/front/article-meta/kwd-group/kwd");
             keywords.add(keyword);
-            keyword.print("keywords");
+            keyword.print(mode, "keywords");
             
             
             // Authors
@@ -147,7 +158,7 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
             MetadataList author = new MetadataList(expectedAuthors, extractedAuthors);
             author.setComp(EvaluationUtils.authorComparator);
             authors.add(author);
-            author.print("author");
+            author.print(mode, "author");
             
             
             // Affiliations
@@ -158,7 +169,7 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
             MetadataList affiliation = new MetadataList(expectedAffiliations, extractedAffiliations);
             affiliation.setComp(EvaluationUtils.cosineComparator());
             affiliations.add(affiliation);
-            affiliation.print("affiliation");
+            affiliation.print(mode, "affiliation");
             
             
             // Author - Affiliation relation
@@ -225,7 +236,7 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
             }
             
             authorsAffiliations.add(authorAffiliation);
-            authorAffiliation.print("author - affiliation");
+            authorAffiliation.print(mode, "author - affiliation");
             
  
             // Email addresses
@@ -233,7 +244,7 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
                                                     extractedNlm, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']//email");
             email.setComp(EvaluationUtils.emailComparator);
             emails.add(email);
-            email.print("email");
+            email.print(mode, "email");
             
             
             // Author - Email relations
@@ -274,7 +285,7 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
                 }
             }
             authorsEmails.add(authorEmail);
-            authorEmail.print("author - email");
+            authorEmail.print(mode, "author - email");
 
             
             // Journal title
@@ -282,21 +293,21 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
                                                         extractedNlm, "/article/front/journal-meta/journal-title-group/journal-title");
             journal.setComp(EvaluationUtils.journalComparator);
             journals.add(journal);
-            journal.print("journal title");
+            journal.print(mode, "journal title");
             
             
             // Volume
             MetadataSingle volume = new MetadataSingle(originalNlm, "/bwmeta/element/structure/ancestor[@level='bwmeta1.level.hierarchy_Journal_Volume']/name[@type='canonical']",
                                                         extractedNlm, "/article/front/article-meta/volume");
             volumes.add(volume);
-            volume.print("volume");
+            volume.print(mode, "volume");
             
             
             // Issue            
             MetadataSingle issue = new MetadataSingle(originalNlm, "/bwmeta/element/structure/ancestor[@level='bwmeta1.level.hierarchy_Journal_Number']/name[@type='canonical']",
                                                         extractedNlm, "/article/front/article-meta/issue");
             issues.add(issue);
-            issue.print("issue");
+            issue.print(mode, "issue");
 
             
             // Pages range
@@ -311,7 +322,7 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
                     fPage.getExtractedValue() + "--" + lPage.getExtractedValue() : "";
             MetadataSingle pageRange = new MetadataSingle(expRange, extrRange);
             pageRanges.add(pageRange);
-            pageRange.print("pages");
+            pageRange.print(mode, "pages");
             
             
             // Publication date
@@ -324,94 +335,126 @@ public final class BwmetaFinalMetadataExtractionEvaluation {
                     StringUtils.join(extractedPubDate, "---"));
             year.setComp(EvaluationUtils.yearComparator);
             years.add(year);
-            year.print("year");
+            year.print(mode, "year");
             
             
             // DOI
             MetadataSingle doi = new MetadataSingle(originalNlm, "/bwmeta/element/id[@scheme='bwmeta1.id-class.DOI']/@value",
                                                         extractedNlm, "/article/front/article-meta/article-id[@pub-id-type='doi']");
             dois.add(doi);
-            doi.print("DOI");
+            doi.print(mode, "DOI");
+            
+            //references
+            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value");
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");
+        
+            List<String> originalRefs = new ArrayList<String>();
+            List<String> extractedRefs = new ArrayList<String>();
+            for (Node originalRefNode : originalRefNodes) {
+                originalRefs.add(XMLTools.extractTextFromNode(originalRefNode).trim());
+            }
+            for (Node extractedRefNode : extractedRefNodes) {
+                extractedRefs.add(XMLTools.extractTextFromNode(extractedRefNode).trim());
+            }
+            
+            MetadataList refs = new MetadataList(originalRefs, extractedRefs);
+            refs.setComp(EvaluationUtils.cosineComparator(0.6));
+            
+            references.add(refs);
+            refs.print(mode, "references");
+            
+            if (mode == 1) {
+                System.out.println("1");
+            }
         }
       
-        System.out.println("==== Summary (" + iter.size() + " docs)====");
+        if (mode == 0) {
+            System.out.println("==== Summary (" + iter.size() + " docs)====");
         
-        PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
-        titlePR.print("Title");
+            PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+            titlePR.print("Title");
 
-        PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
-        abstractPR.print("Abstract");
+            PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
+            abstractPR.print("Abstract");
         
-        PrecisionRecall keywordsPR = new PrecisionRecall().buildForList(keywords);
-        keywordsPR.print("Keywords");
+            PrecisionRecall keywordsPR = new PrecisionRecall().buildForList(keywords);
+            keywordsPR.print("Keywords");
         
-        PrecisionRecall authorsPR = new PrecisionRecall().buildForList(authors);
-        authorsPR.print("Authors");
+            PrecisionRecall authorsPR = new PrecisionRecall().buildForList(authors);
+            authorsPR.print("Authors");
 
-        PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
-        affiliationsPR.print("Affiliations");
+            PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
+            affiliationsPR.print("Affiliations");
         
-        PrecisionRecall authorsAffiliationsPR = new PrecisionRecall().buildForRelation(authorsAffiliations);
-        authorsAffiliationsPR.print("Author - affiliation");
+            PrecisionRecall authorsAffiliationsPR = new PrecisionRecall().buildForRelation(authorsAffiliations);
+            authorsAffiliationsPR.print("Author - affiliation");
         
-        PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
-        emailsPR.print("Emails");
+            PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
+            emailsPR.print("Emails");
 
-        PrecisionRecall authorsEmailsPR = new PrecisionRecall().buildForRelation(authorsEmails);
-        authorsEmailsPR.print("Author - email");
+            PrecisionRecall authorsEmailsPR = new PrecisionRecall().buildForRelation(authorsEmails);
+            authorsEmailsPR.print("Author - email");
         
-        PrecisionRecall journalPR = new PrecisionRecall().buildForSingle(journals);
-        journalPR.print("Journal");
+            PrecisionRecall journalPR = new PrecisionRecall().buildForSingle(journals);
+            journalPR.print("Journal");
 
-        PrecisionRecall volumePR = new PrecisionRecall().buildForSingle(volumes);
-        volumePR.print("Volume");
-
-        PrecisionRecall issuePR = new PrecisionRecall().buildForSingle(issues);
-        issuePR.print("Issue");
-
-        PrecisionRecall pageRangePR = new PrecisionRecall().buildForSingle(pageRanges);
-        pageRangePR.print("Pages");
+            PrecisionRecall volumePR = new PrecisionRecall().buildForSingle(volumes);
+            volumePR.print("Volume");
         
-        PrecisionRecall yearPR = new PrecisionRecall().buildForSingle(years);
-        yearPR.print("Year");
-        
-        PrecisionRecall doiPR = new PrecisionRecall().buildForSingle(dois);
-        doiPR.print("DOI");
+            PrecisionRecall issuePR = new PrecisionRecall().buildForSingle(issues);
+            issuePR.print("Issue");
 
-        List<PrecisionRecall> results = Lists.newArrayList(
+            PrecisionRecall pageRangePR = new PrecisionRecall().buildForSingle(pageRanges);
+            pageRangePR.print("Pages");
+        
+            PrecisionRecall yearPR = new PrecisionRecall().buildForSingle(years);
+            yearPR.print("Year");
+        
+            PrecisionRecall doiPR = new PrecisionRecall().buildForSingle(dois);
+            doiPR.print("DOI");
+
+            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            refsPR.print("References");
+        
+            List<PrecisionRecall> results = Lists.newArrayList(
                 titlePR, authorsPR, affiliationsPR, emailsPR, abstractPR, 
                 keywordsPR, journalPR, volumePR, issuePR, pageRangePR, yearPR,
-                doiPR);
+                doiPR, refsPR);
         
-        double avgPrecision = 0;
-        double avgRecall = 0;
-        double avgF1 = 0;
-        for (PrecisionRecall result : results) {
-            avgPrecision += result.calculatePrecision();
-            avgRecall += result.calculateRecall();
-            avgF1 += result.calculateF1();
-        }
-        avgPrecision /= results.size();
-        avgRecall /= results.size();
-        avgF1 /= results.size();
+            double avgPrecision = 0;
+            double avgRecall = 0;
+            double avgF1 = 0;
+            for (PrecisionRecall result : results) {
+                avgPrecision += result.calculatePrecision();
+                avgRecall += result.calculateRecall();
+                avgF1 += result.calculateF1();
+            }
+            avgPrecision /= results.size();
+            avgRecall /= results.size();
+            avgF1 /= results.size();
   
-        System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
-        System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
-        System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+            System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
+            System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
+            System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+        }
     }
 
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
-        if (args.length != 3) {
+        if (args.length != 3 && args.length != 4) {
             System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
             return;
         }
         String directory = args[0];
         String origExt = args[1];
         String extrExt = args[2];
+        int mode = 0;
+        if (args.length == 4 && args[3].equals("csv")) {
+            mode = 1;
+        }
 
         BwmetaFinalMetadataExtractionEvaluation e = new BwmetaFinalMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
-        e.evaluate(iter);
+        e.evaluate(mode, iter);
     }
 
 }

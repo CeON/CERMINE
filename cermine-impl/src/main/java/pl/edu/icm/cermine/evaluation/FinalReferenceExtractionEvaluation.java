@@ -55,7 +55,7 @@ public final class FinalReferenceExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
         
-        List<MetadataList> references = new ArrayList<MetadataList>();
+        List<ComparisonResult> references = new ArrayList<ComparisonResult>();
         
         if (mode == 1) {
             System.out.println("path,gro_refs,one");
@@ -83,8 +83,8 @@ public final class FinalReferenceExtractionEvaluation {
                 continue;
             }
 
-//            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//ref-list/ref"); //nxml
-            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value"); //bwmeta
+            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//ref-list/ref"); //nxml
+//            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value"); //bwmeta
             
 //            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");//cermine, pdfx
             List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//listBibl/biblStruct");//grobid
@@ -112,10 +112,10 @@ public final class FinalReferenceExtractionEvaluation {
             }
         }
       
-        if (mode == 0) {
+        if (mode != 1) {
             System.out.println("==== Summary (" + iter.size() + " docs)====");
 
-            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            PrecisionRecall refsPR = new PrecisionRecall().build(references);
             refsPR.print("Mean on docs");
         }
     }
@@ -131,6 +131,9 @@ public final class FinalReferenceExtractionEvaluation {
         int mode = 0;
         if (args.length == 4 && args[3].equals("csv")) {
             mode = 1;
+        }
+        if (args.length == 4 && args[3].equals("q")) {
+            mode = 2;
         }
 
         FinalReferenceExtractionEvaluation e = new FinalReferenceExtractionEvaluation();

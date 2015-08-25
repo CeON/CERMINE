@@ -22,7 +22,7 @@ import java.util.Comparator;
 import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Document;
 
-public class MetadataSingle {
+public class MetadataSingle implements ComparisonResult {
 
     private String expectedValue;
     private String extractedValue;
@@ -49,24 +49,14 @@ public class MetadataSingle {
         return correct;
     }
 
+    @Override
     public boolean hasExpected() {
         return expectedValue != null && !expectedValue.isEmpty();
     }
 
+    @Override
     public boolean hasExtracted() {
         return extractedValue != null && !extractedValue.isEmpty();
-    }
-
-    public int expectedSize() {
-        return hasExpected() ? 1 : 0;
-    }
-
-    public int extractedSize() {
-        return hasExtracted() ? 1 : 0;
-    }
-
-    public int correctSize() {
-        return isCorrect() ? 1 : 0;
     }
 
     public String getExpectedValue() {
@@ -97,18 +87,40 @@ public class MetadataSingle {
             System.out.println("Correct: " + (isCorrect() ? "yes" : "no"));
         }
         if (mode == 1) {
-            System.out.print(hasExpected() || hasExtracted()? correctSize() : "null");
-            System.out.print(",");
-            if ("title".equals(name) || "abstract".equals(name)) {
-                System.out.print(hasExpected() || hasExtracted() ? 
-                        EvaluationUtils.compareStringsSW(
-                            getExpectedValue() == null ? " " : getExpectedValue(), 
-                            getExtractedValue() == null ? " " : getExtractedValue()) 
-                        : "null");
-                System.out.print(",");
+            if (!hasExtracted() && !hasExpected()) {
+                System.out.print("null");
+            } else if (!hasExtracted() || !hasExpected()) {
+                System.out.print("0");
+            } else {
+                System.out.print(getF1());
             }
+            System.out.print(",");
         }
         
+    }
+
+    @Override
+    public Double getPrecision() {
+        if (!hasExtracted()) {
+            return null;
+        }
+        return isCorrect() ? 1. : 0.;
+    }
+
+    @Override
+    public Double getRecall() {
+        if (!hasExpected()) {
+            return null;
+        }
+        return isCorrect() ? 1. : 0.;
+    }
+
+    @Override
+    public Double getF1() {
+        if (getPrecision() == null || getRecall() == null) {
+            return null;
+        }
+        return isCorrect() ? 1. : 0.;
     }
     
 }

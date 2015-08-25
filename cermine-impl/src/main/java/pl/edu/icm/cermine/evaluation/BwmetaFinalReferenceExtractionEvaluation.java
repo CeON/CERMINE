@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.evaluation;
 
-import com.google.common.collect.Lists;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,12 +34,11 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
- * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class BwmetaPDFExtractFinalMetadataExtractionEvaluation {
+public final class BwmetaFinalReferenceExtractionEvaluation {
 
-    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
+    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, XPathExpressionException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -56,18 +54,16 @@ public final class BwmetaPDFExtractFinalMetadataExtractionEvaluation {
         builder.setFeature("http://xml.org/sax/features/validation", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-
-        List<ComparisonResult> titles = new ArrayList<ComparisonResult>();
+        
         List<ComparisonResult> references = new ArrayList<ComparisonResult>();
-
+        
         if (mode == 1) {
-            System.out.println("path,pextr_title,pextr_refs,one");
+            System.out.println("path,gro_refs,one");
         }
-
+        
         int i = 0;
         for (NlmPair pair : iter) {
             i++;
-            
             if (mode == 0) {
                 System.out.println("");
                 System.out.println(">>>>>>>>> "+i);
@@ -76,7 +72,7 @@ public final class BwmetaPDFExtractFinalMetadataExtractionEvaluation {
             if (mode == 1) {
                 System.out.print(pair.getOriginalNlm().getPath()+",");
             }
-
+            
             org.w3c.dom.Document originalNlm;
             org.w3c.dom.Document extractedNlm;
             try {
@@ -86,20 +82,18 @@ public final class BwmetaPDFExtractFinalMetadataExtractionEvaluation {
                 i--;
                 continue;
             }
+
+//            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//ref-list/ref"); //nxml
+            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value"); //bwmeta
             
-            // Document's title
-            MetadataSingle title = new MetadataSingle(originalNlm, "/bwmeta/element/name[not(@type)]",
-                                                        extractedNlm, "/pdf/title");
-            title.setComp(EvaluationUtils.swComparator);
-            titles.add(title);
-            title.print(mode, "title");         
-            
-            //references
-            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value");
-            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "/pdf/reference");
+//            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");//cermine, pdfx
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//listBibl/biblStruct");//grobid
+//           List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//citationList/citation/rawString");//parscit
+//            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "/pdf/reference");//pdf-extract
         
             List<String> originalRefs = new ArrayList<String>();
             List<String> extractedRefs = new ArrayList<String>();
+            
             for (Node originalRefNode : originalRefNodes) {
                 originalRefs.add(XMLTools.extractTextFromNode(originalRefNode).trim());
             }
@@ -116,36 +110,13 @@ public final class BwmetaPDFExtractFinalMetadataExtractionEvaluation {
             if (mode == 1) {
                 System.out.println("1");
             }
-
         }
-
+      
         if (mode != 1) {
             System.out.println("==== Summary (" + iter.size() + " docs)====");
-        
-            PrecisionRecall titlePR = new PrecisionRecall().build(titles);
-            titlePR.print("Title");
 
             PrecisionRecall refsPR = new PrecisionRecall().build(references);
-            refsPR.print("References");
-        
-            List<PrecisionRecall> results = Lists.newArrayList(
-                titlePR, refsPR);
-        
-            double avgPrecision = 0;
-            double avgRecall = 0;
-            double avgF1 = 0;
-            for (PrecisionRecall result : results) {
-                avgPrecision += result.getPrecision();
-                avgRecall += result.getRecall();
-                avgF1 += result.getF1();
-            }
-            avgPrecision /= results.size();
-            avgRecall /= results.size();
-            avgF1 /= results.size();
-  
-            System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
-            System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
-            System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+            refsPR.print("Mean on docs");
         }
     }
 
@@ -165,9 +136,10 @@ public final class BwmetaPDFExtractFinalMetadataExtractionEvaluation {
             mode = 2;
         }
 
-        BwmetaPDFExtractFinalMetadataExtractionEvaluation e = new BwmetaPDFExtractFinalMetadataExtractionEvaluation();
+        BwmetaFinalReferenceExtractionEvaluation e = new BwmetaFinalReferenceExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(mode, iter);
     }
 
 }
+    

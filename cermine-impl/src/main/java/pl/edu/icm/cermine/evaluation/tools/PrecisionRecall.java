@@ -26,37 +26,34 @@ import java.util.List;
  */
 public class PrecisionRecall {
     
-        public int correct;
-        public int expected;
-        public int extracted;
+    public Double precision;
+    public Double recall;
+    public Double f1;
         
-        public Double precision;
-        public Double recall;
-        public Double f1;
-        
-        public PrecisionRecall() {
-            correct = 0;
-            expected = 0;
-            extracted = 0;
-        }
-        
-        public PrecisionRecall buildForSingle(List<MetadataSingle> metadataList) {
-            for (MetadataSingle metadata : metadataList) {
-                correct += metadata.correctSize();
-                expected += metadata.expectedSize();
-                extracted += metadata.extractedSize();
-            }
+    public PrecisionRecall build(List<ComparisonResult> metadataList) {
+        if (metadataList == null || metadataList.isEmpty()) {
             return this;
         }
-        
-        public PrecisionRecall buildForList(List<MetadataList> metadataList) {
+        if (metadataList.get(0) instanceof MetadataSingle) {
+            int expected = 0;
+            int extracted = 0;
+            int correct = 0;
+            for (ComparisonResult metadata : metadataList) {
+                expected += (metadata.hasExpected() ? 1 : 0);
+                extracted += (metadata.hasExtracted() ? 1 : 0);
+                correct += (metadata.getF1() == null ? 0 : metadata.getF1());
+            }
+            precision = (extracted == 0) ? null : ((double)correct / extracted);
+            recall = (expected == 0) ? null : ((double)correct / expected);
+            f1 = (precision == null || recall == null) ? null : 2 * precision * recall / (precision + recall);
+        } else {
             int precisions = 0;
             int recalls = 0;
             int f1s = 0;
             precision = 0.;
             recall = 0.;
             f1 = 0.;
-            for (MetadataList metadata : metadataList) {
+            for (ComparisonResult metadata : metadataList) {
                 if (metadata.getPrecision() != null) {
                     precision += metadata.getPrecision();
                     precisions++;
@@ -73,78 +70,27 @@ public class PrecisionRecall {
             precision /= precisions;
             recall /= recalls;
             f1 /= f1s;
-            return this;
         }
+        return this;
+    }
         
-        public PrecisionRecall buildForRelation(List<MetadataRelation> metadataList) {
-            int precisions = 0;
-            int recalls = 0;
-            int f1s = 0;
-            precision = 0.;
-            recall = 0.;
-            f1 = 0.;
-            for (MetadataRelation metadata : metadataList) {
-                if (metadata.getPrecision() != null) {
-                    precision += metadata.getPrecision();
-                    precisions++;
-                }
-                if (metadata.getRecall() != null) {
-                    recall += metadata.getRecall();
-                    recalls++;
-                }
-                if (metadata.getF1() != null) {
-                    f1 += metadata.getF1();
-                    f1s++;
-                }
-            }
-            precision /= precisions;
-            recall /= recalls;
-            f1 /= f1s;
-            return this;
-        }
+    public void print(String name) {
+        System.out.printf(name + ": precision: %4.2f" + ", recall: %4.2f" + ", F1: %4.2f\n\n",
+                    getPrecision() == null ? -1. : 100 * getPrecision(), 
+                    getRecall() == null ? -1. : 100 * getRecall(), 
+                    getF1() == null ? -1. : 100 * getF1());
+    }
 
-        @Override
-        public String toString() {
-            return "PrecisionRecall{" + "correct=" + correct + ", expected=" + expected + ", extracted=" + extracted + '}';
-        }
-        
-        public void print(String name) {
-            System.out.println(name + ": " + toString());
-            System.out.printf(name + ": precision: %4.2f" + ", recall: %4.2f" + ", F1: %4.2f\n\n",
-                    calculatePrecision() == null ? -1. : 100 * calculatePrecision(), 
-                    calculateRecall() == null ? -1. : 100 * calculateRecall(), 
-                    calculateF1() == null ? -1. : 100 * calculateF1());
-        }
+    public Double getF1() {
+        return f1;
+    }
 
-        public Double calculateRecall() {
-            if (recall != null) {
-                return recall;
-            }
-            if (expected == 0) {
-                return null;
-            }
-            return (double) correct / expected;
-        }
-        
-        public Double calculatePrecision() {
-            if (precision != null) {
-                return precision;
-            }
-            if (extracted == 0) {
-                return null;
-            }
-            return (double) correct / extracted;
-        }
-        
-        public Double calculateF1() {
-            if (f1 != null) {
-                return f1;
-            }
-            Double prec = calculatePrecision();
-            Double rec = calculateRecall();
-            if (prec == null || rec == null) {
-                return null;
-            }
-            return 2 * prec * rec / (prec + rec);
-        }
+    public Double getPrecision() {
+        return precision;
+    }
+
+    public Double getRecall() {
+        return recall;
+    }
+
 }

@@ -57,14 +57,14 @@ public final class BwmetaPdfxFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
-        List<MetadataList> emails = new ArrayList<MetadataList>();
-        List<MetadataSingle> abstracts = new ArrayList<MetadataSingle>();
-        List<MetadataSingle> dois = new ArrayList<MetadataSingle>();
-        List<MetadataList> references = new ArrayList<MetadataList>();
+        List<ComparisonResult> titles = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> emails = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> abstracts = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> dois = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> references = new ArrayList<ComparisonResult>();
 
         if (mode == 1) {
-            System.out.println("path,pdfx_title,pdfx_title_sw,pdfx_abstract,pdfx_abstract_sw,pdfx_email,"+
+            System.out.println("path,pdfx_title,pdfx_abstract,pdfx_email,"+
                 "pdfx_doi,pdfx_refs,one");
         }
         
@@ -146,22 +146,22 @@ public final class BwmetaPdfxFinalMetadataExtractionEvaluation {
             }
         }
 
-        if (mode == 0) {
+        if (mode != 1) {
             System.out.println("==== Summary (" + iter.size() + " docs)====");
         
-            PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+            PrecisionRecall titlePR = new PrecisionRecall().build(titles);
             titlePR.print("Title");
 
-            PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
+            PrecisionRecall emailsPR = new PrecisionRecall().build(emails);
             emailsPR.print("Emails");
       
-            PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
+            PrecisionRecall abstractPR = new PrecisionRecall().build(abstracts);
             abstractPR.print("Abstract");
 
-            PrecisionRecall doiPR = new PrecisionRecall().buildForSingle(dois);
+            PrecisionRecall doiPR = new PrecisionRecall().build(dois);
             doiPR.print("DOI");
         
-            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            PrecisionRecall refsPR = new PrecisionRecall().build(references);
             refsPR.print("References");
         
             List<PrecisionRecall> results = Lists.newArrayList(
@@ -171,9 +171,9 @@ public final class BwmetaPdfxFinalMetadataExtractionEvaluation {
             double avgRecall = 0;
             double avgF1 = 0;
             for (PrecisionRecall result : results) {
-                avgPrecision += result.calculatePrecision();
-                avgRecall += result.calculateRecall();
-                avgF1 += result.calculateF1();
+                avgPrecision += result.getPrecision();
+                avgRecall += result.getRecall();
+                avgF1 += result.getF1();
             }
             avgPrecision /= results.size();
             avgRecall /= results.size();
@@ -196,6 +196,9 @@ public final class BwmetaPdfxFinalMetadataExtractionEvaluation {
         int mode = 0;
         if (args.length == 4 && args[3].equals("csv")) {
             mode = 1;
+        }
+        if (args.length == 4 && args[3].equals("q")) {
+            mode = 2;
         }
 
         BwmetaPdfxFinalMetadataExtractionEvaluation e = new BwmetaPdfxFinalMetadataExtractionEvaluation();

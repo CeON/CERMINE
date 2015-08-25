@@ -28,7 +28,7 @@ import org.w3c.dom.Document;
  *
  * @author Dominika Tkaczyk
  */
-public class MetadataList {
+public class MetadataList implements ComparisonResult {
 
     private List<String> expectedValue;
     private List<String> extractedValue;
@@ -46,14 +46,17 @@ public class MetadataList {
         this.extractedValue = extractedValue;
     }
 
+    @Override
     public boolean hasExpected() {
         return expectedValue != null && !expectedValue.isEmpty();
     }
 
+    @Override
     public boolean hasExtracted() {
         return extractedValue != null && !extractedValue.isEmpty();
     }
 
+    @Override
     public Double getPrecision() {
         if (!hasExtracted()) {
             return null;
@@ -79,6 +82,7 @@ public class MetadataList {
         return precision;
     }
 
+    @Override
     public Double getRecall() {
         if (!hasExpected()) {
             return null;
@@ -105,14 +109,12 @@ public class MetadataList {
         return recall;
     }
 
+    @Override
     public Double getF1() {
         if (getPrecision() == null && getRecall() == null) {
             return null;
         }
-        if (getPrecision() == null || getRecall() == null) {
-            return null;
-        }
-        if (getPrecision() + getRecall() == 0) {
+        if (getPrecision() == null || getRecall() == null || getPrecision() + getRecall() == 0) {
             return 0.;
         }
         return 2*getPrecision()*getRecall()/(getPrecision()+getRecall());
@@ -133,15 +135,13 @@ public class MetadataList {
             System.out.printf("Recall: %4.2f\n", getRecall());
         }
         if (mode == 1) {
-            Double f1 = getF1();
-            if (f1 == null) {
-                f1 = 0.;
+            if (!hasExtracted() && !hasExpected()) {
+                System.out.print("null");
+            } else if (!hasExtracted() || !hasExpected()) {
+                System.out.print("0");
+            } else {
+                System.out.print(getF1());
             }
-            if (f1.isNaN()) {
-                System.out.println(getPrecision());
-                System.out.println(getRecall());
-            }
-            System.out.print(hasExpected() || hasExtracted()? f1 : "null");
             System.out.print(",");
         }
     }

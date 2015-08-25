@@ -57,11 +57,11 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
-        List<MetadataList> references = new ArrayList<MetadataList>();
+        List<ComparisonResult> titles = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> references = new ArrayList<ComparisonResult>();
 
         if (mode == 1) {
-            System.out.println("path,pextr_title,pextr_title_sw,pextr_refs,one");
+            System.out.println("path,pextr_title,pextr_refs,one");
         }
         
         int i = 0;
@@ -120,13 +120,13 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
 
         }
 
-        if (mode == 0) {
+        if (mode != 1) {
             System.out.println("==== Summary (" + iter.size() + " docs)====");
         
-            PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+            PrecisionRecall titlePR = new PrecisionRecall().build(titles);
             titlePR.print("Title");
 
-            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            PrecisionRecall refsPR = new PrecisionRecall().build(references);
             refsPR.print("References");
         
             List<PrecisionRecall> results = Lists.newArrayList(
@@ -136,9 +136,9 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
             double avgRecall = 0;
             double avgF1 = 0;
             for (PrecisionRecall result : results) {
-                avgPrecision += result.calculatePrecision();
-                avgRecall += result.calculateRecall();
-                avgF1 += result.calculateF1();
+                avgPrecision += result.getPrecision();
+                avgRecall += result.getRecall();
+                avgF1 += result.getF1();
             }
             avgPrecision /= results.size();
             avgRecall /= results.size();
@@ -161,6 +161,9 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         int mode = 0;
         if (args.length == 4 && args[3].equals("csv")) {
             mode = 1;
+        }
+        if (args.length == 4 && args[3].equals("q")) {
+            mode = 2;
         }
 
         PDFExtractFinalMetadataExtractionEvaluation e = new PDFExtractFinalMetadataExtractionEvaluation();

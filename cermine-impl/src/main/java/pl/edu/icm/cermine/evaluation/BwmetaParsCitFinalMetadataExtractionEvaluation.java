@@ -59,16 +59,16 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
-        List<MetadataList> authors = new ArrayList<MetadataList>();
-        List<MetadataList> affiliations = new ArrayList<MetadataList>();
-        List<MetadataList> emails = new ArrayList<MetadataList>();
-        List<MetadataSingle> abstracts = new ArrayList<MetadataSingle>();
-        List<MetadataList> keywords = new ArrayList<MetadataList>();
-        List<MetadataList> references = new ArrayList<MetadataList>();
+        List<ComparisonResult> titles = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> authors = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> affiliations = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> emails = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> abstracts = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> keywords = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> references = new ArrayList<ComparisonResult>();
 
         if (mode == 1) {
-            System.out.println("path,pcit_title,pcit_title_sw,pcit_abstract,pcit_abstract_sw,pcit_keywords,"+
+            System.out.println("path,pcit_title,pcit_abstract,pcit_keywords,"+
                 "pcit_authors,pcit_affs,pcit_email,pcit_refs,one");
         }
         
@@ -226,28 +226,28 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
             }
         }
 
-        if (mode == 0) {
+        if (mode != 1) {
             System.out.println("==== Summary (" + iter.size() + " docs)====");
         
-            PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+            PrecisionRecall titlePR = new PrecisionRecall().build(titles);
             titlePR.print("Title");
 
-            PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
+            PrecisionRecall abstractPR = new PrecisionRecall().build(abstracts);
             abstractPR.print("Abstract");
         
-            PrecisionRecall keywordsPR = new PrecisionRecall().buildForList(keywords);
+            PrecisionRecall keywordsPR = new PrecisionRecall().build(keywords);
             keywordsPR.print("Keywords");
         
-            PrecisionRecall authorsPR = new PrecisionRecall().buildForList(authors);
+            PrecisionRecall authorsPR = new PrecisionRecall().build(authors);
             authorsPR.print("Authors");
 
-            PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
+            PrecisionRecall affiliationsPR = new PrecisionRecall().build(affiliations);
             affiliationsPR.print("Affiliations");
 
-            PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
+            PrecisionRecall emailsPR = new PrecisionRecall().build(emails);
             emailsPR.print("Emails");
 
-            PrecisionRecall refsPR = new PrecisionRecall().buildForList(references);
+            PrecisionRecall refsPR = new PrecisionRecall().build(references);
             refsPR.print("References");
         
             List<PrecisionRecall> results = Lists.newArrayList(
@@ -258,9 +258,9 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
             double avgRecall = 0;
             double avgF1 = 0;
             for (PrecisionRecall result : results) {
-                avgPrecision += result.calculatePrecision();
-                avgRecall += result.calculateRecall();
-                avgF1 += result.calculateF1();
+                avgPrecision += result.getPrecision();
+                avgRecall += result.getRecall();
+                avgF1 += result.getF1();
             }
             avgPrecision /= results.size();
             avgRecall /= results.size();
@@ -283,6 +283,9 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
         int mode = 0;
         if (args.length == 4 && args[3].equals("csv")) {
             mode = 1;
+        }
+        if (args.length == 4 && args[3].equals("q")) {
+            mode = 2;
         }
 
         BwmetaParsCitFinalMetadataExtractionEvaluation e = new BwmetaParsCitFinalMetadataExtractionEvaluation();

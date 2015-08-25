@@ -60,23 +60,23 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-        List<MetadataSingle> titles = new ArrayList<MetadataSingle>();
-        List<MetadataList> authors = new ArrayList<MetadataList>();
-        List<MetadataList> affiliations = new ArrayList<MetadataList>();
-        List<MetadataRelation> authorsAffiliations = new ArrayList<MetadataRelation>();
-        List<MetadataList> emails = new ArrayList<MetadataList>();
-        List<MetadataRelation> authorsEmails = new ArrayList<MetadataRelation>();
-        List<MetadataSingle> abstracts = new ArrayList<MetadataSingle>();
-        List<MetadataList> keywords = new ArrayList<MetadataList>();
-        List<MetadataSingle> journals = new ArrayList<MetadataSingle>();
-        List<MetadataSingle> volumes = new ArrayList<MetadataSingle>();
-        List<MetadataSingle> issues = new ArrayList<MetadataSingle>();
-        List<MetadataSingle> pageRanges = new ArrayList<MetadataSingle>();
-        List<MetadataSingle> years = new ArrayList<MetadataSingle>();
-        List<MetadataSingle> dois = new ArrayList<MetadataSingle>();
+        List<ComparisonResult> titles = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> authors = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> affiliations = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> authorsAffiliations = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> emails = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> authorsEmails = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> abstracts = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> keywords = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> journals = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> volumes = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> issues = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> pageRanges = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> years = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> dois = new ArrayList<ComparisonResult>();
         
         if (mode == 1) {
-            System.out.println("path,gro_title,gro_title_sw,gro_abstract,gro_abstract_sw,gro_keywords,"+
+            System.out.println("path,gro_title,gro_abstract,gro_keywords,"+
                 "gro_authors,gro_affs,gro_autaff,gro_email,gro_autemail,gro_journal,gro_volume,gro_issue,"+
                 "gro_pages,gro_year,gro_doi,one");
         }
@@ -385,49 +385,49 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
             }
         }
       
-        if (mode == 0) {
+        if (mode != 1) {
             System.out.println("==== Summary (" + iter.size() + " docs)====");
         
-            PrecisionRecall titlePR = new PrecisionRecall().buildForSingle(titles);
+            PrecisionRecall titlePR = new PrecisionRecall().build(titles);
             titlePR.print("Title");
 
-            PrecisionRecall abstractPR = new PrecisionRecall().buildForSingle(abstracts);
+            PrecisionRecall abstractPR = new PrecisionRecall().build(abstracts);
             abstractPR.print("Abstract");
         
-            PrecisionRecall keywordsPR = new PrecisionRecall().buildForList(keywords);
+            PrecisionRecall keywordsPR = new PrecisionRecall().build(keywords);
             keywordsPR.print("Keywords");
         
-            PrecisionRecall authorsPR = new PrecisionRecall().buildForList(authors);
+            PrecisionRecall authorsPR = new PrecisionRecall().build(authors);
             authorsPR.print("Authors");
 
-            PrecisionRecall affiliationsPR = new PrecisionRecall().buildForList(affiliations);
+            PrecisionRecall affiliationsPR = new PrecisionRecall().build(affiliations);
             affiliationsPR.print("Affiliations");
 
-            PrecisionRecall authorsAffiliationsPR = new PrecisionRecall().buildForRelation(authorsAffiliations);
+            PrecisionRecall authorsAffiliationsPR = new PrecisionRecall().build(authorsAffiliations);
             authorsAffiliationsPR.print("Author - affiliation");
         
-            PrecisionRecall emailsPR = new PrecisionRecall().buildForList(emails);
+            PrecisionRecall emailsPR = new PrecisionRecall().build(emails);
             emailsPR.print("Emails");
      
-            PrecisionRecall authorsEmailsPR = new PrecisionRecall().buildForRelation(authorsEmails);
+            PrecisionRecall authorsEmailsPR = new PrecisionRecall().build(authorsEmails);
             authorsEmailsPR.print("Author - email");
         
-            PrecisionRecall journalPR = new PrecisionRecall().buildForSingle(journals);
+            PrecisionRecall journalPR = new PrecisionRecall().build(journals);
             journalPR.print("Journal");
 
-            PrecisionRecall volumePR = new PrecisionRecall().buildForSingle(volumes);
+            PrecisionRecall volumePR = new PrecisionRecall().build(volumes);
             volumePR.print("Volume");
 
-            PrecisionRecall issuePR = new PrecisionRecall().buildForSingle(issues);
+            PrecisionRecall issuePR = new PrecisionRecall().build(issues);
             issuePR.print("Issue");
 
-            PrecisionRecall pageRangePR = new PrecisionRecall().buildForSingle(pageRanges);
+            PrecisionRecall pageRangePR = new PrecisionRecall().build(pageRanges);
             pageRangePR.print("Pages");
  
-            PrecisionRecall yearPR = new PrecisionRecall().buildForSingle(years);
+            PrecisionRecall yearPR = new PrecisionRecall().build(years);
             yearPR.print("Year");
         
-            PrecisionRecall doiPR = new PrecisionRecall().buildForSingle(dois);
+            PrecisionRecall doiPR = new PrecisionRecall().build(dois);
             doiPR.print("DOI");
 
             List<PrecisionRecall> results = Lists.newArrayList(
@@ -438,9 +438,9 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
             double avgRecall = 0;
             double avgF1 = 0;
             for (PrecisionRecall result : results) {
-                avgPrecision += result.calculatePrecision();
-                avgRecall += result.calculateRecall();
-                avgF1 += result.calculateF1();
+                avgPrecision += result.getPrecision();
+                avgRecall += result.getRecall();
+                avgF1 += result.getF1();
             }
             avgPrecision /= results.size();
             avgRecall /= results.size();
@@ -463,6 +463,9 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
         int mode = 0;
         if (args.length == 4 && args[3].equals("csv")) {
             mode = 1;
+        }
+        if (args.length == 4 && args[3].equals("q")) {
+            mode = 2;
         }
 
         BwmetaGrobidFinalMetadataExtractionEvaluation e = new BwmetaGrobidFinalMetadataExtractionEvaluation();

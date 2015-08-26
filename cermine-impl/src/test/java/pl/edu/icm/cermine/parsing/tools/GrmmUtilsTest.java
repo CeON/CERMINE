@@ -28,7 +28,6 @@ public class GrmmUtilsTest {
 
 	@Test
 	public void testToGrmmInput1() {
-		
 		String expected = "TEXT ---- F1 F2 F3";
 		String actual = GrmmUtils.toGrmmInput("TEXT", Arrays.asList("F1", "F2", "F3"));
 		assertEquals(expected, actual);
@@ -50,4 +49,5 @@ public class GrmmUtilsTest {
 		String actual = GrmmUtils.toGrmmInput(Arrays.asList(token1, token2), 1);
 		assertEquals(expected, actual);
 	}
+    
 }

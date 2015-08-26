@@ -31,15 +31,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
-import pl.edu.icm.cermine.evaluation.tools.CosineDistance;
-import pl.edu.icm.cermine.evaluation.tools.SmithWatermanDistance;
-import pl.edu.icm.cermine.evaluation.tools.StringTools;
-import pl.edu.icm.cermine.evaluation.tools.XMLTools;
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
+import pl.edu.icm.cermine.tools.TextUtils;
+import pl.edu.icm.cermine.tools.XMLTools;
+import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
 public class RuleBasedPubmedXMLGenerator {
 
@@ -178,7 +178,7 @@ public class RuleBasedPubmedXMLGenerator {
         //received date
         List<String> receivedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='received']", domDoc, XPathConstants.NODE));
         if (!receivedDate.isEmpty() && receivedDate.size() >= 3) {
-            for (String date : StringTools.produceDates(receivedDate)) {
+            for (String date : TextUtils.produceDates(receivedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -186,7 +186,7 @@ public class RuleBasedPubmedXMLGenerator {
         //accepted date
         List<String> acceptedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='accepted']", domDoc, XPathConstants.NODE));
         if (!acceptedDate.isEmpty() && acceptedDate.size() >= 3) {
-            for (String date : StringTools.produceDates(acceptedDate)) {
+            for (String date : TextUtils.produceDates(acceptedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -201,7 +201,7 @@ public class RuleBasedPubmedXMLGenerator {
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
         }
         if (pubdateString != null && pubdateString.size() >= 3) {
-            for (String date : StringTools.produceDates(pubdateString)) {
+            for (String date : TextUtils.produceDates(pubdateString)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -211,7 +211,7 @@ public class RuleBasedPubmedXMLGenerator {
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
         }
         if (pubdateString != null && pubdateString.size() >= 3) {
-            for (String date : StringTools.produceDates(pubdateString)) {
+            for (String date : TextUtils.produceDates(pubdateString)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -272,7 +272,7 @@ public class RuleBasedPubmedXMLGenerator {
             String editorString = XMLTools.extractTextFromNode(editorNodes.item(nodeIdx));
             editors.add(editorString);
         }
-        entries.putIf(StringTools.joinStrings(editors), BxZoneLabel.MET_EDITOR);
+        entries.putIf(TextUtils.joinStrings(editors), BxZoneLabel.MET_EDITOR);
 
         NodeList authorsResult = (NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/contrib[@contrib-type='author']", domDoc, XPathConstants.NODESET);
         for (int nodeIdx = 0; nodeIdx < authorsResult.getLength(); ++nodeIdx) {
@@ -305,7 +305,7 @@ public class RuleBasedPubmedXMLGenerator {
             }
             authorNames.add(name + " " + surname);
         }
-        entries.putIf(StringTools.joinStrings(authorNames), BxZoneLabel.MET_AUTHOR);
+        entries.putIf(TextUtils.joinStrings(authorNames), BxZoneLabel.MET_AUTHOR);
 
         //authors' affiliations
         NodeList affNodes = (NodeList) xpath.evaluate("/article/front/article-meta/aff", domDoc, XPathConstants.NODESET);
@@ -422,7 +422,7 @@ public class RuleBasedPubmedXMLGenerator {
                 }
                 formulaParts.add(XMLTools.extractTextFromNode(curChild));
             }
-            entries.putIf(StringTools.joinStrings(formulaParts), BxZoneLabel.BODY_EQUATION);
+            entries.putIf(TextUtils.joinStrings(formulaParts), BxZoneLabel.BODY_EQUATION);
         }
 
         //references
@@ -433,7 +433,7 @@ public class RuleBasedPubmedXMLGenerator {
                 refStrings.add(XMLTools.extractTextFromNode(refParentNode.getChildNodes().item(refIdx)));
             }
         }
-        entries.putIf(StringTools.joinStrings(refStrings), BxZoneLabel.REFERENCES);
+        entries.putIf(TextUtils.joinStrings(refStrings), BxZoneLabel.REFERENCES);
         entries.put("references", BxZoneLabel.REFERENCES);
 
         Set<String> allBibInfos = new HashSet<String>();
@@ -497,15 +497,15 @@ public class RuleBasedPubmedXMLGenerator {
 
         //iterate over entries
         for (Entry<String, BxZoneLabel> entry : entries.entrySet()) {
-            List<String> entryTokens = StringTools.tokenize(entry.getKey());
+            List<String> entryTokens = TextUtils.tokenize(entry.getKey());
             printlnVerbose("--------------------");
             printlnVerbose(entry.getValue() + " " + entry.getKey() + "\n");
             //iterate over zones
             for (Integer zoneIdx = 0; zoneIdx < bxDocLen; ++zoneIdx) {
                 BxZone curZone = bxDoc.asZones().get(zoneIdx);
-                List<String> zoneTokens = StringTools.tokenize(
-                        StringTools.removeOrphantSpaces(
-                        StringTools.cleanLigatures(
+                List<String> zoneTokens = TextUtils.tokenize(
+                        TextUtils.removeOrphantSpaces(
+                        TextUtils.cleanLigatures(
                         curZone.toText().toLowerCase())));
 
                 Double smithSim;
@@ -862,7 +862,7 @@ public class RuleBasedPubmedXMLGenerator {
         for (File pdfFile : files) {
             try {
                 String pdfPath = pdfFile.getPath();
-                String nxmlPath = StringTools.getNLMPath(pdfPath);
+                String nxmlPath = TextUtils.getNLMPath(pdfPath);
                 String cxmlPath = pdfPath.replaceFirst("\\.pdf", ".cxml");
                 String cpxmlPath = pdfPath.replaceFirst("\\.pdf", ".cxml-corr");
 

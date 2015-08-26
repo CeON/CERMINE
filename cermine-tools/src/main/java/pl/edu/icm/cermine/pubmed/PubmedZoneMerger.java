@@ -10,7 +10,7 @@ import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
-import pl.edu.icm.cermine.structure.tools.DisjointSets;
+import pl.edu.icm.cermine.tools.DisjointSets;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 

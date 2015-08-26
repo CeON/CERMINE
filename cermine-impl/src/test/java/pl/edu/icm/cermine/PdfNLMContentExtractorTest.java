@@ -73,6 +73,7 @@ public class PdfNLMContentExtractorTest {
         
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         Diff diff = new Diff(outputter.outputString(expContent), outputter.outputString(testContent));
+        System.out.println(outputter.outputString(testContent));
         assertTrue(diff.similar());
     }
 }

@@ -20,7 +20,7 @@ package pl.edu.icm.cermine.parsing.features;
 
 import pl.edu.icm.cermine.parsing.model.ParsableString;
 import pl.edu.icm.cermine.parsing.model.Token;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  * Feature calculator which checks whether a token (representing a word) has a given feature.
@@ -39,10 +39,7 @@ FeatureCalculator<Token<?>, ParsableString<?>> {
 
 	@Override
     public double calculateFeatureValue(Token<?> token, ParsableString<?> context) {
-    	if (calculateFeaturePredicate(token, context)) {
-    		return 1;
-    	} else {
-    		return 0;
-    	}
+    	return calculateFeaturePredicate(token, context) ? 1 : 0;
     }
+    
 }

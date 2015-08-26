@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 public class IsItemizeFeature extends FeatureCalculator<BxZone, BxPage> {
 

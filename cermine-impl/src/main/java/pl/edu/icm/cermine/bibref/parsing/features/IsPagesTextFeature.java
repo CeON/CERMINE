@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.commons.lang.ArrayUtils;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  *

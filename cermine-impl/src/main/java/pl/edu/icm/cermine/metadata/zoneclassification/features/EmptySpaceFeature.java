@@ -19,7 +19,7 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 public class EmptySpaceFeature extends FeatureCalculator<BxZone, BxPage> {
 
@@ -34,10 +34,7 @@ public class EmptySpaceFeature extends FeatureCalculator<BxZone, BxPage> {
 			}
 		}
 		double ret = zone.getArea() - charSpace;
-		if(ret < 0) {
-			return 0.0;
-		} else {
-			return ret;
-		}
+		return ret < 0 ? 0.0 : ret;
 	}
+    
 }

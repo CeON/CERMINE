@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMClassifier;
 
 /**

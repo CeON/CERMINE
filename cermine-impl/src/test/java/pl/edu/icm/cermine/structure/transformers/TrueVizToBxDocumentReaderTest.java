@@ -131,8 +131,7 @@ public class TrueVizToBxDocumentReaderTest {
     		if(chunk.getNext() == null)
     			++nextNulls;
     	}
-    	assertEquals(nextNulls, Integer.valueOf(1));
-    	
+    	assertEquals(nextNulls, Integer.valueOf(1));   	
     }
     
     public  <A extends Indexable> Integer countChainedElements(List<A> list) throws TransformationException, IOException {
@@ -154,17 +153,5 @@ public class TrueVizToBxDocumentReaderTest {
     	assertEquals(countChainedElements(doc.asWords()),  Integer.valueOf(doc.asWords().size()-1));
     	assertEquals(countChainedElements(doc.asChunks()), Integer.valueOf(doc.asChunks().size()-1));
     }
-    
-    @Test
-    public void testHeight() throws IOException,  ParserConfigurationException, SAXException, TransformationException {
-       BxPage page=new MargToTextrImporter().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/cermine/structure/006.xml"))).get(0);
-
-       for (BxZone zone:page.getZones()) {
-           assertTrue("Zero heigh zone: "+zone.toText()+" : "+zone.getLabel().name(),zone.getBounds().getHeight()>0);
-
-       }
-    
-    }
-
     
 }

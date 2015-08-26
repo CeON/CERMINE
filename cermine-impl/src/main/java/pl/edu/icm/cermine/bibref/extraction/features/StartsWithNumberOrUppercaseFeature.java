@@ -23,7 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.extraction.model.BxDocumentBibReferences;
 import pl.edu.icm.cermine.structure.model.BxLine;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  *

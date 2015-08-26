@@ -27,7 +27,7 @@ import pl.edu.icm.cermine.tools.Utils;
 * 
 */
 
-public class DistElem<E> implements Comparable<DistElem<E> >{
+public class DistElem<E> implements Comparable<DistElem<E>> {
 
 	@Override
 	public int hashCode() {

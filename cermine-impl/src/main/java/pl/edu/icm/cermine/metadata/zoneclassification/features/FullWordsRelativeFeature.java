@@ -30,8 +30,8 @@ public class FullWordsRelativeFeature extends AbstractFeatureCalculator<BxZone, 
 		String[] words = text.split("\\s");
 		int numberOfWords = 0;
 		int numberOfFullWords = 0;
-		for(String word: words) {
-			if(ZoneClassificationUtils.isConjunction(word)) {
+		for (String word: words) {
+			if (ZoneClassificationUtils.isConjunction(word)) {
 				++numberOfFullWords;
 			}
 			else if(word.length() > 2 && !word.matches(".*\\d.*") && !word.matches(".*[^\\p{Alnum}].*")) {

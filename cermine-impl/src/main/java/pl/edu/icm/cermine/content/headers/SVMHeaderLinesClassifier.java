@@ -25,7 +25,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMClassifier;
 
 /**

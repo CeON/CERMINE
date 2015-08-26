@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.tools.CharacterUtils;
 
 /**
  *
@@ -33,7 +34,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class JournalVolumePagesEnhancer extends AbstractPatternEnhancer {
 
     private static final Pattern PATTERN = 
-            Pattern.compile("([A-Z][^\\d]*),?\\s+(\\d+):?\\s*(\\d{1,5})[\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-](\\d{1,5})");
+            Pattern.compile("([A-Z][^\\d]*),?\\s+(\\d+):?\\s*(\\d{1,5})[" + String.valueOf(CharacterUtils.DASH_CHARS) + "](\\d{1,5})");
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
     private int pages = 10;
 

@@ -18,6 +18,8 @@
 
 package pl.edu.icm.cermine.evaluation;
 
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
+import pl.edu.icm.cermine.tools.XMLTools;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -38,6 +40,7 @@ import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.TextUtils;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -244,7 +247,7 @@ public final class FinalReferenceExtractionEvaluation {
             external:
             for (String partExt : extractedValue) {
                 for (String partExp : tmp) {
-                    if (cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp))+0.001 > .6/*Math.sqrt(2) / 2*/) {
+                    if (cos.compare(TextUtils.tokenize(partExt), TextUtils.tokenize(partExp))+0.001 > .6/*Math.sqrt(2) / 2*/) {
                         ++correct;
                         tmp.remove(partExp);
                         continue external;

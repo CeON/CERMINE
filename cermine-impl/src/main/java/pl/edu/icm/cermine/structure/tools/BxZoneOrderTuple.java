@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.structure.tools;
 import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class BxZoneOrderTuple {
+    
 	private BxZone zone;
 	private int order;
 
@@ -31,13 +32,16 @@ public class BxZoneOrderTuple {
 	public BxZone getZone() {
 		return zone;
 	}
-	public void setZone(BxZone zone) {
+	
+    public void setZone(BxZone zone) {
 		this.zone = zone;
 	}
-	public int getOrder() {
+	
+    public int getOrder() {
 		return order;
 	}
-	public void setOrder(int order) {
+	
+    public void setOrder(int order) {
 		this.order = order;
 	}
 	

@@ -23,8 +23,8 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
-import pl.edu.icm.cermine.structure.tools.DisjointSets;
-import pl.edu.icm.cermine.structure.tools.Histogram;
+import pl.edu.icm.cermine.tools.DisjointSets;
+import pl.edu.icm.cermine.tools.Histogram;
 
 /**
  * Page segmenter using Docstrum algorithm.

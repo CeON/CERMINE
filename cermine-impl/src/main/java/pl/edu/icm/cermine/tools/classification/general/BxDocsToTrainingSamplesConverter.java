@@ -22,8 +22,6 @@ import java.util.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneClassificationUtils;
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
 
 /**
  * BxDocument objects to HMM training elements converter node. The observations

@@ -23,7 +23,8 @@ import java.util.regex.Pattern;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.TextUtils;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  *
@@ -48,12 +49,9 @@ public class YearFeature extends FeatureCalculator<BxZone, BxPage> {
                     break;
                 }
                 String numbers = matcher.group(1);
-                try {
-                    int i = Integer.parseInt(numbers);
-                    if (i >= MIN_YEAR && i < MAX_YEAR) {
-                        yearCount++;
-                    }
-                } catch (NumberFormatException ex) {}
+                if (TextUtils.isNumberBetween(numbers, MIN_YEAR, MAX_YEAR)) {
+                    yearCount++;
+                }
                 toMatch = matcher.group(2);
             }
         }

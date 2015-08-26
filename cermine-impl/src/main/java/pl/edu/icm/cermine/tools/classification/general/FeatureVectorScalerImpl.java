@@ -24,7 +24,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import org.apache.commons.io.IOUtils;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
 
 public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 	protected FeatureLimits[] limits;
@@ -49,7 +48,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 	
     @Override
 	public FeatureVector scaleFeatureVector(FeatureVector fv) {
-		for(FeatureLimits l: limits) {
+		for (FeatureLimits l: limits) {
 			assert l.getMin() != Double.POSITIVE_INFINITY && l.getMax() != Double.NEGATIVE_INFINITY;
 		}
 		return strategy.scaleFeatureVector(scaledLowerBound, scaledUpperBound, limits, fv);
@@ -61,24 +60,24 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 	
     @Override
 	public <A extends Enum<A>> void calculateFeatureLimits(List<TrainingSample<A>> trainingElements) {
-		for(TrainingSample<A> trainingElem: trainingElements) {
+		for (TrainingSample<A> trainingElem: trainingElements) {
 			FeatureVector fv = trainingElem.getFeatureVector();
 			List<String> names = fv.getFeatureNames();
 
 			int featureIdx = 0;
-			for(String name: names) {
+			for (String name: names) {
 				double val = fv.getValue(name);
-				if(val > limits[featureIdx].max) {
+				if (val > limits[featureIdx].getMax()) {
 					limits[featureIdx].setMax(val);
 				}
-				if(val < limits[featureIdx].min){
+				if (val < limits[featureIdx].getMin()){
 					limits[featureIdx].setMin(val);
 				}
 				++featureIdx;
 			}
         }
-		for(FeatureLimits limit: limits) {
-			if(Double.isInfinite(limit.getMin()) || Double.isInfinite(limit.getMax())) {
+		for (FeatureLimits limit: limits) {
+			if (Double.isInfinite(limit.getMin()) || Double.isInfinite(limit.getMax())) {
 				throw new RuntimeException("Feature limit is not calculated properly!");
 			}
 		}
@@ -106,7 +105,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 
             fp_save.write(formatter.toString());
         } finally {
-            if(fp_save != null) {
+            if (fp_save != null) {
                 fp_save.close();
             }
         }
@@ -115,7 +114,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
     public static FeatureVectorScalerImpl fromRangeReader(BufferedReader rangeFile) throws IOException {
         try {
             double feature_min, feature_max;
-            if(rangeFile.read() == 'x') {
+            if (rangeFile.read() == 'x') {
                 rangeFile.readLine();		// pass the '\n' after 'x'
                 String line = rangeFile.readLine();
                 if (line == null) {
@@ -124,14 +123,13 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
                 StringTokenizer st = new StringTokenizer(line);
                 double scaledLowerBound = Double.parseDouble(st.nextToken());
                 double scaledUpperBound = Double.parseDouble(st.nextToken());
-                if(scaledLowerBound != 0 || scaledUpperBound != 1) {
+                if (scaledLowerBound != 0 || scaledUpperBound != 1) {
                     throw new RuntimeException("Feature lower bound and upper bound must"
                             + "be set in range file to resepctively 0 and 1");
                 }
                 String restore_line = null;
                 List<FeatureLimits> limits = new ArrayList<FeatureLimits>();
-                while((restore_line = rangeFile.readLine())!=null)
-                {
+                while ((restore_line = rangeFile.readLine()) != null) {
                     StringTokenizer st2 = new StringTokenizer(restore_line);
                     st2.nextToken(); //discard feature index
                     feature_min = Double.parseDouble(st2.nextToken());

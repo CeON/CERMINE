@@ -30,5 +30,6 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
  * @param <S> label type (BxZoneLabel by default)
  */
 public interface SampleSelector<S> {
-	List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements);
+	
+    List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements);
 }

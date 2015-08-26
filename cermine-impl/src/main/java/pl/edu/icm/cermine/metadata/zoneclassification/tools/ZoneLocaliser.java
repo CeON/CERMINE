@@ -75,25 +75,21 @@ public class ZoneLocaliser {
                 oct = 1;
             }
             
-            if(oct == 1) {
-            	if(upperZone == null || 
-            			otherZone.getY()+otherZone.getHeight() > upperZone.getY()+upperZone.getHeight()) {
+            if (oct == 1) {
+            	if (upperZone == null || otherZone.getY()+otherZone.getHeight() > upperZone.getY()+upperZone.getHeight()) {
             		upperZone = otherZone;
             	}
             } else if(oct == 5) {
-            	if(lowerZone == null ||
-            			otherZone.getY() < lowerZone.getY()) {
+            	if (lowerZone == null || otherZone.getY() < lowerZone.getY()) {
             		lowerZone = otherZone;
             	}
             } else if(oct == 7) {
-            	if(leftZone == null ||
-            			otherZone.getX() + otherZone.getWidth() > leftZone.getX() + leftZone.getWidth()) {
+            	if (leftZone == null || otherZone.getX() + otherZone.getWidth() > leftZone.getX() + leftZone.getWidth()) {
             		leftZone = otherZone;
             	}
             } else if(oct == 3) {
-            	if(rightZone == null ||
-            			otherZone.getX() < rightZone.getX()) {
-            	rightZone = otherZone;
+            	if (rightZone == null || otherZone.getX() < rightZone.getX()) {
+                    rightZone = otherZone;
             	}
             }
         }

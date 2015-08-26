@@ -18,9 +18,8 @@
 
 package pl.edu.icm.cermine.tools.classification.general;
 
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-
 public interface ScalingStrategy {
+    
 	FeatureVector scaleFeatureVector(double scaledLowerBound,
 			double scaledUpperBound, FeatureLimits[] limits, FeatureVector fv);
 }

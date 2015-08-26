@@ -25,8 +25,9 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.PatternUtils;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 
 /**
  * Citation utility class.
@@ -76,54 +77,6 @@ public final class CitationUtils {
         }
 
         return new Citation(citation, tokenList);
-    }
-
-    public static void addHMMLabels(Citation citation) {
-        List<CitationToken> tokens = citation.getTokens();
-
-        for (int i = 0; i < tokens.size(); i++) {
-            CitationTokenLabel label = tokens.get(i).getLabel();
-            CitationTokenLabel prevLabel = null;
-            if (i > 0) {
-                prevLabel = tokens.get(i - 1).getLabel();
-            }
-
-            if (prevLabel != null && prevLabel.equals(CitationTokenLabel.TEXT)
-                    && !label.equals(CitationTokenLabel.TEXT)) {
-                CitationTokenLabel textBeforeLabel = CitationTokenLabel.getTextBeforeLabel(label);
-                if (textBeforeLabel != null) {
-                    int j = i - 1;
-                    while (j >= 0 && j >= i - 2 && tokens.get(j).getLabel().equals(CitationTokenLabel.TEXT)) {
-                        tokens.get(j).setLabel(textBeforeLabel);
-                        j--;
-                    }
-                }
-            }
-        }
-
-        for (int i = tokens.size() - 1; i >= 0; i--) {
-            CitationTokenLabel label = tokens.get(i).getLabel();
-            CitationTokenLabel prevLabel = null;
-            if (i > 0) {
-                prevLabel = tokens.get(i - 1).getLabel();
-            }
-
-            if (prevLabel == null || !label.equals(prevLabel)) {
-                CitationTokenLabel firstLabel = CitationTokenLabel.getFirstLabel(label);
-                if (firstLabel != null) {
-                    tokens.get(i).setLabel(firstLabel);
-                }
-            }
-        }
-    }
-
-    public static void removeHMMLabels(Citation citation) {
-        for (CitationToken token : citation.getTokens()) {
-            CitationTokenLabel normalizedLabel = CitationTokenLabel.getNormalizedLabel(token.getLabel());
-            if (normalizedLabel != null) {
-                token.setLabel(normalizedLabel);
-            }
-        }
     }
 
     public static BibEntry citationToBibref(Citation citation) {
@@ -227,7 +180,7 @@ public final class CitationUtils {
             }
         }
         
-        Pattern doiPattern = Pattern.compile(".*(10\\.\\d{4}/\\S+).*");
+        Pattern doiPattern = Pattern.compile(".*(" + PatternUtils.DOI_PATTERN + ").*");
         Matcher m = doiPattern.matcher(text);
         if (m.matches()) {
             bibEntry.addField(BibEntry.FIELD_DOI, m.group(1));

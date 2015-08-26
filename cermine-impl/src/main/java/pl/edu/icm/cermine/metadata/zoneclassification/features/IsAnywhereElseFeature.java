@@ -27,12 +27,12 @@ public class IsAnywhereElseFeature extends AbstractFeatureCalculator<BxZone, BxP
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {
 		List<BxPage> pages = getOtherPages(context);
-		if(object.toText().length() <= 5) {
+		if (object.toText().length() <= 5) {
 			return 0.0;
 		}
-		for(BxPage page: pages) {
-			for(BxZone zone: page.getZones()) {
-				if(zone.toText().equals(object.toText())) {
+		for (BxPage page: pages) {
+			for (BxZone zone: page.getZones()) {
+				if (zone.toText().equals(object.toText())) {
 					return 1.0;
 				}
 			}

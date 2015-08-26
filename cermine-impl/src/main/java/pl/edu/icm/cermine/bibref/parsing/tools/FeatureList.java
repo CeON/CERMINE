@@ -22,8 +22,8 @@ import java.util.Arrays;
 import pl.edu.icm.cermine.bibref.parsing.features.*;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 
 /**
  *

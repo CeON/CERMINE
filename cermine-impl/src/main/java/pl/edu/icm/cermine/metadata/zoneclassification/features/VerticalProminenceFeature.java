@@ -20,7 +20,7 @@ package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
@@ -74,4 +74,4 @@ public class VerticalProminenceFeature extends FeatureCalculator<BxZone, BxPage>
             }
         }
     }
-};
+}

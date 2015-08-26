@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 
 /**
  *

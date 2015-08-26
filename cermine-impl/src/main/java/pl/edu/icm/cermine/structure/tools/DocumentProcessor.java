@@ -26,7 +26,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  *
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public interface DocumentProcessor{
+public interface DocumentProcessor {
 
     /**
      * Performs an operation on a document.

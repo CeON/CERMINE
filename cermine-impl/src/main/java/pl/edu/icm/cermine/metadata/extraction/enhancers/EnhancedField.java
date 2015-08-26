@@ -32,7 +32,6 @@ public enum EnhancedField {
 
     AUTHORS,
 
-    /** Affiliation */
     DESCRIPTION,
     
     DOI,

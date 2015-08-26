@@ -27,8 +27,8 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
@@ -37,6 +37,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  * @author Paweł Szostek
  */
 public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
+    
 	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-default";
 	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-default.range";
 	

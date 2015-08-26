@@ -32,6 +32,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
 
     /** zone's label */
     private BxZoneLabel label;
+    
     /** list of zone's lines (if the zone is segmented) */
     private final List<BxLine> lines = new ArrayList<BxLine>();
 

@@ -27,6 +27,7 @@ import java.io.Serializable;
  * 
  */
 public final class BxBounds implements Serializable {
+    
     private static final long serialVersionUID = 5062840871474513495L;
 
     /** X coordinate of the bounding box' position on the page */

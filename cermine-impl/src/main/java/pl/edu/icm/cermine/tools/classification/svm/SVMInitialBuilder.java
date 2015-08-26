@@ -25,13 +25,13 @@ import java.util.List;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
-import pl.edu.icm.cermine.evaluation.tools.PenaltyCalculator;
+import pl.edu.icm.cermine.tools.classification.general.PenaltyCalculator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.SVMInitialZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 

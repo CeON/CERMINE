@@ -28,7 +28,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.UnsegmentedPagesFlattener;
-import pl.edu.icm.cermine.structure.transformers.MargToTextrImporter;
+import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  *
@@ -43,7 +43,7 @@ public class ParallelDocstrumPageSegmenterTest {
     @Test
     public void testSegmentPages() throws TransformationException, AnalysisException {
         Reader reader = new InputStreamReader(getResource("DocstrumPageSegmenter01.xml"));
-        BxDocument inDoc = new BxDocument().setPages(new MargToTextrImporter().read(reader));
+        BxDocument inDoc = new BxDocument().setPages(new TrueVizToBxDocumentReader().read(reader));
         new UnsegmentedPagesFlattener().process(inDoc);
         
         DocstrumSegmenter pageSegmenter = new ParallelDocstrumSegmenter();

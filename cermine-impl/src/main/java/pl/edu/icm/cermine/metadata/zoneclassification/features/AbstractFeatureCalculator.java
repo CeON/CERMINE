@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 public abstract class AbstractFeatureCalculator<S,T> extends FeatureCalculator<S, T> {
 	
@@ -31,11 +31,11 @@ public abstract class AbstractFeatureCalculator<S,T> extends FeatureCalculator<S
 		BxPage prevPage = page.getPrev();
 		BxPage nextPage = page.getNext();
 		
-		while(prevPage != null) {
+		while (prevPage != null) {
 			pages.add(0, prevPage);
 			prevPage = prevPage.getPrev();
 		}
-		while(nextPage != null) {
+		while (nextPage != null) {
 			pages.add(nextPage);
 			nextPage = nextPage.getNext();
 		}
@@ -47,11 +47,11 @@ public abstract class AbstractFeatureCalculator<S,T> extends FeatureCalculator<S
 		BxZone prevZone = zone.getPrev();
 		BxZone nextZone = zone.getNext();
 		
-		while(prevZone != null) {
+		while (prevZone != null) {
 			zones.add(0, prevZone);
 			prevZone = prevZone.getPrev();
 		}
-		while(nextZone != null) {
+		while (nextZone != null) {
 			zones.add(nextZone);
 			nextZone = nextZone.getNext();
 		}

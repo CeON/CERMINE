@@ -35,15 +35,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.PdfBxStructureExtractor;
-import pl.edu.icm.cermine.evaluation.tools.CosineDistance;
-import pl.edu.icm.cermine.evaluation.tools.SmithWatermanDistance;
-import pl.edu.icm.cermine.evaluation.tools.StringTools;
-import pl.edu.icm.cermine.evaluation.tools.XMLTools;
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneLocaliser;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
+import pl.edu.icm.cermine.tools.TextUtils;
+import pl.edu.icm.cermine.tools.XMLTools;
+import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
 public class PubmedXMLGenerator {
 
@@ -181,7 +181,7 @@ public class PubmedXMLGenerator {
         //received date
         List<String> receivedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='received']", domDoc, XPathConstants.NODE));
         if (!receivedDate.isEmpty() && receivedDate.size() >= 3) {
-            for (String date : StringTools.produceDates(receivedDate)) {
+            for (String date : TextUtils.produceDates(receivedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -189,7 +189,7 @@ public class PubmedXMLGenerator {
         //accepted date
         List<String> acceptedDate = XMLTools.extractChildrenAsTextList((Node) xpath.evaluate("/article/front/article-meta/history/date[@date-type='accepted']", domDoc, XPathConstants.NODE));
         if (!acceptedDate.isEmpty() && acceptedDate.size() >= 3) {
-            for (String date : StringTools.produceDates(acceptedDate)) {
+            for (String date : TextUtils.produceDates(acceptedDate)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -204,7 +204,7 @@ public class PubmedXMLGenerator {
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
         }
         if (pubdateString != null && pubdateString.size() >= 3) {
-            for (String date : StringTools.produceDates(pubdateString)) {
+            for (String date : TextUtils.produceDates(pubdateString)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -214,7 +214,7 @@ public class PubmedXMLGenerator {
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
         }
         if (pubdateString != null && pubdateString.size() >= 3) {
-            for (String date : StringTools.produceDates(pubdateString)) {
+            for (String date : TextUtils.produceDates(pubdateString)) {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
@@ -274,7 +274,7 @@ public class PubmedXMLGenerator {
             String editorString = XMLTools.extractTextFromNode(editorNodes.item(nodeIdx));
             editors.add(editorString);
         }
-        entries.putIf(StringTools.joinStrings(editors), BxZoneLabel.MET_EDITOR);
+        entries.putIf(TextUtils.joinStrings(editors), BxZoneLabel.MET_EDITOR);
 
         NodeList authorsResult = (NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/contrib[@contrib-type='author']", domDoc, XPathConstants.NODESET);
         for (int nodeIdx = 0; nodeIdx < authorsResult.getLength(); ++nodeIdx) {
@@ -307,7 +307,7 @@ public class PubmedXMLGenerator {
             }
             authorNames.add(name + " " + surname);
         }
-        entries.putIf(StringTools.joinStrings(authorNames), BxZoneLabel.MET_AUTHOR);
+        entries.putIf(TextUtils.joinStrings(authorNames), BxZoneLabel.MET_AUTHOR);
 
         //authors' affiliations
         NodeList affNodes = (NodeList) xpath.evaluate("/article/front/article-meta/aff", domDoc, XPathConstants.NODESET);
@@ -424,7 +424,7 @@ public class PubmedXMLGenerator {
         		}
         		formulaParts.add(XMLTools.extractTextFromNode(curChild));
         	}
-        	entries.putIf(StringTools.joinStrings(formulaParts), BxZoneLabel.BODY_EQUATION);
+        	entries.putIf(TextUtils.joinStrings(formulaParts), BxZoneLabel.BODY_EQUATION);
         }
 
         //references
@@ -435,7 +435,7 @@ public class PubmedXMLGenerator {
                 refStrings.add(XMLTools.extractTextFromNode(refParentNode.getChildNodes().item(refIdx)));
             }
         }
-        entries.putIf(StringTools.joinStrings(refStrings), BxZoneLabel.REFERENCES);
+        entries.putIf(TextUtils.joinStrings(refStrings), BxZoneLabel.REFERENCES);
         entries.put("references", BxZoneLabel.REFERENCES);
 
         Set<String> allBibInfos = new HashSet<String>();
@@ -497,15 +497,15 @@ public class PubmedXMLGenerator {
 
         //iterate over entries
         for (Entry<String, BxZoneLabel> entry : entries.entrySet()) {
-            List<String> entryTokens = StringTools.tokenize(entry.getKey());
+            List<String> entryTokens = TextUtils.tokenize(entry.getKey());
             printlnVerbose("--------------------");
             printlnVerbose(entry.getValue() + " " + entry.getKey() + "\n");
             //iterate over zones
             for (Integer zoneIdx = 0; zoneIdx < bxDocLen; ++zoneIdx) {
                 BxZone curZone = bxDoc.asZones().get(zoneIdx);
-                List<String> zoneTokens = StringTools.tokenize(
-                        StringTools.removeOrphantSpaces(
-                        StringTools.cleanLigatures(
+                List<String> zoneTokens = TextUtils.tokenize(
+                        TextUtils.removeOrphantSpaces(
+                        TextUtils.cleanLigatures(
                         curZone.toText().toLowerCase())));
                 
                 Double smithSim;
@@ -529,8 +529,8 @@ public class PubmedXMLGenerator {
         	for(BxZone zone: page.getZones()) {
         		Integer zoneIdx = bxDoc.asZones().indexOf(zone);
         		BxZone curZone = bxDoc.asZones().get(zoneIdx);
-        		String zoneText = StringTools.removeOrphantSpaces(curZone.toText().toLowerCase());
-        		List<String> zoneTokens = StringTools.tokenize(zoneText);
+        		String zoneText = TextUtils.removeOrphantSpaces(curZone.toText().toLowerCase());
+        		List<String> zoneTokens = TextUtils.tokenize(zoneText);
         		Boolean valueSet = false;
 
         		Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
@@ -732,9 +732,9 @@ public class PubmedXMLGenerator {
         for (File pdfFile : FileUtils.listFiles(dir, new String[]{"pdf"}, true)) {
             try { 
                 String pdfPath = pdfFile.getPath();
-                String nxmlPath = StringTools.getNLMPath(pdfPath);
+                String nxmlPath = TextUtils.getNLMPath(pdfPath);
                 
-                File xmlFile = new File(StringTools.getTrueVizPath(nxmlPath));
+                File xmlFile = new File(TextUtils.getTrueVizPath(nxmlPath));
                 if (xmlFile.exists()) {
                     continue;
                 }
@@ -784,7 +784,7 @@ public class PubmedXMLGenerator {
                 System.out.print(coverage+" "+set.size()+" "+keys);
 
                 FileWriter fstream = new FileWriter(
-                        StringTools.getTrueVizPath(nxmlPath).replace(".xml", "."+coverage+".cxml"));
+                        TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "."+coverage+".cxml"));
                 BufferedWriter out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                 out.write(writer.write(bxDoc.getPages()));

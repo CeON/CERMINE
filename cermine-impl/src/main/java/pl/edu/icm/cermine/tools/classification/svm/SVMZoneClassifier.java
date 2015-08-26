@@ -28,8 +28,8 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel>  implements ZoneClassifier{
@@ -47,7 +47,7 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 		return document;
 	}
 	
-	public static List<TrainingSample<BxZoneLabel>>loadProblem(String path, FeatureVectorBuilder<BxZone, BxPage> fvb) throws IOException {
+	public static List<TrainingSample<BxZoneLabel>> loadProblem(String path, FeatureVectorBuilder<BxZone, BxPage> fvb) throws IOException {
 		File file = new File(path);
 		return loadProblem(file, fvb);
 	}

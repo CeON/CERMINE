@@ -18,8 +18,6 @@
 
 package pl.edu.icm.cermine.tools.classification.general;
 
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-
 /**
  *
  * @author Dominika Tkaczyk

@@ -25,6 +25,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  * @author Dominika Tkaczyk
  */
 public class SVMAlternativeMetadataZoneClassifier extends SVMMetadataZoneClassifier {
+    
 	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-humanities";
 	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-humanities.range";
 	

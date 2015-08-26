@@ -26,6 +26,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.tools.PatternUtils;
 
 /**
  *
@@ -34,8 +35,8 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class DoiEnhancer extends AbstractMultiPatternEnhancer {
 
     private static final List<Pattern> PATTERNS = Lists.newArrayList(
-            Pattern.compile("\\bdoi:?\\s*(10\\.\\d{4}/\\S+)", Pattern.CASE_INSENSITIVE),
-            Pattern.compile("\\bdx\\.doi\\.org/(10\\.\\d{4}/\\S+)", Pattern.CASE_INSENSITIVE)
+            Pattern.compile("\\bdoi:?\\s*(" + PatternUtils.DOI_PATTERN + ")", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("\\bdx\\.doi\\.org/(" + PatternUtils.DOI_PATTERN + ")", Pattern.CASE_INSENSITIVE)
             );
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 

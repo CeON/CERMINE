@@ -28,7 +28,7 @@ import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.GrmmUtils;
-import pl.edu.icm.cermine.parsing.tools.TextClassifier;
+import pl.edu.icm.cermine.tools.TextUtils;
 
 /**
  * Class for converting affiliation features to GRMM file format. It reads
@@ -79,7 +79,7 @@ public class AffiliationTrainingDataExporter {
         for (DocumentAffiliation affiliation : affiliations) {
                 for (Token<AffiliationLabel> token: affiliation.getTokens()) {
                         String text = token.getText();
-                        if (!TextClassifier.isWord(text)) {
+                        if (!TextUtils.isWord(text)) {
                         	continue;
                         }
                         int wordOccurences = occurences.containsKey(text) ? occurences.get(text) : 0;

@@ -20,7 +20,8 @@ package pl.edu.icm.cermine.bibref.parsing.features;
 
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.TextUtils;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  *
@@ -33,12 +34,7 @@ public class IsYearFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {
-        try {
-            int year = Integer.parseInt(object.getText());
-            return (year >= MIN_YEAR && year < MAX_YEAR) ? 1 : 0;
-        } catch (NumberFormatException e) {
-            return 0;
-        }
+        return TextUtils.isNumberBetween(object.getText(), MIN_YEAR, MAX_YEAR) ? 1 : 0;
     }
 
 }

@@ -24,9 +24,10 @@ import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.Utils;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
-public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
+public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage> {
+    
 	public static final double EPS = 10.0;
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override
@@ -40,9 +41,9 @@ public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
 		List<BxZone> zones = new ArrayList<BxZone>(page.getZones());
 		Collections.sort(zones, new yCoordinateComparator());
 		BxZone lastZone = zones.get(zones.size()-1);
-		if(zone.equals(lastZone)) {
+		if (zone.equals(lastZone)) {
 			return 1.0;
-		} else if(Math.abs(lastZone.getY() + lastZone.getHeight() - (zone.getY() + zone.getHeight())) <= EPS) {
+		} else if (Math.abs(lastZone.getY() + lastZone.getHeight() - (zone.getY() + zone.getHeight())) <= EPS) {
 			return 1.0;
 		} else {
 			return 0.0;

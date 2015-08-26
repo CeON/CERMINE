@@ -33,6 +33,7 @@ public abstract class BxObject <S, T> implements Indexable<S> {
 
     /** zone's bounding box */
     private BxBounds bounds;
+    
     /** page number in the document */
     private String objId;
 
@@ -41,6 +42,7 @@ public abstract class BxObject <S, T> implements Indexable<S> {
 
     /** next page in the linked list of pages. Stored in the logical reading order */
     private S nextObj;
+    
     private S prevObj;
 
     private T parent;

@@ -25,9 +25,10 @@ import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.Utils;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
-public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>{
+public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage> {
+    
 	private static final double EPS = 10.0;
 	private static class yCoordinateComparator implements Comparator<BxZone> {
 		@Override
@@ -41,9 +42,9 @@ public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>
 		List<BxZone> zones = new ArrayList<BxZone>(page.getZones());
 		Collections.sort(zones, new yCoordinateComparator());
 		BxZone firstZone = zones.get(0);
-		if(zone.equals(firstZone)) {
+		if (zone.equals(firstZone)) {
 			return 1.0;
-		} else	if(Math.abs(zone.getY() - firstZone.getY()) <= EPS) {
+		} else if (Math.abs(zone.getY() - firstZone.getY()) <= EPS) {
 			return 1.0;
 		} else {
 			return 0.0;

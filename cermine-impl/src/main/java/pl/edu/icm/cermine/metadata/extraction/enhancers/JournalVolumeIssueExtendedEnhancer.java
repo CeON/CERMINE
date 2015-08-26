@@ -24,6 +24,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.tools.CharacterUtils;
 
 /**
  *
@@ -31,7 +32,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  */
 public class JournalVolumeIssueExtendedEnhancer extends AbstractPatternEnhancer {
 
-    private static final Pattern PATTERN = Pattern.compile("^([A-Z][^0-9]*)[,;: \\d]* (volume|vol|v)[\\.,;: ]+(\\d{1,3})[\\.,;: ]*(issue|num|no|number|n)[\\.,;: ]+(\\d{1,3})(?=[^\\d\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-]|$)",
+    private static final Pattern PATTERN = Pattern.compile("^([A-Z][^0-9]*)[,;: \\d]* (volume|vol|v)[\\.,;: ]+(\\d{1,3})[\\.,;: ]*(issue|num|no|number|n)[\\.,;: ]+(\\d{1,3})(?=[^\\d" + String.valueOf(CharacterUtils.DASH_CHARS) + "]|$)",
             Pattern.CASE_INSENSITIVE);
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);
 

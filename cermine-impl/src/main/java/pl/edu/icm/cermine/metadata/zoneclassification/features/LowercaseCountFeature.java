@@ -19,7 +19,7 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  *

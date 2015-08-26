@@ -18,26 +18,28 @@
 
 package pl.edu.icm.cermine.evaluation.tools;
 
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import java.util.List;
+import pl.edu.icm.cermine.tools.TextUtils;
 
 public class DateComparator {
 	
 	public static Boolean yearsMatch(List<String> expected, List<String> extracted) {
-		for(String expectedDate: expected) {
-			List<String> expectedParts = StringTools.tokenize(expectedDate);
+		for (String expectedDate: expected) {
+			List<String> expectedParts = TextUtils.tokenize(expectedDate);
 			String expectedYear = null;
 			for(String part: expectedParts) {
-				if(part.length() == 4 && part.matches("^\\d+$") && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
-					expectedYear = part;
+                if (TextUtils.isNumberBetween(part, 1900, 2100)) {
+     				expectedYear = part;
 					break;
 				}
 			}
-			if(expectedYear == null) {
+			if (expectedYear == null) {
 				return null;
 			} else {
 				String extractedYear = null;
 				for(String extractedDate: extracted) {
-					List<String> extractedParts = StringTools.tokenize(extractedDate);
+					List<String> extractedParts = TextUtils.tokenize(extractedDate);
 					for(String part: extractedParts) {
 						if(part.length() == 4 && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
 							extractedYear = part;
@@ -55,19 +57,19 @@ public class DateComparator {
 	
 	public static Boolean datesMatch(List<String> expected, List<String> extracted) {
 		Boolean anyExpectedOk = false;
-		for(String expectedDate: expected) {
-			List<String> expectedParts = StringTools.tokenize(expectedDate);
-			if(expectedParts.size() == 1) {
+		for (String expectedDate: expected) {
+			List<String> expectedParts = TextUtils.tokenize(expectedDate);
+			if (expectedParts.size() == 1) {
 				continue;
 			}
 			anyExpectedOk = true;
 
 			for(String extractedDate: extracted) {
-				List<String> extractedParts = StringTools.tokenize(extractedDate);
-				if(extractedParts.size() == 1) {
+				List<String> extractedParts = TextUtils.tokenize(extractedDate);
+				if (extractedParts.size() == 1) {
 					continue;
 				}
-				if(new CosineDistance().compare(expectedParts, extractedParts)  > 0.95) {
+				if (new CosineDistance().compare(expectedParts, extractedParts)  > 0.95) {
 					return true;
 				}
 			}

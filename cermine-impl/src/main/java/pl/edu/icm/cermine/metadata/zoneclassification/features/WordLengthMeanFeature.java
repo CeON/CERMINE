@@ -19,7 +19,7 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /** 
  * @author Pawel Szostek (p.szostek@icm.edu.pl) 
@@ -31,7 +31,7 @@ public class WordLengthMeanFeature extends FeatureCalculator<BxZone, BxPage> {
 	public double calculateFeatureValue(BxZone object, BxPage context) {
 		int wordsLengthsSum = 0;
 		int numberOfWords = 0;
-		for(BxLine line: object.getLines()) {
+		for (BxLine line: object.getLines()) {
 			for(BxWord word: line.getWords()) {
 				int curLength = 0;
 				for(BxChunk chunk: word.getChunks()) {

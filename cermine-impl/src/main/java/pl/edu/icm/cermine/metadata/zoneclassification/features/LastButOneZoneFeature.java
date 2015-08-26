@@ -25,8 +25,8 @@ public class LastButOneZoneFeature extends AbstractFeatureCalculator<BxZone, BxP
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {
-		if(object.hasPrev()) {
-			if(object.getPrev().hasPrev()) {
+		if (object.hasPrev()) {
+			if (object.getPrev().hasPrev()) {
 				return (double) object.getPrev().getPrev().getLabel().ordinal();
 			}
 		} 

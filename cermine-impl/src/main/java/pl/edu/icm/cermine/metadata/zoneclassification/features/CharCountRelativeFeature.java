@@ -19,7 +19,7 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  *
@@ -47,10 +47,6 @@ public class CharCountRelativeFeature extends FeatureCalculator<BxZone, BxPage> 
                     }
                 }
             }
-        }
-        if(((double) count / (double) pCount)<0.0) {
-        	System.out.println(count);
-        	System.out.println(pCount);
         }
         return (double) count / (double) pCount;
     }

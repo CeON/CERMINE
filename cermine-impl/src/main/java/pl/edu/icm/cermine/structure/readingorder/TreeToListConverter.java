@@ -23,6 +23,7 @@ import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class TreeToListConverter {
+    
 	public List<BxZone> convertToList(BxZoneGroup obj) {
 		List<BxZone> ret = new ArrayList<BxZone>();
 		if (obj.getLeftChild() instanceof BxZone) {

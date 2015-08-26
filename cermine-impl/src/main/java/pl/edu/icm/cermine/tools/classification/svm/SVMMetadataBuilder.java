@@ -25,14 +25,14 @@ import java.util.List;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
-import pl.edu.icm.cermine.evaluation.tools.PenaltyCalculator;
+import pl.edu.icm.cermine.tools.classification.general.PenaltyCalculator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.SVMMetadataZoneClassifier;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
 import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
@@ -42,6 +42,7 @@ public class SVMMetadataBuilder {
 
     protected static SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples,
             int kernelType, double gamma, double C, int degree) throws IOException {
+
         trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_METADATA);
         System.out.println("Training samples "+trainingSamples.size());
 

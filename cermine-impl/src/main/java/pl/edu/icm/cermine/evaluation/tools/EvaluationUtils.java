@@ -27,10 +27,11 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
-import pl.edu.icm.cermine.tools.classification.general.DirExtractor;
-import pl.edu.icm.cermine.tools.classification.general.DocumentsExtractor;
+import pl.edu.icm.cermine.tools.DirExtractor;
+import pl.edu.icm.cermine.tools.DocumentsExtractor;
 
 public class EvaluationUtils {
+    
     public static List<BxDocument> getDocumentsFromPath(String inputDirPath) throws TransformationException
 	{
 		if (inputDirPath == null) {

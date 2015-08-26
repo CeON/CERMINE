@@ -24,7 +24,7 @@ import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneClassificationUt
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 

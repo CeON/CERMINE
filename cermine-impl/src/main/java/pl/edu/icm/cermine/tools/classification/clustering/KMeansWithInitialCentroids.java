@@ -45,9 +45,9 @@ package pl.edu.icm.cermine.tools.classification.clustering;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMetric;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorDistanceMetric;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorEuclideanMetric;
 
 public class KMeansWithInitialCentroids {
     /**

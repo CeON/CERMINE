@@ -18,9 +18,9 @@
 
 package pl.edu.icm.cermine.tools.classification.clustering;
 
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorDistanceMetric;
 
 /**
  *

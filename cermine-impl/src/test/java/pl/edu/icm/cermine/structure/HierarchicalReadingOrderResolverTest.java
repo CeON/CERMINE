@@ -79,23 +79,27 @@ public class HierarchicalReadingOrderResolverTest {
 	}
 
 	private Boolean areDocumentsEqual(BxDocument doc1, BxDocument doc2) {
-		if(doc1.getPages().size() != doc2.getPages().size())
+		if (doc1.getPages().size() != doc2.getPages().size()) {
 			return false;
-		for(Integer pageIdx=0; pageIdx < doc1.getPages().size(); ++pageIdx) {
+        }
+		for (Integer pageIdx=0; pageIdx < doc1.getPages().size(); ++pageIdx) {
 			BxPage page1 = doc1.getPages().get(pageIdx);
 			BxPage page2 = doc2.getPages().get(pageIdx);
-			if(page1.getZones().size() != page2.getZones().size())
+			if (page1.getZones().size() != page2.getZones().size()) {
 				return false;
-			for(Integer zoneIdx=0; zoneIdx < page1.getZones().size(); ++zoneIdx) {
+            }
+			for (Integer zoneIdx=0; zoneIdx < page1.getZones().size(); ++zoneIdx) {
 				BxZone zone1 = page1.getZones().get(zoneIdx);
 				BxZone zone2 = page2.getZones().get(zoneIdx);
-				if(zone1.getChunks().size() != zone2.getChunks().size())
+				if (zone1.getChunks().size() != zone2.getChunks().size()) {
 					return false;
-				for(Integer chunkIdx=0; chunkIdx < zone1.getChunks().size(); ++chunkIdx) {
+                }
+				for (Integer chunkIdx=0; chunkIdx < zone1.getChunks().size(); ++chunkIdx) {
 					BxChunk chunk1 = zone1.getChunks().get(chunkIdx);
 					BxChunk chunk2 = zone2.getChunks().get(chunkIdx);
-					if(!chunk1.toText().equals(chunk2.toText()))
+					if (!chunk1.toText().equals(chunk2.toText())) {
 						return false;
+                    }
 				}
 			}
 		}
@@ -104,12 +108,12 @@ public class HierarchicalReadingOrderResolverTest {
 	
 	@Test
 	public void testSetReadingOrder() throws TransformationException, IOException {
-		for(Enumeration<? extends ZipEntry> e = zipFile.entries();
-				e.hasMoreElements();) {
+		for (Enumeration<? extends ZipEntry> e = zipFile.entries(); e.hasMoreElements();) {
 			String filename = e.nextElement().getName();
 			System.out.println(filename);
-			if(!filename.endsWith(".xml"))
+			if (!filename.endsWith(".xml")) {
 				continue;
+            }
 			BxDocument doc = getDocumentFromZip(filename);
 			BxDocument modelOrderedDoc = getDocumentFromZip(filename + ".out");
 	

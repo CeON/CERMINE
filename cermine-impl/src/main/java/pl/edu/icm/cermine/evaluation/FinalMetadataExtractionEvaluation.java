@@ -18,6 +18,9 @@
 
 package pl.edu.icm.cermine.evaluation;
 
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
+import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
+import pl.edu.icm.cermine.tools.XMLTools;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.io.FileInputStream;
@@ -40,6 +43,7 @@ import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.TextUtils;
 
 /**
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
@@ -526,7 +530,7 @@ public final class FinalMetadataExtractionEvaluation {
         external:
         for (String partExt : extracted) {
             for (String partExp : tmp) {
-                if (cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp))+0.001 > Math.sqrt(2) / 2) {
+                if (cos.compare(TextUtils.tokenize(partExt), TextUtils.tokenize(partExp))+0.001 > Math.sqrt(2) / 2) {
                     ++correct;
                     tmp.remove(partExp);
                     continue external;
@@ -544,7 +548,7 @@ public final class FinalMetadataExtractionEvaluation {
         for (String partExt : extracted) {
             internal:
             for (String partExp : tmp) {
-                if (cos.compare(StringTools.tokenize(partExt), StringTools.tokenize(partExp))+0.001 > Math.sqrt(2) / 2) {
+                if (cos.compare(TextUtils.tokenize(partExt), TextUtils.tokenize(partExp))+0.001 > Math.sqrt(2) / 2) {
                     ++correct;
                     tmp.remove(partExp);
                     continue external;
@@ -555,8 +559,8 @@ public final class FinalMetadataExtractionEvaluation {
     }
 
     private static double compareStringsSW(String expectedText, String extractedText) {
-        List<String> expectedTokens = StringTools.tokenize(expectedText.trim());
-        List<String> extractedTokens = StringTools.tokenize(extractedText.trim());
+        List<String> expectedTokens = TextUtils.tokenize(expectedText.trim());
+        List<String> extractedTokens = TextUtils.tokenize(extractedText.trim());
         SmithWatermanDistance distanceFunc = new SmithWatermanDistance(.0, .0);
         double distance = distanceFunc.compare(expectedTokens, extractedTokens);
         return 2*distance / (double) (expectedTokens.size()+extractedTokens.size());
@@ -756,8 +760,8 @@ public final class FinalMetadataExtractionEvaluation {
             external:
             for (StringRelation partExt : extractedValue) {
                 for (StringRelation partExp : tmp) {
-                    if (cos.compare(StringTools.tokenize(partExt.element1), StringTools.tokenize(partExp.element1))+0.001 > Math.sqrt(2) / 2
-                        && cos.compare(StringTools.tokenize(partExt.element2), StringTools.tokenize(partExp.element2))+0.001 > Math.sqrt(2) / 2) {
+                    if (cos.compare(TextUtils.tokenize(partExt.element1), TextUtils.tokenize(partExp.element1))+0.001 > Math.sqrt(2) / 2
+                        && cos.compare(TextUtils.tokenize(partExt.element2), TextUtils.tokenize(partExp.element2))+0.001 > Math.sqrt(2) / 2) {
                         ++correct;
                         tmp.remove(partExp);
                         continue external;
@@ -778,8 +782,8 @@ public final class FinalMetadataExtractionEvaluation {
             for (StringRelation partExt : extractedValue) {
                 internal:
                 for (StringRelation partExp : tmp) {
-                    if (cos.compare(StringTools.tokenize(partExt.element1), StringTools.tokenize(partExp.element1))+0.001 > Math.sqrt(2) / 2
-                        && cos.compare(StringTools.tokenize(partExt.element2), StringTools.tokenize(partExp.element2))+0.001 > Math.sqrt(2) / 2) {
+                    if (cos.compare(TextUtils.tokenize(partExt.element1), TextUtils.tokenize(partExp.element1))+0.001 > Math.sqrt(2) / 2
+                        && cos.compare(TextUtils.tokenize(partExt.element2), TextUtils.tokenize(partExp.element2))+0.001 > Math.sqrt(2) / 2) {
                         ++correct;
                         tmp.remove(partExp);
                         continue external;

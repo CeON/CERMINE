@@ -28,12 +28,13 @@ import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxLine;
+import pl.edu.icm.cermine.tools.CharacterUtils;
 import pl.edu.icm.cermine.tools.classification.clustering.KMeansWithInitialCentroids;
-import pl.edu.icm.cermine.tools.classification.features.FeatureCalculator;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMetric;
+import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorDistanceMetric;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorEuclideanMetric;
 
 /**
  * Clustering-based bibliographic reference extractor.
@@ -124,7 +125,8 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
                 }
                 actRef = lines.get(i);
             } else {
-                String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
+                String hyphenList = String.valueOf(CharacterUtils.DASH_CHARS);
+                hyphenList = hyphenList.replaceAll("-", "") + "-";
                 if (actRef.matches(".*[a-zA-Z]["+hyphenList+"]")) {
                     actRef = actRef.substring(0, actRef.length()-1);
                 } else {

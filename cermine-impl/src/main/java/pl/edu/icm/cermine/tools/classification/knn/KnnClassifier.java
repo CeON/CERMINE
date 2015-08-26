@@ -23,9 +23,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVector;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorDistanceMetric;
 
 /**
  *
@@ -33,8 +33,6 @@ import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetr
  * 
  */
 public class KnnClassifier<T> {
-    
-    
     
     public T classify(KnnModel<T> model, FeatureVectorDistanceMetric metric, FeatureVector sample, int samplesCount) {
        
@@ -106,13 +104,7 @@ public class KnnClassifier<T> {
         public int compare(TrainingSample<T> ts1, TrainingSample<T> ts2) {
             double dist1 = metric.getDistance(sample, ts1.getFeatureVector());
             double dist2 = metric.getDistance(sample, ts2.getFeatureVector());
-            if (dist1 < dist2) {
-                return -1;
-            } else if (dist1 > dist2) {
-                return 1;
-            } else {
-                return 0;
-            }
+            return Double.compare(dist1, dist2);
         }
  
     }

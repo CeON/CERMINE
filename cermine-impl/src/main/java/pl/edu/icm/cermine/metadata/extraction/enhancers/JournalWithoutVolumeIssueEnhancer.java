@@ -26,6 +26,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.tools.CharacterUtils;
 
 /**
  *
@@ -34,7 +35,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class JournalWithoutVolumeIssueEnhancer extends AbstractMultiPatternEnhancer {
 
     private static final List<Pattern> PATTERNS = Lists.newArrayList(
-            Pattern.compile("^([A-Z][^0-9]*) (\\d{1,3})[,: ]+(\\d+)(?=[^\\d\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-]|$)"),
+            Pattern.compile("^([A-Z][^0-9]*) (\\d{1,3})[,: ]+(\\d+)(?=[^\\d" + String.valueOf(CharacterUtils.DASH_CHARS) + "]|$)"),
             Pattern.compile("^([A-Z][^0-9]*).*[^0-9](\\d{1,3})[,: ]*\\((\\d+)\\)")
             );
     

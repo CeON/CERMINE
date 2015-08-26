@@ -49,27 +49,19 @@ public class AffiliationFeatureExtractor implements FeatureExtractor<DocumentAff
                         new IsUpperCaseFeature(),
                         new IsAllUpperCaseFeature(),
                         new IsAllLowerCaseFeature()
-                        // new IsWordFeature(),
-                        // new IsSeparatorFeature(),
-                        // new IsNonAlphanumFeature(),
                         ));
 		
 		keywordFeatures = Arrays.<KeywordFeatureCalculator<Token<AffiliationLabel>>>asList(
 			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
 			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
 			new AffiliationDictionaryFeature("KeywordInstitution", 	"institution_keywords.txt", false)
-			// new AffiliationDictionaryFeature("KeywordCity", 			"cities.txt", 				true),
-			// new AffiliationDictionaryFeature("KeywordState", 		"states.txt", 				true),
-			// new AffiliationDictionaryFeature("KeywordStateCode", 	"state_codes.txt", 			true),
-			// new AffiliationDictionaryFeature("KeywordStopWord",		"stop_words_multilang.txt", false),
 			);
 		
 		wordFeature = 
 			new WordFeatureCalculator(Arrays.<BinaryTokenFeatureCalculator>asList(
 					new IsNumberFeature()), false);
 	}
-	
-	
+
 	/**
 	 * @param commonWords the words that are not considered 'Rare'
 	 * @throws AnalysisException 
@@ -87,7 +79,6 @@ public class AffiliationFeatureExtractor implements FeatureExtractor<DocumentAff
 		this.wordFeature = wordFeature;
 	}
 	
-
 	@Override
 	public void calculateFeatures(DocumentAffiliation affiliation) {
 		

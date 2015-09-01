@@ -1,0 +1,85 @@
+/**
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2013 ICM-UW
+ *
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package pl.edu.icm.cermine.bibref.sentiment;
+
+import com.google.common.collect.Lists;
+import java.util.List;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+
+/**
+ *
+ * @author Dominika Tkaczyk
+ */
+public class CitationContextFinderTest {
+    
+    private static final String documentText1 = 
+        "We can reference a single document like this [2] or [ 12].";
+
+    private static final String documentText2 = 
+        "Sometimes we use [3,2, 4, 12 ] to reference multiple documents in one place.";
+
+    private static final String documentText3 = 
+        "To save space, the number can also be given as ranges: [2-4] or [1-5, 7].";
+
+    private static final String documentText = 
+        "This is a typical state of the art fragment. " +
+        documentText1 + " " +
+        documentText2 + " " +
+        documentText3 + " Random spaces are used to make sure the regexps work well.";
+
+    @Test
+    public void testContextFinder() {
+        CitationContextFinder finder = new CitationContextFinder();
+        
+        CitationContext context1 = new CitationContext();
+        context1.setStartRefPosition(91);
+        context1.setEndRefPosition(92);
+        
+        CitationContext context2 = new CitationContext();
+        context2.setStartRefPosition(98);
+        context2.setEndRefPosition(101);
+        
+        CitationContext context3 = new CitationContext();
+        context3.setStartRefPosition(122);
+        context3.setEndRefPosition(133);
+        
+        CitationContext context4 = new CitationContext();
+        context4.setStartRefPosition(237);
+        context4.setEndRefPosition(240);
+        
+        CitationContext context5 = new CitationContext();
+        context5.setStartRefPosition(246);
+        context5.setEndRefPosition(252);
+        
+        List<CitationContext> list1 = Lists.newArrayList(context1);
+        List<CitationContext> list2 = Lists.newArrayList(context2, context3, context4);
+        List<CitationContext> list3 = Lists.newArrayList(context5);
+        
+        finder.findContext(documentText, Lists.newArrayList(list1, list2, list3));
+        
+        assertEquals(documentText1, context1.getContext());
+        assertEquals(documentText1, context2.getContext());
+        assertEquals(documentText2, context3.getContext());
+        assertEquals(documentText3, context4.getContext());
+        assertEquals(documentText3, context5.getContext());
+    }
+    
+}

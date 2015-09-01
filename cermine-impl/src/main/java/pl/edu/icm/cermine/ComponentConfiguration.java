@@ -23,6 +23,9 @@ import java.io.InputStream;
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.sentiment.CitationContextFinder;
+import pl.edu.icm.cermine.bibref.sentiment.CitationReferenceFinder;
+import pl.edu.icm.cermine.bibref.sentiment.CitationSentimentAnalyser;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
@@ -80,6 +83,16 @@ public class ComponentConfiguration {
     
     /** content cleaner */
     ContentCleaner contentCleaner;
+  
+    /** citation reference finder */
+    CitationReferenceFinder citationReferenceFinder;
+    
+    /** citation context finder */
+    CitationContextFinder citationContextFinder;
+    
+    /** citation sentiment analyser */
+    CitationSentimentAnalyser citationSentimentAnalyser;
+    
    
     public ComponentConfiguration() throws AnalysisException {
         try {
@@ -95,6 +108,9 @@ public class ComponentConfiguration {
             contentFilter = ComponentFactory.getContentFilter();
             contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor();
             contentCleaner = ComponentFactory.getContentCleaner();
+            citationReferenceFinder = ComponentFactory.getCitationReferenceFinder();
+            citationContextFinder = ComponentFactory.getCitationContextFinder();
+            citationSentimentAnalyser = ComponentFactory.getCitationSentimentAnalyser();
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create ComponentConfiguration!", ex);
         }
@@ -214,6 +230,30 @@ public class ComponentConfiguration {
 
     public ReadingOrderResolver getReadingOrderResolver() {
         return readingOrderResolver;
+    }
+
+    public CitationContextFinder getCitationContextFinder() {
+        return citationContextFinder;
+    }
+
+    public void setCitationContextFinder(CitationContextFinder citationContextFinder) {
+        this.citationContextFinder = citationContextFinder;
+    }
+
+    public CitationReferenceFinder getCitationReferenceFinder() {
+        return citationReferenceFinder;
+    }
+
+    public void setCitationReferenceFinder(CitationReferenceFinder citationReferenceFinder) {
+        this.citationReferenceFinder = citationReferenceFinder;
+    }
+
+    public CitationSentimentAnalyser getCitationSentimentAnalyser() {
+        return citationSentimentAnalyser;
+    }
+
+    public void setCitationSentimentAnalyser(CitationSentimentAnalyser citationSentimentAnalyser) {
+        this.citationSentimentAnalyser = citationSentimentAnalyser;
     }
     
 }

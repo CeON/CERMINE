@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
@@ -343,5 +345,58 @@ public class ExtractionUtils {
         RawTextWithLabelsExtractor textExtractor = new RawTextWithLabelsExtractor();
         return textExtractor.extractRawTextWithLabels(document, contentStr);
     }
-    
+
+    /**
+     * Extracts citation sentiments.
+     * 
+     * @param conf extraction configuration
+     * @param fullText the full text
+     * @param citations citation list
+     * @return citation sentiments
+     */
+    public static List<CitationSentiment> analyzeSentiment(ComponentConfiguration conf, 
+            String fullText, List<BibEntry> citations) {
+        List<List<CitationContext>> contexts = findCitationLocations(conf, fullText, citations);
+        return analyzeSentiment(conf, fullText, citations, contexts);
+    }
+
+    /**
+     * Extracts citation sentiments.
+     * 
+     * @param conf extraction configuration
+     * @param fullText the full text
+     * @param citations citation list
+     * @param contexts citation contexts
+     * @return  citation sentiments
+     */
+    public static List<CitationSentiment> analyzeSentiment(ComponentConfiguration conf, 
+            String fullText, List<BibEntry> citations, List<List<CitationContext>> contexts) {
+        conf.citationContextFinder.findContext(fullText, contexts);
+        List<CitationSentiment> sentiments = new ArrayList<CitationSentiment>(citations.size());
+        for (int i = 0; i < citations.size(); i++) {
+            BibEntry citation = citations.get(i);
+            List<CitationContext> context = contexts.get(i);
+            sentiments.add(conf.citationSentimentAnalyser.analyzeSentiment(citation, context));
+        }
+        return sentiments;
+    }
+
+    /**
+     * Extracts citation locations.
+     * 
+     * @param conf extraction configuration
+     * @param fullText the full text
+     * @param citations citation list
+     * @return  citation loations
+     */
+    public static List<List<CitationContext>> findCitationLocations(ComponentConfiguration conf, 
+            String fullText, List<BibEntry> citations) {
+        List<List<CitationContext>> contexts = new ArrayList<List<CitationContext>>();
+        for (BibEntry citation : citations) {
+            List<CitationContext> context = conf.citationReferenceFinder.findReferences(fullText, citation);
+            contexts.add(context);
+        }
+        return contexts;
+    }
+
 }

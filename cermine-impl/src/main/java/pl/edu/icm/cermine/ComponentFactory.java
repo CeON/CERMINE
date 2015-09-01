@@ -27,6 +27,7 @@ import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.KMeansBibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.sentiment.*;
 import pl.edu.icm.cermine.content.LogicalStructureExtractor;
 import pl.edu.icm.cermine.content.SVMLogicalStructureExtractor;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
@@ -272,4 +273,39 @@ public class ComponentFactory {
         return new ContentCleaner();
     }
     
+    /**
+     * The method creates an instance of the default citation reference finder.
+     * 
+     * @return citation reference finder
+     */
+    public static CitationReferenceFinder getCitationReferenceFinder() {
+        return new CitationReferenceFinder();
+    }
+    
+    /**
+     * The method creates an instance of the default citation context finder.
+     * 
+     * @return citation context finder
+     */
+    public static CitationContextFinder getCitationContextFinder() {
+        return new CitationContextFinder();
+    }
+    
+    /**
+     * The method creates an instance of the default citation sentiment analyser.
+     * 
+     * @return citation sentiment analyser
+     */
+    public static CitationSentimentAnalyser getCitationSentimentAnalyser() {
+        return new DefaultCitationSentimentAnalyser();
+    }
+    
+    /**
+     * The method creates an instance of the random citation sentiment analyser.
+     * 
+     * @return citation sentiment analyser
+     */
+    public static CitationSentimentAnalyser getRandomCitationSentimentAnalyser() {
+        return new RandomCitationSentimentAnalyser();
+    }
 }

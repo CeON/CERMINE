@@ -28,6 +28,8 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
@@ -74,6 +76,13 @@ public class ContentExtractor {
     /** extracted content in NLM format */
     private Element nlmContent;
 
+    /** citation locations and contexts */
+    private List<List<CitationContext>> citationContexts;
+    
+    /** citation sentiments */
+    private List<CitationSentiment> citationSentiments;
+    
+    
     public ContentExtractor() throws AnalysisException {
         conf = new ComponentConfiguration();
     }
@@ -87,6 +96,33 @@ public class ContentExtractor {
     public void uploadPDF(InputStream pdfFile) throws IOException {
         this.reset();
         this.pdfFile = pdfFile;
+    }
+
+    /**
+     * Stores citation locations.
+     * 
+     * @param citationContexts citation locations
+     */
+    public void uploadCitationContexts(List<List<CitationContext>> citationContexts) {
+        this.citationContexts = citationContexts;
+    }
+
+    /**
+     * Stores the document's raw full text.
+     * 
+     * @param rawFullText raw full text
+     */
+    public void uploadRawFullText(String rawFullText) {
+        this.rawFullText = rawFullText;
+    }
+
+    /**
+     * Stores the document's references.
+     * 
+     * @param references the document's references
+     */
+    public void uploadReferences(List<BibEntry> references) {
+        this.references = references;
     }
     
     /**
@@ -167,6 +203,35 @@ public class ContentExtractor {
         return nlmReferences;
     }
 
+    /**
+     * Extracts the locations of the document's citations.
+     * 
+     * @return the locations
+     * @throws AnalysisException 
+     */
+    public List<List<CitationContext>> getCitationLocations() throws AnalysisException {
+        if (citationContexts == null) {
+            getRawFullText();
+            getReferences();
+            citationContexts = ExtractionUtils.findCitationLocations(conf, rawFullText, references);
+        }
+        return citationContexts;
+    }
+    
+    /**
+     * Extractes the sentiments of the document's citations.
+     * 
+     * @return the citation sentiments
+     * @throws AnalysisException 
+     */
+    public List<CitationSentiment> getCitationSentiments() throws AnalysisException {
+        if (citationSentiments == null) {
+            getCitationLocations();
+            citationSentiments = ExtractionUtils.analyzeSentiment(conf, rawFullText, references, citationContexts);
+        }
+        return citationSentiments;
+    }
+    
     /**
      * Extracts raw text.
      * 
@@ -320,7 +385,7 @@ public class ContentExtractor {
                     extractor.uploadPDF(in);
                     BxDocument doc = extractor.getBxDocument();
                     Element result = extractor.getNLMContent();
-
+                    
                     long end = System.currentTimeMillis();
                     elapsed = (end - start) / 1000F;
             

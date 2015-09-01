@@ -16,18 +16,20 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.tools;
+package pl.edu.icm.cermine.bibref.sentiment;
+
+import java.util.List;
+import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 
 /**
+ * Citation sentiment analyser interface.
  *
  * @author Dominika Tkaczyk
  */
-public class CharacterUtils {
+public interface CitationSentimentAnalyser {
     
-    public static final char[] DASH_CHARS = {
-        '\u002D', '\u00AD', '\u2010', '\u2011', '\u2012', '\u2013', '\u2014', '\u2015', 
-        '\u207B', '\u208B', '\u2212', '-'};
-    
-    public static final char[] ROMAN_CHARS = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
-    
+    CitationSentiment analyzeSentiment(BibEntry citation, List<CitationContext> context);
+
 }

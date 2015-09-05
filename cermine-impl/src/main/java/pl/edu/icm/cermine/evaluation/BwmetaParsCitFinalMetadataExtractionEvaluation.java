@@ -204,7 +204,7 @@ public final class BwmetaParsCitFinalMetadataExtractionEvaluation {
 
             //references
             List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value");
-            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//citationList/citation/rawString");
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//algorithm[@name='ParsCit']//citationList/citation/rawString");
         
             List<String> originalRefs = new ArrayList<String>();
             List<String> extractedRefs = new ArrayList<String>();

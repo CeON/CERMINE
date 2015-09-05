@@ -74,11 +74,12 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
         List<ComparisonResult> pageRanges = new ArrayList<ComparisonResult>();
         List<ComparisonResult> years = new ArrayList<ComparisonResult>();
         List<ComparisonResult> dois = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> references = new ArrayList<ComparisonResult>();
         
         if (mode == 1) {
             System.out.println("path,gro_title,gro_abstract,gro_keywords,"+
                 "gro_authors,gro_affs,gro_autaff,gro_email,gro_autemail,gro_journal,gro_volume,gro_issue,"+
-                "gro_pages,gro_year,gro_doi,one");
+                "gro_pages,gro_year,gro_doi,gro_refs,one");
         }
         
         int i = 0;
@@ -235,21 +236,6 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
             authorsAffiliations.add(authorAffiliation);
             authorAffiliation.print(mode, "author - affiliation");
 
-            double autF1 = 0;
-            if (author.getPrecision() != null && author.getRecall() != null) {
-                autF1 = 2./(1./author.getPrecision()+1./author.getRecall());
-            }
-            double affF1 = 0;
-            if (affiliation.getPrecision() != null && affiliation.getRecall() != null) {
-                affF1 = 2./(1./affiliation.getPrecision()+1./affiliation.getRecall());
-            }
-            double aufF1 = 0;
-            if (authorAffiliation.getPrecision() != null && authorAffiliation.getRecall() != null) {
-                aufF1 = 2./(1./authorAffiliation.getPrecision()+1./authorAffiliation.getRecall());
-            }
-
-//            System.out.println("TOTL "+autF1+","+affF1+","+aufF1);
-
        
             // Email addresses
             MetadataList email = new MetadataList(originalNlm, "/bwmeta/element/contributor[@role='author']/attribute[@key='contact-email']/value",
@@ -380,6 +366,28 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
             dois.add(doi);
             doi.print(mode, "DOI");
 
+            
+            // References
+            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value"); //bwmeta
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//listBibl/biblStruct");//grobid
+        
+            List<String> originalRefs = new ArrayList<String>();
+            List<String> extractedRefs = new ArrayList<String>();
+            
+            for (Node originalRefNode : originalRefNodes) {
+                originalRefs.add(XMLTools.extractTextFromNode(originalRefNode).trim());
+            }
+            for (Node extractedRefNode : extractedRefNodes) {
+                extractedRefs.add(XMLTools.extractTextFromNode(extractedRefNode).trim());
+            }
+            
+            MetadataList refs = new MetadataList(originalRefs, extractedRefs);
+            refs.setComp(EvaluationUtils.cosineComparator(0.6));
+            
+            references.add(refs);
+            refs.print(mode, "references");
+
+            
             if (mode == 1) {
                 System.out.println("1");
             }
@@ -430,6 +438,9 @@ public final class BwmetaGrobidFinalMetadataExtractionEvaluation {
             PrecisionRecall doiPR = new PrecisionRecall().build(dois);
             doiPR.print("DOI");
 
+            PrecisionRecall refsPR = new PrecisionRecall().build(references);
+            refsPR.print("References");
+            
             List<PrecisionRecall> results = Lists.newArrayList(
                 titlePR, authorsPR, affiliationsPR, emailsPR, abstractPR, 
                 keywordsPR, yearPR, doiPR);

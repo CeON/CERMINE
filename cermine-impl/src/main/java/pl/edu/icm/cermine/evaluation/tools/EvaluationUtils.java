@@ -20,11 +20,7 @@ package pl.edu.icm.cermine.evaluation.tools;
 
 import com.google.common.collect.Lists;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -197,8 +193,8 @@ public class EvaluationUtils {
 
         @Override
         public int compare(String t1, String t2) {
-            String t1Norm = t1.replaceAll("[^a-zA-Z0-9]", "");
-            String t2Norm = t2.replaceAll("[^a-zA-Z0-9]", "");
+            String t1Norm = t1.replaceAll("[^a-zA-Z]", "");
+            String t2Norm = t2.replaceAll("[^a-zA-Z]", "");
             if (compareStringsSW(t1, t2) >= .9 ||
                     (!t1Norm.isEmpty() && t1Norm.equals(t2Norm))) {
                 return 0;
@@ -260,6 +256,34 @@ public class EvaluationUtils {
             return t1.trim().compareToIgnoreCase(t2.trim());
         }
     };
+    
+    public static Comparator<String> headerComparator(final Comparator<String> comp) {
+        return new Comparator<String>() {
+
+            @Override
+            public int compare(String t1, String t2) {
+                List<String> t1Lines = Lists.newArrayList(t1.split("\n"));
+                List<String> t2Lines = Lists.newArrayList(t2.split("\n"));
+                if (t1Lines.size() != t2Lines.size()) {
+                    return -1;
+                }
+                for (int i = 0; i < t1Lines.size(); i++) {
+                    if (t1Lines.get(i).equals(t2Lines.get(i))) {
+                        continue;
+                    }
+                    String trimmed1 = t1Lines.get(i).trim();
+                    String trimmed2 = t2Lines.get(i).trim();
+                    if (t1Lines.get(i).length() - trimmed1.length() != t2Lines.get(i).length() - trimmed2.length()) {
+                        return -1;
+                    }
+                    if (comp.compare(trimmed1, trimmed2) != 0) {
+                        return -1;
+                    }
+                }
+                return 0;
+            }
+        };
+    }
     
  
     public static org.w3c.dom.Document elementToW3CDocument(org.jdom.Element elem) throws JDOMException {

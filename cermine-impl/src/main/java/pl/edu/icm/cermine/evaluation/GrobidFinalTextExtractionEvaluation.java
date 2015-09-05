@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.evaluation;
 
+import com.google.common.collect.Lists;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,11 +35,12 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
+ * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class FinalReferenceExtractionEvaluation {
+public final class GrobidFinalTextExtractionEvaluation {
 
-    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, XPathExpressionException, TransformerException {
+    public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -54,11 +56,11 @@ public final class FinalReferenceExtractionEvaluation {
         builder.setFeature("http://xml.org/sax/features/validation", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-        
-        List<ComparisonResult> references = new ArrayList<ComparisonResult>();
+
+        List<ComparisonResult> headers = new ArrayList<ComparisonResult>();
         
         if (mode == 1) {
-            System.out.println("path,gro_refs,one");
+            System.out.println("path,gro_header,one");
         }
         
         int i = 0;
@@ -72,7 +74,7 @@ public final class FinalReferenceExtractionEvaluation {
             if (mode == 1) {
                 System.out.print(pair.getOriginalNlm().getPath()+",");
             }
-            
+
             org.w3c.dom.Document originalNlm;
             org.w3c.dom.Document extractedNlm;
             try {
@@ -83,29 +85,33 @@ public final class FinalReferenceExtractionEvaluation {
                 continue;
             }
 
-            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//ref-list/ref"); //nxml
-//            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//relation[@type='reference-to']/attribute[@key='reference-text']/value"); //bwmeta
             
-//            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");//cermine, pdfx
-            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//listBibl/biblStruct");//grobid
-//           List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//citationList/citation/rawString");//parscit
-//            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "/pdf/reference");//pdf-extract
-        
-            List<String> originalRefs = new ArrayList<String>();
-            List<String> extractedRefs = new ArrayList<String>();
+            // headers
+            List<String> expAll = new ArrayList<String>();
+            List<String> extrAll = new ArrayList<String>();
             
-            for (Node originalRefNode : originalRefNodes) {
-                originalRefs.add(XMLTools.extractTextFromNode(originalRefNode).trim());
+            List<Node> expNodes = XMLTools.extractNodes(originalNlm, "/article/body//sec/title");
+            for (Node expNode : expNodes) {
+                String h = XMLTools.extractTextFromNode(expNode).trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                if (isProper(h)) {
+                    expAll.add(h);
+                }
             }
-            for (Node extractedRefNode : extractedRefNodes) {
-                extractedRefs.add(XMLTools.extractTextFromNode(extractedRefNode).trim());
+
+            List<Node> extNodes = XMLTools.extractNodes(extractedNlm, "/TEI/text/body/div/head");
+            for (Node extNode : extNodes) {
+                String h = XMLTools.extractTextFromNode(extNode).trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                if (isProper(h)) {
+                    extrAll.add(h);
+                }
             }
+
+            MetadataList header = new MetadataList(removeReferences(expAll), removeReferences(extrAll));
+            header.setComp(EvaluationUtils.swComparator);
+                        
+            header.print(mode, "Headers");
+            headers.add(header);
             
-            MetadataList refs = new MetadataList(originalRefs, extractedRefs);
-            refs.setComp(EvaluationUtils.cosineComparator(0.6));
-            
-            references.add(refs);
-            refs.print(mode, "references");
             
             if (mode == 1) {
                 System.out.println("1");
@@ -115,11 +121,30 @@ public final class FinalReferenceExtractionEvaluation {
         if (mode != 1) {
             System.out.println("==== Summary (" + iter.size() + " docs)====");
 
-            PrecisionRecall refsPR = new PrecisionRecall().build(references);
-            refsPR.print("Mean on docs");
+            PrecisionRecall headersPR = new PrecisionRecall().build(headers);
+            headersPR.print("Headers");
         }
     }
 
+    private boolean isProper(String header) {
+        List<String> toDelete = Lists.newArrayList(
+                "references", "acknowledgements", "acknowledgments", 
+                "conflicts of interest", "declaration of interest", "appendix",
+                "conflict of interest statement", "conflict of interest", "funding",
+                "authors contributions", "competing interests");
+        return !toDelete.contains(header);
+    }
+    
+    private List<String> removeReferences(List<String> list) {
+        List<String> removed = Lists.newArrayList(list);
+        for (String element : list) {
+            if (!isProper(element)) {
+                removed.remove(element);
+            }
+        }
+        return removed;
+    }
+    
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
         if (args.length != 3 && args.length != 4) {
             System.out.println("Usage: FinalMetadataExtractionEvaluation <input dir> <orig extension> <extract extension>");
@@ -136,10 +161,9 @@ public final class FinalReferenceExtractionEvaluation {
             mode = 2;
         }
 
-        FinalReferenceExtractionEvaluation e = new FinalReferenceExtractionEvaluation();
+        GrobidFinalTextExtractionEvaluation e = new GrobidFinalTextExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(mode, iter);
     }
 
 }
-    

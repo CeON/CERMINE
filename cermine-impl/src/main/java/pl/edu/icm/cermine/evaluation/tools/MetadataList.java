@@ -150,4 +150,20 @@ public class MetadataList implements ComparisonResult {
         this.comp = comp;
     }
 
+    public List<String> getExpectedValue() {
+        return expectedValue;
+    }
+
+    public void setExpectedValue(List<String> expectedValue) {
+        this.expectedValue = expectedValue;
+    }
+
+    public List<String> getExtractedValue() {
+        return extractedValue;
+    }
+
+    public void setExtractedValue(List<String> extractedValue) {
+        this.extractedValue = extractedValue;
+    }
+    
 }

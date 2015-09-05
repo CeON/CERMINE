@@ -29,6 +29,7 @@ import javax.xml.xpath.XPathExpressionException;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.evaluation.tools.MetadataRelation.StringRelation;
 import pl.edu.icm.cermine.evaluation.tools.*;
@@ -39,7 +40,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class FinalTextExtractionEvaluation {
+public final class ParsCitFinalTextExtractionEvaluation {
 
     public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
@@ -66,8 +67,8 @@ public final class FinalTextExtractionEvaluation {
         List<ComparisonResult> headers3 = new ArrayList<ComparisonResult>();
         
         if (mode == 1) {
-            System.out.println("path,cerm_header,cerm_hlevel,cerm_header0,"
-                    + "cerm_header1,cerm_header2,cerm_header3,one");
+            System.out.println("path,pcit_header,pcit_hlevel,pcit_header0,"
+                    + "pcit_header1,pcit_header2,pcit_header3,one");
         }
         
         int i = 0;
@@ -119,27 +120,31 @@ public final class FinalTextExtractionEvaluation {
             String expTree = sb.toString().trim();
             
             sb = new StringBuilder();
-            List<Node> extNodes = XMLTools.extractNodes(extractedNlm, "/article/body//sec");
-            for (Node extNode : extNodes) {
-                String h = "-";
-                if (!XMLTools.extractChildrenNodesFromNode(extNode, "title").isEmpty()) {
-                    h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(extNode, "title").get(0));
+            Node vNode = XMLTools.extractNodes(extractedNlm, "//algorithm[@name='SectLabel']/variant").get(0);
+            NodeList extNodes = vNode.getChildNodes();
+            for (int nodeIdx = 0; nodeIdx < extNodes.getLength(); nodeIdx++) {
+                Node extNode = extNodes.item(nodeIdx);
+                if ("sectionHeader".equals(extNode.getNodeName())) {
+                    String h = extNode.getTextContent().trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                    if (isProper(h)) {
+                        sb.append(h);
+                        sb.append("\n");
+                    }
+                } else if ("subsectionHeader".equals(extNode.getNodeName())) {
+                    String h = extNode.getTextContent().trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                    if (isProper(h)) {
+                        sb.append(" ");
+                        sb.append(h);
+                        sb.append("\n");
+                    }
+                } else if ("subsubsectionHeader".equals(extNode.getNodeName())) {
+                    String h = extNode.getTextContent().trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                    if (isProper(h)) {
+                        sb.append("  ");
+                        sb.append(h);
+                        sb.append("\n");
+                    }
                 }
-                h = h.trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
-                if (!isProper(h)) {
-                    continue;
-                }
-                Node parent = extNode.getParentNode();
-                if (!"body".equals(parent.getNodeName()) && !"sec".equals(parent.getNodeName())) {
-                    continue;
-                }
-                while ("sec".equals(parent.getNodeName())) {
-                    parent = parent.getParentNode();
-                    sb.append(" ");
-                }
- 
-                sb.append(h);
-                sb.append("\n");
             }
             String extTree = sb.toString().trim();
 
@@ -380,7 +385,7 @@ public final class FinalTextExtractionEvaluation {
             mode = 2;
         }
 
-        FinalTextExtractionEvaluation e = new FinalTextExtractionEvaluation();
+        ParsCitFinalTextExtractionEvaluation e = new ParsCitFinalTextExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(mode, iter);
     }

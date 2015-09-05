@@ -39,7 +39,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class FinalTextExtractionEvaluation {
+public final class PdfxFinalTextExtractionEvaluation {
 
     public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
@@ -66,8 +66,8 @@ public final class FinalTextExtractionEvaluation {
         List<ComparisonResult> headers3 = new ArrayList<ComparisonResult>();
         
         if (mode == 1) {
-            System.out.println("path,cerm_header,cerm_hlevel,cerm_header0,"
-                    + "cerm_header1,cerm_header2,cerm_header3,one");
+            System.out.println("path,pdfx_header,pdfx_hlevel,pdfx_header0,"
+                    + "pdfx_header1,pdfx_header2,pdfx_header3,one");
         }
         
         int i = 0;
@@ -119,25 +119,25 @@ public final class FinalTextExtractionEvaluation {
             String expTree = sb.toString().trim();
             
             sb = new StringBuilder();
-            List<Node> extNodes = XMLTools.extractNodes(extractedNlm, "/article/body//sec");
+            List<Node> extNodes = XMLTools.extractNodes(extractedNlm, "/pdfx/article/body//section");
             for (Node extNode : extNodes) {
                 String h = "-";
-                if (!XMLTools.extractChildrenNodesFromNode(extNode, "title").isEmpty()) {
-                    h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(extNode, "title").get(0));
+                if (!XMLTools.extractChildrenNodesFromNode(extNode, "h1").isEmpty()) {
+                    h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(extNode, "h1").get(0));
+                } else if (!XMLTools.extractChildrenNodesFromNode(extNode, "h2").isEmpty()) {
+                    h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(extNode, "h2").get(0));
+                } else if (!XMLTools.extractChildrenNodesFromNode(extNode, "h3").isEmpty()) {
+                    h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(extNode, "h3").get(0));
                 }
                 h = h.trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
                 if (!isProper(h)) {
                     continue;
                 }
                 Node parent = extNode.getParentNode();
-                if (!"body".equals(parent.getNodeName()) && !"sec".equals(parent.getNodeName())) {
-                    continue;
-                }
-                while ("sec".equals(parent.getNodeName())) {
+                while ("section".equals(parent.getNodeName())) {
                     parent = parent.getParentNode();
                     sb.append(" ");
                 }
- 
                 sb.append(h);
                 sb.append("\n");
             }
@@ -380,7 +380,7 @@ public final class FinalTextExtractionEvaluation {
             mode = 2;
         }
 
-        FinalTextExtractionEvaluation e = new FinalTextExtractionEvaluation();
+        PdfxFinalTextExtractionEvaluation e = new PdfxFinalTextExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(mode, iter);
     }

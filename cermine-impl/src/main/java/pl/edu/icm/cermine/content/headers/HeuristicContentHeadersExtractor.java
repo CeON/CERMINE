@@ -19,10 +19,7 @@
 package pl.edu.icm.cermine.content.headers;
 
 import com.google.common.collect.Lists;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import pl.edu.icm.cermine.content.model.BxDocContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
@@ -34,7 +31,7 @@ import pl.edu.icm.cermine.tools.statistics.Population;
  */
 public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor {
 
-    private HeadersClusterizer headersClusterizer;
+    private SimpleHeadersClusterizer headersClusterizer;
     
     private HeaderLinesCompletener headerLinesCompletener;
 
@@ -150,7 +147,29 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
         }
         
         candidates.removeAll(toDelete);
-        
+
+        candidatesList = new ArrayList<BxLine>();
+        for (BxPage page : document.getPages()) {
+            for (BxZone zone : page.getZones()) {
+                for (BxLine line : zone.getLines()) {
+                    if (candidates.contains(line)) {
+                        candidatesList.add(line);
+                    }
+                }
+            }
+        }
+        int clusters[] = headersClusterizer.clusterLines(candidatesList);
+        Set<Integer> keptClusters = new HashSet<Integer>();
+        for (int clusterIdx = 0; clusterIdx < clusters.length; clusterIdx++) {
+            int cluster = clusters[clusterIdx];
+            if (keptClusters.size() < 3) {
+                keptClusters.add(cluster);
+            }
+            if (!keptClusters.contains(cluster)) {
+                candidates.remove(candidatesList.get(clusterIdx));
+            }
+        }
+
         BxDocContentStructure contentStructure = new BxDocContentStructure();
         BxLine lastHeaderLine = null;
         for (BxPage page : document.getPages()) {

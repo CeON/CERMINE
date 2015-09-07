@@ -37,6 +37,10 @@ public class SimpleHeadersClusterizer implements HeadersClusterizer {
     @Override
     public void clusterHeaders(BxDocContentStructure contentStructure) {
         List<BxLine> lines = contentStructure.getFirstHeaderLines();
+        contentStructure.setHeaderLevelIds(clusterLines(lines));
+    }
+
+    public int[] clusterLines(List<BxLine> lines) {
         int[] clusters = new int[lines.size()];
         Set<BxLine> done = new HashSet<BxLine>();
         int i = 0;
@@ -61,9 +65,10 @@ public class SimpleHeadersClusterizer implements HeadersClusterizer {
             }
             i++;
         }
-        contentStructure.setHeaderLevelIds(clusters);
-    }
 
+        return clusters;
+    }
+    
     public double getMaxHeightDiff() {
         return maxHeightDiff;
     }

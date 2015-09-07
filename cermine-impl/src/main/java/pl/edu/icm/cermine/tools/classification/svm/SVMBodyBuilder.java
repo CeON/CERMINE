@@ -95,11 +95,11 @@ public class SVMBodyBuilder {
             System.exit(1);
         }
 
-        Double C = 512.0;
+        Double C = 8.0;
         if (line.hasOption("C")){
             C = Double.valueOf(line.getOptionValue("C"));
         }
-        Double gamma = 8.0;
+        Double gamma = 0.5;
         if (line.hasOption("g")){
             gamma = Double.valueOf(line.getOptionValue("g"));
         }

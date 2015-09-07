@@ -45,25 +45,6 @@ public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassific
     protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree) 
             throws IOException, AnalysisException, CloneNotSupportedException {
 
-        Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
-        map.put(BxZoneLabel.BODY_ACKNOWLEDGMENT, BxZoneLabel.BODY_CONTENT);
-        map.put(BxZoneLabel.BODY_CONFLICT_STMT, BxZoneLabel.BODY_CONTENT);
-        map.put(BxZoneLabel.BODY_EQUATION, BxZoneLabel.BODY_JUNK);
-        map.put(BxZoneLabel.BODY_FIGURE, BxZoneLabel.BODY_JUNK);
-        map.put(BxZoneLabel.BODY_GLOSSARY, BxZoneLabel.BODY_JUNK);
-        map.put(BxZoneLabel.BODY_TABLE, BxZoneLabel.BODY_JUNK);
-        
-        Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
-        for (TrainingSample<BxZoneLabel> sample : trainingSamples) {
-        	if (sample.getLabel().getCategory() == BxZoneLabelCategory.CAT_BODY) {
-                if (map.get(sample.getLabel()) != null) {
-                    sample.setLabel(map.get(sample.getLabel()));
-                }
-            } else {
-        		sample.setLabel(labelMapper.get(sample.getLabel()));
-            }
-        }
-       
         PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
         int[] intClasses = new int[pc.getClasses().size()];
         double[] classesWeights = new double[pc.getClasses().size()];
@@ -75,7 +56,7 @@ public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassific
             ++labelIdx;
         }
        
-        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(ContentFilterTools.VECTOR_BUILDER);
+        SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
         param.gamma = gamma;
@@ -104,11 +85,6 @@ public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassific
     
     @Override
     public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException {
-        DocumentsIterator it = new DocumentsIterator(inputFile, ext);
-        List<TrainingSample<BxZoneLabel>> samples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), 
-                    getFeatureVectorBuilder(), null);
-        List<TrainingSample<BxZoneLabel>> tss = ClassificationUtils.filterElements(samples, BxZoneLabelCategory.CAT_BODY);
-        
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
         map.put(BxZoneLabel.BODY_ACKNOWLEDGMENT, BxZoneLabel.BODY_CONTENT);
         map.put(BxZoneLabel.BODY_CONFLICT_STMT, BxZoneLabel.BODY_CONTENT);
@@ -117,17 +93,11 @@ public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassific
         map.put(BxZoneLabel.BODY_GLOSSARY, BxZoneLabel.BODY_JUNK);
         map.put(BxZoneLabel.BODY_TABLE, BxZoneLabel.BODY_JUNK);
         
-        Map<BxZoneLabel, BxZoneLabel> labelMapper = BxZoneLabel.getLabelToGeneralMap();
-        for (TrainingSample<BxZoneLabel> sample : tss) {
-        	if (sample.getLabel().getCategory() == BxZoneLabelCategory.CAT_BODY) {
-                if (map.get(sample.getLabel()) != null) {
-                    sample.setLabel(map.get(sample.getLabel()));
-                }
-            } else {
-        		sample.setLabel(labelMapper.get(sample.getLabel()));
-            }
-        }
-        
+        DocumentsIterator it = new DocumentsIterator(inputFile, ext);
+        List<TrainingSample<BxZoneLabel>> samples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), 
+                    getFeatureVectorBuilder(), map);
+        List<TrainingSample<BxZoneLabel>> tss = ClassificationUtils.filterElements(samples, BxZoneLabelCategory.CAT_BODY);
+
         return tss;
     }
     

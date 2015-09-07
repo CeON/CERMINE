@@ -100,7 +100,7 @@ public final class PdfxFinalTextExtractionEvaluation {
                 if (!XMLTools.extractChildrenNodesFromNode(expNode, "title").isEmpty()) {
                     h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(expNode, "title").get(0));
                 }
-                h = h.trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                h = h.toLowerCase().replaceAll("[^a-zA-Z ]", "").trim();
                 if (!isProper(h)) {
                     continue;
                 }
@@ -108,13 +108,19 @@ public final class PdfxFinalTextExtractionEvaluation {
                 if (!"body".equals(parent.getNodeName()) && !"sec".equals(parent.getNodeName())) {
                     continue;
                 }
+                int k = 0;
                 while ("sec".equals(parent.getNodeName())) {
                     parent = parent.getParentNode();
-                    sb.append(" ");
+                    k++;
                 }
- 
-                sb.append(h);
-                sb.append("\n");
+                if (k < 3) {
+                    while (k > 0) {
+                        sb.append(" ");
+                        k--;
+                    }
+                    sb.append(h);
+                    sb.append("\n");
+                }
             }
             String expTree = sb.toString().trim();
             
@@ -129,7 +135,7 @@ public final class PdfxFinalTextExtractionEvaluation {
                 } else if (!XMLTools.extractChildrenNodesFromNode(extNode, "h3").isEmpty()) {
                     h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(extNode, "h3").get(0));
                 }
-                h = h.trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                h = h.toLowerCase().replaceAll("[^a-zA-Z ]", "").trim();
                 if (!isProper(h)) {
                     continue;
                 }

@@ -92,9 +92,17 @@ public final class GrobidFinalTextExtractionEvaluation {
             
             List<Node> expNodes = XMLTools.extractNodes(originalNlm, "/article/body//sec/title");
             for (Node expNode : expNodes) {
-                String h = XMLTools.extractTextFromNode(expNode).trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
-                if (isProper(h)) {
-                    expAll.add(h);
+                int k = 0;
+                Node parent = expNode.getParentNode();
+                while ("sec".equals(parent.getNodeName())) {
+                    parent = parent.getParentNode();
+                    k++;
+                }
+                if (k <= 3) {
+                    String h = XMLTools.extractTextFromNode(expNode).trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                    if (isProper(h)) {
+                        expAll.add(h);
+                    }
                 }
             }
 

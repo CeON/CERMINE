@@ -101,7 +101,7 @@ public final class ParsCitFinalTextExtractionEvaluation {
                 if (!XMLTools.extractChildrenNodesFromNode(expNode, "title").isEmpty()) {
                     h = XMLTools.extractTextFromNode(XMLTools.extractChildrenNodesFromNode(expNode, "title").get(0));
                 }
-                h = h.trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                h = h.toLowerCase().replaceAll("[^a-zA-Z ]", "").trim();
                 if (!isProper(h)) {
                     continue;
                 }
@@ -109,13 +109,19 @@ public final class ParsCitFinalTextExtractionEvaluation {
                 if (!"body".equals(parent.getNodeName()) && !"sec".equals(parent.getNodeName())) {
                     continue;
                 }
+                int k = 0;
                 while ("sec".equals(parent.getNodeName())) {
                     parent = parent.getParentNode();
-                    sb.append(" ");
+                    k++;
                 }
- 
-                sb.append(h);
-                sb.append("\n");
+                if (k < 3) {
+                    while (k > 0) {
+                        sb.append(" ");
+                        k--;
+                    }
+                    sb.append(h);
+                    sb.append("\n");
+                }
             }
             String expTree = sb.toString().trim();
             
@@ -125,20 +131,20 @@ public final class ParsCitFinalTextExtractionEvaluation {
             for (int nodeIdx = 0; nodeIdx < extNodes.getLength(); nodeIdx++) {
                 Node extNode = extNodes.item(nodeIdx);
                 if ("sectionHeader".equals(extNode.getNodeName())) {
-                    String h = extNode.getTextContent().trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                    String h = extNode.getTextContent().toLowerCase().replaceAll("[^a-zA-Z ]", "").trim();
                     if (isProper(h)) {
                         sb.append(h);
                         sb.append("\n");
                     }
                 } else if ("subsectionHeader".equals(extNode.getNodeName())) {
-                    String h = extNode.getTextContent().trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                    String h = extNode.getTextContent().toLowerCase().replaceAll("[^a-zA-Z ]", "").trim();
                     if (isProper(h)) {
                         sb.append(" ");
                         sb.append(h);
                         sb.append("\n");
                     }
                 } else if ("subsubsectionHeader".equals(extNode.getNodeName())) {
-                    String h = extNode.getTextContent().trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+                    String h = extNode.getTextContent().toLowerCase().replaceAll("[^a-zA-Z ]", "").trim();
                     if (isProper(h)) {
                         sb.append("  ");
                         sb.append(h);

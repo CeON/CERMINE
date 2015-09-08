@@ -19,9 +19,7 @@
 package pl.edu.icm.cermine.bibref.sentiment;
 
 import java.util.List;
-import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CiTOProperty;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 
 /**
@@ -32,9 +30,8 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 public class DefaultCitationSentimentAnalyser implements CitationSentimentAnalyser {
     
     @Override
-    public CitationSentiment analyzeSentiment(BibEntry citation, List<CitationContext> context) {
+    public CitationSentiment analyzeSentiment(List<String> context) {
         CitationSentiment sentiment = new CitationSentiment();
-        sentiment.setKey(citation.getKey());
         if (!context.isEmpty()) {
             sentiment.addProperty(CiTOProperty.CITES);
         }

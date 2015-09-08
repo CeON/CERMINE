@@ -27,17 +27,7 @@ import java.util.Set;
  */
 public class CitationSentiment {
 
-    private String key;
-    
     private Set<CiTOProperty> properties;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public Set<CiTOProperty> getProperties() {
         if (properties == null) {

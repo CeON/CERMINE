@@ -23,19 +23,19 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.tools.CharacterUtils;
 import pl.edu.icm.cermine.tools.TextUtils;
 
 /**
- * A class for extracting references from the document's full text.
+ * A class for extracting citation positions from the document's full text.
  *
  * @author Dominika Tkaczyk
  */
-public class CitationReferenceFinder {
+public class CitationPositionFinder {
     
-    public List<CitationContext> findReferences(String fullText, BibEntry citation) {
-        List<CitationContext> contexts = new ArrayList<CitationContext>();
+    public List<CitationPosition> findReferences(String fullText, BibEntry citation) {
+        List<CitationPosition> positions = new ArrayList<CitationPosition>();
         Pattern numberPattern = Pattern.compile("^[^\\d]*(\\d+)");
         Matcher numberMatcher = numberPattern.matcher(citation.getText());
         String number = null;
@@ -50,11 +50,10 @@ public class CitationReferenceFinder {
             String[] matched = refMatcher.group(1).replaceAll(" ", "").split(",");
             for (String match : matched) {
                 if (number.equals(match)) {
-                    CitationContext context = new CitationContext();
-                    context.setKey(citation.getKey());
-                    context.setStartRefPosition(refMatcher.start(1));
-                    context.setEndRefPosition(refMatcher.end(1));
-                    contexts.add(context);
+                    CitationPosition position = new CitationPosition();
+                    position.setStartRefPosition(refMatcher.start(1));
+                    position.setEndRefPosition(refMatcher.end(1));
+                    positions.add(position);
                 } else {
                     Pattern rangePattern = Pattern.compile("^(\\d+)[" + String.valueOf(CharacterUtils.DASH_CHARS) + "](\\d+)$");
                     Matcher rangeMatcher = rangePattern.matcher(match);
@@ -62,18 +61,17 @@ public class CitationReferenceFinder {
                         int lower = Integer.parseInt(rangeMatcher.group(1));
                         int upper = Integer.parseInt(rangeMatcher.group(2));
                         if (TextUtils.isNumberBetween(number, lower, upper+1)) {
-                            CitationContext context = new CitationContext();
-                            context.setKey(citation.getKey());
-                            context.setStartRefPosition(refMatcher.start(1));
-                            context.setEndRefPosition(refMatcher.end(1));
-                            contexts.add(context);
+                            CitationPosition position = new CitationPosition();
+                            position.setStartRefPosition(refMatcher.start(1));
+                            position.setEndRefPosition(refMatcher.end(1));
+                            positions.add(position);
                         }
                     }
                 }
             }
         }
         
-        return contexts;
+        return positions;
     }
     
 }

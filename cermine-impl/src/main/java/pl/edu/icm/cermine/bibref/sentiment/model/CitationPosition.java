@@ -19,32 +19,16 @@
 package pl.edu.icm.cermine.bibref.sentiment.model;
 
 /**
- * A class for storing a single reference to another document in a document's text.
+ * A class for storing the position of a single reference to another document in a document's text.
  *
  * @author Dominika Tkaczyk
  */
-public class CitationContext {
-    
-    private String key;
+public class CitationPosition {
     
     private int startRefPosition;
     
     private int endRefPosition;
     
-    private String context;
-
-    /**
-     * Returns the text context surrounding the reference in a text.
-     * 
-     * @return the text context
-     */
-    public String getContext() {
-        return context;
-    }
-
-    public void setContext(String context) {
-        this.context = context;
-    }
 
     /**
      * Returns the index of the character following the last reference character
@@ -60,18 +44,6 @@ public class CitationContext {
         this.endRefPosition = endRefPosition;
     }
 
-    /**
-     * Retuns the key corresponding to the input citation.
-     * 
-     * @return the key
-     */
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     /**
      * Returns the index of the first reference character in the document's text.

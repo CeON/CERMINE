@@ -67,7 +67,7 @@ public class ContentExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
         BxDocument testDocument;
         try {
-            extractor.uploadPDF(testStream);
+            extractor.setPDF(testStream);
             testDocument = extractor.getBxDocument();
         } finally {
             testStream.close();
@@ -88,7 +88,7 @@ public class ContentExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
         String testContent;
         try {
-            extractor.uploadPDF(testStream);
+            extractor.setPDF(testStream);
             testContent = extractor.getRawFullText();
         } finally {
             testStream.close();
@@ -120,7 +120,7 @@ public class ContentExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
         Element testMetadata;
         try {
-            extractor.uploadPDF(testStream);
+            extractor.setPDF(testStream);
             testMetadata = extractor.getNLMMetadata();
         } finally {
             testStream.close();
@@ -149,7 +149,7 @@ public class ContentExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
         List<Element> testReferences;
         try {
-            extractor.uploadPDF(testStream);
+            extractor.setPDF(testStream);
             testReferences = extractor.getNLMReferences();
         } finally {
             testStream.close();
@@ -192,7 +192,7 @@ public class ContentExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
         Element testContent;
         try {
-            extractor.uploadPDF(testStream);
+            extractor.setPDF(testStream);
             testContent = extractor.getNLMContent();
         } finally {
             testStream.close();

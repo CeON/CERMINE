@@ -278,8 +278,8 @@ public class ComponentFactory {
      * 
      * @return citation reference finder
      */
-    public static CitationReferenceFinder getCitationReferenceFinder() {
-        return new CitationReferenceFinder();
+    public static CitationPositionFinder getCitationPositionFinder() {
+        return new CitationPositionFinder();
     }
     
     /**

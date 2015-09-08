@@ -22,9 +22,7 @@ import com.google.common.collect.Lists;
 import java.util.EnumSet;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CiTOProperty;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 
 /**
@@ -32,36 +30,18 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
  * @author Dominika Tkaczyk
  */
 public class RandomCitationSentimentAnalyserTest {
-
-    private static BibEntry citation = new BibEntry().setText(" [12]  W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc, 58 (1963) 13-30.")
-            .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.")
-            .addField(BibEntry.FIELD_TITLE, "Probability inequalities for sums of bounded random variables")
-            .addField(BibEntry.FIELD_JOURNAL, "J. Amer. Statist. Assoc")
-            .addField(BibEntry.FIELD_VOLUME, "58")
-            .addField(BibEntry.FIELD_YEAR, "1963")
-            .addField(BibEntry.FIELD_PAGES, "13--30");
-    
     
     @Test
-    public void testContextFinder() {
+    public void testPositionFinder() {
         CitationSentimentAnalyser analyser = new RandomCitationSentimentAnalyser();
-        
-        CitationContext context1 = new CitationContext();
-        context1.setContext("context1");
-        CitationContext context2 = new CitationContext();
-        context2.setContext("context2");
-        CitationContext context3 = new CitationContext();
-        context3.setContext("context3");
-        CitationContext context4 = new CitationContext();
-        context4.setContext("context4");
-        
-        CitationSentiment sentiment = analyser.analyzeSentiment(citation, Lists.newArrayList(context1));
+
+        CitationSentiment sentiment = analyser.analyzeSentiment(Lists.newArrayList("context1"));
         assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.CREDITS), sentiment.getProperties());
         
-        sentiment = analyser.analyzeSentiment(citation, Lists.newArrayList(context2, context3));
+        sentiment = analyser.analyzeSentiment(Lists.newArrayList("context2", "context3"));
         assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.PLAGIARIZES), sentiment.getProperties());
         
-        sentiment = analyser.analyzeSentiment(citation, Lists.newArrayList(context3, context4));
+        sentiment = analyser.analyzeSentiment(Lists.newArrayList("context3", "context4"));
         assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.UPDATES), sentiment.getProperties());
     }
     

@@ -28,7 +28,7 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -76,8 +76,8 @@ public class ContentExtractor {
     /** extracted content in NLM format */
     private Element nlmContent;
 
-    /** citation locations and contexts */
-    private List<List<CitationContext>> citationContexts;
+    /** citation positions */
+    private List<List<CitationPosition>> citationPositions;
     
     /** citation sentiments */
     private List<CitationSentiment> citationSentiments;
@@ -93,7 +93,7 @@ public class ContentExtractor {
      * @param pdfFile PDF stream
      * @throws IOException 
      */
-    public void uploadPDF(InputStream pdfFile) throws IOException {
+    public void setPDF(InputStream pdfFile) throws IOException {
         this.reset();
         this.pdfFile = pdfFile;
     }
@@ -103,8 +103,8 @@ public class ContentExtractor {
      * 
      * @param citationContexts citation locations
      */
-    public void uploadCitationContexts(List<List<CitationContext>> citationContexts) {
-        this.citationContexts = citationContexts;
+    public void setCitationPositions(List<List<CitationPosition>> citationPositions) {
+        this.citationPositions = citationPositions;
     }
 
     /**
@@ -112,7 +112,7 @@ public class ContentExtractor {
      * 
      * @param rawFullText raw full text
      */
-    public void uploadRawFullText(String rawFullText) {
+    public void setRawFullText(String rawFullText) {
         this.rawFullText = rawFullText;
     }
 
@@ -121,7 +121,7 @@ public class ContentExtractor {
      * 
      * @param references the document's references
      */
-    public void uploadReferences(List<BibEntry> references) {
+    public void setReferences(List<BibEntry> references) {
         this.references = references;
     }
     
@@ -209,13 +209,13 @@ public class ContentExtractor {
      * @return the locations
      * @throws AnalysisException 
      */
-    public List<List<CitationContext>> getCitationLocations() throws AnalysisException {
-        if (citationContexts == null) {
+    public List<List<CitationPosition>> getCitationPositions() throws AnalysisException {
+        if (citationPositions == null) {
             getRawFullText();
             getReferences();
-            citationContexts = ExtractionUtils.findCitationLocations(conf, rawFullText, references);
+            citationPositions = ExtractionUtils.findCitationPositions(conf, rawFullText, references);
         }
-        return citationContexts;
+        return citationPositions;
     }
     
     /**
@@ -226,8 +226,8 @@ public class ContentExtractor {
      */
     public List<CitationSentiment> getCitationSentiments() throws AnalysisException {
         if (citationSentiments == null) {
-            getCitationLocations();
-            citationSentiments = ExtractionUtils.analyzeSentiment(conf, rawFullText, references, citationContexts);
+            getCitationPositions();
+            citationSentiments = ExtractionUtils.analyzeSentimentFromPositions(conf, rawFullText, citationPositions);
         }
         return citationSentiments;
     }
@@ -353,7 +353,7 @@ public class ContentExtractor {
                 parser.updateMetadataModel(extractor.getConf());
                 parser.updateInitialModel(extractor.getConf());
                 InputStream in = new FileInputStream(file);
-                extractor.uploadPDF(in);
+                extractor.setPDF(in);
                 Element result = extractor.getNLMContent();
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                 System.out.println(outputter.outputString(result));
@@ -382,7 +382,7 @@ public class ContentExtractor {
                     parser.updateMetadataModel(extractor.getConf());
                     parser.updateInitialModel(extractor.getConf());
                     InputStream in = new FileInputStream(pdf);
-                    extractor.uploadPDF(in);
+                    extractor.setPDF(in);
                     BxDocument doc = extractor.getBxDocument();
                     Element result = extractor.getNLMContent();
                     

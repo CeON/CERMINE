@@ -22,23 +22,19 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.process.DocumentPreprocessor;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import java.util.*;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 
 /**
- * A class for finding the text contexts of references based on their locations
+ * A class for finding the text contexts of references based on their positions
  * in the document's text.
  *
  * @author Dominika Tkaczyk
  */
 public class CitationContextFinder {
     
-    public void findContext(String fullText, List<List<CitationContext>> references) {
+    public List<List<String>> findContext(String fullText, List<List<CitationPosition>> positions) {
         Map<Integer, Integer> wordsIndexes = new HashMap<Integer, Integer>();
-        Map<Integer, List<HasWord>> words = new HashMap<Integer, List<HasWord>>();
         DocumentPreprocessor procesor = new DocumentPreprocessor(new StringReader(fullText));
         Iterator<List<HasWord>> iterator = procesor.iterator();
         while (iterator.hasNext()) {
@@ -55,18 +51,22 @@ public class CitationContextFinder {
                 }
             }
             wordsIndexes.put(min, max);
-            words.put(min, wordList);
         }
-        for (List<CitationContext> contexts : references) {
-            for (CitationContext context : contexts) {
+        List<List<String>> contexts = new ArrayList<List<String>>();
+        
+        for (List<CitationPosition> position : positions) {
+            List<String> context = new ArrayList<String>();
+            for (CitationPosition pos : position) {
                 for (Map.Entry<Integer, Integer> entry : wordsIndexes.entrySet()) {
-                    if (context.getStartRefPosition() >= entry.getKey()
-                            && context.getStartRefPosition() < entry.getValue()) {
-                        context.setContext(fullText.substring(entry.getKey(), entry.getValue()));
+                    if (pos.getStartRefPosition() >= entry.getKey()
+                            && pos.getStartRefPosition() < entry.getValue()) {
+                        context.add(fullText.substring(entry.getKey(), entry.getValue()));
                     }
                 }
             }
+            contexts.add(context);
         }
+        return contexts;
     }
     
 }

@@ -20,9 +20,7 @@ package pl.edu.icm.cermine.bibref.sentiment;
 
 import java.util.List;
 import java.util.Random;
-import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CiTOProperty;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 
 /**
@@ -33,17 +31,14 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 public class RandomCitationSentimentAnalyser implements CitationSentimentAnalyser {
     
     @Override
-    public CitationSentiment analyzeSentiment(BibEntry citation, List<CitationContext> contexts) {
+    public CitationSentiment analyzeSentiment(List<String> contexts) {
         StringBuilder sb = new StringBuilder();
-        for (CitationContext context : contexts) {
-            if (context.getContext() != null) {
-                sb.append(context.getContext());
-            }
+        for (String context : contexts) {
+            sb.append(context);
         }
         int seed = sb.toString().hashCode();
         
         CitationSentiment sentiment = new CitationSentiment();
-        sentiment.setKey(citation.getKey());
         sentiment.addProperty(CiTOProperty.CITES);
         sentiment.addProperty(randomProperty(seed, 0.8));
         sentiment.addProperty(randomProperty(seed, 0.4));

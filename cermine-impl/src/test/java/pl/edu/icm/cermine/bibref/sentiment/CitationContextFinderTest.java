@@ -22,7 +22,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 
 /**
  *
@@ -49,37 +49,44 @@ public class CitationContextFinderTest {
     public void testContextFinder() {
         CitationContextFinder finder = new CitationContextFinder();
         
-        CitationContext context1 = new CitationContext();
+        CitationPosition context1 = new CitationPosition();
         context1.setStartRefPosition(91);
         context1.setEndRefPosition(92);
         
-        CitationContext context2 = new CitationContext();
+        CitationPosition context2 = new CitationPosition();
         context2.setStartRefPosition(98);
         context2.setEndRefPosition(101);
         
-        CitationContext context3 = new CitationContext();
+        CitationPosition context3 = new CitationPosition();
         context3.setStartRefPosition(122);
         context3.setEndRefPosition(133);
         
-        CitationContext context4 = new CitationContext();
+        CitationPosition context4 = new CitationPosition();
         context4.setStartRefPosition(237);
         context4.setEndRefPosition(240);
         
-        CitationContext context5 = new CitationContext();
+        CitationPosition context5 = new CitationPosition();
         context5.setStartRefPosition(246);
         context5.setEndRefPosition(252);
         
-        List<CitationContext> list1 = Lists.newArrayList(context1);
-        List<CitationContext> list2 = Lists.newArrayList(context2, context3, context4);
-        List<CitationContext> list3 = Lists.newArrayList(context5);
+        List<CitationPosition> list1 = Lists.newArrayList(context1);
+        List<CitationPosition> list2 = Lists.newArrayList(context2, context3, context4);
+        List<CitationPosition> list3 = Lists.newArrayList(context5);
         
-        finder.findContext(documentText, Lists.newArrayList(list1, list2, list3));
+        List<List<String>> contexts = finder.findContext(documentText, Lists.newArrayList(list1, list2, list3));
+
+        assertEquals(3, contexts.size());
+
+        assertEquals(1, contexts.get(0).size());
+        assertEquals(documentText1, contexts.get(0).get(0));
         
-        assertEquals(documentText1, context1.getContext());
-        assertEquals(documentText1, context2.getContext());
-        assertEquals(documentText2, context3.getContext());
-        assertEquals(documentText3, context4.getContext());
-        assertEquals(documentText3, context5.getContext());
+        assertEquals(3, contexts.get(1).size());
+        assertEquals(documentText1, contexts.get(1).get(0));
+        assertEquals(documentText2, contexts.get(1).get(1));
+        assertEquals(documentText3, contexts.get(1).get(2));
+        
+        assertEquals(1, contexts.get(2).size());
+        assertEquals(documentText3, contexts.get(2).get(0));
     }
     
 }

@@ -28,7 +28,7 @@ import pl.edu.icm.cermine.ComponentFactory;
 import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CiTOProperty;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
@@ -72,11 +72,11 @@ public class CitationSentimentAnalyserTest {
     };
 
     @Test
-    public void testCitationLocations() throws AnalysisException {
+    public void testCitationPositions() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.uploadRawFullText(documentText);
-        extractor.uploadReferences(Lists.newArrayList(citations));
-        List<List<CitationContext>> locations = extractor.getCitationLocations();
+        extractor.setRawFullText(documentText);
+        extractor.setReferences(Lists.newArrayList(citations));
+        List<List<CitationPosition>> locations = extractor.getCitationPositions();
         
         assertEquals(3, locations.size());
         
@@ -96,8 +96,8 @@ public class CitationSentimentAnalyserTest {
     @Test
     public void testCitationSentiment() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.uploadRawFullText(documentText);
-        extractor.uploadReferences(Lists.newArrayList(citations));
+        extractor.setRawFullText(documentText);
+        extractor.setReferences(Lists.newArrayList(citations));
         List<CitationSentiment> sentiments = extractor.getCitationSentiments();
         
         assertEquals(3, sentiments.size());
@@ -109,8 +109,8 @@ public class CitationSentimentAnalyserTest {
     @Test
     public void testRandomCitationSentiment() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.uploadRawFullText(documentText);
-        extractor.uploadReferences(Lists.newArrayList(citations));
+        extractor.setRawFullText(documentText);
+        extractor.setReferences(Lists.newArrayList(citations));
         extractor.getConf().setCitationSentimentAnalyser(ComponentFactory.getRandomCitationSentimentAnalyser());
         List<CitationSentiment> sentiments = extractor.getCitationSentiments();
         
@@ -123,27 +123,27 @@ public class CitationSentimentAnalyserTest {
     @Test
     public void testCitationLocationSentiment() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.uploadRawFullText(documentText);
+        extractor.setRawFullText(documentText);
         
-        CitationContext context1 = new CitationContext();
-        context1.setStartRefPosition(98);
-        context1.setEndRefPosition(101);
+        CitationPosition position1 = new CitationPosition();
+        position1.setStartRefPosition(98);
+        position1.setEndRefPosition(101);
         
-        CitationContext context2 = new CitationContext();
-        context2.setStartRefPosition(122);
-        context2.setEndRefPosition(133);
+        CitationPosition position2 = new CitationPosition();
+        position2.setStartRefPosition(122);
+        position2.setEndRefPosition(133);
         
-        CitationContext context3 = new CitationContext();
-        context3.setStartRefPosition(246);
-        context3.setEndRefPosition(252);
+        CitationPosition position3 = new CitationPosition();
+        position3.setStartRefPosition(246);
+        position3.setEndRefPosition(252);
         
-        List<CitationContext> list1 = Lists.newArrayList(context1, context2);
-        List<CitationContext> list2 = Lists.newArrayList(context3);
-        List<CitationContext> list3 = new ArrayList<CitationContext>();
-        List<List<CitationContext>> locations = Lists.newArrayList(list1, list2, list3);
+        List<CitationPosition> list1 = Lists.newArrayList(position1, position2);
+        List<CitationPosition> list2 = Lists.newArrayList(position3);
+        List<CitationPosition> list3 = new ArrayList<CitationPosition>();
+        List<List<CitationPosition>> locations = Lists.newArrayList(list1, list2, list3);
         
-        extractor.uploadReferences(Lists.newArrayList(citations));
-        extractor.uploadCitationContexts(locations);
+        extractor.setReferences(Lists.newArrayList(citations));
+        extractor.setCitationPositions(locations);
         List<CitationSentiment> sentiments = extractor.getCitationSentiments();
         
         assertEquals(3, sentiments.size());

@@ -19,8 +19,6 @@
 package pl.edu.icm.cermine.bibref.sentiment;
 
 import java.util.List;
-import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationContext;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 
 /**
@@ -30,6 +28,6 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
  */
 public interface CitationSentimentAnalyser {
     
-    CitationSentiment analyzeSentiment(BibEntry citation, List<CitationContext> context);
+    CitationSentiment analyzeSentiment(List<String> contexts);
 
 }

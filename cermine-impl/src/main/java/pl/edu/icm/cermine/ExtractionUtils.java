@@ -45,7 +45,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  */
 public class ExtractionUtils {
     
-    public static final boolean timeDebug = true;
+    public static final boolean timeDebug = false;
    
     /**
      * Extracts box structure from input stream.

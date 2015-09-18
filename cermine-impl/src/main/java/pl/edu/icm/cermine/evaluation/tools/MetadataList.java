@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Document;
+import pl.edu.icm.cermine.tools.XMLTools;
 
 /**
  *

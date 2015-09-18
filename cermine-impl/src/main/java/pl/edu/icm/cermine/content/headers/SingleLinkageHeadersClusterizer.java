@@ -24,9 +24,9 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.tools.classification.clustering.Clusterizer;
 import pl.edu.icm.cermine.tools.classification.clustering.FeatureVectorClusterizer;
 import pl.edu.icm.cermine.tools.classification.clustering.SingleLinkageClusterizer;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorDistanceMetric;
-import pl.edu.icm.cermine.tools.classification.metrics.FeatureVectorEuclideanMetric;
+import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorDistanceMetric;
+import pl.edu.icm.cermine.tools.distance.FeatureVectorEuclideanMetric;
 
 /**
  *

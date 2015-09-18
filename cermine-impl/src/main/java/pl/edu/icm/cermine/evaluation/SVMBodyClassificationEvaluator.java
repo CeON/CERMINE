@@ -26,17 +26,13 @@ import libsvm.svm_parameter;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.content.filtering.ContentFilterTools;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils.DocumentsIterator;
-import pl.edu.icm.cermine.evaluation.tools.PenaltyCalculator;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
-import pl.edu.icm.cermine.tools.classification.features.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
-import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
-import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.classification.general.*;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {

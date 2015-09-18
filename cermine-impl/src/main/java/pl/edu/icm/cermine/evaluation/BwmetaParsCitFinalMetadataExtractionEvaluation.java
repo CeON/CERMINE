@@ -35,6 +35,7 @@ import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.XMLTools;
 
 /**
  * @author Pawel Szostek (p.szostek@icm.edu.pl)

@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.evaluation.tools;
 import java.util.Comparator;
 import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Document;
+import pl.edu.icm.cermine.tools.XMLTools;
 
 public class MetadataSingle implements ComparisonResult {
 

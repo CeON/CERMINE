@@ -35,6 +35,9 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.DirExtractor;
 import pl.edu.icm.cermine.tools.DocumentsExtractor;
+import pl.edu.icm.cermine.tools.TextUtils;
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
+import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
 public class EvaluationUtils {
     
@@ -126,8 +129,8 @@ public class EvaluationUtils {
     }
   
     public static double compareStringsSW(String expectedText, String extractedText) {
-        List<String> expectedTokens = StringTools.tokenize(expectedText.trim());
-        List<String> extractedTokens = StringTools.tokenize(extractedText.trim());
+        List<String> expectedTokens = TextUtils.tokenize(expectedText.trim());
+        List<String> extractedTokens = TextUtils.tokenize(extractedText.trim());
         SmithWatermanDistance distanceFunc = new SmithWatermanDistance(.0, .0);
         double distance = distanceFunc.compare(expectedTokens, extractedTokens);
         return 2*distance / (double) (expectedTokens.size()+extractedTokens.size());
@@ -181,7 +184,7 @@ public class EvaluationUtils {
 
         @Override
         public int compare(String t1, String t2) {
-            if (new CosineDistance().compare(StringTools.tokenize(t1), StringTools.tokenize(t2)) > threshold) {
+            if (new CosineDistance().compare(TextUtils.tokenize(t1), TextUtils.tokenize(t2)) > threshold) {
                 return 0;
             }
             return t1.compareToIgnoreCase(t2);

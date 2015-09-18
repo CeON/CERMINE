@@ -26,6 +26,7 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
+import pl.edu.icm.cermine.content.headers.HeadersClusterizer;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
@@ -78,6 +79,9 @@ public class ComponentConfiguration {
     /** content header extractor */
     ContentHeadersExtractor contentHeaderExtractor;
     
+    /** content header clusterizer */
+    HeadersClusterizer contentHeaderClusterizer;
+    
     /** content cleaner */
     ContentCleaner contentCleaner;
    
@@ -94,6 +98,7 @@ public class ComponentConfiguration {
             bibReferenceParser = ComponentFactory.getBibReferenceParser(); 
             contentFilter = ComponentFactory.getContentFilter();
             contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor();
+            contentHeaderClusterizer = ComponentFactory.getContentHeaderClusterizer();
             contentCleaner = ComponentFactory.getContentCleaner();
         } catch (IOException ex) {
             throw new AnalysisException("Cannot create ComponentConfiguration!", ex);
@@ -166,6 +171,14 @@ public class ComponentConfiguration {
     
     public void setContentHeaderExtractor(InputStream model, InputStream range) throws AnalysisException, IOException {
         this.contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor(model, range);
+    }
+
+    public HeadersClusterizer getContentHeaderClusterizer() {
+        return contentHeaderClusterizer;
+    }
+
+    public void setContentHeaderClusterizer(HeadersClusterizer contentHeaderClusterizer) {
+        this.contentHeaderClusterizer = contentHeaderClusterizer;
     }
     
     public ParsableStringParser<DocumentAffiliation> getAffiliationParser() {

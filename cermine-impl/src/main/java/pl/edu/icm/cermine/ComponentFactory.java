@@ -30,9 +30,7 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.filtering.SVMContentFilter;
-import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
-import pl.edu.icm.cermine.content.headers.HeuristicContentHeadersExtractor;
-import pl.edu.icm.cermine.content.headers.SVMContentHeadersExtractor;
+import pl.edu.icm.cermine.content.headers.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.EnhancerMetadataExtractor;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
@@ -230,6 +228,10 @@ public class ComponentFactory {
         return new HeuristicContentHeadersExtractor();
     }
 
+    public static HeadersClusterizer getContentHeaderClusterizer() throws AnalysisException {
+        return new SimpleHeadersClusterizer();
+    }
+    
     /**
      * The method creates an instance of a content header extractor. 
      * 

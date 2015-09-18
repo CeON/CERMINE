@@ -193,7 +193,6 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
             }
         }
         
-        headersClusterizer.clusterHeaders(contentStructure);
         headerLinesCompletener.completeLines(contentStructure);
         
         return contentStructure;

@@ -19,9 +19,8 @@
 package pl.edu.icm.cermine.structure.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import pl.edu.icm.cermine.tools.CountMap;
 
 /**
  * Models a single page of a document. A page is either segmented (divided into zones)
@@ -82,6 +81,32 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
         return this;
     }
 
+    @Override
+    public String getMostPopularFontName() {
+        CountMap<String> map = new CountMap<String>();
+        for (BxZone zone : zones) {
+            for (BxLine line : zone.getLines()) {
+                for (BxWord word : line.getWords()) {
+                    for (BxChunk chunk : word.getChunks()) {
+                        if (chunk.getFontName() != null) {
+                            map.add(chunk.getFontName());
+                        }
+                    }
+                }
+            }
+        }
+        return map.getMaxCountObject();
+    }
+    
+    @Override
+    public Set<String> getFontNames() {
+        Set<String> names = new HashSet<String>();
+        for (BxZone zone : zones) {
+            names.addAll(zone.getFontNames());
+        }
+        return names;
+    }
+    
     @Override
 	public String toText() {
         if (getText() == null) {

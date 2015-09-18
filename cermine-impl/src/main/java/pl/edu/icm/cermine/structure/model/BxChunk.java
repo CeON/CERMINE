@@ -18,7 +18,9 @@
 
 package pl.edu.icm.cermine.structure.model;
 
+import com.google.common.collect.Sets;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Immutable representation of a chunk of glyphs.
@@ -55,5 +57,15 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
 
     public String toText() {
         return this.getText();
+    }
+
+    @Override
+    public String getMostPopularFontName() {
+        return fontName;
+    }
+
+    @Override
+    public Set<String> getFontNames() {
+        return Sets.newHashSet(fontName);
     }
 }

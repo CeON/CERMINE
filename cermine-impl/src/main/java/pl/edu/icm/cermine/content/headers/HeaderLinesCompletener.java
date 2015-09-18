@@ -31,15 +31,15 @@ public class HeaderLinesCompletener {
     
     public static final int DEFAULT_MAX_ADDED_LINES = 2;
     
-    public static final double DEFAULT_HEADER_HEIGHT_TOL = 0.01;
+    public static final double DEFAULT_HEADER_HEIGHT_TOL = 0.1;
     
-    public static final int DEFAULT_MIN_HEADER_SCORE = 1;
+    public static final int DEFAULT_MIN_HEADER_SCORE = 2;
     
     public static final double DEFAULT_HEADER_LINE_WIDTH_MULT = 0.7;
     
     public static final double DEFAULT_HEADER_LINE_MULT = 0.7;
     
-    public static final int DEFAULT_MIN_HEADER_LINE_SCORE = 1;
+    public static final int DEFAULT_MIN_HEADER_LINE_SCORE = 2;
     
     /**
      * The maximum number of additional line following the first header line added as a part of the header.
@@ -79,6 +79,9 @@ public class HeaderLinesCompletener {
                 if (Math.abs(actLine.getHeight() - headerLine.getHeight()) < headerHeightTolerance) {
                     score++;
                 }
+                if (actLine.getMostPopularFontName().equals(headerLine.getMostPopularFontName())) {
+                    score++;
+                }
                 if (score >= minHeaderCandidateScore) {
                     candidates.add(actLine);
                     added++;
@@ -99,6 +102,12 @@ public class HeaderLinesCompletener {
             if (lastCandidate.hasNext() 
                     && Math.abs(headerLine.getY() - firstCandidate.getY()) 
                   < Math.abs(lastCandidate.getY() - lastCandidate.getNext().getY()) * headerLineSpacingMultiplier) {
+                score++;
+            }
+            if (lastCandidate.hasNext() && lastCandidate.getNext().toText().matches("[A-Z].*")) {
+                score++;
+            }
+            if (lastCandidate.hasNext() && !lastCandidate.getMostPopularFontName().equals(lastCandidate.getNext().getMostPopularFontName())) {
                 score++;
             }
             if (score >= minHeaderLineScore) {

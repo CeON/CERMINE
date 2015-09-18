@@ -34,7 +34,7 @@ public class SVMContentHeadersExtractor implements ContentHeadersExtractor {
     
     private SVMHeaderLinesClassifier contentHeaderClassifier;
     
-    private HeadersClusterizer headersClusterizer;
+    private SingleLinkageHeadersClusterizer headersClusterizer;
     
     private HeaderLinesCompletener headerLinesCompletener;
 
@@ -44,19 +44,19 @@ public class SVMContentHeadersExtractor implements ContentHeadersExtractor {
     
     public SVMContentHeadersExtractor(SVMHeaderLinesClassifier contentHeaderClassifier) {
         this.contentHeaderClassifier = contentHeaderClassifier;
-        this.headersClusterizer = new HeadersClusterizer();
+        this.headersClusterizer = new SingleLinkageHeadersClusterizer();
         this.headerLinesCompletener = new HeaderLinesCompletener();
     }
     
     public SVMContentHeadersExtractor(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
 		this.contentHeaderClassifier = new SVMHeaderLinesClassifier(modelFile, rangeFile);
-        this.headersClusterizer = new HeadersClusterizer();
+        this.headersClusterizer = new SingleLinkageHeadersClusterizer();
         this.headerLinesCompletener = new HeaderLinesCompletener();
 	}
 
 	public SVMContentHeadersExtractor(String modelFilePath, String rangeFilePath) throws AnalysisException {
 		this.contentHeaderClassifier = new SVMHeaderLinesClassifier(modelFilePath, rangeFilePath);
-        this.headersClusterizer = new HeadersClusterizer();
+        this.headersClusterizer = new SingleLinkageHeadersClusterizer();
         this.headerLinesCompletener = new HeaderLinesCompletener();
 	}
     

@@ -18,9 +18,9 @@
 
 package pl.edu.icm.cermine.evaluation.tools;
 
-import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import java.util.List;
 import pl.edu.icm.cermine.tools.TextUtils;
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
 
 public class DateComparator {
 	
@@ -41,7 +41,8 @@ public class DateComparator {
 				for(String extractedDate: extracted) {
 					List<String> extractedParts = TextUtils.tokenize(extractedDate);
 					for(String part: extractedParts) {
-						if(part.length() == 4 && Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
+						if (part.length() == 4 && part.matches("^[0-9]+$") &&
+                            Integer.parseInt(part) < 2100 && Integer.parseInt(part) > 1900) {
 							extractedYear = part;
 							break;
 						}

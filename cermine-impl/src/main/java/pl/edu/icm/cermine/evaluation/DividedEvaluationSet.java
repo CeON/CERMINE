@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.evaluation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
@@ -44,7 +45,8 @@ public class DividedEvaluationSet {
     public static List<DividedEvaluationSet> build(List<TrainingSample<BxZoneLabel>> samples, int numberOfFolds) {
         List<TrainingSample<BxZoneLabel>> shuffledDocs = new ArrayList<TrainingSample<BxZoneLabel>>(samples.size());
         shuffledDocs.addAll(samples);
-        Collections.shuffle(shuffledDocs);
+        Random random = new Random(2102);
+        Collections.shuffle(shuffledDocs, random);
         List<List<TrainingSample<BxZoneLabel>>> dividedSamples = new ArrayList<List<TrainingSample<BxZoneLabel>>>(numberOfFolds);
 
         for (int fold = 0; fold < numberOfFolds; ++fold) {

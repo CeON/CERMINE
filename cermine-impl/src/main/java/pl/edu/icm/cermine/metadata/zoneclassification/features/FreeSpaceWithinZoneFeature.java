@@ -27,13 +27,6 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 public class FreeSpaceWithinZoneFeature extends FeatureCalculator<BxZone, BxPage> {
 
-	private static String featureName = "FreeSpace";
-
-	@Override
-	public String getFeatureName() {
-		return featureName;
-	}
-
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
 		double charSpace = 0.0;

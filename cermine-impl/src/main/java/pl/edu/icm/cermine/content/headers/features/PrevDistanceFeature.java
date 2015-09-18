@@ -30,7 +30,7 @@ public class PrevDistanceFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {
-        return line.getPrev().getBounds().getY() - line.getBounds().getY();
+        return line.hasPrev() ? line.getPrev().getBounds().getY() - line.getBounds().getY() : 0;
     }
     
 }

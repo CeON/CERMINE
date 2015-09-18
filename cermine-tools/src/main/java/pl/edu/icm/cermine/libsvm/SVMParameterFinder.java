@@ -28,7 +28,6 @@ import org.apache.commons.cli.*;
 import pl.edu.icm.cermine.evaluation.ClassificationResults;
 import pl.edu.icm.cermine.evaluation.DividedEvaluationSet;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
@@ -49,18 +48,18 @@ public abstract class SVMParameterFinder {
     protected int foldness;
     private final Map<BxZoneLabel, BxZoneLabel> labelMap = DEFAULT_LABEL_MAP.clone();
 
-    public static void main(String[] args, SVMParameterFinder evaluator)
-            throws ParseException, AnalysisException, IOException, TransformationException, CloneNotSupportedException, InterruptedException, ExecutionException {
+    public static void main(String[] args, SVMParameterFinder evaluator) 
+            throws ParseException, AnalysisException, InterruptedException, ExecutionException{
         Options options = new Options();
-        options.addOption("compact", false, "do not print results for pages");
         options.addOption("fold", true, "foldness of cross-validation");
-        options.addOption("help", false, "print this help message");
-        options.addOption("minimal", false, "print only final summary");
-        options.addOption("full", false, "print all possible messages");
         options.addOption("kernel", true, "kernel type");
         options.addOption("degree", true, "degree");
         options.addOption("ext", true, "file extension");
         options.addOption("threads", true, "number of threads");
+        options.addOption("minc", true, "");
+        options.addOption("maxc", true, "");
+        options.addOption("ming", true, "");
+        options.addOption("maxg", true, "");
         
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
@@ -109,15 +108,33 @@ public abstract class SVMParameterFinder {
             if (extStr != null && !extStr.isEmpty()) {
                 ext = extStr;
             }
+
+            int minc = -5;
+            if (line.hasOption("minc")) {
+                minc = Integer.valueOf(line.getOptionValue("minc"));
+            }
+            int maxc = 15;
+            if (line.hasOption("maxc")) {
+                maxc = Integer.valueOf(line.getOptionValue("maxc"));
+            }
+            int ming = -15;
+            if (line.hasOption("ming")) {
+                ming = Integer.valueOf(line.getOptionValue("ming"));
+            }
+            int maxg = 3;
+            if (line.hasOption("maxg")) {
+                maxg = Integer.valueOf(line.getOptionValue("maxg"));
+            }
             
             evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());
-            evaluator.run(inputFile, ext, threads, kernelType, degree);
+            evaluator.run(inputFile, ext, threads, kernelType, degree, minc, maxc, ming, maxg);
         }
     }
 
     protected abstract List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException;
     
-    public void run(String inputFile, String ext, int threads, int kernel, int degree) throws AnalysisException, IOException, TransformationException, CloneNotSupportedException, InterruptedException, ExecutionException {
+    public void run(String inputFile, String ext, int threads, int kernel, int degree, int minc, int maxc, int ming, int maxg) 
+            throws AnalysisException, InterruptedException, ExecutionException {
         List<TrainingSample<BxZoneLabel>> samples = getSamples(inputFile, ext);
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -128,9 +145,9 @@ public abstract class SVMParameterFinder {
         int bestglog = 0;
 
         int submitted = 0;
-        
-        for (int clog = -5; clog <= 15; clog++) {
-            for (int glog = 3; glog >= -15; glog--) {
+
+        for (int clog = minc; clog <= maxc; clog++) {
+            for (int glog = maxg; glog >= ming; glog--) {
                 completionService.submit(new Evaluator(samples, new EvaluationParams(clog, glog), kernel, degree));
                 submitted++;
             }

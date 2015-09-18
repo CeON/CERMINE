@@ -28,7 +28,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  */
 public class CRFBibReferenceParserTest extends AbstractBibReferenceParserTest {
     
-    private double minPercentage = 0.9;
+    private double minPercentage = 0.8;
     
     private CRFBibReferenceParser parser;
     

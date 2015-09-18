@@ -53,7 +53,8 @@ public class JournalVolumeIssueEnhancer extends AbstractMultiPatternEnhancer {
     @Override
     protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
         metadata.setJournal(result.group(1).trim()
-                .replaceAll("Published as: ", "").replaceAll(",$", ""));
+                .replaceAll("Published as: ", "").replaceAll(",$", "")
+                .replaceAll(".*/", "").trim());
         metadata.setVolume(result.group(2));
         metadata.setIssue(result.group(3));
        

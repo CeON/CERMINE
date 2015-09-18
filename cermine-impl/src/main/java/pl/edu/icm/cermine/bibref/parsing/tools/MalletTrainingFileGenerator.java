@@ -117,7 +117,7 @@ public final class MalletTrainingFileGenerator {
             System.out.println(allcitations.size());
             int ind = 0;
             for (Citation citation : allcitations) {
-                List<String> tokens = CitationUtils.citationToMalletInputFormat(citation, additionalFeatures);
+                List<String> tokens = CitationUtils.citationToMalletInputFormat(citation);
                 for (String token : tokens) {
                     writer.write(token);
                     writer.write("\n");

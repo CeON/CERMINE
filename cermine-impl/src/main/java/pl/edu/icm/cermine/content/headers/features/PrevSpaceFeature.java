@@ -28,13 +28,6 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  */
 public class PrevSpaceFeature extends FeatureCalculator<BxLine, BxPage> {
 
-    private static String featureName = "PrevSpaceFeature";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
-
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {
         if (!line.hasPrev() || line.getPrev().getY() > line.getY()) {

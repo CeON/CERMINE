@@ -19,21 +19,11 @@
 package pl.edu.icm.cermine.content.filtering;
 
 import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import pl.edu.icm.cermine.content.filtering.features.*;
-import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
-import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.metadata.zoneclassification.features.*;
+import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
-import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
-import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
-import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
-import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
 /**
  *
@@ -44,33 +34,70 @@ public final class ContentFilterTools {
     public static final FeatureVectorBuilder<BxZone, BxPage> VECTOR_BUILDER = new FeatureVectorBuilder<BxZone, BxPage>();
     static {
         VECTOR_BUILDER.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
-                new MathSymbolsFeature(),
-                new RelativeMeanLengthFeature(),
-                new AreaFeature(),
-                new GreekLettersFeature(),
-                new XVarianceFeature(),
-                new FigureTableFeature()
-                ));
-    }
-    
-    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException, TransformationException {
-        List<BxDocument> documents = EvaluationUtils.getDocumentsFromPath(trainPath);
-        return toTrainingSamples(documents);
-    }
-    
-    public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(List<BxDocument> documents) throws AnalysisException {
-        List<TrainingSample<BxZoneLabel>> trainingSamples;
-
-        SampleSelector<BxZoneLabel> selector = new OversamplingSelector<BxZoneLabel>(1.0);
-        
-        Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
-        map.put(BxZoneLabel.BODY_HEADING, BxZoneLabel.BODY_CONTENT);
-       
-        trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(documents, VECTOR_BUILDER, map);
-        trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
-        trainingSamples = selector.pickElements(trainingSamples);
-        
-        return trainingSamples;
+            new FigureFeature(),
+            new IsLastPageFeature(),
+            new AcknowledgementFeature(),
+            new AuthorFeature(),
+            new IsWidestOnThePageFeature(),
+            new LicenseFeature(),
+            new BracketedLineRelativeCountFeature(),
+            new ContainsPageNumberFeature(),
+            new IsLeftFeature(),
+            new IsAnywhereElseFeature(),
+            new FigureTableFeature(),
+            new AffiliationFeature(),
+            new IsLowestOnThePageFeature(),
+            new IsOnSurroundingPagesFeature(),
+            new BibinfoFeature(),
+            new IsFirstPageFeature(),
+            new IsLongestOnThePageFeature(),
+            new IsFontBiggerThanNeighboursFeature(),
+            new YearFeature(),
+            new ContainsCuePhrasesFeature(),
+            new CuePhrasesRelativeCountFeature(),
+            new DigitCountFeature(),
+            new IsSingleWordFeature(),
+            new ReferencesFeature(),
+            new BracketCountFeature(),
+            new BracketRelativeCountFeature(),
+            new PageNumberFeature(),
+            new DotCountFeature(),
+            new StartsWithDigitFeature(),
+            new AuthorNameRelativeFeature(),
+            new LineCountFeature(),
+            new LineHeightMaxMeanFeature(),
+            new LineXPositionDiffFeature(),
+            new LineXPositionMeanFeature(),
+            new CommaCountFeature(),
+            new UppercaseWordCountFeature(),
+            new UppercaseCountFeature(),
+            new XVarianceFeature(),
+            new CommaRelativeCountFeature(),
+            new UppercaseWordRelativeCountFeature(),
+            new DotRelativeCountFeature(),
+            new FullWordsRelativeFeature(),
+            new DigitRelativeCountFeature(),
+            new LowercaseCountFeature(),
+            new WordLengthMeanFeature(),
+            new LineXWidthPositionDiffFeature(),
+            new UppercaseRelativeCountFeature(),
+            new PunctuationRelativeCountFeature(),
+            new LastButOneZoneFeature(),
+            new LineRelativeCountFeature(),
+            new PreviousZoneFeature(),
+            new LineHeightMeanFeature(),
+            new XPositionFeature(),
+            new HorizontalRelativeProminenceFeature(),
+            new DistanceFromNearestNeighbourFeature(),
+            new EmptySpaceFeature(),
+            new EmptySpaceRelativeFeature(),
+            new VerticalProminenceFeature(),
+            new YPositionFeature(),
+            new YPositionRelativeFeature(),
+            new LineWidthMeanFeature(),
+            new ProportionsFeature(),
+            new RelativeMeanLengthFeature()
+            ));
     }
 
     private ContentFilterTools() {

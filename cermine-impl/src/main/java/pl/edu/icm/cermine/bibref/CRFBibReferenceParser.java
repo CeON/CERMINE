@@ -26,6 +26,8 @@ import edu.umass.cs.mallet.grmm.learning.ACRF;
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import org.apache.commons.cli.*;
@@ -56,8 +58,19 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     private static final String defaultModelFile = "/pl/edu/icm/cermine/bibref/acrf.ser.gz";
     
     private static final String defaultWordsFile = "/pl/edu/icm/cermine/bibref/crf-train-words.txt";
-    private Set<String> words;
+    private static Set<String> words;
 
+    static {
+        words = new HashSet<String>();
+        InputStream wis = CitationUtils.class.getResourceAsStream(defaultWordsFile);
+        try {
+            words.addAll(IOUtils.readLines(wis));
+        } catch (IOException ex) {
+            Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common words!", ex);
+            words = null;
+        }
+    }
+    
     public CRFBibReferenceParser(String modelFile) throws AnalysisException {
         System.setProperty("java.util.logging.config.file",
             "edu/umass/cs/mallet/base/util/resources/logging.properties");
@@ -79,14 +92,6 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
             } catch (IOException ex) {
                 throw new AnalysisException("Cannot set model!", ex);
             }
-        }
-        
-        words = new HashSet<String>();
-        InputStream wis = CitationUtils.class.getResourceAsStream(defaultWordsFile);
-        try {
-            words.addAll(IOUtils.readLines(wis));
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot set words!", ex);
         }
     }
     
@@ -110,13 +115,10 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
                 throw new AnalysisException("Cannot set model!", ex);
             }
         }
-        words = new HashSet<String>();
-        InputStream wis = CitationUtils.class.getResourceAsStream(defaultWordsFile);
-        try {
-            words.addAll(IOUtils.readLines(wis));
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot set words!", ex);
-        }
+    }
+
+    public static Set<String> getWords() {
+        return words;
     }
 
     @Override
@@ -130,7 +132,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         }
         
         Citation citation = CitationUtils.stringToCitation(text);
-        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation, words), "\n");
+        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation), "\n");
         
         Pipe pipe = model.getInputPipe();
         InstanceList instanceList = new InstanceList(pipe);
@@ -142,6 +144,29 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         }
         
         return CitationUtils.citationToBibref(citation);
+    }
+    
+    public Citation parseToTokenList(String text) throws AnalysisException {
+        if (model == null) {
+            throw new AnalysisException("Model object is not set!");
+        }
+        Citation citation = CitationUtils.stringToCitation(text);
+        if (text.length() > MAX_REFERENCE_LENGTH) {
+            return citation;
+        }
+        
+        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation), "\n");
+        
+        Pipe pipe = model.getInputPipe();
+        InstanceList instanceList = new InstanceList(pipe);
+        instanceList.add(new LineGroupIterator(new StringReader(data), Pattern.compile ("\\s*"), true)); 
+        LabelsSequence labelSequence = (LabelsSequence)model.getBestLabels(instanceList).get(0);
+           
+        for (int i = 0; i < labelSequence.size(); i++) {
+            citation.getTokens().get(i).setLabel(CitationTokenLabel.valueOf(labelSequence.get(i).toString()));
+        }
+        
+        return citation;
     }
   
     public static CRFBibReferenceParser getInstance() throws AnalysisException {

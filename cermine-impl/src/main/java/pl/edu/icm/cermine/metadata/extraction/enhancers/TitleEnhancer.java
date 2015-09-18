@@ -77,6 +77,9 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
                     || (zone.hasPrev() && zone.getPrev().getLines().size() == 1 && zone.getPrev().toText().toLowerCase().startsWith("sponsored document from"))) {
                 continue;
             }
+            if (zone.hasNext() && zone.getNext().toText().toLowerCase().replaceAll("[^a-z]", "").startsWith("journalhomepage")) {
+                continue;
+            }
             titleZones.add(zone);
         }
         Collections.sort(titleZones, new Comparator<BxZone>() {

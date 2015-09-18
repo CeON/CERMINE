@@ -28,13 +28,6 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  */
 public class PrevEndsWithDotFeature extends FeatureCalculator<BxLine, BxPage> {
 
-    private static String featureName = "PrevEndsWithDotFeature";
-
-    @Override
-    public String getFeatureName() {
-        return featureName;
-    }
-
     @Override
     public double calculateFeatureValue(BxLine line, BxPage page) {
         if (!line.hasPrev()) {

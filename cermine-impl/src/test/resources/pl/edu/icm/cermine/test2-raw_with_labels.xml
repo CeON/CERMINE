@@ -149,47 +149,47 @@ they could safely be physically active and fearful of the
 consequences if they exceeded this unknown threshold.
 Participants repeatedly mentioned how the monitoring of
 their heart rate by the medical staff during the exercise
-sessions provided a sense of security.
-I thought that maybe this thing will creep up
-behind me some day, but having done the course
+sessions provided a sense of security.</zone>
+  <zone label="BODY_HEADING">I thought that maybe this thing will creep up</zone>
+  <zone label="BODY_CONTENT">behind me some day, but having done the course
 here, you'd be on a monitor and you saw your
 reactions to, you knew what you could do and
 what you couldn't do . . .. That settled me down
-and I was quite happy then. (Centre A, R4).
-It was a great reassurance for me, anyway,
+and I was quite happy then. (Centre A, R4).</zone>
+  <zone label="BODY_HEADING">It was a great reassurance for me, anyway,
 personally, a great confidence booster. And I'm not
 afraid to do things now. And I was certainly afraid
-before I took the course. (Centre A, R1).
-The programme of exercise was a crucial kick-start to
-becoming functional and mobile once more.
-When I came here first I could hardly lift a cup of
-water and, sure, I could pick two big buckets now
-and go where I like with them. I'd be very fit now,
-I couldn't be much fitter. (Centre A, R7).
-The patient-centred approach and the focus on their
+before I took the course. (Centre A, R1).</zone>
+  <zone label="BODY_CONTENT">The programme of exercise was a crucial kick-start to
+becoming functional and mobile once more.</zone>
+  <zone label="BODY_HEADING">When I came here first I could hardly lift a cup of</zone>
+  <zone label="BODY_CONTENT">water and, sure, I could pick two big buckets now
+and go where I like with them. I'd be very fit now,</zone>
+  <zone label="BODY_HEADING">I couldn't be much fitter. (Centre A, R7).</zone>
+  <zone label="BODY_CONTENT">The patient-centred approach and the focus on their
 needs improved participants' morale and counteracted the
 sense of isolation and redundancy that often affects heart
 failure patients.</zone>
   <zone label="MET_BIB_INFO">Rehabilitation Research and Practice</zone>
-  <zone label="BODY_CONTENT">You got a real feeling from the staff that they'd do
-anything they could for you. It was really about us
+  <zone label="BODY_HEADING">You got a real feeling from the staff that they'd do</zone>
+  <zone label="BODY_CONTENT">anything they could for you. It was really about us
 and they'd go above and beyond to help you. They
 are great, the nurses (Centre B, R4).
 The group setting facilitated interaction with peers who
 had the same condition, which also lessened feelings of
-loneliness and anxiety.
-And then when you see other people and start
+loneliness and anxiety.</zone>
+  <zone label="BODY_HEADING">And then when you see other people and start
 talking about it, it doesn't seem nearly as bad.
-(Centre A, R5).
-Many of the participants had felt ill-informed about
+(Centre A, R5).</zone>
+  <zone label="BODY_CONTENT">Many of the participants had felt ill-informed about
 their condition prior to attending the programme. They
 also lacked knowledge of the tips and tricks that would
 have helped them cope and improve their quality of life
 generally. Information sessions addressed these knowledge
 gaps, helping them to understand their condition and
-manage it more successfully.
-Well, when I left hospital I was given a leaflet to
-read and went through them in a scattered sort of
+manage it more successfully.</zone>
+  <zone label="BODY_HEADING">Well, when I left hospital I was given a leaflet to</zone>
+  <zone label="BODY_CONTENT">read and went through them in a scattered sort of
 a way. It was only when I came down here that
 they explained it in more detail, important parts
 of it. (Centre A, R4).
@@ -206,18 +206,18 @@ developed in the clinic. Some had failed to maintain an
 exercise regimen, in particular the participants who had
 symptoms of fatigue and breathlessness. Lack of equipment
 was partly to blame, but the absence of the discipline of the
-programme was also a factor.
-I found I missed, the first week I slacked on
-everything because I had no place, I had no eleven
-o'clock to be up here and two o'clock to be up here.
-I kinda just went into a bit of a trough. (Centre A,
-R1).
-The participants were not unanimous on this point,
+programme was also a factor.</zone>
+  <zone label="BODY_HEADING">I found I missed, the first week I slacked on</zone>
+  <zone label="BODY_CONTENT">everything because I had no place, I had no eleven
+o'clock to be up here and two o'clock to be up here.</zone>
+  <zone label="BODY_HEADING">I kinda just went into a bit of a trough. (Centre A,
+R1).</zone>
+  <zone label="BODY_CONTENT">The participants were not unanimous on this point,
 however, and some seemed to have coped better with
 self-maintenance independently of the programme. These
 participants continued to exercise and did not feel the need
-for external sources of motivation.
-You have to get out and do the bit of walking or
+for external sources of motivation.</zone>
+  <zone label="BODY_HEADING">You have to get out and do the bit of walking or
 whatever, if you don't do it one day it's always
 harder then to do it the next. (Centre B, R2).</zone>
   <zone label="GEN_OTHER">3</zone>
@@ -245,9 +245,9 @@ staff. They generally lacked a close relationship with their GP
 and expressed little faith in their GP's ability to recognise
 and effectively meet their needs. One participant spoke of
 his GP's unwillingness to take responsibility in managing his
-condition:
-I got blood tests done . . . with my GP, and he got
-the results back and he goes . . ., “. . . I'm not taking
+condition:</zone>
+  <zone label="BODY_HEADING">I got blood tests done . . . with my GP, and he got</zone>
+  <zone label="BODY_CONTENT">the results back and he goes . . ., “. . . I'm not taking
 responsibility for you, back to [rehabilitation
 facility]”. Since we finished the course, I've been
 back in [rehabilitation facility] six times (Centre
@@ -255,9 +255,9 @@ A, R4).
 In relation to their general health problems (not specifically
 heart failure), many felt that GPs treated them in a summary
 manner, dispensing prescriptions without investigating
-the problem:
-You go with a pain or an ache to them and they've
-no test much for it, ah sure, give you an aspirin,
+the problem:</zone>
+  <zone label="BODY_HEADING">You go with a pain or an ache to them and they've</zone>
+  <zone label="BODY_CONTENT">no test much for it, ah sure, give you an aspirin,
 give you Difene, give you something else for a week
 or a fortnight and come back. That's my main
 objection: there should be more serious looking
@@ -269,9 +269,9 @@ many participants were not confident that the GP could deal
 adequately with the situation and would simply send patients
 to hospital as a matter of course. If they needed advice,
 participants were much more likely to contact the hospital
-that was treating them or the cardiac unit.
-But if you have a problem at home, something
-went wrong with you, like what happened to me
+that was treating them or the cardiac unit.</zone>
+  <zone label="BODY_HEADING">But if you have a problem at home, something</zone>
+  <zone label="BODY_CONTENT">went wrong with you, like what happened to me
 once, the last place you'd be going to would be to
 your GP, you'd go straight to the hospital or to the
 heart unit here. (Centre A, R6).</zone>
@@ -281,11 +281,11 @@ that GPs might provide heart failure rehabilitation programmes.
 They felt that GP surgeries would not have the
 space nor the facilities to accommodate a programme. They
 also felt more secure doing the programme within a hospital
-setting:
-They know me here, they know what I've been
+setting:</zone>
+  <zone label="BODY_HEADING">They know me here, they know what I've been
 through and what I need. He (the GP) doesn't
-know the half of it (Centre B, R7).</zone>
-  <zone label="BODY_HEADING">8. Quality of Care</zone>
+know the half of it (Centre B, R7).
+8. Quality of Care</zone>
   <zone label="BODY_CONTENT">During the discussion, several participants expressed frustration
 at the lack of continuity in their care-for example, the
 doctor to whom they were referred not being available when
@@ -306,17 +306,17 @@ good rapport.</zone>
 failure”. The term had a discouraging effect when he was
 first diagnosed, and he wished for an alternative. Two other
 participants disagreed, however, and believed it had made no
-difference to their response to their diagnosis:
-It's defeatist, we're failed before we start . . . the
-nurse came to me and I in the bed and I wasn't
+difference to their response to their diagnosis:</zone>
+  <zone label="BODY_HEADING">It's defeatist, we're failed before we start . . . the</zone>
+  <zone label="BODY_CONTENT">nurse came to me and I in the bed and I wasn't
 well at all . . . and she gave me these leaflets, Living
 with Heart Failure, and I said, “That's some
 motivation, living with heart failure”. (Centre A,
-R1).
-You still have the condition, you can call it what
+R1).</zone>
+  <zone label="BODY_HEADING">You still have the condition, you can call it what
 you like, you still have the condition. To me, it
-doesn't matter. (Centre A, R3).
-10. Medication
+doesn't matter. (Centre A, R3).</zone>
+  <zone label="BODY_CONTENT">10. Medication
 In both hospitals a pharmacist is available as part of the
 multidisciplinary team to give patients advice and answer
 any questions that may arise. The pharmacist highlights
@@ -329,18 +329,18 @@ expressed exasperation with constant changes to their regimens
 and the slowness of new medications to take effect.</zone>
   <zone label="MET_BIB_INFO">Rehabilitation Research and Practice</zone>
   <zone label="BODY_CONTENT">Participants highlighted the need to be organised and to
-maintain a routine with regard to taking their medication:
-You just get used to it, you've a certain number
-of tablets and you just have to take them. That's
+maintain a routine with regard to taking their medication:</zone>
+  <zone label="BODY_HEADING">You just get used to it, you've a certain number</zone>
+  <zone label="BODY_CONTENT">of tablets and you just have to take them. That's
 the way it goes. I find the containers great [pill
 containers with individual compartments] so
 you know what you have to take every day and
 when you've already taken it. (Centre B, R5).
 One participant seemed baffled about the number of
 different medications he needed to take, their purpose, and
-their side-effects as described in the medication leaflets.
-How, God in heaven, could you be right with all
-them yokes, and take the leaflet out of the packet
+their side-effects as described in the medication leaflets.</zone>
+  <zone label="BODY_HEADING">How, God in heaven, could you be right with all</zone>
+  <zone label="BODY_CONTENT">them yokes, and take the leaflet out of the packet
 and read all the side effects, you'd go crazy. So what
 do you do? (Centre A, R5).
 11. Discussion
@@ -480,9 +480,9 @@ their quality of care, their quality of life and their self-care
 and lifestyle management. The challenge is to make such
 opportunities for education and support with heart failure
 the norm for the much wider group of heart failure patients
-who exist now and will grow in numbers into the future.
-Acknowledgments
-This research was funded by the Health Services Executive.
+who exist now and will grow in numbers into the future.</zone>
+  <zone label="BODY_HEADING">Acknowledgments</zone>
+  <zone label="BODY_CONTENT">This research was funded by the Health Services Executive.
 The authors gratefully acknowledge the assistance of Dr. Ken
 McDonald, Ms. Bronagh Travers, Dr. Aidan Buckley, and Ms.
 Mary Sinnott for recruiting participants to the study and

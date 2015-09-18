@@ -29,6 +29,7 @@ import pl.edu.icm.cermine.bibref.sentiment.CitationSentimentAnalyser;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
+import pl.edu.icm.cermine.content.headers.HeadersClusterizer;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.MetadataExtractor;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
@@ -81,6 +82,9 @@ public class ComponentConfiguration {
     /** content header extractor */
     ContentHeadersExtractor contentHeaderExtractor;
     
+    /** content header clusterizer */
+    HeadersClusterizer contentHeaderClusterizer;
+    
     /** content cleaner */
     ContentCleaner contentCleaner;
   
@@ -94,6 +98,8 @@ public class ComponentConfiguration {
     CitationSentimentAnalyser citationSentimentAnalyser;
     
    
+    boolean timeDebug = false;
+    
     public ComponentConfiguration() throws AnalysisException {
         try {
             characterExtractor = ComponentFactory.getCharacterExtractor();
@@ -107,6 +113,7 @@ public class ComponentConfiguration {
             bibReferenceParser = ComponentFactory.getBibReferenceParser(); 
             contentFilter = ComponentFactory.getContentFilter();
             contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor();
+            contentHeaderClusterizer = ComponentFactory.getContentHeaderClusterizer();
             contentCleaner = ComponentFactory.getContentCleaner();
             citationPositionFinder = ComponentFactory.getCitationPositionFinder();
             citationContextFinder = ComponentFactory.getCitationContextFinder();
@@ -183,6 +190,14 @@ public class ComponentConfiguration {
     public void setContentHeaderExtractor(InputStream model, InputStream range) throws AnalysisException, IOException {
         this.contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor(model, range);
     }
+
+    public HeadersClusterizer getContentHeaderClusterizer() {
+        return contentHeaderClusterizer;
+    }
+
+    public void setContentHeaderClusterizer(HeadersClusterizer contentHeaderClusterizer) {
+        this.contentHeaderClusterizer = contentHeaderClusterizer;
+    }
     
     public ParsableStringParser<DocumentAffiliation> getAffiliationParser() {
         return affiliationParser;
@@ -254,6 +269,14 @@ public class ComponentConfiguration {
 
     public void setCitationSentimentAnalyser(CitationSentimentAnalyser citationSentimentAnalyser) {
         this.citationSentimentAnalyser = citationSentimentAnalyser;
+    }
+
+    public boolean isTimeDebug() {
+        return timeDebug;
+    }
+
+    public void setTimeDebug(boolean timeDebug) {
+        this.timeDebug = timeDebug;
     }
     
 }

@@ -18,6 +18,8 @@
 
 package pl.edu.icm.cermine.structure.model;
 
+import java.util.Set;
+
 /**
  * Common class for all Bx* classes having physical properties (this is to say
  * BxBounds).
@@ -148,4 +150,8 @@ public abstract class BxObject <S, T> implements Indexable<S> {
         this.text = null;
     }
     
+    public abstract String getMostPopularFontName();
+    
+    public abstract Set<String> getFontNames();
+
 }

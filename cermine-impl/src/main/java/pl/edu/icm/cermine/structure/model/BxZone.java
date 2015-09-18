@@ -93,6 +93,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
         return this;
     }
 
+    @Override
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();
         for (BxLine line : lines) {
@@ -107,6 +108,7 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
         return map.getMaxCountObject();
     }
     
+    @Override
     public Set<String> getFontNames() {
         Set<String> names = new HashSet<String>();
         for (BxLine line : lines) {

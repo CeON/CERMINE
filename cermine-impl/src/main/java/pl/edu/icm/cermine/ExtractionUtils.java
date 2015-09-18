@@ -44,8 +44,6 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  * @author Dominika Tkaczyk
  */
 public class ExtractionUtils {
-    
-    public static final boolean timeDebug = false;
    
     /**
      * Extracts box structure from input stream.
@@ -62,7 +60,7 @@ public class ExtractionUtils {
         doc = segmentaPages(conf, doc);
         doc = resolveReadingOrder(conf, doc);
         doc =  classifyInitially(conf, doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("1. Structure extraction: " + elapsed);
         }
@@ -115,7 +113,7 @@ public class ExtractionUtils {
         BxDocument doc = classifyMetadata(conf, document);
         DocumentMetadata metadata = cleanMetadata(conf, doc);
     	metadata = parseAffiliations(conf, metadata);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("2. Metadata extraction: " + elapsed);
         }
@@ -155,7 +153,7 @@ public class ExtractionUtils {
         doc = segmentaPages(conf, doc);
         doc = resolveReadingOrder(conf, doc);
         String text = extractRawText(conf, doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("Raw text extraction: " + elapsed);
         }
@@ -202,7 +200,7 @@ public class ExtractionUtils {
         long start = System.currentTimeMillis();
         String[] refs = extractRefStrings(conf, document);
         BibEntry[] parsed =  parseReferences(conf, refs);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("3. References extraction: " + elapsed);
         }
@@ -329,7 +327,7 @@ public class ExtractionUtils {
             BxContentStructToDocContentStructConverter converter = 
                     new BxContentStructToDocContentStructConverter();
             DocumentContentStructure structure = converter.convert(tmpContentStructure);
-            if (timeDebug) {
+            if (conf.timeDebug) {
                 double elapsed = (System.currentTimeMillis() - start) / 1000.;
                 System.out.println("4. Body extraction: " + elapsed);
             }
@@ -370,7 +368,7 @@ public class ExtractionUtils {
         contentStr = clusterHeaders(conf, contentStr);
         RawTextWithLabelsExtractor textExtractor = new RawTextWithLabelsExtractor();
         Element rawText = textExtractor.extractRawTextWithLabels(document, contentStr);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("Raw text with labels extraction: " + elapsed);
         }
@@ -385,7 +383,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxDocument doc = conf.characterExtractor.extractCharacters(stream);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("1.1 Character extraction: "+elapsed);
         }
@@ -397,7 +395,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.documentSegmenter.segmentDocument(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("1.2 Page segmentation: "+elapsed);
         }
@@ -409,7 +407,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.readingOrderResolver.resolve(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("1.3 Reading order resolving: "+elapsed);
         }
@@ -421,7 +419,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.initialClassifier.classifyZones(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("1.4 Initial classification: "+elapsed);
         }
@@ -433,7 +431,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.metadataClassifier.classifyZones(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("2.1 Metadata classification: "+elapsed);
         }
@@ -445,7 +443,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         DocumentMetadata metadata = conf.metadataExtractor.extractMetadata(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("2.2 Metadata cleaning: "+elapsed);
         }
@@ -459,7 +457,7 @@ public class ExtractionUtils {
     	for (DocumentAffiliation aff : metadata.getAffiliations()) {
     		conf.affiliationParser.parse(aff);
     	}
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("2.3 Affiliation parsing: "+elapsed);
         }
@@ -471,7 +469,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         String[] refs = conf.bibReferenceExtractor.extractBibReferences(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("3.1 Reference extraction: "+elapsed);
         }
@@ -486,7 +484,7 @@ public class ExtractionUtils {
         for (int i = 0; i < refs.length; i++) {
             parsedRefs[i] = conf.bibReferenceParser.parseBibReference(refs[i]);
         }
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("3.2 Reference parsing: "+elapsed);
         }
@@ -498,7 +496,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.contentFilter.filter(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("4.1 Content filtering: "+elapsed);
         }
@@ -510,7 +508,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxDocContentStructure contentStructure = conf.contentHeaderExtractor.extractHeaders(doc);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("4.2 Headers extraction: "+elapsed);
         }
@@ -522,7 +520,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         conf.contentHeaderClusterizer.clusterHeaders(contentStructure);
-        if (timeDebug) {
+        if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("4.3 Headers clustering: "+elapsed);
         }

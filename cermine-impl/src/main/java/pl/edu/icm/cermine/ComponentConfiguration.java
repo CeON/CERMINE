@@ -85,6 +85,8 @@ public class ComponentConfiguration {
     /** content cleaner */
     ContentCleaner contentCleaner;
    
+    boolean timeDebug = false;
+    
     public ComponentConfiguration() throws AnalysisException {
         try {
             characterExtractor = ComponentFactory.getCharacterExtractor();
@@ -227,6 +229,14 @@ public class ComponentConfiguration {
 
     public ReadingOrderResolver getReadingOrderResolver() {
         return readingOrderResolver;
+    }
+
+    public boolean isTimeDebug() {
+        return timeDebug;
+    }
+
+    public void setTimeDebug(boolean timeDebug) {
+        this.timeDebug = timeDebug;
     }
     
 }

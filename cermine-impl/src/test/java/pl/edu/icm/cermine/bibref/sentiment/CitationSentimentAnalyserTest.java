@@ -115,9 +115,9 @@ public class CitationSentimentAnalyserTest {
         List<CitationSentiment> sentiments = extractor.getCitationSentiments();
         
         assertEquals(3, sentiments.size()); 
-        assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.REFUTES), sentiments.get(0).getProperties());
-        assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.UPDATES), sentiments.get(1).getProperties());
-        assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.EXTENDS), sentiments.get(2).getProperties());
+        assertEquals(EnumSet.of(CiTOProperty.DOCUMENTS, CiTOProperty.PLAGIARIZES), sentiments.get(0).getProperties());
+        assertEquals(EnumSet.of(CiTOProperty.CONTAINS_ASSERTION_FROM), sentiments.get(1).getProperties());
+        assertEquals(EnumSet.of(CiTOProperty.AGREES_WITH), sentiments.get(2).getProperties());
     }
     
     @Test

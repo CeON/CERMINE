@@ -37,18 +37,17 @@ public class RandomCitationSentimentAnalyser implements CitationSentimentAnalyse
             sb.append(context);
         }
         int seed = sb.toString().hashCode();
-        
+
         CitationSentiment sentiment = new CitationSentiment();
-        sentiment.addProperty(CiTOProperty.CITES);
         sentiment.addProperty(randomProperty(seed, 0.8));
-        sentiment.addProperty(randomProperty(seed, 0.4));
-        sentiment.addProperty(randomProperty(seed, 0.2));
-        
+        sentiment.addProperty(randomProperty(2*seed, 0.5));
+        sentiment.addProperty(randomProperty(3*seed, 0.2));
+
         return sentiment;
     }
     
     private CiTOProperty randomProperty(int seed, double probability) {
-        List<CiTOProperty> properties = CiTOProperty.getActiveValues();
+        List<CiTOProperty> properties = CiTOProperty.getValuesOfParent(CiTOProperty.CITES);
         int size = (int) (properties.size() / probability);
         Random randomGenerator = new Random(seed);
         int index = randomGenerator.nextInt(size);

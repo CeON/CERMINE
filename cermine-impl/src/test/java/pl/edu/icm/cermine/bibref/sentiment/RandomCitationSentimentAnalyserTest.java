@@ -36,13 +36,13 @@ public class RandomCitationSentimentAnalyserTest {
         CitationSentimentAnalyser analyser = new RandomCitationSentimentAnalyser();
 
         CitationSentiment sentiment = analyser.analyzeSentiment(Lists.newArrayList("context1"));
-        assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.CREDITS), sentiment.getProperties());
+        assertEquals(EnumSet.of(CiTOProperty.CITES_AS_EVIDENCE, CiTOProperty.SUPPORTS), sentiment.getProperties());
         
         sentiment = analyser.analyzeSentiment(Lists.newArrayList("context2", "context3"));
-        assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.PLAGIARIZES), sentiment.getProperties());
+        assertEquals(EnumSet.of(CiTOProperty.CITES_AS_SOURCE_DOCUMENT), sentiment.getProperties());
         
         sentiment = analyser.analyzeSentiment(Lists.newArrayList("context3", "context4"));
-        assertEquals(EnumSet.of(CiTOProperty.CITES, CiTOProperty.UPDATES), sentiment.getProperties());
+        assertEquals(EnumSet.of(CiTOProperty.DISCUSSES), sentiment.getProperties());
     }
     
 }

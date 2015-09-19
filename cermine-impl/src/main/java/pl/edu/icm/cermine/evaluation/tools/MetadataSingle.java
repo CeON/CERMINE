@@ -118,10 +118,13 @@ public class MetadataSingle implements ComparisonResult {
 
     @Override
     public Double getF1() {
-        if (getPrecision() == null || getRecall() == null) {
+        if (getPrecision() == null && getRecall() == null) {
             return null;
         }
-        return isCorrect() ? 1. : 0.;
+        if (getPrecision() == null || getRecall() == null || getPrecision() + getRecall() == 0) {
+            return 0.;
+        }
+        return 2*getPrecision()*getRecall()/(getPrecision()+getRecall());
     }
     
 }

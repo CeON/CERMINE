@@ -34,43 +34,30 @@ public class PrecisionRecall {
         if (metadataList == null || metadataList.isEmpty()) {
             return this;
         }
-        if (metadataList.get(0) instanceof MetadataSingle) {
-            int expected = 0;
-            int extracted = 0;
-            int correct = 0;
-            for (ComparisonResult metadata : metadataList) {
-                expected += (metadata.hasExpected() ? 1 : 0);
-                extracted += (metadata.hasExtracted() ? 1 : 0);
-                correct += (metadata.getF1() == null ? 0 : metadata.getF1());
+        int precisions = 0;
+        int recalls = 0;
+        int f1s = 0;
+        precision = 0.;
+        recall = 0.;
+        f1 = 0.;
+        for (ComparisonResult metadata : metadataList) {
+            if (metadata.getPrecision() != null) {
+                precision += metadata.getPrecision();
+                precisions++;
             }
-            precision = (extracted == 0) ? null : ((double)correct / extracted);
-            recall = (expected == 0) ? null : ((double)correct / expected);
-            f1 = (precision == null || recall == null) ? null : 2 * precision * recall / (precision + recall);
-        } else {
-            int precisions = 0;
-            int recalls = 0;
-            int f1s = 0;
-            precision = 0.;
-            recall = 0.;
-            f1 = 0.;
-            for (ComparisonResult metadata : metadataList) {
-                if (metadata.getPrecision() != null) {
-                    precision += metadata.getPrecision();
-                    precisions++;
-                }
-                if (metadata.getRecall() != null) {
-                    recall += metadata.getRecall();
-                    recalls++;
-                }
-                if (metadata.getF1() != null) {
-                    f1 += metadata.getF1();
-                    f1s++;
-                }
+            if (metadata.getRecall() != null) {
+                recall += metadata.getRecall();
+                recalls++;
             }
-            precision /= precisions;
-            recall /= recalls;
-            f1 /= f1s;
+            if (metadata.getF1() != null) {
+                f1 += metadata.getF1();
+                f1s++;
+            }
         }
+        precision /= precisions;
+        recall /= recalls;
+        f1 /= f1s;
+
         return this;
     }
         

@@ -31,7 +31,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
@@ -59,7 +59,7 @@ public class HTMLDocContentStructureConvertersTest {
         
         InputStream is = this.getClass().getResourceAsStream(modelFilePath);
         InputStreamReader isr = new InputStreamReader(is);
-        DocumentContentStructure structure = reader.read(isr);
+        ContentStructure structure = reader.read(isr);
         String structureHTML = writer.write(structure);
         
         XMLUnit.setIgnoreWhitespace(true);

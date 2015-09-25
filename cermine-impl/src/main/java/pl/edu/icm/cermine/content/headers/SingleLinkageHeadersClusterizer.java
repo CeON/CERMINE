@@ -18,7 +18,7 @@
 
 package pl.edu.icm.cermine.content.headers;
 
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.tools.classification.clustering.Clusterizer;
@@ -58,7 +58,7 @@ public class SingleLinkageHeadersClusterizer implements HeadersClusterizer {
     
     
     @Override
-    public void clusterHeaders(BxDocContentStructure contentStructure) {
+    public void clusterHeaders(BxContentStructure contentStructure) {
         FeatureVectorClusterizer fvClusterizer = new FeatureVectorClusterizer();
         fvClusterizer.setClusterizer(clusterizer);
         int[] clusters = fvClusterizer.clusterize(contentStructure.getFirstHeaderFeatureVectors(vectorBuilder), 

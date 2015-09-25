@@ -20,7 +20,7 @@ package pl.edu.icm.cermine.content.headers;
 
 import com.google.common.collect.Lists;
 import java.util.*;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.statistics.Population;
@@ -41,7 +41,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     }
     
     @Override
-    public BxDocContentStructure extractHeaders(BxDocument document) throws AnalysisException {
+    public BxContentStructure extractHeaders(BxDocument document) throws AnalysisException {
 
         Population heightPopulation = new Population();
         Population fontPopulation = new Population();
@@ -170,7 +170,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
             }
         }
 
-        BxDocContentStructure contentStructure = new BxDocContentStructure();
+        BxContentStructure contentStructure = new BxContentStructure();
         BxLine lastHeaderLine = null;
         for (BxPage page : document) {
             for (BxZone zone : page) {

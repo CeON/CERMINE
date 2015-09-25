@@ -20,11 +20,10 @@ package pl.edu.icm.cermine.content.transformers;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure.BxDocContentPart;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
-import pl.edu.icm.cermine.content.model.DocumentHeader;
-import pl.edu.icm.cermine.content.model.DocumentParagraph;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure.BxDocContentPart;
+import pl.edu.icm.cermine.content.model.ContentStructure;
+import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
@@ -32,31 +31,45 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  *
  * @author Dominika Tkaczyk
  */
-public class BxContentStructToDocContentStructConverter implements ModelToModelConverter<BxDocContentStructure, DocumentContentStructure> {
+public class BxContentStructToDocContentStructConverter implements ModelToModelConverter<BxContentStructure, ContentStructure> {
 
     @Override
-    public DocumentContentStructure convert(BxDocContentStructure contentStructure, Object... hints) throws TransformationException {
-        DocumentContentStructure dcs = convertContentParts(contentStructure.getParts(), 0);
-        dcs.setParents();
+    public ContentStructure convert(BxContentStructure contentStructure, Object... hints) throws TransformationException {
+        ContentStructure dcs = new ContentStructure();
+        
+        List<BxDocContentPart> sectionContentParts = new ArrayList<BxDocContentPart>();
+        int topClusterNum = contentStructure.getParts().get(0).getLevelId();
+        for (BxDocContentPart contentPart : contentStructure.getParts()) {
+            if (contentPart.getLevelId() == topClusterNum && !sectionContentParts.isEmpty()) {
+                DocumentSection dcp = convertContentPart(sectionContentParts, 1);
+                dcs.addSection(dcp);
+                sectionContentParts.clear();
+            }
+            sectionContentParts.add(contentPart);
+        }
+        if (!sectionContentParts.isEmpty()) {
+            DocumentSection dcp = convertContentPart(sectionContentParts, 1);
+            dcs.addSection(dcp);
+        }
+        
         return dcs;
     }
 
-    private DocumentContentStructure convertContentParts(List<BxDocContentPart> contentParts, int level) {
-        DocumentContentStructure dcs = new DocumentContentStructure();
+    private DocumentSection convertContentPart(List<BxDocContentPart> contentParts, int level) {
+        DocumentSection section = new DocumentSection();
         if (contentParts.isEmpty()) {
-            return dcs;
+            return section;
         }
 
-        if (level > 0) {
-            dcs.setHeader(new DocumentHeader(level, contentParts.get(0).getCleanHeaderText(), dcs));
-            for (String contentText : contentParts.get(0).getCleanContentTexts()) {
-                dcs.addParagraph(new DocumentParagraph(contentText, dcs));
-            }
+        section.setLevel(level);
+        section.setTitle(contentParts.get(0).getCleanHeaderText());
+        for (String contentText : contentParts.get(0).getCleanContentTexts()) {
+            section.addParagraph(contentText);
+        }
 
-            contentParts.remove(0);
-            if (contentParts.isEmpty()) {
-                return dcs;
-            }
+        contentParts.remove(0);
+        if (contentParts.isEmpty()) {
+            return section;
         }
 
         int topClusterNum = contentParts.get(0).getLevelId();
@@ -65,22 +78,22 @@ public class BxContentStructToDocContentStructConverter implements ModelToModelC
 
         for (BxDocContentPart contentPart : contentParts) {
             if (contentPart.getLevelId() == topClusterNum && !sectionContentParts.isEmpty()) {
-                DocumentContentStructure dcp = convertContentParts(sectionContentParts, level + 1);
-                dcs.addPart(dcp);
+                DocumentSection dcp = convertContentPart(sectionContentParts, level + 1);
+                section.addSection(dcp);
                 sectionContentParts.clear();
             }
             sectionContentParts.add(contentPart);
         }
         if (!sectionContentParts.isEmpty()) {
-            DocumentContentStructure dcp = convertContentParts(sectionContentParts, level + 1);
-            dcs.addPart(dcp);
+            DocumentSection dcp = convertContentPart(sectionContentParts, level + 1);
+            section.addSection(dcp);
         }
         
-        return dcs;
+        return section;
     }
 
     @Override
-    public List<DocumentContentStructure> convertAll(List<BxDocContentStructure> source, Object... hints) throws TransformationException {
+    public List<ContentStructure> convertAll(List<BxContentStructure> source, Object... hints) throws TransformationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

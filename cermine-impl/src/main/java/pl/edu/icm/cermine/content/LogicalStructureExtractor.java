@@ -21,8 +21,8 @@ package pl.edu.icm.cermine.content;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.transformers.BxContentStructToDocContentStructConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -54,10 +54,10 @@ public abstract class LogicalStructureExtractor {
     }
     
     
-    public DocumentContentStructure extractStructure(BxDocument document) throws AnalysisException {
+    public ContentStructure extractStructure(BxDocument document) throws AnalysisException {
         try {
             BxDocument doc = contentFilter.filter(document);
-            BxDocContentStructure tmpContentStructure = headerExtractor.extractHeaders(doc);
+            BxContentStructure tmpContentStructure = headerExtractor.extractHeaders(doc);
             contentCleaner.cleanupContent(tmpContentStructure);
             return converter.convert(tmpContentStructure);
         } catch (TransformationException ex) {

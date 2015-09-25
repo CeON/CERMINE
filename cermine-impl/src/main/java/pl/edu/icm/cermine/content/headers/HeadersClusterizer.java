@@ -18,7 +18,7 @@
 
 package pl.edu.icm.cermine.content.headers;
 
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 
 /**
  *
@@ -26,6 +26,6 @@ import pl.edu.icm.cermine.content.model.BxDocContentStructure;
  */
 public interface HeadersClusterizer {
     
-    void clusterHeaders(BxDocContentStructure contentStructure);
+    void clusterHeaders(BxContentStructure contentStructure);
 
 }

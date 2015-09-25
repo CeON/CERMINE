@@ -18,7 +18,7 @@
 
 package pl.edu.icm.cermine.content.headers;
 
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -28,6 +28,6 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public interface ContentHeadersExtractor {
     
-    BxDocContentStructure extractHeaders(BxDocument document) throws AnalysisException;
+    BxContentStructure extractHeaders(BxDocument document) throws AnalysisException;
 
 }

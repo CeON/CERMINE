@@ -22,8 +22,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.jdom.Element;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure.BxDocContentPart;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure.BxDocContentPart;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxLine;
@@ -36,7 +36,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
  */
 public class RawTextWithLabelsExtractor {
     
-    public Element extractRawTextWithLabels(BxDocument document, BxDocContentStructure structure) 
+    public Element extractRawTextWithLabels(BxDocument document, BxContentStructure structure) 
             throws AnalysisException {
         Set<BxLine> headerLines = new HashSet<BxLine>();
         for (BxDocContentPart contentPart : structure.getParts()) {

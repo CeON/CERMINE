@@ -19,7 +19,7 @@
 package pl.edu.icm.cermine.content.headers;
 
 import java.io.BufferedReader;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 
@@ -67,9 +67,9 @@ public class SVMContentHeadersExtractor implements ContentHeadersExtractor {
     }
     
     @Override
-    public BxDocContentStructure extractHeaders(BxDocument document) throws AnalysisException {
+    public BxContentStructure extractHeaders(BxDocument document) throws AnalysisException {
 
-        BxDocContentStructure contentStructure = new BxDocContentStructure();
+        BxContentStructure contentStructure = new BxContentStructure();
         BxLine lastHeaderLine = null;
         for (BxPage page : document) {
             for (BxZone zone : page) {

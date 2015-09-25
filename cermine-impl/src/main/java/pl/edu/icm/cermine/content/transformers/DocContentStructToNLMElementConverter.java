@@ -21,9 +21,8 @@ package pl.edu.icm.cermine.content.transformers;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
-import pl.edu.icm.cermine.content.model.DocumentHeader;
-import pl.edu.icm.cermine.content.model.DocumentParagraph;
+import pl.edu.icm.cermine.content.model.ContentStructure;
+import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
@@ -32,45 +31,47 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  *
  * @author Dominika Tkaczyk
  */
-public class DocContentStructToNLMElementConverter implements ModelToModelConverter<DocumentContentStructure, Element> {
+public class DocContentStructToNLMElementConverter implements ModelToModelConverter<ContentStructure, Element> {
 
     @Override
-    public Element convert(DocumentContentStructure source, Object... hints) throws TransformationException {
+    public Element convert(ContentStructure source, Object... hints) throws TransformationException {
         Element body = new Element("body");
         body.addContent(toHTML(source));
         addSectionIds(body);
         return body;
     }
     
-    private List<Element> toHTML(DocumentContentStructure dcs) {
+    private List<Element> toHTML(ContentStructure dcs) {
         List<Element> elements = new ArrayList<Element>();
-        if (dcs.getHeader() == null) {
-            for (DocumentContentStructure part : dcs.getParts()) {
-                elements.addAll(toHTML(part));
-            }
-        } else {
-            Element element = new Element("sec");
-            element.addContent(toHTML(dcs.getHeader()));
-            for (DocumentParagraph paragraph : dcs.getParagraphs()) {
-                element.addContent(toHTML(paragraph));
-            }
-            for (DocumentContentStructure part : dcs.getParts()) {
-                element.addContent(toHTML(part));
-            }
-            elements.add(element);
+        for (DocumentSection part : dcs.getSections()) {
+            elements.addAll(toHTML(part));
         }
         return elements;
     }
+    
+    private List<Element> toHTML(DocumentSection part) {
+        List<Element> elements = new ArrayList<Element>();
+        Element element = new Element("sec");
+        element.addContent(toHTMLTitle(part.getTitle()));
+        for (String paragraph : part.getParagraphs()) {
+            element.addContent(toHTMLParagraph(paragraph));
+        }
+        for (DocumentSection subpart : part.getSubsections()) {
+            element.addContent(toHTML(subpart));
+        }
+        elements.add(element);
+        return elements;
+    }
 
-    public Element toHTML(DocumentHeader header) {
+    public Element toHTMLTitle(String header) {
         Element element = new Element("title");
-        element.setText(header.getText()+"\n");
+        element.setText(header+"\n");
         return element;
     }
     
-    public Element toHTML(DocumentParagraph paragraph) {
+    public Element toHTMLParagraph(String paragraph) {
         Element element = new Element("p");
-        element.setText(paragraph.getText()+"\n");
+        element.setText(paragraph+"\n");
         return element;
     }
   
@@ -96,7 +97,7 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
     }
 
     @Override
-    public List<Element> convertAll(List<DocumentContentStructure> source, Object... hints) throws TransformationException {
+    public List<Element> convertAll(List<ContentStructure> source, Object... hints) throws TransformationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

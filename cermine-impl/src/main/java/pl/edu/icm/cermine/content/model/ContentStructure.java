@@ -18,35 +18,32 @@
 
 package pl.edu.icm.cermine.content.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Document paragraph class.
  *
  * @author Dominika Tkaczyk
  */
-public class DocumentParagraph {
+public class ContentStructure {
 
-    private String text;
-    private DocumentContentStructure contentStructure;
+    private List<DocumentSection> sections = new ArrayList<DocumentSection>();
 
-    public DocumentParagraph(String text, DocumentContentStructure contentStructure) {
-        this.text = text;
-        this.contentStructure = contentStructure;
+    
+    public ContentStructure() {
+        sections = new ArrayList<DocumentSection>();
     }
 
-    public String getText() {
-        return text;
+    public List<DocumentSection> getSections() {
+        return sections;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setSections(List<DocumentSection> sections) {
+        this.sections = sections;
     }
 
-    public DocumentContentStructure getContentStructure() {
-        return contentStructure;
+    public void addSection(DocumentSection section) {
+        sections.add(section);
     }
-
-    public void setContentStructure(DocumentContentStructure contentStructure) {
-        this.contentStructure = contentStructure;
-    }
-
+    
 }

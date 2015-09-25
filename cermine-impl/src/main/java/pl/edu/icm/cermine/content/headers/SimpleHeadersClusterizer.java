@@ -21,7 +21,7 @@ package pl.edu.icm.cermine.content.headers;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.structure.model.BxLine;
 
 /**
@@ -35,7 +35,7 @@ public class SimpleHeadersClusterizer implements HeadersClusterizer {
     private double maxHeightDiff = DEFAULT_MAX_HEIGHT_DIFF;
     
     @Override
-    public void clusterHeaders(BxDocContentStructure contentStructure) {
+    public void clusterHeaders(BxContentStructure contentStructure) {
         List<BxLine> lines = contentStructure.getFirstHeaderLines();
         contentStructure.setHeaderLevelIds(clusterLines(lines));
     }

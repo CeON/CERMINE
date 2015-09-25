@@ -20,7 +20,7 @@ package pl.edu.icm.cermine.content.headers;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.structure.model.BxLine;
 
 /**
@@ -62,7 +62,7 @@ public class HeaderLinesCompletener {
     
     private int minHeaderLineScore = DEFAULT_MIN_HEADER_LINE_SCORE;
     
-    public void completeLines(BxDocContentStructure contentStructure) {
+    public void completeLines(BxContentStructure contentStructure) {
         for (BxLine headerLine : contentStructure.getFirstHeaderLines()) {
             int added = 0;
             BxLine actLine = headerLine;

@@ -29,9 +29,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure.BxDocContentPart;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure.BxDocContentPart;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -48,11 +48,11 @@ public class BxToDocContentStructConverterTest {
     DocContentStructToHTMLWriter writer;
     
     String expectedHTML;
-    BxDocContentStructure bxDocStruct;
+    BxContentStructure bxDocStruct;
     
     @Before
     public void setUp() throws JDOMException, IOException, TransformationException, URISyntaxException {
-        bxDocStruct = new BxDocContentStructure();
+        bxDocStruct = new BxContentStructure();
         
         BxLine line1 = constructLine("1. Section");
         BxLine line2 = constructLine("par1");
@@ -114,7 +114,7 @@ public class BxToDocContentStructConverterTest {
 
     @Test
     public void structToXMLTest() throws SAXException, IOException, TransformationException, JDOMException {
-        DocumentContentStructure dcs = converter.convert(bxDocStruct);
+        ContentStructure dcs = converter.convert(bxDocStruct);
         String dcsHTML = writer.write(dcs);
         
         XMLUnit.setIgnoreWhitespace(true);

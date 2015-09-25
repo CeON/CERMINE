@@ -28,8 +28,8 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.transformers.BxContentStructToDocContentStructConverter;
 import pl.edu.icm.cermine.content.transformers.DocContentStructToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -267,9 +267,9 @@ public class ExtractionUtils {
     public static Element extractTextAsNLM(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         try {
-            ModelToModelConverter<DocumentContentStructure, Element> converter
+            ModelToModelConverter<ContentStructure, Element> converter
                     = new DocContentStructToNLMElementConverter();
-            DocumentContentStructure struct = extractText(conf, stream);
+            ContentStructure struct = extractText(conf, stream);
             return converter.convert(struct);
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract text from document!", ex);
@@ -287,9 +287,9 @@ public class ExtractionUtils {
     public static Element extractTextAsNLM(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
         try {
-            ModelToModelConverter<DocumentContentStructure, Element> converter
+            ModelToModelConverter<ContentStructure, Element> converter
                     = new DocContentStructToNLMElementConverter();
-            DocumentContentStructure struct = extractText(conf, document);
+            ContentStructure struct = extractText(conf, document);
             return converter.convert(struct);
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract text from document!", ex);
@@ -304,7 +304,7 @@ public class ExtractionUtils {
      * @return document's full text
      * @throws AnalysisException 
      */
-    public static DocumentContentStructure extractText(ComponentConfiguration conf, InputStream stream) 
+    public static ContentStructure extractText(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         BxDocument doc = extractStructure(conf, stream);
         return extractText(conf, doc);
@@ -318,17 +318,17 @@ public class ExtractionUtils {
      * @return document's full text
      * @throws AnalysisException 
      */
-    public static DocumentContentStructure extractText(ComponentConfiguration conf, BxDocument document) 
+    public static ContentStructure extractText(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
         try {
             long start = System.currentTimeMillis();
             BxDocument doc = filterContent(conf, document);
-            BxDocContentStructure tmpContentStructure = extractHeaders(conf, doc);
+            BxContentStructure tmpContentStructure = extractHeaders(conf, doc);
             tmpContentStructure = clusterHeaders(conf, tmpContentStructure);
             conf.contentCleaner.cleanupContent(tmpContentStructure);
             BxContentStructToDocContentStructConverter converter = 
                     new BxContentStructToDocContentStructConverter();
-            DocumentContentStructure structure = converter.convert(tmpContentStructure);
+            ContentStructure structure = converter.convert(tmpContentStructure);
             if (conf.timeDebug) {
                 double elapsed = (System.currentTimeMillis() - start) / 1000.;
                 System.out.println("4. Body extraction: " + elapsed);
@@ -366,7 +366,7 @@ public class ExtractionUtils {
         long start = System.currentTimeMillis();
         BxDocument doc = classifyMetadata(conf, document);
         doc = filterContent(conf, doc);
-        BxDocContentStructure contentStr = extractHeaders(conf, doc);
+        BxContentStructure contentStr = extractHeaders(conf, doc);
         contentStr = clusterHeaders(conf, contentStr);
         RawTextWithLabelsExtractor textExtractor = new RawTextWithLabelsExtractor();
         Element rawText = textExtractor.extractRawTextWithLabels(document, contentStr);
@@ -557,10 +557,10 @@ public class ExtractionUtils {
     }
     
     //4.2 Headers extraction
-    public static BxDocContentStructure extractHeaders(ComponentConfiguration conf, BxDocument doc) 
+    public static BxContentStructure extractHeaders(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        BxDocContentStructure contentStructure = conf.contentHeaderExtractor.extractHeaders(doc);
+        BxContentStructure contentStructure = conf.contentHeaderExtractor.extractHeaders(doc);
         if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("4.2 Headers extraction: "+elapsed);
@@ -569,7 +569,7 @@ public class ExtractionUtils {
     }
     
     //4.3 Headers clustering
-    public static BxDocContentStructure clusterHeaders(ComponentConfiguration conf, BxDocContentStructure contentStructure) 
+    public static BxContentStructure clusterHeaders(ComponentConfiguration conf, BxContentStructure contentStructure) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
         conf.contentHeaderClusterizer.clusterHeaders(contentStructure);

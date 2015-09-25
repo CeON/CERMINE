@@ -31,7 +31,7 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
  *
  * @author Dominika Tkaczyk
  */
-public class BxDocContentStructure {
+public class BxContentStructure {
     
     private List<BxLine> firstHeaderLines = new ArrayList<BxLine>();
     private Map<BxLine, BxDocContentPart> parts = new HashMap<BxLine, BxDocContentPart>();

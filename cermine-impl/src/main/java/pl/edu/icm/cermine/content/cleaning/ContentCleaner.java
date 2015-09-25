@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure;
-import pl.edu.icm.cermine.content.model.BxDocContentStructure.BxDocContentPart;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
+import pl.edu.icm.cermine.content.model.BxContentStructure.BxDocContentPart;
 import pl.edu.icm.cermine.structure.model.BxLine;
 
 /**
@@ -49,7 +49,7 @@ public class ContentCleaner {
     
     private double firstParagraphLineMinScore = DEFAULT_FIRST_PAR_LINE_SCORE;
     
-    public void cleanupContent(BxDocContentStructure contentStructure) {
+    public void cleanupContent(BxContentStructure contentStructure) {
         for (BxDocContentPart contentPart : contentStructure.getParts()) {
             List<BxLine> headerLines = contentPart.getHeaderLines();
             StringBuilder sb = new StringBuilder();

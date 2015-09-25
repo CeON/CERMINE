@@ -26,9 +26,8 @@ import java.util.List;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
-import pl.edu.icm.cermine.content.model.DocumentHeader;
-import pl.edu.icm.cermine.content.model.DocumentParagraph;
+import pl.edu.icm.cermine.content.model.ContentStructure;
+import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.transformers.FormatToModelReader;
 
@@ -37,21 +36,48 @@ import pl.edu.icm.cermine.tools.transformers.FormatToModelReader;
  *
  * @author Dominika Tkaczyk
  */
-public class HTMLToDocContentStructReader implements FormatToModelReader<DocumentContentStructure> {
+public class HTMLToDocContentStructReader implements FormatToModelReader<ContentStructure> {
 
     @Override
-    public DocumentContentStructure read(String string, Object... hints) throws TransformationException {
+    public ContentStructure read(String string, Object... hints) throws TransformationException {
         return read(new StringReader(string), hints);
     }
 
     @Override
-    public DocumentContentStructure read(Reader reader, Object... hints) throws TransformationException {
+    public ContentStructure read(Reader reader, Object... hints) throws TransformationException {
         try {
             Element root = getRoot(reader);
-            
-            DocumentContentStructure dcs = createDocContentStruct(root.getChildren(), 0);
-            dcs.setParents();
-            
+            ContentStructure dcs = new ContentStructure();//createDocContentStruct(root.getChildren(), 0);
+            List<Element> elements = root.getChildren();
+            if (elements.isEmpty()) {
+                return dcs;
+            }
+        
+            int index = 0;
+            Element current = elements.get(0);
+            while (current != null && isParagraph(current)) {
+                current = getNext(++index, elements);
+            }
+            if (current == null) {
+                return dcs;
+            }
+        
+            int nextLevel = getHeaderLevel(current);
+            List<Element> els = new ArrayList<Element>();
+            while (current != null) {
+                if (isHeader(current) && nextLevel == getHeaderLevel(current) && !els.isEmpty()) {
+                    DocumentSection n = createPart(els, 1);
+                    dcs.addSection(n);
+                    els.clear();
+                }
+                els.add(current);
+                current = getNext(++index, elements);
+            }
+            if (!els.isEmpty()) {
+                DocumentSection n = createPart(els, 1);
+                dcs.addSection(n);
+            }
+        
             return dcs;
         } catch (JDOMException ex) {
             throw new TransformationException(ex);
@@ -66,38 +92,35 @@ public class HTMLToDocContentStructReader implements FormatToModelReader<Documen
         return dom.getRootElement();
     }
     
-    private DocumentContentStructure createDocContentStruct(List<Element> elements, int level) {
-        DocumentContentStructure dcs = new DocumentContentStructure();
+    private DocumentSection createPart(List<Element> elements, int level) {
+        DocumentSection section = new DocumentSection();
         
         if (elements.isEmpty()) {
-            return dcs;
+            return section;
         }
         
         int index = 0;
         Element current = elements.get(0);
         
-        if (level > 0 && isHeader(current)) {
-            DocumentHeader header = new DocumentHeader(level, current.getValue(), dcs);
-            dcs.setHeader(header);
-            current = getNext(++index, elements);
-        }
-        
+        section.setLevel(level);
+        section.setTitle(current.getValue());
+        current = getNext(++index, elements);
+                
         while (current != null && isParagraph(current)) {
-            DocumentParagraph paragraph = new DocumentParagraph(current.getValue(), dcs);
-            dcs.addParagraph(paragraph);
+            section.addParagraph(current.getValue());
             current = getNext(++index, elements);
         }
         
         if (current == null) {
-            return dcs;
+            return section;
         }
         
         int nextLevel = getHeaderLevel(current);
         List<Element> els = new ArrayList<Element>();
         while (current != null) {
             if (isHeader(current) && nextLevel == getHeaderLevel(current) && !els.isEmpty()) {
-                DocumentContentStructure n = createDocContentStruct(els, level+1);
-                dcs.addPart(n);
+                DocumentSection n = createPart(els, level+1);
+                section.addSection(n);
                 els.clear();
             }
             els.add(current);
@@ -105,11 +128,11 @@ public class HTMLToDocContentStructReader implements FormatToModelReader<Documen
         }
         
         if (!els.isEmpty()) {
-            DocumentContentStructure n = createDocContentStruct(els, level+1);
-            dcs.addPart(n);
+            DocumentSection n = createPart(els, level+1);
+            section.addSection(n);
         }
         
-        return dcs;
+        return section;
     }
     
     private boolean isHeader(Element element) {
@@ -132,12 +155,12 @@ public class HTMLToDocContentStructReader implements FormatToModelReader<Documen
     }
 
     @Override
-    public List<DocumentContentStructure> readAll(String string, Object... hints) throws TransformationException {
+    public List<ContentStructure> readAll(String string, Object... hints) throws TransformationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<DocumentContentStructure> readAll(Reader reader, Object... hints) throws TransformationException {
+    public List<ContentStructure> readAll(Reader reader, Object... hints) throws TransformationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

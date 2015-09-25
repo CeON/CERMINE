@@ -20,7 +20,7 @@ package pl.edu.icm.cermine;
 
 import java.io.InputStream;
 import org.jdom.Element;
-import pl.edu.icm.cermine.content.model.DocumentContentStructure;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -68,7 +68,7 @@ public class PdfNLMTextExtractor {
      * @return document's full text
      * @throws AnalysisException 
      */
-    public DocumentContentStructure extractText(InputStream stream) throws AnalysisException {
+    public ContentStructure extractText(InputStream stream) throws AnalysisException {
         return ExtractionUtils.extractText(conf, stream);
     }
 
@@ -79,7 +79,7 @@ public class PdfNLMTextExtractor {
      * @return document's full text
      * @throws AnalysisException 
      */
-    public DocumentContentStructure extractText(BxDocument document) throws AnalysisException {
+    public ContentStructure extractText(BxDocument document) throws AnalysisException {
         return ExtractionUtils.extractText(conf, document);
     }
 

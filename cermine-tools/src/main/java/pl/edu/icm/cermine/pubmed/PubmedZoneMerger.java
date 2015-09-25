@@ -1,6 +1,7 @@
 
 package pl.edu.icm.cermine.pubmed;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.*;
 import org.apache.commons.io.FileUtils;
@@ -10,9 +11,9 @@ import pl.edu.icm.cermine.structure.HierarchicalReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
-import pl.edu.icm.cermine.tools.DisjointSets;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
+import pl.edu.icm.cermine.tools.DisjointSets;
 
 /**
  *
@@ -85,13 +86,13 @@ public class PubmedZoneMerger {
             avgDiffZone /= countDZ;
             avgDiffRelZone /= countDZ;
             
-            for (BxPage page : bxDoc.getPages()) {
+            for (BxPage page : bxDoc) {
                 List<BxZone> zones = new ArrayList<BxZone>();
-                zones.addAll(page.getZones());
+                zones.addAll(Lists.newArrayList(page));
                 
                 List<BxLine> lines = new ArrayList<BxLine>();
-                for (BxZone z : page.getZones()) {
-                     for (BxLine l : z.getLines()) {
+                for (BxZone z : page) {
+                     for (BxLine l : z) {
                          lines.add(l);
                      }
                 }
@@ -204,7 +205,7 @@ public class PubmedZoneMerger {
                         
                         if (prev != null) {
                             if (Math.abs(prev.getY()-line.getY()) < 1) {
-                                for (BxWord w : line.getWords()) {
+                                for (BxWord w : line) {
                                     prev.addWord(w);
                                     w.setParent(prev);
                                 }
@@ -237,7 +238,7 @@ public class PubmedZoneMerger {
             FileWriter fstream = new FileWriter(newPath);
             BufferedWriter out = new BufferedWriter(fstream);
             BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-            out.write(writer.write(bxDoc.getPages()));
+            out.write(writer.write(Lists.newArrayList(bxDoc)));
             out.close();
             i++;
             System.out.println("Progress: "+i+" out of "+files.size()+" ("+(i*100./files.size())+"%)");

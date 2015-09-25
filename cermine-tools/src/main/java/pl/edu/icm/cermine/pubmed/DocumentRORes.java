@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.pubmed;
 
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -63,7 +64,7 @@ public class DocumentRORes {
                 throw new IOException("Cannot create file!");
             }
             BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-            writer.write(new FileWriter(f2), d2.getPages());
+            writer.write(new FileWriter(f2), Lists.newArrayList(d2));
         }
 	}
 }

@@ -14,6 +14,7 @@
  */
 package pl.edu.icm.cermine.pubmed;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Map.Entry;
 import java.util.*;
@@ -31,7 +32,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
-import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.*;
@@ -39,6 +39,7 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.TextUtils;
 import pl.edu.icm.cermine.tools.XMLTools;
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
 public class RuleBasedPubmedXMLGenerator {
@@ -125,7 +126,9 @@ public class RuleBasedPubmedXMLGenerator {
         Reader r = new InputStreamReader(pdfStream);
         BxDocument bxDoc = new BxDocument().setPages(reader.read(r));
 
-        Integer bxDocLen = bxDoc.asZones().size();
+        List<BxZone> zones = Lists.newArrayList(bxDoc.asZones());
+        
+        Integer bxDocLen = zones.size();
 
         SmartHashMap entries = new SmartHashMap();
 
@@ -502,7 +505,7 @@ public class RuleBasedPubmedXMLGenerator {
             printlnVerbose(entry.getValue() + " " + entry.getKey() + "\n");
             //iterate over zones
             for (Integer zoneIdx = 0; zoneIdx < bxDocLen; ++zoneIdx) {
-                BxZone curZone = bxDoc.asZones().get(zoneIdx);
+                BxZone curZone = zones.get(zoneIdx);
                 List<String> zoneTokens = TextUtils.tokenize(
                         TextUtils.removeOrphantSpaces(
                         TextUtils.cleanLigatures(
@@ -518,14 +521,14 @@ public class RuleBasedPubmedXMLGenerator {
                     smithSim = smith.compare(entryTokens, zoneTokens);
                     cosSim = cos.compare(entryTokens, zoneTokens);
                 }
-                printlnVerbose(smithSim + " " + bxDoc.asZones().get(zoneIdx).toText() + "\n\n");
+                printlnVerbose(smithSim + " " + zones.get(zoneIdx).toText() + "\n\n");
                 swLabelSim.get(zoneIdx).add(new LabelTrio(entry.getValue(), entryTokens, smithSim));
                 cosLabProb.get(zoneIdx).add(new LabelTrio(entry.getValue(), entryTokens, cosSim));
             }
         }
 
 
-        for (BxPage pp : bxDoc.getPages()) {
+        for (BxPage pp : bxDoc) {
 
 
             boolean changed = true;
@@ -534,9 +537,9 @@ public class RuleBasedPubmedXMLGenerator {
                 changed = false;
                 boolean wasIntro = false;
 
-                for (BxZone z : pp.getZones()) {
+                for (BxZone z : pp) {
                     BxZoneLabel orig = z.getLabel();
-                    int i = bxDoc.asZones().indexOf(z);
+                    int i = zones.indexOf(z);
 
                     double titleAl = 0;
                     double authorAl = 0;
@@ -551,9 +554,9 @@ public class RuleBasedPubmedXMLGenerator {
                     }
 
                     String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase();
-                    int linesCount = z.getLines().size();
-                    int pageIdx = bxDoc.getPages().indexOf(z.getParent());
-                    BxLine firstLine = z.getLines().get(0);
+                    int linesCount = z.childrenCount();
+                    int pageIdx = Lists.newArrayList(bxDoc).indexOf(z.getParent());
+                    BxLine firstLine = z.getFirstChild();
 
                     if (pageIdx == 0 && (z.getLabel().equals(BxZoneLabel.MET_TITLE) || z.getLabel().equals(BxZoneLabel.BODY_CONTENT))
                             && titleAl >= 0.7 && authorAl >= 0.4) {
@@ -640,16 +643,16 @@ public class RuleBasedPubmedXMLGenerator {
                         BxPage p = z.getParent();
                         if (pageIdx > 0) {
                             BxPage prevPage = p.getPrev();
-                            for (BxZone z1 : prevPage.getZones()) {
+                            for (BxZone z1 : prevPage) {
                                 if (z1.toText().replaceAll("[^a-zA-Z]", "").equals(z.toText().replaceAll("[^a-zA-Z]", ""))
                                         && Math.abs(z1.getY() - z.getY()) < 10) {
                                     z.setLabel(BxZoneLabel.MET_BIB_INFO);
                                 }
                             }
                         }
-                        if (pageIdx < bxDoc.asPages().size() - 1) {
+                        if (pageIdx < bxDoc.childrenCount() - 1) {
                             BxPage nextPage = p.getNext();
-                            for (BxZone z1 : nextPage.getZones()) {
+                            for (BxZone z1 : nextPage) {
                                 if (z1.toText().replaceAll("[^a-zA-Z]", "").equals(z.toText().replaceAll("[^a-zA-Z]", ""))
                                         && Math.abs(z1.getY() - z.getY()) < 10) {
                                     z.setLabel(BxZoneLabel.MET_BIB_INFO);
@@ -658,16 +661,16 @@ public class RuleBasedPubmedXMLGenerator {
                         }
                         if (pageIdx > 1) {
                             BxPage prevPage = p.getPrev().getPrev();
-                            for (BxZone z1 : prevPage.getZones()) {
+                            for (BxZone z1 : prevPage) {
                                 if (z1.toText().replaceAll("[^a-zA-Z]", "").equals(z.toText().replaceAll("[^a-zA-Z]", ""))
                                         && Math.abs(z1.getY() - z.getY()) < 10) {
                                     z.setLabel(BxZoneLabel.MET_BIB_INFO);
                                 }
                             }
                         }
-                        if (pageIdx < bxDoc.asPages().size() - 2) {
+                        if (pageIdx < bxDoc.childrenCount() - 2) {
                             BxPage nextPage = p.getNext().getNext();
-                            for (BxZone z1 : nextPage.getZones()) {
+                            for (BxZone z1 : nextPage) {
                                 if (z1.toText().replaceAll("[^a-zA-Z]", "").equals(z.toText().replaceAll("[^a-zA-Z]", ""))
                                         && Math.abs(z1.getY() - z.getY()) < 10) {
                                     z.setLabel(BxZoneLabel.MET_BIB_INFO);
@@ -784,12 +787,12 @@ public class RuleBasedPubmedXMLGenerator {
                     if (pageIdx == 0 && linesCount < 10 && (z.getLabel().equals(BxZoneLabel.BODY_CONTENT)
                             || z.getLabel().equals(BxZoneLabel.OTH_UNKNOWN))
                             && z.hasPrev() && z.getY() - z.getHeight() - z.getPrev().getY() < 4
-                            && Math.abs(firstLine.getHeight() - z.getPrev().getLines().get(0).getHeight()) < 0.5) {
+                            && Math.abs(firstLine.getHeight() - z.getPrev().getFirstChild().getHeight()) < 0.5) {
                         if (!z.getPrev().getLabel().equals(BxZoneLabel.MET_KEYWORDS)) {
                             z.setLabel(z.getPrev().getLabel());
                         }
                     }
-                    if (pageIdx == bxDoc.getPages().size() - 1
+                    if (pageIdx == bxDoc.childrenCount() - 1
                             && (text.startsWith("publish with")
                             || text.contains("will be the most significant development")
                             || text.contains("disseminating the results of biomedical")
@@ -828,7 +831,7 @@ public class RuleBasedPubmedXMLGenerator {
                 }
 
                 boolean wasAuthor = false;
-                for (BxZone z : pp.getZones()) {
+                for (BxZone z : pp) {
                     BxZoneLabel orig = z.getLabel();
 
                     String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase();
@@ -914,7 +917,7 @@ public class RuleBasedPubmedXMLGenerator {
                 FileWriter fstream = new FileWriter(cpxmlPath);
                 BufferedWriter out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                out.write(writer.write(bxDoc.getPages()));
+                out.write(writer.write(Lists.newArrayList(bxDoc)));
                 out.close();
                 System.out.println("Progress: " + i + " out of " + files.size() + " (" + (i * 100. / files.size()) + "%)");
             } catch (Exception e) {

@@ -57,8 +57,8 @@ public class PubmedZoneLabelsEvaluator {
             Reader r2 = new InputStreamReader(is2);
             BxDocument corrBxDoc = new BxDocument().setPages(reader.read(r2));
 
-            List<BxZone> origZones = origBxDoc.asZones();
-            List<BxZone> corrZones = corrBxDoc.asZones();
+            List<BxZone> origZones = Lists.newArrayList(origBxDoc.asZones());
+            List<BxZone> corrZones = Lists.newArrayList(corrBxDoc.asZones());
 
             for (int i = 0; i < origZones.size(); i++) {
                 BxZone origZone = origZones.get(i);

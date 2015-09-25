@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.pubmed;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Map.Entry;
 import java.util.*;
@@ -35,7 +36,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.PdfBxStructureExtractor;
-import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneLocaliser;
@@ -43,6 +43,7 @@ import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.TextUtils;
 import pl.edu.icm.cermine.tools.XMLTools;
+import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
 public class PubmedXMLGenerator {
@@ -128,7 +129,10 @@ public class PubmedXMLGenerator {
 
         PdfBxStructureExtractor structureExtractor = new PdfBxStructureExtractor();
         BxDocument bxDoc = structureExtractor.extractStructure(pdfStream);
-        Integer bxDocLen = bxDoc.asZones().size();
+        
+        List<BxZone> zones = Lists.newArrayList(bxDoc.asZones());
+        
+        Integer bxDocLen = zones.size();
 
         SmartHashMap entries = new SmartHashMap();
 
@@ -502,7 +506,7 @@ public class PubmedXMLGenerator {
             printlnVerbose(entry.getValue() + " " + entry.getKey() + "\n");
             //iterate over zones
             for (Integer zoneIdx = 0; zoneIdx < bxDocLen; ++zoneIdx) {
-                BxZone curZone = bxDoc.asZones().get(zoneIdx);
+                BxZone curZone = zones.get(zoneIdx);
                 List<String> zoneTokens = TextUtils.tokenize(
                         TextUtils.removeOrphantSpaces(
                         TextUtils.cleanLigatures(
@@ -518,17 +522,17 @@ public class PubmedXMLGenerator {
                     smithSim = smith.compare(entryTokens, zoneTokens);
                     cosSim = cos.compare(entryTokens, zoneTokens);
                 }
-                printlnVerbose(smithSim + " " + bxDoc.asZones().get(zoneIdx).toText() + "\n\n");
+                printlnVerbose(smithSim + " " + zones.get(zoneIdx).toText() + "\n\n");
                 swLabelSim.get(zoneIdx).add(new LabelTrio(entry.getValue(), entryTokens, smithSim));
                 cosLabProb.get(zoneIdx).add(new LabelTrio(entry.getValue(), entryTokens, cosSim));
             }
         }
 
         printlnVerbose("===========================");
-        for (BxPage page: bxDoc.getPages()) {
-        	for(BxZone zone: page.getZones()) {
-        		Integer zoneIdx = bxDoc.asZones().indexOf(zone);
-        		BxZone curZone = bxDoc.asZones().get(zoneIdx);
+        for (BxPage page: bxDoc) {
+        	for(BxZone zone: page) {
+        		Integer zoneIdx = zones.indexOf(zone);
+        		BxZone curZone = zones.get(zoneIdx);
         		String zoneText = TextUtils.removeOrphantSpaces(curZone.toText().toLowerCase());
         		List<String> zoneTokens = TextUtils.tokenize(zoneText);
         		Boolean valueSet = false;
@@ -675,7 +679,7 @@ public class PubmedXMLGenerator {
         	}
         	Map<BxZone, ZoneLocaliser> zoneLocMap = new HashMap<BxZone, ZoneLocaliser>();
         	Set<BxZone> unlabeledZones = new HashSet<BxZone>();
-        	for(BxZone zone: page.getZones()) {
+        	for(BxZone zone: page) {
         		if(zone.getLabel() == null) {
         			unlabeledZones.add(zone);
         			zoneLocMap.put(zone, new ZoneLocaliser(zone));
@@ -787,7 +791,7 @@ public class PubmedXMLGenerator {
                         TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "."+coverage+".cxml"));
                 BufferedWriter out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                out.write(writer.write(bxDoc.getPages()));
+                out.write(writer.write(Lists.newArrayList(bxDoc)));
                 out.close();
                 
                 System.out.println(" done");

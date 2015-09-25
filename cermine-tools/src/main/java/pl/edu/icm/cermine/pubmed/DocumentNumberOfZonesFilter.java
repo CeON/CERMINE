@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.pubmed;
 
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class DocumentNumberOfZonesFilter {
             BxDocument doc = new BxDocument().setPages(pages);
             doc.setFilename(f.getName());
            
-            int size = doc.asZones().size();
+            int size = Lists.newArrayList(doc.asZones()).size();
             System.out.println(doc.getFilename()+" "+size+" "+(i*100./files.size()));
 
             File f2 = new File(outDir+doc.getFilename().replaceAll("cerm.xml", size+".cerm.xml"));

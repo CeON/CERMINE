@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.pubmed;
 
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -56,7 +57,7 @@ public class DocumentBibZonesCorrector {
             for (BxZone z: doc.asZones()) {
                 if (!BxZoneLabel.MET_BIB_INFO.equals(z.getLabel()) &&
                         !BxZoneLabel.REFERENCES.equals(z.getLabel()) &&
-                        z.getLines().size() <= 2 && 
+                        z.childrenCount() <= 2 && 
                         (z.toText().toLowerCase().contains("journal ")
                         || z.toText().toLowerCase().contains("vol.")
                         || z.toText().toLowerCase().contains("vol ")
@@ -74,7 +75,7 @@ public class DocumentBibZonesCorrector {
                 } else
                 if (!BxZoneLabel.OTH_UNKNOWN.equals(z.getLabel()) &&
                         !BxZoneLabel.MET_BIB_INFO.equals(z.getLabel()) &&
-                        z.getLines().size() <= 2 && 
+                        z.childrenCount() <= 2 && 
                         (z.toText().toLowerCase().contains("page "))) {
                     System.out.println("DETECTED PAGE: ");
                     System.out.println(z.getLabel()+" "+z.toText());
@@ -90,7 +91,7 @@ public class DocumentBibZonesCorrector {
                 throw new IOException("Cannot create file: ");
             }
             FileWriter fw = new FileWriter(f2);
-            wrt.write(fw, doc.getPages());
+            wrt.write(fw, Lists.newArrayList(doc));
             fw.flush();
             fw.close();
         }

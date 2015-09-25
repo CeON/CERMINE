@@ -76,10 +76,10 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
-        if (zone.getLines().size() < 2) {
+        if (zone.childrenCount() < 2) {
             return false;
         } else {
-            Iterator<BxLine> iterator = zone.getLines().iterator();
+            Iterator<BxLine> iterator = zone.iterator();
             String firstLine = iterator.next().toText().toLowerCase();
             if (types.contains(firstLine)) {
                 StringBuilder text = new StringBuilder();
@@ -106,8 +106,8 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
 
             @Override
             public int compare(BxZone t1, BxZone t2) {
-                return Double.compare(t2.getLines().get(0).getBounds().getHeight(),
-                        t1.getLines().get(0).getBounds().getHeight());
+                return Double.compare(t2.getChild(0).getHeight(),
+                        t1.getChild(0).getHeight());
             }
 
         });

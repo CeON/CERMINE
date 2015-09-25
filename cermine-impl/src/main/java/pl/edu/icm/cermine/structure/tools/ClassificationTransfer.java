@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.tools;
 
+import com.google.common.collect.Lists;
 import java.util.*;
 import pl.edu.icm.cermine.structure.model.*;
 
@@ -30,23 +31,23 @@ public class ClassificationTransfer {
     private static final double TOLERANCE = 1.0e-3;
 
     public void transferClassification(BxDocument source, BxDocument target) {
-        if (source.getPages().size() != target.getPages().size()) {
+        if (source.childrenCount() != target.childrenCount()) {
             throw new IllegalArgumentException("Page counts of the documents must be equal");
         }
-        for (int i = 0; i < source.getPages().size(); i++) {
-            transferClassification(source.getPages().get(i), target.getPages().get(i));
+        for (int i = 0; i < source.childrenCount(); i++) {
+            transferClassification(source.getChild(i), target.getChild(i));
         }
     }
 
     public void transferClassification(BxPage source, BxPage target) {
         Map<String, Map<BxChunk, Entry>> map = new HashMap<String, Map<BxChunk, Entry>>();
         List<Entry> entries = new ArrayList<Entry>();
-        for (BxZone zone : target.getZones()) {
+        for (BxZone zone : target) {
             Entry entry = new Entry();
             entry.zone = zone;
-            for (BxLine line : zone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         Map<BxChunk, Entry> map2 = map.get(chunk.toText());
                         if (map2 == null) {
                             map2 = new HashMap<BxChunk, Entry>();
@@ -59,13 +60,13 @@ public class ClassificationTransfer {
             entries.add(entry);
         }
 
-        for (BxZone zone : source.getZones()) {
+        for (BxZone zone : source) {
             if (zone.getLabel() == null || zone.getLabel() == BxZoneLabel.OTH_UNKNOWN) {
                 continue;
             }
-            for (BxLine line : zone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    chunkLoop: for (BxChunk chunk : word.getChunks()) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    chunkLoop: for (BxChunk chunk : word) {
                         Map<BxChunk, Entry> map2 = map.get(chunk.toText());
                         if (map2 != null) {
                             for(Map.Entry<BxChunk, Entry> mapEntry : map2.entrySet()) {

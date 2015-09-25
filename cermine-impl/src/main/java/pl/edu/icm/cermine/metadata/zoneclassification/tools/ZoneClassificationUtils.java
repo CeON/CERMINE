@@ -44,8 +44,8 @@ public class ZoneClassificationUtils {
     }
 
     public static void mapZoneLabels(BxDocument document, Map<BxZoneLabel, BxZoneLabel> labelMap) {
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
                 if (labelMap.get(zone.getLabel()) != null) {
                     zone.setLabel(labelMap.get(zone.getLabel()));
                 }
@@ -55,10 +55,10 @@ public class ZoneClassificationUtils {
 
     public static void correctPagesBounds(BxDocument document) {
         BxBoundsBuilder builder = new BxBoundsBuilder();
-        for (BxPage page : document.getPages()) {
+        for (BxPage page : document) {
             builder.expand(page.getBounds());
         }
-        for (BxPage page : document.getPages()) {
+        for (BxPage page : document) {
             page.setBounds(builder.getBounds());
         }
     }

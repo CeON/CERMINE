@@ -18,9 +18,11 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.zip.ZipException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.junit.Before;
@@ -74,25 +76,26 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 
 	@Override
 	protected boolean compareDocuments(BxDocument testDoc,	BxDocument expectedDoc) {
-		if(testDoc.asPages().size() != expectedDoc.asPages().size())
+		if (testDoc.childrenCount() != expectedDoc.childrenCount()) {
 			return false;
+        }
 		
+        List<BxZone> testZones = Lists.newArrayList(testDoc.asZones());
+        List<BxZone> expZones = Lists.newArrayList(expectedDoc.asZones());
 		Integer correctZones = 0;
-		Integer zones = testDoc.asZones().size();
-		for(Integer zoneIdx=0; zoneIdx < testDoc.asZones().size(); ++zoneIdx) {
-			BxZone testZone = testDoc.asZones().get(zoneIdx);
-			BxZone expectedZone = expectedDoc.asZones().get(zoneIdx);
+		Integer zones = testZones.size();
+		for (Integer zoneIdx = 0; zoneIdx < testZones.size(); ++zoneIdx) {
+			BxZone testZone = testZones.get(zoneIdx);
+			BxZone expectedZone = expZones.get(zoneIdx);
 			++allZones;
-			if(testZone.getLabel() == expectedZone.getLabel().getGeneralLabel())
+			if (testZone.getLabel() == expectedZone.getLabel().getGeneralLabel()) {
 				++correctZones;
-			else
+            } else {
 				++badZones;
+            }
 		}
-		System.out.println(((double)correctZones/(double)zones));
-		if(((double)correctZones/(double)zones) >= testSuccessPercentage/100.0)
-			return true;
-		else
-			return false;
+
+		return ((double)correctZones/(double)zones) >= testSuccessPercentage/100.0;
 	}
 
 	@Override

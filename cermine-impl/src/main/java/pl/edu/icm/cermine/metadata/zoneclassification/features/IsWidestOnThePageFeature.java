@@ -26,7 +26,7 @@ public class IsWidestOnThePageFeature extends FeatureCalculator<BxZone, BxPage> 
 
     @Override
     public double calculateFeatureValue(BxZone object, BxPage context) {
-        for (BxZone zone : context.getZones()) {
+        for (BxZone zone : context) {
             if (zone.getWidth() > object.getWidth()) {
                 return 0.0;
             }

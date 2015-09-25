@@ -49,62 +49,65 @@ public abstract class AbstractFilterEnhancer implements Enhancer {
     }
 
     protected Iterable<BxZone> filterZones(BxPage page) {
-        return new FilterIterable<BxZone>(page.getZones()) {
+        return new FilterIterable<BxZone>(page) {
 
             @Override
-            protected boolean match(BxZone zone, int index, List<BxZone> zones) {
+            protected boolean match(BxZone zone) {
                 return searchedZoneLabels.contains(zone.getLabel());
             }
         };
     }
 
     protected Iterable<BxPage> filterPages(BxDocument document) {
-        return new FilterIterable<BxPage>(document.getPages()) {
+        return new FilterIterable<BxPage>(document) {
 
             @Override
-            protected boolean match(BxPage page, int index, List<BxPage> pages) {
-                return !searchedFirstPageOnly || index == 0;
+            protected boolean match(BxPage page) {
+                return !searchedFirstPageOnly || !page.hasPrev();
             }
         };
     }
 
     private abstract static class FilterIterable<T> implements Iterable<T> {
 
-        private List<T> list;
+        private Iterable<T> it;
 
-        public FilterIterable(List<T> list) {
-            this.list = list;
+        public FilterIterable(Iterable<T> it) {
+            this.it = it;
         }
 
-        protected abstract boolean match(T zone, int index, List<T> zones);
+        protected abstract boolean match(T zone);
 
         @Override
         public Iterator<T> iterator() {
             return new Iterator<T>() {
 
                 private Iterator<T> iterator;
-                private int index = -1;
                 private T next = null;
 
                 {
-                    iterator = list.iterator();
+                    iterator = it.iterator();
                     findNext();
                 }
 
                 private void findNext() {
+                    if (!iterator.hasNext()) {
+                        next = null;
+                    }
                     while (iterator.hasNext()) {
                         next = iterator.next();
-                        index++;
-                        if (match(next, index, list)) {
-                            return;
+                        if (match(next)) {
+                            break;
                         }
                     }
-                    index = -1;
+                    if (next != null && !iterator.hasNext() && !match(next)) {
+                        next = null;
+                    }
                 }
 
                 @Override
                 public boolean hasNext() {
-                    return index != -1;
+                    return next != null;
                 }
 
                 @Override
@@ -116,7 +119,6 @@ public abstract class AbstractFilterEnhancer implements Enhancer {
 
                 @Override
                 public void remove() {
-                    throw new UnsupportedOperationException("Not supported yet.");
                 }
 
             };

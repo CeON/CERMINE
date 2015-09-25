@@ -32,14 +32,14 @@ public class WordCountRelativeFeature extends FeatureCalculator<BxZone, BxPage> 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int count = 0;
-        for (BxLine line : zone.getLines()) {
-            count += line.getWords().size();
+        for (BxLine line : zone) {
+            count += line.childrenCount();
         }
 
         int pCount = 0;
-        for (BxZone pZone: page.getZones()) {
-            for (BxLine line : pZone.getLines()) {
-                pCount += line.getWords().size();
+        for (BxZone pZone: page) {
+            for (BxLine line : pZone) {
+                pCount += line.childrenCount();
             }
         }
 

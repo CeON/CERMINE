@@ -35,7 +35,7 @@ public class DistanceFromNearestNeighbourFeature extends FeatureCalculator<BxZon
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         double minDist = Double.MAX_VALUE;
 
-        for (BxZone otherZone : page.getZones()) {
+        for (BxZone otherZone : page) {
             if (otherZone == zone) {
                 continue;
             }

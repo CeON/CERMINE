@@ -31,9 +31,9 @@ public class FreeSpaceWithinZoneFeature extends FeatureCalculator<BxZone, BxPage
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
 		double charSpace = 0.0;
 
-		for (BxLine line : zone.getLines()) {
-			for (BxWord word : line.getWords()) {
-				for (BxChunk chunk : word.getChunks()) {
+		for (BxLine line : zone) {
+			for (BxWord word : line) {
+				for (BxChunk chunk : word) {
 					charSpace += chunk.getArea();
 				}
 			}

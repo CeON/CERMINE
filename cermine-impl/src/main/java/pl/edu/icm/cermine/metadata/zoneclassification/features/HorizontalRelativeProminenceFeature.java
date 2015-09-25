@@ -32,7 +32,7 @@ public class HorizontalRelativeProminenceFeature extends FeatureCalculator<BxZon
         double leftProminence = zone.getX();
         double rightProminence = page.getWidth() - (zone.getX() + zone.getWidth());
 
-        for (BxZone otherZone : page.getZones()) {
+        for (BxZone otherZone : page) {
             if (otherZone == zone) {
                 continue;
             }

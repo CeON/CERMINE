@@ -17,6 +17,7 @@
  */
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,7 +39,7 @@ public class IsLowestOnThePageFeature extends FeatureCalculator<BxZone, BxPage> 
 	
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {	
-		List<BxZone> zones = new ArrayList<BxZone>(page.getZones());
+		List<BxZone> zones = Lists.newArrayList(page);
 		Collections.sort(zones, new yCoordinateComparator());
 		BxZone lastZone = zones.get(zones.size()-1);
 		if (zone.equals(lastZone)) {

@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.util.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
@@ -46,7 +47,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
         computeDocumentOrientation(document);
         BxDocument output = new BxDocument();
-        for (BxPage page: document.getPages()) {
+        for (BxPage page: document) {
         	BxPage segmentedPage = segmentPage(page);
         	if (segmentedPage.getBounds() != null) {
         		output.addPage(segmentedPage);
@@ -123,10 +124,11 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * @return array of components
      */
     protected List<Component> createComponents(BxPage page) throws AnalysisException {
-        Component[] components = new Component[page.getChunks().size()];
+        List<BxChunk> chunks = Lists.newArrayList(page.getChunks());
+        Component[] components = new Component[chunks.size()];
         for (int i = 0; i < components.length; i++) {
             try {
-                components[i] = new Component(page.getChunks().get(i));
+                components[i] = new Component(chunks.get(i));
             } catch(IllegalArgumentException ex) {
                 throw new AnalysisException(ex);
             }
@@ -466,11 +468,11 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      */
     private BxPage convertToBxModel(BxPage origPage, List<List<ComponentLine>> zones, double wordSpacing) {
         BxPage page = new BxPage();
-        
-        int pageIndex = origPage.getParent().getPages().indexOf(origPage);
+        List<BxPage> pages = Lists.newArrayList(origPage.getParent());
+        int pageIndex = pages.indexOf(origPage);
         boolean groupped = false;
         if (zones.size() > MAX_ZONES_PER_PAGE && pageIndex >= PAGE_MARGIN
-                && pageIndex < origPage.getParent().getPages().size() - PAGE_MARGIN) {
+                && pageIndex < pages.size() - PAGE_MARGIN) {
             List<ComponentLine> oneZone = new ArrayList<ComponentLine>();
             for (List<ComponentLine> zone : zones) {
                 oneZone.addAll(zone);
@@ -488,7 +490,8 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             for (ComponentLine line : lines) {
                 zone.addLine(line.convertToBxLine(wordSpacing));
             }
-            Collections.sort(zone.getLines(), new Comparator<BxLine>() {
+            List<BxLine> zLines = Lists.newArrayList(zone);
+            Collections.sort(zLines, new Comparator<BxLine>() {
 
                 @Override
                 public int compare(BxLine o1, BxLine o2) {
@@ -496,6 +499,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                 }
 
             });
+            zone.setLines(zLines);
             BxBoundsBuilder.setBounds(zone);
             page.addZone(zone);
         }

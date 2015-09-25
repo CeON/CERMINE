@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.evaluation;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -86,9 +87,9 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     @Override
     protected Results compareItems(BxDocument expected, BxDocument actual) {
         Results results = new Results();
-        for (int i = 0; i < expected.asPages().size(); i++) {
-            BxPage expPage = expected.asPages().get(i);
-            BxPage actPage = actual.asPages().get(i);
+        for (int i = 0; i < expected.childrenCount(); i++) {
+            BxPage expPage = expected.getChild(i);
+            BxPage actPage = actual.getChild(i);
             results.zoneLevel.add(compareZones(expPage, actPage));
             results.lineLevel.add(compareLines(expPage, actPage));
             results.wordLevel.add(compareWords(expPage, actPage));
@@ -143,19 +144,19 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         Map<BxChunk, BxWord> map = BxModelUtils.mapChunksToWords(actual);
 
         LevelResults results = new LevelResults();
-        for (BxZone expectedZone : expected.getZones()) {
+        for (BxZone expectedZone : expected) {
             if (ignoredLabels.contains(expectedZone.getLabel())) {
                 continue;
             }
-            for (BxLine expectedLine : expectedZone.getLines()) {
-                for (BxWord expectedWord : expectedLine.getWords()) {
+            for (BxLine expectedLine : expectedZone) {
+                for (BxWord expectedWord : expectedLine) {
                     Set<BxWord> actualWords = new HashSet<BxWord>();
-                    for (BxChunk chunk : expectedWord.getChunks()) {
+                    for (BxChunk chunk : expectedWord) {
                         actualWords.add(map.get(chunk));
                     }
                     if (actualWords.size() == 1) {
                         for (BxWord actualWord : actualWords) {
-                            if (actualWord.getChunks().size() == expectedWord.getChunks().size()) {
+                            if (actualWord.childrenCount() == expectedWord.childrenCount()) {
                                 results.matched++;
                             }
                         }
@@ -173,14 +174,14 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         Map<BxChunk, BxLine> map = BxModelUtils.mapChunksToLines(actual);
 
         LevelResults results = new LevelResults();
-        for (BxZone expectedZone : expected.getZones()) {
+        for (BxZone expectedZone : expected) {
             if (ignoredLabels.contains(expectedZone.getLabel())) {
                 continue;
             }
-            for (BxLine expectedLine : expectedZone.getLines()) {
+            for (BxLine expectedLine : expectedZone) {
                 Set<BxLine> actualLines = new HashSet<BxLine>();
-                for (BxWord word : expectedLine.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+                for (BxWord word : expectedLine) {
+                    for (BxChunk chunk : word) {
                         actualLines.add(map.get(chunk));
                     }
                 }
@@ -202,14 +203,14 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         Map<BxChunk, BxZone> map = BxModelUtils.mapChunksToZones(actual);
         
         LevelResults results = new LevelResults();
-        for (BxZone expectedZone : expected.getZones()) {
+        for (BxZone expectedZone : expected) {
             if (ignoredLabels.contains(expectedZone.getLabel())) {
                 continue;
             }
             Set<BxZone> actualZones = new HashSet<BxZone>();
-            for (BxLine line : expectedZone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+            for (BxLine line : expectedZone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         actualZones.add(map.get(chunk));
                     }
                 }
@@ -247,7 +248,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
 	@Override
 	protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
-        writer.write(output, document.getPages());
+        writer.write(output, Lists.newArrayList(document));
 	}
 
 	@Override

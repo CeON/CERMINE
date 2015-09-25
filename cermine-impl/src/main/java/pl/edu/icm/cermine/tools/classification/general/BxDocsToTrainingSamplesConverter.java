@@ -42,8 +42,8 @@ public abstract class BxDocsToTrainingSamplesConverter {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }
 
-            for (BxPage page : doc.getPages()) {
-                for (BxZone zone : page.getZones()) {
+            for (BxPage page : doc) {
+                for (BxZone zone : page) {
                     FeatureVector featureVector = vectorBuilder.getFeatureVector(zone, page);
                     TrainingSample<BxZoneLabel> element = new TrainingSample<BxZoneLabel>(featureVector, zone.getLabel());
                     element.setData(zone.toText());
@@ -64,8 +64,8 @@ public abstract class BxDocsToTrainingSamplesConverter {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }
 
-            for (BxPage page : doc.getPages()) {
-                for (BxZone zone : page.getZones()) {
+            for (BxPage page : doc) {
+                for (BxZone zone : page) {
                     FeatureVector featureVector = vectorBuilder.getFeatureVector(zone, page);
                     TrainingSample<BxZoneLabel> element = new TrainingSample<BxZoneLabel>(featureVector, zone.getLabel());
                     trainingList.add(element);
@@ -99,9 +99,9 @@ public abstract class BxDocsToTrainingSamplesConverter {
                 ZoneClassificationUtils.mapZoneLabels(doc, labelMap);
             }
 
-            for (BxPage page : doc.getPages()) {
-                for (BxZone zone : page.getZones()) {
-                    for (BxLine line : zone.getLines()) {
+            for (BxPage page : doc) {
+                for (BxZone zone : page) {
+                    for (BxLine line : zone) {
                         FeatureVector featureVector = vectorBuilder.getFeatureVector(line, page);
                         TrainingSample<BxZoneLabel> element = new TrainingSample<BxZoneLabel>(featureVector, zone.getLabel());
                         trainingList.add(element);

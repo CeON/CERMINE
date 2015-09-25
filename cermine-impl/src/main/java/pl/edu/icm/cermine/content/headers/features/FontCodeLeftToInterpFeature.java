@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.content.headers.features;
 
+import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -44,7 +45,7 @@ public class FontCodeLeftToInterpFeature extends FeatureCalculator<BxLine, BxPag
     @Override
     public double calculateFeatureValue(BxLine line, BxPage context) {
         int i = 0;
-        for (BxWord word : line.getWords()){ 
+        for (BxWord word : line){ 
             i++;
             String wordProcessed = word.toText().replaceAll("[^a-zA-Z\\.:\\?\\)\\(]", "");
             if (wordProcessed.matches("([a-zA-Z]{2,}|(.*?\\)))(\\.|:|\\?)")) {
@@ -52,8 +53,8 @@ public class FontCodeLeftToInterpFeature extends FeatureCalculator<BxLine, BxPag
             }
         }
         CountMap<String> mapLeft = new CountMap<String>();
-        for (BxWord word : line.getWords().subList(0, i)) {
-            for (BxChunk chunk : word.getChunks()) {
+        for (BxWord word : Lists.newArrayList(line).subList(0, i)) {
+            for (BxChunk chunk : word) {
                 if (chunk.getFontName() != null) {
                     mapLeft.add(chunk.getFontName());
                 }

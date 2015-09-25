@@ -31,7 +31,7 @@ public class IsAnywhereElseFeature extends AbstractFeatureCalculator<BxZone, BxP
 			return 0.0;
 		}
 		for (BxPage page: pages) {
-			for (BxZone zone: page.getZones()) {
+			for (BxZone zone: page) {
 				if (zone.toText().equals(object.toText())) {
 					return 1.0;
 				}

@@ -144,8 +144,8 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
     
     @Override
     public BxDocument classifyZones(BxDocument document) throws AnalysisException {
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
                 zone.setParent(page);
             }
         }

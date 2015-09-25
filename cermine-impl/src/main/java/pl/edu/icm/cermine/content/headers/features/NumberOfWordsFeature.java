@@ -30,7 +30,7 @@ public class NumberOfWordsFeature extends FeatureCalculator<BxLine, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxLine object, BxPage context) {
-        return object.getWords().size();
+        return object.childrenCount();
     }
 
 }

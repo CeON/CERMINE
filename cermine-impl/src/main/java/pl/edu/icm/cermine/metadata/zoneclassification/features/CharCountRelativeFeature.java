@@ -30,19 +30,19 @@ public class CharCountRelativeFeature extends FeatureCalculator<BxZone, BxPage> 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int count = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
+                for (BxChunk chunk : word) {
                     count += chunk.toText().length();
                 }
             }
         }
 
         int pCount = 0;
-        for (BxZone pZone : page.getZones()) {
-            for (BxLine line : pZone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+        for (BxZone pZone : page) {
+            for (BxLine line : pZone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         pCount += chunk.toText().length();
                     }
                 }

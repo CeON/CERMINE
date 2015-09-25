@@ -31,7 +31,7 @@ public class ContainsPageNumberFeature extends FeatureCalculator<BxZone, BxPage>
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        if (zone.getLines().size() > 1) {
+        if (zone.childrenCount() > 1) {
             return 0;
         }
         if (Pattern.matches("^\\d+$|^Page\\s+.*$|^page\\s+.*$", zone.toText())) {

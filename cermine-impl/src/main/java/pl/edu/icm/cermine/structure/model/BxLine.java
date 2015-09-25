@@ -18,14 +18,13 @@
 
 package pl.edu.icm.cermine.structure.model;
 
-import java.io.Serializable;
 import java.util.*;
 import pl.edu.icm.cermine.tools.CountMap;
 
 /**
  * Models a single line of text containing words.
  */
-public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Printable {
+public class BxLine extends BxObject<BxWord, BxLine, BxZone> {
 
     private static final long serialVersionUID = 917352034911588106L;
 
@@ -36,10 +35,6 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     public BxLine setBounds(BxBounds bounds) {
     	super.setBounds(bounds);
     	return this;
-    }
-
-    public List<BxWord> getWords() {
-        return words;
     }
 
     public BxLine setWords(Collection<BxWord> words) {
@@ -66,7 +61,7 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();
         for (BxWord word : words) {
-            for (BxChunk chunk : word.getChunks()) {
+            for (BxChunk chunk : word) {
                 if (chunk.getFontName() != null) {
                     map.add(chunk.getFontName());
                 }
@@ -99,5 +94,23 @@ public class BxLine extends BxObject<BxLine, BxZone> implements Serializable, Pr
             setText(sb.toString());
         }
         return getText();
+    }
+
+    @Override
+    public Iterator<BxWord> iterator() {
+        return words.listIterator();
+    }
+
+    @Override
+    public int childrenCount() {
+        return words.size();
+    }
+
+    @Override
+    public BxWord getChild(int index) {
+        if (index < 0 || index >= words.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return words.get(index);
     }
 }

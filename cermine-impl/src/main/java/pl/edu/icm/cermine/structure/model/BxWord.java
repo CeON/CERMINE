@@ -18,23 +18,19 @@
 
 package pl.edu.icm.cermine.structure.model;
 
-import java.io.Serializable;
 import java.util.*;
 import pl.edu.icm.cermine.tools.CountMap;
 
 /**
  * Models a word containing text chunks.
  */
-public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Printable {
+public class BxWord extends BxObject<BxChunk, BxWord, BxLine> {
 
     private static final long serialVersionUID = 2704689342968933369L;
 
     /** list of word's chunks */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
 
-	public List<BxChunk> getChunks() {
-		return chunks;
-	}
 
     public BxWord setChunks(Collection<BxChunk> chunks) {
         resetText();
@@ -88,5 +84,23 @@ public class BxWord extends BxObject<BxWord, BxLine> implements Serializable,Pri
             setText(sb.toString());
         }
         return getText();
+    }
+
+    @Override
+    public Iterator<BxChunk> iterator() {
+        return chunks.listIterator();
+    }
+
+    @Override
+    public int childrenCount() {
+        return chunks.size();
+    }
+
+    @Override
+    public BxChunk getChild(int index) {
+        if (index < 0 || index >= chunks.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return chunks.get(index);
     }
 }

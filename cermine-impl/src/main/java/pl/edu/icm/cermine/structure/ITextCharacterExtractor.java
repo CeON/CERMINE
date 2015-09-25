@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.exceptions.InvalidPdfException;
 import com.itextpdf.text.pdf.PRIndirectReference;
@@ -149,8 +150,8 @@ public class ITextCharacterExtractor implements CharacterExtractor {
     }
 
     private BxDocument removeDuplicateChunks(BxDocument document) {
-        for (BxPage page : document.getPages()) {
-            List<BxChunk> chunks = page.getChunks();
+        for (BxPage page : document) {
+            List<BxChunk> chunks = Lists.newArrayList(page.getChunks());
             List<BxChunk> filteredChunks = new ArrayList<BxChunk>();
             Map<Integer, Map<Integer, Set<BxChunk>>> chunkMap = new HashMap<Integer, Map<Integer, Set<BxChunk>>>();
             for (BxChunk chunk : chunks) {
@@ -190,19 +191,20 @@ public class ITextCharacterExtractor implements CharacterExtractor {
     }
     
     private BxDocument filterComponents(BxDocument document) {
-        for (BxPage page : document.getPages()) {
+        for (BxPage page : document) {
             BxBoundsBuilder bounds = new BxBoundsBuilder();
-            for (BxChunk ch : page.getChunks()) {
+            List<BxChunk> chunks = Lists.newArrayList(page.getChunks());
+            for (BxChunk ch : chunks) {
                 bounds.expand(ch.getBounds());
             }
-        
-            double density = (double)100.0*page.getChunks().size() / (bounds.getBounds().getWidth()*bounds.getBounds().getHeight());
+                    
+            double density = (double)100.0*chunks.size() / (bounds.getBounds().getWidth()*bounds.getBounds().getHeight());
             if (Double.isNaN(density) || density < CHUNK_DENSITY_LIMIT) {
                 continue;
             }
             
             Map<String, List<BxChunk>> map = new HashMap<String, List<BxChunk>>();
-            for (BxChunk ch : page.getChunks()) {
+            for (BxChunk ch : chunks) {
                 int x = (int)ch.getX()/PAGE_GRID_SIZE;
                 int y = (int)ch.getY()/PAGE_GRID_SIZE;
                 String key = Integer.toString(x)+" "+Integer.toString(y);
@@ -215,10 +217,11 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             for (List<BxChunk> list : map.values()) {
                 if (list.size() > CHUNK_DENSITY_LIMIT) {
                     for (BxChunk ch : list) {
-                        page.getChunks().remove(ch);
+                        chunks.remove(ch);
                     }
                 }
             }
+            page.setChunks(chunks);
         }
         return document;
     }

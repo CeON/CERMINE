@@ -34,7 +34,7 @@ public class ReferencesFeature extends FeatureCalculator<BxZone, BxPage> {
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int refDigits = 0;
         int refIndents = 0;
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             if (Pattern.matches("^\\[\\d+\\].*", line.toText()) || Pattern.matches("^\\d+\\..*", line.toText())) {
                 refDigits++;
             }
@@ -42,8 +42,8 @@ public class ReferencesFeature extends FeatureCalculator<BxZone, BxPage> {
                 refIndents++;
             }
         }
-        return ((double)refDigits > (double)zone.getLines().size() / 4.0
-                || (double)refIndents > (double)zone.getLines().size() / 4.0) ? 1 : 0;
+        return ((double)refDigits > (double)zone.childrenCount() / 4.0
+                || (double)refIndents > (double)zone.childrenCount() / 4.0) ? 1 : 0;
     }
 
 }

@@ -50,10 +50,10 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
         Population indentationPopulation = new Population();
         
         Set<BxLine> candidates = new HashSet<BxLine>();
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
                 if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT) || zone.getLabel().equals(BxZoneLabel.GEN_BODY)) {
-                    for (BxLine line : zone.getLines()) {
+                    for (BxLine line : zone) {
                         heightPopulation.addObservation(line.getHeight());
                         lengthPopulation.addObservation(line.getWidth());
                         indentationPopulation.addObservation(line.getX());
@@ -102,10 +102,10 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
             }
         }
         
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
                 if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT) || zone.getLabel().equals(BxZoneLabel.GEN_BODY)) {
-                    for (BxLine line : zone.getLines()) {
+                    for (BxLine line : zone) {
                         if (looksLikeHeader(line) && headerFonts.contains(line.getMostPopularFontName())) {
                             candidates.add(line);
                         }
@@ -149,9 +149,9 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
         candidates.removeAll(toDelete);
 
         candidatesList = new ArrayList<BxLine>();
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
-                for (BxLine line : zone.getLines()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
+                for (BxLine line : zone) {
                     if (candidates.contains(line)) {
                         candidatesList.add(line);
                     }
@@ -172,10 +172,10 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
 
         BxDocContentStructure contentStructure = new BxDocContentStructure();
         BxLine lastHeaderLine = null;
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
                 if (zone.getLabel().equals(BxZoneLabel.BODY_CONTENT) || zone.getLabel().equals(BxZoneLabel.GEN_BODY)) {
-                    for (BxLine line : zone.getLines()) {
+                    for (BxLine line : zone) {
                         if (candidates.contains(line)) {
                             contentStructure.addFirstHeaderLine(page, line);
                             lastHeaderLine = line;

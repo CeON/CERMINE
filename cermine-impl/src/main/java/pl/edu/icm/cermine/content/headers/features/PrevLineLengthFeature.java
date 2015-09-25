@@ -36,8 +36,8 @@ public class PrevLineLengthFeature extends FeatureCalculator<BxLine, BxPage> {
         }
         double avLength = 0;
         int linesCount = 0;
-        for (BxZone zone : page.getZones()) {
-            for (BxLine l : zone.getLines()) {
+        for (BxZone zone : page) {
+            for (BxLine l : zone) {
                 linesCount++;
                 avLength += l.getBounds().getWidth();
             }

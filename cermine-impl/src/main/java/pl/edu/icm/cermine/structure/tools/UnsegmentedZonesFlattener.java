@@ -18,6 +18,8 @@
 
 package pl.edu.icm.cermine.structure.tools;
 
+import com.google.common.collect.Lists;
+import java.util.ArrayList;
 import pl.edu.icm.cermine.structure.model.*;
 
 /**
@@ -28,14 +30,14 @@ public class UnsegmentedZonesFlattener implements DocumentProcessor {
 
     @Override
     public void process(BxDocument document) {
-        for (BxPage page: document.getPages()) {
-            for (BxZone zone: page.getZones()) {
-                for (BxLine line: zone.getLines()) {
-                    for (BxWord word: line.getWords()) {
-                        zone.getChunks().addAll(word.getChunks());
+        for (BxPage page: document) {
+            for (BxZone zone: page) {
+                for (BxLine line: zone) {
+                    for (BxWord word: line) {
+                        zone.getChunks().addAll(Lists.newArrayList(word));
                     }
                 }
-                zone.getLines().clear();
+                zone.setLines(new ArrayList<BxLine>());
             }
         }
     }

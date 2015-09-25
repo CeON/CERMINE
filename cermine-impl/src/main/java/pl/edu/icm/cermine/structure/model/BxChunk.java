@@ -19,7 +19,9 @@
 package pl.edu.icm.cermine.structure.model;
 
 import com.google.common.collect.Sets;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,7 +30,7 @@ import java.util.Set;
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  * 
  */
-public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializable {
+public final class BxChunk extends BxObject<Character, BxChunk, BxWord> {
 
     private static final long serialVersionUID = -6911268485662874663L;
 
@@ -55,6 +57,7 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
         this.fontName = fontName;
     }
 
+    @Override
     public String toText() {
         return this.getText();
     }
@@ -67,5 +70,27 @@ public final class BxChunk extends BxObject<BxChunk, BxWord> implements Serializ
     @Override
     public Set<String> getFontNames() {
         return Sets.newHashSet(fontName);
+    }
+
+    @Override
+    public Iterator<Character> iterator() {
+        List<Character> characters = new ArrayList<Character>();
+        for (char ch: getText().toCharArray()) {
+            characters.add(ch);
+        }
+        return characters.listIterator();
+    }
+
+    @Override
+    public int childrenCount() {
+        return toText().length();
+    }
+
+    @Override
+    public Character getChild(int index) {
+        if (index < 0 || index >= toText().length()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return toText().charAt(index);
     }
 }

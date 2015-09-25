@@ -31,7 +31,7 @@ public class VerticalProminenceFeature extends FeatureCalculator<BxZone, BxPage>
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        if (page.getZones().size() == 1) {
+        if (page.childrenCount() == 1) {
             return 0.0; //there is only one zone - no prominence can be measured
         }
         BxZone prevZone = zone.getPrev();

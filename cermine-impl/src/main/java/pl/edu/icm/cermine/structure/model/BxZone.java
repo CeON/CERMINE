@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.structure.model;
 
-import java.io.Serializable;
 import java.util.*;
 import pl.edu.icm.cermine.tools.CountMap;
 
@@ -26,7 +25,7 @@ import pl.edu.icm.cermine.tools.CountMap;
  * Models a single zone of a page. A zone contains either lines of text
  * or a list of chunks, that haven't been grouped into lines yet.
  */
-public final class BxZone extends BxObject<BxZone, BxPage> implements Serializable, Printable {
+public final class BxZone extends BxObject<BxLine, BxZone, BxPage> {
 
     private static final long serialVersionUID = -7331944901471939127L;
 
@@ -48,10 +47,6 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
         return this;
     }
 
-    public List<BxLine> getLines() {
-        return lines;
-    }
-    
     public BxZone setLines(Collection<BxLine> lines) {
         resetText();
         if (lines != null) {
@@ -97,8 +92,8 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();
         for (BxLine line : lines) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
+            for (BxWord word : line) {
+                for (BxChunk chunk : word) {
                     if (chunk.getFontName() != null) {
                         map.add(chunk.getFontName());
                     }
@@ -132,5 +127,23 @@ public final class BxZone extends BxObject<BxZone, BxPage> implements Serializab
             setText(sb.toString());
         }
         return getText();
+    }
+
+    @Override
+    public Iterator<BxLine> iterator() {
+        return lines.listIterator();
+    }
+
+    @Override
+    public int childrenCount() {
+        return lines.size();
+    }
+
+    @Override
+    public BxLine getChild(int index) {
+        if (index < 0 || index >= lines.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return lines.get(index);
     }
 }

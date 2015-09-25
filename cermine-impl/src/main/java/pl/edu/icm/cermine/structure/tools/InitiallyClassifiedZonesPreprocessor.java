@@ -30,8 +30,8 @@ public class InitiallyClassifiedZonesPreprocessor implements DocumentProcessor {
 
     @Override
     public void process(BxDocument document) {
-        for (BxPage page: document.getPages()) {
-            for (BxZone zone: page.getZones()) {
+        for (BxPage page: document) {
+            for (BxZone zone: page) {
                 zone.setLabel(zone.getLabel().getGeneralLabel());
             }
         }

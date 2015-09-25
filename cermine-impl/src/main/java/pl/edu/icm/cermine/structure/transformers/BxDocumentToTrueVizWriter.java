@@ -155,7 +155,7 @@ public class BxDocumentToTrueVizWriter {
         appendBounds(doc, node, "WordCorners", word.getBounds(), hints);
         appendPropertyIfNotNull(doc, node, "WordNext", word.getNextId());
         appendProperty(doc, node, "WordNumChars", "");
-        for (BxChunk chunk: word.getChunks()) {
+        for (BxChunk chunk : word) {
             appendCharacter(doc, node, chunk, hints);
         }
         parent.appendChild(node);
@@ -167,7 +167,7 @@ public class BxDocumentToTrueVizWriter {
         appendBounds(doc, node, "LineCorners", line.getBounds(), hints);
         appendPropertyIfNotNull(doc, node, "LineNext", line.getNextId());
         appendProperty(doc, node, "LineNumChars", "");
-        for (BxWord word: line.getWords()) {
+        for (BxWord word : line) {
             appendWord(doc, node, word, hints);
         }
         parent.appendChild(node);
@@ -199,7 +199,7 @@ public class BxDocumentToTrueVizWriter {
             	throw new TransformationException("Writing down an unknown zone label: " + zone.getLabel());
             }
         }
-        for (BxLine line: zone.getLines()) {
+        for (BxLine line : zone) {
             appendLine(doc, node, line, hints);
         }
         parent.appendChild(node);
@@ -213,7 +213,7 @@ public class BxDocumentToTrueVizWriter {
         appendProperty(doc, node, "PageColumns", "");
         appendPropertyIfNotNull(doc, node, "PageNext", page.getNextId());
         appendProperty(doc, node, "PageZones", "");
-        for (BxZone zone: page.getZones()) {
+        for (BxZone zone : page) {
             appendZone(doc, node, zone, hints);
         }
         parent.appendChild(node);

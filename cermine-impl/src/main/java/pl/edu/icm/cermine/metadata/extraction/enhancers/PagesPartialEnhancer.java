@@ -45,7 +45,7 @@ public class PagesPartialEnhancer extends AbstractPatternEnhancer {
     
     @Override
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
-        pages = document.getPages().size();
+        pages = document.childrenCount();
         return super.enhanceMetadata(document, metadata);
     }
 

@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.util.*;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.readingorder.BxZoneGroup;
@@ -66,23 +67,26 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
     @Override
     public BxDocument resolve(BxDocument messyDoc) {
         BxDocument orderedDoc = new BxDocument();
-        List<BxPage> pages = messyDoc.getPages();
+        List<BxPage> pages = Lists.newArrayList(messyDoc);
         for (BxPage page : pages) {
-            List<BxZone> zones = page.getZones();
+            List<BxZone> zones = Lists.newArrayList(page);
             for (BxZone zone : zones) {
-                List<BxLine> lines = zone.getLines();
+                List<BxLine> lines = Lists.newArrayList(zone);
                 for (BxLine line : lines) {
-                    List<BxWord> words = line.getWords();
+                    List<BxWord> words = Lists.newArrayList(line);
                     for (BxWord word : words) {
-                        List<BxChunk> chunks = word.getChunks();
+                        List<BxChunk> chunks = Lists.newArrayList(word);
                         Collections.sort(chunks, X_ASCENDING_ORDER);
                         word.resetText();
+                        word.setChunks(chunks);
                     }
                     Collections.sort(words, X_ASCENDING_ORDER);
                     line.resetText();
+                    line.setWords(words);
                 }
                 Collections.sort(lines, YX_ASCENDING_ORDER);
                 zone.resetText();
+                zone.setLines(lines);
             }
             List<BxZone> orderedZones;
             if (zones.size() > MAX_ZONES) {
@@ -170,11 +174,11 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
      * @param doc is a reference to a document with properly set reading order
      */
     private void setIdsAndLinkTogether(BxDocument doc) {
-        setIdsGenericImpl(doc.asPages());
-        setIdsGenericImpl(doc.asZones());
-        setIdsGenericImpl(doc.asLines());
-        setIdsGenericImpl(doc.asWords());
-        setIdsGenericImpl(doc.asChunks());
+        setIdsGenericImpl(Lists.newArrayList(doc));
+        setIdsGenericImpl(Lists.newArrayList(doc.asZones()));
+        setIdsGenericImpl(Lists.newArrayList(doc.asLines()));
+        setIdsGenericImpl(Lists.newArrayList(doc.asWords()));
+        setIdsGenericImpl(Lists.newArrayList(doc.asChunks()));
     }
 
     /**

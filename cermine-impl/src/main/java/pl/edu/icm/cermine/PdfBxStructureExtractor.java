@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Collection;
 import org.apache.commons.cli.ParseException;
@@ -109,7 +110,7 @@ public class PdfBxStructureExtractor {
                 elapsed = (end - start) / 1000F;
             
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                writer.write(new FileWriter(strF), doc.getPages());
+                writer.write(new FileWriter(strF), Lists.newArrayList(doc));
             } catch (AnalysisException ex) {
                ex.printStackTrace();
             } catch (TransformationException ex) {

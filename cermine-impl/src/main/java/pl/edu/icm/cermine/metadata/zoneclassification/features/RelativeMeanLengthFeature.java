@@ -31,7 +31,7 @@ public class RelativeMeanLengthFeature extends FeatureCalculator<BxZone, BxPage>
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        BxLine firstLine = zone.getLines().get(0);
+        BxLine firstLine = zone.getFirstChild();
         BxLine line = firstLine;
         double meanTotalWidth = line.getWidth();
         int lineCount = 1;
@@ -55,15 +55,15 @@ public class RelativeMeanLengthFeature extends FeatureCalculator<BxZone, BxPage>
         meanTotalWidth /= lineCount;
         
         double meanZoneWidth = 0;
-        for (BxLine l : zone.getLines()) {
+        for (BxLine l : zone) {
             meanZoneWidth += l.getWidth();
         }
         
-        if (zone.getLines().isEmpty() || meanTotalWidth == 0) {
+        if (!zone.hasChildren() || meanTotalWidth == 0) {
             return 0;
         }
         
-        return meanZoneWidth / zone.getLines().size() / meanTotalWidth;
+        return meanZoneWidth / zone.childrenCount() / meanTotalWidth;
     }
     
 }

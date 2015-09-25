@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Lists;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +44,7 @@ public class PagesNumbersEnhancer extends AbstractFilterEnhancer {
         if (enhancedFields.contains(EnhancedField.PAGES)) {
             return;
         }
-        List<BxPage> pages = new ArrayList<BxPage>(document.getPages());
+        List<BxPage> pages = Lists.newArrayList(document);
         
         Map<Integer, Set<Integer>> candidates = new HashMap<Integer, Set<Integer>>();
         for (int i = 0; i < pages.size(); i++) {
@@ -54,7 +55,7 @@ public class PagesNumbersEnhancer extends AbstractFilterEnhancer {
                 if (zone.toText().matches("^\\d{1,6}$")) {
                     int pageNumber = Integer.parseInt(zone.toText());
                     candidates.get(i).add(pageNumber);
-                } else if (zone.getLines().size() == 1) {
+                } else if (zone.childrenCount() == 1) {
                     Pattern p1 = Pattern.compile("^(\\d{1,6}).*$");
                     Matcher m1 = p1.matcher(zone.toText());
                     Pattern p2 = Pattern.compile("^.*(\\d{1,6})$");
@@ -100,7 +101,7 @@ public class PagesNumbersEnhancer extends AbstractFilterEnhancer {
         
         if (best > -1) {
             metadata.setPages(String.valueOf(bestarg), 
-                            String.valueOf(bestarg+document.asPages().size()-1));
+                            String.valueOf(bestarg + document.childrenCount()-1));
             enhancedFields.add(EnhancedField.PAGES);
         }
 

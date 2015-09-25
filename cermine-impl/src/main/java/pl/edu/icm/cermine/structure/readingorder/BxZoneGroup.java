@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.readingorder;
 
+import java.util.Iterator;
 import java.util.Set;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxObject;
@@ -29,7 +30,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
 * @author Pawel Szostek (p.szostek@icm.edu.pl) @date 05.2012
  * 
 */
-public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
+public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup, BxZoneGroup> {
 
     private BxObject leftChild;
     private BxObject rightChild;
@@ -99,6 +100,26 @@ public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup> {
 
     @Override
     public Set<String> getFontNames() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String toText() {
+        return leftChild.toText() + "\n" + rightChild.toText();
+    }
+
+    @Override
+    public Iterator<BxZoneGroup> iterator() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int childrenCount() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public BxZoneGroup getChild(int index) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

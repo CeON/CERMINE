@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.transformers;
 
+import com.google.common.collect.Lists;
 import java.io.StringReader;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -99,7 +100,7 @@ public class BxDocumentToMinimalTrueVizWriterTest {
 
     private Document bxToDom(BxDocument doc) throws Exception {
         BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-        String out = writer.write(doc.getPages(), BxDocumentToTrueVizWriter.MINIMAL_OUTPUT_SIZE);
+        String out = writer.write(Lists.newArrayList(doc), BxDocumentToTrueVizWriter.MINIMAL_OUTPUT_SIZE);
         return TrueVizUtils.newDocumentBuilder(true).parse(new InputSource(new StringReader(out)));
     }
 

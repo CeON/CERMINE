@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.tools;
 
+import java.util.ArrayList;
 import pl.edu.icm.cermine.structure.model.*;
 
 /**
@@ -28,16 +29,20 @@ public class UnsegmentedPagesFlattener implements DocumentProcessor {
 
     @Override
     public void process(BxDocument document) {
-        for (BxPage page: document.getPages()) {
-            for (BxZone zone: page.getZones()) {
-                page.getChunks().addAll(zone.getChunks());
-                for (BxLine line: zone.getLines()) {
-                    for (BxWord word: line.getWords()) {
-                        page.getChunks().addAll(word.getChunks());
+        for (BxPage page: document) {
+            for (BxZone zone: page) {
+                for (BxChunk chunk : zone.getChunks()) {
+                    page.addChunk(chunk);
+                }
+                for (BxLine line: zone) {
+                    for (BxWord word: line) {
+                        for (BxChunk chunk : word) {
+                            page.addChunk(chunk);
+                        }
                     }
                 }
             }
-            page.getZones().clear();
+            page.setZones(new ArrayList<BxZone>());
         }
     }
 

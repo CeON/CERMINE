@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,7 +85,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
 
         ExecutorService exec = Executors.newFixedThreadPool(PdfNLMContentExtractor.THREADS_NUMBER);
         ArrayList<Callable<NumBxPage>> tasks = new ArrayList<Callable<NumBxPage>>();
-        for (BxPage page : document.getPages()) {
+        for (BxPage page : document) {
            tasks.add(new ComponentCounter(page));
         }
         
@@ -106,12 +107,12 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         this.computeDocumentOrientation(componentMap);
     
         BxDocument output = new BxDocument();
-        BxPage[] pages = new BxPage[document.getPages().size()];
+        BxPage[] pages = new BxPage[document.childrenCount()];
         
         exec = Executors.newFixedThreadPool(PdfNLMContentExtractor.THREADS_NUMBER);
         tasks = new ArrayList<Callable<NumBxPage>>();
         int i = 0;
-        for (BxPage page : document.getPages()) {
+        for (BxPage page : document) {
            tasks.add(new SingleSegmenter(page, i++));
         }
         

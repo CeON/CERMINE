@@ -18,20 +18,23 @@
 
 package pl.edu.icm.cermine.structure.model;
 
+import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
  * Common class for all Bx* classes having physical properties (this is to say
  * BxBounds).
  * 
- * @param <S> the actual type
- * @param <T> context type (e.g. BxPage for BxZone)
+ * @param <C> child type
+ * @param <T> the actual type
+ * @param <P> parent type (e.g. BxPage for BxZone)
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @date 05.2012
  * 
  */
 
-public abstract class BxObject <S, T> implements Indexable<S> {
+public abstract class BxObject <C, T, P> implements Indexable<T>, Iterable<C>, Printable, Serializable {
 
     /** zone's bounding box */
     private BxBounds bounds;
@@ -43,21 +46,37 @@ public abstract class BxObject <S, T> implements Indexable<S> {
     private String nextObjId;
 
     /** next page in the linked list of pages. Stored in the logical reading order */
-    private S nextObj;
+    private T nextObj;
     
-    private S prevObj;
+    private T prevObj;
 
-    private T parent;
+    private P parent;
     
     private String text;
     
-    public void setParent(T parent) {
+    public void setParent(P parent) {
     	this.parent = parent;
     }
     
-    public T getParent() {
+    public P getParent() {
     	return parent;
     }
+
+    @Override
+    public abstract Iterator<C> iterator();
+    
+    public boolean hasChildren() {
+        return iterator().hasNext();
+    }
+    
+    public abstract int childrenCount();
+    
+    public C getFirstChild() {
+        Iterator<C> it = iterator();
+        return it.hasNext() ? it.next() : null;
+    }
+    
+    public abstract C getChild(int index);
     
     @Override
     public void setId(String objId) {
@@ -80,12 +99,12 @@ public abstract class BxObject <S, T> implements Indexable<S> {
     }
 
     @Override
-    public void setNext(S nextObj) {
+    public void setNext(T nextObj) {
     	this.nextObj = nextObj;
     }
 
     @Override
-    public S getNext() {
+    public T getNext() {
     	return this.nextObj;
     }
 
@@ -95,12 +114,12 @@ public abstract class BxObject <S, T> implements Indexable<S> {
 	}    
 
     @Override
-    public void setPrev(S prevObj) {
+    public void setPrev(T prevObj) {
     	this.prevObj = prevObj;
     }
 
     @Override
-    public S getPrev() {
+    public T getPrev() {
     	return this.prevObj;
     }
 
@@ -117,9 +136,9 @@ public abstract class BxObject <S, T> implements Indexable<S> {
         return bounds;
     }
 
-    public S setBounds(BxBounds bounds) {
+    public T setBounds(BxBounds bounds) {
     	this.bounds = bounds;
-    	return (S)this;
+    	return (T)this;
     }
     
     public double getX() {

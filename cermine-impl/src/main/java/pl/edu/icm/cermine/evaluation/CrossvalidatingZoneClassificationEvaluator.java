@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.evaluation;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -183,7 +184,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
     }
 
     protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
-        writer.write(output, document.getPages());
+        writer.write(output, Lists.newArrayList(document));
     }
 
     protected void printItemResults(BxZone expected, BxZone actual) {

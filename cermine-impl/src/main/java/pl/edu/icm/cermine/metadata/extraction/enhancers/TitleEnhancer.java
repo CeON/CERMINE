@@ -74,7 +74,7 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
                 continue;
             }
             if (zone.toText().toLowerCase().startsWith("sponsored document from")
-                    || (zone.hasPrev() && zone.getPrev().getLines().size() == 1 && zone.getPrev().toText().toLowerCase().startsWith("sponsored document from"))) {
+                    || (zone.hasPrev() && zone.getPrev().childrenCount() == 1 && zone.getPrev().toText().toLowerCase().startsWith("sponsored document from"))) {
                 continue;
             }
             if (zone.hasNext() && zone.getNext().toText().toLowerCase().replaceAll("[^a-z]", "").startsWith("journalhomepage")) {
@@ -86,28 +86,28 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
 
             @Override
             public int compare(BxZone t1, BxZone t2) {
-                return Double.compare(t2.getLines().get(0).getBounds().getHeight(),
-                        t1.getLines().get(0).getBounds().getHeight());
+                return Double.compare(t2.getChild(0).getHeight(),
+                        t1.getChild(0).getHeight());
             }
 
         });
 
         if (!titleZones.isEmpty()) {
             BxZone titleZone = titleZones.get(0);
-            double height = titleZone.getLines().get(0).getHeight();
+            double height = titleZone.getChild(0).getHeight();
             while (titleZone.hasPrev() 
                     && BxZoneLabel.MET_TITLE.equals(titleZone.getPrev().getLabel())
-                    && Math.abs(height-titleZone.getPrev().getLines().get(0).getHeight()) < 0.5) {
+                    && Math.abs(height-titleZone.getPrev().getChild(0).getHeight()) < 0.5) {
                 titleZone = titleZone.getPrev();
             }
             
             StringBuilder titleSB = new StringBuilder(titleZone.toText());
-            while (titleZone.hasNext() && Math.abs(height-titleZone.getNext().getLines().get(0).getHeight()) < 0.5) {
+            while (titleZone.hasNext() && Math.abs(height-titleZone.getNext().getChild(0).getHeight()) < 0.5) {
                 if (BxZoneLabel.MET_TITLE.equals(titleZone.getNext().getLabel())) {
                     titleZone = titleZone.getNext();
                     titleSB.append(" ");
                     titleSB.append(titleZone.toText());
-                } else if (titleZone.getNext().getLines().size() == 1
+                } else if (titleZone.getNext().childrenCount() == 1
                         && titleZone.getNext().getFontNames().equals(titleZone.getFontNames())) {
                     titleZone = titleZone.getNext();
                     titleSB.append(" ");

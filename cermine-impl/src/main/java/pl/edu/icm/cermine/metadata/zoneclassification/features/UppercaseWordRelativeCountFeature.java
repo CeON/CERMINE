@@ -34,11 +34,11 @@ public class UppercaseWordRelativeCountFeature extends FeatureCalculator<BxZone,
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int count = 0;
         int allCount = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
                 allCount++;
-                if(!word.getChunks().isEmpty()) {
-                	String s = word.getChunks().get(0).toText();
+                if (word.hasChildren()) {
+                	String s = word.getChild(0).toText();
                 	if (!s.isEmpty() && Character.isUpperCase(s.charAt(0))) {
                 		count++;
                 	}

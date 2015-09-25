@@ -18,14 +18,13 @@
 
 package pl.edu.icm.cermine.structure.model;
 
-import java.io.Serializable;
 import java.util.*;
 import pl.edu.icm.cermine.tools.CountMap;
 
 /**
  * Models a document containing pages.
  */
-public final class BxDocument implements Serializable {
+public final class BxDocument extends BxObject<BxPage, BxDocument, Object> {
 
     private static final long serialVersionUID = -4826783896245709986L;
 
@@ -43,10 +42,6 @@ public final class BxDocument implements Serializable {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
-
-	public List<BxPage> getPages() {
-        return pages;
-    }
 
     public BxDocument setPages(Collection<BxPage> pages) {
         if (pages != null) {
@@ -68,6 +63,7 @@ public final class BxDocument implements Serializable {
         return this;
     }
 
+    @Override
     public String toText() {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
@@ -85,8 +81,14 @@ public final class BxDocument implements Serializable {
      * 
      * @return a list of constituent pages. The list keeps the order used in the original file
      */
-    public List<BxPage> asPages() {
-    	return this.getPages();
+    public Iterable<BxPage> asPages() {
+        return new Iterable<BxPage>() {
+
+            @Override
+            public Iterator<BxPage> iterator() {
+                return pages.listIterator();
+            }
+        };
     }
     
     /**
@@ -94,12 +96,20 @@ public final class BxDocument implements Serializable {
      * @return a list of constituent zones. The list holds the logical reading-order if 
      * a ReadingOrderResolver was run on the original document.
      */
-    public List<BxZone> asZones() {
-    	List<BxZone> ret = new ArrayList<BxZone>();
-    	for(BxPage page: asPages()) {
-    		ret.addAll(page.getZones());
-    	}
-    	return ret; 
+    public Iterable<BxZone> asZones() {
+        return new Iterable<BxZone>() {
+            
+            @Override
+            public Iterator<BxZone> iterator() {
+                List<BxZone> zones = new ArrayList<BxZone>();
+            	for (BxPage page : asPages()) {
+                    for (BxZone zone : page) {
+                        zones.add(zone);
+                    }       
+                }
+                return zones.listIterator();
+            }
+        };
     }
     
     /**
@@ -107,12 +117,20 @@ public final class BxDocument implements Serializable {
      * @return a list of constituent text lines. The list holds the logical reading-order if 
      * a ReadingOrderResolver was run on the original document.
      */
-    public List<BxLine> asLines() {
-    	List<BxLine> ret = new ArrayList<BxLine>();
-    	for(BxZone zone: asZones()) {
-    		ret.addAll(zone.getLines());
-    	}
-    	return ret;
+    public Iterable<BxLine> asLines() {
+        return new Iterable<BxLine>() {
+            
+            @Override
+            public Iterator<BxLine> iterator() {
+                List<BxLine> lines = new ArrayList<BxLine>();
+            	for (BxZone zone : asZones()) {
+                    for (BxLine line : zone) {
+                        lines.add(line);
+                    }       
+                }
+                return lines.listIterator();
+            }
+        };
     }
     
     /**
@@ -120,12 +138,20 @@ public final class BxDocument implements Serializable {
      * @return a list of constituent words. The list holds the logical reading-order if 
      * a ReadingOrderResolver was run on the original document.
      */
-    public List<BxWord> asWords() {
-    	List<BxWord> ret = new ArrayList<BxWord>();
-    	for(BxLine line: asLines()) {
-    		ret.addAll(line.getWords());
-    	}
-    	return ret;
+    public Iterable<BxWord> asWords() {
+        return new Iterable<BxWord>() {
+            
+            @Override
+            public Iterator<BxWord> iterator() {
+                List<BxWord> words = new ArrayList<BxWord>();
+            	for (BxLine line : asLines()) {
+                    for (BxWord word : line) {
+                        words.add(word);
+                    }       
+                }
+                return words.listIterator();
+            }
+        };
     }
     
     /**
@@ -133,38 +159,58 @@ public final class BxDocument implements Serializable {
      * @return a list of constituent letters. The list holds the logical reading-order if 
      * a ReadingOrderResolver was run on the original document.
      */
-    public List<BxChunk> asChunks() {
-    	List<BxChunk> ret = new ArrayList<BxChunk>();
-    	for(BxWord word: asWords()) {
-    		ret.addAll(word.getChunks());
-    	}
-    	return ret;
+    public Iterable<BxChunk> asChunks() {
+    	return new Iterable<BxChunk>() {
+            
+            @Override
+            public Iterator<BxChunk> iterator() {
+                List<BxChunk> chunks = new ArrayList<BxChunk>();
+            	for (BxWord word : asWords()) {
+                    for (BxChunk chunk : word) {
+                        chunks.add(chunk);
+                    }       
+                }
+                return chunks.listIterator();
+            }
+        };
     }
     
+    @Override
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();
-        for (BxPage page : pages) {
-            for (BxZone zone : page.getZones()) {
-                for (BxLine line : zone.getLines()) {
-                    for (BxWord word : line.getWords()) {
-                        for (BxChunk chunk : word.getChunks()) {
-                            if (chunk.getFontName() != null) {
-                                map.add(chunk.getFontName());
-                            }
-                        }
-                    }
-                }
-            }
+        for (BxChunk chunk : asChunks()) {
+            if (chunk.getFontName() != null) {
+                map.add(chunk.getFontName());
+            }    
         }
         return map.getMaxCountObject();
     }
     
+    @Override
     public Set<String> getFontNames() {
         Set<String> names = new HashSet<String>();
         for (BxPage page : pages) {
             names.addAll(page.getFontNames());
         }
         return names;
+    }
+
+    @Override
+    public Iterator<BxPage> iterator() {
+        return pages.listIterator();
+    }
+
+    @Override
+    public int childrenCount() {
+        return pages.size();
+    }
+
+    @Override
+    public BxPage getChild(int index) {
+        if (index < 0 || index >= pages.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return pages.get(index);
     }
     
 }

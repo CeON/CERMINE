@@ -78,7 +78,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                     continue;
                 }
                 boolean firstLine = true;
-                for (BxLine line : zone.getLines()) {
+                for (BxLine line : zone) {
                     if (firstLine) {
                         firstLine = false;
                         if (headers.contains(line.toText().toLowerCase().replaceAll("[^0-9a-zA-Z]", ""))) {
@@ -94,8 +94,8 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                     double meanY = 0;
                     double meanH = 0;
                     int total = 0;
-                    for (BxWord w : line.getWords()) {
-                        for (BxChunk ch : w.getChunks()) {
+                    for (BxWord w : line) {
+                        for (BxChunk ch : w) {
                             meanY += ch.getY();
                             meanH += ch.getHeight();
                             total++;
@@ -104,8 +104,8 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                     meanY /= total;
                     meanH /= total;
                         
-                    for (BxWord word : line.getWords()) {
-                        Iterator<BxChunk> iterator = word.getChunks().iterator();
+                    for (BxWord word : line) {
+                        Iterator<BxChunk> iterator = word.iterator();
                         while (iterator.hasNext()) {
                             BxChunk chunk = iterator.next();
                             double chunkY = chunk.getY();

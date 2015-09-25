@@ -30,9 +30,9 @@ public class CharCountFeature extends FeatureCalculator<BxZone, BxPage> {
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int count = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
+                for (BxChunk chunk : word) {
                     count += chunk.toText().length();
                 }
             }

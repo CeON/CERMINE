@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.transformers;
 
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +30,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipFile;
 import javax.xml.parsers.ParserConfigurationException;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -55,8 +57,8 @@ public class TrueVizToBxDocumentReaderTest {
        boolean contains=false;
        boolean rightText=false;
        boolean rightSize=false;
-       for (BxZone zone:page.getZones()) {
-          if (zone.getLabel()!=null) {
+       for (BxZone zone : page) {
+          if (zone.getLabel() != null) {
            if (zone.getLabel().equals(BxZoneLabel.MET_AUTHOR)) {
                contains=true;
                System.out.println(zone.toText());
@@ -78,8 +80,9 @@ public class TrueVizToBxDocumentReaderTest {
        assertTrue(rightText);
        assertTrue(rightSize);
        
-       assertEquals("font-1", page.getZones().get(0).getLines().get(0).getWords().get(0).getChunks().get(0).getFontName());
-       assertEquals("font-2", page.getZones().get(0).getLines().get(0).getWords().get(0).getChunks().get(1).getFontName());
+       BxWord word = page.getChild(0).getChild(0).getChild(0);
+       assertEquals("font-1", word.getChild(0).getFontName());
+       assertEquals("font-2", word.getChild(1).getFontName());
     }
 
 	private BxDocument getDocumentFromZipFile(String zipFilename, String filename) throws TransformationException, IOException, URISyntaxException {
@@ -147,11 +150,16 @@ public class TrueVizToBxDocumentReaderTest {
     @Test
     public void testChainedElementsEven() throws TransformationException, IOException, URISyntaxException {
     	BxDocument doc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
-    	assertEquals(countChainedElements(doc.asPages()),  Integer.valueOf(doc.asPages().size()-1));
-    	assertEquals(countChainedElements(doc.asZones()),  Integer.valueOf(doc.asZones().size()-1));
-    	assertEquals(countChainedElements(doc.asLines()),  Integer.valueOf(doc.asLines().size()-1));
-    	assertEquals(countChainedElements(doc.asWords()),  Integer.valueOf(doc.asWords().size()-1));
-    	assertEquals(countChainedElements(doc.asChunks()), Integer.valueOf(doc.asChunks().size()-1));
+        List<BxPage> pages = Lists.newArrayList(doc);
+        List<BxZone> zones = Lists.newArrayList(doc.asZones());
+        List<BxLine> lines = Lists.newArrayList(doc.asLines());
+        List<BxWord> words = Lists.newArrayList(doc.asWords());
+        List<BxChunk> chunks = Lists.newArrayList(doc.asChunks());
+    	assertEquals(countChainedElements(pages),  Integer.valueOf(pages.size() - 1));
+    	assertEquals(countChainedElements(zones),  Integer.valueOf(zones.size()-1));
+    	assertEquals(countChainedElements(lines),  Integer.valueOf(lines.size()-1));
+    	assertEquals(countChainedElements(words),  Integer.valueOf(words.size()-1));
+    	assertEquals(countChainedElements(chunks), Integer.valueOf(chunks.size()-1));
     }
     
 }

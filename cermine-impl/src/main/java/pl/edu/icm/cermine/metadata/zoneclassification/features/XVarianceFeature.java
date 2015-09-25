@@ -32,23 +32,23 @@ public class XVarianceFeature extends FeatureCalculator<BxZone, BxPage> {
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         double meanX = 0;
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             meanX += line.getX();
         }
         
-        if (meanX == 0 || zone.getLines().isEmpty()) {
+        if (meanX == 0 || !zone.hasChildren()) {
             return 0;
         }
         
-        meanX /= zone.getLines().size();
+        meanX /= zone.childrenCount();
         
         double meanXDiff = 0;
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             meanXDiff += Math.abs(line.getX() - meanX);
             
         }
                 
-        return meanXDiff / zone.getLines().size() / meanX;
+        return meanXDiff / zone.childrenCount() / meanX;
      }
     
 } 

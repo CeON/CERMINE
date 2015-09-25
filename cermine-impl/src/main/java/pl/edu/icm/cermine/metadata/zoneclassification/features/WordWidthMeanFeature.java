@@ -35,8 +35,8 @@ public class WordWidthMeanFeature extends FeatureCalculator<BxZone, BxPage> {
         int count = 0;
         double mean = 0;
 
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
                 count++;
                 mean += word.getBounds().getWidth();
             }

@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -50,14 +51,14 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
     
     @Override
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
-        for (BxZone zone : document.getPages().get(0).getZones()) {
+        for (BxZone zone : document.getFirstChild()) {
             if (BxZoneLabel.MET_AUTHOR.equals(zone.getLabel())) {
                 return false;
             }
         }
         boolean inLine = false;
-        for (BxZone zone1 : filterZones(document.getPages().get(0))) {
-            for (BxZone zone2 : filterZones(document.getPages().get(0))) {
+        for (BxZone zone1 : filterZones(document.getFirstChild())) {
+            for (BxZone zone2 : filterZones(document.getFirstChild())) {
                 if (!zone1.equals(zone2) && Math.abs(zone1.getY()-zone2.getY()) < 10) {
                     inLine = true;
                 }
@@ -72,7 +73,7 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
         BxZone toAdd1 = null;
         BxZone toAdd2 = null;
         
-        for (BxZone zone : filterZones(document.getPages().get(0))) {
+        for (BxZone zone : filterZones(document.getFirstChild())) {
             BxZone z1 = new BxZone();
             z1.setLabel(BxZoneLabel.MET_AUTHOR);
             BxBoundsBuilder b1 = new BxBoundsBuilder();
@@ -81,7 +82,7 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
             BxBoundsBuilder b2 = new BxBoundsBuilder();
             boolean wasAff = false;
             BxLine prev = null;
-            for (BxLine line : zone.getLines()) {
+            for (BxLine line : zone) {
                 String lineText = line.toText().toLowerCase();
                 if (prev != null && 
                         (!prev.getMostPopularFontName().equals(line.getMostPopularFontName())
@@ -103,7 +104,7 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
             }
             z1.setBounds(b1.getBounds());
             z2.setBounds(b2.getBounds());
-            if (!z1.getLines().isEmpty() && !z2.getLines().isEmpty()) {
+            if (z1.hasChildren() && z2.hasChildren()) {
                 toDel = zone;
                 toAdd1 = z1;
                 toAdd2 = z2;
@@ -112,11 +113,11 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
         
         if (toDel != null) {
             List<BxZone> list = new ArrayList<BxZone>();
-            list.addAll(document.getPages().get(0).getZones());
+            list.addAll(Lists.newArrayList(document.getFirstChild()));
             list.remove(toDel);
             list.add(toAdd1);
             list.add(toAdd2);
-            document.getPages().get(0).setZones(list);
+            document.getFirstChild().setZones(list);
             try {
                 roResolver.resolve(document);
             } catch (AnalysisException ex) {}

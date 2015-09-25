@@ -39,7 +39,7 @@ public class YearFeature extends FeatureCalculator<BxZone, BxPage> {
     public double calculateFeatureValue(BxZone zone, BxPage page) {
  
         int yearCount = 0;
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             
             String toMatch = line.toText();
             Pattern pattern = Pattern.compile("^\\D*(\\d+)(.*)$");
@@ -55,7 +55,7 @@ public class YearFeature extends FeatureCalculator<BxZone, BxPage> {
                 toMatch = matcher.group(2);
             }
         }
-        return (double)yearCount / (double)zone.getLines().size();
+        return (double)yearCount / (double)zone.childrenCount();
     }
 
 }

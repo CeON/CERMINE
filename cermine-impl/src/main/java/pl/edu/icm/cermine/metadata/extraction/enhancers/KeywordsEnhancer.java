@@ -61,9 +61,9 @@ public class KeywordsEnhancer extends AbstractSimpleEnhancer {
                 }
                 
                 List<String> keywords = new ArrayList<String>();
-                for (BxLine line : zone.getLines()) {
+                for (BxLine line : zone) {
                     List<BxWord> words = new ArrayList<BxWord>();
-                    for (BxWord word : line.getWords()) {
+                    for (BxWord word : line) {
                         words.add(word);
                     }
                     if (PREFIX.matcher(words.get(0).toText()).matches()) {

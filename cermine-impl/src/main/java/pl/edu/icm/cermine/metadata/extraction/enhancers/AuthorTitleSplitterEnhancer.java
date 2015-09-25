@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -49,7 +50,7 @@ public class AuthorTitleSplitterEnhancer extends AbstractSimpleEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
-        for (BxZone zone : document.getPages().get(0).getZones()) {
+        for (BxZone zone : document.getFirstChild()) {
             if (BxZoneLabel.MET_TITLE.equals(zone.getLabel())) {
                 return false;
             }
@@ -61,7 +62,7 @@ public class AuthorTitleSplitterEnhancer extends AbstractSimpleEnhancer {
         BxZone toAdd1 = null;
         BxZone toAdd2 = null;
         
-        for (BxZone zone : filterZones(document.getPages().get(0))) {
+        for (BxZone zone : filterZones(document.getFirstChild())) {
             BxZone z1 = new BxZone();
             z1.setLabel(BxZoneLabel.MET_TITLE);
             BxBoundsBuilder b1 = new BxBoundsBuilder();
@@ -70,7 +71,7 @@ public class AuthorTitleSplitterEnhancer extends AbstractSimpleEnhancer {
             BxBoundsBuilder b2 = new BxBoundsBuilder();
             boolean wasAuthor = false;
             BxLine prev = null;
-            for (BxLine line : zone.getLines()) {
+            for (BxLine line : zone) {
                 if (prev != null && Sets.intersection(prev.getFontNames(), line.getFontNames()).isEmpty()) {
                     String[] words = line.toText().split(" ");
                     int cWordsCount = 0;
@@ -98,7 +99,7 @@ public class AuthorTitleSplitterEnhancer extends AbstractSimpleEnhancer {
             }
             z1.setBounds(b1.getBounds());
             z2.setBounds(b2.getBounds());
-            if (!z1.getLines().isEmpty() && !z2.getLines().isEmpty()) {
+            if (z1.hasChildren() && z2.hasChildren()) {
                 toDel = zone;
                 toAdd1 = z1;
                 toAdd2 = z2;
@@ -107,11 +108,11 @@ public class AuthorTitleSplitterEnhancer extends AbstractSimpleEnhancer {
         
         if (toDel != null) {
             List<BxZone> list = new ArrayList<BxZone>();
-            list.addAll(document.getPages().get(0).getZones());
+            list.addAll(Lists.newArrayList(document.getFirstChild()));
             list.remove(toDel);
             list.add(toAdd1);
             list.add(toAdd2);
-            document.getPages().get(0).setZones(list);
+            document.getFirstChild().setZones(list);
             try {
                 roResolver.resolve(document);
             } catch (AnalysisException ex) {}

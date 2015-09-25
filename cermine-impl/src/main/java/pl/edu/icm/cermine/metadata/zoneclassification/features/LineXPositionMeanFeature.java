@@ -32,10 +32,10 @@ public class LineXPositionMeanFeature extends FeatureCalculator<BxZone, BxPage> 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         double mean = 0;
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             mean += line.getBounds().getX();
         }
-        return mean / (double) zone.getLines().size() - zone.getBounds().getX();
+        return mean / (double) zone.childrenCount() - zone.getBounds().getX();
     }
 
 }

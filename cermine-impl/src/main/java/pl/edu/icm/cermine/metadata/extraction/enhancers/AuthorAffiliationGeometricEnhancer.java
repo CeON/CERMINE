@@ -44,8 +44,8 @@ public class AuthorAffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
-        BxPage page = document.getPages().get(0);
-        for (BxZone zone : page.getZones()) {
+        BxPage page = document.getFirstChild();
+        for (BxZone zone : page) {
             if (zone.getY() < page.getHeight()/2 && zone.getLabel().equals(BxZoneLabel.MET_AUTHOR)) {
                 return false;
             }
@@ -70,12 +70,12 @@ public class AuthorAffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
             if (zone.getY() > page.getHeight() / 2 && zone.hasPrev() && zone.getPrev().toText().equals("Keywords")) {
                 continue;
             }
-            String authorText = zone.getLines().get(0).toText();
+            String authorText = zone.getFirstChild().toText();
             String emailText = null;
             StringBuilder sb = new StringBuilder();
-            int j = zone.getLines().size();
-            for (int i = 1; i < zone.getLines().size(); i++) {
-                String lineText = zone.getLines().get(i).toText();
+            int j = zone.childrenCount();
+            for (int i = 1; i < zone.childrenCount(); i++) {
+                String lineText = zone.getChild(i).toText();
                 if (lineText.matches(".*@.*")) {
                     if (i == 1) {
                         emailText = lineText;
@@ -100,8 +100,8 @@ public class AuthorAffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
             if (emailText == null) {
                 sb = new StringBuilder();
             
-                for (int i = j; i < zone.getLines().size(); i++) {
-                    String lineText = zone.getLines().get(i).toText();
+                for (int i = j; i < zone.childrenCount(); i++) {
+                    String lineText = zone.getChild(i).toText();
                     if (lineText.endsWith("-")) {
                         sb.append(lineText.replaceAll("-$", ""));
                     } else {

@@ -30,7 +30,7 @@ public class LineCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        return (double) zone.getLines().size();
+        return (double) zone.childrenCount();
     }
 
 }

@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -60,22 +61,22 @@ public class ParallelDocstrumPageSegmenterTest {
         BxDocument outDoc = pageSegmenter.segmentDocument(inDoc);
 
         // Check whether zones are correctly detected
-        assertEquals(1, outDoc.getPages().size());
+        assertEquals(1, outDoc.childrenCount());
 
         // Check whether lines are correctly detected
-        List<BxZone> outZones = outDoc.getPages().get(0).getZones();
+        List<BxZone> outZones = Lists.newArrayList(outDoc.getFirstChild());
         assertEquals(3, outZones.size());
-        assertEquals(3, outZones.get(0).getLines().size());
-        assertEquals(16, outZones.get(1).getLines().size());
-        assertEquals(16, outZones.get(2).getLines().size());
+        assertEquals(3, outZones.get(0).childrenCount());
+        assertEquals(16, outZones.get(1).childrenCount());
+        assertEquals(16, outZones.get(2).childrenCount());
 
-        assertEquals(8, outZones.get(1).getLines().get(0).getWords().size());
-        assertEquals("ABSTRACT", outZones.get(1).getLines().get(0).getWords().get(0).toText());
+        assertEquals(8, outZones.get(1).getFirstChild().childrenCount());
+        assertEquals("ABSTRACT", outZones.get(1).getFirstChild().getFirstChild().toText());
 
         for (BxZone zone : outZones) {
-            for (BxLine line : zone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         assertContains(zone.getBounds(), chunk.getBounds());
                     }
                     assertContains(zone.getBounds(), word.getBounds());
@@ -84,7 +85,7 @@ public class ParallelDocstrumPageSegmenterTest {
             }
         }
 
-        assertNotNull(outDoc.getPages().get(0).getBounds());
+        assertNotNull(outDoc.getFirstChild().getBounds());
     }
 
     public void testSegmentPages_badBounds(BxBounds bounds) throws AnalysisException {
@@ -105,11 +106,6 @@ public class ParallelDocstrumPageSegmenterTest {
     @Test(expected=AnalysisException.class)
     public void testSegmentPages_badBounds3() throws AnalysisException {
         testSegmentPages_badBounds(new BxBounds(0, 0, Double.POSITIVE_INFINITY, 0));
-    }
-
-    private static void assertBetween(int min, int max, int value) {
-        assertTrue("expected between:<" + min + "> and:<" + max + "> but was:<" + value + ">",
-                min <= value && value <= max);
     }
 
     private static void assertContains(BxBounds big, BxBounds small) {

@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.transformers;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -208,21 +209,21 @@ public class TrueVizToBxDocumentReader {
     private void linkAndReorderOtherElements(List<BxPage> pages) {
         BxDocument temp = new BxDocument();
         temp.setPages(pages);
-        linkGenericImpl(temp.asZones());
-        linkGenericImpl(temp.asLines());
-        linkGenericImpl(temp.asWords());
-        linkGenericImpl(temp.asChunks());
+        linkGenericImpl(Lists.newArrayList(temp.asZones()));
+        linkGenericImpl(Lists.newArrayList(temp.asLines()));
+        linkGenericImpl(Lists.newArrayList(temp.asWords()));
+        linkGenericImpl(Lists.newArrayList(temp.asChunks()));
         for (BxPage page : pages) {
-            for (BxZone zone : page.getZones()) {
-                for (BxLine line : zone.getLines()) {
-                    for (BxWord word : line.getWords()) {
-                        word.setChunks(reorderList(word.getChunks()));
+            for (BxZone zone : page) {
+                for (BxLine line : zone) {
+                    for (BxWord word : line) {
+                        word.setChunks(reorderList(Lists.newArrayList(word)));
                     }
-                    line.setWords(reorderList(line.getWords()));
+                    line.setWords(reorderList(Lists.newArrayList(line)));
                 }
-                zone.setLines(reorderList(zone.getLines()));
+                zone.setLines(reorderList(Lists.newArrayList(zone)));
             }
-            page.setZones(reorderList(page.getZones()));
+            page.setZones(reorderList(Lists.newArrayList(page)));
         }
     }
 

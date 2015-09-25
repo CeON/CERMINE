@@ -28,7 +28,7 @@ public class ZoneLocaliser {
 	private BxZone lowerZone = null;
 	
 	public ZoneLocaliser(BxZone zone) {
-        for (BxZone otherZone : zone.getParent().getZones()) {
+        for (BxZone otherZone: zone.getParent()) {
             if (otherZone == zone) {
                 continue;
             }

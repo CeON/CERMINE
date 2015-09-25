@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.structure.model;
 
-import java.io.Serializable;
 import java.util.*;
 import pl.edu.icm.cermine.tools.CountMap;
 
@@ -26,7 +25,7 @@ import pl.edu.icm.cermine.tools.CountMap;
  * Models a single page of a document. A page is either segmented (divided into zones)
  * or not segmented (containing a list of chunks that haven't been grouped into zones yet).
  */
-public final class BxPage extends BxObject<BxPage, BxDocument> implements Serializable, Printable {
+public final class BxPage extends BxObject<BxZone, BxPage, BxDocument> {
 
     private static final long serialVersionUID = 8981043716257046347L;
     
@@ -36,9 +35,6 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     /** list of page's text chunks (if the page is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
 
-    public List<BxZone> getZones() {
-        return zones;
-    }
 
     public BxPage setZones(Collection<BxZone> zones) {
         resetText();
@@ -60,8 +56,8 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
         return this;
     }
 
-    public List<BxChunk> getChunks() {
-        return chunks;
+    public Iterator<BxChunk> getChunks() {
+        return chunks.listIterator();
     }
 
     public BxPage setChunks(Collection<BxChunk> chunks) {
@@ -85,9 +81,9 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();
         for (BxZone zone : zones) {
-            for (BxLine line : zone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         if (chunk.getFontName() != null) {
                             map.add(chunk.getFontName());
                         }
@@ -123,4 +119,23 @@ public final class BxPage extends BxObject<BxPage, BxDocument> implements Serial
         }
         return getText();
     }
+
+    @Override
+    public Iterator<BxZone> iterator() {
+        return zones.listIterator();
+    }
+
+    @Override
+    public int childrenCount() {
+        return zones.size();
+    }
+
+    @Override
+    public BxZone getChild(int index) {
+        if (index < 0 || index >= zones.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return zones.get(index);
+    }
+    
 }

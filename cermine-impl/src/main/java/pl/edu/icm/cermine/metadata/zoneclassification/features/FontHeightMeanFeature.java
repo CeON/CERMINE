@@ -30,9 +30,9 @@ public class FontHeightMeanFeature extends FeatureCalculator<BxZone, BxPage> {
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         double heightSum = 0.0;
         int heightNumber = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
+                for (BxChunk chunk : word) {
                     heightSum += chunk.getBounds().getHeight();
                     ++heightNumber;
                 }

@@ -44,7 +44,7 @@ public class BxBoundsBuilder {
      * @param page
      */
     public void expandByZones(BxPage page) {
-        for (BxZone zone : page.getZones()) {
+        for (BxZone zone : page) {
             expand(zone.getBounds());
         }
     }
@@ -56,7 +56,7 @@ public class BxBoundsBuilder {
      * @param zone
      */
     public void expandByLines(BxZone zone) {
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             expand(line.getBounds());
         }
     }
@@ -68,7 +68,7 @@ public class BxBoundsBuilder {
      * @param line
      */
     public void expandByWords(BxLine line) {
-        for (BxWord word : line.getWords()) {
+        for (BxWord word : line) {
             expand(word.getBounds());
         }
     }
@@ -80,7 +80,7 @@ public class BxBoundsBuilder {
      * @param line
      */
     public void expandByChunks(BxWord word) {
-        for (BxChunk chunk : word.getChunks()) {
+        for (BxChunk chunk : word) {
             expand(chunk.getBounds());
         }
     }

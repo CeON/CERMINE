@@ -32,10 +32,10 @@ public class LineWidthMeanFeature extends FeatureCalculator<BxZone, BxPage> {
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         double mean = 0;
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             mean += line.getBounds().getWidth();
         }
-        return mean / (double) zone.getLines().size();
+        return mean / (double) zone.childrenCount();
     }
 
 }

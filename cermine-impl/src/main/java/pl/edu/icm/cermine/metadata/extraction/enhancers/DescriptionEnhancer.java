@@ -51,7 +51,7 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
         List<BxLine> lines = new ArrayList<BxLine>();
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {
-                for (BxLine line : zone.getLines()) {
+                for (BxLine line : zone) {
                     lines.add(line);
                 }
             }

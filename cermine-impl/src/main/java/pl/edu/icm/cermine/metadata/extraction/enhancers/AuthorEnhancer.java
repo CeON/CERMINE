@@ -48,9 +48,9 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
         for (BxPage page : filterPages(document)) {
             for (BxZone zone : filterZones(page)) {              
                 List<BxChunk> chunks = new ArrayList<BxChunk>();
-                for (BxLine l : zone.getLines()) {
-                    for (BxWord w : l.getWords()) {
-                        for (BxChunk ch : w.getChunks()) {
+                for (BxLine l : zone) {
+                    for (BxWord w : l) {
+                        for (BxChunk ch : w) {
                             chunks.add(ch);
                         }
                         chunks.add(new BxChunk(null, " "));
@@ -120,8 +120,8 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         double meanY = 0;
                         double meanH = 0;
                         int total = 0;
-                        for (BxWord w : line.getWords()) {
-                            for (BxChunk ch : w.getChunks()) {
+                        for (BxWord w : line) {
+                            for (BxChunk ch : w) {
                                 meanY += ch.getY();
                                 meanH += ch.getHeight();
                                 total++;

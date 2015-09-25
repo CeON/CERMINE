@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,10 +35,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.structure.model.BxChunk;
-import pl.edu.icm.cermine.structure.model.BxDocument;
-import pl.edu.icm.cermine.structure.model.BxPage;
-import pl.edu.icm.cermine.structure.model.BxZone;
+import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
@@ -79,18 +77,18 @@ public class HierarchicalReadingOrderResolverTest {
 	}
 
 	private Boolean areDocumentsEqual(BxDocument doc1, BxDocument doc2) {
-		if (doc1.getPages().size() != doc2.getPages().size()) {
+		if (doc1.childrenCount() != doc2.childrenCount()) {
 			return false;
         }
-		for (Integer pageIdx=0; pageIdx < doc1.getPages().size(); ++pageIdx) {
-			BxPage page1 = doc1.getPages().get(pageIdx);
-			BxPage page2 = doc2.getPages().get(pageIdx);
-			if (page1.getZones().size() != page2.getZones().size()) {
+		for (Integer pageIdx=0; pageIdx < doc1.childrenCount(); ++pageIdx) {
+			BxPage page1 = doc1.getChild(pageIdx);
+			BxPage page2 = doc2.getChild(pageIdx);
+			if (page1.childrenCount() != page2.childrenCount()) {
 				return false;
             }
-			for (Integer zoneIdx=0; zoneIdx < page1.getZones().size(); ++zoneIdx) {
-				BxZone zone1 = page1.getZones().get(zoneIdx);
-				BxZone zone2 = page2.getZones().get(zoneIdx);
+			for (Integer zoneIdx=0; zoneIdx < page1.childrenCount(); ++zoneIdx) {
+				BxZone zone1 = page1.getChild(zoneIdx);
+				BxZone zone2 = page2.getChild(zoneIdx);
 				if (zone1.getChunks().size() != zone2.getChunks().size()) {
 					return false;
                 }
@@ -132,11 +130,22 @@ public class HierarchicalReadingOrderResolverTest {
 			HierarchicalReadingOrderResolver roa = new HierarchicalReadingOrderResolver();
 			BxDocument orderedDoc = roa.resolve(doc);
 			
-			assertEquals(doc.asPages().size(),  orderedDoc.asPages().size());
-			assertEquals(doc.asZones().size(),  orderedDoc.asZones().size());
-			assertEquals(doc.asLines().size(),  orderedDoc.asLines().size());
-			assertEquals(doc.asWords().size(),  orderedDoc.asWords().size());
-		    assertEquals(doc.asChunks().size(), orderedDoc.asChunks().size());	
+            List<BxPage> pages1 = Lists.newArrayList(doc.asPages());
+            List<BxPage> pages2 = Lists.newArrayList(orderedDoc.asPages());
+            List<BxZone> zones1 = Lists.newArrayList(doc.asZones());
+            List<BxZone> zones2 = Lists.newArrayList(orderedDoc.asZones());
+            List<BxLine> lines1 = Lists.newArrayList(doc.asLines());
+            List<BxLine> lines2 = Lists.newArrayList(orderedDoc.asLines());
+            List<BxWord> words1 = Lists.newArrayList(doc.asWords());
+            List<BxWord> words2 = Lists.newArrayList(orderedDoc.asWords());
+            List<BxChunk> chunks1 = Lists.newArrayList(doc.asChunks());
+            List<BxChunk> chunks2 = Lists.newArrayList(orderedDoc.asChunks());
+            
+			assertEquals(pages1.size(),  pages2.size());
+			assertEquals(zones1.size(),  zones2.size());
+			assertEquals(lines1.size(),  lines2.size());
+			assertEquals(words1.size(),  words2.size());
+		    assertEquals(chunks1.size(), chunks2.size());	
 		}
 	}
 }

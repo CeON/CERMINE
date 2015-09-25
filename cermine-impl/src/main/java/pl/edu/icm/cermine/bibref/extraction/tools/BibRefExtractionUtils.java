@@ -43,8 +43,8 @@ public final class BibRefExtractionUtils {
     public static BxDocumentBibReferences extractBibRefLines(BxDocument document) throws AnalysisException {
         BxDocumentBibReferences lines = new BxDocumentBibReferences();
 
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
                 if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_REFERENCES)) {
                     lines.addZone(zone);
                 }

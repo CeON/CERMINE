@@ -30,10 +30,10 @@ public class UppercaseWordCountFeature extends FeatureCalculator<BxZone, BxPage>
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int count = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
                 StringBuilder sb = new StringBuilder();
-                for (BxChunk chunk : word.getChunks()) {
+                for (BxChunk chunk : word) {
                     sb.append(chunk.toText());
                 }
                 String s = sb.toString();

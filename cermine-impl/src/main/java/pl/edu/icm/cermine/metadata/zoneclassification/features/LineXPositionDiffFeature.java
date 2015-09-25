@@ -33,7 +33,7 @@ public class LineXPositionDiffFeature extends FeatureCalculator<BxZone, BxPage> 
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         double min = zone.getBounds().getX() + zone.getBounds().getWidth();
         double max = zone.getBounds().getX();
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             if (line.getBounds().getX() < min) {
                 min = line.getBounds().getX();
             }

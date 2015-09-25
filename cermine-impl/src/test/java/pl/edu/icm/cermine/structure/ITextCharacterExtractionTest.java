@@ -18,11 +18,14 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.io.InputStream;
+import java.util.List;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
+import pl.edu.icm.cermine.structure.model.BxChunk;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 
@@ -51,15 +54,16 @@ public class ITextCharacterExtractionTest {
         for (String file : INPUT_FILES) {
             InputStream testStream = this.getClass().getResourceAsStream(INPUT_DIR + file);
             BxDocument testDocument = extractor.extractCharacters(testStream);
-            BxPage page = testDocument.getPages().get(0);
-            assertTrue(page.getChunks().get(0).getBounds().isSimilarTo(b0, 0.08));
-            assertTrue(page.getChunks().get(1).getBounds().isSimilarTo(b1, 0.08));
-            assertTrue(page.getChunks().get(2).getBounds().isSimilarTo(b2, 0.08));
-            assertTrue(page.getChunks().get(3).getBounds().isSimilarTo(b3, 0.08));
-            assertTrue(page.getChunks().get(4).getBounds().isSimilarTo(b4, 0.08));
-            assertTrue(page.getChunks().get(5).getBounds().isSimilarTo(b5, 0.08));
-            assertTrue(page.getChunks().get(6).getBounds().isSimilarTo(b6, 0.08));
-            assertTrue(page.getChunks().get(7).getBounds().isSimilarTo(b7, 0.08));
+            BxPage page = testDocument.getFirstChild();
+            List<BxChunk> chunks = Lists.newArrayList(page.getChunks());
+            assertTrue(chunks.get(0).getBounds().isSimilarTo(b0, 0.08));
+            assertTrue(chunks.get(1).getBounds().isSimilarTo(b1, 0.08));
+            assertTrue(chunks.get(2).getBounds().isSimilarTo(b2, 0.08));
+            assertTrue(chunks.get(3).getBounds().isSimilarTo(b3, 0.08));
+            assertTrue(chunks.get(4).getBounds().isSimilarTo(b4, 0.08));
+            assertTrue(chunks.get(5).getBounds().isSimilarTo(b5, 0.08));
+            assertTrue(chunks.get(6).getBounds().isSimilarTo(b6, 0.08));
+            assertTrue(chunks.get(7).getBounds().isSimilarTo(b7, 0.08));
         }
     }
 }

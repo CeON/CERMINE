@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import com.google.common.collect.Lists;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
@@ -38,14 +39,14 @@ public class AuthorFeature extends FeatureCalculator<BxZone, BxPage> {
             }
         }
 
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
+                for (BxChunk chunk : word) {
                     BxBounds chb = chunk.getBounds();
                     BxBounds lb = line.getBounds();
                     String cht = chunk.toText();
                     if ((cht.matches("\\d") || cht.equals("*")) 
-                            && word.getChunks().indexOf(chunk) > word.getChunks().size() - 3
+                            && Lists.newArrayList(word).indexOf(chunk) > word.childrenCount() - 3
                             && chb.getHeight() < 3 * lb.getHeight() / 4
                             && chb.getY() + chb.getHeight() < lb.getY() + lb.getHeight()) {
                         count++;

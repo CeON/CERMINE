@@ -31,9 +31,9 @@ public class LetterRelativeCountFeature extends FeatureCalculator<BxZone, BxPage
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int count = 0;
         int allCount = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                for (BxChunk chunk : word.getChunks()) {
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
+                for (BxChunk chunk : word) {
                     char[] arr = chunk.toText().toCharArray();
                     for (int i = 0; i < arr.length; i++) {
                         allCount++;

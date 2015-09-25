@@ -30,7 +30,7 @@ public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 
 	@Override
 	public double calculateFeatureValue(BxZone object, BxPage context) {
-		BxLine firstLine = object.getLines().get(0);
+		BxLine firstLine = object.getFirstChild();
 		String lineText = firstLine.toText();
 		String text = object.toText();
 		
@@ -53,24 +53,21 @@ public class StartsWithHeaderFeature extends FeatureCalculator<BxZone, BxPage> {
 			return 1.0;
 		}
 		
-		if(object.getLines().size() <= 2) {			
+		if (object.childrenCount() <= 2) {
 			return 0;
 		}
-		if(!lineText.contains(" ") && !lineText.matches(".*\\d.*") && lineText.matches("\\p{Upper}.+")) {
+		if (!lineText.contains(" ") && !lineText.matches(".*\\d.*") && lineText.matches("\\p{Upper}.+")) {
 			return 1;
 		}
 		String[] words = lineText.split(" ");
 		boolean capitals = true;
-		for(String word: words) {
-			if(!(word.matches("\\{Upper}.+") || ZoneClassificationUtils.isConjunction(word))) {
+		for (String word : words) {
+			if (!(word.matches("\\{Upper}.+") || ZoneClassificationUtils.isConjunction(word))) {
 				capitals = false;
 				break;
 			}
 		}
-		if(capitals) {
-			return 1.0;
-		} 
-
-		return 0;
+        
+        return capitals ? 1.0 : 0;
 	}
 }

@@ -44,9 +44,9 @@ public class BxDocumentBibReferences {
     private Map<BxLine, BibReferenceLineLabel> lineLabels = new HashMap<BxLine, BibReferenceLineLabel>();
 
     public void addZone(BxZone zone) {
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             String normalized = line.toText().toLowerCase().replaceAll("[^a-z]", "");
-            if (line.toText().length() < MAX_TITLE_LENGTH && zone.getLines().indexOf(line) == 0 && 
+            if (line.toText().length() < MAX_TITLE_LENGTH && zone.getChild(0) == line && 
                     (normalized.startsWith("refer") || normalized.startsWith("biblio")
                     || normalized.startsWith("acknowled") || normalized.startsWith("conclus"))) {
                 lines.clear();

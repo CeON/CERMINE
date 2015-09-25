@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import com.google.common.collect.Lists;
 import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -30,7 +31,7 @@ public class IsFontBiggerThanNeighboursFeature extends FeatureCalculator<BxZone,
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        List<BxZone> pageZones = page.getZones();
+        List<BxZone> pageZones = Lists.newArrayList(page);
         if (pageZones.isEmpty()) {
             return 0.0;
         }

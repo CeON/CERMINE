@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Collection;
 import org.apache.commons.cli.ParseException;
@@ -212,7 +213,7 @@ public class PdfNLMContentExtractor {
                     if (extractStr) {
                         BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                         File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
-                        writer.write(new FileWriter(strF), doc.getPages());
+                        writer.write(new FileWriter(strF), Lists.newArrayList(doc));
                     }
                 } catch (AnalysisException ex) {
                    ex.printStackTrace();

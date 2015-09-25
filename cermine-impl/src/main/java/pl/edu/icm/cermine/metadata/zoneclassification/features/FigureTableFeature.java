@@ -30,30 +30,30 @@ public class FigureTableFeature extends FeatureCalculator<BxZone, BxPage> {
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int i = 0;
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             String text = line.toText().toLowerCase();
             if (text.matches("figure ?[0-9ivx]+[\\.:].*$") || text.matches("table ?[0-9ivx]+[\\.:].*$")
                     || text.matches("figure ?[0-9ivx]+$") || text.matches("table ?[0-9ivx]+$")) {
                 if (i == 0) {
                     return 1;
                 }
-                if (Math.abs(line.getX() - zone.getLines().get(i - 1).getX()) > 5) {
+                if (Math.abs(line.getX() - line.getPrev().getX()) > 5) {
                     return 1;
                 }
                 double prevW = 0;
-                for (BxWord w : zone.getLines().get(i - 1).getWords()) {
-                    for (BxChunk ch : w.getChunks()) {
+                for (BxWord w : line.getPrev()) {
+                    for (BxChunk ch : w) {
                         prevW += ch.getArea();
                     }
                 }
-                prevW /= Math.max(zone.getLines().get(i - 1).getArea(), line.getArea());
+                prevW /= Math.max(line.getPrev().getArea(), line.getArea());
                 double lineW = 0;
-                for (BxWord w : line.getWords()) {
-                    for (BxChunk ch : w.getChunks()) {
+                for (BxWord w : line) {
+                    for (BxChunk ch : w) {
                         prevW += ch.getArea();
                     }
                 }
-                lineW /= Math.max(zone.getLines().get(i - 1).getArea(), line.getArea());
+                lineW /= Math.max(line.getPrev().getArea(), line.getArea());
                 if (Math.abs(lineW -prevW) < 0.3) {
                     return 1;
                 }

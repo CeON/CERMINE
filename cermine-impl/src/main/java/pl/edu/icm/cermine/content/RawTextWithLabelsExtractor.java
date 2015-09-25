@@ -45,7 +45,7 @@ public class RawTextWithLabelsExtractor {
         
         Element root = new Element("document");
         
-        BxZoneLabel actLabel = document.asLines().get(0).getParent().getLabel();
+        BxZoneLabel actLabel = document.asLines().iterator().next().getParent().getLabel();
         StringBuilder sb = new StringBuilder();
         for (BxLine line : document.asLines()) {
             BxZoneLabel label = line.getParent().getLabel();

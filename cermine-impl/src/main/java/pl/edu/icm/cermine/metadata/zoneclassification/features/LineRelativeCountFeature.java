@@ -31,11 +31,11 @@ public class LineRelativeCountFeature extends FeatureCalculator<BxZone, BxPage> 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int allLines = 0;
-        for (BxZone pZone : page.getZones()) {
-            allLines += pZone.getLines().size();
+        for (BxZone pZone : page) {
+            allLines += pZone.childrenCount();
         }
         
-        return (double) zone.getLines().size() / (double) allLines;
+        return (double) zone.childrenCount() / (double) allLines;
     }
 
 }

@@ -71,10 +71,10 @@ public class SVMContentHeadersExtractor implements ContentHeadersExtractor {
 
         BxDocContentStructure contentStructure = new BxDocContentStructure();
         BxLine lastHeaderLine = null;
-        for (BxPage page : document.getPages()) {
-            for (BxZone zone : page.getZones()) {
+        for (BxPage page : document) {
+            for (BxZone zone : page) {
                 if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_BODY)) {
-                    for (BxLine line : zone.getLines()) {
+                    for (BxLine line : zone) {
                         if (isHeader(line, page)) {
                             contentStructure.addFirstHeaderLine(page, line);
                             lastHeaderLine = line;

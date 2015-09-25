@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -55,7 +56,7 @@ public class AuthorAffiliationSplitterEnhancer extends AbstractSimpleEnhancer {
         BxZone toAdd1 = null;
         BxZone toAdd2 = null;
         
-        for (BxZone zone : filterZones(document.getPages().get(0))) {
+        for (BxZone zone : filterZones(document.getFirstChild())) {
             String text = zone.toText().toLowerCase();
             boolean containsAff = false;
             for (String keyword : keywords) {
@@ -71,7 +72,7 @@ public class AuthorAffiliationSplitterEnhancer extends AbstractSimpleEnhancer {
                 z2.setLabel(BxZoneLabel.MET_AFFILIATION);
                 BxBoundsBuilder b2 = new BxBoundsBuilder();
                 boolean wasAff = false;
-                for (BxLine line : zone.getLines()) {
+                for (BxLine line : zone) {
                     String lineText = line.toText().toLowerCase();
                     for (String keyword : keywords) {
                         if (lineText.contains(keyword)) {
@@ -88,7 +89,7 @@ public class AuthorAffiliationSplitterEnhancer extends AbstractSimpleEnhancer {
                 }
                 z1.setBounds(b1.getBounds());
                 z2.setBounds(b2.getBounds());
-                if (!z1.getLines().isEmpty() && !z2.getLines().isEmpty()) {
+                if (z1.hasChildren() && z2.hasChildren()) {
                     toDel = zone;
                     toAdd1 = z1;
                     toAdd2 = z2;
@@ -98,11 +99,11 @@ public class AuthorAffiliationSplitterEnhancer extends AbstractSimpleEnhancer {
         
         if (toDel != null) {
             List<BxZone> list = new ArrayList<BxZone>();
-            list.addAll(document.getPages().get(0).getZones());
+            list.addAll(Lists.newArrayList(document.getFirstChild()));
             list.remove(toDel);
             list.add(toAdd1);
             list.add(toAdd2);
-            document.getPages().get(0).setZones(list);
+            document.getFirstChild().setZones(list);
             try {
                 roResolver.resolve(document);
             } catch (AnalysisException ex) {}

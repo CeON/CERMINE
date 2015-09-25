@@ -30,7 +30,7 @@ public class IsOnSurroundingPagesFeature extends FeatureCalculator<BxZone, BxPag
         BxPage prevPage = context.getPrev();
 
         if (nextPage != null) {
-            for (BxZone zone : nextPage.getZones()) {
+            for (BxZone zone : nextPage) {
                 if (zone.toText().equals(object.toText())) {
                     return 1.0;
                 }
@@ -38,7 +38,7 @@ public class IsOnSurroundingPagesFeature extends FeatureCalculator<BxZone, BxPag
         }
 
         if (prevPage != null) {
-            for (BxZone zone : prevPage.getZones()) {
+            for (BxZone zone : prevPage) {
                 if (zone.toText().equals(object.toText())) {
                     return 1.0;
                 }

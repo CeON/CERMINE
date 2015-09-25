@@ -26,7 +26,7 @@ public class IsLongestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>
 
     @Override
     public double calculateFeatureValue(BxZone object, BxPage context) {
-        for (BxZone zone : context.getZones()) {
+        for (BxZone zone : context) {
             if (zone.toText().length() > object.toText().length()) {
                 return 0.0;
             }

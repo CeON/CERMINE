@@ -30,7 +30,7 @@ public class BracketedLineRelativeCountFeature extends FeatureCalculator<BxZone,
         int lines = 0;
         int bracketedLines = 0;
 
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             ++lines;
             if (line.toText().charAt(0) == '[' || line.toText().charAt(0) == ']') {
                 ++bracketedLines;

@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.structure.tools;
 
+import com.google.common.collect.Lists;
 import java.util.*;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.Utils;
@@ -33,17 +34,17 @@ public final class BxModelUtils {
     private BxModelUtils() {}
     
 	public static void setParents(BxDocument doc) {
-		for(BxPage page: doc.getPages()) {
+		for (BxPage page : doc) {
 			page.setParent(doc);
 			setParents(page);
 		}
 	}
 	
 	public static void setParents(BxPage page) {
-		for(BxZone zone: page.getZones()) {
-			for(BxLine line: zone.getLines()) {
-				for(BxWord word: line.getWords()) {
-					for(BxChunk chunk: word.getChunks()) {
+		for (BxZone zone : page) {
+			for (BxLine line : zone) {
+				for (BxWord word : line) {
+					for (BxChunk chunk : word) {
 						chunk.setParent(word);
                     }
 					word.setParent(line);
@@ -55,7 +56,8 @@ public final class BxModelUtils {
 	}
 	
     public static void sortZonesYX(BxPage page, final double tolerance) {
-        Collections.sort(page.getZones(), new Comparator<BxZone>() {
+        List<BxZone> zones = Lists.newArrayList(page);
+        Collections.sort(zones, new Comparator<BxZone>() {
 
             @Override
             public int compare(BxZone o1, BxZone o2) {
@@ -66,6 +68,7 @@ public final class BxModelUtils {
                 return cmp;
             }
         });
+        page.setZones(zones);
     }
 
     public static void sortZonesYX(BxPage page) {
@@ -73,7 +76,8 @@ public final class BxModelUtils {
     }
 
     public static void sortZonesXY(BxPage page, final double tolerance) {
-        Collections.sort(page.getZones(), new Comparator<BxZone>() {
+        List<BxZone> zones = Lists.newArrayList(page);
+        Collections.sort(zones, new Comparator<BxZone>() {
 
             @Override
             public int compare(BxZone o1, BxZone o2) {
@@ -84,6 +88,7 @@ public final class BxModelUtils {
                 return cmp;
             }
         });
+        page.setZones(zones);
     }
 
     public static void sortZonesXY(BxPage page) {
@@ -91,7 +96,8 @@ public final class BxModelUtils {
     }
 
     public static void sortLines(BxZone zone) {
-        Collections.sort(zone.getLines(), new Comparator<BxLine>() {
+        List<BxLine> lines = Lists.newArrayList(zone);
+        Collections.sort(lines, new Comparator<BxLine>() {
 
             @Override
             public int compare(BxLine o1, BxLine o2) {
@@ -102,46 +108,51 @@ public final class BxModelUtils {
                 return cmp;
             }
         });
+        zone.setLines(lines);
     }
 
     public static void sortWords(BxLine line) {
-        Collections.sort(line.getWords(), new Comparator<BxWord>() {
+        List<BxWord> words = Lists.newArrayList(line);
+        Collections.sort(words, new Comparator<BxWord>() {
 
             @Override
             public int compare(BxWord o1, BxWord o2) {
                 return Double.compare(o1.getBounds().getX(), o2.getBounds().getX());
             }
         });
+        line.setWords(words);
     }
 
     public static void sortChunks(BxWord word) {
-        Collections.sort(word.getChunks(), new Comparator<BxChunk>() {
+        List<BxChunk> chunks = Lists.newArrayList(word);
+        Collections.sort(chunks, new Comparator<BxChunk>() {
 
             @Override
             public int compare(BxChunk o1, BxChunk o2) {
                 return Double.compare(o1.getBounds().getX(), o2.getBounds().getX());
             }
         });
+        word.setChunks(chunks);
     }
 
     public static void sortZoneRecursively(BxZone zone) {
         sortLines(zone);
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
             sortWords(line);
-            for (BxWord word : line.getWords()) {
+            for (BxWord word : line) {
                 sortChunks(word);
             }
         }
     }
 
     public static void sortZonesRecursively(BxPage page) {
-        for (BxZone zone : page.getZones()) {
+        for (BxZone zone : page) {
             sortZoneRecursively(zone);
         }
     }
 
     public static void sortZonesRecursively(BxDocument document) {
-        for (BxPage page : document.getPages()) {
+        for (BxPage page : document) {
             sortZonesRecursively(page);
         }
     }
@@ -154,7 +165,7 @@ public final class BxModelUtils {
      */
     public static BxWord deepClone(BxWord word) {
         BxWord copy = new BxWord().setBounds(word.getBounds());
-        for (BxChunk chunk : word.getChunks()) {
+        for (BxChunk chunk : word) {
         	BxChunk copiedChunk = deepClone(chunk);
         	copiedChunk.setParent(copy);
         	copy.addChunk(chunk);
@@ -170,7 +181,7 @@ public final class BxModelUtils {
      */
     public static BxLine deepClone(BxLine line) {
         BxLine copy = new BxLine().setBounds(line.getBounds());
-        for (BxWord word : line.getWords()) {
+        for (BxWord word : line) {
         	BxWord copiedWord = deepClone(word);
         	copiedWord.setParent(copy);
             copy.addWord(copiedWord);
@@ -191,7 +202,7 @@ public final class BxModelUtils {
 
     public static BxZone deepClone(BxZone zone) {
         BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(zone.getBounds());
-        for (BxLine line : zone.getLines()) {
+        for (BxLine line : zone) {
         	BxLine copiedLine = deepClone(line);
         	copiedLine.setParent(copy);
             copy.addLine(copiedLine);
@@ -210,13 +221,14 @@ public final class BxModelUtils {
      */
     public static BxPage deepClone(BxPage page) {
         BxPage copy = new BxPage().setBounds(page.getBounds());
-        for (BxZone zone : page.getZones()) {
+        for (BxZone zone : page) {
         	BxZone copiedZone = deepClone(zone);
         	copiedZone.setParent(copy);
             copy.addZone(copiedZone);
         }
-        for (BxChunk chunk : page.getChunks()) {
-            copy.addChunk(chunk);
+        Iterator<BxChunk> chunks = page.getChunks();
+        while (chunks.hasNext()) {
+            copy.addChunk(chunks.next());
         }
         return copy;
     }
@@ -230,7 +242,7 @@ public final class BxModelUtils {
     public static BxDocument deepClone(BxDocument document) {
         BxDocument copy = new BxDocument();
         copy.setFilename(document.getFilename());
-        for (BxPage page : document.getPages()) {
+        for (BxPage page : document) {
         	BxPage copiedPage = deepClone(page);
         	copiedPage.setParent(copy);
             copy.addPage(copiedPage);
@@ -254,10 +266,10 @@ public final class BxModelUtils {
      */
     public static Map<BxChunk, BxWord> mapChunksToWords(BxPage page) {
         Map<BxChunk, BxWord> map = new HashMap<BxChunk, BxWord>();
-        for (BxZone zone : page.getZones()) {
-            for (BxLine line : zone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+        for (BxZone zone : page) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         map.put(chunk, word);
                     }
                 }
@@ -274,10 +286,10 @@ public final class BxModelUtils {
      */
     public static Map<BxChunk, BxLine> mapChunksToLines(BxPage page) {
         Map<BxChunk, BxLine> map = new HashMap<BxChunk, BxLine>();
-        for (BxZone zone : page.getZones()) {
-            for (BxLine line : zone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+        for (BxZone zone : page) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         map.put(chunk, line);
                     }
                 }
@@ -294,10 +306,10 @@ public final class BxModelUtils {
      */
     public static Map<BxChunk, BxZone> mapChunksToZones(BxPage page) {
         Map<BxChunk, BxZone> map = new HashMap<BxChunk, BxZone>();
-        for (BxZone zone : page.getZones()) {
-            for (BxLine line : zone.getLines()) {
-                for (BxWord word : line.getWords()) {
-                    for (BxChunk chunk : word.getChunks()) {
+        for (BxZone zone : page) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
                         map.put(chunk, zone);
                     }
                 }
@@ -314,8 +326,8 @@ public final class BxModelUtils {
      */
     public static int countChunks(BxLine line) {
         int chunkCount = 0;
-        for (BxWord word : line.getWords()) {
-            chunkCount += word.getChunks().size();
+        for (BxWord word : line) {
+            chunkCount += word.childrenCount();
         }
         return chunkCount;
     }
@@ -328,9 +340,9 @@ public final class BxModelUtils {
      */
     public static int countChunks(BxZone zone) {
         int chunkCount = 0;
-        for (BxLine line : zone.getLines()) {
-            for (BxWord word : line.getWords()) {
-                chunkCount += word.getChunks().size();
+        for (BxLine line : zone) {
+            for (BxWord word : line) {
+                chunkCount += word.childrenCount();
             }
         }
         return chunkCount;
@@ -354,11 +366,11 @@ public final class BxModelUtils {
     }
     
     public static boolean areEqual(BxWord word1, BxWord word2) {
-        if (word1.getChunks().size() != word2.getChunks().size()) {
+        if (word1.childrenCount() != word2.childrenCount()) {
 			return false;
         }
-		for (int i = 0; i < word1.getChunks().size(); i++) {
-            if (!areEqual(word1.getChunks().get(i), word2.getChunks().get(i))) {
+		for (int i = 0; i < word1.childrenCount(); i++) {
+            if (!areEqual(word1.getChild(i), word2.getChild(i))) {
                 return false;
             }
         }
@@ -366,11 +378,11 @@ public final class BxModelUtils {
     }
     
     public static boolean areEqual(BxLine line1, BxLine line2) {
-        if (line1.getWords().size() != line2.getWords().size()) {
+        if (line1.childrenCount() != line2.childrenCount()) {
 			return false;
         }
-		for (int i = 0; i < line1.getWords().size(); i++) {
-            if (!areEqual(line1.getWords().get(i), line2.getWords().get(i))) {
+		for (int i = 0; i < line1.childrenCount(); i++) {
+            if (!areEqual(line1.getChild(i), line2.getChild(i))) {
                 return false;
             }
         }
@@ -378,11 +390,11 @@ public final class BxModelUtils {
     }
     
     public static boolean areEqual(BxZone zone1, BxZone zone2) {
-        if (zone1.getLines().size() != zone2.getLines().size()) {
+        if (zone1.childrenCount() != zone2.childrenCount()) {
 			return false;
         }
-		for (int i = 0; i < zone1.getLines().size(); i++) {
-            if (!areEqual(zone1.getLines().get(i), zone2.getLines().get(i))) {
+		for (int i = 0; i < zone1.childrenCount(); i++) {
+            if (!areEqual(zone1.getChild(i), zone2.getChild(i))) {
                 return false;
             }
         }
@@ -390,12 +402,12 @@ public final class BxModelUtils {
     }
     
     public static boolean areEqual(BxPage page1, BxPage page2) {
-        if (page1.getZones().size() != page2.getZones().size()) {
+        if (page1.childrenCount() != page2.childrenCount()) {
 			return false;
             
         }
-		for (int i = 0; i < page1.getZones().size(); i++) {
-            if (!areEqual(page1.getZones().get(i), page2.getZones().get(i))) {
+		for (int i = 0; i < page1.childrenCount(); i++) {
+            if (!areEqual(page1.getChild(i), page2.getChild(i))) {
                 return false;
             }
         }
@@ -403,11 +415,11 @@ public final class BxModelUtils {
     }
     
     public static boolean areEqual(BxDocument doc1, BxDocument doc2) {
-		if (doc1.getPages().size() != doc2.getPages().size()) {
+		if (doc1.childrenCount() != doc2.childrenCount()) {
 			return false;
         }
-        for (int i = 0; i < doc1.getPages().size(); i++) {
-            if (!areEqual(doc1.getPages().get(i), doc1.getPages().get(i))) {
+        for (int i = 0; i < doc1.childrenCount(); i++) {
+            if (!areEqual(doc1.getChild(i), doc2.getChild(i))) {
                 return false;
             }
         }

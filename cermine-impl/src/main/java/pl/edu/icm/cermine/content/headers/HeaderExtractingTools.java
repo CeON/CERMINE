@@ -23,15 +23,11 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.content.headers.features.*;
-import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.*;
-import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
-import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
-import pl.edu.icm.cermine.tools.classification.general.BxDocsToTrainingSamplesConverter;
-import pl.edu.icm.cermine.tools.classification.general.ClassificationUtils;
-import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
+import pl.edu.icm.cermine.tools.BxDocUtils;
+import pl.edu.icm.cermine.tools.classification.general.*;
 import pl.edu.icm.cermine.tools.classification.sampleselection.OversamplingSelector;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleSelector;
 
@@ -76,7 +72,7 @@ public final class HeaderExtractingTools {
     }
     
     public static List<TrainingSample<BxZoneLabel>> toTrainingSamples(String trainPath) throws AnalysisException, TransformationException {
-        List<BxDocument> documents = EvaluationUtils.getDocumentsFromPath(trainPath);
+        List<BxDocument> documents = BxDocUtils.getDocumentsFromPath(trainPath);
         return toTrainingSamples(documents);
     }
 

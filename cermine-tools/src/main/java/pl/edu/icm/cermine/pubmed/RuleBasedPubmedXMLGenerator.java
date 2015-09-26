@@ -14,6 +14,7 @@
  */
 package pl.edu.icm.cermine.pubmed;
 
+import pl.edu.icm.cermine.tools.SmartHashMap;
 import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Map.Entry;

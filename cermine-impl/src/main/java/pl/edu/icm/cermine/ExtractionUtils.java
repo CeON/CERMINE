@@ -521,11 +521,7 @@ public class ExtractionUtils {
      */
     public static List<List<CitationPosition>> findCitationPositions(ComponentConfiguration conf, 
             String fullText, List<BibEntry> citations) {
-        List<List<CitationPosition>> positions = new ArrayList<List<CitationPosition>>();
-        for (BibEntry citation : citations) {
-            List<CitationPosition> position = conf.citationPositionFinder.findReferences(fullText, citation);
-            positions.add(position);
-        }
+        List<List<CitationPosition>> positions = conf.citationPositionFinder.findReferences(fullText, citations);
         return positions;
     }
     

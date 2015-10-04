@@ -46,6 +46,18 @@ public class CitationReferenceFinderTest {
         "This is a typical state of the art fragment. To save space, the number can also " +
         "be given as ranges: [2-4] or [1-5, 7].";
     
+    private static String documentTextAuthorNames =
+        "This is a typical state of the art fragment. Reference can also be given by " +
+        "author name (Hoeffding, 1963), multiple refs: (Agranovitch and Vishisk, 1964), " +
+        "also multiple references: (Lee et al., 2004; Agranovitch and Vishisk, 1964; " +
+        "Wang et al., 2003)";
+    
+    private static String documentTextRoundBrackets =
+        "This is a typical state of the art fragment. We can reference a single document " +
+        "like this (2) or ( 1). Sometimes we use (3,2, 4, 12 ) to reference multiple " +
+        "documents in one place. To save space, the number can also be given as ranges: " +
+        "(2-4) or (1-5, 7).";
+    
     private static BibEntry[] citations = {
         new BibEntry().setText(" [12]  W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc, 58 (1963) 13-30.")
             .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.")
@@ -92,7 +104,7 @@ public class CitationReferenceFinderTest {
             .addField(BibEntry.FIELD_PAGES, "362--371"),
         
     };
-    
+
     @Test
     public void testReferenceFinderNoRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
@@ -100,7 +112,7 @@ public class CitationReferenceFinderTest {
         List<CitationPosition> positions = finder.findReferences(documentTextNoRefs, citations[2]);
         assertTrue(positions.isEmpty());
     }
-    
+  
     @Test
     public void testReferenceFinderSingleRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
@@ -146,18 +158,80 @@ public class CitationReferenceFinderTest {
         assertEquals(104, postitions.get(0).getEndRefPosition());
         assertEquals(110, postitions.get(1).getStartRefPosition());
         assertEquals(116, postitions.get(1).getEndRefPosition());
-        
+
         postitions = finder.findReferences(documentTextRanges, citations[3]);
         assertEquals(2, postitions.size());
         assertEquals(101, postitions.get(0).getStartRefPosition());
         assertEquals(104, postitions.get(0).getEndRefPosition());
         assertEquals(110, postitions.get(1).getStartRefPosition());
         assertEquals(116, postitions.get(1).getEndRefPosition());
-
+        
         postitions = finder.findReferences(documentTextRanges, citations[4]);
         assertEquals(1, postitions.size());
         assertEquals(110, postitions.get(0).getStartRefPosition());
         assertEquals(116, postitions.get(0).getEndRefPosition());
+    }
+    
+    @Test
+    public void testReferenceFinderAuthorNames() {
+        CitationPositionFinder finder = new CitationPositionFinder();
+    
+        List<CitationPosition> positions = finder.findReferences(documentTextAuthorNames, citations[0]);
+        assertEquals(1, positions.size());
+        assertEquals(88, positions.get(0).getStartRefPosition());
+        assertEquals(105, positions.get(0).getEndRefPosition());
+     
+        positions = finder.findReferences(documentTextAuthorNames, citations[1]);
+        assertEquals(2, positions.size());
+        assertEquals(122, positions.get(0).getStartRefPosition());
+        assertEquals(153, positions.get(0).getEndRefPosition());
+        assertEquals(181, positions.get(1).getStartRefPosition());
+        assertEquals(249, positions.get(1).getEndRefPosition());
+       
+        positions = finder.findReferences(documentTextAuthorNames, citations[2]);
+        assertEquals(1, positions.size());
+        assertEquals(181, positions.get(0).getStartRefPosition());
+        assertEquals(249, positions.get(0).getEndRefPosition());
+        
+        positions = finder.findReferences(documentTextAuthorNames, citations[3]);
+        assertEquals(0, positions.size());
+        
+        positions = finder.findReferences(documentTextAuthorNames, citations[4]);
+        assertEquals(1, positions.size());
+        assertEquals(181, positions.get(0).getStartRefPosition());
+        assertEquals(249, positions.get(0).getEndRefPosition());
+    }
+    
+    @Test
+    public void testReferenceFinderRoundBrackets() {
+        CitationPositionFinder finder = new CitationPositionFinder();
+    
+        List<CitationPosition> positions = finder.findReferences(documentTextRoundBrackets, citations[0]);
+        assertEquals(1, positions.size());
+        assertEquals(121, positions.get(0).getStartRefPosition());
+        assertEquals(132, positions.get(0).getEndRefPosition());
+     
+        positions = finder.findReferences(documentTextRoundBrackets, citations[1]);
+        assertEquals(4, positions.size());
+        assertEquals(91, positions.get(0).getStartRefPosition());
+        assertEquals(92, positions.get(0).getEndRefPosition());
+        assertEquals(121, positions.get(1).getStartRefPosition());
+        assertEquals(132, positions.get(1).getEndRefPosition());
+       
+        positions = finder.findReferences(documentTextRoundBrackets, citations[2]);
+        assertEquals(1, positions.size());
+        assertEquals(245, positions.get(0).getStartRefPosition());
+        assertEquals(251, positions.get(0).getEndRefPosition());
+        
+        positions = finder.findReferences(documentTextRoundBrackets, citations[3]);
+        assertEquals(3, positions.size());
+        assertEquals(121, positions.get(0).getStartRefPosition());
+        assertEquals(132, positions.get(0).getEndRefPosition());
+        
+        positions = finder.findReferences(documentTextRoundBrackets, citations[4]);
+        assertEquals(1, positions.size());
+        assertEquals(245, positions.get(0).getStartRefPosition());
+        assertEquals(251, positions.get(0).getEndRefPosition());
     }
     
 }

@@ -49,11 +49,9 @@ public class CitationPositionFinder {
                 positions.add(pos);
             }
         }
-        if (sumOfSizes(positions) < citations.size()) {
-            positions.clear();
-            for (BibEntry citation: citations) {
-                List<CitationPosition> pos = findByAuthorYearFuzzy(fullText, citation);
-                positions.add(pos);
+        for (int i = 0; i < positions.size(); i++) {
+            if (positions.get(i).isEmpty()) {
+                positions.get(i).addAll(findByAuthorYearFuzzy(fullText, citations.get(i)));
             }
         }
         if (sumOfSizes(positions) < citations.size()) {
@@ -63,7 +61,7 @@ public class CitationPositionFinder {
                 positions.add(pos);
             }
         }
-  
+        
         if (sumOfSizes(positions) < citations.size()) {
             for (List<CitationPosition> pos : positions) {
                 pos.clear();
@@ -172,7 +170,7 @@ public class CitationPositionFinder {
         if (nameMatcher.find()) {
             String name = nameMatcher.group();
             
-            Pattern refPattern = Pattern.compile(name + "\\D{1,30}(\\d{4})");
+            Pattern refPattern = Pattern.compile(name + "\\D{1,30}(\\d{4})", Pattern.CASE_INSENSITIVE);
             Matcher refMatcher = refPattern.matcher(fullText);
             while (refMatcher.find()) {
                 String year = refMatcher.group(1);

@@ -19,11 +19,16 @@
 package pl.edu.icm.cermine.content.transformers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.jdom.Element;
+import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
+import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.Pair;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -36,28 +41,50 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
     @Override
     public Element convert(ContentStructure source, Object... hints) throws TransformationException {
         Element body = new Element("body");
-        body.addContent(toHTML(source));
+        ContentStructureCitationPositions positions = null;
+        for (Object hint : hints) {
+            if (hint instanceof ContentStructureCitationPositions) {
+                positions = (ContentStructureCitationPositions) hint;
+                break;
+            }
+        }
+        body.addContent(toHTML(source, positions));
         addSectionIds(body);
         return body;
     }
     
-    private List<Element> toHTML(ContentStructure dcs) {
+    private List<Element> toHTML(ContentStructure dcs, ContentStructureCitationPositions positions) {
         List<Element> elements = new ArrayList<Element>();
         for (DocumentSection part : dcs.getSections()) {
-            elements.addAll(toHTML(part));
+            elements.addAll(toHTML(part, positions));
         }
         return elements;
     }
     
-    private List<Element> toHTML(DocumentSection part) {
+    private List<Element> toHTML(DocumentSection part, ContentStructureCitationPositions positions) {
         List<Element> elements = new ArrayList<Element>();
         Element element = new Element("sec");
         element.addContent(toHTMLTitle(part.getTitle()));
-        for (String paragraph : part.getParagraphs()) {
-            element.addContent(toHTMLParagraph(paragraph));
+        for (int i = 0; i < part.getParagraphs().size(); i++) {
+            String paragraph = part.getParagraphs().get(i);
+            List<Pair<Integer, CitationPosition>> positionList = new ArrayList<Pair<Integer, CitationPosition>>();
+            if (positions != null) {
+                positionList = positions.getPositions(part, i);
+                Collections.sort(positionList, new Comparator<Pair<Integer, CitationPosition>>() {
+
+                    @Override
+                    public int compare(Pair<Integer, CitationPosition> t1, Pair<Integer, CitationPosition> t2) {
+                        if (t1.getSecond().getStartRefPosition() != t2.getSecond().getStartRefPosition()) {
+                            return Integer.valueOf(t1.getSecond().getStartRefPosition()).compareTo(t2.getSecond().getStartRefPosition());
+                        }
+                        return Integer.valueOf(t1.getSecond().getEndRefPosition()).compareTo(t2.getSecond().getEndRefPosition());
+                    }
+                });
+            }
+            element.addContent(toHTMLParagraph(paragraph, positionList));
         }
         for (DocumentSection subpart : part.getSubsections()) {
-            element.addContent(toHTML(subpart));
+            element.addContent(toHTML(subpart, positions));
         }
         elements.add(element);
         return elements;
@@ -69,9 +96,30 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
         return element;
     }
     
-    public Element toHTMLParagraph(String paragraph) {
+    public Element toHTMLParagraph(String paragraph, List<Pair<Integer, CitationPosition>> positions) {
         Element element = new Element("p");
-        element.setText(paragraph+"\n");
+        int lastParIndex = 0;
+        int posIndex = 0;
+        while (posIndex < positions.size()) {
+            CitationPosition position = positions.get(posIndex).getSecond();
+            int start = position.getStartRefPosition();
+            int end = position.getEndRefPosition();
+            StringBuilder citationIndex = new StringBuilder();
+            citationIndex.append(positions.get(posIndex).getFirst()+1);
+            while (++posIndex < positions.size() && positions.get(posIndex).getSecond().getStartRefPosition() == start) {
+                citationIndex.append(" ");
+                citationIndex.append(positions.get(posIndex).getFirst()+1);
+                posIndex++;
+            }
+            element.addContent(paragraph.substring(lastParIndex, start));
+            Element ref = new Element("xref");
+            ref.setAttribute("ref-type", "bibr");
+            ref.setAttribute("rid", citationIndex.toString());
+            ref.setText(paragraph.substring(start, end));
+            element.addContent(ref);
+            lastParIndex = end;
+        }
+        element.addContent(paragraph.substring(lastParIndex));
         return element;
     }
   

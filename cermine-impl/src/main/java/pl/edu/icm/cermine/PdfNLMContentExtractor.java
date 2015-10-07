@@ -92,8 +92,10 @@ public class PdfNLMContentExtractor {
         Element refList = new Element("ref-list");
         if (extractReferences) {
             Element[] references = ExtractionUtils.extractReferencesAsNLM(conf, document);
-            for (Element ref : references) {
+            for (int i = 0; i < references.length; i++) {
+                Element ref = references[i];
                 Element r = new Element("ref");
+                r.setAttribute("id", String.valueOf(i+1));
                 r.addContent(ref);
                 refList.addContent(r);
             }

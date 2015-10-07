@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.bibref.sentiment;
 
+import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -109,129 +110,129 @@ public class CitationReferenceFinderTest {
     public void testReferenceFinderNoRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<CitationPosition> positions = finder.findReferences(documentTextNoRefs, citations[2]);
-        assertTrue(positions.isEmpty());
+        List<List<CitationPosition>> positions = finder.findReferences(documentTextNoRefs, Arrays.asList(citations));
+        assertEquals(5, positions.size());
+        for (List<CitationPosition> pos : positions) {
+            assertTrue(pos.isEmpty());
+        }
     }
-  
+
     @Test
     public void testReferenceFinderSingleRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<CitationPosition> positions = finder.findReferences(documentTextSingleRefs, citations[0]);
-        assertEquals(1, positions.size());
-        assertEquals(98, positions.get(0).getStartRefPosition());
-        assertEquals(101, positions.get(0).getEndRefPosition());
+        List<List<CitationPosition>> positions = finder.findReferences(documentTextSingleRefs, Arrays.asList(citations));
+        assertEquals(5, positions.size());
+
+        assertEquals(1, positions.get(0).size());
+        assertEquals(98, positions.get(0).get(0).getStartRefPosition());
+        assertEquals(101, positions.get(0).get(0).getEndRefPosition());
         
-        positions = finder.findReferences(documentTextSingleRefs, citations[1]);
-        assertEquals(1, positions.size());
-        assertEquals(91, positions.get(0).getStartRefPosition());
-        assertEquals(92, positions.get(0).getEndRefPosition());
+        assertEquals(1, positions.get(1).size());
+        assertEquals(91, positions.get(1).get(0).getStartRefPosition());
+        assertEquals(92, positions.get(1).get(0).getEndRefPosition());
     }
     
     @Test
     public void testReferenceFinderMultipleRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<CitationPosition> positions = finder.findReferences(documentTextMultipleRefs, citations[0]);
-        assertEquals(1, positions.size());
-        assertEquals(63, positions.get(0).getStartRefPosition());
-        assertEquals(74, positions.get(0).getEndRefPosition());
+        List<List<CitationPosition>> positions = finder.findReferences(documentTextMultipleRefs, Arrays.asList(citations));
+        assertEquals(5, positions.size());
         
-        positions = finder.findReferences(documentTextMultipleRefs, citations[1]);
-        assertEquals(1, positions.size());
-        assertEquals(63, positions.get(0).getStartRefPosition());
-        assertEquals(74, positions.get(0).getEndRefPosition());
+        assertEquals(1, positions.get(0).size());
+        assertEquals(63, positions.get(0).get(0).getStartRefPosition());
+        assertEquals(74, positions.get(0).get(0).getEndRefPosition());
         
-        positions = finder.findReferences(documentTextMultipleRefs, citations[3]);
-        assertEquals(1, positions.size());
-        assertEquals(63, positions.get(0).getStartRefPosition());
-        assertEquals(74, positions.get(0).getEndRefPosition());
+        assertEquals(1, positions.get(1).size());
+        assertEquals(63, positions.get(1).get(0).getStartRefPosition());
+        assertEquals(74, positions.get(1).get(0).getEndRefPosition());
+        
+        assertEquals(1, positions.get(3).size());
+        assertEquals(63, positions.get(3).get(0).getStartRefPosition());
+        assertEquals(74, positions.get(3).get(0).getEndRefPosition());
     }
     
     @Test
     public void testReferenceFinderRangeRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<CitationPosition> postitions = finder.findReferences(documentTextRanges, citations[1]);
-        assertEquals(2, postitions.size());
-        assertEquals(101, postitions.get(0).getStartRefPosition());
-        assertEquals(104, postitions.get(0).getEndRefPosition());
-        assertEquals(110, postitions.get(1).getStartRefPosition());
-        assertEquals(116, postitions.get(1).getEndRefPosition());
-
-        postitions = finder.findReferences(documentTextRanges, citations[3]);
-        assertEquals(2, postitions.size());
-        assertEquals(101, postitions.get(0).getStartRefPosition());
-        assertEquals(104, postitions.get(0).getEndRefPosition());
-        assertEquals(110, postitions.get(1).getStartRefPosition());
-        assertEquals(116, postitions.get(1).getEndRefPosition());
+        List<List<CitationPosition>> positions = finder.findReferences(documentTextRanges, Arrays.asList(citations));
+        assertEquals(5, positions.size());
         
-        postitions = finder.findReferences(documentTextRanges, citations[4]);
-        assertEquals(1, postitions.size());
-        assertEquals(110, postitions.get(0).getStartRefPosition());
-        assertEquals(116, postitions.get(0).getEndRefPosition());
+        assertEquals(2, positions.get(1).size());
+        assertEquals(101, positions.get(1).get(0).getStartRefPosition());
+        assertEquals(104, positions.get(1).get(0).getEndRefPosition());
+        assertEquals(110, positions.get(1).get(1).getStartRefPosition());
+        assertEquals(116, positions.get(1).get(1).getEndRefPosition());
+
+        assertEquals(2, positions.get(3).size());
+        assertEquals(101, positions.get(3).get(0).getStartRefPosition());
+        assertEquals(104, positions.get(3).get(0).getEndRefPosition());
+        assertEquals(110, positions.get(3).get(1).getStartRefPosition());
+        assertEquals(116, positions.get(3).get(1).getEndRefPosition());
+        
+        assertEquals(1, positions.get(4).size());
+        assertEquals(110, positions.get(4).get(0).getStartRefPosition());
+        assertEquals(116, positions.get(4).get(0).getEndRefPosition());
     }
     
     @Test
     public void testReferenceFinderAuthorNames() {
         CitationPositionFinder finder = new CitationPositionFinder();
     
-        List<CitationPosition> positions = finder.findReferences(documentTextAuthorNames, citations[0]);
-        assertEquals(1, positions.size());
-        assertEquals(88, positions.get(0).getStartRefPosition());
-        assertEquals(105, positions.get(0).getEndRefPosition());
+        List<List<CitationPosition>> positions = finder.findReferences(documentTextAuthorNames, Arrays.asList(citations));
+        assertEquals(5, positions.size());
+        
+        assertEquals(1, positions.get(0).size());
+        assertEquals(88, positions.get(0).get(0).getStartRefPosition());
+        assertEquals(105, positions.get(0).get(0).getEndRefPosition());
      
-        positions = finder.findReferences(documentTextAuthorNames, citations[1]);
-        assertEquals(2, positions.size());
-        assertEquals(122, positions.get(0).getStartRefPosition());
-        assertEquals(153, positions.get(0).getEndRefPosition());
-        assertEquals(181, positions.get(1).getStartRefPosition());
-        assertEquals(249, positions.get(1).getEndRefPosition());
+        assertEquals(2, positions.get(1).size());
+        assertEquals(122, positions.get(1).get(0).getStartRefPosition());
+        assertEquals(153, positions.get(1).get(0).getEndRefPosition());
+        assertEquals(181, positions.get(1).get(1).getStartRefPosition());
+        assertEquals(249, positions.get(1).get(1).getEndRefPosition());
        
-        positions = finder.findReferences(documentTextAuthorNames, citations[2]);
-        assertEquals(1, positions.size());
-        assertEquals(181, positions.get(0).getStartRefPosition());
-        assertEquals(249, positions.get(0).getEndRefPosition());
+        assertEquals(1, positions.get(2).size());
+        assertEquals(181, positions.get(2).get(0).getStartRefPosition());
+        assertEquals(249, positions.get(2).get(0).getEndRefPosition());
         
-        positions = finder.findReferences(documentTextAuthorNames, citations[3]);
-        assertEquals(0, positions.size());
+        assertEquals(0, positions.get(3).size());
         
-        positions = finder.findReferences(documentTextAuthorNames, citations[4]);
-        assertEquals(1, positions.size());
-        assertEquals(181, positions.get(0).getStartRefPosition());
-        assertEquals(249, positions.get(0).getEndRefPosition());
+        assertEquals(1, positions.get(4).size());
+        assertEquals(181, positions.get(4).get(0).getStartRefPosition());
+        assertEquals(249, positions.get(4).get(0).getEndRefPosition());
     }
     
     @Test
     public void testReferenceFinderRoundBrackets() {
         CitationPositionFinder finder = new CitationPositionFinder();
     
-        List<CitationPosition> positions = finder.findReferences(documentTextRoundBrackets, citations[0]);
-        assertEquals(1, positions.size());
-        assertEquals(121, positions.get(0).getStartRefPosition());
-        assertEquals(132, positions.get(0).getEndRefPosition());
+        List<List<CitationPosition>> positions = finder.findReferences(documentTextRoundBrackets, Arrays.asList(citations));
+        assertEquals(5, positions.size());
+        
+        assertEquals(1, positions.get(0).size());
+        assertEquals(121, positions.get(0).get(0).getStartRefPosition());
+        assertEquals(132, positions.get(0).get(0).getEndRefPosition());
      
-        positions = finder.findReferences(documentTextRoundBrackets, citations[1]);
-        assertEquals(4, positions.size());
-        assertEquals(91, positions.get(0).getStartRefPosition());
-        assertEquals(92, positions.get(0).getEndRefPosition());
-        assertEquals(121, positions.get(1).getStartRefPosition());
-        assertEquals(132, positions.get(1).getEndRefPosition());
+        assertEquals(4, positions.get(1).size());
+        assertEquals(91, positions.get(1).get(0).getStartRefPosition());
+        assertEquals(92, positions.get(1).get(0).getEndRefPosition());
+        assertEquals(121, positions.get(1).get(1).getStartRefPosition());
+        assertEquals(132, positions.get(1).get(1).getEndRefPosition());
        
-        positions = finder.findReferences(documentTextRoundBrackets, citations[2]);
-        assertEquals(1, positions.size());
-        assertEquals(245, positions.get(0).getStartRefPosition());
-        assertEquals(251, positions.get(0).getEndRefPosition());
+        assertEquals(1, positions.get(2).size());
+        assertEquals(245, positions.get(2).get(0).getStartRefPosition());
+        assertEquals(251, positions.get(2).get(0).getEndRefPosition());
         
-        positions = finder.findReferences(documentTextRoundBrackets, citations[3]);
-        assertEquals(3, positions.size());
-        assertEquals(121, positions.get(0).getStartRefPosition());
-        assertEquals(132, positions.get(0).getEndRefPosition());
+        assertEquals(3, positions.get(3).size());
+        assertEquals(121, positions.get(3).get(0).getStartRefPosition());
+        assertEquals(132, positions.get(3).get(0).getEndRefPosition());
         
-        positions = finder.findReferences(documentTextRoundBrackets, citations[4]);
-        assertEquals(1, positions.size());
-        assertEquals(245, positions.get(0).getStartRefPosition());
-        assertEquals(251, positions.get(0).getEndRefPosition());
+        assertEquals(1, positions.get(4).size());
+        assertEquals(245, positions.get(4).get(0).getStartRefPosition());
+        assertEquals(251, positions.get(4).get(0).getEndRefPosition());
     }
-    
+
 }

@@ -20,6 +20,7 @@ package pl.edu.icm.cermine;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
@@ -27,6 +28,8 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
+import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;
+import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.ContentStructure;
@@ -59,7 +62,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxDocument doc = extractCharacters(conf, stream);
-        doc = segmentaPages(conf, doc);
+        doc = segmentPages(conf, doc);
         doc = resolveReadingOrder(conf, doc);
         doc =  classifyInitially(conf, doc);
         if (conf.timeDebug) {
@@ -152,7 +155,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxDocument doc = extractCharacters(conf, stream);
-        doc = segmentaPages(conf, doc);
+        doc = segmentPages(conf, doc);
         doc = resolveReadingOrder(conf, doc);
         String text = extractRawText(conf, doc);
         if (conf.timeDebug) {
@@ -266,14 +269,8 @@ public class ExtractionUtils {
      */
     public static Element extractTextAsNLM(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
-        try {
-            ModelToModelConverter<ContentStructure, Element> converter
-                    = new DocContentStructToNLMElementConverter();
-            ContentStructure struct = extractText(conf, stream);
-            return converter.convert(struct);
-        } catch (TransformationException ex) {
-            throw new AnalysisException("Cannot extract text from document!", ex);
-        }
+        BxDocument doc = extractStructure(conf, stream);
+        return extractTextAsNLM(conf, doc);
     }
 
     /**
@@ -290,7 +287,10 @@ public class ExtractionUtils {
             ModelToModelConverter<ContentStructure, Element> converter
                     = new DocContentStructToNLMElementConverter();
             ContentStructure struct = extractText(conf, document);
-            return converter.convert(struct);
+            BibEntry[] references = extractReferences(conf, document);
+            ContentCitationPositionFinder finder = new ContentCitationPositionFinder();
+            ContentStructureCitationPositions positions = finder.findReferences(struct, Arrays.asList(references));
+            return converter.convert(struct, positions);
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract text from document!", ex);
         }
@@ -393,7 +393,7 @@ public class ExtractionUtils {
     }
     
     //1.2 Page segmentation
-    public static BxDocument segmentaPages(ComponentConfiguration conf, BxDocument doc) 
+    public static BxDocument segmentPages(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.documentSegmenter.segmentDocument(doc);

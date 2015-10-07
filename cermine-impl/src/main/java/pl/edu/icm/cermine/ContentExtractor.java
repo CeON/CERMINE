@@ -281,8 +281,10 @@ public class ContentExtractor {
             
             Element back = new Element("back");
             Element refList = new Element("ref-list");
-            for (Element ref : nlmReferences) {
+            for (int i = 0; i < nlmReferences.size(); i++) {
+                Element ref = nlmReferences.get(i);
                 Element r = new Element("ref");
+                r.setAttribute("id", String.valueOf(i+1));
                 r.addContent(ref);
                 refList.addContent(r);
             }

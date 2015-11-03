@@ -107,7 +107,7 @@ public class CitationPositionFinder {
             }
         }
         
-        refPattern = Pattern.compile("([A-Z][^\\s\\.]+)\\s+et\\s+al\\.\\s+\\((\\d\\d\\d\\d)\\)");
+        refPattern = Pattern.compile("([A-Z][^\\s\\.]+)\\s+et\\s+al\\.\\s+\\((\\d{4})\\)");
         refMatcher = refPattern.matcher(fullText);
         while (refMatcher.find()) {
             String year = refMatcher.group(2);
@@ -119,7 +119,7 @@ public class CitationPositionFinder {
             }
         }
         
-        refPattern = Pattern.compile("([A-Z][^\\s\\.]+)\\s+(and|&)\\s+[A-Z][^\\s\\.]+\\s+\\((\\d\\d\\d\\d)\\)");
+        refPattern = Pattern.compile("([A-Z][^\\s\\.]+)\\s+(and|&)\\s+[A-Z][^\\s\\.]+\\s+\\((\\d{4})\\)");
         refMatcher = refPattern.matcher(fullText);
         while (refMatcher.find()) {
             String year = refMatcher.group(3);
@@ -131,7 +131,7 @@ public class CitationPositionFinder {
             }
         }
         
-        refPattern = Pattern.compile("([A-Z][^\\s\\.]+)\\s+\\((\\d\\d\\d\\d)\\)");
+        refPattern = Pattern.compile("([A-Z][^\\s\\.]+)\\s+\\((\\d{4})\\)");
         refMatcher = refPattern.matcher(fullText);
         while (refMatcher.find()) {
             String year = refMatcher.group(2);
@@ -164,7 +164,7 @@ public class CitationPositionFinder {
     
     private void findByNumber(String fullText, BibEntry citation, String leftBracket, String rightBracket,
             DocumentPositions positions) {
-        Pattern numberPattern = Pattern.compile("^[^\\d]{0,10}(\\d+)");
+        Pattern numberPattern = Pattern.compile("^[^\\d]{0,10}(\\d{1,5})");
         Matcher numberMatcher = numberPattern.matcher(citation.getText());
         String number;
         if (numberMatcher.find()) {
@@ -181,14 +181,16 @@ public class CitationPositionFinder {
                 if (number.equals(match)) {
                     positions.addPosition(citation, refMatcher.start(1), refMatcher.end(1));
                 } else {
-                    Pattern rangePattern = Pattern.compile("^(\\d+)[" + String.valueOf(CharacterUtils.DASH_CHARS) + "](\\d+)$");
+                    Pattern rangePattern = Pattern.compile("^(\\d{1,5})[" + String.valueOf(CharacterUtils.DASH_CHARS) + "](\\d{1,5})$");
                     Matcher rangeMatcher = rangePattern.matcher(match);
                     if (rangeMatcher.find()) {
-                        int lower = Integer.parseInt(rangeMatcher.group(1));
-                        int upper = Integer.parseInt(rangeMatcher.group(2));
-                        if (TextUtils.isNumberBetween(number, lower, upper+1)) {
-                            positions.addPosition(citation, refMatcher.start(1), refMatcher.end(1));
-                        }
+                        try {
+                            int lower = Integer.parseInt(rangeMatcher.group(1));
+                            int upper = Integer.parseInt(rangeMatcher.group(2));
+                            if (TextUtils.isNumberBetween(number, lower, upper+1)) {
+                                positions.addPosition(citation, refMatcher.start(1), refMatcher.end(1));
+                            }
+                        } catch (NumberFormatException e) {}
                     }
                 }
             }

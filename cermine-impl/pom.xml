@@ -128,8 +128,8 @@
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk14</artifactId>
-            <version>1.47</version>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.49</version>
         </dependency>
         <dependency>
             <groupId>xmlunit</groupId>

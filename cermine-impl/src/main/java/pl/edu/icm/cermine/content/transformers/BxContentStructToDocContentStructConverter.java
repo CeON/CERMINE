@@ -38,6 +38,9 @@ public class BxContentStructToDocContentStructConverter implements ModelToModelC
         ContentStructure dcs = new ContentStructure();
         
         List<BxDocContentPart> sectionContentParts = new ArrayList<BxDocContentPart>();
+        if (contentStructure.getParts().isEmpty()) {
+            return dcs;
+        }
         int topClusterNum = contentStructure.getParts().get(0).getLevelId();
         for (BxDocContentPart contentPart : contentStructure.getParts()) {
             if (contentPart.getLevelId() == topClusterNum && !sectionContentParts.isEmpty()) {

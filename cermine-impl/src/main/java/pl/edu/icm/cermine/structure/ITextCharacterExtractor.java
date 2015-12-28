@@ -101,6 +101,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
 
                 PdfDictionary resources = reader.getPageN(pageNumber).getAsDict(PdfName.RESOURCES);
                 processAlternativeFontNames(resources);
+                processAlternativeColorSpace(resources);
 
                 processor.reset();
                 processor.processContent(ContentByteUtils.getContentBytesForPage(reader, pageNumber), resources);
@@ -149,6 +150,18 @@ public class ITextCharacterExtractor implements CharacterExtractor {
         }
     }
 
+    private void processAlternativeColorSpace(PdfDictionary resources) {
+        PdfDictionary csDictionary = resources.getAsDict(PdfName.COLORSPACE);
+        if (csDictionary == null) {
+            return;
+        }
+        for (PdfName csName : csDictionary.getKeys()) {
+            if (csDictionary.getAsArray(csName) != null) {
+                csDictionary.put(csName, PdfName.DEVICEGRAY);
+            }
+        }
+    }
+                
     private BxDocument removeDuplicateChunks(BxDocument document) {
         for (BxPage page : document) {
             List<BxChunk> chunks = Lists.newArrayList(page.getChunks());

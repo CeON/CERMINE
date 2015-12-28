@@ -11,10 +11,10 @@ The code is licensed under GNU Affero General Public License version 3.
 
 How to cite CERMINE:
 
-	Dominika Tkaczyk, Pawel Szostek, Piotr Jan Dendek, Mateusz Fedoryszak and Lukasz Bolikowski. 
-	CERMINE - automatic extraction of metadata and references from scientific literature. 
-	In Proceedings of the 11th IAPR International Workshop on Document Analysis Systems,
-	pages 217-221, 2014.
+	Dominika Tkaczyk, Pawel Szostek, Mateusz Fedoryszak, Piotr Jan Dendek and Lukasz Bolikowski. 
+	CERMINE: automatic extraction of structured metadata from scientific literature. 
+	In International Journal on Document Analysis and Recognition (IJDAR), 2015, 
+	vol. 18, no. 4, pp. 317-335, doi: 10.1007/s10032-015-0249-8.
 
 DOI of CERMINE release 1.6: 
 

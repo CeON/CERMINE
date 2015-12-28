@@ -61,7 +61,8 @@ $ curl -X POST --data-binary @article.pdf \
                  <br/>
                  <p>Dominika Tkaczyk, Pawel Szostek, Mateusz Fedoryszak, Piotr Jan Dendek and Lukasz Bolikowski.
                      <i>CERMINE: automatic extraction of structured metadata from scientific literature</i>.
-                     In International Journal on Document Analysis and Recognition, pp. 1-19, 2015.</p>
+                     In International Journal on Document Analysis and Recognition, 2015,
+		     vol. 18, no. 4, pp. 317-335, doi: 10.1007/s10032-015-0249-8.</p>
                  <br/>
                  <p>BibTeX:</p>
                  <br/>
@@ -74,7 +75,10 @@ $ curl -X POST --data-binary @article.pdf \
   publisher={Springer Berlin Heidelberg},
   year={2015},
   doi={10.1007/s10032-015-0249-8},
-  pages={1-19},
+  pages={317-335},
+  volume={18},
+  number={4},
+  url={http://dx.doi.org/10.1007/s10032-015-0249-8}
 }</pre>
                  
                  <h2>License</h2>

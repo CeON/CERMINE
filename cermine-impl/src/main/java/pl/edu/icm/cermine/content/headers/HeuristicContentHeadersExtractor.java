@@ -19,10 +19,13 @@
 package pl.edu.icm.cermine.content.headers;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import java.util.Map.Entry;
 import java.util.*;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
+import pl.edu.icm.cermine.tools.CountMap;
 import pl.edu.icm.cermine.tools.statistics.Population;
 
 /**
@@ -48,7 +51,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
         Population distancePopulation = new Population();
         Population lengthPopulation = new Population();
         Population indentationPopulation = new Population();
-        
+
         Set<BxLine> candidates = new HashSet<BxLine>();
         for (BxPage page : document) {
             for (BxZone zone : page) {
@@ -86,19 +89,19 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
 
         Set<String> headerFonts = new HashSet<String>();
         List<BxLine> candidatesList = Lists.newArrayList(candidates);
-        
-        for (int x = 0; x < candidatesList.size(); x++) {
-            BxLine line1 = candidatesList.get(x);
-            for (int y = x+1; y < candidatesList.size(); y++) {
-                BxLine line2 = candidatesList.get(y);
-                for (int z = y+1; z < candidatesList.size(); z++) {
-                    BxLine line3 = candidatesList.get(z);
-                    if (line1.getMostPopularFontName().equals(line2.getMostPopularFontName())
-                        && line3.getMostPopularFontName().equals(line2.getMostPopularFontName())
-                        && Math.abs(fontPopulation.getZScore(getFontIndex(line1))) > outlFontZScore) {
-                        headerFonts.add(line1.getMostPopularFontName());
-                    }
-                }
+
+        Set<String> docFontPopulation = Sets.newHashSet();
+        if (!candidatesList.isEmpty()) {
+            docFontPopulation = candidatesList.get(0).getParent().getParent().getParent().getFontNames();
+        }
+        CountMap<String> fontCandidates = new CountMap<String>();
+        for (int x = 0; x < candidatesList.size(); x++) {            
+            fontCandidates.add(candidatesList.get(x).getMostPopularFontName());
+        }
+        for (Entry<String, Integer> entry : fontCandidates.getSortedEntries(3)) {
+            if (Math.abs(fontPopulation.getZScore(getFontIndex(entry.getKey(), docFontPopulation))) 
+                    > outlFontZScore) {
+                headerFonts.add(entry.getKey());
             }
         }
         
@@ -199,9 +202,14 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     }
 
     private double getFontIndex(BxLine line) {
-        List<String> fonts = Lists.newArrayList(line.getParent().getParent().getParent().getFontNames());
+        return getFontIndex(line.getMostPopularFontName(), 
+                line.getParent().getParent().getParent().getFontNames());
+    }
+    
+    private double getFontIndex(String fontName, Set<String> population) {
+        List<String> fonts = Lists.newArrayList(population);
         Collections.sort(fonts);
-        return fonts.indexOf(line.getMostPopularFontName());
+        return fonts.indexOf(fontName);
     }
     
     private boolean isFirstInZone(BxLine line) {

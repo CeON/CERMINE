@@ -39,4 +39,4 @@ pdfs = [xml[-3]+"pdf" for xml in xmls]
 
 for pdf in pdfs:
     location = local_files[pdf]
-    shutil.copy(pumbed_path + "/" + location, xmls_path)
+    shutil.copy(pubmed_path + "/" + location, xmls_path)

@@ -158,8 +158,8 @@
     </properties>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com/CeON/CERMINE.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/CeON/CERMINE.git</developerConnection>
+        <connection>scm:git:git@github.com:CeON/CERMINE.git</connection>
+        <developerConnection>scm:git:git@github.com:CeON/CERMINE.git</developerConnection>
         <url>https://github.com/CeON/CERMINE</url>
       <tag>HEAD</tag>
   </scm>

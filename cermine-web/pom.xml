@@ -5,11 +5,11 @@
     <parent>
         <groupId>pl.edu.icm.cermine</groupId>
         <artifactId>cermine-parent</artifactId>
-        <version>1.8</version>
+        <version>1.9-SNAPSHOT</version>
     </parent>
 
     <groupId>pl.edu.icm.cermine</groupId>
-    <version>1.8</version>
+    <version>1.9-SNAPSHOT</version>
     <artifactId>cermine-web</artifactId>
     <packaging>war</packaging>
     <name>CERMINE Web Interface - ${project.version}</name>

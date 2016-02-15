@@ -29,6 +29,8 @@ CERMINE can be used for:
   * extracting metadata from reference strings,
   * extracting metadata from affiliation strings.
 
+In all tasks the default output format is [NLM JATS](http://jats.nlm.nih.gov/archiving/tag-library/1.1/).
+
 **Maven dependency**
 
 CERMINE can be used in Java projects by adding the following dependency and repository to the project's *pom.xml* file:

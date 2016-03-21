@@ -84,7 +84,7 @@ public class PdfNLMContentExtractor {
         
         Element text = new Element("body");
         if (extractText) {
-            text = ExtractionUtils.extractTextAsNLM(conf, document);
+            text = ExtractionUtils.extractTextAsNLM(conf, document, null);
         }
         content.addContent(text);
         
@@ -102,7 +102,7 @@ public class PdfNLMContentExtractor {
         }
         back.addContent(refList);
         content.addContent(back);
-
+        
         return content;
     }
 

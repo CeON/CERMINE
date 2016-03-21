@@ -270,7 +270,7 @@ public class ExtractionUtils {
     public static Element extractTextAsNLM(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         BxDocument doc = extractStructure(conf, stream);
-        return extractTextAsNLM(conf, doc);
+        return extractTextAsNLM(conf, doc, null);
     }
 
     /**
@@ -281,15 +281,18 @@ public class ExtractionUtils {
      * @return document's full text in NLM format
      * @throws AnalysisException 
      */
-    public static Element extractTextAsNLM(ComponentConfiguration conf, BxDocument document) 
+    public static Element extractTextAsNLM(ComponentConfiguration conf, BxDocument document,
+            List<BibEntry> references) 
             throws AnalysisException {
         try {
             ModelToModelConverter<ContentStructure, Element> converter
                     = new DocContentStructToNLMElementConverter();
             ContentStructure struct = extractText(conf, document);
-            BibEntry[] references = extractReferences(conf, document);
+            if (references == null) {
+                references = Arrays.asList(extractReferences(conf, document));
+            }
             ContentCitationPositionFinder finder = new ContentCitationPositionFinder();
-            ContentStructureCitationPositions positions = finder.findReferences(struct, Arrays.asList(references));
+            ContentStructureCitationPositions positions = finder.findReferences(struct, references);
             return converter.convert(struct, positions);
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract text from document!", ex);

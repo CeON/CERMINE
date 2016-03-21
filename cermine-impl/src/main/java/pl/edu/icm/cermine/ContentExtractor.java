@@ -255,7 +255,8 @@ public class ContentExtractor {
     public Element getNLMText() throws AnalysisException {
         if (nlmFullText == null) {
             getBxDocument();
-            nlmFullText = ExtractionUtils.extractTextAsNLM(conf, bxDocument);
+            getReferences();
+            nlmFullText = ExtractionUtils.extractTextAsNLM(conf, bxDocument, references);
         }
         return nlmFullText;
     }

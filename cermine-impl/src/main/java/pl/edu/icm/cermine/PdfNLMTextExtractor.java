@@ -58,7 +58,7 @@ public class PdfNLMTextExtractor {
      * @throws AnalysisException 
      */
     public Element extractTextAsNLM(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractTextAsNLM(conf, document);
+        return ExtractionUtils.extractTextAsNLM(conf, document, null);
     }
     
     /**

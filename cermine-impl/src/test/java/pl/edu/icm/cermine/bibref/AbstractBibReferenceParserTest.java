@@ -132,7 +132,12 @@ public abstract class AbstractBibReferenceParserTest {
     };
 
     @Test
-    public void hmmBibReferenceParserTest() throws AnalysisException {
+    public void bibReferenceEmptyParserTest() throws AnalysisException {
+        System.out.println(getParser().parseBibReference("").toBibTeX());
+    }
+    
+    @Test
+    public void bibReferenceParserTest() throws AnalysisException {
         int allFields = 0;
         int parsedFields = 0;
         for (BibEntry entry : entries) {

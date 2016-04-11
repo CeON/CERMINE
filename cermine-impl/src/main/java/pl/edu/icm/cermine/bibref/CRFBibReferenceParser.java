@@ -137,6 +137,9 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         Pipe pipe = model.getInputPipe();
         InstanceList instanceList = new InstanceList(pipe);
         instanceList.add(new LineGroupIterator(new StringReader(data), Pattern.compile ("\\s*"), true)); 
+        if (model.getBestLabels(instanceList).isEmpty()) {
+            return new BibEntry().setText(text);
+        }
         LabelsSequence labelSequence = (LabelsSequence)model.getBestLabels(instanceList).get(0);
            
         for (int i = 0; i < labelSequence.size(); i++) {

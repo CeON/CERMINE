@@ -32,14 +32,17 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
  * Document geometric structure extractor. Extracts the geometric hierarchical structure
  * (pages, zones, lines, words and characters) from a PDF file and stores it as a BxDocument object.
  *
+ * @deprecated use {@link ContentExtractor} instead.
+ * 
  * @author Dominika Tkaczyk
  */
+@Deprecated
 public class PdfBxStructureExtractor {
 
-    private ComponentConfiguration conf;
+    private final ContentExtractor extractor;
 
     public PdfBxStructureExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+        extractor = new ContentExtractor();
     }
     
     /**
@@ -50,15 +53,20 @@ public class PdfBxStructureExtractor {
      * @throws AnalysisException 
      */
     public BxDocument extractStructure(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractStructure(conf, stream);
+        try {
+            extractor.setPDF(stream);
+            return extractor.getBxDocument();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     public ComponentConfiguration getConf() {
-        return conf;
+        return extractor.getConf();
     }
 
     public void setConf(ComponentConfiguration conf) {
-        this.conf = conf;
+        extractor.setConf(conf);
     }
     
     public static void main(String[] args) throws ParseException, IOException {

@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.edu.icm.cermine.PdfNLMContentExtractor;
+import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
@@ -136,7 +136,7 @@ public class CermineExtractorServiceImplTest {
         final CermineExtractorServiceImpl instance = new CermineExtractorServiceImpl();
         instance.setThreadPoolSize(3);
         instance.init();
-        List<PdfNLMContentExtractor> list = new ArrayList<PdfNLMContentExtractor>();
+        List<ContentExtractor> list = new ArrayList<ContentExtractor>();
         for (int i = 0; i < 3; i++) {
             list.add(instance.obtainExtractor());
         }
@@ -144,7 +144,7 @@ public class CermineExtractorServiceImplTest {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                PdfNLMContentExtractor res = instance.obtainExtractor();
+                ContentExtractor res = instance.obtainExtractor();
                 sleeping = false;
             }
         }).start();

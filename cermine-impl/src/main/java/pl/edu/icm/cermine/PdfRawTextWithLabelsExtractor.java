@@ -35,15 +35,18 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  * Text extractor from PDF files. Extracted text includes 
  * all text strings found in the document in correct reading order
  * as well as labels for text fragments.
+ * 
+ * @deprecated use {@link ContentExtractor} instead.
  *
  * @author Dominika Tkaczyk
  */
+@Deprecated
 public class PdfRawTextWithLabelsExtractor {
     
-    ComponentConfiguration conf;
+    private final ContentExtractor extractor;
     
     public PdfRawTextWithLabelsExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+        extractor = new ContentExtractor();
     }
     
     /**
@@ -54,7 +57,12 @@ public class PdfRawTextWithLabelsExtractor {
      * @throws AnalysisException 
      */
     public Element extractRawText(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractRawTextWithLabels(conf, stream);
+        try {
+            extractor.setPDF(stream);
+            return extractor.getLabelledRawFullText();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
     
     /**
@@ -65,15 +73,20 @@ public class PdfRawTextWithLabelsExtractor {
      * @throws AnalysisException 
      */
     public Element extractRawText(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractRawTextWithLabels(conf, document);
+        try {
+            extractor.setBxDocument(document);
+            return extractor.getLabelledRawFullText();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     public ComponentConfiguration getConf() {
-        return conf;
+        return extractor.getConf();
     }
 
     public void setConf(ComponentConfiguration conf) {
-        this.conf = conf;
+        extractor.setConf(conf);
     }
     
     public static void main(String[] args) throws ParseException, IOException {

@@ -70,7 +70,10 @@ public class ContentExtractor {
     /** raw full text */
     private String rawFullText;
     
-    /** full text in NLM format */
+    /** labelled full text format */
+    private Element labelledFullText;
+    
+    /** structured full text in NLM format */
     private Element nlmFullText;
     
     /** extracted content in NLM format */
@@ -94,14 +97,24 @@ public class ContentExtractor {
      * @throws IOException 
      */
     public void setPDF(InputStream pdfFile) throws IOException {
-        this.reset();
+        reset();
         this.pdfFile = pdfFile;
     }
 
     /**
+     * Sets the input bx document.
+     * 
+     * @param bxDocument 
+     */
+    public void setBxDocument(BxDocument bxDocument) throws IOException {
+        reset();
+        this.bxDocument = bxDocument;
+    }
+    
+    /**
      * Stores citation locations.
      * 
-     * @param citationContexts citation locations
+     * @param citationPositions citation locations
      */
     public void setCitationPositions(List<List<CitationPosition>> citationPositions) {
         this.citationPositions = citationPositions;
@@ -132,12 +145,13 @@ public class ContentExtractor {
      * @throws AnalysisException 
      */
     public BxDocument getBxDocument() throws AnalysisException {
+        if (bxDocument != null) {
+            return bxDocument;
+        }
         if (pdfFile == null) {
             throw new AnalysisException("No PDF document uploaded!");
         }
-        if (bxDocument == null) {
-            bxDocument = ExtractionUtils.extractStructure(conf, pdfFile);
-        }
+        bxDocument = ExtractionUtils.extractStructure(conf, pdfFile);
         return bxDocument;
     }
     
@@ -247,7 +261,21 @@ public class ContentExtractor {
     }
 
     /**
-     * Extracts full text.
+     * Extracts labelled raw text.
+     * 
+     * @return labelled raw text
+     * @throws AnalysisException 
+     */
+    public Element getLabelledRawFullText() throws AnalysisException {
+        if (labelledFullText == null) {
+            getBxDocument();
+            labelledFullText = ExtractionUtils.extractRawTextWithLabels(conf, bxDocument);
+        }
+        return labelledFullText;
+    }
+    
+    /**
+     * Extracts structured full text.
      * 
      * @return full text in NLM format
      * @throws AnalysisException 

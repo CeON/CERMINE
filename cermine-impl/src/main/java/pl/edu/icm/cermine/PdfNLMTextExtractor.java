@@ -18,9 +18,9 @@
 
 package pl.edu.icm.cermine;
 
+import java.io.IOException;
 import java.io.InputStream;
 import org.jdom.Element;
-import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -28,15 +28,18 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  * Text extractor from PDF files. Extracted text includes 
  * all text string found in the document in correct reading order.
  *
+ * @deprecated use {@link ContentExtractor} instead.
+ * 
  * @author Paweł Szostek
  * @author Dominika Tkaczyk
  */
+@Deprecated
 public class PdfNLMTextExtractor {
   
-    private ComponentConfiguration conf;
+    private final ContentExtractor extractor;
     
     public PdfNLMTextExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+        extractor = new ContentExtractor();
     }
 
     /**
@@ -47,7 +50,12 @@ public class PdfNLMTextExtractor {
      * @throws AnalysisException 
      */
     public Element extractTextAsNLM(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractTextAsNLM(conf, stream);
+        try {
+            extractor.setPDF(stream);
+            return extractor.getNLMText();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     /**
@@ -58,37 +66,20 @@ public class PdfNLMTextExtractor {
      * @throws AnalysisException 
      */
     public Element extractTextAsNLM(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractTextAsNLM(conf, document, null);
+        try {
+            extractor.setBxDocument(document);
+            return extractor.getNLMText();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
     
-    /**
-     * Extracts full text from input stream.
-     * 
-     * @param stream PDF stream
-     * @return document's full text
-     * @throws AnalysisException 
-     */
-    public ContentStructure extractText(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractText(conf, stream);
-    }
-
-    /**
-     * Extracts full text from document's box structure.
-     * 
-     * @param document box structure
-     * @return document's full text
-     * @throws AnalysisException 
-     */
-    public ContentStructure extractText(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractText(conf, document);
-    }
-
     public ComponentConfiguration getConf() {
-        return conf;
+        return extractor.getConf();
     }
 
     public void setConf(ComponentConfiguration conf) {
-        this.conf = conf;
+        extractor.setConf(conf);
     }
     
 }

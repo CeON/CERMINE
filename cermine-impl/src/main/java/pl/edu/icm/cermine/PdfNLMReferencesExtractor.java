@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine;
 
+import java.io.IOException;
 import java.io.InputStream;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
@@ -28,14 +29,17 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  * Parsed bibliograhic references extractor. Extracts references from a PDF file and stores them
  * in NLM format.
  *
+ * @deprecated use {@link ContentExtractor} instead.
+ * 
  * @author Dominika Tkaczyk
  */
+@Deprecated
 public class PdfNLMReferencesExtractor {
     
-    private ComponentConfiguration conf;
+    private final ContentExtractor extractor;
     
     public PdfNLMReferencesExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+        extractor = new ContentExtractor();
     }
     
     /**
@@ -46,7 +50,12 @@ public class PdfNLMReferencesExtractor {
      * @throws AnalysisException 
      */
     public BibEntry[] extractReferences(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractReferences(conf, stream);
+        try {
+            extractor.setPDF(stream);
+            return extractor.getReferences().toArray(new BibEntry[]{});
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     /**
@@ -57,7 +66,12 @@ public class PdfNLMReferencesExtractor {
      * @throws AnalysisException 
      */
     public BibEntry[] extractReferences(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractReferences(conf, document);
+        try {
+            extractor.setBxDocument(document);
+            return extractor.getReferences().toArray(new BibEntry[]{});
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
     
     /**
@@ -68,7 +82,12 @@ public class PdfNLMReferencesExtractor {
      * @throws AnalysisException 
      */
     public Element[] extractReferencesAsNLM(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractReferencesAsNLM(conf, stream);
+        try {
+            extractor.setPDF(stream);
+            return extractor.getNLMReferences().toArray(new Element[]{});
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     /**
@@ -79,15 +98,20 @@ public class PdfNLMReferencesExtractor {
      * @throws AnalysisException 
      */
     public Element[] extractReferencesAsNLM(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractReferencesAsNLM(conf, document);
+        try {
+            extractor.setBxDocument(document);
+            return extractor.getNLMReferences().toArray(new Element[]{});
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     public ComponentConfiguration getConf() {
-        return conf;
+        return extractor.getConf();
     }
 
     public void setConf(ComponentConfiguration conf) {
-        this.conf = conf;
+        extractor.setConf(conf);
     }
     
 }

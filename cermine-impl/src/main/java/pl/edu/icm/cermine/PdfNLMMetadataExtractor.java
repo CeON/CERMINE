@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine;
 
+import java.io.IOException;
 import java.io.InputStream;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -28,14 +29,17 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 /**
  * NLM-based metadata extractor from PDF files.
  *
+ * @deprecated use {@link ContentExtractor} instead.
+ * 
  * @author Dominika Tkaczyk
  */
+@Deprecated
 public class PdfNLMMetadataExtractor {
 
-    private ComponentConfiguration conf;
+    private final ContentExtractor extractor;
     
     public PdfNLMMetadataExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+        extractor = new ContentExtractor();
     }
     
     /**
@@ -46,7 +50,12 @@ public class PdfNLMMetadataExtractor {
      * @throws AnalysisException 
      */
     public DocumentMetadata extractMetadata(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractMetadata(conf, stream);
+        try {
+            extractor.setPDF(stream);
+            return extractor.getMetadata();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
     
     /**
@@ -57,7 +66,12 @@ public class PdfNLMMetadataExtractor {
      * @throws AnalysisException 
      */
     public Element extractMetadataAsNLM(InputStream stream) throws AnalysisException {
-        return ExtractionUtils.extractMetadataAsNLM(conf, stream);
+        try {
+            extractor.setPDF(stream);
+            return extractor.getNLMMetadata();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
     
     /**
@@ -68,7 +82,12 @@ public class PdfNLMMetadataExtractor {
      * @throws AnalysisException 
      */
     public DocumentMetadata extractMetadata(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractMetadata(conf, document);
+        try {
+            extractor.setBxDocument(document);
+            return extractor.getMetadata();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
     
     /**
@@ -79,15 +98,20 @@ public class PdfNLMMetadataExtractor {
      * @throws AnalysisException 
      */
     public Element extractMetadataAsNLM(BxDocument document) throws AnalysisException {
-        return ExtractionUtils.extractMetadataAsNLM(conf, document);
+        try {
+            extractor.setBxDocument(document);
+            return extractor.getNLMMetadata();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     public ComponentConfiguration getConf() {
-        return conf;
+        return extractor.getConf();
     }
 
     public void setConf(ComponentConfiguration conf) {
-        this.conf = conf;
+        extractor.setConf(conf);
     }
     
 }

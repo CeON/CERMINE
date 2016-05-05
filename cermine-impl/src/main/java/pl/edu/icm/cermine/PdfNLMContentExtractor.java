@@ -21,6 +21,7 @@ package pl.edu.icm.cermine;
 import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Collection;
+import java.util.List;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
@@ -34,11 +35,14 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 /**
  * NLM-based content extractor from PDF files.
  *
+ * @deprecated use {@link ContentExtractor} instead.
+ * 
  * @author Dominika Tkaczyk
  */
+@Deprecated
 public class PdfNLMContentExtractor {
 
-    private ComponentConfiguration conf;
+    private final ContentExtractor extractor;
     
     private boolean extractMetadata = true;
     
@@ -50,7 +54,7 @@ public class PdfNLMContentExtractor {
 
     
     public PdfNLMContentExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+        extractor = new ContentExtractor();
     }
 
     /**
@@ -61,8 +65,13 @@ public class PdfNLMContentExtractor {
      * @throws AnalysisException 
      */
     public Element extractContent(InputStream stream) throws AnalysisException {
-        BxDocument doc = ExtractionUtils.extractStructure(conf, stream);
-        return extractContent(doc);
+        try {
+            extractor.setPDF(stream);
+            BxDocument doc = extractor.getBxDocument();
+            return extractContent(doc);
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
     }
 
     /**
@@ -73,45 +82,50 @@ public class PdfNLMContentExtractor {
      * @throws AnalysisException 
      */
     public Element extractContent(BxDocument document) throws AnalysisException {
-        Element content = new Element("article");
-        
-        Element metadata = new Element("front");
-        if (extractMetadata) {
-            Element meta = ExtractionUtils.extractMetadataAsNLM(conf, document);
-            metadata = (Element) meta.getChild("front").clone();
-        }
-        content.addContent(metadata);
-        
-        Element text = new Element("body");
-        if (extractText) {
-            text = ExtractionUtils.extractTextAsNLM(conf, document, null);
-        }
-        content.addContent(text);
-        
-        Element back = new Element("back");
-        Element refList = new Element("ref-list");
-        if (extractReferences) {
-            Element[] references = ExtractionUtils.extractReferencesAsNLM(conf, document);
-            for (int i = 0; i < references.length; i++) {
-                Element ref = references[i];
-                Element r = new Element("ref");
-                r.setAttribute("id", String.valueOf(i+1));
-                r.addContent(ref);
-                refList.addContent(r);
+        try {
+            extractor.setBxDocument(document);
+            Element content = new Element("article");
+            
+            Element metadata = new Element("front");
+            if (extractMetadata) {
+                Element meta = extractor.getNLMMetadata();
+                metadata = (Element) meta.getChild("front").clone();
             }
+            content.addContent(metadata);
+            
+            Element text = new Element("body");
+            if (extractText) {
+                text = extractor.getNLMText();
+            }
+            content.addContent(text);
+           
+            Element back = new Element("back");
+            Element refList = new Element("ref-list");
+            if (extractReferences) {
+                List<Element> references = extractor.getNLMReferences();
+                for (int i = 0; i < references.size(); i++) {
+                    Element ref = references.get(i);
+                    Element r = new Element("ref");
+                    r.setAttribute("id", String.valueOf(i+1));
+                    r.addContent((Element)ref.clone());
+                    refList.addContent(r);
+                }
+            }
+            back.addContent(refList);
+            content.addContent(back);
+  
+            return content;
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
         }
-        back.addContent(refList);
-        content.addContent(back);
-        
-        return content;
     }
 
     public ComponentConfiguration getConf() {
-        return conf;
+        return extractor.getConf();
     }
 
     public void setConf(ComponentConfiguration conf) {
-        this.conf = conf;
+        extractor.setConf(conf);
     }
     
     public boolean isExtractMetadata() {

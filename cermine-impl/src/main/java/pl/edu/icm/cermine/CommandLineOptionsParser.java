@@ -133,7 +133,7 @@ public class CommandLineOptionsParser {
         if (commandLine.hasOption("threads")) {
             return Integer.valueOf(commandLine.getOptionValue("threads"));
         }
-        return PdfNLMContentExtractor.THREADS_NUMBER;
+        return ContentExtractor.THREADS_NUMBER;
     }
 
     private String getStringOptionValue(String defaultValue, String name) {

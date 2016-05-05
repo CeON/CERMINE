@@ -49,8 +49,6 @@ public class PdfNLMContentExtractor {
     private boolean extractReferences = true;
     
     private boolean extractText = true;
-    
-    public static int THREADS_NUMBER = 3;
 
     
     public PdfNLMContentExtractor() throws AnalysisException {
@@ -176,7 +174,7 @@ public class PdfNLMContentExtractor {
         String extension = parser.getNLMExtension();
         boolean extractStr = parser.extractStructure();
         String strExtension = parser.getBxExtension();
-        PdfNLMContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        ContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         File file = new File(path);
         if (file.isFile()) {

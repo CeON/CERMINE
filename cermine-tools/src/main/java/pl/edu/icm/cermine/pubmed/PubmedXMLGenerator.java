@@ -36,7 +36,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import pl.edu.icm.cermine.PdfBxStructureExtractor;
+import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneLocaliser;
@@ -128,8 +128,9 @@ public class PubmedXMLGenerator {
         DocumentBuilder builder = dbf.newDocumentBuilder();
         Document domDoc = builder.parse(nlmStream);
 
-        PdfBxStructureExtractor structureExtractor = new PdfBxStructureExtractor();
-        BxDocument bxDoc = structureExtractor.extractStructure(pdfStream);
+        ContentExtractor extractor = new ContentExtractor();
+        extractor.setPDF(pdfStream);
+        BxDocument bxDoc = extractor.getBxDocument();
         
         List<BxZone> zones = Lists.newArrayList(bxDoc.asZones());
         

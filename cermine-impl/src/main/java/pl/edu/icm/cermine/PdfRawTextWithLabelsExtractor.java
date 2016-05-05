@@ -107,7 +107,7 @@ public class PdfRawTextWithLabelsExtractor {
         
         String path = parser.getPath();
         String extension = parser.getTextExtension();
-        PdfNLMContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        ContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         File file = new File(path);
         if (file.isFile()) {

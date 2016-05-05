@@ -46,6 +46,8 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
  * @author Dominika Tkaczyk
  */
 public class ContentExtractor {
+
+    public static int THREADS_NUMBER = 3;
     
     private ComponentConfiguration conf;
     
@@ -375,7 +377,7 @@ public class ContentExtractor {
         String extension = parser.getNLMExtension();
         boolean extractStr = parser.extractStructure();
         String strExtension = parser.getBxExtension();
-        PdfNLMContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        ContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         File file = new File(path);
         if (file.isFile()) {

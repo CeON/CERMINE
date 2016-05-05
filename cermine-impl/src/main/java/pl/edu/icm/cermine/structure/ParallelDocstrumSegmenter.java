@@ -18,13 +18,12 @@
 
 package pl.edu.icm.cermine.structure;
 
-import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
-import pl.edu.icm.cermine.PdfNLMContentExtractor;
+import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -83,7 +82,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
         Map<BxPage, List<Component>> componentMap = new HashMap<BxPage, List<Component>>();
 
-        ExecutorService exec = Executors.newFixedThreadPool(PdfNLMContentExtractor.THREADS_NUMBER);
+        ExecutorService exec = Executors.newFixedThreadPool(ContentExtractor.THREADS_NUMBER);
         ArrayList<Callable<NumBxPage>> tasks = new ArrayList<Callable<NumBxPage>>();
         for (BxPage page : document) {
            tasks.add(new ComponentCounter(page));
@@ -109,7 +108,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         BxDocument output = new BxDocument();
         BxPage[] pages = new BxPage[document.childrenCount()];
         
-        exec = Executors.newFixedThreadPool(PdfNLMContentExtractor.THREADS_NUMBER);
+        exec = Executors.newFixedThreadPool(ContentExtractor.THREADS_NUMBER);
         tasks = new ArrayList<Callable<NumBxPage>>();
         int i = 0;
         for (BxPage page : document) {

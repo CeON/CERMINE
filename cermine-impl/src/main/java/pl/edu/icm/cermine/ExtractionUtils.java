@@ -41,6 +41,7 @@ import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -62,6 +63,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxDocument doc = extractCharacters(conf, stream);
+        TimeoutRegister.get().check();
         doc = segmentPages(conf, doc);
         doc = resolveReadingOrder(conf, doc);
         doc =  classifyInitially(conf, doc);
@@ -399,6 +401,7 @@ public class ExtractionUtils {
     public static BxDocument segmentPages(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
+        TimeoutRegister.get().check();
         doc = conf.documentSegmenter.segmentDocument(doc);
         if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;

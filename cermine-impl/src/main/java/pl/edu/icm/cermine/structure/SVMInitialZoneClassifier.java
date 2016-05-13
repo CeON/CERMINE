@@ -30,6 +30,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * Classifying zones as: METADATA, BODY, REFERENCES, OTHER. 
@@ -128,14 +129,15 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
     }
     
     @Override
-	public BxDocument classifyZones(BxDocument document) throws AnalysisException {
+    public BxDocument classifyZones(BxDocument document) throws AnalysisException {
         for (BxZone zone : document.asZones()) {
             if (zone.getLabel() == null) {
                 BxZoneLabel predicted = predictLabel(zone, zone.getParent());
                 zone.setLabel(predicted);
+                TimeoutRegister.get().check();
             }
         }
         return document;
-	}
+    }
     
 }

@@ -36,6 +36,7 @@ import pl.edu.icm.cermine.structure.model.BxChunk;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 
 /**
@@ -105,6 +106,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
 
                 processor.reset();
                 processor.processContent(ContentByteUtils.getContentBytesForPage(reader, pageNumber), resources);
+                TimeoutRegister.get().check();
             }
 
             return filterComponents(removeDuplicateChunks(documentCreator.document));

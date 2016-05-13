@@ -18,15 +18,23 @@
 
 package pl.edu.icm.cermine;
 
-import com.google.common.collect.Lists;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
+
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+
+import com.google.common.collect.Lists;
+
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
@@ -36,6 +44,9 @@ import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
+import pl.edu.icm.cermine.tools.timeout.StandardTimeout;
+import pl.edu.icm.cermine.tools.timeout.TimeoutException;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * Content extractor from PDF files.
@@ -153,8 +164,23 @@ public class ContentExtractor {
         if (pdfFile == null) {
             throw new AnalysisException("No PDF document uploaded!");
         }
+        TimeoutRegister.get().check();
         bxDocument = ExtractionUtils.extractStructure(conf, pdfFile);
         return bxDocument;
+    }
+    
+    /** The same as {@link #getBxDocument()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public BxDocument getBxDocument(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getBxDocument();
+        } finally {
+            TimeoutRegister.remove();
+        }
     }
     
     /**
@@ -165,10 +191,25 @@ public class ContentExtractor {
      */
     public DocumentMetadata getMetadata() throws AnalysisException {
         if (metadata == null) {
+            TimeoutRegister.get().check();
             getBxDocument();
             metadata = ExtractionUtils.extractMetadata(conf, bxDocument);
         }
         return metadata;
+    }
+    
+    /** The same as {@link #getMetadata()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public DocumentMetadata getMetadata(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getMetadata();
+        } finally {
+            TimeoutRegister.remove();
+        }
     }
     
     /**
@@ -180,6 +221,7 @@ public class ContentExtractor {
     public Element getNLMMetadata() throws AnalysisException {
         try {
             if (nlmMetadata == null) {
+                TimeoutRegister.get().check();
                 getMetadata();
                 DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
                 nlmMetadata = converter.convert(metadata);
@@ -187,6 +229,20 @@ public class ContentExtractor {
             return nlmMetadata;
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract metadata!", ex);
+        }
+    }
+    
+    /** The same as {@link #getNLMMetadata()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public Element getNLMMetadata(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getNLMMetadata();
+        } finally {
+            TimeoutRegister.remove();
         }
     }
     
@@ -204,6 +260,20 @@ public class ContentExtractor {
         return references;
     }
     
+    /** The same as {@link #getReferences()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public List<BibEntry> getReferences(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getReferences();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+    
     /**
      * Extracts the references in NLM format.
      * 
@@ -217,6 +287,20 @@ public class ContentExtractor {
                 ExtractionUtils.convertReferences(references.toArray(new BibEntry[]{})));
         }
         return nlmReferences;
+    }
+    
+    /** The same as {@link #getNLMReferences()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public List<Element> getNLMReferences(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getNLMReferences();
+        } finally {
+            TimeoutRegister.remove();
+        }
     }
 
     /**
@@ -234,6 +318,20 @@ public class ContentExtractor {
         return citationPositions;
     }
     
+    /** The same as {@link #getCitationPositions()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public List<List<CitationPosition>> getCitationPositions(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getCitationPositions();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+    
     /**
      * Extractes the sentiments of the document's citations.
      * 
@@ -248,6 +346,20 @@ public class ContentExtractor {
         return citationSentiments;
     }
     
+    /** The same as {@link #getCitationSentiments()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public List<CitationSentiment> getCitationSentiments(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getCitationSentiments();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+    
     /**
      * Extracts raw text.
      * 
@@ -260,6 +372,20 @@ public class ContentExtractor {
             rawFullText = ExtractionUtils.extractRawText(conf, bxDocument);
         }
         return rawFullText;
+    }
+    
+    /** The same as {@link #getRawFullText()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public String getRawFullText(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getRawFullText();
+        } finally {
+            TimeoutRegister.remove();
+        }
     }
 
     /**
@@ -291,6 +417,20 @@ public class ContentExtractor {
         return nlmFullText;
     }
     
+    /** The same as {@link #getNLMText()} but with a timeout.
+     * 
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public Element getNLMText(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getNLMText();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+    
     /**
      * Extracts full content in NLM format.
      * 
@@ -299,6 +439,7 @@ public class ContentExtractor {
      */
     public Element getNLMContent() throws AnalysisException {
         if (nlmContent == null) {
+            TimeoutRegister.get().check();
             getNLMMetadata();
             getNLMReferences();
             getNLMText();
@@ -323,6 +464,20 @@ public class ContentExtractor {
             nlmContent.addContent(back);
         }
         return nlmContent;
+    }
+    
+    /** The same as {@link #getNLMContent()} but with a timeout.
+     *  
+     * @param timeoutMillis timeout in milliseconds
+     * @throws AnalysisException
+     */
+    public Element getNLMContent(long timeoutMillis) throws AnalysisException {
+        try {
+            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            return getNLMContent();
+        } finally {
+            TimeoutRegister.remove();
+        }
     }
     
     /**
@@ -369,7 +524,13 @@ public class ContentExtractor {
                   + "                            used only if passed path is a directory\n"
                   + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
                   + "                            default: \"cxml\"; used only if passed path is a directory\n"
-                  + "  -threads <num>            number of threads for parallel processing\n");
+                  + "  -threads <num>            number of threads for parallel processing\n"
+                  + "  -timeout <seconds>        approximate maximal processing time of a single document\n"
+                  + "                            in seconds; if the time is exceeded, the program exits\n"
+                  + "                            with an error; by default, no timeout is used.\n"
+                  + "                            The value is approximate because in some cases,\n"
+                  + "                            this time might be slightly exceeded,\n"
+                  + "                            say by a second or two.\n");
             System.exit(1);
         }
         
@@ -378,20 +539,32 @@ public class ContentExtractor {
         boolean extractStr = parser.extractStructure();
         String strExtension = parser.getBxExtension();
         ContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        Long timeoutMillis = secondsToMilliseconds(parser.getTimeout());
  
         File file = new File(path);
         if (file.isFile()) {
             try {
+                if (timeoutMillis != null) {
+                    TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+                }
                 ContentExtractor extractor = new ContentExtractor();
+                TimeoutRegister.get().check();
                 parser.updateMetadataModel(extractor.getConf());
                 parser.updateInitialModel(extractor.getConf());
                 InputStream in = new FileInputStream(file);
                 extractor.setPDF(in);
+                TimeoutRegister.get().check();
+
                 Element result = extractor.getNLMContent();
+                
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                 System.out.println(outputter.outputString(result));
             } catch (AnalysisException ex) {
                 ex.printStackTrace();
+            } finally {
+                if (timeoutMillis != null) {
+                    TimeoutRegister.remove();
+                }               
             }
         } else {
         
@@ -407,8 +580,11 @@ public class ContentExtractor {
  
                 long start = System.currentTimeMillis();
                 float elapsed = 0;
-            
-                System.out.println(pdf.getPath());
+                if (timeoutMillis != null) {
+                    TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+                }
+                
+                System.out.println("File processed: "+pdf.getPath());
  
                 try {
                     ContentExtractor extractor = new ContentExtractor();
@@ -416,12 +592,10 @@ public class ContentExtractor {
                     parser.updateInitialModel(extractor.getConf());
                     InputStream in = new FileInputStream(pdf);
                     extractor.setPDF(in);
-                    BxDocument doc = extractor.getBxDocument();
+
+                    BxDocument doc = extractor.getBxDocument();;
                     Element result = extractor.getNLMContent();
-                    
-                    long end = System.currentTimeMillis();
-                    elapsed = (end - start) / 1000F;
-            
+
                     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                     if (!xmlF.createNewFile()) {
                         System.out.println("Cannot create new file!");
@@ -434,18 +608,38 @@ public class ContentExtractor {
                         writer.write(new FileWriter(strF), Lists.newArrayList(doc));
                     }
                 } catch (AnalysisException ex) {
-                   ex.printStackTrace();
+                    printException(ex);
                 } catch (TransformationException ex) {
-                   ex.printStackTrace();
+                    printException(ex);
+                } catch (TimeoutException ex) {
+                    printException(ex);
+                } finally {
+                    if (timeoutMillis != null) {
+                        TimeoutRegister.remove();
+                    }
+                    long end = System.currentTimeMillis();
+                    elapsed = (end - start) / 1000F;
                 }
                 
                 i++;
                 int percentage = i*100/files.size();
                 System.out.println("Extraction time: " + Math.round(elapsed) + "s");
-                System.out.println(percentage + "% done (" + i +" out of " + files.size() + ")");
+                System.out.println("Progress: "+percentage + "% done (" + i +" out of " + files.size() + ")");
                 System.out.println("");
             }
         }
     }
     
+    private static Long secondsToMilliseconds(Long seconds){
+        final long secondsToMillis = 1000;
+        Long millis = null;
+        if (seconds !=  null) {
+            millis = seconds * secondsToMillis;
+        }
+        return millis;
+    }
+        
+    private static void printException(Exception ex) {
+        System.out.print("Exception occured: " + ExceptionUtils.getStackTrace(ex));
+    }
 }

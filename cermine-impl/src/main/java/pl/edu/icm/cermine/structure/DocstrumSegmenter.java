@@ -26,6 +26,7 @@ import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 import pl.edu.icm.cermine.tools.DisjointSets;
 import pl.edu.icm.cermine.tools.Histogram;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * Page segmenter using Docstrum algorithm.
@@ -133,7 +134,9 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                 throw new AnalysisException(ex);
             }
         }
+        TimeoutRegister.get().check();
         Arrays.sort(components, ComponentXComparator.getInstance());
+        TimeoutRegister.get().check();
         findNeighbors(components);
         return Arrays.asList(components);
     }
@@ -178,6 +181,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                     }
                     newCandidatesFound = true;
                 }
+                TimeoutRegister.get().check();
                 while (end < components.length && components[end].getX() - components[i].getX() < searchDist) {
                     candidates.add(new Neighbor(components[end], components[i]));
                     if (candidates.size() > pageNeighborCount) {
@@ -192,6 +196,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                     Collections.sort(candidates, NeighborDistanceComparator.getInstance());
                     dist = candidates.get(pageNeighborCount - 1).getDistance();
                 }
+                TimeoutRegister.get().check();
             }
             candidates.subList(pageNeighborCount, candidates.size()).clear();
             components[i].setNeighbors(new ArrayList<Neighbor>(candidates));
@@ -361,6 +366,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                         sets.union(li, lj);
                     }
                 }
+                TimeoutRegister.get().check();
             }
         }
         List<List<ComponentLine>> zones = new ArrayList<List<ComponentLine>>();
@@ -393,6 +399,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                     bounds.set(i, null);
                     continue mainFor;
                 }
+                TimeoutRegister.get().check();
             }
             outputZones.add(zones.get(i));
         }

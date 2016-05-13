@@ -39,6 +39,7 @@ import pl.edu.icm.cermine.structure.CharacterExtractor;
 import pl.edu.icm.cermine.structure.DocumentSegmenter;
 import pl.edu.icm.cermine.structure.ReadingOrderResolver;
 import pl.edu.icm.cermine.structure.ZoneClassifier;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * The class represents the configuration of the extraction system.
@@ -106,12 +107,17 @@ public class ComponentConfiguration {
             documentSegmenter = ComponentFactory.getDocumentSegmenter();
             readingOrderResolver = ComponentFactory.getReadingOrderResolver();
             initialClassifier = ComponentFactory.getInitialZoneClassifier();
+            TimeoutRegister.get().check();
             metadataClassifier = ComponentFactory.getMetadataZoneClassifier();
+            TimeoutRegister.get().check();
             metadataExtractor = ComponentFactory.getMetadataExtractor();
+            TimeoutRegister.get().check();
             affiliationParser = ComponentFactory.getAffiliationParser();
+            TimeoutRegister.get().check();
             bibReferenceExtractor = ComponentFactory.getBibReferenceExtractor();
-            bibReferenceParser = ComponentFactory.getBibReferenceParser(); 
+            bibReferenceParser = ComponentFactory.getBibReferenceParser();
             contentFilter = ComponentFactory.getContentFilter();
+            TimeoutRegister.get().check();
             contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor();
             contentHeaderClusterizer = ComponentFactory.getContentHeaderClusterizer();
             contentCleaner = ComponentFactory.getContentCleaner();

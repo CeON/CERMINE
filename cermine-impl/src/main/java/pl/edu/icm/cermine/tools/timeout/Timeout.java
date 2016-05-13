@@ -13,5 +13,5 @@ public interface Timeout {
 	 * 
 	 * @throws TimeoutException
 	 */
-	public void check() throws TimeoutException;
+	void check() throws TimeoutException;
 }

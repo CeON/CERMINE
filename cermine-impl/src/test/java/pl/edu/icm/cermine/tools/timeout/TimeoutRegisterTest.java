@@ -46,6 +46,8 @@ public class TimeoutRegisterTest {
 			TimeoutRegister.get().check();
 			TimeoutRegister.get().check();
 			TimeoutRegister.get().check();
+			TimeoutRegister.get().check();
+			TimeoutRegister.get().check();
 		} finally {
 			TimeoutRegister.remove();
 		}		
@@ -59,6 +61,7 @@ public class TimeoutRegisterTest {
 			TimeoutRegister.get().check();
 			TimeoutRegister.remove();
 			TimeoutRegister.set(new StandardTimeout(2, new MockCurrentTime()));
+			TimeoutRegister.get().check();
 			TimeoutRegister.get().check();
 			TimeoutRegister.get().check();
 		} finally {

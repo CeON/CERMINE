@@ -1,5 +1,7 @@
 package pl.edu.icm.cermine.tools.timeout;
 
+import com.google.common.base.Preconditions;
+
 /** 
  * Standard {@link Timeout} implementation.
  * 
@@ -23,6 +25,7 @@ public class StandardTimeout implements Timeout {
 	 * @param currentTime object that delivers information about current time
 	 */
 	public StandardTimeout(long timeoutMillis, CurrentTime currentTime){
+        Preconditions.checkArgument(timeoutMillis >= 0);
 		long startTime = currentTime.get();
 		this.endTimeMillis = startTime + timeoutMillis;
 		this.currentTime = currentTime;
@@ -35,7 +38,7 @@ public class StandardTimeout implements Timeout {
 	 */
 	public void check() throws TimeoutException{
 		long currTimeMillis = currentTime.get();
-		if(currTimeMillis >= endTimeMillis){
+		if(currTimeMillis > endTimeMillis){
 			throw new TimeoutException(currTimeMillis, endTimeMillis);
 		}
 	}

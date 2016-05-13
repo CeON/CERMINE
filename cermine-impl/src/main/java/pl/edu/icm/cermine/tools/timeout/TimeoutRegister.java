@@ -1,5 +1,7 @@
 package pl.edu.icm.cermine.tools.timeout;
 
+import com.google.common.base.Preconditions;
+
 /** Thread-local singleton for setting and removing timeout for the thread.
  * <br/>
  * The standard way of using this class in order to set timeout is to:
@@ -43,6 +45,7 @@ public class TimeoutRegister {
 	}
 	
 	public static void set(Timeout timeout){
+        Preconditions.checkNotNull(timeout);
 		instance.set(timeout);
 	}
 	

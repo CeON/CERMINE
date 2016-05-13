@@ -18,15 +18,20 @@
 
 package pl.edu.icm.cermine.structure;
 
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
+
 import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
+import pl.edu.icm.cermine.tools.timeout.Timeout;
+import pl.edu.icm.cermine.tools.timeout.TimeoutException;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * Page segmenter using Docstrum algorithm.
@@ -52,28 +57,43 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     
     class SingleSegmenter implements Callable<NumBxPage> {
         NumBxPage page;
+        private Timeout timeout;
 
-        public SingleSegmenter(BxPage page, int index) {
+        public SingleSegmenter(BxPage page, int index, Timeout timeout) {
             this.page = new NumBxPage(page, index);
+            this.timeout = timeout;
         }
        
         @Override
-        public NumBxPage call() throws AnalysisException{
-            return new NumBxPage(segmentPage(page.page), page.index);
+        public NumBxPage call() throws AnalysisException {
+            try {
+                TimeoutRegister.set(timeout);
+                return new NumBxPage(segmentPage(page.page), page.index);
+            } finally {
+                TimeoutRegister.remove();
+            }
         }
     }
     
     class ComponentCounter implements Callable<NumBxPage> {
         NumBxPage page;
+        private Timeout timeout;
 
-        public ComponentCounter(BxPage page) {
+        public ComponentCounter(BxPage page, Timeout timeout) {
             this.page = new NumBxPage(page);
+            this.timeout = timeout;
         }
        
         @Override
         public NumBxPage call() throws AnalysisException {
-            page.components = createComponents(page.page);
-            return page;
+            try {
+                TimeoutRegister.set(timeout);
+                TimeoutRegister.get().check();
+                page.components = createComponents(page.page);
+                return page;
+            } finally {
+                TimeoutRegister.remove();
+            }
         }
     }
     
@@ -85,7 +105,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         ExecutorService exec = Executors.newFixedThreadPool(ContentExtractor.THREADS_NUMBER);
         ArrayList<Callable<NumBxPage>> tasks = new ArrayList<Callable<NumBxPage>>();
         for (BxPage page : document) {
-           tasks.add(new ComponentCounter(page));
+           tasks.add(new ComponentCounter(page, TimeoutRegister.get()));
         }
         
         List<Future<NumBxPage>> results;
@@ -97,6 +117,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
                 NumBxPage p = result.get();
                 componentMap.put(p.page, p.components);
             }
+            TimeoutRegister.get().check();
         } catch (ExecutionException ex) {
             throw new AnalysisException("Cannot segment pages!", ex);
         } catch (InterruptedException ex) {
@@ -112,7 +133,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         tasks = new ArrayList<Callable<NumBxPage>>();
         int i = 0;
         for (BxPage page : document) {
-           tasks.add(new SingleSegmenter(page, i++));
+           tasks.add(new SingleSegmenter(page, i++, TimeoutRegister.get()));
         }
         
         try {
@@ -123,6 +144,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
                 NumBxPage p = result.get();
                 pages[p.index] = p.page;
             }
+            TimeoutRegister.get().check();
             for (BxPage p : pages) {
                 if (p.getBounds() != null) {
                     output.addPage(p);

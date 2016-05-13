@@ -46,6 +46,7 @@ public class CommandLineOptionsParser {
         options.addOption("modelinit", true, "path to initial classifier model");
         options.addOption("threads", true, "number of threads used");
         options.addOption("output", true, "output path");
+        options.addOption("timeout", true, "time in seconds");
     }
     
     public boolean parse(String[] args) throws ParseException {
@@ -77,6 +78,17 @@ public class CommandLineOptionsParser {
     
     public String getBxExtension() {
         return this.getStringOptionValue("cxml", "strext");
+    }
+    
+    /**
+     * @return timeout in seconds; Null if no timeout is set.
+     */
+    public Long getTimeout(){
+    	if (!commandLine.hasOption("timeout")) {
+    		return null;
+    	} else {
+    		return Long.parseLong(commandLine.getOptionValue("timeout"));
+    	}
     }
     
     public void updateMetadataModel(ComponentConfiguration conf) throws AnalysisException, IOException {

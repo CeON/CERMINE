@@ -34,6 +34,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class EmailEnhancer extends AbstractSimpleEnhancer {
 
     private static final Pattern PATTERN = Pattern.compile("\\S+@\\S+");
+    private static final Pattern MULTI_PATTERN = Pattern.compile("[\\{\\[\\(]\\S+(?:, ?\\S+){1,}[\\}\\]\\)]@\\S+");
     
     public EmailEnhancer() {
         this.setSearchedZoneLabels(BxZoneLabel.MET_CORRESPONDENCE, BxZoneLabel.MET_AFFILIATION);
@@ -46,10 +47,21 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
 
     @Override
     protected boolean enhanceMetadata(BxZone zone, DocumentMetadata metadata) {
-        Matcher matcher = PATTERN.matcher(zone.toText());
+        Matcher matcher = MULTI_PATTERN.matcher(zone.toText());
+        while (matcher.find()) {
+            String emails = matcher.group();
+            String domain = emails.replaceFirst(".*@", "");
+            String[] names = emails.replaceFirst("[\\}\\]\\)]@.*", "").replaceFirst("^[\\{\\[\\(]", "").split(", ?");
+            for (String name : names) {
+                addEmail(metadata, name+"@"+domain);
+            }
+        }
+        matcher = PATTERN.matcher(zone.toText());
         while (matcher.find()) {
             String email = matcher.group().replaceFirst("[;\\.,]$", "");
-            addEmail(metadata, email);
+            if (!email.contains("}")) {
+                addEmail(metadata, email.replaceFirst("^\\(", "").replaceFirst("\\)$", ""));
+            }
         }
         return false;
     }

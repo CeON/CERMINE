@@ -32,7 +32,7 @@ import pl.edu.icm.cermine.structure.model.*;
 public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
 
     private static final Pattern SKIPPED_LINE_PATTERN = Pattern.compile(
-            ".*(Email|Correspondence|Contributed equally):?.*",
+            ".*(Email|Correspondence|Contributed equally|Dated|This work|Electronic address|The authors|Index|Received|Draft):?.*",
             Pattern.CASE_INSENSITIVE);
     private static final Pattern EMAIL_SIMPLE_LINE_PATTERN = Pattern.compile(
             "\\S+@[^,\\s]+",
@@ -111,7 +111,9 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             double chunkY = chunk.getY();
                             double chunkH = chunk.getHeight();
                             if (simpleIndexPattern.matcher(chunk.toText()).matches() ||
-                                Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2) {
+                                Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2 ||
+                                (indexes.contains(chunk.toText()) && chunk.getParent().childrenCount() < 3 
+                                    && chunk.getParent().equals(chunk.getParent().getParent().getFirstChild()))) {
                                 processor.addAffIndex(chunk.toText());
                             } else {
                                 processor.addText(chunk.toText());
@@ -130,22 +132,25 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             .replaceFirst("[Cc]orresponding [Aa]uthor.*$", "").trim()
                             .replaceFirst("[Cc]opyright is held by.*$", "").trim()
                             .replaceFirst("Full list of author information.*$", "").trim()
+                            .replaceFirst("\\(?(January|February|March|April|May|June|July|August|September|October|November|December) .*$", "").trim()
                             .replaceFirst(" and$", "").trim()
                             .replaceFirst("\\S+@.*$", "").trim()
-                            .replaceFirst("[Ee]mails?:.*$", "").trim()
-                            .replaceFirst("[Ee]-[Mm]ails?:.*$", "").trim()
+                            .replaceFirst("\\(?[Ee]mails?:.*$", "").trim()
+                            .replaceFirst("\\(?[Ee]- *[Mm]ails?:.*$", "").trim()
                             .replaceFirst("http://.*$", "").trim()
                             .replaceFirst("www\\..*$", "").trim()
                             .replaceFirst("Acknowledgements.*$", "").trim()
-                            .replaceFirst("[\\.,;]$", "").trim();
-                    if (text.isEmpty() || !text.matches(".*[a-zA-Z].*") || text.length() < 12) {
+                            .replaceFirst("[\\.,;]$", "").trim()
+                            .replaceFirst("^[-\\)]", "").trim()
+                            .replaceAll("(?<=[a-z])- (?=[a-z])", "");
+                    if (text.isEmpty() || !text.matches(".*[A-Z].*") || !text.matches(".*[a-z].*") || text.length() < 12) {
                         continue;
                     }
                     String index = entry.getKey();
                     if (index.startsWith("aff-")) {
                         index = "";
                     }
-                    if (index == null || index.isEmpty()) {
+                    if (index.isEmpty()) {
                         if (text.matches("^[1-9]\\. .*") && indexes.contains(text.substring(0, 1))) {
                             while (!text.isEmpty()) {
                                 index = text.substring(0, 1);

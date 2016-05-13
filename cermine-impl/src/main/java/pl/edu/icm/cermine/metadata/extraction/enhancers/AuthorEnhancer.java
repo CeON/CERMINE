@@ -140,7 +140,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                             if (!auth && !author.trim().isEmpty()) {
                                 author = CharMatcher.WHITESPACE.trimFrom(author);
                                 if (!author.toLowerCase().equals("article info") && author.matches(".*[a-zA-Z].*")
-                                        && author.length() > 4) {
+                                        && author.length() > 4 && author.length() < 50) {
                                     metadata.addAuthor(author, refs);
                                 }
                                 author = "";
@@ -157,7 +157,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 if (!author.isEmpty() && !author.toLowerCase().endsWith("introduction")) {
                     author = CharMatcher.WHITESPACE.trimFrom(author);
                     if (!author.toLowerCase().equals("article info") && author.matches(".*[a-zA-Z].*")
-                            && author.length() > 4) {
+                            && author.length() > 4 && author.length() < 50) {
                         metadata.addAuthor(author, refs);
                     }
                 }

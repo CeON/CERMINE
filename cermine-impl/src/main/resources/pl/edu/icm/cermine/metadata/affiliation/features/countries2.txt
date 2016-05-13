@@ -1,421 +1,635 @@
-Afghanistan
-Albania
-Algeria
-Andorra
-Angola
-Antigua and Barbuda
-Argentina
-Armenia
-Australia
-Austria
-Azerbaijan
-The Bahamas
-Bahrain
-Bangladesh
-Barbados
-Belarus
-Belgium
-Belize
-Benin
-Bhutan
-Bolivia
-Bosnia and Herzegovina
-Botswana
-Brazil
-Brunei
-Bulgaria
-Burkina Faso
-Burundi
-Cambodia
-Cameroon
-Canada
-Cape Verde
-Central African Republic
-Chad
-Chile
-China
-Colombia
-Comoros
-Congo
-Republic of the Congo
-Congo
-Democratic Republic of the Congo
-Costa Rica
-Cote d'Ivoire
-Croatia
-Cuba
-Cyprus
-Czech Republic
-Denmark
-Djibouti
-Dominica
-Dominican Republic
-Ecuador
-Egypt
-El Salvador
-Equatorial Guinea
-Eritrea
-Estonia
-Ethiopia
-Fiji
-Finland
-France
-Gabon
-The Gambia
-Georgia
-Germany
-Ghana
-Greece
-Grenada
-Guatemala
-Guinea
-Guinea-Bissau
-Guyana
-Haiti
-Honduras
-Hungary
-Iceland
-India
-Indonesia
-Iran
-Iraq
-Ireland
-Israel
-Italy
-Jamaica
-Japan
-Jordan
-Kazakhstan
-Kenya
-Kiribati
-Korea
-North Korea
-South Korea
-Kuwait
-Kyrgyzstan
-Laos
-Latvia
-Lebanon
-Lesotho
-Liberia
-Libya
-Liechtenstein
-Lithuania
-Luxembourg
-Macedonia
-Madagascar
-Malawi
-Malaysia
-Maldives
-Mali
-Malta
-Marshall Islands
-Mauritania
-Mauritius
-Mexico
-Federated States of Micronesia
-Micronesia
-Moldova
-Monaco
-Mongolia
-Morocco
-Mozambique
-Myanmar
-Burma
-Namibia
-Nauru
-Nepal
-Netherlands
-New Zealand
-Nicaragua
-Niger
-Nigeria
-Norway
-Oman
-Pakistan
-Palau
-Panama
-Papua New Guinea
-Paraguay
-Peru
-Philippines
-Poland
-Portugal
-Qatar
-Romania
-Russia
-Rwanda
-Saint Kitts and Nevis
-Saint Lucia
-Samoa
-San Marino
-Sao Tome and Principe
-Saudi Arabia
-Senegal
-Serbia
-Montenegro
-Federal Republic of Yugoslavia
-Yugoslavia
-Seychelles
-Sierra Leone
-Singapore
-Slovakia
-Slovenia
-Solomon Islands
-Somalia
-South Africa
-Spain
-Sri Lanka
-Sudan
-Suriname
-Swaziland
-Sweden
-Switzerland
-Syria
-Taiwan
-Tajikistan
-Tanzania
-Thailand
-Tolo
-Tonga
-Trinidad and Tobago
-Tunisia
-Turkey
-Turkmenistan
-Tuvalu
-Uganda
-Ukraine
-United Arab Emirates
-United Kingdom
-United States
-Uruguay
-Uzbekistan
-Vanuatu
-Vatican City
-Holy See
-Venezuela
-Vietnam
-Yemen
-Zambia
-Zimbabwe
 Afghanestan
-Shqiperia
-Al Jaza'ir
-Andorra
-Angola
-Antigua and Barbuda
-Argentina
-Hayastan
-Australia
-Oesterreich
-Azarbaycan Respublikasi
-The Bahamas
-Al Bahrayn
-Bangladesh
-Barbados
-Byelarus
-Belgique
-Belgie
-Belice
-Benin
-Drukyul
-Bolivia
-Bosna i Hercegovina
-Botswana
-Brasil
-Brunei
-Bulariya
-Republika Bulgariya
-Burkina Faso
-Burundi
-Kampuchea
-Cameroon
-Cameroun
-Canada
-Cabo Verde
-Republique Centrafricaine
-Tchad
-Chile
-Zhong Guo
-Colombia
-Comores
-Republique du Congo
-Republique Democratique du Congo
-Costa Rica
-Cote d'Ivoire
-Hrvatska
-Cuba
-Kypros
-Kibris
-Ceska Republika
-Danmark
-Djibouti
-Dominica
-Republica Dominicana
-Ecuador
-Misr
-El Salvador
-Guinea Ecuatorial
-Ertra
-Eesti
-YeItyop'iya
-Fiji
-Suomi
-France
-Republique Francaise
-Gabon
-The Gambia
-Sak'art'velo
-Deutschland
-Ghana
-Ellas
-Grenada
-Guatemala
-Guinee
-Guine-Bissau
-Guyana
-Haiti
-Honduras
-Magyarorszag
-Island
-India
-Bharat
-Indonesia
-Iran
-Persia
-Al Iraq
-Ireland
-Eire
-Yisra'el
-Italia
-Jamaica
-Nippon
-Al Urdun
-Qazaqstan
-Kenya
-Kiribati
-Choson
-Choson-minjujuui-inmin-konghwaguk
-Taehan-min'guk
-Al Kuwayt
-Kyrgyz Respublikasy
-Sathalanalat Paxathipatai Paxaxon Lao
-Latvija
-Lubnan
-Lesotho
-Liberia
-Libya
-Liechtenstein
-Lietuva
-Luxembourg
-Makedonija
-Madagascar
-Malawi
-Malaysia
-Dhivehi Raajje
-Mali
-Malta
-Marshall Islands
-Muritaniyah
-Mauritius
-Mexico
-Federated States of Micronesia
-Moldova
-Monaco
-Mongol Uls
-Al Maghrib
-Mocambique
-Myanma Naingngandaw
-Namibia
-Nauru
-Nepal
-Nederland
-New Zealand
-Nicaragua
-Niger
-Nigeria
-Norge
-Uman
-Pakistan
-Belau
-Panama
-Papua New Guinea
-Paraguay
-Peru
-Pilipinas
-Polska
-Portugal
-Qatar
-Romania
-Rossiya
-Rwanda
-Saint Kitts and Nevis
-Saint Lucia
-Samoa
-San Marino
-Sao Tome e Principe
+AFGHANESTAN
+Afghanistan
+AFGHANISTAN
 Al Arabiyah as Suudiyah
-Senegal
-Srbija-Crna Gora
-Seychelles
-Sierra Leone
-Singapore
-Slovensko
-Slovenija
-Solomon Islands
-Somalia
-South Africa
-Espana
-Sri Lanka
-As-Sudan
-Suriname
-Swaziland
-Sverige
-Schweiz
-Suisse
-Svizzera
-Suriyah
-T'ai-wan
-Jumhurii Tojikistan
-Tanzania
-Muang Thai
-Togo
-Tonga
-Trinidad and Tobago
-Tunis
-Turkiye
-Turkmenistan
-Tuvalu
-Uganda
-Ukrayina
+AL ARABIYAH AS SUUDIYAH
+Al Bahrayn
+AL BAHRAYN
+Albania
+ALBANIA
+Algeria
+ALGERIA
 Al Imarat al Arabiyah al Muttahidah
-United Kingdom
-United States
-Uruguay
-Uzbekiston Respublikasi
-Vanuatu
-Santa Sede
-Citta del Vaticano
-Venezuela
-Viet Nam
+AL IMARAT AL ARABIYAH AL MUTTAHIDAH
+Al Iraq
+AL IRAQ
+Al Jaza'ir
+AL JAZA'IR
+Al Kuwayt
+AL KUWAYT
+Al Maghrib
+AL MAGHRIB
+Al Urdun
+AL URDUN
 Al Yaman
-Zambia
-Zimbabwe
-US
-USA
-U. S.
-U. S. A.
-United States of America
-UK
-U. K.
+AL YAMAN
+Andorra
+ANDORRA
+Angola
+ANGOLA
+Antigua and Barbuda
+ANTIGUA AND BARBUDA
+Arab Emirates
+ARAB EMIRATES
+Argentina
+ARGENTINA
+Argentine
+ARGENTINE
+Armenia
+ARMENIA
+As-Sudan
+AS-SUDAN
+Australia
+AUSTRALIA
+Austria
+AUSTRIA
+Azarbaycan Respublikasi
+AZARBAYCAN RESPUBLIKASI
+Azerbaijan
+AZERBAIJAN
+Bahrain
+BAHRAIN
+Bangladesh
+BANGLADESH
+Barbados
+BARBADOS
+Belarus
+BELARUS
+Belau
+BELAU
+Belgie
+BELGIE
+Belgique
+BELGIQUE
+Belgium
+BELGIUM
+Belice
+BELICE
+Belize
+BELIZE
+Benin
+BENIN
+Bharat
+BHARAT
+Bhutan
+BHUTAN
+Bolivia
+BOLIVIA
+Bosna i Hercegovina
+BOSNA I HERCEGOVINA
+Bosnia and Herzegovina
+BOSNIA AND HERZEGOVINA
+Botswana
+BOTSWANA
+Brasil
+BRASIL
+Brazil
+BRAZIL
+Brunei
+BRUNEI
+Bulariya
+BULARIYA
+Bulgaria
+BULGARIA
+Burkina Faso
+BURKINA FASO
+Burma
+BURMA
+Burundi
+BURUNDI
+Byelarus
+BYELARUS
+Cabo Verde
+CABO VERDE
+Cambodia
+CAMBODIA
+Cameroon
+CAMEROON
+Cameroun
+CAMEROUN
+Canada
+CANADA
+Cape Verde
+CAPE VERDE
+Central African Republic
+CENTRAL AFRICAN REPUBLIC
+Ceska Republika
+CESKA REPUBLIKA
+Chad
+CHAD
+Chile
+CHILE
+China
+CHINA
+Choson
+CHOSON
+Choson-minjujuui-inmin-konghwaguk
+CHOSON-MINJUJUUI-INMIN-KONGHWAGUK
+Citta del Vaticano
+CITTA DEL VATICANO
+Colombia
+COLOMBIA
+Comores
+COMORES
+Comoros
+COMOROS
+Congo
+CONGO
+Costa Rica
+COSTA RICA
+Cote d'Ivoire
+COTE D'IVOIRE
+Croatia
+CROATIA
+Cuba
+CUBA
+Cyprus
+CYPRUS
+Czech Republic
+CZECH REPUBLIC
+Danmark
+DANMARK
+Democratic Republic of the Congo
+DEMOCRATIC REPUBLIC OF THE CONGO
+Denmark
+DENMARK
+Deutschland
+DEUTSCHLAND
+Dhivehi Raajje
+DHIVEHI RAAJJE
+Djibouti
+DJIBOUTI
+Dominica
+DOMINICA
+Dominican Republic
+DOMINICAN REPUBLIC
+Drukyul
+DRUKYUL
+Ecuador
+ECUADOR
+Eesti
+EESTI
+Egypt
+EGYPT
+Eire
+EIRE
+Ellas
+ELLAS
+El Salvador
+EL SALVADOR
+Equatorial Guinea
+EQUATORIAL GUINEA
+Eritrea
+ERITREA
+Ertra
+ERTRA
+Espana
+ESPANA
+Estonia
+ESTONIA
+Ethiopia
+ETHIOPIA
+Federal Republic of Yugoslavia
+FEDERAL REPUBLIC OF YUGOSLAVIA
+Federated States of Micronesia
+FEDERATED STATES OF MICRONESIA
+Fiji
+FIJI
+Finland
+FINLAND
+France
+FRANCE
+Gabon
+GABON
+Georgia
+GEORGIA
+Germany
+GERMANY
+Ghana
+GHANA
 Great Britain
-R. O. C.
-PR China
+GREAT BRITAIN
+Greece
+GREECE
+Grenada
+GRENADA
+Guatemala
+GUATEMALA
+Guinea
+GUINEA
+Guinea-Bissau
+GUINEA-BISSAU
+Guinea Ecuatorial
+GUINEA ECUATORIAL
+Guine-Bissau
+GUINE-BISSAU
+Guinee
+GUINEE
+Guyana
+GUYANA
+Haiti
+HAITI
+Hayastan
+HAYASTAN
+Holy See
+HOLY SEE
+Honduras
+HONDURAS
+Hrvatska
+HRVATSKA
+Hungary
+HUNGARY
+Iceland
+ICELAND
+India
+INDIA
+Indonesia
+INDONESIA
+Iran
+IRAN
+Iraq
+IRAQ
+Ireland
+IRELAND
+Island
+ISLAND
+Israel
+ISRAEL
+Italia
+ITALIA
+Italy
+ITALY
+Jamaica
+JAMAICA
+Japan
+JAPAN
+Jordan
+JORDAN
+Jumhurii Tojikistan
+JUMHURII TOJIKISTAN
+Kampuchea
+KAMPUCHEA
+Kazakhstan
+KAZAKHSTAN
+Kenya
+KENYA
+Kibris
+KIBRIS
+Kiribati
+KIRIBATI
+Korea
+KOREA
+Kosova
+KOSOVA
+Kuwait
+KUWAIT
+Kypros
+KYPROS
+Kyrgyz Respublikasy
+KYRGYZ RESPUBLIKASY
+Kyrgyzstan
+KYRGYZSTAN
+Laos
+LAOS
+Latvia
+LATVIA
+Latvija
+LATVIJA
+Lebanon
+LEBANON
+Lesotho
+LESOTHO
+Liberia
+LIBERIA
+Libya
+LIBYA
+Liechtenstein
+LIECHTENSTEIN
+Lietuva
+LIETUVA
+Lithuania
+LITHUANIA
+Lubnan
+LUBNAN
+Luxembourg
+LUXEMBOURG
+Macedonia
+MACEDONIA
+Madagascar
+MADAGASCAR
+Magyarorszag
+MAGYARORSZAG
+Makedonija
+MAKEDONIJA
+Malawi
+MALAWI
+Malaysia
+MALAYSIA
+Maldives
+MALDIVES
+Mali
+MALI
+Malta
+MALTA
+Marshall Islands
+MARSHALL ISLANDS
+Mauritania
+MAURITANIA
+Mauritius
+MAURITIUS
+Mexico
+MEXICO
+Micronesia
+MICRONESIA
+Misr
+MISR
+Mocambique
+MOCAMBIQUE
+Moldova
+MOLDOVA
+Monaco
+MONACO
+Mongolia
+MONGOLIA
+Mongol Uls
+MONGOL ULS
+Montenegro
+MONTENEGRO
+Morocco
+MOROCCO
+Mozambique
+MOZAMBIQUE
+Muang Thai
+MUANG THAI
+Muritaniyah
+MURITANIYAH
+Myanma Naingngandaw
+MYANMA NAINGNGANDAW
+Myanmar
+MYANMAR
+Namibia
+NAMIBIA
+Nauru
+NAURU
+Nederland
+NEDERLAND
+Nepal
+NEPAL
+Netherlands
+NETHERLANDS
+New Zealand
+NEW ZEALAND
+Nicaragua
+NICARAGUA
+Niger
+NIGER
+Nigeria
+NIGERIA
+Nippon
+NIPPON
+Norge
+NORGE
+North Korea
+NORTH KOREA
+Norway
+NORWAY
+Oesterreich
+OESTERREICH
+Oman
+OMAN
+Pakistan
+PAKISTAN
+Palau
+PALAU
+Panama
+PANAMA
+Papua New Guinea
+PAPUA NEW GUINEA
+Paraguay
+PARAGUAY
+People's Republic of China
+PEOPLE'S REPUBLIC OF CHINA
+People,s Republic of China
+PEOPLE,S REPUBLIC OF CHINA
+Persia
+PERSIA
+Peru
+PERU
+Philippines
+PHILIPPINES
+Pilipinas
+PILIPINAS
+Poland
+POLAND
+Polska
+POLSKA
+Portugal
+PORTUGAL
 P R China
 P. R. China
-People's Republic of China
-Arab Emirates
-The Netherlands
-the Netherlands
-Kosova
+PR China
+P R CHINA
+P. R. CHINA
+PR CHINA
+Qatar
+QATAR
+Qazaqstan
+QAZAQSTAN
+Republica Dominicana
+REPUBLICA DOMINICANA
 Republic of
+REPUBLIC OF
+Republic of the Congo
+REPUBLIC OF THE CONGO
+Republika Bulgariya
+REPUBLIKA BULGARIYA
+Republique Centrafricaine
+REPUBLIQUE CENTRAFRICAINE
+Republique Democratique du Congo
+REPUBLIQUE DEMOCRATIQUE DU CONGO
+Republique du Congo
+REPUBLIQUE DU CONGO
+Republique Francaise
+REPUBLIQUE FRANCAISE
+R. O. C.
+Romania
+ROMANIA
+Rossiya
+ROSSIYA
+Russia
+RUSSIA
+Rwanda
+RWANDA
+Saint Kitts and Nevis
+SAINT KITTS AND NEVIS
+Saint Lucia
+SAINT LUCIA
+Sak'art'velo
+SAK'ART'VELO
+Samoa
+SAMOA
+San Marino
+SAN MARINO
+Santa Sede
+SANTA SEDE
+Sao Tome and Principe
+SAO TOME AND PRINCIPE
+Sao Tome e Principe
+SAO TOME E PRINCIPE
+Sathalanalat Paxathipatai Paxaxon Lao
+SATHALANALAT PAXATHIPATAI PAXAXON LAO
+Saudi Arabia
+SAUDI ARABIA
+Schweiz
+SCHWEIZ
+Senegal
+SENEGAL
+Serbia
+SERBIA
+Seychelles
+SEYCHELLES
+Shqiperia
+SHQIPERIA
+Sierra Leone
+SIERRA LEONE
+Singapore
+SINGAPORE
+Slovakia
+SLOVAKIA
+Slovenia
+SLOVENIA
+Slovenija
+SLOVENIJA
+Slovensko
+SLOVENSKO
+Solomon Islands
+SOLOMON ISLANDS
+Somalia
+SOMALIA
+South Africa
+SOUTH AFRICA
+South Korea
+SOUTH KOREA
+Spain
+SPAIN
+Srbija-Crna Gora
+SRBIJA-CRNA GORA
+Sri Lanka
+SRI LANKA
+Sudan
+SUDAN
+Suisse
+SUISSE
+Suomi
+SUOMI
+Suriname
+SURINAME
+Suriyah
+SURIYAH
+Sverige
+SVERIGE
+Svizzera
+SVIZZERA
+Swaziland
+SWAZILAND
+Sweden
+SWEDEN
+Switzerland
+SWITZERLAND
+Syria
+SYRIA
+Taehan-min'guk
+TAEHAN-MIN'GUK
+Taiwan
+T'ai-wan
+TAIWAN
+T'AI-WAN
+Tajikistan
+TAJIKISTAN
+Tanzania
+TANZANIA
+Tchad
+TCHAD
+Thailand
+THAILAND
+The Bahamas
+THE BAHAMAS
+The Gambia
+THE GAMBIA
+the Netherlands
+The Netherlands
+THE NETHERLANDS
+Togo
+TOGO
+Tolo
+TOLO
+Tonga
+TONGA
+Trinidad and Tobago
+TRINIDAD AND TOBAGO
+Tunis
+TUNIS
+Tunisia
+TUNISIA
+Turkey
+TURKEY
+Turkiye
+TURKIYE
+Turkmenistan
+TURKMENISTAN
+Tuvalu
+TUVALU
+Uganda
+UGANDA
+UK
+U. K
+U. K.
+Ukraine
+UKRAINE
+Ukrayina
+UKRAYINA
+Uman
+UMAN
+United Arab Emirates
+UNITED ARAB EMIRATES
+United Kingdom
+UNITED KINGDOM
+United States
+UNITED STATES
+United States of America
+UNITED STATES OF AMERICA
+Uruguay
+URUGUAY
+US
+U. S.
+USA
+U. S. A.
+Uzbekistan
+UZBEKISTAN
+Uzbekiston Respublikasi
+UZBEKISTON RESPUBLIKASI
+Vanuatu
+VANUATU
+Vatican City
+VATICAN CITY
+Venezuela
+VENEZUELA
+Vietnam
+Viet Nam
+VIETNAM
+VIET NAM
+YeItyop'iya
+YEITYOP'IYA
+Yemen
+YEMEN
+Yisra'el
+YISRA'EL
+Yugoslavia
+YUGOSLAVIA
+Zambia
+ZAMBIA
+Zhong Guo
+ZHONG GUO
+Zimbabwe
+ZIMBABWE

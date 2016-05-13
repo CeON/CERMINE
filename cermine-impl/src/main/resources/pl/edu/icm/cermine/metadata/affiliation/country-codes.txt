@@ -21,6 +21,7 @@ antigua ag
 antigua and barbuda ag
 arab emirates ae
 argentina ar
+argentine ar
 armenia am
 aruba aw
 as-sudan sd
@@ -139,6 +140,7 @@ eth et
 falkland islands fk
 falkland islands (malvinas) fk
 faroe islands fo
+federal republic of germany de
 federal republic of yugoslavia mk
 federated states of micronesia fm
 fiji fj
@@ -295,6 +297,7 @@ niue nu
 nld nl
 norfolk island nf
 norge no
+northern ireland uk
 northern mariana islands mp
 north korea kp
 norway no
@@ -329,6 +332,7 @@ p r china cn
 qatar qa
 qazaqstan kz
 republica dominicana do
+republic of china cn
 republic of the congo cg
 republika bulgariya bg
 republique centrafricaine cf
@@ -344,6 +348,7 @@ russian federation ru
 rus ru
 rwanda rw
 r. o. c. cn
+s republic of china cn
 saint barthélemy bl
 saint helena sh
 saint helena, ascension and tristan da cunha sh
@@ -410,6 +415,7 @@ syrian arab republic sy
 taehan-min'guk kr
 t'ai-wan tw
 taiwan tw
+taiwan r.o.c tw
 tajikistan tj
 tanzania tz
 tanzania (united republic of) tz

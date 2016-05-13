@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.parsing.features;
 
 import pl.edu.icm.cermine.parsing.model.ParsableString;
@@ -23,23 +22,25 @@ import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
- * Feature calculator which checks whether a token (representing a word) has a given feature.
- * 
+ * Feature calculator which checks whether a token (representing a word) has a
+ * given feature.
+ *
  * @author Bartosz Tarnawski
  */
 public abstract class BinaryTokenFeatureCalculator extends
-FeatureCalculator<Token<?>, ParsableString<?>> {
+        FeatureCalculator<Token<?>, ParsableString<?>> {
 
-	/**
-	 * @param token
-	 * @param context
-	 * @return whether the token in the context has the feature represented by the class
-	 */
-	public abstract boolean calculateFeaturePredicate(Token<?> token, ParsableString<?> context);
+    /**
+     * @param token
+     * @param context
+     * @return whether the token in the context has the feature represented by
+     * the class
+     */
+    public abstract boolean calculateFeaturePredicate(Token<?> token, ParsableString<?> context);
 
-	@Override
+    @Override
     public double calculateFeatureValue(Token<?> token, ParsableString<?> context) {
-    	return calculateFeaturePredicate(token, context) ? 1 : 0;
+        return calculateFeaturePredicate(token, context) ? 1 : 0;
     }
-    
+
 }

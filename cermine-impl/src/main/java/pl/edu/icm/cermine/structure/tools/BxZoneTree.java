@@ -28,7 +28,7 @@ public class BxZoneTree {
 
         private BxZoneOrderTuple tuple;
         private BxZoneTreeNode parent;
-        private List<BxZoneTreeNode> children;
+        private final List<BxZoneTreeNode> children;
 
         public BxZoneTreeNode getParent() {
             return parent;

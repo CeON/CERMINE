@@ -138,9 +138,6 @@ public class KMeansWithInitialCentroids {
         System.arraycopy(centroids, 0, this.centroids, 0, centroids.length);
     }
     
-    /**
-     * XXX add doc
-     */
     public List<FeatureVector>[] cluster(List<FeatureVector> data) {
         if (data.isEmpty())
             throw new RuntimeException("The dataset should not be empty");

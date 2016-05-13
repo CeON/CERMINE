@@ -32,11 +32,11 @@ public class DocumentMetadata {
 
     private String title;
     
-    private Map<String, String> ids = new HashMap<String, String>();
+    private final Map<String, String> ids = new HashMap<String, String>();
     
-    private List<DocumentAuthor> authors = new ArrayList<DocumentAuthor>();
+    private final List<DocumentAuthor> authors = new ArrayList<DocumentAuthor>();
     
-    private List<DocumentAuthor> editors = new ArrayList<DocumentAuthor>();
+    private final List<DocumentAuthor> editors = new ArrayList<DocumentAuthor>();
 
     private String abstrakt;
     
@@ -56,9 +56,9 @@ public class DocumentMetadata {
     
     private String publisher;
     
-    private Map<String, DocumentDate> dates = new HashMap<String, DocumentDate>();
+    private final Map<String, DocumentDate> dates = new HashMap<String, DocumentDate>();
 
-    private List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
+    private final List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
     
     
     public String getTitle() {

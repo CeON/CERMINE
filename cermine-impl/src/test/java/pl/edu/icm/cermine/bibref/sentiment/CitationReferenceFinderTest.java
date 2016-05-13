@@ -20,11 +20,11 @@ package pl.edu.icm.cermine.bibref.sentiment;
 
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -32,34 +32,34 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
  */
 public class CitationReferenceFinderTest {
     
-    private static String documentTextNoRefs = 
+    private static final String DOCUMENT_TEXT1 = 
         "This is a state of the art fragment with absolutely no references whatsoever.";
 
-    private static String documentTextSingleRefs = 
+    private static final String DOCUMENT_TEXT2 = 
         "This is a typical state of the art fragment. We can reference a single document " +
         "like this [2] or [ 12].";
 
-    private static String documentTextMultipleRefs = 
+    private static final String DOCUMENT_TEXT3 = 
         "This is a typical state of the art fragment. Sometimes we use [3,2, 4, 12 ] to " +
         "reference multiple documents in one place.";
 
-    private static String documentTextRanges = 
+    private static final String DOCUMENT_TEXT4 = 
         "This is a typical state of the art fragment. To save space, the number can also " +
         "be given as ranges: [2-4] or [1-5, 7].";
     
-    private static String documentTextAuthorNames =
+    private static final String DOCUMENT_TEXT5 =
         "This is a typical state of the art fragment. Reference can also be given by " +
         "author name (Hoeffding, 1963), multiple refs: (Agranovitch and Vishisk, 1964), " +
         "also multiple references: (Lee et al., 2004; Agranovitch and Vishisk, 1964; " +
         "Wang et al., 2003)";
     
-    private static String documentTextRoundBrackets =
+    private static final String DOCUMENT_TEXT6 =
         "This is a typical state of the art fragment. We can reference a single document " +
         "like this (2) or ( 1). Sometimes we use (3,2, 4, 12 ) to reference multiple " +
         "documents in one place. To save space, the number can also be given as ranges: " +
         "(2-4) or (1-5, 7).";
     
-    private static BibEntry[] citations = {
+    private static final BibEntry[] CITATIONS = {
         new BibEntry().setText(" [12]  W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc, 58 (1963) 13-30.")
             .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.")
             .addField(BibEntry.FIELD_TITLE, "Probability inequalities for sums of bounded random variables")
@@ -110,7 +110,7 @@ public class CitationReferenceFinderTest {
     public void testReferenceFinderNoRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<List<CitationPosition>> positions = finder.findReferences(documentTextNoRefs, Arrays.asList(citations));
+        List<List<CitationPosition>> positions = finder.findReferences(DOCUMENT_TEXT1, Arrays.asList(CITATIONS));
         assertEquals(5, positions.size());
         for (List<CitationPosition> pos : positions) {
             assertTrue(pos.isEmpty());
@@ -121,7 +121,7 @@ public class CitationReferenceFinderTest {
     public void testReferenceFinderSingleRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<List<CitationPosition>> positions = finder.findReferences(documentTextSingleRefs, Arrays.asList(citations));
+        List<List<CitationPosition>> positions = finder.findReferences(DOCUMENT_TEXT2, Arrays.asList(CITATIONS));
         assertEquals(5, positions.size());
 
         assertEquals(1, positions.get(0).size());
@@ -137,7 +137,7 @@ public class CitationReferenceFinderTest {
     public void testReferenceFinderMultipleRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<List<CitationPosition>> positions = finder.findReferences(documentTextMultipleRefs, Arrays.asList(citations));
+        List<List<CitationPosition>> positions = finder.findReferences(DOCUMENT_TEXT3, Arrays.asList(CITATIONS));
         assertEquals(5, positions.size());
         
         assertEquals(1, positions.get(0).size());
@@ -157,7 +157,7 @@ public class CitationReferenceFinderTest {
     public void testReferenceFinderRangeRefs() {
         CitationPositionFinder finder = new CitationPositionFinder();
         
-        List<List<CitationPosition>> positions = finder.findReferences(documentTextRanges, Arrays.asList(citations));
+        List<List<CitationPosition>> positions = finder.findReferences(DOCUMENT_TEXT4, Arrays.asList(CITATIONS));
         assertEquals(5, positions.size());
         
         assertEquals(2, positions.get(1).size());
@@ -181,7 +181,7 @@ public class CitationReferenceFinderTest {
     public void testReferenceFinderAuthorNames() {
         CitationPositionFinder finder = new CitationPositionFinder();
     
-        List<List<CitationPosition>> positions = finder.findReferences(documentTextAuthorNames, Arrays.asList(citations));
+        List<List<CitationPosition>> positions = finder.findReferences(DOCUMENT_TEXT5, Arrays.asList(CITATIONS));
         assertEquals(5, positions.size());
         
         assertEquals(1, positions.get(0).size());
@@ -209,7 +209,7 @@ public class CitationReferenceFinderTest {
     public void testReferenceFinderRoundBrackets() {
         CitationPositionFinder finder = new CitationPositionFinder();
     
-        List<List<CitationPosition>> positions = finder.findReferences(documentTextRoundBrackets, Arrays.asList(citations));
+        List<List<CitationPosition>> positions = finder.findReferences(DOCUMENT_TEXT6, Arrays.asList(CITATIONS));
         assertEquals(5, positions.size());
         
         assertEquals(1, positions.get(0).size());

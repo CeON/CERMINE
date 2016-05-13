@@ -60,7 +60,7 @@ public class BxDocumentToTrueVizWriterTest {
 
     private void assertXpath(String expr, double expected) throws XPathExpressionException {
         Double actual = (Double) xpath.evaluate(expr, domDoc, XPathConstants.NUMBER);
-        assertEquals(expected, actual.doubleValue(), 0.00001);
+        assertEquals(expected, actual, 0.00001);
     }
 
     private BxDocument getBxDocument() {

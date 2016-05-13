@@ -36,5 +36,5 @@ public interface CharacterExtractor {
      * @return a document containing pages with individual characters.
      * @throws AnalysisException 
      */
-	BxDocument extractCharacters(InputStream stream) throws AnalysisException;
+    BxDocument extractCharacters(InputStream stream) throws AnalysisException;
 }

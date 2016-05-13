@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.structure.transformers;
 
 import com.google.common.collect.Lists;
@@ -37,7 +36,6 @@ import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.*;
 
-
 /**
  *
  * @author krusek
@@ -45,121 +43,128 @@ import pl.edu.icm.cermine.structure.model.*;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 public class TrueVizToBxDocumentReaderTest {
-	static String PATH = "/pl/edu/icm/cermine/structure/";
+
+    static String PATH = "/pl/edu/icm/cermine/structure/";
 
     public TrueVizToBxDocumentReaderTest() {
     }
 
     @Test
-    public void testImporter() throws IOException,  ParserConfigurationException, SAXException,
+    public void testImporter() throws IOException, ParserConfigurationException, SAXException,
             TransformationException {
-       BxPage page=new TrueVizToBxDocumentReader().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/cermine/structure/imports/MargImporterTest1.xml"))).get(0);
-       boolean contains=false;
-       boolean rightText=false;
-       boolean rightSize=false;
-       for (BxZone zone : page) {
-          if (zone.getLabel() != null) {
-           if (zone.getLabel().equals(BxZoneLabel.MET_AUTHOR)) {
-               contains=true;
-               System.out.println(zone.toText());
-               // takie cos na toplevelu                 Howard M. Schachter,* Ba' Pham,* Jim King,tt  Stephanie Langford,* David Moher*$
-              if (zone.toText().trim().equalsIgnoreCase("Howard M  Schachter   Ba  Pham   Jim King tt\nStephanie Langford   David Moher".trim())) {
-                  rightText=true;
-              }
-              if (zone.getBounds().getX()==72 && zone.getBounds().getY()==778 && zone.getBounds().getWidth()==989 && zone.getBounds().getHeight()==122) {
-                    rightSize=true;
-                  } else {
-                   System.out.println(zone.getBounds().getX()+ " " + zone.getBounds().getY() +" "+zone.getBounds().getWidth()+ " "+zone.getBounds().getHeight());
-                  }
-           }
-         } else {
-              System.out.println("Zone with no label: "+zone.toText());
-         }
-       }
-       assertTrue(contains);
-       assertTrue(rightText);
-       assertTrue(rightSize);
-       
-       BxWord word = page.getChild(0).getChild(0).getChild(0);
-       assertEquals("font-1", word.getChild(0).getFontName());
-       assertEquals("font-2", word.getChild(1).getFontName());
+        BxPage page = new TrueVizToBxDocumentReader().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/cermine/structure/imports/MargImporterTest1.xml"))).get(0);
+        boolean contains = false;
+        boolean rightText = false;
+        boolean rightSize = false;
+        for (BxZone zone : page) {
+            if (zone.getLabel() != null) {
+                if (zone.getLabel().equals(BxZoneLabel.MET_AUTHOR)) {
+                    contains = true;
+                    System.out.println(zone.toText());
+                    // takie cos na toplevelu                 Howard M. Schachter,* Ba' Pham,* Jim King,tt  Stephanie Langford,* David Moher*$
+                    if (zone.toText().trim().equalsIgnoreCase("Howard M  Schachter   Ba  Pham   Jim King tt\nStephanie Langford   David Moher".trim())) {
+                        rightText = true;
+                    }
+                    if (zone.getBounds().getX() == 72 && zone.getBounds().getY() == 778 && zone.getBounds().getWidth() == 989 && zone.getBounds().getHeight() == 122) {
+                        rightSize = true;
+                    } else {
+                        System.out.println(zone.getBounds().getX() + " " + zone.getBounds().getY() + " " + zone.getBounds().getWidth() + " " + zone.getBounds().getHeight());
+                    }
+                }
+            } else {
+                System.out.println("Zone with no label: " + zone.toText());
+            }
+        }
+        assertTrue(contains);
+        assertTrue(rightText);
+        assertTrue(rightSize);
+
+        BxWord word = page.getChild(0).getChild(0).getChild(0);
+        assertEquals("font-1", word.getChild(0).getFontName());
+        assertEquals("font-2", word.getChild(1).getFontName());
     }
 
-	private BxDocument getDocumentFromZipFile(String zipFilename, String filename) throws TransformationException, IOException, URISyntaxException {
+    private BxDocument getDocumentFromZipFile(String zipFilename, String filename) throws TransformationException, IOException, URISyntaxException {
         URL url = this.getClass().getResource(PATH + zipFilename);
         ZipFile zipFile = new ZipFile(new File(url.toURI()));
         InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
         InputStreamReader isr = new InputStreamReader(is);
 
-		TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-		BxDocument doc = new BxDocument().setPages(reader.read(isr));
-		isr.close();
-		return doc;
-	}
+        TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+        BxDocument doc = new BxDocument().setPages(reader.read(isr));
+        isr.close();
+        return doc;
+    }
 
     @Test
     public void testAllNextsAreSet1() throws TransformationException, IOException, URISyntaxException {
-    	BxDocument orderedDoc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
-    	//walk through document's structure
-    	Integer nextNulls = 0;
-    	for(BxPage page: orderedDoc.asPages()) {
-    		if(page.getNext() == null)
-    			++nextNulls;
-    	}
-    	assertEquals(nextNulls, Integer.valueOf(1));
+        BxDocument orderedDoc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
+        //walk through document's structure
+        Integer nextNulls = 0;
+        for (BxPage page : orderedDoc.asPages()) {
+            if (page.getNext() == null) {
+                ++nextNulls;
+            }
+        }
+        assertEquals(nextNulls, Integer.valueOf(1));
 
-    	nextNulls = 0;
-    	for(BxZone zone: orderedDoc.asZones()) {
-    		if(zone.getNext() == null)
-    			++nextNulls;
-    	}
-    	assertEquals(nextNulls, Integer.valueOf(1));
+        nextNulls = 0;
+        for (BxZone zone : orderedDoc.asZones()) {
+            if (zone.getNext() == null) {
+                ++nextNulls;
+            }
+        }
+        assertEquals(nextNulls, Integer.valueOf(1));
 
-    	nextNulls = 0;
-    	for(BxLine line: orderedDoc.asLines()) {
-    		if(line.getNext() == null)
-    			++nextNulls;
-    	}
-    	assertEquals(nextNulls, Integer.valueOf(1));
+        nextNulls = 0;
+        for (BxLine line : orderedDoc.asLines()) {
+            if (line.getNext() == null) {
+                ++nextNulls;
+            }
+        }
+        assertEquals(nextNulls, Integer.valueOf(1));
 
-    	nextNulls = 0;
-    	for(BxWord word: orderedDoc.asWords()) {
-    		if(word.getNext() == null)
-    			++nextNulls;
-    	}
-    	assertEquals(nextNulls, Integer.valueOf(1));
+        nextNulls = 0;
+        for (BxWord word : orderedDoc.asWords()) {
+            if (word.getNext() == null) {
+                ++nextNulls;
+            }
+        }
+        assertEquals(nextNulls, Integer.valueOf(1));
 
-    	nextNulls = 0;
-    	for(BxChunk chunk: orderedDoc.asChunks()) {
-    		if(chunk.getNext() == null)
-    			++nextNulls;
-    	}
-    	assertEquals(nextNulls, Integer.valueOf(1));   	
+        nextNulls = 0;
+        for (BxChunk chunk : orderedDoc.asChunks()) {
+            if (chunk.getNext() == null) {
+                ++nextNulls;
+            }
+        }
+        assertEquals(nextNulls, Integer.valueOf(1));
     }
-    
-    public  <A extends Indexable> Integer countChainedElements(List<A> list) throws TransformationException, IOException {
-    	Set<A> nextSet = new HashSet<A>();
-    	for(A elem: list) {
-    		A next = (A)elem.getNext();
-    		if(next != null && list.contains(next))
-    			nextSet.add(next);
-    	}
-    	return nextSet.size();
+
+    public <A extends Indexable> Integer countChainedElements(List<A> list) throws TransformationException, IOException {
+        Set<A> nextSet = new HashSet<A>();
+        for (A elem : list) {
+            A next = (A) elem.getNext();
+            if (next != null && list.contains(next)) {
+                nextSet.add(next);
+            }
+        }
+        return nextSet.size();
     }
 
     @Test
     public void testChainedElementsEven() throws TransformationException, IOException, URISyntaxException {
-    	BxDocument doc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
+        BxDocument doc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
         List<BxPage> pages = Lists.newArrayList(doc);
         List<BxZone> zones = Lists.newArrayList(doc.asZones());
         List<BxLine> lines = Lists.newArrayList(doc.asLines());
         List<BxWord> words = Lists.newArrayList(doc.asWords());
         List<BxChunk> chunks = Lists.newArrayList(doc.asChunks());
-    	assertEquals(countChainedElements(pages),  Integer.valueOf(pages.size() - 1));
-    	assertEquals(countChainedElements(zones),  Integer.valueOf(zones.size()-1));
-    	assertEquals(countChainedElements(lines),  Integer.valueOf(lines.size()-1));
-    	assertEquals(countChainedElements(words),  Integer.valueOf(words.size()-1));
-    	assertEquals(countChainedElements(chunks), Integer.valueOf(chunks.size()-1));
+        assertEquals(countChainedElements(pages), Integer.valueOf(pages.size() - 1));
+        assertEquals(countChainedElements(zones), Integer.valueOf(zones.size() - 1));
+        assertEquals(countChainedElements(lines), Integer.valueOf(lines.size() - 1));
+        assertEquals(countChainedElements(words), Integer.valueOf(words.size() - 1));
+        assertEquals(countChainedElements(chunks), Integer.valueOf(chunks.size() - 1));
     }
-    
+
 }

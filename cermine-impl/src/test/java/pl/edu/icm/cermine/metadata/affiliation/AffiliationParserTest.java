@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata.affiliation;
 
 import org.jdom.output.XMLOutputter;
@@ -27,59 +26,59 @@ import pl.edu.icm.cermine.exception.TransformationException;
 public class AffiliationParserTest {
 
     @Test
-	public void testEmpty() throws AnalysisException, TransformationException {
-		CRFAffiliationParser parser = new CRFAffiliationParser();
-		XMLOutputter outputter = new XMLOutputter();
-		String input = "";
-		String expected = "<aff id=\"id\"><label>id</label></aff>";
-		String actual = outputter.outputString(parser.parse(input));
-		assertEquals(expected, actual);
-	}
-    
-    @Test
-	public void testOriental() throws AnalysisException, TransformationException {
-		CRFAffiliationParser parser = new CRFAffiliationParser();
-		XMLOutputter outputter = new XMLOutputter();
-		String input = "山梨大学大学院医学工学総合研究部　社会医学講座";
-		String expected = "<aff id=\"id\"><label>id</label></aff>";
-		String actual = outputter.outputString(parser.parse(input));
-		assertEquals(expected, actual);
-	}
-    
-	@Test
-	public void testParseString() throws AnalysisException, TransformationException {
-		CRFAffiliationParser parser = new CRFAffiliationParser();
-		XMLOutputter outputter = new XMLOutputter();
-		String input = "Department of Dinozauring, Dino Institute, Tyranosaurus Route 35, Boston, MA, USA";
-		String expected = "<aff id=\"id\"><label>id</label>" +
-				"<institution>Department of Dinozauring, Dino Institute</institution>" +
-				", " +
-				"<addr-line>Tyranosaurus Route 35, Boston, MA</addr-line>" +
-				", " +
-				"<country country=\"US\">USA</country>" +
-				"</aff>";
-		String actual = outputter.outputString(parser.parse(input));
-		assertEquals(expected, actual);
-	}
+    public void testEmpty() throws AnalysisException, TransformationException {
+        CRFAffiliationParser parser = new CRFAffiliationParser();
+        XMLOutputter outputter = new XMLOutputter();
+        String input = "";
+        String expected = "<aff id=\"id\"><label>id</label></aff>";
+        String actual = outputter.outputString(parser.parse(input));
+        assertEquals(expected, actual);
+    }
 
-	@Test
-	public void testParseStringWithAuthor() throws AnalysisException, TransformationException {
-		CRFAffiliationParser parser = new CRFAffiliationParser(
-				"common-words-affiliations-with-author.txt",
-				"acrf-affiliations-with-author.ser.gz");
-		XMLOutputter outputter = new XMLOutputter();
-		String input = "Andrew McDino and Elizabeth Pterodactyl, Department of Dinozauring, Dino Institute, Tyranosaurus Route 35, Boston, MA, USA";
-		String expected = "<aff id=\"id\"><label>id</label>" +
-//				"<author>Andrew McDino and Elizabeth Pterodactyl</author>" +
-				", " +
-				"<institution>Department of Dinozauring, Dino Institute</institution>" +
-				", " +
-				"<addr-line>Tyranosaurus Route 35, Boston, MA</addr-line>" +
-				", " +
-				"<country country=\"US\">USA</country>" +
-				"</aff>";
-		String actual = outputter.outputString(parser.parse(input));
-		assertEquals(expected, actual);
-	}
+    @Test
+    public void testOriental() throws AnalysisException, TransformationException {
+        CRFAffiliationParser parser = new CRFAffiliationParser();
+        XMLOutputter outputter = new XMLOutputter();
+        String input = "山梨大学大学院医学工学総合研究部　社会医学講座";
+        String expected = "<aff id=\"id\"><label>id</label></aff>";
+        String actual = outputter.outputString(parser.parse(input));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testParseString() throws AnalysisException, TransformationException {
+        CRFAffiliationParser parser = new CRFAffiliationParser();
+        XMLOutputter outputter = new XMLOutputter();
+        String input = "Department of Dinozauring, Dino Institute, Tyranosaurus Route 35, Boston, MA, USA";
+        String expected = "<aff id=\"id\"><label>id</label>"
+                + "<institution>Department of Dinozauring, Dino Institute</institution>"
+                + ", "
+                + "<addr-line>Tyranosaurus Route 35, Boston, MA</addr-line>"
+                + ", "
+                + "<country country=\"US\">USA</country>"
+                + "</aff>";
+        String actual = outputter.outputString(parser.parse(input));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testParseStringWithAuthor() throws AnalysisException, TransformationException {
+        CRFAffiliationParser parser = new CRFAffiliationParser(
+                "common-words-affiliations-with-author.txt",
+                "acrf-affiliations-with-author.ser.gz");
+        XMLOutputter outputter = new XMLOutputter();
+        String input = "Andrew McDino and Elizabeth Pterodactyl, Department of Dinozauring, Dino Institute, Tyranosaurus Route 35, Boston, MA, USA";
+        String expected = "<aff id=\"id\"><label>id</label>"
+                + //				"<author>Andrew McDino and Elizabeth Pterodactyl</author>" +
+                ", "
+                + "<institution>Department of Dinozauring, Dino Institute</institution>"
+                + ", "
+                + "<addr-line>Tyranosaurus Route 35, Boston, MA</addr-line>"
+                + ", "
+                + "<country country=\"US\">USA</country>"
+                + "</aff>";
+        String actual = outputter.outputString(parser.parse(input));
+        assertEquals(expected, actual);
+    }
 
 }

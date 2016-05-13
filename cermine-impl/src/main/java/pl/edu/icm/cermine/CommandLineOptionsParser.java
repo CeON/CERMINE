@@ -31,7 +31,7 @@ import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
  */
 public class CommandLineOptionsParser {
     
-    private Options options;
+    private final Options options;
     
     private CommandLine commandLine;
     

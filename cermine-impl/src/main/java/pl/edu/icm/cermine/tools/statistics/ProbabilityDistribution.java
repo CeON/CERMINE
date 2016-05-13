@@ -16,7 +16,7 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.tools;
+package pl.edu.icm.cermine.tools.statistics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class ProbabilityDistribution<E> {
 
-    private Map<E, Integer> eventCount = new HashMap<E, Integer>();
+    private final Map<E, Integer> eventCount = new HashMap<E, Integer>();
     private int totalCount = 0;
 
     public void addEvent(E event) {

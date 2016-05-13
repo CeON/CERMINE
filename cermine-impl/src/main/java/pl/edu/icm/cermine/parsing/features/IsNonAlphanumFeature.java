@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.parsing.features;
 
 import pl.edu.icm.cermine.parsing.model.ParsableString;
@@ -28,8 +27,8 @@ import pl.edu.icm.cermine.tools.TextUtils;
  */
 public class IsNonAlphanumFeature extends BinaryTokenFeatureCalculator {
 
-	@Override
-	public boolean calculateFeaturePredicate(Token<?> token, ParsableString<?> context) {
-		return TextUtils.isNonAlphanumSep(token.getText());
-	}
+    @Override
+    public boolean calculateFeaturePredicate(Token<?> token, ParsableString<?> context) {
+        return TextUtils.isNonAlphanumSep(token.getText());
+    }
 }

@@ -31,7 +31,7 @@ public class DocumentSection {
     
     private String title;
     
-    private List<String> paragraphs;
+    private final List<String> paragraphs;
     
     private List<DocumentSection> subsections = new ArrayList<DocumentSection>();
 

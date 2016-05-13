@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.structure;
 
 import com.google.common.collect.Lists;
@@ -36,75 +35,76 @@ import pl.edu.icm.cermine.structure.tools.DocumentProcessor;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
-	protected static final String zipResources = "/pl/edu/icm/cermine/structure/roa_test_small.zip";
-	
-	protected static final double testSuccessPercentage = 80;
-	
-	protected SVMZoneClassifier classifier;
-    
+
+    protected static final String ZIP_RESOURCES = "/pl/edu/icm/cermine/structure/roa_test_small.zip";
+
+    protected static final double TEST_SUCCESS_PERCENTAGE = 80;
+
+    protected SVMZoneClassifier classifier;
+
     protected ReadingOrderResolver ror;
-	
+
     int allZones = 0;
     int badZones = 0;
-    
+
     @Before
     public void setUp() throws IOException, AnalysisException {
-    	classifier = new SVMInitialZoneClassifier();
+        classifier = new SVMInitialZoneClassifier();
         ror = new HierarchicalReadingOrderResolver();
-    	startProcessFlattener = new DocumentProcessor() {
-			@Override
-			public void process(BxDocument document) throws AnalysisException {
-				ror.resolve(document);
-			}
-		};
+        startProcessFlattener = new DocumentProcessor() {
+            @Override
+            public void process(BxDocument document) throws AnalysisException {
+                ror.resolve(document);
+            }
+        };
         endProcessFlattener = new DocumentProcessor() {
-			@Override
-			public void process(BxDocument document) throws AnalysisException {
-				ror.resolve(document);
-			}
-		};
+            @Override
+            public void process(BxDocument document) throws AnalysisException {
+                ror.resolve(document);
+            }
+        };
     }
-    
+
     @Test
-    public void SVMInitialZoneClassifierTest() throws URISyntaxException, ZipException, IOException, 
+    public void SVMInitialZoneClassifierTest() throws URISyntaxException, ZipException, IOException,
             ParserConfigurationException, SAXException, AnalysisException, TransformationException {
-        testAllFilesFromZip(Arrays.asList(zipResources), testSuccessPercentage);
+        testAllFilesFromZip(Arrays.asList(ZIP_RESOURCES), TEST_SUCCESS_PERCENTAGE);
 
-        System.out.println("all zones: "+this.allZones);
-        System.out.println("bad zones: "+this.badZones);
+        System.out.println("all zones: " + this.allZones);
+        System.out.println("bad zones: " + this.badZones);
     }
 
-	@Override
-	protected boolean compareDocuments(BxDocument testDoc,	BxDocument expectedDoc) {
-		if (testDoc.childrenCount() != expectedDoc.childrenCount()) {
-			return false;
+    @Override
+    protected boolean compareDocuments(BxDocument testDoc, BxDocument expectedDoc) {
+        if (testDoc.childrenCount() != expectedDoc.childrenCount()) {
+            return false;
         }
-		
+
         List<BxZone> testZones = Lists.newArrayList(testDoc.asZones());
         List<BxZone> expZones = Lists.newArrayList(expectedDoc.asZones());
-		Integer correctZones = 0;
-		Integer zones = testZones.size();
-		for (Integer zoneIdx = 0; zoneIdx < testZones.size(); ++zoneIdx) {
-			BxZone testZone = testZones.get(zoneIdx);
-			BxZone expectedZone = expZones.get(zoneIdx);
-			++allZones;
-			if (testZone.getLabel() == expectedZone.getLabel().getGeneralLabel()) {
-				++correctZones;
+        Integer correctZones = 0;
+        Integer zones = testZones.size();
+        for (Integer zoneIdx = 0; zoneIdx < testZones.size(); ++zoneIdx) {
+            BxZone testZone = testZones.get(zoneIdx);
+            BxZone expectedZone = expZones.get(zoneIdx);
+            ++allZones;
+            if (testZone.getLabel() == expectedZone.getLabel().getGeneralLabel()) {
+                ++correctZones;
             } else {
-				++badZones;
+                ++badZones;
             }
-		}
+        }
 
-		return ((double)correctZones/(double)zones) >= testSuccessPercentage/100.0;
-	}
+        return ((double) correctZones / (double) zones) >= TEST_SUCCESS_PERCENTAGE / 100.0;
+    }
 
-	@Override
-	protected BxDocument process(BxDocument doc) throws AnalysisException {
+    @Override
+    protected BxDocument process(BxDocument doc) throws AnalysisException {
         for (BxZone z : doc.asZones()) {
             z.setLabel(null);
         }
-		classifier.classifyZones(doc);
-		return doc;
-	}
+        classifier.classifyZones(doc);
+        return doc;
+    }
 
 }

@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools;
 
 import com.google.common.collect.Lists;
@@ -29,92 +28,89 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 public class BxDocUtils {
-    
-    public static List<BxDocument> getDocumentsFromPath(String inputDirPath) throws TransformationException
-	{
-		if (inputDirPath == null) {
-			throw new NullPointerException("Input directory must not be null.");
-		}
 
-		if (!inputDirPath.endsWith(File.separator)) {
-			inputDirPath += File.separator;
-		}
-		DocumentsExtractor extractor = new DirExtractor(inputDirPath);
-		
-		List<BxDocument> evaluationDocuments;
-		evaluationDocuments = extractor.getDocuments();
-		return evaluationDocuments;
-	}
-    
+    public static List<BxDocument> getDocumentsFromPath(String inputDirPath) throws TransformationException {
+        if (inputDirPath == null) {
+            throw new NullPointerException("Input directory must not be null.");
+        }
+
+        if (!inputDirPath.endsWith(File.separator)) {
+            inputDirPath += File.separator;
+        }
+        DocumentsExtractor extractor = new DirExtractor(inputDirPath);
+
+        List<BxDocument> evaluationDocuments;
+        evaluationDocuments = extractor.getDocuments();
+        return evaluationDocuments;
+    }
+
     public static BxDocument getDocument(File file) throws IOException, TransformationException {
-    	TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
+        TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
         BxDocument newDoc = new BxDocument();
         InputStream is = new FileInputStream(file);
         try {
             List<BxPage> pages = tvReader.read(new InputStreamReader(is));
-            for(BxPage page: pages) {
+            for (BxPage page : pages) {
                 page.setParent(newDoc);
             }
             newDoc.setFilename(file.getName());
             newDoc.setPages(pages);
             return newDoc;
         } finally {
-            if (is != null) {
-            	is.close();
-            }
+            is.close();
         }
     }
-    
+
     public static class DocumentsIterator implements Iterable<BxDocument> {
 
-       	private File dir;
-    	private int curIdx;
-    	private File[] files;
-        
+        private File dir;
+        private int curIdx;
+        private File[] files;
+
         public DocumentsIterator(String dirPath) {
             this(dirPath, "cxml");
         }
-        
+
         public DocumentsIterator(String dirPath, String extension) {
-			if(!dirPath.endsWith(File.separator)) {
-				dirPath += File.separator;
-			}
-    		this.dir = new File(dirPath);
-    		this.curIdx = -1;
-    		
+            if (!dirPath.endsWith(File.separator)) {
+                dirPath += File.separator;
+            }
+            this.dir = new File(dirPath);
+            this.curIdx = -1;
+
             List<File> list = Lists.newArrayList(FileUtils.listFiles(dir, new String[]{extension}, true));
             this.files = list.toArray(new File[]{});
-    	}
-    	
-		@Override
-		public Iterator<BxDocument> iterator() {
+        }
 
-	        return new Iterator<BxDocument>() {
+        @Override
+        public Iterator<BxDocument> iterator() {
 
-	            @Override
-	            public boolean hasNext() {
-	                return curIdx + 1 < files.length;
-	            }
+            return new Iterator<BxDocument>() {
 
-	            @Override
-	            public BxDocument next() {
-	                ++curIdx;
-        			try {
-						return getDocument(files[curIdx]);
-					} catch (IOException e) {
-						return null;
-					} catch (TransformationException e) {
-						return null;
-					}
-	            }
+                @Override
+                public boolean hasNext() {
+                    return curIdx + 1 < files.length;
+                }
 
-	            @Override
-	            public void remove() {
-	                ++curIdx;
-	            }
-	        };
-		}
-    	
+                @Override
+                public BxDocument next() {
+                    ++curIdx;
+                    try {
+                        return getDocument(files[curIdx]);
+                    } catch (IOException e) {
+                        return null;
+                    } catch (TransformationException e) {
+                        return null;
+                    }
+                }
+
+                @Override
+                public void remove() {
+                    ++curIdx;
+                }
+            };
+        }
+
     }
-  
+
 }

@@ -23,8 +23,8 @@ import java.util.List;
 
 public class SmithWatermanDistance {
 
-    private double mu;
-    private double delta;
+    private final double mu;
+    private final double delta;
 
     public SmithWatermanDistance(double mu, double delta) {
         this.mu = mu;

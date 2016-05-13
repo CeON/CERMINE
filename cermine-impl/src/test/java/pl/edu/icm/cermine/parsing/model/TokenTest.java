@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.parsing.model;
 
 import java.util.Arrays;
@@ -27,27 +26,27 @@ import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 
 public class TokenTest {
 
-	@Test
-	public void testSequenceEquals() {
-		List<Token<AffiliationLabel>> sequence1 = Arrays.asList(
-				new Token<AffiliationLabel>("Bob", 1, 23),
-				new Token<AffiliationLabel>("Hop", 1, 23)
-				);
-		List<Token<AffiliationLabel>> sequence2 = Arrays.asList(
-				new Token<AffiliationLabel>("bob", 19, 23),
-				new Token<AffiliationLabel>("hoP", 11, 87)
-				);
-		List<Token<AffiliationLabel>> sequence3 = Arrays.asList(
-				new Token<AffiliationLabel>("Bobb", 1, 23),
-				new Token<AffiliationLabel>("Hop", 1, 23)
-				);
-		List<Token<AffiliationLabel>> sequence4 = Arrays.asList(
-				new Token<AffiliationLabel>("Bob", 19, 23)
-				);
-		assertTrue(Token.sequenceTextEquals(sequence1, sequence2, false));
-		assertFalse(Token.sequenceTextEquals(sequence1, sequence2, true));
-		assertFalse(Token.sequenceTextEquals(sequence1, sequence3, false));
-		assertFalse(Token.sequenceTextEquals(sequence1, sequence4, false));
-	}
+    @Test
+    public void testSequenceEquals() {
+        List<Token<AffiliationLabel>> sequence1 = Arrays.asList(
+                new Token<AffiliationLabel>("Bob", 1, 23),
+                new Token<AffiliationLabel>("Hop", 1, 23)
+        );
+        List<Token<AffiliationLabel>> sequence2 = Arrays.asList(
+                new Token<AffiliationLabel>("bob", 19, 23),
+                new Token<AffiliationLabel>("hoP", 11, 87)
+        );
+        List<Token<AffiliationLabel>> sequence3 = Arrays.asList(
+                new Token<AffiliationLabel>("Bobb", 1, 23),
+                new Token<AffiliationLabel>("Hop", 1, 23)
+        );
+        List<Token<AffiliationLabel>> sequence4 = Arrays.asList(
+                new Token<AffiliationLabel>("Bob", 19, 23)
+        );
+        assertTrue(Token.sequenceTextEquals(sequence1, sequence2, false));
+        assertFalse(Token.sequenceTextEquals(sequence1, sequence2, true));
+        assertFalse(Token.sequenceTextEquals(sequence1, sequence3, false));
+        assertFalse(Token.sequenceTextEquals(sequence1, sequence4, false));
+    }
 
 }

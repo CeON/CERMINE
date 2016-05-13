@@ -43,15 +43,15 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class PubMedToNLM {
     
-    private static String nlmDir = "/media/4CEE59EAEE59CCB8/data/refs/data/";
-    private static String outNLM = "/home/domin/phd-metadata-extraction/results/citations/citations.nxml";
-    private static String outBT = "/home/domin/phd-metadata-extraction/results/citations/citations.bibtex";
-    private static String outTXT = "/home/domin/phd-metadata-extraction/results/citations/citations.txt";
+    private static final String NLM_DIR = "/media/4CEE59EAEE59CCB8/data/refs/data/";
+    private static final String OUT_NLM = "/home/domin/phd-metadata-extraction/results/citations/citations.nxml";
+    private static final String OUT_BT = "/home/domin/phd-metadata-extraction/results/citations/citations.bibtex";
+    private static final String OUT_TXT = "/home/domin/phd-metadata-extraction/results/citations/citations.txt";
     
 
     public static void main(String[] args) throws JDOMException, IOException, AnalysisException, TransformationException {
         
-        File dir = new File(nlmDir);
+        File dir = new File(NLM_DIR);
         
         Set<BibEntry> citations = new HashSet<BibEntry>();
         
@@ -163,9 +163,9 @@ public final class PubMedToNLM {
             System.out.println(i+" "+i*100./files.size()+"%");
         }
 
-        File nlm = new File(outNLM);
-        File bt = new File(outBT);
-        File txt = new File(outTXT);
+        File nlm = new File(OUT_NLM);
+        File bt = new File(OUT_BT);
+        File txt = new File(OUT_TXT);
         
         BibEntryToNLMElementConverter conv = new BibEntryToNLMElementConverter();
         XMLOutputter outputter = new XMLOutputter(Format.getRawFormat());

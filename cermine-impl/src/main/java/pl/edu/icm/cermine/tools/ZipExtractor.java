@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools;
 
 import java.io.File;
@@ -35,37 +34,37 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 public class ZipExtractor implements DocumentsExtractor {
-    
-	protected ZipFile zipFile;
 
-	public ZipExtractor(String path) throws IOException, URISyntaxException {
-		URL url = path.getClass().getResource(path);
-		URI uri = url.toURI();
-		File file = new File(uri);
-		this.zipFile = new ZipFile(file);
-	}
+    protected ZipFile zipFile;
 
-	public ZipExtractor(File file) throws IOException {
-		this.zipFile = new ZipFile(file);
-	}
-	
-	public ZipExtractor(ZipFile zipFile) {
-		this.zipFile = zipFile;
-	}
+    public ZipExtractor(String path) throws IOException, URISyntaxException {
+        URL url = path.getClass().getResource(path);
+        URI uri = url.toURI();
+        File file = new File(uri);
+        this.zipFile = new ZipFile(file);
+    }
+
+    public ZipExtractor(File file) throws IOException {
+        this.zipFile = new ZipFile(file);
+    }
+
+    public ZipExtractor(ZipFile zipFile) {
+        this.zipFile = zipFile;
+    }
 
     @Override
-	public List<BxDocument> getDocuments() throws TransformationException {
-		List<BxDocument> documents = new ArrayList<BxDocument>();
+    public List<BxDocument> getDocuments() throws TransformationException {
+        List<BxDocument> documents = new ArrayList<BxDocument>();
 
-		TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
-		Enumeration<? extends ZipEntry> entries = zipFile.entries();
-		while (entries.hasMoreElements()) {
-			ZipEntry zipEntry = (ZipEntry) entries.nextElement();
-			if (zipEntry.getName().endsWith("xml")) {
+        TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
+        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+        while (entries.hasMoreElements()) {
+            ZipEntry zipEntry = (ZipEntry) entries.nextElement();
+            if (zipEntry.getName().endsWith("xml")) {
                 try {
                     List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry)));
                     BxDocument newDoc = new BxDocument();
-                    for(BxPage page: pages) {
+                    for (BxPage page : pages) {
                         page.setParent(newDoc);
                     }
                     newDoc.setFilename(zipEntry.getName());
@@ -74,8 +73,8 @@ public class ZipExtractor implements DocumentsExtractor {
                 } catch (IOException ex) {
                     throw new TransformationException("Cannot read file!", ex);
                 }
-			}
-		}
-		return documents;
-	}
+            }
+        }
+        return documents;
+    }
 }

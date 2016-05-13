@@ -44,14 +44,12 @@ public class VerticalProminenceFeature extends FeatureCalculator<BxZone, BxPage>
                     return nextZone.getY() - (zone.getY() + zone.getHeight());
                 } else {
                     nextZone = nextZone.getNext();
-                    continue;
                 }
             } else if (nextZone == null) { //given zone is the last one in the set - there is none after it
                 if (zone.getY() - (prevZone.getY() + prevZone.getHeight()) > ZONE_EPSILON) {
                     return zone.getY() - (prevZone.getY() + prevZone.getHeight());
                 } else {
                     prevZone = prevZone.getPrev();
-                    continue;
                 }
             } else { //there is a zone before and after the given one
                 if (zone.getY() - (prevZone.getY() + prevZone.getHeight()) > ZONE_EPSILON) { //previous zone lies in the same column
@@ -59,16 +57,13 @@ public class VerticalProminenceFeature extends FeatureCalculator<BxZone, BxPage>
                         return nextZone.getY() - (prevZone.getY() + prevZone.getHeight()) - zone.getHeight();
                     } else {
                         nextZone = nextZone.getNext();
-                        continue;
                     }
                 } else {
                     if (nextZone.getY() - (zone.getY() + zone.getHeight()) > ZONE_EPSILON) {
                         prevZone = prevZone.getPrev();
-                        continue;
                     } else { //neither previous zone nor next zone lies in natural geometrical order
                         prevZone = prevZone.getPrev();
                         nextZone = nextZone.getNext();
-                        continue;
                     }
                 }
             }

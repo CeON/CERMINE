@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools.classification.general;
 
 import java.util.ArrayList;
@@ -24,35 +23,36 @@ import java.util.List;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 public class PenaltyCalculator {
-    
-	private List<TrainingSample<BxZoneLabel>> samples;
-	private List<BxZoneLabel> classes = null;
-	public PenaltyCalculator(List<TrainingSample<BxZoneLabel>> samples) {
-		this.samples = samples;
-	}
-	
-	public double getPenaltyWeigth(BxZoneLabel label) {
-		int allSamples = samples.size();
-		int thisSamples = 0;
-		for (TrainingSample<BxZoneLabel> sample: samples) {
-			if (sample.getLabel() == label) {
-				++thisSamples;
-			}
-		}
-		return (double)allSamples / thisSamples;
-	}
-	
-	public List<BxZoneLabel> getClasses() {
-		if (classes == null) {
-			classes = new ArrayList<BxZoneLabel>();
-			for(TrainingSample<BxZoneLabel> sample: samples) {
-				if(!classes.contains(sample.getLabel())) {
-					classes.add(sample.getLabel());
-				}
-			}
-			Collections.sort(classes);
+
+    private final List<TrainingSample<BxZoneLabel>> samples;
+    private List<BxZoneLabel> classes = null;
+
+    public PenaltyCalculator(List<TrainingSample<BxZoneLabel>> samples) {
+        this.samples = samples;
+    }
+
+    public double getPenaltyWeigth(BxZoneLabel label) {
+        int allSamples = samples.size();
+        int thisSamples = 0;
+        for (TrainingSample<BxZoneLabel> sample : samples) {
+            if (sample.getLabel() == label) {
+                ++thisSamples;
+            }
         }
-		return classes;
-	}
-	
+        return (double) allSamples / thisSamples;
+    }
+
+    public List<BxZoneLabel> getClasses() {
+        if (classes == null) {
+            classes = new ArrayList<BxZoneLabel>();
+            for (TrainingSample<BxZoneLabel> sample : samples) {
+                if (!classes.contains(sample.getLabel())) {
+                    classes.add(sample.getLabel());
+                }
+            }
+            Collections.sort(classes);
+        }
+        return classes;
+    }
+
 }

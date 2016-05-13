@@ -33,7 +33,7 @@ import pl.edu.icm.cermine.tools.Pair;
  */
 public class ContentStructureCitationPositions {
 
-    private Map<DocumentSection, Map<String, List<CitationPosition>>> positions =
+    private final Map<DocumentSection, Map<String, List<CitationPosition>>> positions =
             new HashMap<DocumentSection, Map<String, List<CitationPosition>>>();
 
     void addPosition(DocumentSection section, int paragraphIndex, int citationIndex, CitationPosition position) {

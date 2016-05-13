@@ -173,7 +173,6 @@ public class BibEntry {
         return result;
     }
 
-    /** Escapes curly braces and underscores. */
     protected String escape(String text) {
         return text.replace("{", "\\{").replace("}", "\\}").replace("_", "\\_");
     }
@@ -212,10 +211,10 @@ public class BibEntry {
         if ((this.text == null) ? (other.text != null) : !this.text.equals(other.text)) {
             return false;
         }
-        if (this.fields != other.fields && (this.fields == null || !this.fields.equals(other.fields))) {
-            return false;
+        if (this.fields == other.fields) {
+            return true;
         }
-        return true;
+        return this.fields != null && this.fields.equals(other.fields);
     }
 
     @Override

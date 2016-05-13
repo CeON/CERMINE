@@ -38,18 +38,18 @@ public class DocumentPlane {
     /**
      * List of objects on the plane. Stored in a random order
      */
-    private List<BxObject> objs;
+    private final List<BxObject> objs;
     /**
      * Size of a grid square. If gridSize=50, then the plane is divided into squares of size 50. Each square contains
      * objects placed in a 50x50 area
      */
-    private int gridSize;
+    private final int gridSize;
     /**
      * Redundant dictionary of objects on the plane. Allows efficient 2D space search. Keys are X-Y coordinates of a
      * grid square. Single object can be stored under several keys (depending on its physical size). Grid squares are
      * lazy-initialized.
      */
-    private Map<GridXY, List<BxObject>> grid;
+    private final Map<GridXY, List<BxObject>> grid;
 
     /**
      * Representation of XY coordinates
@@ -75,10 +75,7 @@ public class DocumentPlane {
                 return false;
             }
             GridXY comparedObj = (GridXY) obj;
-            if (x != comparedObj.x || y != comparedObj.y) {
-                return false;
-            }
-            return true;
+            return x == comparedObj.x && y == comparedObj.y;
         }
 
         @Override
@@ -102,6 +99,9 @@ public class DocumentPlane {
 
     /**
      * Looks for objects placed between obj1 and obj2 excluding them
+     * @param obj1
+     * @param obj2
+     * @return 
      */
     public List<BxObject> findObjectsBetween(BxObject obj1, BxObject obj2) {
         double x0 = Math.min(obj1.getX(), obj2.getX());
@@ -122,6 +122,9 @@ public class DocumentPlane {
 
     /**
      * Checks if there is any object placed between obj1 and obj2
+     * @param obj1
+     * @param obj2
+     * @return 
      */
     public boolean anyObjectsBetween(BxObject obj1, BxObject obj2) {
         List<BxObject> lObjs = findObjectsBetween(obj1, obj2);
@@ -130,6 +133,8 @@ public class DocumentPlane {
 
     /**
      * Adds object to the plane
+     * @param obj
+     * @return 
      */
     public DocumentPlane add(BxObject obj) {
         int objsBefore = this.objs.size();
@@ -228,6 +233,7 @@ public class DocumentPlane {
 
     /**
      * Count objects stored in objects dictionary
+     * @return 
      */
     protected int elementsInGrid() {
         List<BxObject> objs_ = new ArrayList<BxObject>();
@@ -243,6 +249,7 @@ public class DocumentPlane {
 
     /**
      * Used for debugging purposes
+     * @return 
      */
     public String dump() {
         StringBuilder sb = new StringBuilder();
@@ -263,4 +270,4 @@ public class DocumentPlane {
         }
         return sb.toString();
     }
-};
+}

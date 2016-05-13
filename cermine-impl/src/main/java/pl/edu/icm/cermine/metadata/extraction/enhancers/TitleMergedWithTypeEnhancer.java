@@ -33,7 +33,7 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
 
     // All type strings are lowercase to provide case-insensitive matching
-    private Set<String> types = Sets.newHashSet(
+    private final Set<String> types = Sets.newHashSet(
             "case report", 
             "case study", 
             "clinical study", 

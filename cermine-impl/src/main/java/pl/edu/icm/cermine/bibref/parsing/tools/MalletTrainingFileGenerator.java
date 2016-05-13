@@ -32,14 +32,14 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
  */
 public final class MalletTrainingFileGenerator {
 
-    private static String nlmDir = "/home/domin/cermine-tests/out/";
-    private static String outFile = "/tmp/crf-train.txt";
-    private static String outFile2 = "/tmp/crf-train-words.txt";
-    private static int minCount = 5;
+    private static final String NLM_DIR = "/home/domin/cermine-tests/out/";
+    private static final String OUT_FILE = "/tmp/crf-train.txt";
+    private static final String OUT_FILE2 = "/tmp/crf-train-words.txt";
+    private static final int MIN_COUNT = 5;
 
     public static void main(String[] args) throws JDOMException, IOException {
 
-        File dir = new File(nlmDir);
+        File dir = new File(NLM_DIR);
         FileWriter writer = null;
         try {
             List<Citation> allcitations = new ArrayList<Citation>();
@@ -100,13 +100,13 @@ public final class MalletTrainingFileGenerator {
             Set<String> additionalFeatures = new HashSet<String>();
 
             for (Entry<String, Integer> wordCount : wordCounts) {
-                if (wordCount.getValue() > minCount) {
+                if (wordCount.getValue() > MIN_COUNT) {
                     additionalFeatures.add(wordCount.getKey());
                 }
             }
 
-            writer = new FileWriter(outFile);
-            FileWriter writer2 = new FileWriter(outFile2);
+            writer = new FileWriter(OUT_FILE);
+            FileWriter writer2 = new FileWriter(OUT_FILE2);
 
             for (String s : additionalFeatures) {
                 writer2.write(s);

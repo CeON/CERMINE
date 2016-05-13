@@ -25,10 +25,11 @@ import java.util.Map.Entry;
 /**
  *
  * @author Dominika Tkaczyk
+ * @param <T> element type
  */
 public class CountMap<T> {
 
-    private Map<T, Integer> map = new HashMap<T, Integer>();
+    private final Map<T, Integer> map = new HashMap<T, Integer>();
     
     public void add(T object) {
         if (map.get(object) == null) {

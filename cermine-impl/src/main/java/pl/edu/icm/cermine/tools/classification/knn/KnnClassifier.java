@@ -30,6 +30,7 @@ import pl.edu.icm.cermine.tools.distance.FeatureVectorDistanceMetric;
 /**
  *
  * @author Dominika Tkaczyk
+ * @param <T> class label
  * 
  */
 public class KnnClassifier<T> {
@@ -92,8 +93,8 @@ public class KnnClassifier<T> {
 
     public class FVEuclideanDistanceComparator implements Comparator<TrainingSample<T>> {
         
-        private FeatureVectorDistanceMetric metric;
-        private FeatureVector sample;
+        private final FeatureVectorDistanceMetric metric;
+        private final FeatureVector sample;
 
         public FVEuclideanDistanceComparator(FeatureVector sample, FeatureVectorDistanceMetric metric) {
             this.sample = sample;

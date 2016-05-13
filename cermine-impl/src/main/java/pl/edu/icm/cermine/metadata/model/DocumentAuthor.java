@@ -32,9 +32,9 @@ public class DocumentAuthor {
     
     private String email;
 
-    private List<String> affiliationRefs = new ArrayList<String>();
+    private final List<String> affiliationRefs = new ArrayList<String>();
     
-    private List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
+    private final List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
 
     public DocumentAuthor(String name) {
         this.name = name;

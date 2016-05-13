@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools.classification.sampleselection;
 
 import java.util.ArrayList;
@@ -24,9 +23,9 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class NormalSelector<S> implements SampleSelector<S> {
 
-	@Override
-	public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements) {
-		return new ArrayList<TrainingSample<S>>(inputElements);
-	}
+    @Override
+    public List<TrainingSample<S>> pickElements(List<TrainingSample<S>> inputElements) {
+        return new ArrayList<TrainingSample<S>>(inputElements);
+    }
 
 }

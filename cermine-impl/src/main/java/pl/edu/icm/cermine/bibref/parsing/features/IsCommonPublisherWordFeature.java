@@ -29,7 +29,7 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  */
 public class IsCommonPublisherWordFeature extends FeatureCalculator<CitationToken, Citation> {
 
-    private static List<String> keywords = Arrays.asList(
+    private static final List<String> KEYWORDS = Arrays.asList(
             "academic",
             "birkhäuser",
             "cambridge", "company",
@@ -50,6 +50,6 @@ public class IsCommonPublisherWordFeature extends FeatureCalculator<CitationToke
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {
-        return (keywords.contains(object.getText().toLowerCase())) ? 1 : 0;
+        return (KEYWORDS.contains(object.getText().toLowerCase())) ? 1 : 0;
     }
 }

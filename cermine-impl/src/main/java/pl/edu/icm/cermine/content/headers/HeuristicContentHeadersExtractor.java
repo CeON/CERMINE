@@ -34,9 +34,9 @@ import pl.edu.icm.cermine.tools.statistics.Population;
  */
 public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor {
 
-    private SimpleHeadersClusterizer headersClusterizer;
+    private final SimpleHeadersClusterizer headersClusterizer;
     
-    private HeaderLinesCompletener headerLinesCompletener;
+    private final HeaderLinesCompletener headerLinesCompletener;
 
     public HeuristicContentHeadersExtractor() {
         this.headersClusterizer = new SimpleHeadersClusterizer();
@@ -321,24 +321,24 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     private static final int MAX_HEADER_LINE_COUNT = 5;
     
             
-    private double candMaxLengthZScore = CAND_MAX_LENGTH_ZSCORE;
+    private final double candMaxLengthZScore = CAND_MAX_LENGTH_ZSCORE;
     
-    private double candMaxLengthZScore2 = CAND_MAX_LENGTH_ZSCORE_2;
+    private final double candMaxLengthZScore2 = CAND_MAX_LENGTH_ZSCORE_2;
     
-    private double candMinHeightZScore = CAND_MIN_HEIGHT_ZSCORE;
+    private final double candMinHeightZScore = CAND_MIN_HEIGHT_ZSCORE;
     
-    private double outlHeightZScore = OUTL_HEIGHT_ZSCORE;
+    private final double outlHeightZScore = OUTL_HEIGHT_ZSCORE;
             
-    private double outlFontZScore = OUTL_FONT_ZSCORE;
+    private final double outlFontZScore = OUTL_FONT_ZSCORE;
     
-    private double outlDistanceZScore = OUTL_DIST_ZSCORE;
+    private final double outlDistanceZScore = OUTL_DIST_ZSCORE;
                             
-    private double outlIndentZScore = OUTL_INDENT_ZSCORE;
+    private final double outlIndentZScore = OUTL_INDENT_ZSCORE;
     
-    private double maxHeightSimilarity = MAX_HEIGHT_SIMILARITY;
+    private final double maxHeightSimilarity = MAX_HEIGHT_SIMILARITY;
 
-    private int maxSimilarLinesCount = MAX_SIMILAR_LINES_COUNT;
+    private final int maxSimilarLinesCount = MAX_SIMILAR_LINES_COUNT;
     
-    private int maxHeaderLineCount = MAX_HEADER_LINE_COUNT;
+    private final int maxHeaderLineCount = MAX_HEADER_LINE_COUNT;
     
 }

@@ -27,7 +27,7 @@ import com.google.common.collect.Multiset;
  */
 public class Population {
     
-    private Multiset<Double> observations = HashMultiset.create();
+    private final Multiset<Double> observations = HashMultiset.create();
     
     private double mean = Double.NaN;
     private double sd = Double.NaN;

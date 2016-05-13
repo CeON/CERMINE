@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools;
 
 import java.util.ArrayList;
@@ -28,18 +27,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 public class XMLTools {
-    
-	private static XPath xpath = XPathFactory.newInstance().newXPath();
-	
-	public static String extractTextFromNode(Document doc, String path) throws XPathExpressionException {
-		Node node = (Node) xpath.evaluate(path, doc, XPathConstants.NODE);
-		return extractTextFromNode(node);
-	}
+
+    private static final XPath XPATH = XPathFactory.newInstance().newXPath();
+
+    public static String extractTextFromNode(Document doc, String path) throws XPathExpressionException {
+        Node node = (Node) XPATH.evaluate(path, doc, XPathConstants.NODE);
+        return extractTextFromNode(node);
+    }
 
     public static String extractTextFromNode(Node node) {
-            
+
         StringBuilder ret = new StringBuilder();
 
         if (node == null) {
@@ -60,10 +58,10 @@ public class XMLTools {
     }
 
     public static String extractTextFromNodes(Document doc, String path) throws XPathExpressionException {
-    	NodeList nodes = (NodeList)xpath.evaluate(path, doc, XPathConstants.NODESET);
-    	return extractTextFromNodes(nodes);
+        NodeList nodes = (NodeList) XPATH.evaluate(path, doc, XPathConstants.NODESET);
+        return extractTextFromNodes(nodes);
     }
-    
+
     public static String extractTextFromNodes(NodeList nodes) {
         StringBuilder ret = new StringBuilder();
         for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
@@ -74,27 +72,27 @@ public class XMLTools {
     }
 
     public static List<String> extractTextAsList(Document doc, String path) throws XPathExpressionException {
-    	NodeList nodes = (NodeList)xpath.evaluate(path, doc, XPathConstants.NODESET);
-    	return extractTextAsList(nodes);
+        NodeList nodes = (NodeList) XPATH.evaluate(path, doc, XPathConstants.NODESET);
+        return extractTextAsList(nodes);
     }
-    
+
     public static List<String> extractTextAsList(NodeList nodes) {
         List<String> ret = new ArrayList<String>();
         for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
-        	String extractedText = extractTextFromNode(nodes.item(nodeIdx));
-        	extractedText = extractedText.trim();
-        	if(!extractedText.isEmpty()) {
-        		ret.add(extractedText);
-        	}
+            String extractedText = extractTextFromNode(nodes.item(nodeIdx));
+            extractedText = extractedText.trim();
+            if (!extractedText.isEmpty()) {
+                ret.add(extractedText);
+            }
         }
         return ret;
     }
 
     public static List<String> extractChildrenAsTextList(Document doc, String path) throws XPathExpressionException {
-    	Node node = (Node) xpath.evaluate(path, doc, XPathConstants.NODE);
-    	return extractChildrenAsTextList(node);
+        Node node = (Node) XPATH.evaluate(path, doc, XPathConstants.NODE);
+        return extractChildrenAsTextList(node);
     }
-    
+
     public static List<String> extractChildrenAsTextList(Node node) {
         List<String> ret = new ArrayList<String>();
 
@@ -110,16 +108,16 @@ public class XMLTools {
         }
         return ret;
     }
-    
+
     public static List<Node> extractNodes(Document doc, String path) throws XPathExpressionException {
-    	NodeList nodes = (NodeList)xpath.evaluate(path, doc, XPathConstants.NODESET);
+        NodeList nodes = (NodeList) XPATH.evaluate(path, doc, XPathConstants.NODESET);
         List<Node> nodeList = new ArrayList<Node>();
         for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
             nodeList.add(nodes.item(nodeIdx));
         }
-    	return nodeList;
+        return nodeList;
     }
-    
+
     public static List<String> extractChildrenTextFromNode(Node node, String name) throws XPathExpressionException {
         List<String> text = new ArrayList<String>();
         for (int nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
@@ -128,9 +126,9 @@ public class XMLTools {
                 text.add(child.getTextContent());
             }
         }
-    	return text;
+        return text;
     }
-    
+
     public static List<Node> extractChildrenNodesFromNode(Node node, String name) throws XPathExpressionException {
         List<Node> nodes = new ArrayList<Node>();
         for (int nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
@@ -139,7 +137,7 @@ public class XMLTools {
                 nodes.add(child);
             }
         }
-    	return nodes;
+        return nodes;
     }
-    
+
 }

@@ -30,20 +30,20 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
  */
 public class CitationContextFinderTest {
     
-    private static final String documentText1 = 
+    private static final String DOCUMENT_TEXT1 = 
         "We can reference a single document like this [2] or [ 12].";
 
-    private static final String documentText2 = 
+    private static final String DOCUMENT_TEXT2 = 
         "Sometimes we use [3,2, 4, 12 ] to reference multiple documents in one place.";
 
-    private static final String documentText3 = 
+    private static final String DOCUMENT_TEXT3 = 
         "To save space, the number can also be given as ranges: [2-4] or [1-5, 7].";
 
-    private static final String documentText = 
+    private static final String DOCUMENT_TEXT4 = 
         "This is a typical state of the art fragment. " +
-        documentText1 + " " +
-        documentText2 + " " +
-        documentText3 + " Random spaces are used to make sure the regexps work well.";
+        DOCUMENT_TEXT1 + " " +
+        DOCUMENT_TEXT2 + " " +
+        DOCUMENT_TEXT3 + " Random spaces are used to make sure the regexps work well.";
 
     @Test
     public void testContextFinder() {
@@ -73,20 +73,20 @@ public class CitationContextFinderTest {
         List<CitationPosition> list2 = Lists.newArrayList(context2, context3, context4);
         List<CitationPosition> list3 = Lists.newArrayList(context5);
         
-        List<List<String>> contexts = finder.findContext(documentText, Lists.newArrayList(list1, list2, list3));
+        List<List<String>> contexts = finder.findContext(DOCUMENT_TEXT4, Lists.newArrayList(list1, list2, list3));
 
         assertEquals(3, contexts.size());
 
         assertEquals(1, contexts.get(0).size());
-        assertEquals(documentText1, contexts.get(0).get(0));
+        assertEquals(DOCUMENT_TEXT1, contexts.get(0).get(0));
         
         assertEquals(3, contexts.get(1).size());
-        assertEquals(documentText1, contexts.get(1).get(0));
-        assertEquals(documentText2, contexts.get(1).get(1));
-        assertEquals(documentText3, contexts.get(1).get(2));
+        assertEquals(DOCUMENT_TEXT1, contexts.get(1).get(0));
+        assertEquals(DOCUMENT_TEXT2, contexts.get(1).get(1));
+        assertEquals(DOCUMENT_TEXT3, contexts.get(1).get(2));
         
         assertEquals(1, contexts.get(2).size());
-        assertEquals(documentText3, contexts.get(2).get(0));
+        assertEquals(DOCUMENT_TEXT3, contexts.get(2).get(0));
     }
     
 }

@@ -297,10 +297,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
         } else { //two zones
             double xdiff = ox+ow/2 - cx-cw/2;
             double ydiff = oy+oh/2 - cy-ch/2;
-            if (xdiff + ydiff < 0) {
-                return true;
-            }
-            return false;
+            return xdiff + ydiff < 0;
         }
     }
 

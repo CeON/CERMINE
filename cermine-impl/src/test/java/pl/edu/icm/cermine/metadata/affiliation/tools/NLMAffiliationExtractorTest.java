@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata.affiliation.tools;
 
 import java.io.IOException;
@@ -32,27 +31,27 @@ import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConv
 
 public class NLMAffiliationExtractorTest {
 
-	private NLMAffiliationExtractor instance = new NLMAffiliationExtractor();
-	
-	@Test
-	public void testExtractStrings() throws JDOMException, IOException, TransformationException {
+    private final NLMAffiliationExtractor instance = new NLMAffiliationExtractor();
+
+    @Test
+    public void testExtractStrings() throws JDOMException, IOException, TransformationException {
         InputSource source = new InputSource(NLMAffiliationExtractor.class.getResourceAsStream(
-        		"test-nlm-extract-affs.xml"));
-        
+                "test-nlm-extract-affs.xml"));
+
         String[] expectedString = {
-        		"<aff id=\"id\"><label>id</label><institution>School</institution><institution>of</institution><institution>Biological</institution><institution>and</institution><institution>Chemical</institution><institution>Sciences</institution><institution>,</institution><institution>Queen</institution><institution>Mary</institution><institution>University</institution><institution>of</institution><institution>London</institution>,<addr-line>London</addr-line>,<country country=\"UK\">UK</country></aff>",
-                "<aff id=\"id\"><label>id</label><institution>Department</institution><institution>of</institution><institution>Pathology</institution><institution>,</institution><institution>University</institution><institution>of</institution><institution>Cincinnati</institution><institution>College</institution><institution>of</institution><institution>Medicine</institution>,<country country=\"US\">USA</country></aff>"
+            "<aff id=\"id\"><label>id</label><institution>School</institution><institution>of</institution><institution>Biological</institution><institution>and</institution><institution>Chemical</institution><institution>Sciences</institution><institution>,</institution><institution>Queen</institution><institution>Mary</institution><institution>University</institution><institution>of</institution><institution>London</institution>,<addr-line>London</addr-line>,<country country=\"UK\">UK</country></aff>",
+            "<aff id=\"id\"><label>id</label><institution>Department</institution><institution>of</institution><institution>Pathology</institution><institution>,</institution><institution>University</institution><institution>of</institution><institution>Cincinnati</institution><institution>College</institution><institution>of</institution><institution>Medicine</institution>,<country country=\"US\">USA</country></aff>"
         };
-        
+
         DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
         XMLOutputter outputter = new XMLOutputter();
-		List<DocumentAffiliation> affs = instance.extractStrings(source);
-		assertEquals(affs.size(), 2);
-		for (int i = 0; i < 2; i++) {
+        List<DocumentAffiliation> affs = instance.extractStrings(source);
+        assertEquals(affs.size(), 2);
+        for (int i = 0; i < 2; i++) {
             Element element = converter.convertAffiliation(affs.get(i));
-            String actual =  outputter.outputString(element);
-			String expected = expectedString[i];
-			assertEquals(expected, actual);
-		}
-	}
+            String actual = outputter.outputString(element);
+            String expected = expectedString[i];
+            assertEquals(expected, actual);
+        }
+    }
 }

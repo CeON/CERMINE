@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.parsing.tools;
 
 import java.io.IOException;
@@ -34,8 +33,9 @@ import pl.edu.icm.cermine.parsing.model.ParsableString;
 import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
- * Generic extractor, which transform NLM XML's into the parsable string representation.
- * 
+ * Generic extractor, which transform NLM XML's into the parsable string
+ * representation.
+ *
  * @author Dominika Tkaczyk
  * @author Bartosz Tarnawski
  *
@@ -44,20 +44,24 @@ import pl.edu.icm.cermine.parsing.model.Token;
  * @param <PS> parsable string type
  */
 public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS extends ParsableString<T>> {
-	
+
     protected abstract List<String> getTags();
+
     protected abstract String getKeyText();
-	protected abstract Map<String, L> getTagLabelMap();
-	protected abstract PS createParsableString();
-	protected abstract PS createParsableString(String text);
-	
-	/**
-	 * @param source the InputSoruce representing the XML document
-	 * @return parsable string representing the source
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public List<PS> extractStrings(InputSource source) throws JDOMException, IOException {
+
+    protected abstract Map<String, L> getTagLabelMap();
+
+    protected abstract PS createParsableString();
+
+    protected abstract PS createParsableString(String text);
+
+    /**
+     * @param source the InputSoruce representing the XML document
+     * @return parsable string representing the source
+     * @throws JDOMException
+     * @throws IOException
+     */
+    public List<PS> extractStrings(InputSource source) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         builder.setValidation(false);
         builder.setFeature("http://xml.org/sax/features/validation", false);
@@ -66,8 +70,8 @@ public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS exten
         Document doc = builder.build(source);
 
         @SuppressWarnings("serial")
-		Iterator<?> mixedStrings = doc.getDescendants(new Filter() {
-			@Override
+        Iterator<?> mixedStrings = doc.getDescendants(new Filter() {
+            @Override
             public boolean matches(Object object) {
                 return object instanceof Element && getTags().contains(((Element) object).getName());
             }
@@ -76,7 +80,7 @@ public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS exten
         List<PS> stringSet = new ArrayList<PS>();
 
         while (mixedStrings.hasNext()) {
-        	PS instance = createParsableString();
+            PS instance = createParsableString();
             readElement((Element) mixedStrings.next(), instance);
             stringSet.add(instance);
         }

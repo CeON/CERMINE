@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.structure.tools;
 
 import com.google.common.collect.Lists;
@@ -28,33 +27,34 @@ import pl.edu.icm.cermine.tools.Utils;
  * @author krusek
  */
 public final class BxModelUtils {
-    
+
     private static final double SIMILARITY_TOLERANCE = 0.001;
-    
-    private BxModelUtils() {}
-    
-	public static void setParents(BxDocument doc) {
-		for (BxPage page : doc) {
-			page.setParent(doc);
-			setParents(page);
-		}
-	}
-	
-	public static void setParents(BxPage page) {
-		for (BxZone zone : page) {
-			for (BxLine line : zone) {
-				for (BxWord word : line) {
-					for (BxChunk chunk : word) {
-						chunk.setParent(word);
+
+    private BxModelUtils() {
+    }
+
+    public static void setParents(BxDocument doc) {
+        for (BxPage page : doc) {
+            page.setParent(doc);
+            setParents(page);
+        }
+    }
+
+    public static void setParents(BxPage page) {
+        for (BxZone zone : page) {
+            for (BxLine line : zone) {
+                for (BxWord word : line) {
+                    for (BxChunk chunk : word) {
+                        chunk.setParent(word);
                     }
-					word.setParent(line);
-				}
-				line.setParent(zone);
-			}
-			zone.setParent(page);
-		}
-	}
-	
+                    word.setParent(line);
+                }
+                line.setParent(zone);
+            }
+            zone.setParent(page);
+        }
+    }
+
     public static void sortZonesYX(BxPage page, final double tolerance) {
         List<BxZone> zones = Lists.newArrayList(page);
         Collections.sort(zones, new Comparator<BxZone>() {
@@ -160,15 +160,15 @@ public final class BxModelUtils {
     /**
      * Creates a deep copy of the word.
      *
-     * @param zone
+     * @param word
      * @return
      */
     public static BxWord deepClone(BxWord word) {
         BxWord copy = new BxWord().setBounds(word.getBounds());
         for (BxChunk chunk : word) {
-        	BxChunk copiedChunk = deepClone(chunk);
-        	copiedChunk.setParent(copy);
-        	copy.addChunk(chunk);
+            BxChunk copiedChunk = deepClone(chunk);
+            copiedChunk.setParent(copy);
+            copy.addChunk(chunk);
         }
         return copy;
     }
@@ -176,35 +176,34 @@ public final class BxModelUtils {
     /**
      * Creates a deep copy of the line.
      *
-     * @param zone
+     * @param line
      * @return
      */
     public static BxLine deepClone(BxLine line) {
         BxLine copy = new BxLine().setBounds(line.getBounds());
         for (BxWord word : line) {
-        	BxWord copiedWord = deepClone(word);
-        	copiedWord.setParent(copy);
+            BxWord copiedWord = deepClone(word);
+            copiedWord.setParent(copy);
             copy.addWord(copiedWord);
         }
         return copy;
     }
 
     public static BxChunk deepClone(BxChunk chunk) {
-    	return new BxChunk(chunk.getBounds(), chunk.toText());
+        return new BxChunk(chunk.getBounds(), chunk.toText());
     }
-    
+
     /**
      * Creates a deep copy of the zone.
      *
      * @param zone
      * @return
      */
-
     public static BxZone deepClone(BxZone zone) {
         BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(zone.getBounds());
         for (BxLine line : zone) {
-        	BxLine copiedLine = deepClone(line);
-        	copiedLine.setParent(copy);
+            BxLine copiedLine = deepClone(line);
+            copiedLine.setParent(copy);
             copy.addLine(copiedLine);
         }
         for (BxChunk chunk : zone.getChunks()) {
@@ -215,15 +214,15 @@ public final class BxModelUtils {
 
     /**
      * Creates a deep copy of the page.
-     * 
+     *
      * @param page
      * @return
      */
     public static BxPage deepClone(BxPage page) {
         BxPage copy = new BxPage().setBounds(page.getBounds());
         for (BxZone zone : page) {
-        	BxZone copiedZone = deepClone(zone);
-        	copiedZone.setParent(copy);
+            BxZone copiedZone = deepClone(zone);
+            copiedZone.setParent(copy);
             copy.addZone(copiedZone);
         }
         Iterator<BxChunk> chunks = page.getChunks();
@@ -243,19 +242,19 @@ public final class BxModelUtils {
         BxDocument copy = new BxDocument();
         copy.setFilename(document.getFilename());
         for (BxPage page : document) {
-        	BxPage copiedPage = deepClone(page);
-        	copiedPage.setParent(copy);
+            BxPage copiedPage = deepClone(page);
+            copiedPage.setParent(copy);
             copy.addPage(copiedPage);
         }
         return copy;
     }
 
     public static List<BxDocument> deepClone(List<BxDocument> documents) {
-    	List<BxDocument> copy = new ArrayList<BxDocument>(documents.size());
-    	for(BxDocument doc: documents) {
-    		copy.add(deepClone(doc));
-    	}
-    	return copy;
+        List<BxDocument> copy = new ArrayList<BxDocument>(documents.size());
+        for (BxDocument doc : documents) {
+            copy.add(deepClone(doc));
+        }
+        return copy;
     }
 
     /**
@@ -354,69 +353,66 @@ public final class BxModelUtils {
                 && containing.getX() + containing.getWidth() >= contained.getX() + contained.getWidth() - tolerance
                 && containing.getY() + containing.getHeight() >= contained.getY() + contained.getHeight() - tolerance;
     }
-    
+
     public static boolean areEqual(BxChunk chunk1, BxChunk chunk2) {
         if (!chunk1.toText().equals(chunk2.toText())) {
             return false;
         }
-        if (!chunk1.getBounds().isSimilarTo(chunk2.getBounds(), SIMILARITY_TOLERANCE)) {
-            return false;
-        }
-        return true;
+        return chunk1.getBounds().isSimilarTo(chunk2.getBounds(), SIMILARITY_TOLERANCE);
     }
-    
+
     public static boolean areEqual(BxWord word1, BxWord word2) {
         if (word1.childrenCount() != word2.childrenCount()) {
-			return false;
+            return false;
         }
-		for (int i = 0; i < word1.childrenCount(); i++) {
+        for (int i = 0; i < word1.childrenCount(); i++) {
             if (!areEqual(word1.getChild(i), word2.getChild(i))) {
                 return false;
             }
         }
         return true;
     }
-    
+
     public static boolean areEqual(BxLine line1, BxLine line2) {
         if (line1.childrenCount() != line2.childrenCount()) {
-			return false;
+            return false;
         }
-		for (int i = 0; i < line1.childrenCount(); i++) {
+        for (int i = 0; i < line1.childrenCount(); i++) {
             if (!areEqual(line1.getChild(i), line2.getChild(i))) {
                 return false;
             }
         }
         return true;
     }
-    
+
     public static boolean areEqual(BxZone zone1, BxZone zone2) {
         if (zone1.childrenCount() != zone2.childrenCount()) {
-			return false;
+            return false;
         }
-		for (int i = 0; i < zone1.childrenCount(); i++) {
+        for (int i = 0; i < zone1.childrenCount(); i++) {
             if (!areEqual(zone1.getChild(i), zone2.getChild(i))) {
                 return false;
             }
         }
         return true;
     }
-    
+
     public static boolean areEqual(BxPage page1, BxPage page2) {
         if (page1.childrenCount() != page2.childrenCount()) {
-			return false;
-            
+            return false;
+
         }
-		for (int i = 0; i < page1.childrenCount(); i++) {
+        for (int i = 0; i < page1.childrenCount(); i++) {
             if (!areEqual(page1.getChild(i), page2.getChild(i))) {
                 return false;
             }
         }
         return true;
     }
-    
+
     public static boolean areEqual(BxDocument doc1, BxDocument doc2) {
-		if (doc1.childrenCount() != doc2.childrenCount()) {
-			return false;
+        if (doc1.childrenCount() != doc2.childrenCount()) {
+            return false;
         }
         for (int i = 0; i < doc1.childrenCount(); i++) {
             if (!areEqual(doc1.getChild(i), doc2.getChild(i))) {
@@ -424,5 +420,5 @@ public final class BxModelUtils {
             }
         }
         return true;
-	}
+    }
 }

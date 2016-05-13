@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools;
 
 import java.util.List;
@@ -24,17 +23,17 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
  * Documents extractor interface.
- * 
+ *
  * @author Paweł Szostek
  */
 public interface DocumentsExtractor {
-    
+
     /**
      * Extracts documents.
-     * 
+     *
      * @return a list of extracted documents
-     * @throws TransformationException 
+     * @throws TransformationException
      */
-	List<BxDocument> getDocuments() throws TransformationException;
-    
+    List<BxDocument> getDocuments() throws TransformationException;
+
 }

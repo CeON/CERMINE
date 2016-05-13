@@ -55,19 +55,18 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     
     private ACRF model;
     
-    private static final String defaultModelFile = "/pl/edu/icm/cermine/bibref/acrf.ser.gz";
+    private static final String DEFAULT_MODEL_FILE = "/pl/edu/icm/cermine/bibref/acrf.ser.gz";
     
-    private static final String defaultWordsFile = "/pl/edu/icm/cermine/bibref/crf-train-words.txt";
-    private static Set<String> words;
+    private static final String DEFAULT_WORDS_FILE = "/pl/edu/icm/cermine/bibref/crf-train-words.txt";
+    private static final Set<String> WORDS;
 
     static {
-        words = new HashSet<String>();
-        InputStream wis = CitationUtils.class.getResourceAsStream(defaultWordsFile);
+        WORDS = new HashSet<String>();
+        InputStream wis = CitationUtils.class.getResourceAsStream(DEFAULT_WORDS_FILE);
         try {
-            words.addAll(IOUtils.readLines(wis));
+            WORDS.addAll(IOUtils.readLines(wis));
         } catch (IOException ex) {
             Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common words!", ex);
-            words = null;
         }
     }
     
@@ -118,7 +117,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     }
 
     public static Set<String> getWords() {
-        return words;
+        return WORDS;
     }
 
     @Override
@@ -173,7 +172,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     }
   
     public static CRFBibReferenceParser getInstance() throws AnalysisException {
-        return new CRFBibReferenceParser(CRFBibReferenceParser.class.getResourceAsStream(defaultModelFile));
+        return new CRFBibReferenceParser(CRFBibReferenceParser.class.getResourceAsStream(DEFAULT_MODEL_FILE));
     }
     
     public static void main(String[] args) throws ParseException, AnalysisException, TransformationException {

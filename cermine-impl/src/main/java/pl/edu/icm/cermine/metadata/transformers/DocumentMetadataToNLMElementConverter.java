@@ -151,20 +151,26 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
         aff.setAttribute(ATTR_ID, affiliation.getId());
         addElement(aff, TAG_LABEL, affiliation.getId());
         for (Token<AffiliationLabel> token : affiliation.getTokens()) {
-            if (token.getLabel().equals(AffiliationLabel.TEXT)) {
-                aff.addContent(token.getText());
-            } else if (token.getLabel().equals(AffiliationLabel.COUN)) {
-                CountryISOCodeFinder finder = new CountryISOCodeFinder();
-                String isoCode = finder.getCountryISOCode(token.getText());
-                if (isoCode == null) {
-                    addElement(aff, TAG_COUNTRY, token.getText());
-                } else {
-                    addElement(aff, TAG_COUNTRY, token.getText(), ATTR_COUNTRY, isoCode);
-                }
-            } else if (token.getLabel().equals(AffiliationLabel.INST)) {
-                addElement(aff, TAG_INSTITUTION, token.getText());
-            } else if (token.getLabel().equals(AffiliationLabel.ADDR)) {
-                addElement(aff, TAG_ADDRESS, token.getText());
+            switch (token.getLabel()) {
+                case TEXT:
+                    aff.addContent(token.getText());
+                    break;
+                case COUN:
+                    CountryISOCodeFinder finder = new CountryISOCodeFinder();
+                    String isoCode = finder.getCountryISOCode(token.getText());
+                    if (isoCode == null) {
+                        addElement(aff, TAG_COUNTRY, token.getText());
+                    } else {
+                        addElement(aff, TAG_COUNTRY, token.getText(), ATTR_COUNTRY, isoCode);
+                    }   break;
+                case INST:
+                    addElement(aff, TAG_INSTITUTION, token.getText());
+                    break;
+                case ADDR:
+                    addElement(aff, TAG_ADDRESS, token.getText());
+                    break;
+                default:
+                    break;
             }
         }
         return aff;

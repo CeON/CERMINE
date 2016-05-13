@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.tools.classification.general;
 /**
  *
  * @author Dominika Tkaczyk
+ * @param <S> class label
  */
 public class TrainingSample<S> implements Cloneable {
     

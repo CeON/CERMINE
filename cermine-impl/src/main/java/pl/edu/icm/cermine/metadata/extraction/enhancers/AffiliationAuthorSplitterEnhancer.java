@@ -44,7 +44,7 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
         setSearchedZoneLabels(EnumSet.of(BxZoneLabel.MET_AFFILIATION));
     }
 
-    private static final Set<String> keywords = Sets.newHashSet(
+    private static final Set<String> KEYWORDS = Sets.newHashSet(
             "department", "departament", "universit", "institute", "school", "college", 
             "univ.", "instituto", "facultad", "universidad", "center", "labs"
             );
@@ -87,7 +87,7 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
                 if (prev != null && 
                         (!prev.getMostPopularFontName().equals(line.getMostPopularFontName())
                         || prev.getHeight() - line.getHeight() > 1)) {
-                    for (String keyword : keywords) {
+                    for (String keyword : KEYWORDS) {
                         if (lineText.contains(keyword)) {
                             wasAff = true;
                         }

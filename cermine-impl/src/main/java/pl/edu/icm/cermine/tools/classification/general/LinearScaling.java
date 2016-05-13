@@ -15,38 +15,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools.classification.general;
 
 public class LinearScaling implements ScalingStrategy {
 
-	@Override
-	public FeatureVector scaleFeatureVector(double scaledLowerBound,
-			double scaledUpperBound, FeatureLimits[] limits, FeatureVector fv) {
-		final double EPS = 0.00001;
-		FeatureVector newVector = new FeatureVector();
-		
-		int featureIdx = 0;
-		for(String name: fv.getFeatureNames()) {
-			//scaling function: y = a*x+b
-			// featureLower = a*v_min + b
-			// featureUpper = a*v_max + b
-			if(Math.abs(limits[featureIdx].getMax()-limits[featureIdx].getMin()) < EPS) {
-				newVector.addFeature(name, 1.0);
-			} else {
-				Double featureValue = fv.getValue(name);
-				double a = (scaledUpperBound-scaledLowerBound)/(limits[featureIdx].getMax()-limits[featureIdx].getMin());
-				double b = scaledLowerBound-a*limits[featureIdx].getMin();
-				
-				featureValue = a*featureValue+b; 
+    @Override
+    public FeatureVector scaleFeatureVector(double scaledLowerBound,
+            double scaledUpperBound, FeatureLimits[] limits, FeatureVector fv) {
+        final double EPS = 0.00001;
+        FeatureVector newVector = new FeatureVector();
 
-				if (featureValue.isNaN()) {
-					throw new RuntimeException("Feature value is set to NaN: "+name);
-				}
-				newVector.addFeature(name, featureValue);
-			}
-			++featureIdx;
-		}
-		return newVector;
-	}
+        int featureIdx = 0;
+        for (String name : fv.getFeatureNames()) {
+            //scaling function: y = a*x+b
+            // featureLower = a*v_min + b
+            // featureUpper = a*v_max + b
+            if (Math.abs(limits[featureIdx].getMax() - limits[featureIdx].getMin()) < EPS) {
+                newVector.addFeature(name, 1.0);
+            } else {
+                Double featureValue = fv.getValue(name);
+                double a = (scaledUpperBound - scaledLowerBound) / (limits[featureIdx].getMax() - limits[featureIdx].getMin());
+                double b = scaledLowerBound - a * limits[featureIdx].getMin();
+
+                featureValue = a * featureValue + b;
+
+                if (featureValue.isNaN()) {
+                    throw new RuntimeException("Feature value is set to NaN: " + name);
+                }
+                newVector.addFeature(name, featureValue);
+            }
+            ++featureIdx;
+        }
+        return newVector;
+    }
 }

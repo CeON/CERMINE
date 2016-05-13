@@ -77,7 +77,7 @@ public class BxBoundsBuilder {
      * Expands current bounding box so that it contains bounding boxes
      * of word chunks.
      *
-     * @param line
+     * @param word
      */
     public void expandByChunks(BxWord word) {
         for (BxChunk chunk : word) {
@@ -161,7 +161,7 @@ public class BxBoundsBuilder {
     /**
      * Sets the bounding box of line based on bounding boxes of line words.
      *
-     * @param zone
+     * @param line
      */
     public static void setBounds(BxLine line) {
         BxBoundsBuilder builder = new BxBoundsBuilder();
@@ -172,7 +172,7 @@ public class BxBoundsBuilder {
     /**
      * Sets the bounding box of word based on bounding boxes of word chunks.
      *
-     * @param zone
+     * @param word
      */
     public static void setBounds(BxWord word) {
         BxBoundsBuilder builder = new BxBoundsBuilder();

@@ -47,7 +47,7 @@ public abstract class AbstractDateEnhancer extends AbstractSimpleEnhancer {
         "november|nov\\.",
         "december|dec\\."};
 
-    private EnhancedField field;
+    private final EnhancedField field;
     private Pattern simplePattern;
     private Pattern anotherPattern;
 

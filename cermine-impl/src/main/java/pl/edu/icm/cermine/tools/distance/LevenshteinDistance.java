@@ -16,7 +16,7 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.tools;
+package pl.edu.icm.cermine.tools.distance;
 
 import java.util.ArrayList;
 import java.util.List;

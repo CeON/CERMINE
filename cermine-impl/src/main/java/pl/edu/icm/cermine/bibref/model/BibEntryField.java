@@ -75,10 +75,7 @@ public class BibEntryField {
         if (this.startIndex != other.startIndex) {
             return false;
         }
-        if (this.endIndex != other.endIndex) {
-            return false;
-        }
-        return true;
+        return this.endIndex == other.endIndex;
     }
 
     @Override

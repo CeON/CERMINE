@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.structure.tools;
 
-import com.google.common.collect.Lists;
 import java.util.*;
 import pl.edu.icm.cermine.structure.model.*;
 

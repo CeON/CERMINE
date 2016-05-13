@@ -75,6 +75,9 @@ public class CompleteLinkageClusterizer implements Clusterizer {
             if (mind < maxDistance || (evaluator != null && !evaluator.isAcceptable(clusterArray))) {
                 clusters.remove(minClust1);
                 clusters.remove(minClust2);
+                if (minClust1 == null) {
+                    minClust1 = new HashSet<Integer>();
+                }
                 minClust1.addAll(minClust2);
                 clusters.add(minClust1);
             } else {

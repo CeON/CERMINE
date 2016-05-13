@@ -29,7 +29,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  */
 public abstract class AbstractBibReferenceParserTest {
     
-    private BibEntry[] entries = {
+    private final BibEntry[] entries = {
         new BibEntry().setText("[6]  W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc, 58 (1963) 13-30.")
             .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.")
             .addField(BibEntry.FIELD_TITLE, "Probability inequalities for sums of bounded random variables")

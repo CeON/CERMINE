@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools;
 
 import java.util.Collection;
@@ -123,8 +122,7 @@ public class Histogram implements Iterable<Histogram.Bin> {
                 int j = i + d - shift;
                 if (j < 0) {
                     j += frequencies.length;
-                }
-                else if (j >= frequencies.length) {
+                } else if (j >= frequencies.length) {
                     j -= frequencies.length;
                 }
                 newFrequencies[i] += kernel[d] * frequencies[j];
@@ -136,7 +134,7 @@ public class Histogram implements Iterable<Histogram.Bin> {
     public double[] createGaussianKernel(double length, double stdDeviation) {
         int r = (int) Math.round(length / resolution) / 2;
         stdDeviation /= resolution;
-        
+
         int size = 2 * r + 1;
         double[] kernel = new double[size];
         double sum = 0;
@@ -174,14 +172,13 @@ public class Histogram implements Iterable<Histogram.Bin> {
      *
      * @return number of bins
      */
-
     public int getSize() {
         return frequencies.length;
     }
 
     /**
      * Returns the height of the bin at the specified position.
-     * 
+     *
      * @param index bin index
      * @return bin height
      */
@@ -197,13 +194,13 @@ public class Histogram implements Iterable<Histogram.Bin> {
     public double getPeakValue() {
         int peakIndex = 0;
         for (int i = 1; i < frequencies.length; i++) {
-            if(frequencies[i] > frequencies[peakIndex]) {
+            if (frequencies[i] > frequencies[peakIndex]) {
                 peakIndex = i;
             }
         }
         int peakEndIndex = peakIndex + 1;
         final double EPS = 0.0001;
-        while(peakEndIndex < frequencies.length && Math.abs(frequencies[peakEndIndex] - frequencies[peakIndex]) < EPS) {
+        while (peakEndIndex < frequencies.length && Math.abs(frequencies[peakEndIndex] - frequencies[peakIndex]) < EPS) {
             peakEndIndex++;
         }
         return ((double) peakIndex + peakEndIndex) / 2 * resolution + min;
@@ -252,7 +249,7 @@ public class Histogram implements Iterable<Histogram.Bin> {
 
     public final class Bin {
 
-        private int index;
+        private final int index;
 
         private Bin(int index) {
             this.index = index;

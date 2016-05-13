@@ -65,7 +65,7 @@ public class BibEntryToNLMElementConverter implements ModelToModelConverter<BibE
 
             @Override
             public int compare(BibEntryField t1, BibEntryField t2) {
-                return Integer.valueOf(t1.getStartIndex()).compareTo(Integer.valueOf(t2.getStartIndex()));
+                return Integer.valueOf(t1.getStartIndex()).compareTo(t2.getStartIndex());
             }
         
         });

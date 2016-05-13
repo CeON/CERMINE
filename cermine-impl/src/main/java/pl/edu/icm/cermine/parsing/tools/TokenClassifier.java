@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.parsing.tools;
 
 import java.util.List;
@@ -24,17 +23,18 @@ import pl.edu.icm.cermine.parsing.model.Token;
 
 /**
  * Class for predicting token labels.
- * 
+ *
  * @author Bartosz Tarnawski
  * @param <T> token type
  */
 public interface TokenClassifier<T extends Token<?>> {
-	/**
-	 * Predicts and sets a label for each of the tokens.
-	 * The tokens are assumed to hold appropriate lists of features.
-	 * 
-	 * @param tokens
-	 * @throws AnalysisException
-	 */
-	void classify(List<T> tokens) throws AnalysisException; 
+
+    /**
+     * Predicts and sets a label for each of the tokens. The tokens are assumed
+     * to hold appropriate lists of features.
+     *
+     * @param tokens
+     * @throws AnalysisException
+     */
+    void classify(List<T> tokens) throws AnalysisException;
 }

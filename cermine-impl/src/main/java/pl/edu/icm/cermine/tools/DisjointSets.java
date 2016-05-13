@@ -24,10 +24,11 @@ import java.util.*;
  * A disjoint-set data structure.
  *
  * @author krusek
+ * @param <E> element type
  */
 public class DisjointSets<E> implements Iterable<Set<E>> {
 
-    private Map<E, Entry<E>> map = new HashMap<E, Entry<E>>();
+    private final Map<E, Entry<E>> map = new HashMap<E, Entry<E>>();
 
     /**
      * Constructs a new set of singletons.
@@ -73,7 +74,7 @@ public class DisjointSets<E> implements Iterable<Set<E>> {
     public Iterator<Set<E>> iterator() {
         return new Iterator<Set<E>>() {
 
-            private Iterator<Entry<E>> iterator = map.values().iterator();
+            private final Iterator<Entry<E>> iterator = map.values().iterator();
             private Entry<E> nextRepresentative;
 
             {
@@ -120,7 +121,7 @@ public class DisjointSets<E> implements Iterable<Set<E>> {
 
     private static class Entry<E> {
         private int size = 1;
-        private E value;
+        private final E value;
         private Entry<E> parent = this;
         private Entry<E> next = null;
         private Entry<E> last = this;

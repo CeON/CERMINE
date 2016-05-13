@@ -206,7 +206,7 @@ public class CitationPositionFinder {
     }
     
     private static class DocumentPositions {
-        private boolean[] covered;
+        private final boolean[] covered;
         List<CitationPosition> positions = new ArrayList<CitationPosition>();
         List<BibEntry> citations;
         Map<BibEntry, List<CitationPosition>> citationPositions = new HashMap<BibEntry, List<CitationPosition>>();

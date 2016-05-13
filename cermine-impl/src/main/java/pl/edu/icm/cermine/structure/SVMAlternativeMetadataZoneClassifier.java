@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.structure;
 
 import java.io.IOException;
@@ -25,16 +24,16 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  * @author Dominika Tkaczyk
  */
 public class SVMAlternativeMetadataZoneClassifier extends SVMMetadataZoneClassifier {
-    
-	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-humanities";
-	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-humanities.range";
-	
+
+    private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-humanities";
+    private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-humanities.range";
+
     private static SVMAlternativeMetadataZoneClassifier defaultInstance;
-    
-	public SVMAlternativeMetadataZoneClassifier() throws AnalysisException {
-		super(MODEL_FILE_PATH, RANGE_FILE_PATH, true);
-	}
-	
+
+    public SVMAlternativeMetadataZoneClassifier() throws AnalysisException {
+        super(MODEL_FILE_PATH, RANGE_FILE_PATH, true);
+    }
+
     public static SVMAlternativeMetadataZoneClassifier getDefaultInstance() throws AnalysisException, IOException {
         if (defaultInstance == null) {
             defaultInstance = new SVMAlternativeMetadataZoneClassifier();

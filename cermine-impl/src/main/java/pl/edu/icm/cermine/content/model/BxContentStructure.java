@@ -33,9 +33,8 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
  */
 public class BxContentStructure {
     
-    private List<BxLine> firstHeaderLines = new ArrayList<BxLine>();
-    private Map<BxLine, BxDocContentPart> parts = new HashMap<BxLine, BxDocContentPart>();
-
+    private final List<BxLine> firstHeaderLines = new ArrayList<BxLine>();
+    private final Map<BxLine, BxDocContentPart> parts = new HashMap<BxLine, BxDocContentPart>();
 
     public void addFirstHeaderLine(BxPage page, BxLine headerLine) {
         firstHeaderLines.add(headerLine);
@@ -98,7 +97,7 @@ public class BxContentStructure {
         
         private int levelId;
         
-        private BxPage page;
+        private final BxPage page;
 
         private BxLine firstHeaderLine;
         private List<BxLine> headerLines = new ArrayList<BxLine>();

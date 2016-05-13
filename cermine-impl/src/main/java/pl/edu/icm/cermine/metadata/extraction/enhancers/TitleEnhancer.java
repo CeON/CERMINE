@@ -37,7 +37,7 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
         setSearchedFirstPageOnly(true);
     }
 
-    private Set<String> types = Sets.newHashSet(
+    private final Set<String> types = Sets.newHashSet(
             "case report", 
             "case study", 
             "clinical study", 

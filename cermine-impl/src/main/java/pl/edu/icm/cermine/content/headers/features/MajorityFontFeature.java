@@ -27,7 +27,7 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  * @author Jasiek
  */
 public class MajorityFontFeature extends FeatureCalculator<BxLine, BxZone> {
-    private String mostPopularFont;
+    private final String mostPopularFont;
 
     public MajorityFontFeature(String mostPopularFont) {
         this.mostPopularFont = mostPopularFont;

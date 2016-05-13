@@ -24,7 +24,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class UndersamplingSelector<S> implements SampleSelector<S> {
 
-    private double inequalityFactor;
+    private final double inequalityFactor;
 
     public UndersamplingSelector(double inequalityFactor) {
         assert inequalityFactor > 1.0;

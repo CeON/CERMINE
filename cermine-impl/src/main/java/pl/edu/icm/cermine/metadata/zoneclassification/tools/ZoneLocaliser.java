@@ -15,20 +15,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata.zoneclassification.tools;
 
 import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class ZoneLocaliser {
-	
-	private BxZone leftZone = null;
-	private BxZone rightZone = null;
-	private BxZone upperZone = null;
-	private BxZone lowerZone = null;
-	
-	public ZoneLocaliser(BxZone zone) {
-        for (BxZone otherZone: zone.getParent()) {
+
+    private BxZone leftZone = null;
+    private BxZone rightZone = null;
+    private BxZone upperZone = null;
+    private BxZone lowerZone = null;
+
+    public ZoneLocaliser(BxZone zone) {
+        for (BxZone otherZone : zone.getParent()) {
             if (otherZone == zone) {
                 continue;
             }
@@ -51,7 +50,6 @@ public class ZoneLocaliser {
             // 7 | 9 | 3
             // __|___|__
             // 6 | 5 | 4
-
             int oct;
             if (cx + cw <= ox) {
                 if (cy + ch <= oy) {
@@ -74,41 +72,44 @@ public class ZoneLocaliser {
             } else { // oy + oh <= cy
                 oct = 1;
             }
-            
-            if (oct == 1) {
-            	if (upperZone == null || otherZone.getY()+otherZone.getHeight() > upperZone.getY()+upperZone.getHeight()) {
-            		upperZone = otherZone;
-            	}
-            } else if(oct == 5) {
-            	if (lowerZone == null || otherZone.getY() < lowerZone.getY()) {
-            		lowerZone = otherZone;
-            	}
-            } else if(oct == 7) {
-            	if (leftZone == null || otherZone.getX() + otherZone.getWidth() > leftZone.getX() + leftZone.getWidth()) {
-            		leftZone = otherZone;
-            	}
-            } else if(oct == 3) {
-            	if (rightZone == null || otherZone.getX() < rightZone.getX()) {
-                    rightZone = otherZone;
-            	}
+
+            switch (oct) {
+                case 1:
+                    if (upperZone == null || otherZone.getY() + otherZone.getHeight() > upperZone.getY() + upperZone.getHeight()) {
+                        upperZone = otherZone;
+                    }   break;
+                case 5:
+                    if (lowerZone == null || otherZone.getY() < lowerZone.getY()) {
+                        lowerZone = otherZone;
+                    }   break;
+                case 7:
+                    if (leftZone == null || otherZone.getX() + otherZone.getWidth() > leftZone.getX() + leftZone.getWidth()) {
+                        leftZone = otherZone;
+                    }   break;
+                case 3:
+                    if (rightZone == null || otherZone.getX() < rightZone.getX()) {
+                        rightZone = otherZone;
+                    }   break;
+                default:
+                    break;
             }
         }
-	}
-	
-	public BxZone getLeftZone() {
-		return leftZone;
-	}
-	
-	public BxZone getRightZone() {
-		return rightZone;
-	}
-	
-	public BxZone getUpperZone() {
-		return upperZone;
-	}
-	
-	public BxZone getLowerZone() {
-		return lowerZone;
-	}
-	
+    }
+
+    public BxZone getLeftZone() {
+        return leftZone;
+    }
+
+    public BxZone getRightZone() {
+        return rightZone;
+    }
+
+    public BxZone getUpperZone() {
+        return upperZone;
+    }
+
+    public BxZone getLowerZone() {
+        return lowerZone;
+    }
+
 }

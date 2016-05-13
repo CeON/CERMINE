@@ -15,35 +15,52 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.structure.model;
 
 public interface Indexable<A> {
-    
-	/** Getter for the value based on TrueViz XxxID field */
-	String getId();
-	
-    /** Getter for the value based on TrueViz XxxNext field */
-	String getNextId();
-	
-    /** Setter for the value based on TrueViz XxxID field */
-	void setId(String id);
-	
-    /** Setter for the value based on TrueViz XxxNext field */
-	void setNextId(String nextId);
-	
-	/** Get next linked list element */
-	A getNext();
-	
-    /** Set next linked list element */
-	void setNext(A elem);
-	
+
+    /**
+     * Getter for the value based on TrueViz XxxID field
+     * @return 
+     */
+    String getId();
+
+    /**
+     * Getter for the value based on TrueViz XxxNext field
+     * @return 
+     */
+    String getNextId();
+
+    /**
+     * Setter for the value based on TrueViz XxxID field
+     * @param id
+     */
+    void setId(String id);
+
+    /**
+     * Setter for the value based on TrueViz XxxNext field
+     * @param nextId
+     */
+    void setNextId(String nextId);
+
+    /**
+     * Get next linked list element
+     * @return 
+     */
+    A getNext();
+
+    /**
+     * Set next linked list element
+     * @param elem
+     */
+    void setNext(A elem);
+
     boolean hasNext();
-	
-	A getPrev();
-	
+
+    A getPrev();
+
     void setPrev(A elem);
-	
+
     boolean hasPrev();
-    
+
 }

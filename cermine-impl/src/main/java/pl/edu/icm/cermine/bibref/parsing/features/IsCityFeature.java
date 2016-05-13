@@ -29,10 +29,10 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  */
 public class IsCityFeature extends FeatureCalculator<CitationToken, Citation> {
 
-    private static List<String> keywords = Arrays.asList(
+    private static final List<String> KEYWORDS = Arrays.asList(
             "angeles", "antonio", "amsterdam", "ankara", "athens",
             "bangkok", "basel", "beijing", "belgrade", "berkeley", "berlin", "bern", "bologna", "bombay", "boston",
-                "bratislava", "brussels", "bucharest", "budapest",
+            "bratislava", "brussels", "bucharest", "budapest",
             "cambridge", "calgary", "chicago", "copenhagen",
             "dallas", "delhi", "dhaka", "diego", "dordrecht", "dublin",
             "edmonton",
@@ -58,6 +58,6 @@ public class IsCityFeature extends FeatureCalculator<CitationToken, Citation> {
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {
-        return (keywords.contains(object.getText().toLowerCase())) ? 1 : 0;
+        return (KEYWORDS.contains(object.getText().toLowerCase())) ? 1 : 0;
     }
 }

@@ -70,7 +70,7 @@ public abstract class AbstractFilterEnhancer implements Enhancer {
 
     private abstract static class FilterIterable<T> implements Iterable<T> {
 
-        private Iterable<T> it;
+        private final Iterable<T> it;
 
         public FilterIterable(Iterable<T> it) {
             this.it = it;
@@ -82,7 +82,7 @@ public abstract class AbstractFilterEnhancer implements Enhancer {
         public Iterator<T> iterator() {
             return new Iterator<T>() {
 
-                private Iterator<T> iterator;
+                private final Iterator<T> iterator;
                 private T next = null;
 
                 {

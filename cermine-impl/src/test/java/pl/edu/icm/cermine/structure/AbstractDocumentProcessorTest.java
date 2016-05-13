@@ -28,13 +28,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.xml.parsers.ParserConfigurationException;
-import static org.junit.Assert.assertTrue;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.tools.DocumentProcessor;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -42,7 +42,7 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  */
 public abstract class AbstractDocumentProcessorTest {
 
-    private static String xmlFilenameSuffix = ".xml";
+    private static final String XML_FILENAME_EX = ".xml";
 
     protected DocumentProcessor startProcessFlattener;
     protected DocumentProcessor endProcessFlattener;
@@ -98,7 +98,7 @@ public abstract class AbstractDocumentProcessorTest {
             Enumeration entries = zipFile.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry zipEntry = (ZipEntry) entries.nextElement();
-                if (zipEntry.getName().endsWith(xmlFilenameSuffix)) {
+                if (zipEntry.getName().endsWith(XML_FILENAME_EX)) {
                     String parent = new File(zipEntry.getName()).getParent();
                     if (dirSamplesCount.containsKey(parent)) {
                         dirSamplesCount.put(parent, dirSamplesCount.get(parent) + 1);

@@ -44,7 +44,7 @@ import pl.edu.icm.cermine.tools.TextUtils;
  */
 public class AffiliationTrainingDataExporter {
 
-	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
+	private static final AffiliationTokenizer TOKENIZER = new AffiliationTokenizer();
 	private static AffiliationFeatureExtractor featureExtractor = null;
 
 	private static final String DEFAULT_INPUT = "affiliations/javatests/affs-real-like.xml";
@@ -111,7 +111,7 @@ public class AffiliationTrainingDataExporter {
         String text;
         while ((text = reader.readLine()) != null) {
                 DocumentAffiliation affiliation = new DocumentAffiliation(text);
-                affiliation.setTokens(tokenizer.tokenize(affiliation.getRawText()));
+                affiliation.setTokens(TOKENIZER.tokenize(affiliation.getRawText()));
                 affiliations.add(affiliation);
         }
         return affiliations;

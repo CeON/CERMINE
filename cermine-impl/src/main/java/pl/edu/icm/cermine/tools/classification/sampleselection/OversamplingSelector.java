@@ -24,7 +24,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class OversamplingSelector<S> implements SampleSelector<S> {
 
-    private double inequalityFactor;
+    private final double inequalityFactor;
 
     public OversamplingSelector(double inequalityFactor) {
         this.inequalityFactor = inequalityFactor;

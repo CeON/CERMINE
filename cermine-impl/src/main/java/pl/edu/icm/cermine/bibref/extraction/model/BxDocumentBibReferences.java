@@ -38,10 +38,10 @@ public class BxDocumentBibReferences {
     private List<BxLine> lines = new ArrayList<BxLine>();
 
     /** A map associating references' line with their zones */
-    private Map<BxLine, BxZone> lineZones = new HashMap<BxLine, BxZone>();
+    private final Map<BxLine, BxZone> lineZones = new HashMap<BxLine, BxZone>();
 
     /** A map associating references' lines with their labels */
-    private Map<BxLine, BibReferenceLineLabel> lineLabels = new HashMap<BxLine, BibReferenceLineLabel>();
+    private final Map<BxLine, BibReferenceLineLabel> lineLabels = new HashMap<BxLine, BibReferenceLineLabel>();
 
     public void addZone(BxZone zone) {
         for (BxLine line : zone) {

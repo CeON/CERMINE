@@ -29,20 +29,20 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  */
 public class IsTextWordFeature extends FeatureCalculator<CitationToken, Citation> {
 
-    private static String featureName = "IsOtherWord";
+    private static final String FEATURE_NAME = "IsOtherWord";
 
     @Override
     public String getFeatureName() {
-        return featureName;
+        return FEATURE_NAME;
     }
 
-    private static List<String> keywords = Arrays.asList(
+    private static final List<String> KEYWORDS = Arrays.asList(
             "preprint", "preparation", "submitted", "phd", "thesis", "available", "thèse", "doctorale", "paraître",
             "appear", "proceeding", "proceedings");
 
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {
-        return (keywords.contains(object.getText().toLowerCase())) ? 1 : 0;
+        return (KEYWORDS.contains(object.getText().toLowerCase())) ? 1 : 0;
     }
 }

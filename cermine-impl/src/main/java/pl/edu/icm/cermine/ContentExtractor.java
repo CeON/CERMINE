@@ -107,6 +107,7 @@ public class ContentExtractor {
      * Sets the input bx document.
      * 
      * @param bxDocument 
+     * @throws java.io.IOException 
      */
     public void setBxDocument(BxDocument bxDocument) throws IOException {
         reset();

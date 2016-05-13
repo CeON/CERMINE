@@ -15,31 +15,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.exception;
 
 /**
  * Thrown when an unrecoverable problem occurs during analysis.
- * 
+ *
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  *
  */
 public class AnalysisException extends Exception {
-	private static final long serialVersionUID = 4601197315845837554L;
 
-	public AnalysisException() {
-		super();
-	}
+    private static final long serialVersionUID = 4601197315845837554L;
 
-	public AnalysisException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public AnalysisException() {
+        super();
+    }
 
-	public AnalysisException(String message) {
-		super(message);
-	}
+    public AnalysisException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public AnalysisException(Throwable cause) {
-		super(cause);
-	}
+    public AnalysisException(String message) {
+        super(message);
+    }
+
+    public AnalysisException(Throwable cause) {
+        super(cause);
+    }
 }

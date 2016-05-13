@@ -39,6 +39,7 @@ public final class BibRefExtractionUtils {
      *
      * @param document A document
      * @return an object holding references' lines and zones
+     * @throws pl.edu.icm.cermine.exception.AnalysisException
      */
     public static BxDocumentBibReferences extractBibRefLines(BxDocument document) throws AnalysisException {
         BxDocumentBibReferences lines = new BxDocumentBibReferences();
@@ -61,6 +62,7 @@ public final class BibRefExtractionUtils {
      * @param document A document
      * @param references A list of document's references
      * @return an object holding extracted zones and tagged lines
+     * @throws pl.edu.icm.cermine.exception.AnalysisException
      */
     public static BxDocumentBibReferences extractBibRefLines(BxDocument document, List<String> references) throws AnalysisException {
         BxDocumentBibReferences refLines = extractBibRefLines(document);

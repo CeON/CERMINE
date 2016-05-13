@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.structure;
 
 import java.io.BufferedReader;
@@ -32,35 +31,34 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
- * Classifying zones as: METADATA, BODY, REFERENCES, OTHER. 
- * 
+ * Classifying zones as: METADATA, BODY, REFERENCES, OTHER.
+ *
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
-    
-	private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-initial-default";
-	private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-initial-default.range";
+
+    private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-initial-default";
+    private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-initial-default.range";
 
     private static SVMInitialZoneClassifier defaultInstance;
-    
-	public SVMInitialZoneClassifier() throws AnalysisException, IOException {
-		super(getFeatureVectorBuilder());
-		loadModelFromResources(MODEL_FILE_PATH, RANGE_FILE_PATH);
-	}
-	
-	public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException, IOException {
-		super(getFeatureVectorBuilder());
-		loadModelFromFile(modelFile, rangeFile);
-	}
 
-	public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException, IOException {
-		super(getFeatureVectorBuilder());
-		loadModelFromFile(modelFilePath, rangeFilePath);
-	}
+    public SVMInitialZoneClassifier() throws AnalysisException, IOException {
+        super(getFeatureVectorBuilder());
+        loadModelFromResources(MODEL_FILE_PATH, RANGE_FILE_PATH);
+    }
 
-	public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder()
-	{
-		FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
+    public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException, IOException {
+        super(getFeatureVectorBuilder());
+        loadModelFromFile(modelFile, rangeFile);
+    }
+
+    public SVMInitialZoneClassifier(String modelFilePath, String rangeFilePath) throws AnalysisException, IOException {
+        super(getFeatureVectorBuilder());
+        loadModelFromFile(modelFilePath, rangeFilePath);
+    }
+
+    public static FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
+        FeatureVectorBuilder<BxZone, BxPage> vectorBuilder = new FeatureVectorBuilder<BxZone, BxPage>();
         vectorBuilder.setFeatureCalculators(Arrays.<FeatureCalculator<BxZone, BxPage>>asList(
                 new AbstractFeature(),
                 new IsSingleWordFeature(),
@@ -116,19 +114,19 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
                 new LineWidthMeanFeature(),
                 new ProportionsFeature(),
                 new RelativeMeanLengthFeature()
-                ));
+        ));
         return vectorBuilder;
-	}
-	
+    }
+
     public static SVMInitialZoneClassifier getDefaultInstance() throws AnalysisException, IOException {
         if (defaultInstance == null) {
             defaultInstance = new SVMInitialZoneClassifier();
         }
         return defaultInstance;
     }
-    
+
     @Override
-	public BxDocument classifyZones(BxDocument document) throws AnalysisException {
+    public BxDocument classifyZones(BxDocument document) throws AnalysisException {
         for (BxZone zone : document.asZones()) {
             if (zone.getLabel() == null) {
                 BxZoneLabel predicted = predictLabel(zone, zone.getParent());
@@ -136,6 +134,6 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
             }
         }
         return document;
-	}
-    
+    }
+
 }

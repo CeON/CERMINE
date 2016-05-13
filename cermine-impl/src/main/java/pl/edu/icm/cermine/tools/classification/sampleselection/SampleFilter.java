@@ -26,7 +26,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 public class SampleFilter implements SampleSelector<BxZoneLabel> {
 
-    private BxZoneLabelCategory category;
+    private final BxZoneLabelCategory category;
 
     public SampleFilter(BxZoneLabelCategory category) {
         this.category = category;

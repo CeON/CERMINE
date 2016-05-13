@@ -79,6 +79,8 @@ public class ComponentFactory {
      * The method creates an instance of a default initial zone classifier.
      * 
      * @return initial zone classifier
+     * @throws pl.edu.icm.cermine.exception.AnalysisException
+     * @throws java.io.IOException
      */
     public static ZoneClassifier getInitialZoneClassifier() throws AnalysisException, IOException {
         return SVMInitialZoneClassifier.getDefaultInstance();
@@ -111,6 +113,8 @@ public class ComponentFactory {
      * The method creates an instance of a default metadata zone classifier.
      * 
      * @return metadata zone classifier
+     * @throws pl.edu.icm.cermine.exception.AnalysisException
+     * @throws java.io.IOException
      */
     public static ZoneClassifier getMetadataZoneClassifier() throws AnalysisException, IOException {
         return SVMMetadataZoneClassifier.getDefaultInstance();
@@ -152,6 +156,7 @@ public class ComponentFactory {
      * The method creates an instance of a default affiliation parser.
      * 
      * @return affiliation parser
+     * @throws pl.edu.icm.cermine.exception.AnalysisException
      */
     public static ParsableStringParser<DocumentAffiliation> getAffiliationParser() throws AnalysisException {
         return new CRFAffiliationParser();
@@ -170,6 +175,7 @@ public class ComponentFactory {
      * The method creates an instance of a default bib reference parser.
      * 
      * @return bib reference parser
+     * @throws pl.edu.icm.cermine.exception.AnalysisException
      */
     public static BibReferenceParser<BibEntry> getBibReferenceParser() throws AnalysisException {
         return CRFBibReferenceParser.getInstance();

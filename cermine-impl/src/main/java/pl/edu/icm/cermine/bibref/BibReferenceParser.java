@@ -15,14 +15,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.bibref;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
  * Bibliographic reference parser.
- * 
+ *
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
  *
  * @param <T> Type of parsed reference.
@@ -31,12 +30,12 @@ public interface BibReferenceParser<T> {
 
     /**
      * Parses a text of a reference.
-     * 
+     *
      * @param text
-     * @return Parsed reference, or <code>null</code>
-	 * if the specified text couldn't be parsed.
-     * @throws AnalysisException 
+     * @return Parsed reference, or <code>null</code> if the specified text
+     * couldn't be parsed.
+     * @throws AnalysisException
      */
-	T parseBibReference(String text) throws AnalysisException;
+    T parseBibReference(String text) throws AnalysisException;
 
 }

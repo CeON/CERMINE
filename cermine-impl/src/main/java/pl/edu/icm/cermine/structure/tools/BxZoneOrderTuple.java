@@ -15,34 +15,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.structure.tools;
+
 import pl.edu.icm.cermine.structure.model.BxZone;
 
 public class BxZoneOrderTuple {
-    
-	private BxZone zone;
-	private int order;
 
-	public BxZoneOrderTuple(BxZone zone, int order) {
-		this.zone = zone;
-		this.order = order;
-	}
-	
-	public BxZone getZone() {
-		return zone;
-	}
-	
+    private BxZone zone;
+    private int order;
+
+    public BxZoneOrderTuple(BxZone zone, int order) {
+        this.zone = zone;
+        this.order = order;
+    }
+
+    public BxZone getZone() {
+        return zone;
+    }
+
     public void setZone(BxZone zone) {
-		this.zone = zone;
-	}
-	
+        this.zone = zone;
+    }
+
     public int getOrder() {
-		return order;
-	}
-	
+        return order;
+    }
+
     public void setOrder(int order) {
-		this.order = order;
-	}
-	
+        this.order = order;
+    }
+
 }

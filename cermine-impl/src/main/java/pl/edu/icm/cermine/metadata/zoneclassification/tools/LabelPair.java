@@ -15,15 +15,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata.zoneclassification.tools;
 
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 public class LabelPair {
-	/** expected */
+
+    /**
+     * expected
+     */
     public BxZoneLabel l1;
-    /** predicted **/
+    /**
+     * predicted *
+     */
     public BxZoneLabel l2;
 
     public LabelPair(BxZoneLabel l1, BxZoneLabel l2) {
@@ -46,10 +50,7 @@ public class LabelPair {
         if (l1 != other.l1) {
             return false;
         }
-        if (l2 != other.l2) {
-            return false;
-        }
-        return true;
+        return l2 == other.l2;
     }
 
     @Override

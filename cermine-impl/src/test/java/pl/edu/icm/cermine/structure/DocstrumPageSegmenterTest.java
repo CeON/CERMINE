@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.structure;
 
-import com.google.common.collect.Lists;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;

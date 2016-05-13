@@ -29,7 +29,7 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  */
 public class IsCommonSourceWordFeature extends FeatureCalculator<CitationToken, Citation> {
 
-    private static List<String> keywords = Arrays.asList(
+    private static final List<String> KEYWORDS = Arrays.asList(
             "acad", "acta", "algebra", "amer", "anal", "ann", "annales", "annals", "appl",
             "bourbaki", "bull",
             "comm", "comptes",
@@ -47,6 +47,6 @@ public class IsCommonSourceWordFeature extends FeatureCalculator<CitationToken, 
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {
-        return (keywords.contains(object.getText().toLowerCase())) ? 1 : 0;
+        return (KEYWORDS.contains(object.getText().toLowerCase())) ? 1 : 0;
     }
 }

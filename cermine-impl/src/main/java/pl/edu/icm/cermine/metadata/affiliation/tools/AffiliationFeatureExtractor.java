@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata.affiliation.tools;
 
 import java.util.ArrayList;
@@ -31,73 +30,73 @@ import pl.edu.icm.cermine.parsing.tools.FeatureExtractor;
 
 /**
  * Feature extractor suitable for processing affiliations.
- * 
+ *
  * @author Bartosz Tarnawski
  */
 public class AffiliationFeatureExtractor implements FeatureExtractor<DocumentAffiliation> {
 
-	private List<BinaryTokenFeatureCalculator> binaryFeatures;
-	private List<KeywordFeatureCalculator<Token<AffiliationLabel>>> keywordFeatures;
-	private WordFeatureCalculator wordFeature;
-	
-	@SuppressWarnings("unchecked")
-	public AffiliationFeatureExtractor() throws AnalysisException {
-		binaryFeatures = 
-			new ArrayList<BinaryTokenFeatureCalculator>(
-					Arrays.<BinaryTokenFeatureCalculator>asList(
-                        new IsNumberFeature(),
-                        new IsUpperCaseFeature(),
-                        new IsAllUpperCaseFeature(),
-                        new IsAllLowerCaseFeature()
-                        ));
-		
-		keywordFeatures = Arrays.<KeywordFeatureCalculator<Token<AffiliationLabel>>>asList(
-			new AffiliationDictionaryFeature("KeywordAddress", 		"address_keywords.txt", 	false),
-			new AffiliationDictionaryFeature("KeywordCountry", 		"countries2.txt", 			true),
-			new AffiliationDictionaryFeature("KeywordInstitution", 	"institution_keywords.txt", false)
-			);
-		
-		wordFeature = 
-			new WordFeatureCalculator(Arrays.<BinaryTokenFeatureCalculator>asList(
-					new IsNumberFeature()), false);
-	}
+    private List<BinaryTokenFeatureCalculator> binaryFeatures;
+    private List<KeywordFeatureCalculator<Token<AffiliationLabel>>> keywordFeatures;
+    private WordFeatureCalculator wordFeature;
 
-	/**
-	 * @param commonWords the words that are not considered 'Rare'
-	 * @throws AnalysisException 
-	 */
-	public AffiliationFeatureExtractor(List<String> commonWords) throws AnalysisException {
-		this();
-		binaryFeatures.add(new IsRareFeature(commonWords, true));
-	}
-	
-	public AffiliationFeatureExtractor(List<BinaryTokenFeatureCalculator> binaryFeatures,
-			List<KeywordFeatureCalculator<Token<AffiliationLabel>>> keywordFeatures,
-			WordFeatureCalculator wordFeature) {
-		this.binaryFeatures = binaryFeatures;
-		this.keywordFeatures = keywordFeatures;
-		this.wordFeature = wordFeature;
-	}
-	
-	@Override
-	public void calculateFeatures(DocumentAffiliation affiliation) {
-		
-		List<Token<AffiliationLabel>> tokens = affiliation.getTokens();
-		for (Token<AffiliationLabel> token : tokens) {
-			for (BinaryTokenFeatureCalculator binaryFeatureCalculator : binaryFeatures) {
-				if (binaryFeatureCalculator.calculateFeaturePredicate(token, affiliation)) {
-					token.addFeature(binaryFeatureCalculator.getFeatureName());
-				}
-			}
-			String wordFeatureString = wordFeature.calculateFeatureValue(token, affiliation);
-			if (wordFeatureString != null) {
-				token.addFeature(wordFeatureString);
-			}
-		}
-		
-		for (KeywordFeatureCalculator<Token<AffiliationLabel>> dictionaryFeatureCalculator :
-			keywordFeatures) {
-			dictionaryFeatureCalculator.calculateDictionaryFeatures(tokens);
-		}
-	}
+    @SuppressWarnings("unchecked")
+    public AffiliationFeatureExtractor() throws AnalysisException {
+        binaryFeatures
+                = new ArrayList<BinaryTokenFeatureCalculator>(
+                        Arrays.<BinaryTokenFeatureCalculator>asList(
+                                new IsNumberFeature(),
+                                new IsUpperCaseFeature(),
+                                new IsAllUpperCaseFeature(),
+                                new IsAllLowerCaseFeature()
+                        ));
+
+        keywordFeatures = Arrays.<KeywordFeatureCalculator<Token<AffiliationLabel>>>asList(
+                new AffiliationDictionaryFeature("KeywordAddress", "address_keywords.txt", false),
+                new AffiliationDictionaryFeature("KeywordCountry", "countries2.txt", true),
+                new AffiliationDictionaryFeature("KeywordInstitution", "institution_keywords.txt", false)
+        );
+
+        wordFeature
+                = new WordFeatureCalculator(Arrays.<BinaryTokenFeatureCalculator>asList(
+                        new IsNumberFeature()), false);
+    }
+
+    /**
+     * @param commonWords the words that are not considered 'Rare'
+     * @throws AnalysisException
+     */
+    public AffiliationFeatureExtractor(List<String> commonWords) throws AnalysisException {
+        this();
+        binaryFeatures.add(new IsRareFeature(commonWords, true));
+    }
+
+    public AffiliationFeatureExtractor(List<BinaryTokenFeatureCalculator> binaryFeatures,
+            List<KeywordFeatureCalculator<Token<AffiliationLabel>>> keywordFeatures,
+            WordFeatureCalculator wordFeature) {
+        this.binaryFeatures = binaryFeatures;
+        this.keywordFeatures = keywordFeatures;
+        this.wordFeature = wordFeature;
+    }
+
+    @Override
+    public void calculateFeatures(DocumentAffiliation affiliation) {
+
+        List<Token<AffiliationLabel>> tokens = affiliation.getTokens();
+        for (Token<AffiliationLabel> token : tokens) {
+            for (BinaryTokenFeatureCalculator binaryFeatureCalculator : binaryFeatures) {
+                if (binaryFeatureCalculator.calculateFeaturePredicate(token, affiliation)) {
+                    token.addFeature(binaryFeatureCalculator.getFeatureName());
+                }
+            }
+            String wordFeatureString = wordFeature.calculateFeatureValue(token, affiliation);
+            if (wordFeatureString != null) {
+                token.addFeature(wordFeatureString);
+            }
+        }
+
+        for (KeywordFeatureCalculator<Token<AffiliationLabel>> dictionaryFeatureCalculator
+                : keywordFeatures) {
+            dictionaryFeatureCalculator.calculateDictionaryFeatures(tokens);
+        }
+    }
 }

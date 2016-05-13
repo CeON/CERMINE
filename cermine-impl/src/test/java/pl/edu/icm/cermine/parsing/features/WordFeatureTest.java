@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.parsing.features;
 
 import java.util.Arrays;
@@ -29,28 +28,28 @@ import pl.edu.icm.cermine.parsing.model.Token;
 
 public class WordFeatureTest {
 
-	@Test
-	public void testComputeFeature() {
-		String word="BabaMaKota";
-		String notWord = "123";
-		
-		List<Token<AffiliationLabel>> tokens = Arrays.asList(
-				new Token<AffiliationLabel>(word),
-				new Token<AffiliationLabel>(notWord)
-				);
-		
-		WordFeatureCalculator instance = new WordFeatureCalculator(
-				Arrays.<BinaryTokenFeatureCalculator>asList(new IsNumberFeature()), true);
-		
-	    DocumentAffiliation aff = new DocumentAffiliation("");
-		
-		assertEquals("W=babamakota", instance.calculateFeatureValue(tokens.get(0), aff));
-		assertNull(instance.calculateFeatureValue(tokens.get(1), aff));
-		
-		instance = new WordFeatureCalculator(
-				Arrays.<BinaryTokenFeatureCalculator>asList(new IsNumberFeature()), false);
-		assertEquals("W=BabaMaKota", instance.calculateFeatureValue(tokens.get(0), aff));
-		assertNull(instance.calculateFeatureValue(tokens.get(1), aff));
-	}
+    @Test
+    public void testComputeFeature() {
+        String word = "BabaMaKota";
+        String notWord = "123";
+
+        List<Token<AffiliationLabel>> tokens = Arrays.asList(
+                new Token<AffiliationLabel>(word),
+                new Token<AffiliationLabel>(notWord)
+        );
+
+        WordFeatureCalculator instance = new WordFeatureCalculator(
+                Arrays.<BinaryTokenFeatureCalculator>asList(new IsNumberFeature()), true);
+
+        DocumentAffiliation aff = new DocumentAffiliation("");
+
+        assertEquals("W=babamakota", instance.calculateFeatureValue(tokens.get(0), aff));
+        assertNull(instance.calculateFeatureValue(tokens.get(1), aff));
+
+        instance = new WordFeatureCalculator(
+                Arrays.<BinaryTokenFeatureCalculator>asList(new IsNumberFeature()), false);
+        assertEquals("W=BabaMaKota", instance.calculateFeatureValue(tokens.get(0), aff));
+        assertNull(instance.calculateFeatureValue(tokens.get(1), aff));
+    }
 
 }

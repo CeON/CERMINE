@@ -15,31 +15,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.exception;
 
 /**
  * Thrown when an unrecoverable problem occurs during transformations.
- * 
+ *
  * @author Dominika Tkaczyk
  *
  */
 public class TransformationException extends Exception {
-        private static final long serialVersionUID = -4871017514024156616L;
 
-        public TransformationException() {
-                super();
-        }
+    private static final long serialVersionUID = -4871017514024156616L;
 
-        public TransformationException(String message, Throwable cause) {
-                super(message, cause);
-        }
+    public TransformationException() {
+        super();
+    }
 
-        public TransformationException(String message) {
-                super(message);
-        }
+    public TransformationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-        public TransformationException(Throwable cause) {
-                super(cause);
-        }
+    public TransformationException(String message) {
+        super(message);
+    }
+
+    public TransformationException(Throwable cause) {
+        super(cause);
+    }
 }

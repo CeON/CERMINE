@@ -41,8 +41,8 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
             "[\\{\\[]([^,\\s]+, ?)+[^,\\s]+ ?[\\}\\]]?@\\S+",
             Pattern.CASE_INSENSITIVE);
        
-    private static final Pattern fullIndexPattern = Pattern.compile("\\d{1,2}|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|[a-f]|¹|²|³");
-    private static final Pattern simpleIndexPattern = Pattern.compile("\\*|∗|⁎|†|‡|§|\\{|¶|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|¹|²|³");
+    private static final Pattern FULL_INDEX_PATTERN = Pattern.compile("\\d{1,2}|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|[a-f]|¹|²|³");
+    private static final Pattern SIMPLE_INDEX_PATTERN = Pattern.compile("\\*|∗|⁎|†|‡|§|\\{|¶|\\+|\\||⊥|\\^|#|α|β|λ|ξ|ψ|¹|²|³");
         
 
     private final Set<String> headers = Sets.newHashSet("authoraffiliations", "authordetails", "affiliations");
@@ -110,7 +110,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             BxChunk chunk = iterator.next();
                             double chunkY = chunk.getY();
                             double chunkH = chunk.getHeight();
-                            if (simpleIndexPattern.matcher(chunk.toText()).matches() ||
+                            if (SIMPLE_INDEX_PATTERN.matcher(chunk.toText()).matches() ||
                                 Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2 ||
                                 (indexes.contains(chunk.toText()) && chunk.getParent().childrenCount() < 3 
                                     && chunk.getParent().equals(chunk.getParent().getParent().getFirstChild()))) {
@@ -189,9 +189,9 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                 "Correspondence:.+|Contributed equally",
                 Pattern.CASE_INSENSITIVE);
 
-        private Map<String, String> affiliations = new HashMap<String, String>();
+        private final Map<String, String> affiliations = new HashMap<String, String>();
         private String affiliationRef = "";
-        private StringBuilder affiliationBuilder = new StringBuilder();
+        private final StringBuilder affiliationBuilder = new StringBuilder();
         private int emptyIndex = 100;
 
         private void endAffiliation() {
@@ -211,7 +211,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
         }
 
         private boolean isIndex(String text) {
-            return fullIndexPattern.matcher(text).matches();
+            return FULL_INDEX_PATTERN.matcher(text).matches();
         }
 
         public void endWord() {

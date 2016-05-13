@@ -27,10 +27,11 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 /**
  *
  * @author Dominika Tkaczyk
+ * @param <T> label
  */
 public class KnnModel<T> {
     
-    private Set<TrainingSample<T>> trainingSamples;
+    private final Set<TrainingSample<T>> trainingSamples;
 
     public KnnModel(Set<TrainingSample<T>> trainingSamples) {
         this.trainingSamples = trainingSamples;

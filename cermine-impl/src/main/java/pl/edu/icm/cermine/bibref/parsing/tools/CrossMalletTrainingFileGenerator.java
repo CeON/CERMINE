@@ -42,17 +42,16 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class CrossMalletTrainingFileGenerator {
 
-    private static String nlmFile = "/home/domin/phd-metadata-extraction/results/citations/dataset/citations.nxml";
-    private static String outFile = "/home/domin/phd-metadata-extraction/results/citations/training/training";
-    private static String outValidFile = "/home/domin/phd-metadata-extraction/results/citations/training/validation";
+    private static final String NLM_FILE = "/home/domin/phd-metadata-extraction/results/citations/dataset/citations.nxml";
+    private static final String OUT_FILE = "/home/domin/phd-metadata-extraction/results/citations/training/training";
+    private static final String OUT_VALID_FILE = "/home/domin/phd-metadata-extraction/results/citations/training/validation";
    
 
     public static void main(String[] args) throws JDOMException, IOException, TransformationException {
 
-        File file = new File(nlmFile);
+        File file = new File(NLM_FILE);
         try {
             List<Citation> traincitations = new ArrayList<Citation>();
-            List<Citation> validcitations = new ArrayList<Citation>();
 
             InputStream is = null;
             List<Citation> citations;
@@ -68,9 +67,8 @@ public final class CrossMalletTrainingFileGenerator {
 
             Collections.shuffle(citations, new Random(5394));
             traincitations.addAll(citations.subList(0, 2000));
-            validcitations.addAll(citations.subList(2000, 4000));
 
-            File validFile = new File(outValidFile);
+            File validFile = new File(OUT_VALID_FILE);
             for (Citation citation : citations) {
                 for (CitationToken ct : citation.getTokens()) {
                     if (ct.getText().matches("^[a-zA-Z]+$")) {
@@ -92,9 +90,9 @@ public final class CrossMalletTrainingFileGenerator {
             Writer[] testWriters = new Writer[5];
             Writer[] nlmWriters = new Writer[5];
             for (int idx = 0; idx < 5; idx++) {
-                trainWriters[idx] = new FileWriter(outFile+".train."+idx);
-                testWriters[idx] = new FileWriter(outFile+".test."+idx);
-                nlmWriters[idx] = new FileWriter(outFile+".nlm."+idx);
+                trainWriters[idx] = new FileWriter(OUT_FILE+".train."+idx);
+                testWriters[idx] = new FileWriter(OUT_FILE+".test."+idx);
+                nlmWriters[idx] = new FileWriter(OUT_FILE+".nlm."+idx);
             }
             
             for (int idx = 0; idx < folds.length; idx++) {

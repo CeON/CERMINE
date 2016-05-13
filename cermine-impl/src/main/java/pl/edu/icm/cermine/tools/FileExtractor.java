@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.tools;
 
 import java.io.InputStream;
@@ -25,18 +24,18 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 public class FileExtractor {
-    
-	private InputStream inputStream;
 
-	public FileExtractor(InputStream is) {
-		this.inputStream = is;
-	}
+    private final InputStream inputStream;
 
-	public BxDocument getDocument() throws TransformationException {
+    public FileExtractor(InputStream is) {
+        this.inputStream = is;
+    }
+
+    public BxDocument getDocument() throws TransformationException {
         InputStreamReader isr = new InputStreamReader(inputStream);
-        
+
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         return new BxDocument().setPages(reader.read(isr));
-	}
+    }
 
 }

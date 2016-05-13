@@ -23,9 +23,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
@@ -47,17 +45,17 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class CoraRefToNLM {
 
-    private static String nlmDir = "/home/domin/cermine-tests/mixed.citations.xml";
-    private static String outNLM = "/home/domin/phd-metadata-extraction/results/citations/citations.nxml";
-    private static String outBT = "/home/domin/phd-metadata-extraction/results/citations/citations.bibtex";
-    private static String outTXT = "/home/domin/phd-metadata-extraction/results/citations/citations.txt";
+    private static final String NLM_DIR = "/home/domin/cermine-tests/mixed.citations.xml";
+    private static final String OUT_NLM = "/home/domin/phd-metadata-extraction/results/citations/citations.nxml";
+    private static final String OUT_BT = "/home/domin/phd-metadata-extraction/results/citations/citations.bibtex";
+    private static final String OUT_TXT = "/home/domin/phd-metadata-extraction/results/citations/citations.txt";
     
     
     public static void main(String[] args) throws JDOMException, IOException, TransformationException {
         InputStream is = null;
         List<Citation> citations;
         try {
-            is = new FileInputStream(new File(nlmDir));
+            is = new FileInputStream(new File(NLM_DIR));
             InputSource source = new InputSource(is);
             citations = NlmCitationExtractor.extractCitations(source);
         } finally {
@@ -66,17 +64,12 @@ public final class CoraRefToNLM {
             }
         }
 
-        Set<CitationTokenLabel> labels = new HashSet<CitationTokenLabel>();
-
-        int all = 0;
-        int cover = 0;
         outer:
         for (Citation citation : citations) {
             int ind = 0;
             boolean pagef = true;
 
             for (CitationToken ct : citation.getTokens()) {
-                labels.add(ct.getLabel());
                 if (CitationTokenLabel.YEAR.equals(ct.getLabel())) {
                     if (ct.getText().length() < 4) {
                         ct.setLabel(CitationTokenLabel.TEXT);
@@ -140,7 +133,6 @@ public final class CoraRefToNLM {
             List<CitationTokenLabel> labs = new ArrayList<CitationTokenLabel>();
 
             for (String s : be.getAllFieldValues(BibEntry.FIELD_AUTHOR)) {
-                all++;
                 String tmp = s.trim().replaceAll(" +,", ",").replaceAll("\\.", " ").replaceAll(",", ", ").replaceAll(" +", " ");
                 Pattern p1 = Pattern.compile("^[A-Z] [A-Z][-A-Za-z]+ ?($|,|and|AND|&)");
                 Pattern p2 = Pattern.compile("^[A-Z] [A-Z] [A-Z][-A-Za-z]+ ?($|,|and|AND|&)");
@@ -296,9 +288,7 @@ public final class CoraRefToNLM {
                         break;
                     }
                 }
-                if (tmp.isEmpty()) {
-                    cover++;
-                } else {
+                if (!tmp.isEmpty()) {
                     continue outer;
                 }
             }
@@ -324,9 +314,9 @@ public final class CoraRefToNLM {
             }
         }
         
-        File nlm = new File(outNLM);
-        File bt = new File(outBT);
-        File txt = new File(outTXT);
+        File nlm = new File(OUT_NLM);
+        File bt = new File(OUT_BT);
+        File txt = new File(OUT_TXT);
         
         BibEntryToNLMElementConverter conv = new BibEntryToNLMElementConverter();
         XMLOutputter outputter = new XMLOutputter(Format.getRawFormat());

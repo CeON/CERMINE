@@ -35,7 +35,7 @@ import pl.edu.icm.cermine.parsing.tools.NLMParsableStringExtractor;
 public class NLMAffiliationExtractor extends
         NLMParsableStringExtractor<AffiliationLabel, Token<AffiliationLabel>, DocumentAffiliation> {
 
-	private static final AffiliationTokenizer tokenizer = new AffiliationTokenizer();
+	private static final AffiliationTokenizer TOKENIZER = new AffiliationTokenizer();
 	
     @Override
 	protected List<String> getTags() {
@@ -60,7 +60,7 @@ public class NLMAffiliationExtractor extends
     @Override
 	protected DocumentAffiliation createParsableString(String text) {
 		DocumentAffiliation instance = new DocumentAffiliation(text);
-		instance.setTokens(tokenizer.tokenize(instance.getRawText()));
+		instance.setTokens(TOKENIZER.tokenize(instance.getRawText()));
 		return instance;
 	}
 

@@ -22,7 +22,6 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import pl.edu.icm.cermine.ComponentFactory;
 import pl.edu.icm.cermine.ContentExtractor;
@@ -31,6 +30,7 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CiTOProperty;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -38,14 +38,14 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  */
 public class CitationSentimentAnalyserTest {
     
-    private static final String documentText =
+    private static final String DOCUMENT_TEXT =
             "This is a typical state of the art fragment. We can reference a single " +
             "document like this [2] or [ 12]. Sometimes we use [3,2, 4, 12 ] to " +
             "reference multiple documents in one place. To save space, the number can " +
             "also be given as ranges: [2-4] or [1-5, 7]. Random spaces are used to " +
             "make sure the regexps work well.";
     
-    private static BibEntry[] citations = {
+    private static final BibEntry[] CITATIONS = {
         new BibEntry().setText(" [12]  W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc, 58 (1963) 13-30.")
             .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.")
             .addField(BibEntry.FIELD_TITLE, "Probability inequalities for sums of bounded random variables")
@@ -74,8 +74,8 @@ public class CitationSentimentAnalyserTest {
     @Test
     public void testCitationPositions() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.setRawFullText(documentText);
-        extractor.setReferences(Lists.newArrayList(citations));
+        extractor.setRawFullText(DOCUMENT_TEXT);
+        extractor.setReferences(Lists.newArrayList(CITATIONS));
         List<List<CitationPosition>> locations = extractor.getCitationPositions();
         
         assertEquals(3, locations.size());
@@ -96,8 +96,8 @@ public class CitationSentimentAnalyserTest {
     @Test
     public void testCitationSentiment() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.setRawFullText(documentText);
-        extractor.setReferences(Lists.newArrayList(citations));
+        extractor.setRawFullText(DOCUMENT_TEXT);
+        extractor.setReferences(Lists.newArrayList(CITATIONS));
         List<CitationSentiment> sentiments = extractor.getCitationSentiments();
         
         assertEquals(3, sentiments.size());
@@ -109,8 +109,8 @@ public class CitationSentimentAnalyserTest {
     @Test
     public void testRandomCitationSentiment() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.setRawFullText(documentText);
-        extractor.setReferences(Lists.newArrayList(citations));
+        extractor.setRawFullText(DOCUMENT_TEXT);
+        extractor.setReferences(Lists.newArrayList(CITATIONS));
         extractor.getConf().setCitationSentimentAnalyser(ComponentFactory.getRandomCitationSentimentAnalyser());
         List<CitationSentiment> sentiments = extractor.getCitationSentiments();
         
@@ -123,7 +123,7 @@ public class CitationSentimentAnalyserTest {
     @Test
     public void testCitationLocationSentiment() throws AnalysisException {
         ContentExtractor extractor = new ContentExtractor();
-        extractor.setRawFullText(documentText);
+        extractor.setRawFullText(DOCUMENT_TEXT);
         
         CitationPosition position1 = new CitationPosition();
         position1.setStartRefPosition(98);
@@ -142,7 +142,7 @@ public class CitationSentimentAnalyserTest {
         List<CitationPosition> list3 = new ArrayList<CitationPosition>();
         List<List<CitationPosition>> locations = Lists.newArrayList(list1, list2, list3);
         
-        extractor.setReferences(Lists.newArrayList(citations));
+        extractor.setReferences(Lists.newArrayList(CITATIONS));
         extractor.setCitationPositions(locations);
         List<CitationSentiment> sentiments = extractor.getCitationSentiments();
         

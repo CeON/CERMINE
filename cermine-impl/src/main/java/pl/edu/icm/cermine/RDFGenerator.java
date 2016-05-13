@@ -111,7 +111,6 @@ public class RDFGenerator {
                 docRes.addProperty(DC.title, title);
 
                 int affId = 0;
-                int autId = 0;
                 for (DocumentAuthor docAuthor : metadata.getAuthors()) {
                     for (DocumentAffiliation docAffiliation : docAuthor.getAffiliations()) {
                         String affURI = prefix + "affiliation/" + volDoc + "_" + affId;
@@ -139,7 +138,6 @@ public class RDFGenerator {
                         docRes.addProperty(DCTerms.creator, affiliation);
                         affId++;
                     }
-                    autId++;
                 }
 
                 int citId = 0;

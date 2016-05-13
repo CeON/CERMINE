@@ -32,10 +32,10 @@ import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
  */
 public class ZoneClassificationUtils {
 
-    private static String[] conjunctions = {"and", "or", "for", "or", "nor"};
+    private static final String[] CONJUNCTIONS = {"and", "or", "for", "or", "nor"};
 
     public static boolean isConjunction(String word) {
-        for (String conjunction : conjunctions) {
+        for (String conjunction : CONJUNCTIONS) {
             if (conjunction.equalsIgnoreCase(word)) {
                 return true;
             }

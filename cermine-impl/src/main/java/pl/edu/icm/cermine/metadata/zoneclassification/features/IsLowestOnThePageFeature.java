@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

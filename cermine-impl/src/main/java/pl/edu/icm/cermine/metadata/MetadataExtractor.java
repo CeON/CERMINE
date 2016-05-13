@@ -15,15 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata;
 
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
- * Interface for extracting metadata from labelled zones. 
- * 
+ * Interface for extracting metadata from labelled zones.
+ *
  * @author Dominika Tkaczyk
  * @param <T> a type of metadata objects
  */
@@ -31,10 +30,10 @@ public interface MetadataExtractor<T> {
 
     /**
      * Extracts metadata from the document.
-     * 
+     *
      * @param document
      * @return extracted metadata
-     * @throws AnalysisException 
+     * @throws AnalysisException
      */
-	T extractMetadata(BxDocument document) throws AnalysisException;
+    T extractMetadata(BxDocument document) throws AnalysisException;
 }

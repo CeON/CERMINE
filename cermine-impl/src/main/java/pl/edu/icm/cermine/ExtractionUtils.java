@@ -278,6 +278,7 @@ public class ExtractionUtils {
      * 
      * @param conf extraction configuration
      * @param document box structure
+     * @param references references
      * @return document's full text in NLM format
      * @throws AnalysisException 
      */
@@ -500,8 +501,7 @@ public class ExtractionUtils {
      * 
      * @param conf extraction configuration
      * @param fullText the full text
-     * @param citations citation list
-     * @param contexts citation contexts
+     * @param positions citation positions
      * @return  citation sentiments
      */
     public static List<CitationSentiment> analyzeSentimentFromPositions(ComponentConfiguration conf, 

@@ -35,5 +35,5 @@ public interface ZoneClassifier {
      * @return a documents with labels set
      * @throws AnalysisException 
      */
-	BxDocument classifyZones(BxDocument document) throws AnalysisException;
+    BxDocument classifyZones(BxDocument document) throws AnalysisException;
 }

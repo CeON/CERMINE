@@ -60,6 +60,8 @@ public class ContentExtractor {
 
     public static int THREADS_NUMBER = 3;
     
+    private final long SECONDS_TO_MILLIS = 1000;
+    
     private ComponentConfiguration conf;
     
     /** input PDF file */
@@ -171,12 +173,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getBxDocument()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public BxDocument getBxDocument(long timeoutMillis) throws AnalysisException {
+    public BxDocument getBxDocument(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getBxDocument();
         } finally {
             TimeoutRegister.remove();
@@ -200,12 +203,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getMetadata()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public DocumentMetadata getMetadata(long timeoutMillis) throws AnalysisException {
+    public DocumentMetadata getMetadata(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getMetadata();
         } finally {
             TimeoutRegister.remove();
@@ -234,12 +238,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getNLMMetadata()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public Element getNLMMetadata(long timeoutMillis) throws AnalysisException {
+    public Element getNLMMetadata(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMMetadata();
         } finally {
             TimeoutRegister.remove();
@@ -262,12 +267,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getReferences()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public List<BibEntry> getReferences(long timeoutMillis) throws AnalysisException {
+    public List<BibEntry> getReferences(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getReferences();
         } finally {
             TimeoutRegister.remove();
@@ -291,12 +297,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getNLMReferences()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public List<Element> getNLMReferences(long timeoutMillis) throws AnalysisException {
+    public List<Element> getNLMReferences(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMReferences();
         } finally {
             TimeoutRegister.remove();
@@ -320,12 +327,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getCitationPositions()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public List<List<CitationPosition>> getCitationPositions(long timeoutMillis) throws AnalysisException {
+    public List<List<CitationPosition>> getCitationPositions(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getCitationPositions();
         } finally {
             TimeoutRegister.remove();
@@ -348,12 +356,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getCitationSentiments()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public List<CitationSentiment> getCitationSentiments(long timeoutMillis) throws AnalysisException {
+    public List<CitationSentiment> getCitationSentiments(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getCitationSentiments();
         } finally {
             TimeoutRegister.remove();
@@ -376,12 +385,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getRawFullText()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public String getRawFullText(long timeoutMillis) throws AnalysisException {
+    public String getRawFullText(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getRawFullText();
         } finally {
             TimeoutRegister.remove();
@@ -402,6 +412,21 @@ public class ContentExtractor {
         return labelledFullText;
     }
     
+    /** The same as {@link #getLabelledRawFullText()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     */
+    public Element getLabelledRawFullText(long timeoutSeconds) throws AnalysisException {
+        try {
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+            return getLabelledRawFullText();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+    
     /**
      * Extracts structured full text.
      * 
@@ -419,12 +444,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getNLMText()} but with a timeout.
      * 
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public Element getNLMText(long timeoutMillis) throws AnalysisException {
+    public Element getNLMText(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMText();
         } finally {
             TimeoutRegister.remove();
@@ -468,12 +494,13 @@ public class ContentExtractor {
     
     /** The same as {@link #getNLMContent()} but with a timeout.
      *  
-     * @param timeoutMillis timeout in milliseconds
+     * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      */
-    public Element getNLMContent(long timeoutMillis) throws AnalysisException {
+    public Element getNLMContent(long timeoutSeconds) throws AnalysisException {
         try {
-            TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+            TimeoutRegister.set(
+                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMContent();
         } finally {
             TimeoutRegister.remove();
@@ -560,7 +587,9 @@ public class ContentExtractor {
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                 System.out.println(outputter.outputString(result));
             } catch (AnalysisException ex) {
-                ex.printStackTrace();
+                printException(ex);
+            } catch (TimeoutException ex) {
+                printException(ex);
             } finally {
                 if (timeoutMillis != null) {
                     TimeoutRegister.remove();

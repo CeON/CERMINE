@@ -13,4 +13,13 @@ public class TimeoutException extends RuntimeException{
 					+"%d milliseconds past the deadline time", 
 					currentTimeMillis - endTimeMillis));
 	}
+	
+	/**
+	 * Constructor to be used when you want to re-throw a timeout-related 
+	 * exception. 
+	 * @param ex exception
+	 */
+	public TimeoutException(Exception ex){
+	    super(ex);
+	}
 }

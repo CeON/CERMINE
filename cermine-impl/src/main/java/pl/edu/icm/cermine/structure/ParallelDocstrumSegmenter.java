@@ -119,7 +119,11 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
             }
             TimeoutRegister.get().check();
         } catch (ExecutionException ex) {
-            throw new AnalysisException("Cannot segment pages!", ex);
+            if (ex.getCause() instanceof TimeoutException){
+                throw new TimeoutException((Exception)ex);
+            } else {
+                throw new AnalysisException("Cannot segment pages!", ex);
+            }
         } catch (InterruptedException ex) {
             throw new AnalysisException("Cannot segment pages!", ex);
         }
@@ -152,7 +156,11 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
             }
             return output;
         } catch (ExecutionException ex) {
-            throw new AnalysisException("Cannot segment pages!", ex);
+            if (ex.getCause() instanceof TimeoutException){
+                throw new TimeoutException((Exception)ex);
+            } else {
+                throw new AnalysisException("Cannot segment pages!", ex);
+            }
         } catch (InterruptedException ex) {
             throw new AnalysisException("Cannot segment pages!", ex);
         }

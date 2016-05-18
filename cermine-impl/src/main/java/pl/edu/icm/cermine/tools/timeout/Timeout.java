@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 
 /** 
  * Class that throws an exception when given amount of time has already passed
- * when its {@link check()} method is called.
+ * when its {@link #check()} method is called.
  * 
  * @author Mateusz Kobos
  */
@@ -42,6 +42,16 @@ public class Timeout {
 	
 	private static long getCurrentTime(){
         return System.currentTimeMillis();
-	}
+	}	
 	
+	/**
+	 * Return the timeout with more immediate deadline time.
+	 */
+	public static Timeout min(Timeout t0, Timeout t1){
+	    if (t0.endTimeMillis < t1.endTimeMillis){
+	        return t0;
+	    } else {
+	        return t1;
+	    }
+	}
 }

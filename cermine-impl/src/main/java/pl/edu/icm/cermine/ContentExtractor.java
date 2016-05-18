@@ -50,8 +50,32 @@ public class ContentExtractor {
     
     private Timeout mainTimeout = new Timeout();
     
+    /**
+     * Creates the object.
+     * @throws AnalysisException
+     */
     public ContentExtractor() throws AnalysisException{
         this.extractor = new InternalContentExtractor();
+    }
+    
+    /**
+     * Creates the object and sets the timeout before any other initialization 
+     * is done. See {@link #setTimeout(long)} for more details about the
+     * timeout.
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     */
+    public ContentExtractor(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException{
+        this.setTimeout(timeoutSeconds);
+        try {
+            TimeoutRegister.set(mainTimeout);
+            TimeoutRegister.get().check();
+            this.extractor = new InternalContentExtractor();
+        } finally {
+            TimeoutRegister.remove();
+        }
     }
     
     /**
@@ -614,11 +638,8 @@ public class ContentExtractor {
         File file = new File(path);
         if (file.isFile()) {
             try {
-                ContentExtractor extractor = new ContentExtractor();
-                if (timeoutSeconds != null) {
-                    extractor.setTimeout(timeoutSeconds);
-                }
-                TimeoutRegister.get().check();
+                ContentExtractor extractor = 
+                        createContentExtractor(timeoutSeconds);
                 parser.updateMetadataModel(extractor.getConf());
                 parser.updateInitialModel(extractor.getConf());
                 InputStream in = new FileInputStream(file);
@@ -651,10 +672,7 @@ public class ContentExtractor {
  
                 ContentExtractor extractor = null;
                 try {
-                    extractor = new ContentExtractor();
-                    if (timeoutSeconds != null){
-                        extractor.setTimeout(timeoutSeconds);
-                    }
+                    extractor = createContentExtractor(timeoutSeconds);
                     parser.updateMetadataModel(extractor.getConf());
                     parser.updateInitialModel(extractor.getConf());
                     InputStream in = new FileInputStream(pdf);
@@ -695,6 +713,18 @@ public class ContentExtractor {
                 System.out.println("");
             }
         }
+    }
+    
+    private static ContentExtractor createContentExtractor(Long timeoutSeconds) 
+            throws TimeoutException, AnalysisException{
+        ContentExtractor extractor = null;
+        if (timeoutSeconds != null) {
+            extractor = new ContentExtractor(timeoutSeconds);
+        } else {
+            extractor = new ContentExtractor();
+        }
+        TimeoutRegister.get().check();
+        return extractor;
     }
         
     private static void printException(Exception ex) {

@@ -20,7 +20,7 @@ import com.google.common.base.Preconditions;
  * <pre>
  * <code>
  * try {
- *   TimeoutRegister.set(new StandardTimeout(300));
+ *   TimeoutRegister.set(new Timeout(300));
  *   doStuff();
  * } finally {
  *   TimeoutRegister.remove();
@@ -31,14 +31,15 @@ import com.google.common.base.Preconditions;
  * @author Mateusz Kobos
  */
 public class TimeoutRegister {
-	private static final Timeout noTimeout = new DummyTimeout();
+	private static final Timeout noTimeout = new Timeout();
 	
-	private static final ThreadLocal<Timeout> instance = new ThreadLocal<Timeout>(){
-		@Override
-		protected Timeout initialValue(){
-			return noTimeout;
-		}
-	};
+	private static final ThreadLocal<Timeout> instance = 
+	        new ThreadLocal<Timeout>(){
+        		@Override
+        		protected Timeout initialValue(){
+        			return noTimeout;
+        		}
+	        };
 	
 	public static Timeout get(){
 		return instance.get();

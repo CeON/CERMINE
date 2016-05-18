@@ -9,7 +9,7 @@ public class TimeoutException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 
 	public TimeoutException(long currentTimeMillis, long endTimeMillis){
-		super(String.format("Timeout occured: when checked, it was already "
+		super(String.format("Timeout occured: when checked, it was "
 					+"%d milliseconds past the deadline time", 
 					currentTimeMillis - endTimeMillis));
 	}

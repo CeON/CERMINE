@@ -44,7 +44,7 @@ import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
-import pl.edu.icm.cermine.tools.timeout.StandardTimeout;
+import pl.edu.icm.cermine.tools.timeout.Timeout;
 import pl.edu.icm.cermine.tools.timeout.TimeoutException;
 import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
@@ -179,7 +179,7 @@ public class ContentExtractor {
     public BxDocument getBxDocument(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getBxDocument();
         } finally {
             TimeoutRegister.remove();
@@ -209,7 +209,7 @@ public class ContentExtractor {
     public DocumentMetadata getMetadata(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getMetadata();
         } finally {
             TimeoutRegister.remove();
@@ -244,7 +244,7 @@ public class ContentExtractor {
     public Element getNLMMetadata(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMMetadata();
         } finally {
             TimeoutRegister.remove();
@@ -273,7 +273,7 @@ public class ContentExtractor {
     public List<BibEntry> getReferences(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getReferences();
         } finally {
             TimeoutRegister.remove();
@@ -303,7 +303,7 @@ public class ContentExtractor {
     public List<Element> getNLMReferences(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMReferences();
         } finally {
             TimeoutRegister.remove();
@@ -333,7 +333,7 @@ public class ContentExtractor {
     public List<List<CitationPosition>> getCitationPositions(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getCitationPositions();
         } finally {
             TimeoutRegister.remove();
@@ -362,7 +362,7 @@ public class ContentExtractor {
     public List<CitationSentiment> getCitationSentiments(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getCitationSentiments();
         } finally {
             TimeoutRegister.remove();
@@ -391,7 +391,7 @@ public class ContentExtractor {
     public String getRawFullText(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getRawFullText();
         } finally {
             TimeoutRegister.remove();
@@ -420,7 +420,7 @@ public class ContentExtractor {
     public Element getLabelledRawFullText(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getLabelledRawFullText();
         } finally {
             TimeoutRegister.remove();
@@ -450,7 +450,7 @@ public class ContentExtractor {
     public Element getNLMText(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMText();
         } finally {
             TimeoutRegister.remove();
@@ -500,7 +500,7 @@ public class ContentExtractor {
     public Element getNLMContent(long timeoutSeconds) throws AnalysisException {
         try {
             TimeoutRegister.set(
-                    new StandardTimeout(timeoutSeconds*SECONDS_TO_MILLIS));
+                    new Timeout(timeoutSeconds*SECONDS_TO_MILLIS));
             return getNLMContent();
         } finally {
             TimeoutRegister.remove();
@@ -572,7 +572,7 @@ public class ContentExtractor {
         if (file.isFile()) {
             try {
                 if (timeoutMillis != null) {
-                    TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+                    TimeoutRegister.set(new Timeout(timeoutMillis));
                 }
                 ContentExtractor extractor = new ContentExtractor();
                 TimeoutRegister.get().check();
@@ -610,7 +610,7 @@ public class ContentExtractor {
                 long start = System.currentTimeMillis();
                 float elapsed = 0;
                 if (timeoutMillis != null) {
-                    TimeoutRegister.set(new StandardTimeout(timeoutMillis));
+                    TimeoutRegister.set(new Timeout(timeoutMillis));
                 }
                 
                 System.out.println("File processed: "+pdf.getPath());

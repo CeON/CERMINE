@@ -150,7 +150,7 @@ public class CommandLineOptionsParser {
         if (commandLine.hasOption("threads")) {
             return Integer.valueOf(commandLine.getOptionValue("threads"));
         }
-        return ContentExtractor.THREADS_NUMBER;
+        return InternalContentExtractor.THREADS_NUMBER;
     }
 
     private String getStringOptionValue(String defaultValue, String name) {

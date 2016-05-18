@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 import pl.edu.icm.cermine.ContentExtractor;
+import pl.edu.icm.cermine.InternalContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -102,7 +103,8 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     public BxDocument segmentDocument(BxDocument document) throws AnalysisException {
         Map<BxPage, List<Component>> componentMap = new HashMap<BxPage, List<Component>>();
 
-        ExecutorService exec = Executors.newFixedThreadPool(ContentExtractor.THREADS_NUMBER);
+        ExecutorService exec = Executors.newFixedThreadPool(
+                InternalContentExtractor.THREADS_NUMBER);
         ArrayList<Callable<NumBxPage>> tasks = new ArrayList<Callable<NumBxPage>>();
         for (BxPage page : document) {
            tasks.add(new ComponentCounter(page, TimeoutRegister.get()));
@@ -133,7 +135,8 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         BxDocument output = new BxDocument();
         BxPage[] pages = new BxPage[document.childrenCount()];
         
-        exec = Executors.newFixedThreadPool(ContentExtractor.THREADS_NUMBER);
+        exec = Executors.newFixedThreadPool(
+                InternalContentExtractor.THREADS_NUMBER);
         tasks = new ArrayList<Callable<NumBxPage>>();
         int i = 0;
         for (BxPage page : document) {

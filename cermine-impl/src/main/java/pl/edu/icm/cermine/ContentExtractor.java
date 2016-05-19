@@ -52,6 +52,7 @@ public class ContentExtractor {
     
     /**
      * Creates the object.
+     * 
      * @throws AnalysisException
      */
     public ContentExtractor() throws AnalysisException{
@@ -60,8 +61,10 @@ public class ContentExtractor {
     
     /**
      * Creates the object and sets the timeout before any other initialization 
-     * is done. See {@link #setTimeout(long)} for more details about the
-     * timeout.
+     * in the constructor is done.
+     * <p/>
+     * See {@link #setTimeout(long)} for more details about the timeout.
+     * 
      * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed.
@@ -91,7 +94,8 @@ public class ContentExtractor {
      * <p/>
      * The value of the timeout is approximate because in some cases,
      * the program might be allowed to slightly exceeded this time,
-     * say by a second or two.
+     * say by a second or two (depending on the processor speed and processed
+     * file complexity).
      * 
      * @param timeoutSeconds approximate timeout in seconds
      */
@@ -205,12 +209,6 @@ public class ContentExtractor {
     public BxDocument getBxDocument(long timeoutSeconds) 
             throws AnalysisException, TimeoutException {
         return getBxDocument(combineWithMainTimeout(timeoutSeconds));
-    }
-    
-    private Timeout combineWithMainTimeout(long timeoutSeconds){
-        Timeout local = new Timeout(timeoutSeconds * SECONDS_TO_MILLIS);
-        Timeout t = Timeout.min(mainTimeout, local);
-        return t;
     }
     
 
@@ -599,6 +597,13 @@ public class ContentExtractor {
     public Element getNLMContent(long timeoutSeconds) 
             throws AnalysisException, TimeoutException {
         return getNLMContent(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    
+    private Timeout combineWithMainTimeout(long timeoutSeconds){
+        Timeout local = new Timeout(timeoutSeconds * SECONDS_TO_MILLIS);
+        Timeout t = Timeout.min(mainTimeout, local);
+        return t;
     }
     
 

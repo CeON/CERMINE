@@ -12,7 +12,9 @@ public class Timeout {
 	private long endTimeMillis;
 
 	/**
-	 * Create a new instance and start a virtual timeout clock.
+	 * Create a new instance and start a virtual timeout clock. If the timeout
+	 * is set to 0, the first call of {@link #check()} method will result in 
+	 * throwing the {@link TimeoutException}.
 	 */
 	public Timeout(long timeoutMillis){
         Preconditions.checkArgument(timeoutMillis >= 0);

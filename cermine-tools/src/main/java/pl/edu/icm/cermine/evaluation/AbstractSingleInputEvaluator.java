@@ -33,6 +33,10 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * evaluated processor and to create expected result of the processing.
  *
  * @author krusek
+ * @param <L>
+ * @param <P>
+ * @param <I>
+ * @param <R>
  */
 public abstract class AbstractSingleInputEvaluator<L, P, I, R extends Results<R>> extends AbstractEvaluator<P, R> {
 

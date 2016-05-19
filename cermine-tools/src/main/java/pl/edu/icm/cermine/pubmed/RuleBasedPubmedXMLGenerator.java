@@ -1,17 +1,21 @@
 /**
- * This file is part of CERMINE project. Copyright (c) 2011-2013 ICM-UW
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2013 ICM-UW
  *
- * CERMINE is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * CERMINE is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with CERMINE. If not, see
- * <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package pl.edu.icm.cermine.pubmed;
 
 import pl.edu.icm.cermine.tools.SmartHashMap;
@@ -47,9 +51,9 @@ public class RuleBasedPubmedXMLGenerator {
 
     private static class LabelTrio {
 
-        private BxZoneLabel label;
-        private Double alignment;
-        private List<String> entryTokens;
+        private final BxZoneLabel label;
+        private final Double alignment;
+        private final List<String> entryTokens;
 
         @Override
         public int hashCode() {
@@ -91,7 +95,8 @@ public class RuleBasedPubmedXMLGenerator {
             this.label = label;
             this.entryTokens = tokens;
         }
-    };
+    }
+    
     private boolean verbose = false;
 
     private void setVerbose(boolean verbose) {
@@ -209,7 +214,9 @@ public class RuleBasedPubmedXMLGenerator {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
-        pubdateString.clear();
+        if (pubdateString != null) {
+            pubdateString.clear();
+        }
         if (((NodeList) xpath.evaluate("/article/front/article-meta/pub-date", domDoc, XPathConstants.NODESET)).getLength() > 1) {
             Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='ppub']", domDoc, XPathConstants.NODE);
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
@@ -921,7 +928,17 @@ public class RuleBasedPubmedXMLGenerator {
                 out.write(writer.write(Lists.newArrayList(bxDoc)));
                 out.close();
                 System.out.println("Progress: " + i + " out of " + files.size() + " (" + (i * 100. / files.size()) + "%)");
-            } catch (Exception e) {
+            } catch (AnalysisException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (XPathExpressionException e) {
+                e.printStackTrace();
+            } catch (TransformationException e) {
                 e.printStackTrace();
             }
         }

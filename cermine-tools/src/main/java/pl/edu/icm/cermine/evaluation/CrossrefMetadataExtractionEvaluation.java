@@ -26,13 +26,14 @@ import pl.edu.icm.cermine.evaluation.tools.NlmPair;
 import pl.edu.icm.cermine.evaluation.tools.ComparisonResult;
 import pl.edu.icm.cermine.evaluation.tools.NlmIterator;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
+import org.apache.commons.io.FileUtils;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Node;
@@ -45,7 +46,7 @@ import pl.edu.icm.cermine.tools.XMLTools;
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public final class PDFExtractFinalMetadataExtractionEvaluation {
+public final class CrossrefMetadataExtractionEvaluation {
 
     public void evaluate(int mode, NlmIterator iter) throws AnalysisException, IOException, TransformationException, ParserConfigurationException, SAXException, JDOMException, XPathExpressionException, TransformerException {
 
@@ -65,65 +66,72 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
         List<ComparisonResult> titles = new ArrayList<ComparisonResult>();
+        List<ComparisonResult> affiliations = new ArrayList<ComparisonResult>();
         List<ComparisonResult> references = new ArrayList<ComparisonResult>();
 
-        if (mode == 1) {
-            System.out.println("path,pextr_title,pextr_refs,one");
-        }
-        
         int i = 0;
+        
         for (NlmPair pair : iter) {
             i++;
-
+            
             if (mode == 0) {
                 System.out.println("");
                 System.out.println(">>>>>>>>> "+i);
                 System.out.println(pair.getExtractedNlm().getPath());
             }
-            if (mode == 1) {
-                System.out.print(pair.getOriginalNlm().getPath()+",");
-            }
-   
-            org.w3c.dom.Document originalNlm;
+            
             org.w3c.dom.Document extractedNlm;
+            List<String> lines;
             try {
-                originalNlm = documentBuilder.parse(new FileInputStream(pair.getOriginalNlm()));
                 extractedNlm = documentBuilder.parse(new FileInputStream(pair.getExtractedNlm()));
+                lines = FileUtils.readLines(pair.getOriginalNlm());
             } catch (SAXException ex) {
                 i--;
                 continue;
             }
+            if (lines.isEmpty()) {
+                i--;
+                continue;
+            }
             
+         
             // Document's title
-            MetadataSingle title = new MetadataSingle(originalNlm, "/article/front/article-meta//article-title",
-                                                        extractedNlm, "/pdf/title");
+            MetadataSingle title = new MetadataSingle(lines.get(0),
+                    XMLTools.extractTextFromNode(extractedNlm, "/article/front/article-meta//article-title").trim());
             title.setComp(EvaluationUtils.swComparator);
             titles.add(title);
-            title.print(mode, "title");         
+            title.print(mode, "title");
             
-            
-            //references
-            List<Node> originalRefNodes = XMLTools.extractNodes(originalNlm, "//ref-list/ref");
-            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "/pdf/reference");
-        
-            List<String> originalRefs = new ArrayList<String>();
-            List<String> extractedRefs = new ArrayList<String>();
-            for (Node originalRefNode : originalRefNodes) {
-                originalRefs.add(XMLTools.extractTextFromNode(originalRefNode).trim());
+
+            // Affiliations
+            int secondSpace = 2;
+            while (!lines.get(secondSpace).isEmpty()) {
+                secondSpace++;
             }
+            Set<String> expectedAffiliationsSet = Sets.newHashSet(lines.subList(2, secondSpace));
+            Set<String> extractedAffiliationsSet = Sets.newHashSet(XMLTools.extractTextAsList(extractedNlm, "/article/front/article-meta//aff"));
+            List<String> expectedAffiliations = Lists.newArrayList(expectedAffiliationsSet);
+            List<String> extractedAffiliations = Lists.newArrayList(extractedAffiliationsSet);
+            MetadataList affiliation = new MetadataList(expectedAffiliations, extractedAffiliations);
+            affiliation.setComp(EvaluationUtils.cosineComparator());
+            affiliations.add(affiliation);
+            affiliation.print(mode, "affiliation");
+            
+
+            //references
+            List<Node> extractedRefNodes = XMLTools.extractNodes(extractedNlm, "//ref-list/ref");
+            List<String> extractedRefs = new ArrayList<String>();
             for (Node extractedRefNode : extractedRefNodes) {
                 extractedRefs.add(XMLTools.extractTextFromNode(extractedRefNode).trim());
             }
+
+            List<String> originalRefs = lines.subList(secondSpace+1, lines.size());
             
             MetadataList refs = new MetadataList(originalRefs, extractedRefs);
             refs.setComp(EvaluationUtils.cosineComparator(0.6));
             
             references.add(refs);
             refs.print(mode, "references");
-            
-            if (mode == 1) {
-                System.out.println("1");
-            }
 
         }
 
@@ -133,27 +141,11 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
             PrecisionRecall titlePR = new PrecisionRecall().build(titles);
             titlePR.print("Title");
 
+            PrecisionRecall affiliationsPR = new PrecisionRecall().build(affiliations);
+            affiliationsPR.print("Affiliations");
+        
             PrecisionRecall refsPR = new PrecisionRecall().build(references);
             refsPR.print("References");
-        
-            List<PrecisionRecall> results = Lists.newArrayList(
-                titlePR, refsPR);
-        
-            double avgPrecision = 0;
-            double avgRecall = 0;
-            double avgF1 = 0;
-            for (PrecisionRecall result : results) {
-                avgPrecision += result.getPrecision();
-                avgRecall += result.getRecall();
-                avgF1 += result.getF1();
-            }
-            avgPrecision /= results.size();
-            avgRecall /= results.size();
-            avgF1 /= results.size();
-  
-            System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
-            System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
-            System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
         }
     }
 
@@ -165,6 +157,7 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
         String directory = args[0];
         String origExt = args[1];
         String extrExt = args[2];
+
         int mode = 0;
         if (args.length == 4 && args[3].equals("csv")) {
             mode = 1;
@@ -173,9 +166,10 @@ public final class PDFExtractFinalMetadataExtractionEvaluation {
             mode = 2;
         }
 
-        PDFExtractFinalMetadataExtractionEvaluation e = new PDFExtractFinalMetadataExtractionEvaluation();
+        CrossrefMetadataExtractionEvaluation e = new CrossrefMetadataExtractionEvaluation();
         NlmIterator iter = new NlmIterator(directory, origExt, extrExt);
         e.evaluate(mode, iter);
-    }
 
+    }
+    
 }

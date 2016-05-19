@@ -34,6 +34,8 @@ import pl.edu.icm.cermine.exception.TransformationException;
  * processing (expected document).
  *
  * @author krusek
+ * @param <P>
+ * @param <R>
  */
 public abstract class AbstractDualInputEvaluator<P, R extends Results<R>> extends AbstractEvaluator<P, R> {
 

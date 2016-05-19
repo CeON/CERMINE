@@ -40,7 +40,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
-import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.XMLTools;

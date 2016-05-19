@@ -275,8 +275,6 @@ public final class PdfxFinalTextExtractionEvaluation {
                     sb = new StringBuilder();
                     sb.append(exp);
                     sb.append("\n");
-                } else {
-                    continue;
                 }
             }
             if (!sb.toString().isEmpty()) {
@@ -295,8 +293,6 @@ public final class PdfxFinalTextExtractionEvaluation {
                     sb = new StringBuilder();
                     sb.append(ext);
                     sb.append("\n");
-                } else {
-                    continue;
                 }
             }
             if (!sb.toString().isEmpty()) {

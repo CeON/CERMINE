@@ -51,6 +51,7 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
      *
      * @param document document processed by evaluated processor
      * @param writer
+     * @throws pl.edu.icm.cermine.exception.TransformationException
      */
     protected void writeDocument(P document, Writer writer) throws TransformationException{}
 
@@ -178,8 +179,8 @@ public abstract class AbstractEvaluator<P, R extends AbstractEvaluator.Results<R
 
     protected static class Documents<P> {
 
-        private P expected;
-        private P actual;
+        private final P expected;
+        private final P actual;
 
         public Documents(P expected, P actual) {
             this.expected = expected;

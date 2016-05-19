@@ -24,8 +24,8 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 public class ClassificationResults implements AbstractEvaluator.Results<ClassificationResults> {
 
-    private Set<BxZoneLabel> possibleLabels;
-    private Map<LabelPair, Integer> classificationMatrix;
+    private final Set<BxZoneLabel> possibleLabels;
+    private final Map<LabelPair, Integer> classificationMatrix;
     private int goodRecognitions = 0;
     private int badRecognitions = 0;
 
@@ -79,8 +79,7 @@ public class ClassificationResults implements AbstractEvaluator.Results<Classifi
 
     public double sum(Collection<Double> collection) {
     	double sum = 0.0;
-        for (Iterator<Double> it = collection.iterator(); it.hasNext();) {
-            Double elem = it.next();
+        for (Double elem : collection) {
             sum += elem;
         }
     	return sum;

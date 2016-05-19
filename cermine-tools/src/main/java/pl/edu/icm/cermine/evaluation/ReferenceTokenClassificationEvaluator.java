@@ -111,7 +111,6 @@ public class ReferenceTokenClassificationEvaluator {
         double meanRecall = 0;
         double meanFScore = 0;
         for (String orig : labels) {
-            assert(origToTest.get(orig).get(orig) == testToOrig.get(orig).get(orig));
             System.out.println("Original "+orig);
             System.out.println(origToTest.get(orig));
             for (String test : labels) {

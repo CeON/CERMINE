@@ -51,9 +51,9 @@ public class PubmedXMLGenerator {
 
     private static class LabelTrio {
 
-        private BxZoneLabel label;
-        private Double alignment;
-        private List<String> entryTokens;
+        private final BxZoneLabel label;
+        private final Double alignment;
+        private final List<String> entryTokens;
         
         @Override
         public int hashCode() {
@@ -214,7 +214,9 @@ public class PubmedXMLGenerator {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
-        pubdateString.clear();
+        if (pubdateString != null) {
+            pubdateString.clear();
+        }
         if (((NodeList) xpath.evaluate("/article/front/article-meta/pub-date", domDoc, XPathConstants.NODESET)).getLength() > 1) {
             Node pubdateNode = (Node) xpath.evaluate("/article/front/article-meta/pub-date[@pub-type='ppub']", domDoc, XPathConstants.NODE);
             pubdateString = XMLTools.extractChildrenAsTextList(pubdateNode);
@@ -797,7 +799,17 @@ public class PubmedXMLGenerator {
                 out.close();
                 
                 System.out.println(" done");
-            } catch (Exception e) {
+            } catch (AnalysisException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (XPathExpressionException e) {
+                e.printStackTrace();
+            } catch (TransformationException e) {
                 e.printStackTrace();
             }
         }

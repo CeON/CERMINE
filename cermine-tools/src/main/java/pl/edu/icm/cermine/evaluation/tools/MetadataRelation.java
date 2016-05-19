@@ -26,8 +26,8 @@ import java.util.*;
  */
 public class MetadataRelation implements ComparisonResult {
 
-    private Set<StringRelation> expectedValue = new HashSet<StringRelation>();
-    private Set<StringRelation> extractedValue = new HashSet<StringRelation>();
+    private final Set<StringRelation> expectedValue = new HashSet<StringRelation>();
+    private final Set<StringRelation> extractedValue = new HashSet<StringRelation>();
 
     private Double precision;
     private Double recall;
@@ -171,10 +171,7 @@ public class MetadataRelation implements ComparisonResult {
             if ((this.element1 == null) ? (other.element1 != null) : !this.element1.equals(other.element1)) {
                 return false;
             }
-            if ((this.element2 == null) ? (other.element2 != null) : !this.element2.equals(other.element2)) {
-                return false;
-            }
-            return true;
+            return (this.element2 == null) ? (other.element2 == null) : this.element2.equals(other.element2);
         }
 
         @Override

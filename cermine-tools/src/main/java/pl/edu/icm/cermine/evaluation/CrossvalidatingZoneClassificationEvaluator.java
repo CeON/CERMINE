@@ -56,8 +56,8 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
 
     protected int foldness;
     private final Map<BxZoneLabel, BxZoneLabel> labelMap = DEFAULT_LABEL_MAP.clone();
-    private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-    private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+    private final TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+    private final BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
 
     //sample launch: -fold 5 /path/to/your/xml/catalog
     public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator)

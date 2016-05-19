@@ -1,3 +1,20 @@
+/**
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2013 ICM-UW
+ *
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package pl.edu.icm.cermine.pubmed;
 
@@ -42,8 +59,6 @@ public class PubmedZoneMerger {
             BxDocument bxDoc = new BxDocument().setPages(reader.read(r));
             
             double avgDiffZone = 0;
-            double avgDiffRelZone = 0;
-            int countD = 0;
             int countDZ = 0;
             
             for (BxLine line : bxDoc.asLines()) {
@@ -75,21 +90,13 @@ public class PubmedZoneMerger {
                 
                 if (line.getParent().equals(line.getNext().getParent())) {
                     avgDiffZone += diff;
-                    avgDiffRelZone += diffR;
                     countDZ++;
                 }
-                
-                countD++;
-            
             }
             
             avgDiffZone /= countDZ;
-            avgDiffRelZone /= countDZ;
             
             for (BxPage page : bxDoc) {
-                List<BxZone> zones = new ArrayList<BxZone>();
-                zones.addAll(Lists.newArrayList(page));
-                
                 List<BxLine> lines = new ArrayList<BxLine>();
                 for (BxZone z : page) {
                      for (BxLine l : z) {

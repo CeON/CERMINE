@@ -42,24 +42,24 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocument, BxDocument, BxDocument, SegmentationEvaluator.Results> {
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
-    
+
     private DocumentSegmenter pageSegmenter = new DocstrumSegmenter();
 
     private final Set<BxZoneLabel> ignoredLabels = EnumSet.noneOf(BxZoneLabel.class);
 
-    private UnsegmentedPagesFlattener flattener = new UnsegmentedPagesFlattener();
+    private final UnsegmentedPagesFlattener flattener = new UnsegmentedPagesFlattener();
 
-	private final ReadingOrderResolver resolver = new HierarchicalReadingOrderResolver();
+    private final ReadingOrderResolver resolver = new HierarchicalReadingOrderResolver();
 
-	private TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+    private final TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
 
-	private BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+    private final BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
 
     @Override
-	protected Pattern getFilenamePattern() {
-		return FILENAME_PATTERN;
-	}
-	
+    protected Pattern getFilenamePattern() {
+        return FILENAME_PATTERN;
+    }
+
     public void setPageSegmenter(DocumentSegmenter pageSegmenter) {
         this.pageSegmenter = pageSegmenter;
     }
@@ -73,7 +73,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         ignoredLabels.addAll(EnumSet.allOf(BxZoneLabel.class));
         ignoredLabels.removeAll(labels);
     }
-    
+
     @Override
     protected void preprocessDocument(BxDocument document) {
         flattener.process(document);
@@ -113,9 +113,9 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
     @Override
     protected void printItemResults(BxDocument expected, BxDocument actual, int idx, Results results) {
-    	printItemResults(idx, results);
+        printItemResults(idx, results);
     }
-    
+
     protected void printItemResults(int pageIndex, Results results) {
         Formatter formatter = new Formatter(System.out, Locale.US);
         formatter.format(" | %8d |", pageIndex + 1);
@@ -164,12 +164,12 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
                     results.all++;
                 }
             }
-            
+
         }
 
         return results;
     }
-    
+
     private LevelResults compareLines(BxPage expected, BxPage actual) {
         Map<BxChunk, BxLine> map = BxModelUtils.mapChunksToLines(actual);
 
@@ -201,7 +201,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
     private LevelResults compareZones(BxPage expected, BxPage actual) {
         Map<BxChunk, BxZone> map = BxModelUtils.mapChunksToZones(actual);
-        
+
         LevelResults results = new LevelResults();
         for (BxZone expectedZone : expected) {
             if (ignoredLabels.contains(expectedZone.getLabel())) {
@@ -228,34 +228,34 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         return results;
     }
 
-	@Override
-	protected BxDocument prepareActualDocument(BxDocument document) throws AnalysisException {
+    @Override
+    protected BxDocument prepareActualDocument(BxDocument document) throws AnalysisException {
         document = BxModelUtils.deepClone(document);
-	    preprocessDocument(document);
-	    return processDocument(document);
-	}
+        preprocessDocument(document);
+        return processDocument(document);
+    }
 
-	@Override
-	protected BxDocument prepareExpectedDocument(BxDocument document) throws AnalysisException {
+    @Override
+    protected BxDocument prepareExpectedDocument(BxDocument document) throws AnalysisException {
         resolver.resolve(document);
-		return document;
-	}
+        return document;
+    }
 
-	@Override
-	protected BxDocument readDocument(Reader input) throws TransformationException {
-	    return new BxDocument().setPages(reader.read(input));
-	}
+    @Override
+    protected BxDocument readDocument(Reader input) throws TransformationException {
+        return new BxDocument().setPages(reader.read(input));
+    }
 
-	@Override
-	protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
+    @Override
+    protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
         writer.write(output, Lists.newArrayList(document));
-	}
+    }
 
-	@Override
-	protected Iterator<BxDocument> iterateItems(final BxDocument document) {
+    @Override
+    protected Iterator<BxDocument> iterateItems(final BxDocument document) {
         return new Iterator<BxDocument>() {
             private boolean used = false;
-            
+
             @Override
             public boolean hasNext() {
                 return !used;
@@ -271,11 +271,12 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
             public void remove() {
                 used = true;
             }
-        
-        };
-	}
 
-	public static class Results implements AbstractEvaluator.Results<Results> {
+        };
+    }
+
+    public static class Results implements AbstractEvaluator.Results<Results> {
+
         private LevelResults zoneLevel = new LevelResults();
         private LevelResults lineLevel = new LevelResults();
         private LevelResults wordLevel = new LevelResults();
@@ -327,6 +328,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     }
 
     public static class LevelResults {
+
         private int all = 0;
         private int matched = 0;
 
@@ -357,20 +359,19 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         public double getScore() {
             if (all == 0) {
                 return 1.0;
-            }
-            else {
+            } else {
                 return ((double) matched) / all;
             }
         }
     }
-    
+
     public static void main(String[] args) throws AnalysisException, IOException, TransformationException {
-        
+
         SegmentationEvaluator evaluator = new SegmentationEvaluator();
         evaluator.ignoredLabels.add(BxZoneLabel.BODY_TABLE);
         evaluator.ignoredLabels.add(BxZoneLabel.BODY_FIGURE);
         evaluator.ignoredLabels.add(BxZoneLabel.BODY_EQUATION);
-        
+
         File file = new File(args[0]);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"xml"}, true);
         Results results = evaluator.newResults();
@@ -385,7 +386,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         for (File filee : files) {
             System.out.println(new Date(System.currentTimeMillis()));
             System.out.println(filee.getName());
-            
+
             reader = new FileReader(filee);
             origDoc = evaluator.prepareExpectedDocument(evaluator.readDocument(reader));
             testDoc = evaluator.prepareActualDocument(origDoc);

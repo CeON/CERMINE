@@ -15,6 +15,11 @@ import java.util.concurrent.Future;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Mateusz Kobos
+ *
+ */
 public class TimeoutRegisterTest {
 
     @Test(expected = TimeoutException.class)
@@ -35,7 +40,7 @@ public class TimeoutRegisterTest {
     }
 
     @Test(expected = TimeoutException.class)
-    public void testZeroTimeoutWorks() {
+    public void testZeroTimeout() {
         Timeout t = new Timeout(0);
         t.check();
     }

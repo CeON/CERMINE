@@ -22,7 +22,7 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutException;
 public class ContentExtractorTimeoutTest {
     static final private String COMPLEX_PDF_PATH = "/pl/edu/icm/cermine/tools/timeout/complex.pdf";
     static final private String SIMPLE_PDF_PATH = "/pl/edu/icm/cermine/tools/timeout/simple.pdf";
-    static final private long ACCEPTABLE_DELAY = 5000;
+    static final private long ACCEPTABLE_DELAY_MILLIS = 5000;
     
     @Test
     public void testNoTimeout() 
@@ -65,7 +65,7 @@ public class ContentExtractorTimeoutTest {
     @Test
     public void testObjectTimeout() 
             throws IOException, TimeoutException, AnalysisException{
-        assumeOperationsTimeout(
+        assumeOperationsEndInTimeout(
                 new ContentExtractorFactory(){
                     @Override
                     public ContentExtractor create(InputStream document) 
@@ -89,7 +89,7 @@ public class ContentExtractorTimeoutTest {
     @Test
     public void testMethodTimeout() 
             throws IOException, TimeoutException, AnalysisException{
-        assumeOperationsTimeout(Collections.singletonList(
+        assumeOperationsEndInTimeout(Collections.singletonList(
                 new ExtractorOperation(){
                     @Override
                     public void run(ContentExtractor extractor) 
@@ -101,10 +101,10 @@ public class ContentExtractorTimeoutTest {
     }
     
     @Test
-    public void testAllExtractionOperationsTimeout() 
+    public void testAllExtractionOperationsEndInTimeout() 
             throws AnalysisException, IOException{
-        /** The timeout set here is zero to make sure that the methods timeout
-         * no matter how short they take to execute. */
+        /** The timeout set here is zero to make sure that the methods end in
+         * timeout no matter how short they take to execute. */
         List<? extends ExtractorOperation> list = Arrays.asList(
         new ExtractorOperation(){
             @Override
@@ -183,13 +183,13 @@ public class ContentExtractorTimeoutTest {
                 extractor.getNLMContent(0);
             }
         });
-        assumeOperationsTimeout(list);
+        assumeOperationsEndInTimeout(list);
     }
     
     @Test
     public void testObjectAndMethodTimeoutCombinedWithObjectTimeoutActive() 
             throws IOException, TimeoutException, AnalysisException{
-        assumeOperationsTimeout(
+        assumeOperationsEndInTimeout(
             new ContentExtractorFactory(){
                 @Override
                 public ContentExtractor create(InputStream document) 
@@ -213,7 +213,7 @@ public class ContentExtractorTimeoutTest {
     @Test
     public void testObjectAndMethodTimeoutCombinedWithMethodTimeoutActive() 
             throws IOException, TimeoutException, AnalysisException{
-        assumeOperationsTimeout(
+        assumeOperationsEndInTimeout(
                 new ContentExtractorFactory(){
                     @Override
                     public ContentExtractor create(InputStream document) 
@@ -234,10 +234,10 @@ public class ContentExtractorTimeoutTest {
             );
     }
     
-    private static void assumeOperationsTimeout(
+    private static void assumeOperationsEndInTimeout(
             Collection<? extends ExtractorOperation> operations) 
             throws AnalysisException, IOException{
-        assumeOperationsTimeout(new ContentExtractorFactory(){
+        assumeOperationsEndInTimeout(new ContentExtractorFactory(){
             @Override
             public ContentExtractor create(InputStream document) 
                     throws AnalysisException, IOException{
@@ -248,7 +248,7 @@ public class ContentExtractorTimeoutTest {
         }, operations);
     }
     
-    private static void assumeOperationsTimeout(
+    private static void assumeOperationsEndInTimeout(
             ContentExtractorFactory factory,
             Collection<? extends ExtractorOperation> operations) 
             throws AnalysisException, IOException{
@@ -265,17 +265,18 @@ public class ContentExtractorTimeoutTest {
             } finally {
                 in.close();
             }
-            fail("The processing should have been interrupted by timeout but wasn't");
+            fail("The processing should have been interrupted by timeout "
+                    + "but wasn't");
         }
     } 
 
     private static void assumeTimeoutWithinTimeBound(long startMillis) {
         long endMillis = System.currentTimeMillis();
         long diff = endMillis - startMillis;
-        if (diff > ACCEPTABLE_DELAY){
+        if (diff > ACCEPTABLE_DELAY_MILLIS){
             fail("The processing interrupted by the timeout took "+diff
                  +" milliseconds while it should have taken no more than "
-                    +ACCEPTABLE_DELAY+" milliseconds");
+                    +ACCEPTABLE_DELAY_MILLIS+" milliseconds");
         }
     }
 

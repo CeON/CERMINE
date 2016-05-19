@@ -11,12 +11,12 @@ import com.google.common.base.Preconditions;
  *   subsequently use the {@link Timeout} object to check if the timeout time 
  *   has passed or not.</li>
  *   <li>Remove the timeout from the register {@link #remove()}, i.e., remove
- *   the timeout. After it is called, if {@link #get()} is called to get the 
- *   {@link Timeout} object, a dummy implementation will be received with no 
+ *   the timeout. After removal, if {@link #get()} is called to get the 
+ *   {@link Timeout} object, an object will be returned with no 
  *   timeout set.</li>
  * </ul>
  * 
- * Example of usage:
+ * Typical usage:
  * <pre>
  * <code>
  * try {

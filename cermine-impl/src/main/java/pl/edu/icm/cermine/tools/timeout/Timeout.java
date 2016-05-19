@@ -9,25 +9,27 @@ import com.google.common.base.Preconditions;
  * @author Mateusz Kobos
  */
 public class Timeout {
-	private long endTimeMillis;
+	private long deadlineMillis;
 
 	/**
-	 * Create a new instance and start a virtual timeout clock. If the timeout
-	 * is set to 0, the first call of {@link #check()} method will result in 
-	 * throwing the {@link TimeoutException}.
+	 * Create a new instance with the deadline set corresponding to given 
+	 * timeout value. 
+	 * If the timeout is set to 0, the first call of {@link #check()} method
+	 * will result in throwing the {@link TimeoutException}.
+	 * @param timeoutMillis timeout in milliseconds
 	 */
 	public Timeout(long timeoutMillis){
         Preconditions.checkArgument(timeoutMillis >= 0);
 		long startTime = getCurrentTime();
-		this.endTimeMillis = startTime + timeoutMillis;
+		this.deadlineMillis = startTime + timeoutMillis;
 	}
 	
     /**
-     * Create a new instance and start a virtual timeout clock that will never 
-     * stop, i.e., it will never indicate that the time has already passed.
+     * Create a new instance and with the deadline set in an unattainable 
+     * future.
      */	
 	public Timeout(){
-	    this.endTimeMillis = Long.MAX_VALUE;
+	    this.deadlineMillis = Long.MAX_VALUE;
 	}
 	
 	/**
@@ -37,8 +39,8 @@ public class Timeout {
 	 */
 	public void check() throws TimeoutException{
 		long currTimeMillis = getCurrentTime();
-		if(currTimeMillis >= endTimeMillis){
-			throw new TimeoutException(currTimeMillis, endTimeMillis);
+		if(currTimeMillis >= deadlineMillis){
+			throw new TimeoutException(currTimeMillis, deadlineMillis);
 		}
 	}
 	
@@ -47,10 +49,10 @@ public class Timeout {
 	}	
 	
 	/**
-	 * Return the timeout with more immediate deadline time.
+	 * Return the timeout corresponding to the more immediate deadline.
 	 */
 	public static Timeout min(Timeout t0, Timeout t1){
-	    if (t0.endTimeMillis < t1.endTimeMillis){
+	    if (t0.deadlineMillis < t1.deadlineMillis){
 	        return t0;
 	    } else {
 	        return t1;

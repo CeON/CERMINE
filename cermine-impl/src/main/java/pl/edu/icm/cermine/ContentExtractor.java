@@ -60,8 +60,8 @@ public class ContentExtractor {
     }
     
     /**
-     * Creates the object and sets the timeout before any other initialization 
-     * in the constructor is done.
+     * Creates the object and sets the object-bound timeout before any 
+     * other initialization in the constructor is done.
      * <p/>
      * See {@link #setTimeout(long)} for more details about the timeout.
      * 
@@ -89,11 +89,11 @@ public class ContentExtractor {
      * stops and the method throws an exception.
      * <p/>
      * In case the <code>get*</code> method defines a timeout by itself, it is
-     * treated as an additional restriction (i.e., the effective timeout 
+     * treated as an additional time restriction (i.e., the effective timeout 
      * deadline is a minimum value of both timeout deadlines).
      * <p/>
-     * The value of the timeout is approximate because in some cases,
-     * the program might be allowed to slightly exceeded this time,
+     * The value of the timeout is approximate. This is because in some cases,
+     * the program might be allowed to slightly exceeded the timeout,
      * say by a second or two (depending on the processor speed and processed
      * file complexity).
      * 

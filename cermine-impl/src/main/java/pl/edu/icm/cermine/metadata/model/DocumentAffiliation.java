@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata.model;
 
 import java.text.Normalizer;
@@ -36,21 +35,21 @@ import pl.edu.icm.cermine.parsing.model.Token;
 public class DocumentAffiliation implements ParsableString<Token<AffiliationLabel>> {
 
     private String id;
-    
+
     private String index;
-    
+
     private String rawText;
-    
+
     private List<Token<AffiliationLabel>> tokens;
-    
+
     public DocumentAffiliation(String rawText) {
-    	this("id", rawText);
+        this("id", rawText);
     }
 
     public DocumentAffiliation(String id, String rawText) {
         this(id, null, rawText);
     }
-    
+
     public DocumentAffiliation(String id, String index, String rawText) {
         this.id = id;
         this.index = ContentCleaner.clean(index);
@@ -87,32 +86,32 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
     public void setRawText(String rawText) {
         this.rawText = rawText;
     }
-    
-    @Override
-	public List<Token<AffiliationLabel>> getTokens() {
-		return tokens;
-	}
 
     @Override
-	public void setTokens(List<Token<AffiliationLabel>> tokens) {
-		this.tokens = tokens;
-	}
+    public List<Token<AffiliationLabel>> getTokens() {
+        return tokens;
+    }
 
     @Override
-	public void addToken(Token<AffiliationLabel> token) {
-		this.tokens.add(token);
-	}
+    public void setTokens(List<Token<AffiliationLabel>> tokens) {
+        this.tokens = tokens;
+    }
+
+    @Override
+    public void addToken(Token<AffiliationLabel> token) {
+        this.tokens.add(token);
+    }
 
     public void mergeTokens() {
-        if (tokens == null || tokens.isEmpty()){
+        if (tokens == null || tokens.isEmpty()) {
             return;
         }
         Token<AffiliationLabel> actToken = null;
         List<Token<AffiliationLabel>> newTokens = new ArrayList<Token<AffiliationLabel>>();
         for (Token<AffiliationLabel> token : tokens) {
-            if (actToken == null){
+            if (actToken == null) {
                 actToken = new Token<AffiliationLabel>(token.getText(), token.getStartIndex(), token.getEndIndex(), token.getLabel());
-                
+
             } else if (actToken.getLabel().equals(token.getLabel())) {
                 actToken.setEndIndex(token.getEndIndex());
             } else {
@@ -126,17 +125,17 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
             if (i + 1 == newTokens.size()) {
                 token.setEndIndex(rawText.length());
             } else {
-                token.setEndIndex(newTokens.get(i+1).getStartIndex());
+                token.setEndIndex(newTokens.get(i + 1).getStartIndex());
             }
             token.setText(rawText.substring(token.getStartIndex(), token.getEndIndex()));
         }
         tokens = newTokens;
     }
-    
+
     @Override
-	public void appendText(String text) {
-		this.rawText += text;
-	}
+    public void appendText(String text) {
+        this.rawText += text;
+    }
 
     @Override
     public void clean() {
@@ -152,7 +151,7 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
         }
         return null;
     }
-    
+
     public String getCountry() {
         for (Token<AffiliationLabel> token : tokens) {
             if (token.getLabel().equals(AffiliationLabel.COUN)) {
@@ -161,5 +160,5 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
         }
         return null;
     }
-    
+
 }

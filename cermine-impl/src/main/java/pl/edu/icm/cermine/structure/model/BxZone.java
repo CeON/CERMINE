@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.structure.model;
 
 import java.util.*;
 import pl.edu.icm.cermine.tools.CountMap;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * Models a single zone of a page. A zone contains either lines of text
@@ -108,6 +109,7 @@ public final class BxZone extends BxObject<BxLine, BxZone, BxPage> {
         Set<String> names = new HashSet<String>();
         for (BxLine line : lines) {
             names.addAll(line.getFontNames());
+            TimeoutRegister.get().check();
         }
         return names;
     }

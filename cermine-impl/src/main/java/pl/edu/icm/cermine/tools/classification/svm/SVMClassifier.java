@@ -28,6 +28,7 @@ import java.util.Map;
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import pl.edu.icm.cermine.tools.classification.general.*;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * @author Pawel Szostek
@@ -78,56 +79,60 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
         double scaledUpperBound = 1.0;
         FeatureVectorScalerImpl lScaler = new FeatureVectorScalerImpl(dimensions, scaledLowerBound, scaledUpperBound);
         lScaler.setStrategy(new LinearScaling());
-        this.scaler = lScaler;
-
-        featuresNames = (String[]) featureVectorBuilder.getFeatureNames().toArray(new String[0]);
-
-        param = getDefaultParam();
-    }
-
-    protected static svm_parameter clone(svm_parameter param) {
-        svm_parameter ret = new svm_parameter();
-        // default values
-        ret.svm_type = param.svm_type;
-        ret.C = param.C;
-        ret.kernel_type = param.kernel_type;
-        ret.degree = param.degree;
-        ret.gamma = param.gamma; // 1/k
-        ret.coef0 = param.coef0;
-        ret.nu = param.nu;
-        ret.cache_size = param.cache_size;
-        ret.eps = param.eps;
-        ret.p = param.p;
-        ret.shrinking = param.shrinking;
-        ret.probability = param.probability;
-        ret.nr_weight = param.nr_weight;
-        ret.weight_label = param.weight_label;
-        ret.weight = param.weight;
-        return ret;
-    }
-
-    public static svm_parameter getDefaultParam() {
-        return clone(DEFAULT_PARAMETER);
-    }
-
-    public void buildClassifier(List<TrainingSample<E>> trainingElements) {
-        assert trainingElements.size() > 0;
-        scaler.calculateFeatureLimits(trainingElements);
-        problem = buildDatasetForTraining(trainingElements);
-        model = libsvm.svm.svm_train(problem, param);
-    }
-
-    public E predictLabel(S object, T context) {
-        svm_node[] instance = buildDatasetForClassification(object, context);
-        int predictedVal = (int) svm.svm_predict(model, instance);
-        return enumClassObj.getEnumConstants()[predictedVal];
-    }
-
-    public E predictLabel(TrainingSample<E> sample) {
-        svm_node[] instance = buildDatasetForClassification(sample.getFeatureVector());
-        int predictedVal = (int) svm.svm_predict(model, instance);
-        return enumClassObj.getEnumConstants()[predictedVal];
-    }
+	this.scaler = lScaler;
+		
+        featuresNames = (String[])featureVectorBuilder.getFeatureNames().toArray(new String[0]);
+		
+	param = getDefaultParam();
+	}
+	
+	protected static svm_parameter clone(svm_parameter param) {
+		svm_parameter ret = new svm_parameter();
+		// default values
+		ret.svm_type = param.svm_type;
+		ret.C = param.C;
+		ret.kernel_type = param.kernel_type;
+		ret.degree = param.degree;
+		ret.gamma = param.gamma; // 1/k
+		ret.coef0 = param.coef0;
+		ret.nu = param.nu;
+		ret.cache_size = param.cache_size;
+		ret.eps = param.eps;
+		ret.p = param.p;
+		ret.shrinking = param.shrinking;
+		ret.probability = param.probability;
+		ret.nr_weight = param.nr_weight;
+		ret.weight_label = param.weight_label;
+		ret.weight = param.weight;
+		return ret;
+	}
+	
+	public static svm_parameter getDefaultParam() {
+            return clone(DEFAULT_PARAMETER);
+	}
+	
+	public void buildClassifier(List<TrainingSample<E>> trainingElements) {
+		assert trainingElements.size() > 0;
+		scaler.calculateFeatureLimits(trainingElements);
+		problem = buildDatasetForTraining(trainingElements);
+		model = libsvm.svm.svm_train(problem, param);
+	}
+	
+	public E predictLabel(S object, T context) {
+		svm_node[] instance = buildDatasetForClassification(object, context);
+		TimeoutRegister.get().check(); //12s-70s
+		int predictedVal = (int)svm.svm_predict(model, instance);
+		TimeoutRegister.get().check();
+		return enumClassObj.getEnumConstants()[predictedVal];
+	}
+	
+	public E predictLabel(TrainingSample<E> sample) {
+		svm_node[] instance = buildDatasetForClassification(sample.getFeatureVector());
+        TimeoutRegister.get().check();
+		int predictedVal = (int)svm.svm_predict(model, instance);
+		TimeoutRegister.get().check();
+		return enumClassObj.getEnumConstants()[predictedVal];
+	}
 
     public Map<E, Double> predictProbabilities(S object, T context) {
         svm_node[] instance = buildDatasetForClassification(object, context);

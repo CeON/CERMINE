@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,80 +18,116 @@
 
 package pl.edu.icm.cermine;
 
-import com.google.common.collect.Lists;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
+
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+
+import com.google.common.collect.Lists;
+
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
+import pl.edu.icm.cermine.tools.timeout.Timeout;
+import pl.edu.icm.cermine.tools.timeout.TimeoutException;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
- * Content extractor from PDF files.
- * The extractor stores the results of the extraction in various formats.
- * The extraction process is performed only if the requested results 
+ * Extracts content from PDF files.
+ * <p/>
+ * It stores the results of the extraction in various formats.
+ * The extraction process is performed only if the requested result
  * is not available yet.
- *
+ * <p/>
+ * User can set a timeout to limit the processing time of the <code>get*</code>
+ * methods of the class.
+ * 
  * @author Dominika Tkaczyk
+ * @author Mateusz Kobos
+ *
  */
 public class ContentExtractor {
-
-    public static int THREADS_NUMBER = 3;
+    private final long SECONDS_TO_MILLIS = 1000;
     
-    private ComponentConfiguration conf;
+    private final InternalContentExtractor extractor;
     
-    /** input PDF file */
-    private InputStream pdfFile;
+    private Timeout mainTimeout = new Timeout();
     
-    /** document's geometric structure */
-    private BxDocument bxDocument;
-    
-    /** document's metadata */
-    private DocumentMetadata metadata;
-    
-    /** document's metadata in NLM format */
-    private Element nlmMetadata;
-    
-    /** document's list of references */
-    private List<BibEntry> references;
-    
-    /** document's list of references in NLM format */
-    private List<Element> nlmReferences;
-    
-    /** raw full text */
-    private String rawFullText;
-    
-    /** labelled full text format */
-    private Element labelledFullText;
-    
-    /** structured full text in NLM format */
-    private Element nlmFullText;
-    
-    /** extracted content in NLM format */
-    private Element nlmContent;
-
-    /** citation positions */
-    private List<List<CitationPosition>> citationPositions;
-    
-    /** citation sentiments */
-    private List<CitationSentiment> citationSentiments;
-    
-    
-    public ContentExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+    /**
+     * Creates the object.
+     * 
+     * @throws AnalysisException
+     */
+    public ContentExtractor() throws AnalysisException{
+        this.extractor = new InternalContentExtractor();
     }
-
+    
+    /**
+     * Creates the object and sets the object-bound timeout before any 
+     * other initialization in the constructor is done.
+     * <p/>
+     * See {@link #setTimeout(long)} for more details about the timeout.
+     * 
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     */
+    public ContentExtractor(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException{
+        this.setTimeout(timeoutSeconds);
+        try {
+            TimeoutRegister.set(mainTimeout);
+            TimeoutRegister.get().check();
+            this.extractor = new InternalContentExtractor();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+    
+    /**
+     * Set object-bound timeout.
+     * <p/>
+     * If the deadline time specified by the timeout passes while one
+     * of the <code>get*</code> methods of the class is running, the processing
+     * stops and the method throws an exception.
+     * <p/>
+     * In case the <code>get*</code> method defines a timeout by itself, it is
+     * treated as an additional time restriction (i.e., the effective timeout 
+     * deadline is a minimum value of both timeout deadlines).
+     * <p/>
+     * The value of the timeout is approximate. This is because in some cases,
+     * the program might be allowed to slightly exceeded the timeout,
+     * say by a second or two (depending on the processor speed and processed
+     * file complexity).
+     * 
+     * @param timeoutSeconds approximate timeout in seconds
+     */
+    public void setTimeout(long timeoutSeconds){
+        this.mainTimeout = new Timeout(timeoutSeconds * SECONDS_TO_MILLIS);
+    }
+    
+    /**
+     * Remove the object-bound timeout.
+     */
+    public void removeTimeout(){
+        this.mainTimeout = new Timeout();
+    }
+    
     /**
      * Stores the input PDF stream.
      * 
@@ -99,19 +135,16 @@ public class ContentExtractor {
      * @throws IOException 
      */
     public void setPDF(InputStream pdfFile) throws IOException {
-        reset();
-        this.pdfFile = pdfFile;
+        this.extractor.setPDF(pdfFile);
     }
 
     /**
      * Sets the input bx document.
      * 
      * @param bxDocument 
-     * @throws java.io.IOException 
      */
     public void setBxDocument(BxDocument bxDocument) throws IOException {
-        reset();
-        this.bxDocument = bxDocument;
+        this.extractor.setBxDocument(bxDocument);
     }
     
     /**
@@ -120,7 +153,7 @@ public class ContentExtractor {
      * @param citationPositions citation locations
      */
     public void setCitationPositions(List<List<CitationPosition>> citationPositions) {
-        this.citationPositions = citationPositions;
+        this.extractor.setCitationPositions(citationPositions);
     }
 
     /**
@@ -129,7 +162,7 @@ public class ContentExtractor {
      * @param rawFullText raw full text
      */
     public void setRawFullText(String rawFullText) {
-        this.rawFullText = rawFullText;
+        this.extractor.setRawFullText(rawFullText);
     }
 
     /**
@@ -138,192 +171,7 @@ public class ContentExtractor {
      * @param references the document's references
      */
     public void setReferences(List<BibEntry> references) {
-        this.references = references;
-    }
-    
-    /**
-     * Extracts geometric structure.
-     * 
-     * @return geometric structure
-     * @throws AnalysisException 
-     */
-    public BxDocument getBxDocument() throws AnalysisException {
-        if (bxDocument != null) {
-            return bxDocument;
-        }
-        if (pdfFile == null) {
-            throw new AnalysisException("No PDF document uploaded!");
-        }
-        bxDocument = ExtractionUtils.extractStructure(conf, pdfFile);
-        return bxDocument;
-    }
-    
-    /**
-     * Extracts the metadata.
-     * 
-     * @return the metadata
-     * @throws AnalysisException 
-     */
-    public DocumentMetadata getMetadata() throws AnalysisException {
-        if (metadata == null) {
-            getBxDocument();
-            metadata = ExtractionUtils.extractMetadata(conf, bxDocument);
-        }
-        return metadata;
-    }
-    
-    /**
-     * Extracts the metadata in NLM format.
-     * 
-     * @return the metadata in NLM format
-     * @throws AnalysisException 
-     */
-    public Element getNLMMetadata() throws AnalysisException {
-        try {
-            if (nlmMetadata == null) {
-                getMetadata();
-                DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
-                nlmMetadata = converter.convert(metadata);
-            }
-            return nlmMetadata;
-        } catch (TransformationException ex) {
-            throw new AnalysisException("Cannot extract metadata!", ex);
-        }
-    }
-    
-    /**
-     * Extracts the references.
-     * 
-     * @return the list of references
-     * @throws AnalysisException 
-     */
-    public List<BibEntry> getReferences() throws AnalysisException {
-        if (references == null) {
-            getBxDocument();
-            references = Lists.newArrayList(ExtractionUtils.extractReferences(conf, bxDocument));
-        }
-        return references;
-    }
-    
-    /**
-     * Extracts the references in NLM format.
-     * 
-     * @return the list of references
-     * @throws AnalysisException 
-     */
-    public List<Element> getNLMReferences() throws AnalysisException {
-        if (nlmReferences == null) {
-            getReferences();
-            nlmReferences = Lists.newArrayList(
-                ExtractionUtils.convertReferences(references.toArray(new BibEntry[]{})));
-        }
-        return nlmReferences;
-    }
-
-    /**
-     * Extracts the locations of the document's citations.
-     * 
-     * @return the locations
-     * @throws AnalysisException 
-     */
-    public List<List<CitationPosition>> getCitationPositions() throws AnalysisException {
-        if (citationPositions == null) {
-            getRawFullText();
-            getReferences();
-            citationPositions = ExtractionUtils.findCitationPositions(conf, rawFullText, references);
-        }
-        return citationPositions;
-    }
-    
-    /**
-     * Extractes the sentiments of the document's citations.
-     * 
-     * @return the citation sentiments
-     * @throws AnalysisException 
-     */
-    public List<CitationSentiment> getCitationSentiments() throws AnalysisException {
-        if (citationSentiments == null) {
-            getCitationPositions();
-            citationSentiments = ExtractionUtils.analyzeSentimentFromPositions(conf, rawFullText, citationPositions);
-        }
-        return citationSentiments;
-    }
-    
-    /**
-     * Extracts raw text.
-     * 
-     * @return raw text
-     * @throws AnalysisException 
-     */
-    public String getRawFullText() throws AnalysisException {
-        if (rawFullText == null) {
-            getBxDocument();
-            rawFullText = ExtractionUtils.extractRawText(conf, bxDocument);
-        }
-        return rawFullText;
-    }
-
-    /**
-     * Extracts labelled raw text.
-     * 
-     * @return labelled raw text
-     * @throws AnalysisException 
-     */
-    public Element getLabelledRawFullText() throws AnalysisException {
-        if (labelledFullText == null) {
-            getBxDocument();
-            labelledFullText = ExtractionUtils.extractRawTextWithLabels(conf, bxDocument);
-        }
-        return labelledFullText;
-    }
-    
-    /**
-     * Extracts structured full text.
-     * 
-     * @return full text in NLM format
-     * @throws AnalysisException 
-     */
-    public Element getNLMText() throws AnalysisException {
-        if (nlmFullText == null) {
-            getBxDocument();
-            getReferences();
-            nlmFullText = ExtractionUtils.extractTextAsNLM(conf, bxDocument, references);
-        }
-        return nlmFullText;
-    }
-    
-    /**
-     * Extracts full content in NLM format.
-     * 
-     * @return full content in NLM format
-     * @throws AnalysisException 
-     */
-    public Element getNLMContent() throws AnalysisException {
-        if (nlmContent == null) {
-            getNLMMetadata();
-            getNLMReferences();
-            getNLMText();
-            
-            nlmContent = new Element("article");
-            
-            Element meta = (Element) nlmMetadata.getChild("front").clone();
-            nlmContent.addContent(meta);
-            
-            nlmContent.addContent(nlmFullText);
-            
-            Element back = new Element("back");
-            Element refList = new Element("ref-list");
-            for (int i = 0; i < nlmReferences.size(); i++) {
-                Element ref = nlmReferences.get(i);
-                Element r = new Element("ref");
-                r.setAttribute("id", String.valueOf(i+1));
-                r.addContent(ref);
-                refList.addContent(r);
-            }
-            back.addContent(refList);
-            nlmContent.addContent(back);
-        }
-        return nlmContent;
+        this.extractor.setReferences(references);
     }
     
     /**
@@ -332,28 +180,451 @@ public class ContentExtractor {
      * @throws IOException 
      */
     public void reset() throws IOException {
-        bxDocument = null;
-        metadata = null;
-        nlmMetadata = null;
-        references = null;
-        nlmReferences = null;
-        rawFullText = null;
-        nlmFullText = null;
-        nlmContent = null;
-        if (pdfFile != null) {
-            pdfFile.close();
-        }
-        pdfFile = null;
+        this.extractor.reset();
     }
 
     public ComponentConfiguration getConf() {
-        return conf;
+        return this.extractor.getConf();
     }
 
     public void setConf(ComponentConfiguration conf) {
-        this.conf = conf;
+        this.extractor.setConf(conf);
     }
     
+    private BxDocument getBxDocument(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getBxDocument();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts geometric structure.
+     * 
+     * @return geometric structure
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed. 
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public BxDocument getBxDocument() 
+            throws AnalysisException, TimeoutException {
+        return getBxDocument(mainTimeout);
+    }
+    
+    /** The same as {@link #getBxDocument()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public BxDocument getBxDocument(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getBxDocument(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+
+    private DocumentMetadata getMetadata(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getMetadata();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts the metadata.
+     * 
+     * @return the metadata
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public DocumentMetadata getMetadata() 
+            throws AnalysisException, TimeoutException {
+        return getMetadata(mainTimeout);
+    }
+    
+    /** The same as {@link #getMetadata()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public DocumentMetadata getMetadata(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getMetadata(combineWithMainTimeout(timeoutSeconds));
+    }
+
+    
+    private Element getNLMMetadata(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getNLMMetadata();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts the metadata in NLM format.
+     * 
+     * @return the metadata in NLM format
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getNLMMetadata() 
+            throws AnalysisException, TimeoutException {
+        return getNLMMetadata(mainTimeout);
+    }
+    
+    /** The same as {@link #getNLMMetadata()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getNLMMetadata(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getNLMMetadata(combineWithMainTimeout(timeoutSeconds));
+    }
+
+    
+    private List<BibEntry> getReferences(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getReferences();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts the references.
+     * 
+     * @return the list of references
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<BibEntry> getReferences() 
+            throws AnalysisException, TimeoutException {
+        return getReferences(mainTimeout);
+    }
+    
+    /** The same as {@link #getReferences()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<BibEntry> getReferences(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getReferences(combineWithMainTimeout(timeoutSeconds));
+    }
+
+    
+    private List<Element> getNLMReferences(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getNLMReferences();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+
+    /**
+     * Extracts the references in NLM format.
+     * 
+     * @return the list of references
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<Element> getNLMReferences() 
+            throws AnalysisException, TimeoutException {
+        return getNLMReferences(mainTimeout);
+    }
+    
+    /** The same as {@link #getNLMReferences()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<Element> getNLMReferences(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getNLMReferences(combineWithMainTimeout(timeoutSeconds));
+    }
+
+    
+    private List<List<CitationPosition>> getCitationPositions(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getCitationPositions();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts the locations of the document's citations.
+     * 
+     * @return the locations
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<List<CitationPosition>> getCitationPositions() 
+            throws AnalysisException, TimeoutException {
+        return getCitationPositions(mainTimeout);
+    }
+    
+    /** The same as {@link #getCitationPositions()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<List<CitationPosition>> getCitationPositions(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getCitationPositions(combineWithMainTimeout(timeoutSeconds));
+    }
+
+    
+    private List<CitationSentiment> getCitationSentiments(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getCitationSentiments();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts the sentiments of the document's citations.
+     * 
+     * @return the citation sentiments
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<CitationSentiment> getCitationSentiments() 
+            throws AnalysisException, TimeoutException {
+        return getCitationSentiments(mainTimeout);
+    }
+    
+    /** The same as {@link #getCitationSentiments()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public List<CitationSentiment> getCitationSentiments(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getCitationSentiments(combineWithMainTimeout(timeoutSeconds));
+    }
+
+
+    private String getRawFullText(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getRawFullText();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts raw text.
+     * 
+     * @return raw text
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public String getRawFullText() 
+            throws AnalysisException, TimeoutException {
+        return getRawFullText(mainTimeout);
+    }
+    
+    /** The same as {@link #getRawFullText()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public String getRawFullText(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getRawFullText(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    private Element getLabelledRawFullText(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getLabelledRawFullText();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts labeled raw text.
+     * 
+     * @return labeled raw text
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getLabelledRawFullText() 
+            throws AnalysisException, TimeoutException {
+        return getLabelledRawFullText(mainTimeout);
+    }
+    
+    /** The same as {@link #getLabelledRawFullText()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getLabelledRawFullText(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getLabelledRawFullText(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    private Element getNLMText(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getNLMText();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts structured full text.
+     * 
+     * @return full text in NLM format
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getNLMText() 
+            throws AnalysisException, TimeoutException {
+        return getNLMText(mainTimeout);
+    }
+    
+    /** The same as {@link #getNLMText()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getNLMText(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getNLMText(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    
+    private Element getNLMContent(Timeout timeout) 
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getNLMContent();
+        } finally {
+            TimeoutRegister.remove();
+        }        
+    }
+    
+    /**
+     * Extracts full content in NLM format.
+     * 
+     * @return full content in NLM format
+     * @throws AnalysisException 
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getNLMContent() 
+            throws AnalysisException, TimeoutException {
+        return getNLMContent(mainTimeout);
+    }
+    
+    /** The same as {@link #getNLMContent()} but with a timeout.
+     *  
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     * See {@link #setTimeout(long)} for additional information about the 
+     * timeout.
+     */
+    public Element getNLMContent(long timeoutSeconds) 
+            throws AnalysisException, TimeoutException {
+        return getNLMContent(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    
+    private Timeout combineWithMainTimeout(long timeoutSeconds){
+        Timeout local = new Timeout(timeoutSeconds * SECONDS_TO_MILLIS);
+        Timeout t = Timeout.min(mainTimeout, local);
+        return t;
+    }
+    
+
     public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
         if (!parser.parse(args)) {
@@ -370,7 +641,13 @@ public class ContentExtractor {
                   + "                            used only if passed path is a directory\n"
                   + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
                   + "                            default: \"cxml\"; used only if passed path is a directory\n"
-                  + "  -threads <num>            number of threads for parallel processing\n");
+                  + "  -threads <num>            number of threads for parallel processing\n"
+                  + "  -timeout <seconds>        approximate maximum allowed processing time for a PDF file\n"
+                  + "                            in seconds; by default, no timeout is used;\n"
+                  + "                            the value is approximate because in some cases,\n"
+                  + "                            the program might be allowed to slightly exceeded this time,\n"
+                  + "                            say by a second or two;\n"
+                  + "                            \n");
             System.exit(1);
         }
         
@@ -378,21 +655,26 @@ public class ContentExtractor {
         String extension = parser.getNLMExtension();
         boolean extractStr = parser.extractStructure();
         String strExtension = parser.getBxExtension();
-        ContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        Long timeoutSeconds = parser.getTimeout();
  
         File file = new File(path);
         if (file.isFile()) {
             try {
-                ContentExtractor extractor = new ContentExtractor();
+                ContentExtractor extractor = 
+                        createContentExtractor(timeoutSeconds);
                 parser.updateMetadataModel(extractor.getConf());
                 parser.updateInitialModel(extractor.getConf());
                 InputStream in = new FileInputStream(file);
                 extractor.setPDF(in);
+                TimeoutRegister.get().check();
+
                 Element result = extractor.getNLMContent();
+                
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                 System.out.println(outputter.outputString(result));
-            } catch (AnalysisException ex) {
-                ex.printStackTrace();
+            } catch (Exception ex) {
+                printException(ex);
             }
         } else {
         
@@ -408,21 +690,20 @@ public class ContentExtractor {
  
                 long start = System.currentTimeMillis();
                 float elapsed = 0;
-            
-                System.out.println(pdf.getPath());
+                
+                System.out.println("File processed: "+pdf.getPath());
  
+                ContentExtractor extractor = null;
                 try {
-                    ContentExtractor extractor = new ContentExtractor();
+                    extractor = createContentExtractor(timeoutSeconds);
                     parser.updateMetadataModel(extractor.getConf());
                     parser.updateInitialModel(extractor.getConf());
                     InputStream in = new FileInputStream(pdf);
                     extractor.setPDF(in);
+
                     BxDocument doc = extractor.getBxDocument();
                     Element result = extractor.getNLMContent();
-                    
-                    long end = System.currentTimeMillis();
-                    elapsed = (end - start) / 1000F;
-            
+
                     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                     if (!xmlF.createNewFile()) {
                         System.out.println("Cannot create new file!");
@@ -435,18 +716,41 @@ public class ContentExtractor {
                         writer.write(new FileWriter(strF), Lists.newArrayList(doc));
                     }
                 } catch (AnalysisException ex) {
-                   ex.printStackTrace();
+                    printException(ex);
                 } catch (TransformationException ex) {
-                   ex.printStackTrace();
+                    printException(ex);
+                } catch (TimeoutException ex) {
+                    printException(ex);
+                } finally {
+                    if (extractor != null){
+                        extractor.removeTimeout();
+                    }
+                    long end = System.currentTimeMillis();
+                    elapsed = (end - start) / 1000F;
                 }
                 
                 i++;
                 int percentage = i*100/files.size();
                 System.out.println("Extraction time: " + Math.round(elapsed) + "s");
-                System.out.println(percentage + "% done (" + i +" out of " + files.size() + ")");
+                System.out.println("Progress: "+percentage + "% done (" + i +" out of " + files.size() + ")");
                 System.out.println("");
             }
         }
     }
     
+    private static ContentExtractor createContentExtractor(Long timeoutSeconds) 
+            throws TimeoutException, AnalysisException{
+        ContentExtractor extractor = null;
+        if (timeoutSeconds != null) {
+            extractor = new ContentExtractor(timeoutSeconds);
+        } else {
+            extractor = new ContentExtractor();
+        }
+        TimeoutRegister.get().check();
+        return extractor;
+    }
+        
+    private static void printException(Exception ex) {
+        System.out.print("Exception occured: " + ExceptionUtils.getStackTrace(ex));
+    }
 }

@@ -27,6 +27,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.CountMap;
 import pl.edu.icm.cermine.tools.statistics.Population;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  *
@@ -68,6 +69,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
                         if (isFirstInZone(line) && looksLikeHeader(line)) {
                             candidates.add(line);
                         }
+                        TimeoutRegister.get().check();
                     }
                 }
             }
@@ -103,6 +105,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
                     > outlFontZScore) {
                 headerFonts.add(entry.getKey());
             }
+            TimeoutRegister.get().check();
         }
         
         for (BxPage page : document) {

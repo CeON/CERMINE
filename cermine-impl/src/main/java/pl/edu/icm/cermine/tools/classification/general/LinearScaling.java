@@ -17,6 +17,8 @@
  */
 package pl.edu.icm.cermine.tools.classification.general;
 
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
+
 public class LinearScaling implements ScalingStrategy {
 
     @Override
@@ -39,13 +41,14 @@ public class LinearScaling implements ScalingStrategy {
 
                 featureValue = a * featureValue + b;
 
-                if (featureValue.isNaN()) {
-                    throw new RuntimeException("Feature value is set to NaN: " + name);
-                }
-                newVector.addFeature(name, featureValue);
-            }
-            ++featureIdx;
-        }
-        return newVector;
-    }
+				if (featureValue.isNaN()) {
+					throw new RuntimeException("Feature value is set to NaN: "+name);
+				}
+				newVector.addFeature(name, featureValue);
+			}
+			++featureIdx;
+			TimeoutRegister.get().check();
+		}
+		return newVector;
+	}
 }

@@ -102,7 +102,7 @@ public class PdfRawTextExtractor {
         
         String path = parser.getPath();
         String extension = parser.getTextExtension();
-        ContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         File file = new File(path);
         if (file.isFile()) {

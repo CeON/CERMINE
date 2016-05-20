@@ -26,6 +26,7 @@ import pl.edu.icm.cermine.structure.readingorder.DistElem;
 import pl.edu.icm.cermine.structure.readingorder.DocumentPlane;
 import pl.edu.icm.cermine.structure.readingorder.TreeToListConverter;
 import pl.edu.icm.cermine.tools.Utils;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * Class for setting a correct logical reading order of objects embedded in a BxDocument.
@@ -98,6 +99,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
             page.setZones(orderedZones);
             page.resetText();
             orderedDoc.addPage(page);
+            TimeoutRegister.get().check();
         }
         setIdsAndLinkTogether(orderedDoc);
         return orderedDoc;
@@ -202,6 +204,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
             }
         }
         Collections.sort(dists);
+        TimeoutRegister.get().check();
         DocumentPlane plane = new DocumentPlane(zones, GRIDSIZE);
         while (!dists.isEmpty()) {
             DistElem<BxObject> distElem = dists.get(0);
@@ -220,6 +223,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                         newGroup), newGroup, other));
             }
             Collections.sort(dists);
+            TimeoutRegister.get().check();
             plane.add(newGroup);
         }
         

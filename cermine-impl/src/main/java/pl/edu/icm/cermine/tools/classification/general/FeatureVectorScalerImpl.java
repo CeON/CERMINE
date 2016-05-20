@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.util.*;
 import org.apache.commons.io.IOUtils;
 
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
+
 public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 
     protected FeatureLimits[] limits;
@@ -59,22 +61,23 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
     }
 
     @Override
-    public <A extends Enum<A>> void calculateFeatureLimits(List<TrainingSample<A>> trainingElements) {
-        for (TrainingSample<A> trainingElem : trainingElements) {
-            FeatureVector fv = trainingElem.getFeatureVector();
-            List<String> names = fv.getFeatureNames();
+	public <A extends Enum<A>> void calculateFeatureLimits(List<TrainingSample<A>> trainingElements) {
+		for (TrainingSample<A> trainingElem: trainingElements) {
+			FeatureVector fv = trainingElem.getFeatureVector();
+			List<String> names = fv.getFeatureNames();
 
-            int featureIdx = 0;
-            for (String name : names) {
-                double val = fv.getValue(name);
-                if (val > limits[featureIdx].getMax()) {
-                    limits[featureIdx].setMax(val);
-                }
-                if (val < limits[featureIdx].getMin()) {
-                    limits[featureIdx].setMin(val);
-                }
-                ++featureIdx;
-            }
+			int featureIdx = 0;
+			for (String name: names) {
+				double val = fv.getValue(name);
+				if (val > limits[featureIdx].getMax()) {
+					limits[featureIdx].setMax(val);
+				}
+				if (val < limits[featureIdx].getMin()){
+					limits[featureIdx].setMin(val);
+				}
+				++featureIdx;
+			}
+			TimeoutRegister.get().check();
         }
         for (FeatureLimits limit : limits) {
             if (Double.isInfinite(limit.getMin()) || Double.isInfinite(limit.getMax())) {

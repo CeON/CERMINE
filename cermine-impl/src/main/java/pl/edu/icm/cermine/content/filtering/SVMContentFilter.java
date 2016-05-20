@@ -24,6 +24,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMClassifier;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  *
@@ -82,6 +83,7 @@ public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel>
             if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_BODY)) {
                 zone.setLabel(predictLabel(zone, zone.getParent()));
             }
+            TimeoutRegister.get().check();
         }
         return document;
     }

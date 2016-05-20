@@ -25,6 +25,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.svm.SVMClassifier;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  *
@@ -79,12 +80,13 @@ public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel>
     
     @Override
     public BxDocument filter(BxDocument document) throws AnalysisException {
-        for (BxZone zone: document.asZones()) {
-			if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_BODY)) {
+        for (BxZone zone : document.asZones()) {
+            if (zone.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_BODY)) {
                 zone.setLabel(predictLabel(zone, zone.getParent()));
             }
-		}
-		return document;
+            TimeoutRegister.get().check();
+        }
+        return document;
     }
     
 }

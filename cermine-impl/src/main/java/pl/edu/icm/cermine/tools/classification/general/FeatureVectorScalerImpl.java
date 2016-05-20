@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.*;
 import org.apache.commons.io.IOUtils;
 
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
+
 public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 	protected FeatureLimits[] limits;
 	protected double scaledLowerBound;
@@ -75,6 +77,7 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
 				}
 				++featureIdx;
 			}
+			TimeoutRegister.get().check();
         }
 		for (FeatureLimits limit: limits) {
 			if (Double.isInfinite(limit.getMin()) || Double.isInfinite(limit.getMax())) {

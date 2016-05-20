@@ -174,7 +174,7 @@ public class PdfNLMContentExtractor {
         String extension = parser.getNLMExtension();
         boolean extractStr = parser.extractStructure();
         String strExtension = parser.getBxExtension();
-        ContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         File file = new File(path);
         if (file.isFile()) {

@@ -29,6 +29,7 @@ import java.util.Map;
 import libsvm.*;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import pl.edu.icm.cermine.tools.classification.general.*;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * @author Pawel Szostek
@@ -122,13 +123,17 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
 	
 	public E predictLabel(S object, T context) {
 		svm_node[] instance = buildDatasetForClassification(object, context);
+		TimeoutRegister.get().check(); //12s-70s
 		int predictedVal = (int)svm.svm_predict(model, instance);
+		TimeoutRegister.get().check();
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
 	
 	public E predictLabel(TrainingSample<E> sample) {
 		svm_node[] instance = buildDatasetForClassification(sample.getFeatureVector());
+        TimeoutRegister.get().check();
 		int predictedVal = (int)svm.svm_predict(model, instance);
+		TimeoutRegister.get().check();
 		return enumClassObj.getEnumConstants()[predictedVal];
 	}
 

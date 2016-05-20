@@ -29,6 +29,7 @@ import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.Pair;
+import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -92,7 +93,7 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
 
     public Element toHTMLTitle(String header) {
         Element element = new Element("title");
-        element.setText(header+"\n");
+        element.setText(XMLTools.removeInvalidXMLChars(header+"\n"));
         return element;
     }
     
@@ -111,15 +112,15 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
                 citationIndex.append(positions.get(posIndex).getFirst()+1);
                 posIndex++;
             }
-            element.addContent(paragraph.substring(lastParIndex, start));
+            element.addContent(XMLTools.removeInvalidXMLChars(paragraph.substring(lastParIndex, start)));
             Element ref = new Element("xref");
             ref.setAttribute("ref-type", "bibr");
             ref.setAttribute("rid", citationIndex.toString());
-            ref.setText(paragraph.substring(start, end));
+            ref.setText(XMLTools.removeInvalidXMLChars(paragraph.substring(start, end)));
             element.addContent(ref);
             lastParIndex = end;
         }
-        element.addContent(paragraph.substring(lastParIndex));
+        element.addContent(XMLTools.removeInvalidXMLChars(paragraph.substring(lastParIndex)));
         return element;
     }
   

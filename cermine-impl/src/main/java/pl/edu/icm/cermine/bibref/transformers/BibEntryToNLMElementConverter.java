@@ -23,6 +23,7 @@ import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.model.BibEntryField;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -78,17 +79,17 @@ public class BibEntryToNLMElementConverter implements ModelToModelConverter<BibE
 
             String fieldText = text.substring(field.getStartIndex(), field.getEndIndex());
             if (field.getStartIndex() != lastIndex) {
-                element.addContent(text.substring(lastIndex, field.getStartIndex()));
+                element.addContent(XMLTools.removeInvalidXMLChars(text.substring(lastIndex, field.getStartIndex())));
             }
             
             if (BIBENTRY_TO_NLM.get(fieldKeyMap.get(field)) != null) {
                 Element fieldElement = new Element(BIBENTRY_TO_NLM.get(fieldKeyMap.get(field)));
-                fieldElement.setText(fieldText);
+                fieldElement.setText(XMLTools.removeInvalidXMLChars(fieldText));
                 element.addContent(fieldElement);
             } else if (BibEntry.FIELD_PAGES.equals(fieldKeyMap.get(field))) {
                 if (!field.getText().contains("--")) {
                     Element firstPageElement = new Element("fpage");
-                    firstPageElement.setText(field.getText());
+                    firstPageElement.setText(XMLTools.removeInvalidXMLChars(field.getText()));
                     element.addContent(firstPageElement);
                 } else {
                     String firstPage = field.getText().replaceAll("--.*", "");
@@ -97,23 +98,23 @@ public class BibEntryToNLMElementConverter implements ModelToModelConverter<BibE
                     int firstPageIndex = fieldText.indexOf(firstPage);
                     int lastPageIndex = fieldText.indexOf(lastPage, firstPageIndex + firstPage.length());
                     
-                    element.addContent(fieldText.substring(0, firstPageIndex));
+                    element.addContent(XMLTools.removeInvalidXMLChars(fieldText.substring(0, firstPageIndex)));
                 
                     Element firstPageElement = new Element("fpage");
-                    firstPageElement.setText(firstPage);
+                    firstPageElement.setText(XMLTools.removeInvalidXMLChars(firstPage));
                     element.addContent(firstPageElement);
                 
-                    element.addContent(fieldText.substring(firstPageIndex + firstPage.length(), lastPageIndex));
+                    element.addContent(XMLTools.removeInvalidXMLChars(fieldText.substring(firstPageIndex + firstPage.length(), lastPageIndex)));
                 
                     Element lastPageElement = new Element("lpage");
-                    lastPageElement.setText(lastPage);
+                    lastPageElement.setText(XMLTools.removeInvalidXMLChars(lastPage));
                     element.addContent(lastPageElement);
                 }
             } else if (BibEntry.FIELD_AUTHOR.equals(fieldKeyMap.get(field))) {
                 if (!field.getText().contains(", ")) {
                     Element nameElement = new Element("string-name");
                     Element firstElement = new Element("surname");
-                    firstElement.setText(field.getText());
+                    firstElement.setText(XMLTools.removeInvalidXMLChars(field.getText()));
                     nameElement.addContent(firstElement);
                     element.addContent(nameElement);
                 } else {               
@@ -144,26 +145,26 @@ public class BibEntryToNLMElementConverter implements ModelToModelConverter<BibE
 
                     Element nameElement = new Element("string-name");
                     
-                    nameElement.addContent(fieldText.substring(0, firstIndex));
+                    nameElement.addContent(XMLTools.removeInvalidXMLChars(fieldText.substring(0, firstIndex)));
                 
                     Element firstElement = new Element(firstLabel);
-                    firstElement.setText(firstText);
+                    firstElement.setText(XMLTools.removeInvalidXMLChars(firstText));
                     nameElement.addContent(firstElement);
                 
-                    nameElement.addContent(fieldText.substring(firstIndex + firstText.length(), secondIndex));
+                    nameElement.addContent(XMLTools.removeInvalidXMLChars(fieldText.substring(firstIndex + firstText.length(), secondIndex)));
                 
                     Element lastElement = new Element(secondLabel);
-                    lastElement.setText(secondText);
+                    lastElement.setText(XMLTools.removeInvalidXMLChars(secondText));
                     nameElement.addContent(lastElement);
                 
-                    nameElement.addContent(fieldText.substring(secondIndex + secondText.length(), fieldText.length()));
+                    nameElement.addContent(XMLTools.removeInvalidXMLChars(fieldText.substring(secondIndex + secondText.length(), fieldText.length())));
                     element.addContent(nameElement);
                 }
             }
             lastIndex = field.getEndIndex();
         }
         if (lastIndex < text.length()) {
-            element.addContent(text.substring(lastIndex, text.length()));
+            element.addContent(XMLTools.removeInvalidXMLChars(text.substring(lastIndex, text.length())));
         }
        
         return element;

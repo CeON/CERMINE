@@ -23,6 +23,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import org.jdom.Verifier;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -140,4 +141,15 @@ public class XMLTools {
         return nodes;
     }
 
+    public static String removeInvalidXMLChars(String text) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0, len = text.length(); i<len; i++) {
+            char ch = text.charAt(i);
+            if (Verifier.isXMLCharacter(ch)) {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+        
 }

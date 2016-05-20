@@ -25,6 +25,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.affiliation.tools.CountryISOCodeFinder;
 import pl.edu.icm.cermine.metadata.model.*;
 import pl.edu.icm.cermine.parsing.model.Token;
+import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
@@ -202,7 +203,7 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
                 prev.addContent(element);
                 prev = element;
             }
-            prev.setText(text);
+            prev.setText(XMLTools.removeInvalidXMLChars(text));
         }
     }
     
@@ -223,7 +224,7 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
     
     private Element createElement(String name, String text) {
         Element element = new Element(name);
-        element.setText(text);
+        element.setText(XMLTools.removeInvalidXMLChars(text));
         return element;
     }
        

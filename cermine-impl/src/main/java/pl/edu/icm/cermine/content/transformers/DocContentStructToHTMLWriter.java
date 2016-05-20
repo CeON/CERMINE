@@ -29,6 +29,7 @@ import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToFormatWriter;
 
 /**
@@ -78,13 +79,13 @@ public class DocContentStructToHTMLWriter implements ModelToFormatWriter<Content
 
     public Element toHTML(int level, String header) {
         Element element = new Element("H" + level);
-        element.setText(header);
+        element.setText(XMLTools.removeInvalidXMLChars(header));
         return element;
     }
     
     public Element toHTML(String paragraph) {
         Element element = new Element("p");
-        element.setText(paragraph);
+        element.setText(XMLTools.removeInvalidXMLChars(paragraph));
         return element;
     }
 

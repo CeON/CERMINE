@@ -4,10 +4,10 @@
     <parent>
         <groupId>pl.edu.icm.cermine</groupId>
         <artifactId>cermine-parent</artifactId>
-        <version>1.9</version>
+        <version>1.10-SNAPSHOT</version>
     </parent>
     <groupId>pl.edu.icm.cermine</groupId>
-    <version>1.9</version>
+    <version>1.10-SNAPSHOT</version>
     <artifactId>cermine-impl</artifactId>
     <packaging>jar</packaging>
     <name>CERMINE Engine Implementation - ${project.version}</name>

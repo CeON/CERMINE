@@ -17,133 +17,35 @@
  */
 package pl.edu.icm.cermine.tools;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import org.jdom.Element;
+import org.jdom.Text;
 import org.jdom.Verifier;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class XMLTools {
-
-    private static final XPath XPATH = XPathFactory.newInstance().newXPath();
-
-    public static String extractTextFromNode(Document doc, String path) throws XPathExpressionException {
-        Node node = (Node) XPATH.evaluate(path, doc, XPathConstants.NODE);
-        return extractTextFromNode(node);
-    }
-
-    public static String extractTextFromNode(Node node) {
-
+    
+    public static String getTextContent(Element element) {
         StringBuilder ret = new StringBuilder();
-
-        if (node == null) {
+        if (element == null) {
             return "";
         }
-        if (node.getChildNodes().getLength() == 0) {
-            if (node.getNodeValue() != null) {
-                return node.getNodeValue() + " ";
-            } else {
-                return "";
-            }
-        } else {
-            for (int childIdx = 0; childIdx < node.getChildNodes().getLength(); ++childIdx) {
-                ret.append(extractTextFromNode(node.getChildNodes().item(childIdx)));
+        for (Object cont: element.getContent()) {
+            if (cont instanceof Text) {
+                ret.append(((Text) cont).getText());
+                ret.append(" ");
+            } else if (cont instanceof Element) {
+                ret.append(getTextContent((Element) cont));
+                ret.append(" ");
             }
         }
-        return ret.toString().replaceAll("\n", " ").replaceAll("\\s+", " ");
-    }
-
-    public static String extractTextFromNodes(Document doc, String path) throws XPathExpressionException {
-        NodeList nodes = (NodeList) XPATH.evaluate(path, doc, XPathConstants.NODESET);
-        return extractTextFromNodes(nodes);
-    }
-
-    public static String extractTextFromNodes(NodeList nodes) {
-        StringBuilder ret = new StringBuilder();
-        for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
-            Node node = nodes.item(nodeIdx);
-            ret.append(extractTextFromNode(node));
-        }
-        return ret.toString();
-    }
-
-    public static List<String> extractTextAsList(Document doc, String path) throws XPathExpressionException {
-        NodeList nodes = (NodeList) XPATH.evaluate(path, doc, XPathConstants.NODESET);
-        return extractTextAsList(nodes);
-    }
-
-    public static List<String> extractTextAsList(NodeList nodes) {
-        List<String> ret = new ArrayList<String>();
-        for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
-            String extractedText = extractTextFromNode(nodes.item(nodeIdx));
-            extractedText = extractedText.trim();
-            if (!extractedText.isEmpty()) {
-                ret.add(extractedText);
-            }
-        }
-        return ret;
-    }
-
-    public static List<String> extractChildrenAsTextList(Document doc, String path) throws XPathExpressionException {
-        Node node = (Node) XPATH.evaluate(path, doc, XPathConstants.NODE);
-        return extractChildrenAsTextList(node);
-    }
-
-    public static List<String> extractChildrenAsTextList(Node node) {
-        List<String> ret = new ArrayList<String>();
-
-        if (node == null) {
-            return ret;
-        }
-        if (node.getChildNodes().getLength() == 0 && node.getNodeValue() != null) {
-            ret.add(node.getNodeValue());
-        } else {
-            for (int childIdx = 0; childIdx < node.getChildNodes().getLength(); ++childIdx) {
-                ret.addAll(extractChildrenAsTextList(node.getChildNodes().item(childIdx)));
-            }
-        }
-        return ret;
-    }
-
-    public static List<Node> extractNodes(Document doc, String path) throws XPathExpressionException {
-        NodeList nodes = (NodeList) XPATH.evaluate(path, doc, XPathConstants.NODESET);
-        List<Node> nodeList = new ArrayList<Node>();
-        for (int nodeIdx = 0; nodeIdx < nodes.getLength(); ++nodeIdx) {
-            nodeList.add(nodes.item(nodeIdx));
-        }
-        return nodeList;
-    }
-
-    public static List<String> extractChildrenTextFromNode(Node node, String name) throws XPathExpressionException {
-        List<String> text = new ArrayList<String>();
-        for (int nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
-            Node child = node.getChildNodes().item(nodeIdx);
-            if (child.getNodeName().equals(name)) {
-                text.add(child.getTextContent());
-            }
-        }
-        return text;
-    }
-
-    public static List<Node> extractChildrenNodesFromNode(Node node, String name) throws XPathExpressionException {
-        List<Node> nodes = new ArrayList<Node>();
-        for (int nodeIdx = 0; nodeIdx < node.getChildNodes().getLength(); ++nodeIdx) {
-            Node child = node.getChildNodes().item(nodeIdx);
-            if (child.getNodeName().equals(name)) {
-                nodes.add(child);
-            }
-        }
-        return nodes;
+        return ret.toString().replaceAll("\\s+", " ").trim();
     }
 
     public static String removeInvalidXMLChars(String text) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0, len = text.length(); i<len; i++) {
+        for (int i = 0; i < text.length(); i++) {
             char ch = text.charAt(i);
             if (Verifier.isXMLCharacter(ch)) {
                 sb.append(ch);
@@ -151,5 +53,5 @@ public class XMLTools {
         }
         return sb.toString();
     }
-        
+
 }

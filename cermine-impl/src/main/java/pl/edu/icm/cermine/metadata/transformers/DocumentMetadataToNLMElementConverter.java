@@ -135,7 +135,9 @@ public class DocumentMetadataToNLMElementConverter implements ModelToModelConver
         contributor.setAttribute(ATTR_CONTRIB_TYPE, ATTR_VALUE_CONTRIB_AUTHOR);
 
         addElement(contributor, TAG_STRING_NAME, author.getName());
-        addElement(contributor, TAG_EMAIL, author.getEmail());
+        for (String email: author.getEmails()) {
+            addElement(contributor, TAG_EMAIL, email);
+        }
 
         for (DocumentAffiliation aff : author.getAffiliations()) {
             Element affRef = createElement(TAG_XREF, aff.getId());

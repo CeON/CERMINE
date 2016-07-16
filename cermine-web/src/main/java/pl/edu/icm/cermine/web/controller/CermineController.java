@@ -47,7 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser;
 import pl.edu.icm.cermine.service.*;
 
@@ -235,7 +235,7 @@ public class CermineController {
                     response = reference.toBibTeX();
                 } else {
                     responseHeaders.setContentType(MediaType.APPLICATION_XML);
-                    BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
+                    BibEntryToNLMConverter converter = new BibEntryToNLMConverter();
                     Element element = converter.convert(reference);
                     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                     response = outputter.outputString(element);

@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
-import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
+import pl.edu.icm.cermine.metadata.transformers.MetadataToNLMConverter;
 
 public class NLMAffiliationExtractorTest {
 
@@ -43,7 +43,7 @@ public class NLMAffiliationExtractorTest {
             "<aff id=\"id\"><label>id</label><institution>Department</institution><institution>of</institution><institution>Pathology</institution><institution>,</institution><institution>University</institution><institution>of</institution><institution>Cincinnati</institution><institution>College</institution><institution>of</institution><institution>Medicine</institution>,<country country=\"US\">USA</country></aff>"
         };
 
-        DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
+        MetadataToNLMConverter converter = new MetadataToNLMConverter();
         XMLOutputter outputter = new XMLOutputter();
         List<DocumentAffiliation> affs = instance.extractStrings(source);
         assertEquals(affs.size(), 2);

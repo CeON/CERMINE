@@ -33,7 +33,7 @@ import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
@@ -97,7 +97,7 @@ public final class CrossMalletTrainingFileGenerator {
             
             for (int idx = 0; idx < folds.length; idx++) {
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                BibEntryToNLMElementConverter conv = new BibEntryToNLMElementConverter();
+                BibEntryToNLMConverter conv = new BibEntryToNLMConverter();
                 Element el = new Element("refs");
                 int k = 1;
                 

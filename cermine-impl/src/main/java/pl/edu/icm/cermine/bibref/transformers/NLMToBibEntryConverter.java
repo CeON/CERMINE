@@ -31,7 +31,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 /**
  * @author Dominika Tkaczyk
  */
-public class NLMElementToBibEntryConverter implements ModelToModelConverter<Element, BibEntry> {
+public class NLMToBibEntryConverter implements ModelToModelConverter<Element, BibEntry> {
 
     private static final Map<String, String> NLM_TO_BIBENTRY = new HashMap<String, String>();
 

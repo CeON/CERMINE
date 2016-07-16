@@ -31,7 +31,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 /**
  * @author Dominika Tkaczyk
  */
-public class GrobidToContentStructureConverter implements ModelToModelConverter<Element, ContentStructure> {
+public class GrobidToContentConverter implements ModelToModelConverter<Element, ContentStructure> {
 
     @Override
     public ContentStructure convert(Element source, Object... hints) throws TransformationException {

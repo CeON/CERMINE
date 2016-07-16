@@ -40,7 +40,7 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 
@@ -200,7 +200,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         if (outputFormat == null || outputFormat.equals("bibtex")) {
             System.out.println(reference.toBibTeX());
         } else {
-            BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
+            BibEntryToNLMConverter converter = new BibEntryToNLMConverter();
             Element element = converter.convert(reference);
             XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
             System.out.println(outputter.outputString(element));

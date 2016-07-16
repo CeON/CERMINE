@@ -30,7 +30,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 /**
  * @author Dominika Tkaczyk
  */
-public class NLMToContentStructureConverter implements ModelToModelConverter<Element, ContentStructure> {
+public class PdfxToContentConverter implements ModelToModelConverter<Element, ContentStructure> {
 
     @Override
     public ContentStructure convert(Element source, Object... hints) throws TransformationException {
@@ -40,7 +40,7 @@ public class NLMToContentStructureConverter implements ModelToModelConverter<Ele
                 return struct;
             }
             
-            for (Object secElem : source.getChildren("sec")) {
+            for (Object secElem : source.getChildren("section")) {
                 DocumentSection section = convertSection((Element)secElem, 1);
                 if (section != null) {
                     struct.addSection(section);
@@ -61,13 +61,13 @@ public class NLMToContentStructureConverter implements ModelToModelConverter<Ele
         DocumentSection section = new DocumentSection();
         section.setLevel(level);
         
-        Element title = (Element) source.getChild("title");
+        Element title = (Element) source.getChild("h"+level);
         if (title == null) {
             return null;
         }
         section.setTitle(XMLTools.getTextContent(title));
         
-        for (Object secElem : source.getChildren("sec")) {
+        for (Object secElem : source.getChildren("section")) {
             DocumentSection subsection = convertSection((Element)secElem, level+1);
             if (subsection != null) {
                 section.addSection(subsection);

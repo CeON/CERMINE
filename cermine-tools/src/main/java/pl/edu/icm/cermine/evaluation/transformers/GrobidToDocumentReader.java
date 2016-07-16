@@ -48,8 +48,8 @@ public class GrobidToDocumentReader implements FormatToModelReader<Document> {
     @Override
     public Document read(Reader reader, Object... hints) throws TransformationException {
         try {
-            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new GrobidToDocumentMetadataConverter();
-            ModelToModelConverter<Element, ContentStructure> structConverter = new GrobidToContentStructureConverter();
+            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new GrobidToMetadataConverter();
+            ModelToModelConverter<Element, ContentStructure> structConverter = new GrobidToContentConverter();
             ModelToModelConverter<Element, BibEntry> refConverter = new ElementToBibEntryConverter();
             
             Element root = getRoot(reader);

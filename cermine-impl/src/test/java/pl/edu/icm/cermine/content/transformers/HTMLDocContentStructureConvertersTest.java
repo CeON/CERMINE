@@ -42,13 +42,13 @@ public class HTMLDocContentStructureConvertersTest {
     
     String modelFilePath = "/pl/edu/icm/cermine/content/model/model.xml";
     
-    HTMLToDocContentStructReader reader;
-    DocContentStructToHTMLWriter writer;
+    HTMLToDocContentReader reader;
+    DocContentToHTMLWriter writer;
     
     @Before
     public void setUp() throws JDOMException, IOException, TransformationException, URISyntaxException {
-        reader = new HTMLToDocContentStructReader();
-        writer = new DocContentStructToHTMLWriter();
+        reader = new HTMLToDocContentReader();
+        writer = new DocContentToHTMLWriter();
     }
     
  

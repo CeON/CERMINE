@@ -31,7 +31,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 /**
  * @author Dominika Tkaczyk
  */
-public class ParscitToDocumentMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
+public class ParscitToMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
    
     @Override
     public DocumentMetadata convert(Element source, Object... hints) throws TransformationException {

@@ -39,7 +39,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public class BibEntryToNLMElementConverterTest {
    
-    private BibEntryToNLMElementConverter converter;
+    private BibEntryToNLMConverter converter;
     
     private List<BibEntry> entries;
     private List<Element> elements;
@@ -48,7 +48,7 @@ public class BibEntryToNLMElementConverterTest {
 
     @Before
     public void setUp() throws JDOMException, IOException {
-        converter = new BibEntryToNLMElementConverter();
+        converter = new BibEntryToNLMConverter();
         entries = StandardDataExamples.getReferencesAsBibEntry();
         elements = StandardDataExamples.getReferencesAsNLMElement();
         xmlOutputter = new XMLOutputter();

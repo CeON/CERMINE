@@ -32,7 +32,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 /**
  * @author Dominika Tkaczyk
  */
-public class NLMToDocumentMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
+public class NLMToMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
    
     @Override
     public DocumentMetadata convert(Element source, Object... hints) throws TransformationException {

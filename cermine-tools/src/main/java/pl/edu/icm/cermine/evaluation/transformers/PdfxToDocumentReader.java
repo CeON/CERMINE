@@ -50,8 +50,8 @@ public class PdfxToDocumentReader implements FormatToModelReader<Document> {
     @Override
     public Document read(Reader reader, Object... hints) throws TransformationException {
         try {
-            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new PdfxToDocumentMetadataConverter();
-            ModelToModelConverter<Element, ContentStructure> structConverter = new PdfxToContentStructureConverter();
+            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new PdfxToMetadataConverter();
+            ModelToModelConverter<Element, ContentStructure> structConverter = new PdfxToContentConverter();
             ModelToModelConverter<Element, BibEntry> refConverter = new ElementToBibEntryConverter();
             
             Element root = getRoot(reader);

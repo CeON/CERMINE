@@ -37,7 +37,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToFormatWriter;
  *
  * @author Dominika Tkaczyk
  */
-public class DocContentStructToHTMLWriter implements ModelToFormatWriter<ContentStructure> {
+public class DocContentToHTMLWriter implements ModelToFormatWriter<ContentStructure> {
 
     @Override
     public String write(ContentStructure object, Object... hints) throws TransformationException {

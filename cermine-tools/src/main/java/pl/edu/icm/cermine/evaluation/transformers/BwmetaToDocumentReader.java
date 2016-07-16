@@ -50,7 +50,7 @@ public class BwmetaToDocumentReader implements FormatToModelReader<Document> {
     @Override
     public Document read(Reader reader, Object... hints) throws TransformationException {
         try {
-            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new BwmetaToDocumentMetadataConverter();
+            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new BwmetaToMetadataConverter();
             ModelToModelConverter<Element, BibEntry> refConverter = new ElementToBibEntryConverter();
     
             Element root = getRoot(reader);

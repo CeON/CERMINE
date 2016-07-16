@@ -26,7 +26,7 @@ import org.jdom.JDOMException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.icm.cermine.content.transformers.HTMLToDocContentStructReader;
+import pl.edu.icm.cermine.content.transformers.HTMLToDocContentReader;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.transformers.FormatToModelReader;
 
@@ -43,7 +43,7 @@ public class DocumentContentStructureTest {
     
     @Before
     public void setUp() throws JDOMException, IOException, TransformationException, URISyntaxException {
-        reader = new HTMLToDocContentStructReader();
+        reader = new HTMLToDocContentReader();
         
         InputStream is = this.getClass().getResourceAsStream(modelFilePath);
         InputStreamReader isr = new InputStreamReader(is);

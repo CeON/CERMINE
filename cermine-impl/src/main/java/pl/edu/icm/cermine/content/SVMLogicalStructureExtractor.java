@@ -22,7 +22,7 @@ import java.io.BufferedReader;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.SVMContentFilter;
 import pl.edu.icm.cermine.content.headers.SVMContentHeadersExtractor;
-import pl.edu.icm.cermine.content.transformers.BxContentStructToDocContentStructConverter;
+import pl.edu.icm.cermine.content.transformers.BxContentToDocContentConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
@@ -35,7 +35,7 @@ public class SVMLogicalStructureExtractor extends LogicalStructureExtractor {
         this.setContentFilter(new SVMContentFilter());
         this.setHeaderExtractor(new SVMContentHeadersExtractor());
         this.setContentCleaner(new ContentCleaner());
-        this.setConverter(new BxContentStructToDocContentStructConverter());
+        this.setConverter(new BxContentToDocContentConverter());
     }
     
     public SVMLogicalStructureExtractor(BufferedReader filterModelFile, BufferedReader filterRangeFile,
@@ -43,7 +43,7 @@ public class SVMLogicalStructureExtractor extends LogicalStructureExtractor {
         super(new SVMContentFilter(filterModelFile, filterRangeFile),
                 new SVMContentHeadersExtractor(headerModelFile, headerRangeFile),
                 new ContentCleaner(),
-                new BxContentStructToDocContentStructConverter());
+                new BxContentToDocContentConverter());
     }
     
 }

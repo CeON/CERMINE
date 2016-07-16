@@ -30,7 +30,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 /**
  * @author Dominika Tkaczyk
  */
-public class PdfxToDocumentMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
+public class PdfxToMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
    
     @Override
     public DocumentMetadata convert(Element source, Object... hints) throws TransformationException {

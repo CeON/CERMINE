@@ -38,7 +38,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 /**
  * @author Dominika Tkaczyk
  */
-public class MetadataBodyParameterFinder extends SVMParameterFinder {
+public class BodyClassifierParameterFinder extends SVMParameterFinder {
 
     @Override
     protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree)
@@ -74,7 +74,7 @@ public class MetadataBodyParameterFinder extends SVMParameterFinder {
 
     public static void main(String[] args)
             throws ParseException, AnalysisException, IOException, TransformationException, CloneNotSupportedException, InterruptedException, ExecutionException {
-        SVMParameterFinder.main(args, new MetadataBodyParameterFinder());
+        SVMParameterFinder.main(args, new BodyClassifierParameterFinder());
     }
 
     @Override

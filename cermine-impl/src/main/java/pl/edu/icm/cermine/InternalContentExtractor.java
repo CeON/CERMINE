@@ -32,7 +32,7 @@ import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
+import pl.edu.icm.cermine.metadata.transformers.MetadataToNLMConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
 /**
@@ -181,7 +181,7 @@ public class InternalContentExtractor {
         try {
             if (nlmMetadata == null) {
                 getMetadata();
-                DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
+                MetadataToNLMConverter converter = new MetadataToNLMConverter();
                 nlmMetadata = converter.convert(metadata);
             }
             return nlmMetadata;

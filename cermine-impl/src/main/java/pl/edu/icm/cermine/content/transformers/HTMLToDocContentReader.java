@@ -36,7 +36,7 @@ import pl.edu.icm.cermine.tools.transformers.FormatToModelReader;
  *
  * @author Dominika Tkaczyk
  */
-public class HTMLToDocContentStructReader implements FormatToModelReader<ContentStructure> {
+public class HTMLToDocContentReader implements FormatToModelReader<ContentStructure> {
 
     @Override
     public ContentStructure read(String string, Object... hints) throws TransformationException {

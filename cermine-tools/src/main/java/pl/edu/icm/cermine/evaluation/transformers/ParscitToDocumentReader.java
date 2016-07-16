@@ -50,8 +50,8 @@ public class ParscitToDocumentReader implements FormatToModelReader<Document> {
     @Override
     public Document read(Reader reader, Object... hints) throws TransformationException {
         try {
-            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new ParscitToDocumentMetadataConverter();
-            ModelToModelConverter<Element, ContentStructure> structConverter = new ParscitToContentStructureConverter();
+            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new ParscitToMetadataConverter();
+            ModelToModelConverter<Element, ContentStructure> structConverter = new ParscitToContentConverter();
             ModelToModelConverter<Element, BibEntry> refConverter = new ElementToBibEntryConverter();
             
             Element root = getRoot(reader);

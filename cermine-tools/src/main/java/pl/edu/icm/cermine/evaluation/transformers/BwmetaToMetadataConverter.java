@@ -33,7 +33,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 /**
  * @author Dominika Tkaczyk
  */
-public class BwmetaToDocumentMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
+public class BwmetaToMetadataConverter implements ModelToModelConverter<Element, DocumentMetadata> {
    
     @Override
     public DocumentMetadata convert(Element source, Object... hints) throws TransformationException {

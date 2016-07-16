@@ -23,7 +23,7 @@ import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.ContentStructure;
-import pl.edu.icm.cermine.content.transformers.BxContentStructToDocContentStructConverter;
+import pl.edu.icm.cermine.content.transformers.BxContentToDocContentConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -40,13 +40,13 @@ public abstract class LogicalStructureExtractor {
     
     private ContentCleaner contentCleaner;
     
-    private BxContentStructToDocContentStructConverter converter;
+    private BxContentToDocContentConverter converter;
 
     public LogicalStructureExtractor() {
     }
     
     public LogicalStructureExtractor(ContentFilter contentFilter, ContentHeadersExtractor headerExtractor, 
-            ContentCleaner contentCleaner, BxContentStructToDocContentStructConverter converter) {
+            ContentCleaner contentCleaner, BxContentToDocContentConverter converter) {
         this.contentFilter = contentFilter;
         this.headerExtractor = headerExtractor;
         this.contentCleaner = contentCleaner;
@@ -81,11 +81,11 @@ public abstract class LogicalStructureExtractor {
         this.contentFilter = contentFilter;
     }
 
-    public BxContentStructToDocContentStructConverter getConverter() {
+    public BxContentToDocContentConverter getConverter() {
         return converter;
     }
 
-    public void setConverter(BxContentStructToDocContentStructConverter converter) {
+    public void setConverter(BxContentToDocContentConverter converter) {
         this.converter = converter;
     }
 

@@ -36,7 +36,7 @@ import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationFeatureExtractor
 import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
 import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
-import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
+import pl.edu.icm.cermine.metadata.transformers.MetadataToNLMConverter;
 import pl.edu.icm.cermine.parsing.model.Token;
 import pl.edu.icm.cermine.parsing.tools.ParsableStringParser;
 import pl.edu.icm.cermine.tools.ResourcesReader;
@@ -170,7 +170,7 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
             TransformationException {
         DocumentAffiliation aff = new DocumentAffiliation(affiliationString);
         parse(aff);
-        DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
+        MetadataToNLMConverter converter = new MetadataToNLMConverter();
         return converter.convertAffiliation(aff);
     }
 

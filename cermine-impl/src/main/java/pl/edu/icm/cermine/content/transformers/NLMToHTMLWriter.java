@@ -34,7 +34,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToFormatWriter;
  *
  * @author Dominika Tkaczyk
  */
-public class NLMElementToHTMLWriter implements ModelToFormatWriter<Element> {
+public class NLMToHTMLWriter implements ModelToFormatWriter<Element> {
 
     @Override
     public String write(Element object, Object... hints) throws TransformationException {

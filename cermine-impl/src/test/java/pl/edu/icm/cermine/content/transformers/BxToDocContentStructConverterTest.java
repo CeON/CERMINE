@@ -44,8 +44,8 @@ import pl.edu.icm.cermine.structure.model.BxWord;
  */
 public class BxToDocContentStructConverterTest {
     
-    BxContentStructToDocContentStructConverter converter;
-    DocContentStructToHTMLWriter writer;
+    BxContentToDocContentConverter converter;
+    DocContentToHTMLWriter writer;
     
     String expectedHTML;
     BxContentStructure bxDocStruct;
@@ -108,8 +108,8 @@ public class BxToDocContentStructConverterTest {
             +"<H3>2.2.1. Subsubsection</H3><p>par6</p><p>par7</p>"
             +"<H1>3. Section</H1><p>par8</p><p>par9</p><p>par10</p></html>";
         
-        writer = new DocContentStructToHTMLWriter();
-        converter = new BxContentStructToDocContentStructConverter();
+        writer = new DocContentToHTMLWriter();
+        converter = new BxContentToDocContentConverter();
     }
 
     @Test

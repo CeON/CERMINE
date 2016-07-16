@@ -26,20 +26,20 @@ import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.ContentStructure;
-import pl.edu.icm.cermine.content.transformers.BxContentStructToDocContentStructConverter;
+import pl.edu.icm.cermine.content.transformers.BxContentToDocContentConverter;
 import pl.edu.icm.cermine.content.transformers.DocContentStructToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.metadata.transformers.DocumentMetadataToNLMElementConverter;
+import pl.edu.icm.cermine.metadata.transformers.MetadataToNLMConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
@@ -99,7 +99,7 @@ public class ExtractionUtils {
     public static Element extractMetadataAsNLM(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         try {
-            DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
+            MetadataToNLMConverter converter = new MetadataToNLMConverter();
             return converter.convert(extractMetadata(conf, stream));
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract metadata from the document!", ex);
@@ -138,7 +138,7 @@ public class ExtractionUtils {
     public static Element extractMetadataAsNLM(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
         try {
-            DocumentMetadataToNLMElementConverter converter = new DocumentMetadataToNLMElementConverter();
+            MetadataToNLMConverter converter = new MetadataToNLMConverter();
             return converter.convert(extractMetadata(conf, document));
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract metadata from the document!", ex);
@@ -250,7 +250,7 @@ public class ExtractionUtils {
     public static Element[] convertReferences(BibEntry[] entries) 
             throws AnalysisException {
         List<Element> elements = new ArrayList<Element>(entries.length);
-        BibEntryToNLMElementConverter converter = new BibEntryToNLMElementConverter();
+        BibEntryToNLMConverter converter = new BibEntryToNLMConverter();
         for (BibEntry entry : entries) {
             try {
                 elements.add(converter.convert(entry));
@@ -332,8 +332,8 @@ public class ExtractionUtils {
             BxContentStructure tmpContentStructure = extractHeaders(conf, doc);
             tmpContentStructure = clusterHeaders(conf, tmpContentStructure);
             conf.contentCleaner.cleanupContent(tmpContentStructure);
-            BxContentStructToDocContentStructConverter converter = 
-                    new BxContentStructToDocContentStructConverter();
+            BxContentToDocContentConverter converter = 
+                    new BxContentToDocContentConverter();
             ContentStructure structure = converter.convert(tmpContentStructure);
             if (conf.timeDebug) {
                 double elapsed = (System.currentTimeMillis() - start) / 1000.;

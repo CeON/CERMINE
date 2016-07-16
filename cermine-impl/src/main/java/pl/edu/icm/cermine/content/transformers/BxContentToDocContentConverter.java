@@ -31,7 +31,7 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  *
  * @author Dominika Tkaczyk
  */
-public class BxContentStructToDocContentStructConverter implements ModelToModelConverter<BxContentStructure, ContentStructure> {
+public class BxContentToDocContentConverter implements ModelToModelConverter<BxContentStructure, ContentStructure> {
 
     @Override
     public ContentStructure convert(BxContentStructure contentStructure, Object... hints) throws TransformationException {

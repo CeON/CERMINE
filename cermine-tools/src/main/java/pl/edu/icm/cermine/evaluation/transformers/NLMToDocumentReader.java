@@ -30,7 +30,7 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.metadata.transformers.NLMToDocumentMetadataConverter;
+import pl.edu.icm.cermine.metadata.transformers.NLMToMetadataConverter;
 import pl.edu.icm.cermine.model.Document;
 import pl.edu.icm.cermine.tools.transformers.FormatToModelReader;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
@@ -48,8 +48,8 @@ public class NLMToDocumentReader implements FormatToModelReader<Document> {
     @Override
     public Document read(Reader reader, Object... hints) throws TransformationException {
         try {
-            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new NLMToDocumentMetadataConverter();
-            ModelToModelConverter<Element, ContentStructure> structConverter = new NLMToContentStructureConverter();
+            ModelToModelConverter<Element, DocumentMetadata> metaConverter = new NLMToMetadataConverter();
+            ModelToModelConverter<Element, ContentStructure> structConverter = new NLMToContentConverter();
             ModelToModelConverter<Element, BibEntry> refConverter = new ElementToBibEntryConverter();
 
     

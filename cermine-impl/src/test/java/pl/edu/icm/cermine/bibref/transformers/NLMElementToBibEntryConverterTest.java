@@ -35,14 +35,14 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public class NLMElementToBibEntryConverterTest {
     
-    private NLMElementToBibEntryConverter converter;
+    private NLMToBibEntryConverter converter;
     
     private List<BibEntry> entries;
     private List<Element> elements;
 
     @Before
     public void setUp() throws JDOMException, IOException {
-        converter = new NLMElementToBibEntryConverter();
+        converter = new NLMToBibEntryConverter();
     
         elements = StandardDataExamples.getReferencesAsNLMElement();
         entries = StandardDataExamples.getReferencesAsBibEntry();

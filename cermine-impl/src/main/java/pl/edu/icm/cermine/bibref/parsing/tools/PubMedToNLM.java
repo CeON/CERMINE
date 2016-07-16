@@ -33,7 +33,7 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMElementConverter;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 
@@ -167,7 +167,7 @@ public final class PubMedToNLM {
         File bt = new File(OUT_BT);
         File txt = new File(OUT_TXT);
         
-        BibEntryToNLMElementConverter conv = new BibEntryToNLMElementConverter();
+        BibEntryToNLMConverter conv = new BibEntryToNLMConverter();
         XMLOutputter outputter = new XMLOutputter(Format.getRawFormat());
         
         int k = 1;

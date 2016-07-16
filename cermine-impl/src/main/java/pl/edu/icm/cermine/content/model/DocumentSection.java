@@ -31,18 +31,24 @@ public class DocumentSection {
     
     private String title;
     
-    private final List<String> paragraphs;
+    private final List<String> paragraphs = new ArrayList<String>();
     
-    private List<DocumentSection> subsections = new ArrayList<DocumentSection>();
-
-    
-    public DocumentSection() {
-        subsections = new ArrayList<DocumentSection>();
-        paragraphs = new ArrayList<String>();
-    }
+    private final List<DocumentSection> subsections = new ArrayList<DocumentSection>();
 
     public List<DocumentSection> getSubsections() {
-        return subsections;
+        return getSubsections(false);
+    }
+    
+    public List<DocumentSection> getSubsections(boolean recursive) {
+        if (!recursive) {
+            return subsections;
+        }
+        List<DocumentSection> secs = new ArrayList<DocumentSection>();
+        for (DocumentSection sec : subsections) {
+            secs.add(sec);
+            secs.addAll(sec.getSubsections(true));
+        }
+        return secs;
     }
 
     public void addSection(DocumentSection part) {

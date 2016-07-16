@@ -29,13 +29,20 @@ public class ContentStructure {
 
     private List<DocumentSection> sections = new ArrayList<DocumentSection>();
 
-    
-    public ContentStructure() {
-        sections = new ArrayList<DocumentSection>();
-    }
-
     public List<DocumentSection> getSections() {
-        return sections;
+        return getSections(false);
+    }
+    
+    public List<DocumentSection> getSections(boolean recursive) {
+        if (!recursive) {
+            return sections;
+        }
+        List<DocumentSection> secs = new ArrayList<DocumentSection>();
+        for (DocumentSection sec : sections) {
+            secs.add(sec);
+            secs.addAll(sec.getSubsections(true));
+        }
+        return secs;
     }
 
     public void setSections(List<DocumentSection> sections) {

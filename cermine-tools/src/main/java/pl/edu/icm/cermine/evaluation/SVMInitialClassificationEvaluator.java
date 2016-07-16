@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.evaluation;
 
 import java.io.IOException;
@@ -35,6 +34,10 @@ import pl.edu.icm.cermine.tools.classification.general.PenaltyCalculator;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
+/**
+ *
+ * @author Dominika Tkaczyk
+ */
 public class SVMInitialClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
 
     @Override
@@ -48,12 +51,12 @@ public class SVMInitialClassificationEvaluator extends CrossvalidatingZoneClassi
         double[] classesWeights = new double[pc.getClasses().size()];
 
         int labelIdx = 0;
-        for(BxZoneLabel label: pc.getClasses()) {
+        for (BxZoneLabel label : pc.getClasses()) {
             intClasses[labelIdx] = label.ordinal();
             classesWeights[labelIdx] = pc.getPenaltyWeigth(label);
             ++labelIdx;
         }
-       
+
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(SVMInitialZoneClassifier.getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
@@ -64,29 +67,29 @@ public class SVMInitialClassificationEvaluator extends CrossvalidatingZoneClassi
         param.kernel_type = kernelType;
         param.weight = classesWeights;
         param.weight_label = intClasses;
-        
+
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
 
         return zoneClassifier;
     }
 
-	public static void main(String[] args) 
-			throws ParseException, AnalysisException, IOException, TransformationException, CloneNotSupportedException {
-		CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialClassificationEvaluator());
-	}
+    public static void main(String[] args)
+            throws ParseException, AnalysisException, IOException, TransformationException, CloneNotSupportedException {
+        CrossvalidatingZoneClassificationEvaluator.main(args, new SVMInitialClassificationEvaluator());
+    }
 
-	@Override
-	protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
-		return SVMInitialZoneClassifier.getFeatureVectorBuilder();
-	}
+    @Override
+    protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
+        return SVMInitialZoneClassifier.getFeatureVectorBuilder();
+    }
 
     @Override
     public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException {
         DocumentsIterator it = new DocumentsIterator(inputFile, ext);
-        return BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), 
-                    getFeatureVectorBuilder(),
-                    BxZoneLabel.getLabelToGeneralMap());
+        return BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(),
+                getFeatureVectorBuilder(),
+                BxZoneLabel.getLabelToGeneralMap());
     }
+    
 }
-

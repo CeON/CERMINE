@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.*;
+import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
+import pl.edu.icm.cermine.evaluation.tools.DividedEvaluationSet;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -43,6 +45,7 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  * Class for performing cross-validating classifier performance in zone classification task
  *
  * @author Pawel Szostek (p.szostek@icm.edu.pl)
+ * @author Dominika Tkaczyk
  */
 public abstract class CrossvalidatingZoneClassificationEvaluator {
 
@@ -59,7 +62,6 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
     private final TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
     private final BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
 
-    //sample launch: -fold 5 /path/to/your/xml/catalog
     public static void main(String[] args, CrossvalidatingZoneClassificationEvaluator evaluator)
             throws ParseException, AnalysisException, IOException, TransformationException, CloneNotSupportedException {
         Options options = new Options();

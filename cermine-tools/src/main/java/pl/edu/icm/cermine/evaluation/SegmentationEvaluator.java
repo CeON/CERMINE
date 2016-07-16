@@ -21,7 +21,6 @@ package pl.edu.icm.cermine.evaluation;
 import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.*;
-import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -37,11 +36,10 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
  *
- * @author krusek
+ * @author Krysztof Rusek
+ * @author Dominika Tkaczyk
  */
-public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocument, BxDocument, BxDocument, SegmentationEvaluator.Results> {
-
-    private static final Pattern FILENAME_PATTERN = Pattern.compile("(.+)\\.xml");
+public class SegmentationEvaluator {
 
     private DocumentSegmenter pageSegmenter = new DocstrumSegmenter();
 
@@ -54,11 +52,6 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
     private final TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
 
     private final BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-
-    @Override
-    protected Pattern getFilenamePattern() {
-        return FILENAME_PATTERN;
-    }
 
     public void setPageSegmenter(DocumentSegmenter pageSegmenter) {
         this.pageSegmenter = pageSegmenter;
@@ -74,27 +67,12 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         ignoredLabels.removeAll(labels);
     }
 
-    @Override
     protected void preprocessDocument(BxDocument document) {
         flattener.process(document);
     }
 
-    @Override
     protected BxDocument processDocument(BxDocument document) throws AnalysisException {
         return pageSegmenter.segmentDocument(document);
-    }
-
-    @Override
-    protected Results compareItems(BxDocument expected, BxDocument actual) {
-        Results results = new Results();
-        for (int i = 0; i < expected.childrenCount(); i++) {
-            BxPage expPage = expected.getChild(i);
-            BxPage actPage = actual.getChild(i);
-            results.zoneLevel.add(compareZones(expPage, actPage));
-            results.lineLevel.add(compareLines(expPage, actPage));
-            results.wordLevel.add(compareWords(expPage, actPage));
-        }
-        return results;
     }
 
     private void printSeparator() {
@@ -102,7 +80,6 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         Results.printSeparator();
     }
 
-    @Override
     protected void printDocumentStart() {
         System.out.print(" |   Page   |");
         Results.printLevelHeader();
@@ -111,7 +88,6 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         printSeparator();
     }
 
-    @Override
     protected void printItemResults(BxDocument expected, BxDocument actual, int idx, Results results) {
         printItemResults(idx, results);
     }
@@ -122,7 +98,6 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         results.printResults(formatter);
     }
 
-    @Override
     protected void printDocumentResults(Results results) {
         printSeparator();
         Formatter formatter = new Formatter(System.out, Locale.US);
@@ -130,12 +105,6 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         results.printResults(formatter);
     }
 
-    @Override
-    protected Results newResults() {
-        return new Results();
-    }
-
-    @Override
     protected void printFinalResults(Results results) {
         results.printSummary();
     }
@@ -228,60 +197,43 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
         return results;
     }
 
-    @Override
+    protected Results compareItems(BxDocument expected, BxDocument actual) {
+        Results results = new Results();
+        for (int i = 0; i < expected.childrenCount(); i++) {
+            BxPage expPage = expected.getChild(i);
+            BxPage actPage = actual.getChild(i);
+            results.zoneLevel.add(compareZones(expPage, actPage));
+            results.lineLevel.add(compareLines(expPage, actPage));
+            results.wordLevel.add(compareWords(expPage, actPage));
+        }
+        return results;
+    }
+    
     protected BxDocument prepareActualDocument(BxDocument document) throws AnalysisException {
         document = BxModelUtils.deepClone(document);
         preprocessDocument(document);
         return processDocument(document);
     }
 
-    @Override
     protected BxDocument prepareExpectedDocument(BxDocument document) throws AnalysisException {
         resolver.resolve(document);
         return document;
     }
 
-    @Override
     protected BxDocument readDocument(Reader input) throws TransformationException {
         return new BxDocument().setPages(reader.read(input));
     }
 
-    @Override
     protected void writeDocument(BxDocument document, Writer output) throws TransformationException {
         writer.write(output, Lists.newArrayList(document));
     }
 
-    @Override
-    protected Iterator<BxDocument> iterateItems(final BxDocument document) {
-        return new Iterator<BxDocument>() {
-            private boolean used = false;
-
-            @Override
-            public boolean hasNext() {
-                return !used;
-            }
-
-            @Override
-            public BxDocument next() {
-                used = true;
-                return document;
-            }
-
-            @Override
-            public void remove() {
-                used = true;
-            }
-
-        };
-    }
-
-    public static class Results implements AbstractEvaluator.Results<Results> {
+    public static class Results {
 
         private LevelResults zoneLevel = new LevelResults();
         private LevelResults lineLevel = new LevelResults();
         private LevelResults wordLevel = new LevelResults();
 
-        @Override
         public void add(Results results) {
             zoneLevel.add(results.zoneLevel);
             lineLevel.add(results.lineLevel);
@@ -374,7 +326,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
 
         File file = new File(args[0]);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"xml"}, true);
-        Results results = evaluator.newResults();
+        Results results = new Results();
         int i = 0;
 
         double zoneScores = 0;
@@ -390,7 +342,7 @@ public class SegmentationEvaluator extends AbstractSingleInputEvaluator<BxDocume
             reader = new FileReader(filee);
             origDoc = evaluator.prepareExpectedDocument(evaluator.readDocument(reader));
             testDoc = evaluator.prepareActualDocument(origDoc);
-            Results docRes = evaluator.compareDocuments(origDoc, testDoc);
+            Results docRes = evaluator.compareItems(origDoc, testDoc);
             results.add(docRes);
             zoneScores += results.zoneLevel.getScore();
             lineScores += results.lineLevel.getScore();

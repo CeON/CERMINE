@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.libsvm.parameters;
 
 import java.io.IOException;
@@ -36,10 +35,13 @@ import pl.edu.icm.cermine.tools.BxDocUtils.DocumentsIterator;
 import pl.edu.icm.cermine.tools.classification.general.*;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class MetadataBodyParameterFinder extends SVMParameterFinder {
-    
+
     @Override
-    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree) 
+    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree)
             throws IOException, AnalysisException, CloneNotSupportedException {
 
         PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
@@ -52,7 +54,7 @@ public class MetadataBodyParameterFinder extends SVMParameterFinder {
             classesWeights[labelIdx] = pc.getPenaltyWeigth(label);
             ++labelIdx;
         }
-       
+
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
@@ -63,7 +65,7 @@ public class MetadataBodyParameterFinder extends SVMParameterFinder {
         param.kernel_type = kernelType;
         param.weight = classesWeights;
         param.weight_label = intClasses;
-        
+
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
 
@@ -75,11 +77,11 @@ public class MetadataBodyParameterFinder extends SVMParameterFinder {
         SVMParameterFinder.main(args, new MetadataBodyParameterFinder());
     }
 
-	@Override
-	protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
-		return ContentFilterTools.VECTOR_BUILDER;
-	}
-    
+    @Override
+    protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
+        return ContentFilterTools.VECTOR_BUILDER;
+    }
+
     @Override
     public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException {
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
@@ -89,7 +91,7 @@ public class MetadataBodyParameterFinder extends SVMParameterFinder {
         map.put(BxZoneLabel.BODY_FIGURE, BxZoneLabel.BODY_JUNK);
         map.put(BxZoneLabel.BODY_GLOSSARY, BxZoneLabel.BODY_JUNK);
         map.put(BxZoneLabel.BODY_TABLE, BxZoneLabel.BODY_JUNK);
-        
+
         DocumentsIterator it = new DocumentsIterator(inputFile, ext);
         List<TrainingSample<BxZoneLabel>> samples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(
                 it.iterator(), getFeatureVectorBuilder(), map);
@@ -97,5 +99,5 @@ public class MetadataBodyParameterFinder extends SVMParameterFinder {
 
         return tss;
     }
-    
+
 }

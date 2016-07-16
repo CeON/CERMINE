@@ -25,8 +25,8 @@ import java.util.Map;
 import java.util.concurrent.*;
 import libsvm.svm_parameter;
 import org.apache.commons.cli.*;
-import pl.edu.icm.cermine.evaluation.ClassificationResults;
-import pl.edu.icm.cermine.evaluation.DividedEvaluationSet;
+import pl.edu.icm.cermine.evaluation.tools.ClassificationResults;
+import pl.edu.icm.cermine.evaluation.tools.DividedEvaluationSet;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -35,6 +35,10 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
+/**
+ *
+ * @author Dominika Tkaczyk
+ */
 public abstract class SVMParameterFinder {
 
     private static final EnumMap<BxZoneLabel, BxZoneLabel> DEFAULT_LABEL_MAP = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);

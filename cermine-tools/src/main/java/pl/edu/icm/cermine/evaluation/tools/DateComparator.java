@@ -21,6 +21,9 @@ import java.util.List;
 import pl.edu.icm.cermine.tools.TextUtils;
 import pl.edu.icm.cermine.tools.distance.CosineDistance;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class DateComparator {
 
     public static Boolean yearsMatch(List<String> expected, List<String> extracted) {

@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.evaluation;
 
 import java.io.IOException;
@@ -35,23 +34,27 @@ import pl.edu.icm.cermine.tools.BxDocUtils.DocumentsIterator;
 import pl.edu.icm.cermine.tools.classification.general.*;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
+/**
+ *
+ * @author Dominika Tkaczyk
+ */
 public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassificationEvaluator {
-    
+
     @Override
-    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree) 
+    protected SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples, int kernelType, double gamma, double C, int degree)
             throws IOException, AnalysisException, CloneNotSupportedException {
 
         PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
         int[] intClasses = new int[pc.getClasses().size()];
         double[] classesWeights = new double[pc.getClasses().size()];
-        
+
         int labelIdx = 0;
         for (BxZoneLabel label : pc.getClasses()) {
             intClasses[labelIdx] = label.ordinal();
             classesWeights[labelIdx] = pc.getPenaltyWeigth(label);
             ++labelIdx;
         }
-       
+
         SVMZoneClassifier zoneClassifier = new SVMZoneClassifier(getFeatureVectorBuilder());
         svm_parameter param = SVMZoneClassifier.getDefaultParam();
         param.svm_type = svm_parameter.C_SVC;
@@ -62,7 +65,7 @@ public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassific
         param.kernel_type = kernelType;
         param.weight = classesWeights;
         param.weight_label = intClasses;
-        
+
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
 
@@ -74,11 +77,11 @@ public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassific
         CrossvalidatingZoneClassificationEvaluator.main(args, new SVMBodyClassificationEvaluator());
     }
 
-	@Override
-	protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
-		return ContentFilterTools.VECTOR_BUILDER;
-	}
-    
+    @Override
+    protected FeatureVectorBuilder<BxZone, BxPage> getFeatureVectorBuilder() {
+        return ContentFilterTools.VECTOR_BUILDER;
+    }
+
     @Override
     public List<TrainingSample<BxZoneLabel>> getSamples(String inputFile, String ext) throws AnalysisException {
         Map<BxZoneLabel, BxZoneLabel> map = new EnumMap<BxZoneLabel, BxZoneLabel>(BxZoneLabel.class);
@@ -88,13 +91,13 @@ public class SVMBodyClassificationEvaluator extends CrossvalidatingZoneClassific
         map.put(BxZoneLabel.BODY_FIGURE, BxZoneLabel.BODY_JUNK);
         map.put(BxZoneLabel.BODY_GLOSSARY, BxZoneLabel.BODY_JUNK);
         map.put(BxZoneLabel.BODY_TABLE, BxZoneLabel.BODY_JUNK);
-        
+
         DocumentsIterator it = new DocumentsIterator(inputFile, ext);
-        List<TrainingSample<BxZoneLabel>> samples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), 
-                    getFeatureVectorBuilder(), map);
+        List<TrainingSample<BxZoneLabel>> samples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(),
+                getFeatureVectorBuilder(), map);
         List<TrainingSample<BxZoneLabel>> tss = ClassificationUtils.filterElements(samples, BxZoneLabelCategory.CAT_BODY);
 
         return tss;
     }
-    
+
 }

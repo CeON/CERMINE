@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.pubmed;
 
 import pl.edu.icm.cermine.tools.SmartHashMap;
@@ -43,10 +42,12 @@ import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 import pl.edu.icm.cermine.tools.TextUtils;
-import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class RuleBasedPubmedXMLGenerator {
 
     private static class LabelTrio {
@@ -96,7 +97,7 @@ public class RuleBasedPubmedXMLGenerator {
             this.entryTokens = tokens;
         }
     }
-    
+
     private boolean verbose = false;
 
     private void setVerbose(boolean verbose) {
@@ -106,12 +107,6 @@ public class RuleBasedPubmedXMLGenerator {
     private void printlnVerbose(String string) {
         if (verbose) {
             System.out.println(string);
-        }
-    }
-
-    private void printVerbose(String string) {
-        if (verbose) {
-            System.out.print(string);
         }
     }
 
@@ -133,7 +128,7 @@ public class RuleBasedPubmedXMLGenerator {
         BxDocument bxDoc = new BxDocument().setPages(reader.read(r));
 
         List<BxZone> zones = Lists.newArrayList(bxDoc.asZones());
-        
+
         Integer bxDocLen = zones.size();
 
         SmartHashMap entries = new SmartHashMap();
@@ -149,13 +144,13 @@ public class RuleBasedPubmedXMLGenerator {
         entries.putIf(titleString, BxZoneLabel.MET_TITLE);
         String subtitleString = (String) xpath.evaluate("/article/front/article-meta/title-group/article-subtitle", domDoc, XPathConstants.STRING);
         entries.putIf(subtitleString, BxZoneLabel.MET_TITLE);
+
         //journal title
         String journalTitleString = (String) xpath.evaluate("/article/front/journal-meta/journal-title", domDoc, XPathConstants.STRING);
         if (journalTitleString == null || journalTitleString.isEmpty()) {
             journalTitleString = (String) xpath.evaluate("/article/front/journal-meta/journal-title-group/journal-title", domDoc, XPathConstants.STRING);
         }
         entries.putIf(journalTitleString, BxZoneLabel.MET_BIB_INFO);
-
 
         //journal publisher
         String journalPublisherString = (String) xpath.evaluate("/article/front/journal-meta/publisher/publisher-name", domDoc, XPathConstants.STRING);
@@ -230,6 +225,7 @@ public class RuleBasedPubmedXMLGenerator {
         String extLink = (String) xpath.evaluate("/article/front/article-meta/ext-link[@ext-link-type='uri']/xlink:href", domDoc, XPathConstants.STRING);
         printlnVerbose(extLink);
         entries.putIf(extLink, BxZoneLabel.MET_ACCESS_DATA);
+
         //keywords
         Node keywordsNode = (Node) xpath.evaluate("/article/front/article-meta/kwd-group", domDoc, XPathConstants.NODE);
         String keywordsString = XMLTools.extractTextFromNode(keywordsNode);
@@ -288,9 +284,11 @@ public class RuleBasedPubmedXMLGenerator {
         NodeList authorsResult = (NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/contrib[@contrib-type='author']", domDoc, XPathConstants.NODESET);
         for (int nodeIdx = 0; nodeIdx < authorsResult.getLength(); ++nodeIdx) {
             Node curNode = authorsResult.item(nodeIdx);
+
             //author names
             String name = (String) xpath.evaluate("name/given-names", curNode, XPathConstants.STRING);
             String surname = (String) xpath.evaluate("name/surname", curNode, XPathConstants.STRING);
+
             //author affiliation
             List<String> aff = XMLTools.extractTextAsList((NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/aff", domDoc, XPathConstants.NODESET));
 
@@ -374,6 +372,7 @@ public class RuleBasedPubmedXMLGenerator {
         List<String> tableCaptions = new ArrayList<String>();
         List<String> tableBodies = new ArrayList<String>();
         List<String> tableFootnotes = new ArrayList<String>();
+
         //tableNodes
         NodeList tableNodes = (NodeList) xpath.evaluate("/article//table-wrap", domDoc, XPathConstants.NODESET);
 
@@ -493,8 +492,6 @@ public class RuleBasedPubmedXMLGenerator {
 
         printlnVerbose("ref: " + refStrings.size() + " " + refStrings);
 
-
-
         SmithWatermanDistance smith = new SmithWatermanDistance(.1, 0.1);
         CosineDistance cos = new CosineDistance();
 
@@ -516,8 +513,8 @@ public class RuleBasedPubmedXMLGenerator {
                 BxZone curZone = zones.get(zoneIdx);
                 List<String> zoneTokens = TextUtils.tokenize(
                         TextUtils.removeOrphantSpaces(
-                        TextUtils.cleanLigatures(
-                        curZone.toText().toLowerCase())));
+                                TextUtils.cleanLigatures(
+                                        curZone.toText().toLowerCase())));
 
                 Double smithSim;
                 Double cosSim;
@@ -535,10 +532,7 @@ public class RuleBasedPubmedXMLGenerator {
             }
         }
 
-
         for (BxPage pp : bxDoc) {
-
-
             boolean changed = true;
             while (changed) {
 
@@ -892,34 +886,13 @@ public class RuleBasedPubmedXMLGenerator {
                 datasetGenerator.setVerbose(false);
                 BxDocument bxDoc = datasetGenerator.generateTrueViz(cxmlStream, nxmlStream);
                 i++;
-                int keys = 0;
                 Set<BxZoneLabel> set = EnumSet.noneOf(BxZoneLabel.class);
-                int total = 0;
-                int known = 0;
                 for (BxZone z : bxDoc.asZones()) {
-                    total++;
                     if (z.getLabel() != null) {
-                        known++;
                         if (z.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_METADATA)) {
                             set.add(z.getLabel());
                         }
-                        if (BxZoneLabel.REFERENCES.equals(z.getLabel())) {
-                            keys = 1;
-                        }
                     }
-                }
-
-                if (set.contains(BxZoneLabel.MET_AFFILIATION)) {
-                    keys++;
-                }
-                if (set.contains(BxZoneLabel.MET_AUTHOR)) {
-                    keys++;
-                }
-                if (set.contains(BxZoneLabel.MET_BIB_INFO)) {
-                    keys++;
-                }
-                if (set.contains(BxZoneLabel.MET_TITLE)) {
-                    keys++;
                 }
 
                 FileWriter fstream = new FileWriter(cpxmlPath);

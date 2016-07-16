@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.libsvm.training;
 
 import java.io.File;
@@ -36,13 +35,16 @@ import pl.edu.icm.cermine.tools.BxDocUtils.DocumentsIterator;
 import pl.edu.icm.cermine.tools.classification.general.*;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
-
+/**
+ *
+ * @author Dominika Tkaczyk
+ */
 public class SVMBodyBuilder {
 
     protected static SVMZoneClassifier getZoneClassifier(List<TrainingSample<BxZoneLabel>> trainingSamples,
             int kernelType, double gamma, double C, int degree) throws IOException {
         trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
-        System.out.println("Training samples "+trainingSamples.size());
+        System.out.println("Training samples " + trainingSamples.size());
 
         PenaltyCalculator pc = new PenaltyCalculator(trainingSamples);
         int[] intClasses = new int[pc.getClasses().size()];
@@ -93,11 +95,11 @@ public class SVMBodyBuilder {
         }
 
         Double C = 8.0;
-        if (line.hasOption("C")){
+        if (line.hasOption("C")) {
             C = Double.valueOf(line.getOptionValue("C"));
         }
         Double gamma = 0.5;
-        if (line.hasOption("g")){
+        if (line.hasOption("g")) {
             gamma = Double.valueOf(line.getOptionValue("g"));
         }
         String inDir = line.getOptionValue("input");
@@ -105,15 +107,23 @@ public class SVMBodyBuilder {
         String degreeStr = line.getOptionValue("degree");
         Integer degree = -1;
         if (degreeStr != null && !degreeStr.isEmpty()) {
-        	degree = Integer.valueOf(degreeStr);
+            degree = Integer.valueOf(degreeStr);
         }
         Integer kernelType = svm_parameter.RBF;
         if (line.hasOption("kernel")) {
-            switch(Integer.valueOf(line.getOptionValue("kernel"))) {
-                case 0: kernelType = svm_parameter.LINEAR; break;
-                case 1: kernelType = svm_parameter.POLY; break;
-                case 2: kernelType = svm_parameter.RBF; break;
-                case 3: kernelType = svm_parameter.SIGMOID; break;
+            switch (Integer.valueOf(line.getOptionValue("kernel"))) {
+                case 0:
+                    kernelType = svm_parameter.LINEAR;
+                    break;
+                case 1:
+                    kernelType = svm_parameter.POLY;
+                    break;
+                case 2:
+                    kernelType = svm_parameter.RBF;
+                    break;
+                case 3:
+                    kernelType = svm_parameter.SIGMOID;
+                    break;
                 default:
                     throw new IllegalArgumentException("Invalid kernel value provided");
             }
@@ -135,7 +145,7 @@ public class SVMBodyBuilder {
         map.put(BxZoneLabel.BODY_FIGURE, BxZoneLabel.BODY_JUNK);
         map.put(BxZoneLabel.BODY_GLOSSARY, BxZoneLabel.BODY_JUNK);
         map.put(BxZoneLabel.BODY_TABLE, BxZoneLabel.BODY_JUNK);
-        
+
         if (!line.hasOption("cross")) {
             File input = new File(inDir);
             List<TrainingSample<BxZoneLabel>> trainingSamples;
@@ -143,36 +153,36 @@ public class SVMBodyBuilder {
                 DocumentsIterator it = new DocumentsIterator(inDir, ext);
                 FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = ContentFilterTools.VECTOR_BUILDER;
                 trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
-                    map);
+                        map);
             } else {
                 trainingSamples = SVMZoneClassifier.loadProblem(inDir, ContentFilterTools.VECTOR_BUILDER);
             }
-        
+
             trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
             SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
             classifier.saveModel(outFile);
         } else {
             int foldness = 5;
             List<TrainingSample<BxZoneLabel>>[] trainingSamplesSet = new List[foldness];
-        
+
             for (int i = 0; i < foldness; i++) {
-        
-                File input = new File(inDir+"/"+i);
+
+                File input = new File(inDir + "/" + i);
                 List<TrainingSample<BxZoneLabel>> trainingSamples;
                 if (input.isDirectory()) {
-                    DocumentsIterator it = new DocumentsIterator(inDir+"/"+i, ext);
-                
+                    DocumentsIterator it = new DocumentsIterator(inDir + "/" + i, ext);
+
                     FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder = ContentFilterTools.VECTOR_BUILDER;
                     trainingSamples = BxDocsToTrainingSamplesConverter.getZoneTrainingSamples(it.iterator(), featureVectorBuilder,
-                        map);
+                            map);
                 } else {
-                    trainingSamples = SVMZoneClassifier.loadProblem(inDir+"/"+i, ContentFilterTools.VECTOR_BUILDER);
+                    trainingSamples = SVMZoneClassifier.loadProblem(inDir + "/" + i, ContentFilterTools.VECTOR_BUILDER);
                 }
 
                 trainingSamples = ClassificationUtils.filterElements(trainingSamples, BxZoneLabelCategory.CAT_BODY);
                 trainingSamplesSet[i] = trainingSamples;
             }
-        
+
             for (int i = 0; i < foldness; i++) {
                 List<TrainingSample<BxZoneLabel>> trainingSamples = new ArrayList<TrainingSample<BxZoneLabel>>();
                 for (int j = 0; j < foldness; j++) {
@@ -182,9 +192,9 @@ public class SVMBodyBuilder {
                 }
 
                 SVMZoneClassifier classifier = getZoneClassifier(trainingSamples, kernelType, gamma, C, degree);
-                classifier.saveModel(outFile+"-"+i);
+                classifier.saveModel(outFile + "-" + i);
             }
         }
     }
-    
+
 }

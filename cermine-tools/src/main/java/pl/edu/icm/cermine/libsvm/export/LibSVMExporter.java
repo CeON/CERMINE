@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.libsvm.export;
 
 import java.io.BufferedWriter;
@@ -38,35 +37,38 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.sampleselection.SampleFilter;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class LibSVMExporter {
 
     public static void toLibSVM(TrainingSample<BxZoneLabel> trainingElement, BufferedWriter fileWriter) throws IOException {
-       	if(trainingElement.getLabel() == null) {
-       		return;
-       	}
-       	fileWriter.write(String.valueOf(trainingElement.getLabel().ordinal()));
-       	fileWriter.write(" ");
-        	
-       	Integer featureCounter = 1;
-       	for (Double value : trainingElement.getFeatureVector().getValues()) {
-       		StringBuilder sb = new StringBuilder();
-       		Formatter formatter = new Formatter(sb, Locale.US);
-       		formatter.format("%d:%.5f", featureCounter++, value);
-       		fileWriter.write(sb.toString());
-       		fileWriter.write(" ");
-       	}
-       	fileWriter.write("\n");
+        if (trainingElement.getLabel() == null) {
+            return;
+        }
+        fileWriter.write(String.valueOf(trainingElement.getLabel().ordinal()));
+        fileWriter.write(" ");
+
+        Integer featureCounter = 1;
+        for (Double value : trainingElement.getFeatureVector().getValues()) {
+            StringBuilder sb = new StringBuilder();
+            Formatter formatter = new Formatter(sb, Locale.US);
+            formatter.format("%d:%.5f", featureCounter++, value);
+            fileWriter.write(sb.toString());
+            fileWriter.write(" ");
+        }
+        fileWriter.write("\n");
     }
-    
+
     public static void toLibSVM(List<TrainingSample<BxZoneLabel>> trainingElements, String filePath) throws IOException {
-    	BufferedWriter svmDataFile = null;
+        BufferedWriter svmDataFile = null;
         try {
             FileWriter fstream = new FileWriter(filePath);
             svmDataFile = new BufferedWriter(fstream);
             for (TrainingSample<BxZoneLabel> elem : trainingElements) {
-            	if(elem.getLabel() == null) {
-            		continue;
-            	}
+                if (elem.getLabel() == null) {
+                    continue;
+                }
                 svmDataFile.write(String.valueOf(elem.getLabel().ordinal()));
                 svmDataFile.write(" ");
 
@@ -85,14 +87,14 @@ public class LibSVMExporter {
             System.err.println("Error: " + e.getMessage());
             return;
         } finally {
-        	if(svmDataFile != null) {
-        		svmDataFile.close();
-        	}
+            if (svmDataFile != null) {
+                svmDataFile.close();
+            }
         }
-        
+
         System.out.println("Done.");
     }
-    
+
     public static void main(String[] args) throws ParseException, IOException, TransformationException, AnalysisException, CloneNotSupportedException {
         Options options = new Options();
 
@@ -102,7 +104,7 @@ public class LibSVMExporter {
         if (args.length != 2) {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(" [-options] input-directory extension", options);
-            System.exit(1); 
+            System.exit(1);
         }
         String inputDirPath = line.getArgs()[0];
         File inputDirFile = new File(inputDirPath);
@@ -115,51 +117,50 @@ public class LibSVMExporter {
         FeatureVectorBuilder<BxZone, BxPage> metaVectorBuilder = SVMMetadataZoneClassifier.getFeatureVectorBuilder();
         FeatureVectorBuilder<BxZone, BxPage> initialVectorBuilder = SVMInitialZoneClassifier.getFeatureVectorBuilder();
 
-		SampleFilter metaSamplesFilter = new SampleFilter(
-				BxZoneLabelCategory.CAT_METADATA);
+        SampleFilter metaSamplesFilter = new SampleFilter(
+                BxZoneLabelCategory.CAT_METADATA);
 
-		FileWriter initialStream = new FileWriter("initial_"
-				+ inputDirFile.getName() + ".dat");
-		BufferedWriter svmInitialFile = new BufferedWriter(initialStream);
+        FileWriter initialStream = new FileWriter("initial_"
+                + inputDirFile.getName() + ".dat");
+        BufferedWriter svmInitialFile = new BufferedWriter(initialStream);
 
-		FileWriter metaStream = new FileWriter("meta_" + inputDirFile.getName()
-				+ ".dat");
-		BufferedWriter svmMetaFile = new BufferedWriter(metaStream);
+        FileWriter metaStream = new FileWriter("meta_" + inputDirFile.getName()
+                + ".dat");
+        BufferedWriter svmMetaFile = new BufferedWriter(metaStream);
 
-        for(BxDocument doc: iter) {
-        	System.out.println(docIdx + ": " + doc.getFilename());
-        	String filename = doc.getFilename();
-        	doc = ror.resolve(doc);
-        	doc.setFilename(filename);
+        for (BxDocument doc : iter) {
+            System.out.println(docIdx + ": " + doc.getFilename());
+            String filename = doc.getFilename();
+            doc = ror.resolve(doc);
+            doc.setFilename(filename);
 
-        	for (BxZone zone : doc.asZones()) {
-        		if (zone.getLabel() != null) {
-        			if (zone.getLabel().getCategory() != BxZoneLabelCategory.CAT_METADATA) {
-        				zone.setLabel(zone.getLabel().getGeneralLabel());
-        			}
-        		}
-        		else {
-        			zone.setLabel(BxZoneLabel.OTH_UNKNOWN);
-        		}
-        	}
-			List<TrainingSample<BxZoneLabel>> newMetaSamples = BxDocsToTrainingSamplesConverter
-					.getZoneTrainingSamples(doc, metaVectorBuilder,
-							BxZoneLabel.getIdentityMap());
-			newMetaSamples = metaSamplesFilter.pickElements(newMetaSamples);
-        	
-			List<TrainingSample<BxZoneLabel>> newInitialSamples = BxDocsToTrainingSamplesConverter
-					.getZoneTrainingSamples(doc, initialVectorBuilder,
-							BxZoneLabel.getLabelToGeneralMap());
+            for (BxZone zone : doc.asZones()) {
+                if (zone.getLabel() != null) {
+                    if (zone.getLabel().getCategory() != BxZoneLabelCategory.CAT_METADATA) {
+                        zone.setLabel(zone.getLabel().getGeneralLabel());
+                    }
+                } else {
+                    zone.setLabel(BxZoneLabel.OTH_UNKNOWN);
+                }
+            }
+            List<TrainingSample<BxZoneLabel>> newMetaSamples = BxDocsToTrainingSamplesConverter
+                    .getZoneTrainingSamples(doc, metaVectorBuilder,
+                            BxZoneLabel.getIdentityMap());
+            newMetaSamples = metaSamplesFilter.pickElements(newMetaSamples);
 
-			for (TrainingSample<BxZoneLabel> sample : newMetaSamples) {
-				toLibSVM(sample, svmMetaFile);
-			}
-			for (TrainingSample<BxZoneLabel> sample : newInitialSamples) {
-				toLibSVM(sample, svmInitialFile);
-			}
-        	++docIdx;
+            List<TrainingSample<BxZoneLabel>> newInitialSamples = BxDocsToTrainingSamplesConverter
+                    .getZoneTrainingSamples(doc, initialVectorBuilder,
+                            BxZoneLabel.getLabelToGeneralMap());
+
+            for (TrainingSample<BxZoneLabel> sample : newMetaSamples) {
+                toLibSVM(sample, svmMetaFile);
+            }
+            for (TrainingSample<BxZoneLabel> sample : newInitialSamples) {
+                toLibSVM(sample, svmInitialFile);
+            }
+            ++docIdx;
         }
-		svmInitialFile.close();
-		svmMetaFile.close();
+        svmInitialFile.close();
+        svmMetaFile.close();
     }
 }

@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.evaluation.tools;
 
 import java.io.File;
@@ -23,101 +22,103 @@ import java.util.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class NlmIterator implements Iterable<NlmPair> {
-    
-	private int curItemIdx = -1;
-	
+
+    private int curItemIdx = -1;
+
     private List<NlmPair> entries = null;
-    
+
     private String originalNlmExtension;
 
-
-    private final Comparator<File> alphabeticalOrder = new Comparator<File>(){
-		@Override
-		public int compare(File o1, File o2) {
+    private final Comparator<File> alphabeticalOrder = new Comparator<File>() {
+        @Override
+        public int compare(File o1, File o2) {
             String baseName1 = FilenameUtils.getBaseName(o1.getName());
             String extension1 = FilenameUtils.getExtension(o1.getName());
             String baseName2 = FilenameUtils.getBaseName(o2.getName());
-            
+
             if (o1.getPath().equals(o2.getPath())) {
                 return 0;
             }
-            if (o1.getParent().equals(o2.getParent()) &&
-                baseName1.equals(baseName2)) {
-                return extension1.equals(originalNlmExtension) ? -1: 1;
+            if (o1.getParent().equals(o2.getParent())
+                    && baseName1.equals(baseName2)) {
+                return extension1.equals(originalNlmExtension) ? -1 : 1;
             }
             return o1.getPath().compareTo(o2.getPath());
-		}
-	};
+        }
+    };
 
     public NlmIterator(String dirPath) {
         this(dirPath, "nxml", "metaxml");
     }
-    
-	public NlmIterator(String dirPath, final String originalNlmExtension, final String extractedNlmExtension) {
+
+    public NlmIterator(String dirPath, final String originalNlmExtension, final String extractedNlmExtension) {
         this.originalNlmExtension = originalNlmExtension;
 
-		File dir = new File(dirPath);
-		if (!dir.exists()) {
-			throw new IllegalArgumentException("provided input file must exist");
-		}
-		if (!dir.isDirectory()) {
-			throw new IllegalArgumentException("provided input file must be a directory");
-		}
-		if (dir.list().length == 0) {
-			throw new IllegalArgumentException("provided directory can't be empty");
-		}
-        
-		List<File> interestingFiles = new ArrayList<File>(FileUtils.listFiles(dir, new String[]{originalNlmExtension, extractedNlmExtension}, true));
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            throw new IllegalArgumentException("provided input file must exist");
+        }
+        if (!dir.isDirectory()) {
+            throw new IllegalArgumentException("provided input file must be a directory");
+        }
+        if (dir.list().length == 0) {
+            throw new IllegalArgumentException("provided directory can't be empty");
+        }
+
+        List<File> interestingFiles = new ArrayList<File>(FileUtils.listFiles(dir, new String[]{originalNlmExtension, extractedNlmExtension}, true));
 
         if (interestingFiles.size() < 2) {
-			throw new IllegalArgumentException("There are too few files in the given directory!");
-		}
-		Collections.sort(interestingFiles, alphabeticalOrder);
+            throw new IllegalArgumentException("There are too few files in the given directory!");
+        }
+        Collections.sort(interestingFiles, alphabeticalOrder);
 
-		entries = new ArrayList<NlmPair>();
-		
-		int i = 0;
-        while (i < interestingFiles.size()-1) {
+        entries = new ArrayList<NlmPair>();
+
+        int i = 0;
+        while (i < interestingFiles.size() - 1) {
             File file = interestingFiles.get(i);
-            File nextFile = interestingFiles.get(i+1);
+            File nextFile = interestingFiles.get(i + 1);
             String name = file.getName();
             String nextName = nextFile.getName();
-			if (FilenameUtils.getBaseName(name).equals(FilenameUtils.getBaseName(nextName))
+            if (FilenameUtils.getBaseName(name).equals(FilenameUtils.getBaseName(nextName))
                     && !FilenameUtils.getExtension(name).equals(FilenameUtils.getExtension(nextName))) {
-				entries.add(new NlmPair(file, nextFile));
-				i += 2;
-			} else {
-				i++;
-			}
-		}
-	}
+                entries.add(new NlmPair(file, nextFile));
+                i += 2;
+            } else {
+                i++;
+            }
+        }
+    }
 
-	public int size() {
-		return entries.size();
-	}
+    public int size() {
+        return entries.size();
+    }
 
-	@Override
-	public Iterator<NlmPair> iterator() {
-		return new Iterator<NlmPair>() {
+    @Override
+    public Iterator<NlmPair> iterator() {
+        return new Iterator<NlmPair>() {
 
-			@Override
-			public boolean hasNext() {
-				return curItemIdx + 1 < entries.size();
-			}
+            @Override
+            public boolean hasNext() {
+                return curItemIdx + 1 < entries.size();
+            }
 
-			@Override
-			public NlmPair next() {
-				++curItemIdx;
-				NlmPair actualItem = entries.get(curItemIdx);
-				return actualItem;
-			}
+            @Override
+            public NlmPair next() {
+                ++curItemIdx;
+                NlmPair actualItem = entries.get(curItemIdx);
+                return actualItem;
+            }
 
-			@Override
-			public void remove() {
-				++curItemIdx;
-			}
-		};
-	}
+            @Override
+            public void remove() {
+                ++curItemIdx;
+            }
+        };
+    }
 
 }

@@ -15,36 +15,29 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.evaluation.tools;
 
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import javax.xml.transform.TransformerException;
 import org.apache.commons.lang.StringUtils;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
-import org.jdom.JDOMException;
-import org.jdom.output.DOMOutputter;
-import org.w3c.dom.Document;
 import pl.edu.icm.cermine.tools.TextUtils;
 import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class EvaluationUtils {
-    
+
     public static double compareStringsSW(String expectedText, String extractedText) {
         List<String> expectedTokens = TextUtils.tokenize(expectedText.trim());
         List<String> extractedTokens = TextUtils.tokenize(extractedText.trim());
         SmithWatermanDistance distanceFunc = new SmithWatermanDistance(.0, .0);
         double distance = distanceFunc.compare(expectedTokens, extractedTokens);
-        return 2*distance / (double) (expectedTokens.size()+extractedTokens.size());
+        return 2 * distance / (double) (expectedTokens.size() + extractedTokens.size());
     }
 
     public static List<String> removeLeadingZerosFromDate(List<String> strings) {
@@ -76,50 +69,50 @@ public class EvaluationUtils {
         }
         return isSubsequence(str.substring(1), sub);
     }
-    
-    public static Comparator<String> defaultComparator =
-        new Comparator<String>() {
+
+    public static Comparator<String> defaultComparator
+            = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
             return t1.trim().replaceAll(" +", " ").compareToIgnoreCase(t2.trim().replaceAll(" +", " "));
         }
     };
-    
+
     public static Comparator<String> cosineComparator() {
         return cosineComparator(0.7);
     }
-    
+
     public static Comparator<String> cosineComparator(final double threshold) {
         return new Comparator<String>() {
 
-        @Override
-        public int compare(String t1, String t2) {
-            if (new CosineDistance().compare(TextUtils.tokenize(t1), TextUtils.tokenize(t2)) > threshold) {
-                return 0;
+            @Override
+            public int compare(String t1, String t2) {
+                if (new CosineDistance().compare(TextUtils.tokenize(t1), TextUtils.tokenize(t2)) > threshold) {
+                    return 0;
+                }
+                return t1.compareToIgnoreCase(t2);
             }
-            return t1.compareToIgnoreCase(t2);
-        }
-    };
+        };
     }
-    
-    public static Comparator<String> swComparator =
-        new Comparator<String>() {
+
+    public static Comparator<String> swComparator
+            = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
             String t1Norm = t1.replaceAll("[^a-zA-Z]", "");
             String t2Norm = t2.replaceAll("[^a-zA-Z]", "");
-            if (compareStringsSW(t1, t2) >= .9 ||
-                    (!t1Norm.isEmpty() && t1Norm.equals(t2Norm))) {
+            if (compareStringsSW(t1, t2) >= .9
+                    || (!t1Norm.isEmpty() && t1Norm.equals(t2Norm))) {
                 return 0;
             }
             return t1.compareToIgnoreCase(t2);
         }
     };
-    
-    public static Comparator<String> authorComparator =
-        new Comparator<String>() {
+
+    public static Comparator<String> authorComparator
+            = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
@@ -129,24 +122,24 @@ public class EvaluationUtils {
             return t1.trim().compareToIgnoreCase(t2.trim());
         }
     };
-    
-    public static Comparator<String> emailComparator =
-        new Comparator<String>() {
+
+    public static Comparator<String> emailComparator
+            = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
             String t1Norm = t1.toLowerCase().replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
             String t2Norm = t1.toLowerCase().replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
-            
+
             if (t1Norm.equals(t2Norm)) {
                 return 0;
             }
             return t1.trim().compareToIgnoreCase(t2.trim());
         }
     };
-        
-    public static Comparator<String> journalComparator =
-        new Comparator<String>() {
+
+    public static Comparator<String> journalComparator
+            = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
@@ -157,8 +150,8 @@ public class EvaluationUtils {
         }
     };
 
-    public static Comparator<String> yearComparator =
-        new Comparator<String>() {
+    public static Comparator<String> yearComparator
+            = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
@@ -171,7 +164,7 @@ public class EvaluationUtils {
             return t1.trim().compareToIgnoreCase(t2.trim());
         }
     };
-    
+
     public static Comparator<String> headerComparator(final Comparator<String> comp) {
         return new Comparator<String>() {
 
@@ -199,24 +192,5 @@ public class EvaluationUtils {
             }
         };
     }
-    
- 
-    public static org.w3c.dom.Document elementToW3CDocument(org.jdom.Element elem) throws JDOMException {
-        org.jdom.Document metaDoc = new org.jdom.Document();
-        metaDoc.setRootElement(elem);
-        org.jdom.output.DOMOutputter domOutputter = new DOMOutputter();
-        return domOutputter.output(metaDoc);
-    }
 
-    public static String outputDoc(Document document) throws IOException, TransformerException {
-        OutputFormat format = new OutputFormat(document);
-        format.setLineWidth(65);
-        format.setIndenting(true);
-        format.setIndent(2);
-        Writer out = new StringWriter();
-        XMLSerializer serializer = new XMLSerializer(out, format);
-        serializer.serialize(document);
-        return out.toString();
-    }
-    
 }

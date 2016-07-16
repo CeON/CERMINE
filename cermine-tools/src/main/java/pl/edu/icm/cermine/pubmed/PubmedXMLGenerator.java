@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.pubmed;
 
 import pl.edu.icm.cermine.tools.SmartHashMap;
@@ -43,10 +42,12 @@ import pl.edu.icm.cermine.metadata.zoneclassification.tools.ZoneLocaliser;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.TextUtils;
-import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.distance.CosineDistance;
 import pl.edu.icm.cermine.tools.distance.SmithWatermanDistance;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class PubmedXMLGenerator {
 
     private static class LabelTrio {
@@ -54,7 +55,7 @@ public class PubmedXMLGenerator {
         private final BxZoneLabel label;
         private final Double alignment;
         private final List<String> entryTokens;
-        
+
         @Override
         public int hashCode() {
             final int prime = 31;
@@ -97,26 +98,26 @@ public class PubmedXMLGenerator {
         }
     };
 
-	private boolean verbose = false;
+    private boolean verbose = false;
 
-	private void setVerbose(boolean verbose) {
-		this.verbose = verbose;
-	}
+    private void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+    }
 
-	private void printlnVerbose(String string) {
-		if(verbose) {
-			System.out.println(string);
-		}
-	}
-	
-	private void printVerbose(String string) {
-		if(verbose) {
-			System.out.print(string);
-		}
-	}
-	
-    public BxDocument generateTrueViz(InputStream pdfStream, InputStream nlmStream) 
-    		throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
+    private void printlnVerbose(String string) {
+        if (verbose) {
+            System.out.println(string);
+        }
+    }
+
+    private void printVerbose(String string) {
+        if (verbose) {
+            System.out.print(string);
+        }
+    }
+
+    public BxDocument generateTrueViz(InputStream pdfStream, InputStream nlmStream)
+            throws AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
         XPath xpath = XPathFactory.newInstance().newXPath();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setValidating(false);
@@ -131,9 +132,9 @@ public class PubmedXMLGenerator {
         ContentExtractor extractor = new ContentExtractor();
         extractor.setPDF(pdfStream);
         BxDocument bxDoc = extractor.getBxDocument();
-        
+
         List<BxZone> zones = Lists.newArrayList(bxDoc.asZones());
-        
+
         Integer bxDocLen = zones.size();
 
         SmartHashMap entries = new SmartHashMap();
@@ -149,13 +150,13 @@ public class PubmedXMLGenerator {
         entries.putIf(titleString, BxZoneLabel.MET_TITLE);
         String subtitleString = (String) xpath.evaluate("/article/front/article-meta/title-group/article-subtitle", domDoc, XPathConstants.STRING);
         entries.putIf(subtitleString, BxZoneLabel.MET_TITLE);
+
         //journal title
         String journalTitleString = (String) xpath.evaluate("/article/front/journal-meta/journal-title", domDoc, XPathConstants.STRING);
         if (journalTitleString == null || journalTitleString.isEmpty()) {
             journalTitleString = (String) xpath.evaluate("/article/front/journal-meta/journal-title-group/journal-title", domDoc, XPathConstants.STRING);
         }
         entries.putIf(journalTitleString, BxZoneLabel.MET_BIB_INFO);
-
 
         //journal publisher
         String journalPublisherString = (String) xpath.evaluate("/article/front/journal-meta/publisher/publisher-name", domDoc, XPathConstants.STRING);
@@ -226,10 +227,11 @@ public class PubmedXMLGenerator {
                 entries.putIf(date, BxZoneLabel.MET_DATES);
             }
         }
-        
+
         String extLink = (String) xpath.evaluate("/article/front/article-meta/ext-link[@ext-link-type='uri']/xlink:href", domDoc, XPathConstants.STRING);
         printlnVerbose(extLink);
         entries.putIf(extLink, BxZoneLabel.MET_ACCESS_DATA);
+
         //keywords
         Node keywordsNode = (Node) xpath.evaluate("/article/front/article-meta/kwd-group", domDoc, XPathConstants.NODE);
         String keywordsString = XMLTools.extractTextFromNode(keywordsNode);
@@ -241,16 +243,16 @@ public class PubmedXMLGenerator {
 
         //volume
         String volumeString = (String) xpath.evaluate("/article/front/article-meta/volume", domDoc, XPathConstants.STRING);
-        entries.putIf("volume "+volumeString, BxZoneLabel.MET_BIB_INFO);
-        entries.putIf("vol "+volumeString, BxZoneLabel.MET_BIB_INFO);
-        
+        entries.putIf("volume " + volumeString, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf("vol " + volumeString, BxZoneLabel.MET_BIB_INFO);
+
         //issue
         String issueString = (String) xpath.evaluate("/article/front/article-meta/issue", domDoc, XPathConstants.STRING);
-        entries.putIf("number "+issueString, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf("number " + issueString, BxZoneLabel.MET_BIB_INFO);
 
         entries.putIf("journal", BxZoneLabel.MET_BIB_INFO);
         entries.putIf("et al", BxZoneLabel.MET_BIB_INFO);
-               
+
         List<String> authorNames = new ArrayList<String>();
         List<String> authorEmails = new ArrayList<String>();
         List<String> authorAffiliations = new ArrayList<String>();
@@ -259,8 +261,8 @@ public class PubmedXMLGenerator {
         //pages
         String fPage = (String) xpath.evaluate("/article/front/article-meta/fpage", domDoc, XPathConstants.STRING);
         String lPage = (String) xpath.evaluate("/article/front/article-meta/lpage", domDoc, XPathConstants.STRING);
-        entries.putIf("pages "+fPage+" "+lPage, BxZoneLabel.MET_BIB_INFO);
-        entries.putIf("pp "+fPage+" "+lPage, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf("pages " + fPage + " " + lPage, BxZoneLabel.MET_BIB_INFO);
+        entries.putIf("pp " + fPage + " " + lPage, BxZoneLabel.MET_BIB_INFO);
         entries.putIf(fPage, BxZoneLabel.MET_BIB_INFO);
         entries.putIf(lPage, BxZoneLabel.MET_BIB_INFO);
         entries.putIf(lPage, BxZoneLabel.OTH_PAGE_NUMBER);
@@ -272,10 +274,11 @@ public class PubmedXMLGenerator {
                 f++;
                 entries.putIf(String.valueOf(f), BxZoneLabel.OTH_PAGE_NUMBER);
             }
-        } catch (NumberFormatException ex) {}
-        
+        } catch (NumberFormatException ex) {
+        }
+
         entries.putIf("page of", BxZoneLabel.OTH_PAGE_NUMBER);
-        
+
         //editors
         NodeList editorNodes = (NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/contrib[@contrib-type='editor']", domDoc, XPathConstants.NODESET);
         for (int nodeIdx = 0; nodeIdx < editorNodes.getLength(); ++nodeIdx) {
@@ -287,9 +290,11 @@ public class PubmedXMLGenerator {
         NodeList authorsResult = (NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/contrib[@contrib-type='author']", domDoc, XPathConstants.NODESET);
         for (int nodeIdx = 0; nodeIdx < authorsResult.getLength(); ++nodeIdx) {
             Node curNode = authorsResult.item(nodeIdx);
+
             //author names
             String name = (String) xpath.evaluate("name/given-names", curNode, XPathConstants.STRING);
             String surname = (String) xpath.evaluate("name/surname", curNode, XPathConstants.STRING);
+
             //author affiliation
             List<String> aff = XMLTools.extractTextAsList((NodeList) xpath.evaluate("/article/front/article-meta/contrib-group/aff", domDoc, XPathConstants.NODESET));
 
@@ -373,6 +378,7 @@ public class PubmedXMLGenerator {
         List<String> tableCaptions = new ArrayList<String>();
         List<String> tableBodies = new ArrayList<String>();
         List<String> tableFootnotes = new ArrayList<String>();
+
         //tableNodes
         NodeList tableNodes = (NodeList) xpath.evaluate("/article//table-wrap", domDoc, XPathConstants.NODESET);
 
@@ -404,35 +410,35 @@ public class PubmedXMLGenerator {
         //copyright
         String copyrightString = XMLTools.extractTextFromNode((Node) xpath.evaluate("/article/front/article-meta/permissions/copyright-statement", domDoc, XPathConstants.NODE));
         entries.putIf(copyrightString, BxZoneLabel.MET_COPYRIGHT);
-        
+
         //acknowledgment
         String acknowledgement = XMLTools.extractTextFromNode((Node) xpath.evaluate("/article/back/ack", domDoc, XPathConstants.NODE));
         entries.putIf(acknowledgement, BxZoneLabel.BODY_ACKNOWLEDGMENT);
 
         acknowledgement = XMLTools.extractTextFromNode((Node) xpath.evaluate("/article/back/fn-group/fn", domDoc, XPathConstants.NODE));
         entries.putIf(acknowledgement, BxZoneLabel.BODY_CONFLICT_STMT);
-        
+
         //glossary
         String glossary = XMLTools.extractTextFromNode((Node) xpath.evaluate("/article/back/glossary", domDoc, XPathConstants.NODE));
         entries.putIf(glossary, BxZoneLabel.BODY_GLOSSARY);
 
         //formula
         NodeList formulaNodes = (NodeList) xpath.evaluate("/article/body//disp-formula", domDoc, XPathConstants.NODESET);
-        for(int nodeIdx = 0; nodeIdx < formulaNodes.getLength(); ++nodeIdx) {
-        	Node curFormulaNode = formulaNodes.item(nodeIdx);
-        	String label = (String) xpath.evaluate("label", curFormulaNode);
-        	entries.putIf(label, BxZoneLabel.BODY_EQUATION);
+        for (int nodeIdx = 0; nodeIdx < formulaNodes.getLength(); ++nodeIdx) {
+            Node curFormulaNode = formulaNodes.item(nodeIdx);
+            String label = (String) xpath.evaluate("label", curFormulaNode);
+            entries.putIf(label, BxZoneLabel.BODY_EQUATION);
 
-        	NodeList curNodeChildren = curFormulaNode.getChildNodes();
-        	List<String> formulaParts = new ArrayList<String>();
-        	for(int childIdx = 0; childIdx < curNodeChildren.getLength(); ++childIdx) {
-        		Node curChild = curNodeChildren.item(childIdx);
-        		if(curChild.getNodeName().equals("label")) {
-        			continue;
-        		}
-        		formulaParts.add(XMLTools.extractTextFromNode(curChild));
-        	}
-        	entries.putIf(TextUtils.joinStrings(formulaParts), BxZoneLabel.BODY_EQUATION);
+            NodeList curNodeChildren = curFormulaNode.getChildNodes();
+            List<String> formulaParts = new ArrayList<String>();
+            for (int childIdx = 0; childIdx < curNodeChildren.getLength(); ++childIdx) {
+                Node curChild = curNodeChildren.item(childIdx);
+                if (curChild.getNodeName().equals("label")) {
+                    continue;
+                }
+                formulaParts.add(XMLTools.extractTextFromNode(curChild));
+            }
+            entries.putIf(TextUtils.joinStrings(formulaParts), BxZoneLabel.BODY_EQUATION);
         }
 
         //references
@@ -453,7 +459,7 @@ public class PubmedXMLGenerator {
             }
         }
         entries.put(StringUtils.join(allBibInfos, " "), BxZoneLabel.MET_BIB_INFO);
-        
+
         printlnVerbose("journalTitle: " + journalTitleString);
         printlnVerbose("journalPublisher: " + journalPublisherString);
         printlnVerbose("journalISSNPublisher: " + journalISSNString);
@@ -513,9 +519,9 @@ public class PubmedXMLGenerator {
                 BxZone curZone = zones.get(zoneIdx);
                 List<String> zoneTokens = TextUtils.tokenize(
                         TextUtils.removeOrphantSpaces(
-                        TextUtils.cleanLigatures(
-                        curZone.toText().toLowerCase())));
-                
+                                TextUtils.cleanLigatures(
+                                        curZone.toText().toLowerCase())));
+
                 Double smithSim;
                 Double cosSim;
                 if (curZone.toText().contains("www.biomedcentral.com")) {
@@ -533,190 +539,189 @@ public class PubmedXMLGenerator {
         }
 
         printlnVerbose("===========================");
-        for (BxPage page: bxDoc) {
-        	for(BxZone zone: page) {
-        		Integer zoneIdx = zones.indexOf(zone);
-        		BxZone curZone = zones.get(zoneIdx);
-        		String zoneText = TextUtils.removeOrphantSpaces(curZone.toText().toLowerCase());
-        		List<String> zoneTokens = TextUtils.tokenize(zoneText);
-        		Boolean valueSet = false;
+        for (BxPage page : bxDoc) {
+            for (BxZone zone : page) {
+                Integer zoneIdx = zones.indexOf(zone);
+                BxZone curZone = zones.get(zoneIdx);
+                String zoneText = TextUtils.removeOrphantSpaces(curZone.toText().toLowerCase());
+                List<String> zoneTokens = TextUtils.tokenize(zoneText);
+                Boolean valueSet = false;
 
-        		Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
+                Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
 
-        			@Override 
-        			public int compare(LabelTrio t1, LabelTrio t2) {
-        				Double simDif = t1.alignment / t1.entryTokens.size() - t2.alignment / t2.entryTokens.size();
-        				if (Math.abs(simDif) < 0.0001) {
-        					return t2.entryTokens.size() - t1.entryTokens.size();
-        				}
-        				if (simDif > 0) {
-        					return 1;
-        				} else {
-        					return -1;
-        				}
-        			}
-        		});
-        		Collections.reverse(swLabelSim.get(zoneIdx));
+                    @Override
+                    public int compare(LabelTrio t1, LabelTrio t2) {
+                        Double simDif = t1.alignment / t1.entryTokens.size() - t2.alignment / t2.entryTokens.size();
+                        if (Math.abs(simDif) < 0.0001) {
+                            return t2.entryTokens.size() - t1.entryTokens.size();
+                        }
+                        if (simDif > 0) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                });
+                Collections.reverse(swLabelSim.get(zoneIdx));
 
-        		List<String> entryTokens = swLabelSim.get(zoneIdx).get(0).entryTokens;
-        		if (Math.max(zoneTokens.size(), entryTokens.size()) > 0
-        				&& Math.min(zoneTokens.size(), entryTokens.size()) / Math.max(zoneTokens.size(), (double)entryTokens.size()) > 0.7
-        				&& swLabelSim.get(zoneIdx).get(0).alignment / entryTokens.size() > 0.7) {
-        			curZone.setLabel(swLabelSim.get(zoneIdx).get(0).label);
-        			valueSet = true;
-        			printVerbose("0 ");
-        		}
-
-        		if (!valueSet) {
-        			Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
-        				
-        				@Override
-        				public int compare(LabelTrio t1, LabelTrio t2) {
-        					Double simDif = t1.alignment - t2.alignment;
-        					if (Math.abs(simDif) < 0.0001) {
-        						return t2.entryTokens.size() - t1.entryTokens.size();
-        					}
-        					if (simDif > 0) {
-        						return 1;
-        					} else {
-        						return -1;
-        					}
-        				}
-        			});
-        			Collections.reverse(swLabelSim.get(zoneIdx));                  
-        			printlnVerbose("-->" + swLabelSim.get(zoneIdx).get(0).alignment / zoneTokens.size());
-        			if (swLabelSim.get(zoneIdx).get(0).alignment / zoneTokens.size() > 0.5) {
-        				curZone.setLabel(swLabelSim.get(zoneIdx).get(0).label);
-        				valueSet = true;
-        				printVerbose("1 ");
-        			}
-        		}
-
-        		if (!valueSet) {
-        			Map<BxZoneLabel, Double> cumulated = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
-        			for (LabelTrio trio : swLabelSim.get(zoneIdx)) {
-        				if (cumulated.containsKey(trio.label)) {
-        					cumulated.put(trio.label, cumulated.get(trio.label) + trio.alignment / Math.max(zoneTokens.size(), trio.entryTokens.size()));
-        				} else {
-        					cumulated.put(trio.label, trio.alignment / Math.max(zoneTokens.size(), trio.entryTokens.size()));
-        				}
-        			}
-        			Double max = Double.NEGATIVE_INFINITY;
-        			BxZoneLabel bestLabel = null;
-        			for (Entry<BxZoneLabel, Double> entry : cumulated.entrySet()) {
-        				if (entry.getValue() > max) {
-        					max = entry.getValue();
-        					bestLabel = entry.getKey();
-        				}
-        			}
-        			if (max >= 0.5){
-        				curZone.setLabel(bestLabel);
-        				printVerbose("2 ");
-        				valueSet = true;
-        			}
-        		}
+                List<String> entryTokens = swLabelSim.get(zoneIdx).get(0).entryTokens;
+                if (Math.max(zoneTokens.size(), entryTokens.size()) > 0
+                        && Math.min(zoneTokens.size(), entryTokens.size()) / Math.max(zoneTokens.size(), (double) entryTokens.size()) > 0.7
+                        && swLabelSim.get(zoneIdx).get(0).alignment / entryTokens.size() > 0.7) {
+                    curZone.setLabel(swLabelSim.get(zoneIdx).get(0).label);
+                    valueSet = true;
+                    printVerbose("0 ");
+                }
 
                 if (!valueSet) {
                     Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
 
-        			@Override 
-        			public int compare(LabelTrio t1, LabelTrio t2) {
-        				Double simDif = t1.alignment / t1.entryTokens.size() - t2.alignment / t2.entryTokens.size();
-        				if (Math.abs(simDif) < 0.001) {
-        					return t2.entryTokens.size() - t1.entryTokens.size();
-        				}
-        				if (simDif > 0) {
-        					return 1;
-        				} else {
-        					return -1;
-        				}
-        			}
-        		});
-        		Collections.reverse(swLabelSim.get(zoneIdx));
-                List<LabelTrio> l = swLabelSim.get(zoneIdx);
-                    
-                BxZoneLabel best = null;
-                int bestScore = 0;
-                for (LabelTrio lt : l) {
-                    int i = 0;
-                    for (String zt : zoneTokens) {
-                        if (lt.entryTokens.contains(zt)) {
-                            i++;
+                        @Override
+                        public int compare(LabelTrio t1, LabelTrio t2) {
+                            Double simDif = t1.alignment - t2.alignment;
+                            if (Math.abs(simDif) < 0.0001) {
+                                return t2.entryTokens.size() - t1.entryTokens.size();
+                            }
+                            if (simDif > 0) {
+                                return 1;
+                            } else {
+                                return -1;
+                            }
                         }
-                    }
-                    if (i > bestScore && i > 1) {
-                        best = lt.label;
-                        bestScore = i;
+                    });
+                    Collections.reverse(swLabelSim.get(zoneIdx));
+                    printlnVerbose("-->" + swLabelSim.get(zoneIdx).get(0).alignment / zoneTokens.size());
+                    if (swLabelSim.get(zoneIdx).get(0).alignment / zoneTokens.size() > 0.5) {
+                        curZone.setLabel(swLabelSim.get(zoneIdx).get(0).label);
+                        valueSet = true;
+                        printVerbose("1 ");
                     }
                 }
-                if (best != null) {
-                    curZone.setLabel(best);
-                    valueSet = true;
-                } else {
+
+                if (!valueSet) {
+                    Map<BxZoneLabel, Double> cumulated = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
+                    for (LabelTrio trio : swLabelSim.get(zoneIdx)) {
+                        if (cumulated.containsKey(trio.label)) {
+                            cumulated.put(trio.label, cumulated.get(trio.label) + trio.alignment / Math.max(zoneTokens.size(), trio.entryTokens.size()));
+                        } else {
+                            cumulated.put(trio.label, trio.alignment / Math.max(zoneTokens.size(), trio.entryTokens.size()));
+                        }
+                    }
+                    Double max = Double.NEGATIVE_INFINITY;
+                    BxZoneLabel bestLabel = null;
+                    for (Entry<BxZoneLabel, Double> entry : cumulated.entrySet()) {
+                        if (entry.getValue() > max) {
+                            max = entry.getValue();
+                            bestLabel = entry.getKey();
+                        }
+                    }
+                    if (max >= 0.5) {
+                        curZone.setLabel(bestLabel);
+                        printVerbose("2 ");
+                        valueSet = true;
+                    }
+                }
+
+                if (!valueSet) {
+                    Collections.sort(swLabelSim.get(zoneIdx), new Comparator<LabelTrio>() {
+
+                        @Override
+                        public int compare(LabelTrio t1, LabelTrio t2) {
+                            Double simDif = t1.alignment / t1.entryTokens.size() - t2.alignment / t2.entryTokens.size();
+                            if (Math.abs(simDif) < 0.001) {
+                                return t2.entryTokens.size() - t1.entryTokens.size();
+                            }
+                            if (simDif > 0) {
+                                return 1;
+                            } else {
+                                return -1;
+                            }
+                        }
+                    });
+                    Collections.reverse(swLabelSim.get(zoneIdx));
+                    List<LabelTrio> l = swLabelSim.get(zoneIdx);
+
+                    BxZoneLabel best = null;
+                    int bestScore = 0;
                     for (LabelTrio lt : l) {
                         int i = 0;
                         for (String zt : zoneTokens) {
-                            for (String j: lt.entryTokens) {
-                                if (zt.replaceAll("[^0-9a-zA-Z,;\\.!\\?]", "").equals(j.replaceAll("[^0-9a-zA-Z,;\\.!\\?]", ""))) {
-                                    i++;
-                                    break;
-                                }
+                            if (lt.entryTokens.contains(zt)) {
+                                i++;
                             }
                         }
                         if (i > bestScore && i > 1) {
                             best = lt.label;
                             bestScore = i;
                         }
-                    } 
-                }
-                
-                
-                if (best != null) {
+                    }
+                    if (best != null) {
+                        curZone.setLabel(best);
+                        valueSet = true;
+                    } else {
+                        for (LabelTrio lt : l) {
+                            int i = 0;
+                            for (String zt : zoneTokens) {
+                                for (String j : lt.entryTokens) {
+                                    if (zt.replaceAll("[^0-9a-zA-Z,;\\.!\\?]", "").equals(j.replaceAll("[^0-9a-zA-Z,;\\.!\\?]", ""))) {
+                                        i++;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (i > bestScore && i > 1) {
+                                best = lt.label;
+                                bestScore = i;
+                            }
+                        }
+                    }
+
+                    if (best != null) {
                         curZone.setLabel(best);
                         valueSet = true;
                     }
                 }
-        		if(!valueSet) {
-        			curZone.setLabel(null);
-        		}
-        		printlnVerbose(zone.getLabel() + " " + zone.toText() + "\n");
-        	}
-        	Map<BxZone, ZoneLocaliser> zoneLocMap = new HashMap<BxZone, ZoneLocaliser>();
-        	Set<BxZone> unlabeledZones = new HashSet<BxZone>();
-        	for(BxZone zone: page) {
-        		if(zone.getLabel() == null) {
-        			unlabeledZones.add(zone);
-        			zoneLocMap.put(zone, new ZoneLocaliser(zone));
-        		}
-        	}
-        	Integer lastNumberOfUnlabeledZones;
-        	do {
-        		lastNumberOfUnlabeledZones = unlabeledZones.size();
-        		infereLabels(unlabeledZones, zoneLocMap);
+                if (!valueSet) {
+                    curZone.setLabel(null);
+                }
+                printlnVerbose(zone.getLabel() + " " + zone.toText() + "\n");
+            }
+            Map<BxZone, ZoneLocaliser> zoneLocMap = new HashMap<BxZone, ZoneLocaliser>();
+            Set<BxZone> unlabeledZones = new HashSet<BxZone>();
+            for (BxZone zone : page) {
+                if (zone.getLabel() == null) {
+                    unlabeledZones.add(zone);
+                    zoneLocMap.put(zone, new ZoneLocaliser(zone));
+                }
+            }
+            Integer lastNumberOfUnlabeledZones;
+            do {
+                lastNumberOfUnlabeledZones = unlabeledZones.size();
                 infereLabels(unlabeledZones, zoneLocMap);
-        	} while(lastNumberOfUnlabeledZones != unlabeledZones.size());
+                infereLabels(unlabeledZones, zoneLocMap);
+            } while (lastNumberOfUnlabeledZones != unlabeledZones.size());
         }
         printlnVerbose("=>=>=>=>=>=>=>=>=>=>=>=>=>=");
 
         return bxDoc;
     }
 
-	private void infereLabels(Set<BxZone> unlabeledZones, Map<BxZone, ZoneLocaliser> zoneLocMap) {
-    	Set<BxZone> toBeRemoved = new HashSet<BxZone>();
-        for(BxZone zone: unlabeledZones) {
+    private void infereLabels(Set<BxZone> unlabeledZones, Map<BxZone, ZoneLocaliser> zoneLocMap) {
+        Set<BxZone> toBeRemoved = new HashSet<BxZone>();
+        for (BxZone zone : unlabeledZones) {
             if (zone.getLabel() == null) {
-            	ZoneLocaliser loc = zoneLocMap.get(zone); 
-            	if((loc.getLeftZone() != null && loc.getRightZone() != null)
-            			&& (loc.getLeftZone().getLabel() == loc.getRightZone().getLabel())) {
-            		zone.setLabel(loc.getLeftZone().getLabel());
+                ZoneLocaliser loc = zoneLocMap.get(zone);
+                if ((loc.getLeftZone() != null && loc.getRightZone() != null)
+                        && (loc.getLeftZone().getLabel() == loc.getRightZone().getLabel())) {
+                    zone.setLabel(loc.getLeftZone().getLabel());
                     printVerbose("3 ");
                     toBeRemoved.add(zone);
-            	} else if((loc.getLowerZone() != null && loc.getUpperZone() != null)
-            			&& (loc.getLowerZone().getLabel() == loc.getUpperZone().getLabel())) {
-            		zone.setLabel(loc.getLowerZone().getLabel());
+                } else if ((loc.getLowerZone() != null && loc.getUpperZone() != null)
+                        && (loc.getLowerZone().getLabel() == loc.getUpperZone().getLabel())) {
+                    zone.setLabel(loc.getLowerZone().getLabel());
                     printVerbose("3 ");
                     toBeRemoved.add(zone);
-            	} else if (zone.hasNext() && zone.hasPrev()
+                } else if (zone.hasNext() && zone.hasPrev()
                         && zone.getPrev().getLabel() == zone.getNext().getLabel()) {
                     zone.setLabel(zone.getPrev().getLabel());
                     printVerbose("3 ");
@@ -724,30 +729,30 @@ public class PubmedXMLGenerator {
                 }
             }
         }
-        for(BxZone zone: toBeRemoved) {
-        	zoneLocMap.remove(zone);
+        for (BxZone zone : toBeRemoved) {
+            zoneLocMap.remove(zone);
         }
         unlabeledZones.removeAll(toBeRemoved);
     }
-    
+
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println("Usage: <pubmed directory>");
             System.exit(1);
         }
-	
+
         File dir = new File(args[0]);
         for (File pdfFile : FileUtils.listFiles(dir, new String[]{"pdf"}, true)) {
-            try { 
+            try {
                 String pdfPath = pdfFile.getPath();
                 String nxmlPath = TextUtils.getNLMPath(pdfPath);
-                
+
                 File xmlFile = new File(TextUtils.getTrueVizPath(nxmlPath));
                 if (xmlFile.exists()) {
                     continue;
                 }
-                
-                System.out.print(pdfPath+" ");
+
+                System.out.print(pdfPath + " ");
 
                 InputStream pdfStream = new FileInputStream(pdfPath);
                 InputStream nxmlStream = new FileInputStream(nxmlPath);
@@ -755,12 +760,12 @@ public class PubmedXMLGenerator {
                 PubmedXMLGenerator datasetGenerator = new PubmedXMLGenerator();
                 datasetGenerator.setVerbose(false);
                 BxDocument bxDoc = datasetGenerator.generateTrueViz(pdfStream, nxmlStream);
-                
+
                 int keys = 0;
                 Set<BxZoneLabel> set = EnumSet.noneOf(BxZoneLabel.class);
                 int total = 0;
                 int known = 0;
-                for (BxZone z: bxDoc.asZones()) {
+                for (BxZone z : bxDoc.asZones()) {
                     total++;
                     if (z.getLabel() != null) {
                         known++;
@@ -772,7 +777,7 @@ public class PubmedXMLGenerator {
                         }
                     }
                 }
-                
+
                 if (set.contains(BxZoneLabel.MET_AFFILIATION)) {
                     keys++;
                 }
@@ -787,17 +792,17 @@ public class PubmedXMLGenerator {
                 }
                 int coverage = 0;
                 if (total > 0) {
-                    coverage = known*100/total;
+                    coverage = known * 100 / total;
                 }
-                System.out.print(coverage+" "+set.size()+" "+keys);
+                System.out.print(coverage + " " + set.size() + " " + keys);
 
                 FileWriter fstream = new FileWriter(
-                        TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "."+coverage+".cxml"));
+                        TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "." + coverage + ".cxml"));
                 BufferedWriter out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                 out.write(writer.write(Lists.newArrayList(bxDoc)));
                 out.close();
-                
+
                 System.out.println(" done");
             } catch (AnalysisException e) {
                 e.printStackTrace();

@@ -15,35 +15,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.evaluation.tools;
 
 import java.io.File;
 
+/**
+ * @author Dominika Tkaczyk
+ */
 public class NlmPair {
-    
-	private File originalNlm;
-	private File extractedNlm;
-	
-	public NlmPair(File originalNlm, File extractedNlm) {
-		super();
-		this.originalNlm = originalNlm;
-		this.extractedNlm = extractedNlm;
-	}
-	
+
+    private File originalNlm;
+    private File extractedNlm;
+
+    public NlmPair(File originalNlm, File extractedNlm) {
+        this.originalNlm = originalNlm;
+        this.extractedNlm = extractedNlm;
+    }
+
     public File getOriginalNlm() {
-		return originalNlm;
-	}
-	public void setOriginalNlm(File originalNlm) {
-		this.originalNlm = originalNlm;
-	}
-	
+        return originalNlm;
+    }
+
+    public void setOriginalNlm(File originalNlm) {
+        this.originalNlm = originalNlm;
+    }
+
     public File getExtractedNlm() {
-		return extractedNlm;
-	}
-	
+        return extractedNlm;
+    }
+
     public void setExtractedNlm(File extractedNlm) {
-		this.extractedNlm = extractedNlm;
-	}
-	
+        this.extractedNlm = extractedNlm;
+    }
+
 }

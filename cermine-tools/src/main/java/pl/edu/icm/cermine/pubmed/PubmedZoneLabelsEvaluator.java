@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.pubmed;
 
 import com.google.common.collect.Lists;
@@ -31,7 +30,6 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
 /**
- *
  * @author Dominika Tkaczyk
  */
 public class PubmedZoneLabelsEvaluator {
@@ -121,8 +119,6 @@ public class PubmedZoneLabelsEvaluator {
                 sumPrec += (good * 100. / all);
                 countPrec++;
             }
-
-
 
             all = 0;
 

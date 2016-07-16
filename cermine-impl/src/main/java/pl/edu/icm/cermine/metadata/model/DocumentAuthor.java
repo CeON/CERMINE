@@ -27,43 +27,55 @@ import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
  * @author Dominika Tkaczyk
  */
 public class DocumentAuthor {
-
+    
     private String name;
     
-    private String email;
+    private List<String> emails;
 
-    private final List<String> affiliationRefs = new ArrayList<String>();
+    private List<String> affiliationRefs;
     
-    private final List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
+    private List<DocumentAffiliation> affiliations;
 
     public DocumentAuthor(String name) {
+        this(name, null, new ArrayList<String>());
+    }
+
+    public DocumentAuthor(String name, String email) {
+        this(name, email, new ArrayList<String>());
+    }
+
+    public DocumentAuthor(String name, List<String> affiliationRefs) {
+        this(name, null, affiliationRefs);
+    }
+
+    public DocumentAuthor(String name, String email, List<String> affiliationRefs) {
         this.name = name;
+        this.emails = new ArrayList<String>();
+        if (email != null) {
+            this.emails.add(email);
+        }
+        this.affiliationRefs = affiliationRefs;
+        this.affiliations = new ArrayList<DocumentAffiliation>();
     }
 
-    public String getEmail() {
-        return email;
+    public List<String> getEmails() {
+        return emails;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void addEmail(String email) {
+        if (email != null && !email.isEmpty() && !emails.contains(email)) {
+            emails.add(email);
+        }
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void addAffiliation(DocumentAffiliation affiliation) {
         if (!affiliations.contains(affiliation)) {
             affiliations.add(affiliation);
         }
-    }
-
-    public void setAffiliationRefs(List<String> refs) {
-        affiliationRefs.addAll(refs);
     }
 
     public List<DocumentAffiliation> getAffiliations() {
@@ -76,7 +88,11 @@ public class DocumentAuthor {
 
     void clean() {
         name = ContentCleaner.clean(name);
-        email = ContentCleaner.clean(email);
+        List<String> newEmails = new ArrayList<String>();
+        for (String email: emails) {
+            newEmails.add(ContentCleaner.clean(email));
+        }
+        emails = newEmails;
         for (DocumentAffiliation affiliation : affiliations){
             affiliation.clean();
         }

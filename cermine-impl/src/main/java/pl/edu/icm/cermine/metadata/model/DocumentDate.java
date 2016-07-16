@@ -40,30 +40,19 @@ public class DocumentDate {
         this.year = year;
         this.month = month;
         this.day = day;
+        clean();
     }
 
     public String getDay() {
         return day;
     }
 
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getMonth() {
+   public String getMonth() {
         return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
     }
 
     public String getYear() {
         return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
     }
 
     public static final String DATE_ACCEPTED = "accepted";
@@ -74,7 +63,7 @@ public class DocumentDate {
     
     public static final String DATE_PUBLISHED = "published";
 
-    void clean() {
+    private void clean() {
         day = ContentCleaner.clean(day);
         month = ContentCleaner.clean(month);
         year = ContentCleaner.clean(year);

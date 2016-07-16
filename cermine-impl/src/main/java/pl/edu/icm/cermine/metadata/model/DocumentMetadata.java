@@ -60,6 +60,7 @@ public class DocumentMetadata {
 
     private final List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
     
+    private final List<String> emails = new ArrayList<String>();
     
     public String getTitle() {
         return title;
@@ -127,23 +128,53 @@ public class DocumentMetadata {
     }
     
     public void addAuthor(String authorName, List<String> affiliationIndexes) {
-        DocumentAuthor author = new DocumentAuthor(authorName);
-        author.setAffiliationRefs(affiliationIndexes);
+        DocumentAuthor author = new DocumentAuthor(authorName, new ArrayList<String>(affiliationIndexes));
         authors.add(author);
     }
     
     public void addAuthor(String authorName, List<String> affiliationIndexes, String email) {
-        DocumentAuthor author = new DocumentAuthor(authorName);
-        author.setAffiliationRefs(affiliationIndexes);
-        if (email != null && !email.isEmpty()) {
-            author.setEmail(email);
+        if (email.isEmpty()) {
+            email = null;
         }
+        if (email != null && !emails.contains(email)) {
+            emails.add(email);
+        }
+        DocumentAuthor author = new DocumentAuthor(authorName, email, new ArrayList<String>(affiliationIndexes));
         authors.add(author);
     }
 
+    public void addAuthorWithAffiliations(String authorName, String email, List<String> affiliations) {
+        if (email.isEmpty()) {
+            email = null;
+        }
+        if (email != null && !emails.contains(email)) {
+            emails.add(email);
+        }
+        
+        DocumentAuthor author = new DocumentAuthor(authorName, email);
+        authors.add(author);
+        
+        for (String affiliation: affiliations) {
+            DocumentAffiliation aff = getAffiliationByName(affiliation);
+            if (aff == null) {
+                aff = new DocumentAffiliation(String.valueOf(affiliations.size()), affiliation);
+                this.affiliations.add(aff);
+                author.addAffiliation(aff);
+            }
+        }
+    }
+    
     public List<DocumentAuthor> getAuthors() {
         return authors;
     }
+
+    public List<String> getEmails() {
+        return emails;
+    }
+    
+    public void addEmail(String email) {
+        emails.add(email);
+    }            
     
     public String getIssue() {
         return issue;
@@ -250,10 +281,6 @@ public class DocumentMetadata {
         firstPage = ContentCleaner.clean(firstPage);
         lastPage = ContentCleaner.clean(lastPage);
         publisher = ContentCleaner.clean(publisher);
-        for (DocumentDate date : dates.values()) {
-           date.clean();
-        }
-        
     }
 
     public static final String ID_HINDAWI = "hindawi-id";

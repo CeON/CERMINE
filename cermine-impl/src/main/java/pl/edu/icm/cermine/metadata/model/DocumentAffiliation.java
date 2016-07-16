@@ -66,16 +66,8 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getIndex() {
         return index;
-    }
-
-    public void setIndex(String index) {
-        this.index = index;
     }
 
     @Override

@@ -71,7 +71,9 @@ public class PdfBxStructureExtractor {
     
     public static void main(String[] args) throws ParseException, IOException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
-        if (!parser.parse(args)) {
+        String error = parser.parse(args);
+        if (error != null) {
+            System.err.println(error + "\n");
             System.err.println(
                     "Usage: PdfBxStructureExtractor -path <path> [optional parameters]\n\n"
                   + "Tool for extracting structured content from PDF files.\n\n"

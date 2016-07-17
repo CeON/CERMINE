@@ -31,6 +31,7 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import com.google.common.collect.Lists;
+import java.util.Map;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
@@ -614,114 +615,117 @@ public class ContentExtractor {
 
     public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
-        if (!parser.parse(args)) {
+        String error = parser.parse(args);
+        if (error != null) {
+            System.err.println(error + "\n");
             System.err.println(
                     "Usage: ContentExtractor -path <path> [optional parameters]\n\n"
                     + "Tool for extracting metadata and content from PDF files.\n\n"
                     + "Arguments:\n"
-                    + "  -path <path>              path to a PDF file or directory containing PDF files\n"
-                    + "  -ext <extension>          (optional) the extension of the resulting metadata file;\n"
-                    + "                            default: \"cermxml\"; used only if passed path is a directory\n"
-                    + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
-                    + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
-                    + "  -str                      whether to store structure (TrueViz) files as well;\n"
-                    + "                            used only if passed path is a directory\n"
-                    + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
-                    + "                            default: \"cxml\"; used only if passed path is a directory\n"
-                    + "  -threads <num>            number of threads for parallel processing\n"
-                    + "  -timeout <seconds>        approximate maximum allowed processing time for a PDF file\n"
-                    + "                            in seconds; by default, no timeout is used;\n"
-                    + "                            the value is approximate because in some cases,\n"
-                    + "                            the program might be allowed to slightly exceeded this time,\n"
-                    + "                            say by a second or two;\n"
-                    + "                            \n");
+                    + "  -path <path>           path to a directory containing PDF files\n"
+                    + "  -outputs <list>        (optional) comma-separated list of extraction\n"
+                    + "                         output(s); possible values: \"jats\" (document\n"
+                    + "                         metadata and content in NLM JATS format), \"text\"\n"
+                    + "                         (raw document text), \"zones\" (text zones with\n"
+                    + "                         their labels), \"trueviz\" (geometric structure in\n"
+                    + "                         TrueViz format); default: \"jats\"\n"
+                    + "  -exts <list>           (optional) comma-separated list of extensions of the\n"
+                    + "                         resulting files; the list has to have the same\n"
+                    + "                         length as output list; default: \"cermxml\"\n"
+                    + "  -override              override already existing files\n"
+                    + "  -timeout <seconds>     (optional) approximate maximum allowed processing\n"
+                    + "                         time for a PDF file in seconds; by default, no\n"
+                    + "                         timeout is used; the value is approximate because in\n"
+                    + "                         some cases, the program might be allowed to slightly\n"
+                    + "                         exceeded this time, say by a second or two\n"
+                    + "  -modelmeta <path>      (optional) the path to the metadata classifier model\n"
+                    + "  -modelinit <path>      (optional) the path to the initial classifier model\n"
+                    + "  -threads <num>         (optional) number of threads for parallel processing;\n"
+                    + "                         default: 3"
+                    );
             System.exit(1);
         }
 
-        String path = parser.getPath();
-        String extension = parser.getNLMExtension();
-        boolean extractStr = parser.extractStructure();
-        String strExtension = parser.getBxExtension();
         InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
+        boolean override = parser.override();
         Long timeoutSeconds = parser.getTimeout();
+        
+        String path = parser.getPath();
+        Map<String, String> extensions = parser.getTypesAndExtensions();
 
         File file = new File(path);
-        if (file.isFile()) {
+        Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
+
+        int i = 0;
+        for (File pdf : files) {
+            long start = System.currentTimeMillis();
+            float elapsed;
+
+            System.out.println("File processed: " + pdf.getPath());
+
+            ContentExtractor extractor = null;
             try {
-                ContentExtractor extractor
-                        = createContentExtractor(timeoutSeconds);
+                extractor = createContentExtractor(timeoutSeconds);
                 parser.updateMetadataModel(extractor.getConf());
                 parser.updateInitialModel(extractor.getConf());
-                InputStream in = new FileInputStream(file);
+          
+                InputStream in = new FileInputStream(pdf);
                 extractor.setPDF(in);
-                TimeoutRegister.get().check();
 
-                Element result = extractor.getNLMContent();
-
-                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                System.out.println(outputter.outputString(result));
-            } catch (Exception ex) {
-                printException(ex);
-            }
-        } else {
-
-            Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
-
-            int i = 0;
-            for (File pdf : files) {
-                File xmlF = new File(pdf.getPath().replaceAll("pdf$", extension));
-                if (xmlF.exists()) {
-                    i++;
-                    continue;
-                }
-
-                long start = System.currentTimeMillis();
-                float elapsed;
-
-                System.out.println("File processed: " + pdf.getPath());
-
-                ContentExtractor extractor = null;
-                try {
-                    extractor = createContentExtractor(timeoutSeconds);
-                    parser.updateMetadataModel(extractor.getConf());
-                    parser.updateInitialModel(extractor.getConf());
-                    InputStream in = new FileInputStream(pdf);
-                    extractor.setPDF(in);
-
-                    BxDocument doc = extractor.getBxDocument();
-                    Element result = extractor.getNLMContent();
-
-                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                    if (!xmlF.createNewFile()) {
-                        System.out.println("Cannot create new file!");
+                if (extensions.containsKey("jats")) {
+                    File outputFile = getOutputFile(pdf, extensions.get("jats"));
+                    if (override || !outputFile.exists()) {
+                        Element jats = extractor.getNLMContent();
+                        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                        FileUtils.writeStringToFile(outputFile, outputter.outputString(jats));
                     }
-                    FileUtils.writeStringToFile(xmlF, outputter.outputString(result));
-
-                    if (extractStr) {
+                }
+                
+                if (extensions.containsKey("trueviz")) {
+                    File outputFile = getOutputFile(pdf, extensions.get("trueviz"));
+                    if (override || !outputFile.exists()) {
+                        BxDocument doc = extractor.getBxDocument();
                         BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                        File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
-                        writer.write(new FileWriter(strF), Lists.newArrayList(doc));
+                        writer.write(new FileWriter(outputFile), Lists.newArrayList(doc));
                     }
-                } catch (AnalysisException ex) {
-                    printException(ex);
-                } catch (TransformationException ex) {
-                    printException(ex);
-                } catch (TimeoutException ex) {
-                    printException(ex);
-                } finally {
-                    if (extractor != null) {
-                        extractor.removeTimeout();
-                    }
-                    long end = System.currentTimeMillis();
-                    elapsed = (end - start) / 1000F;
                 }
-
-                i++;
-                int percentage = i * 100 / files.size();
-                System.out.println("Extraction time: " + Math.round(elapsed) + "s");
-                System.out.println("Progress: " + percentage + "% done (" + i + " out of " + files.size() + ")");
-                System.out.println("");
+                
+                if (extensions.containsKey("zones")) {
+                    File outputFile = getOutputFile(pdf, extensions.get("zones"));
+                    if (override || !outputFile.exists()) {
+                        Element text = extractor.getLabelledRawFullText();
+                        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                        FileUtils.writeStringToFile(outputFile, outputter.outputString(text));
+                    }
+                }
+                
+                if (extensions.containsKey("text")) {
+                    File outputFile = getOutputFile(pdf, extensions.get("text"));
+                    if (override || !outputFile.exists()) {
+                        String text = extractor.getRawFullText();
+                        FileUtils.writeStringToFile(outputFile, text);
+                    }
+                }
+                
+            } catch (AnalysisException ex) {
+                printException(ex);
+            } catch (TransformationException ex) {
+                printException(ex);
+            } catch (TimeoutException ex) {
+                printException(ex);
+            } finally {
+                if (extractor != null) {
+                    extractor.removeTimeout();
+                }
+                long end = System.currentTimeMillis();
+                elapsed = (end - start) / 1000F;
             }
+
+            i++;
+            int percentage = i * 100 / files.size();
+            System.out.println("Extraction time: " + Math.round(elapsed) + "s");
+            System.out.println("Progress: " + percentage + "% done (" + i + " out of " + files.size() + ")");
+            System.out.println("");
         }
     }
 
@@ -737,6 +741,10 @@ public class ContentExtractor {
         return extractor;
     }
 
+    private static File getOutputFile(File pdf, String ext) {
+        return new File(pdf.getPath().replaceFirst("pdf$", ext));
+    }
+    
     private static void printException(Exception ex) {
         System.out.print("Exception occured: " + ExceptionUtils.getStackTrace(ex));
     }

@@ -152,7 +152,9 @@ public class PdfNLMContentExtractor {
 
     public static void main(String[] args) throws ParseException, IOException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
-        if (!parser.parse(args)) {
+        String error = parser.parse(args);
+        if (error != null) {
+            System.err.println(error + "\n");
             System.err.println(
                     "Usage: PdfNLMContentExtractor -path <path> [optional parameters]\n\n"
                   + "Tool for extracting metadata and content from PDF files.\n\n"

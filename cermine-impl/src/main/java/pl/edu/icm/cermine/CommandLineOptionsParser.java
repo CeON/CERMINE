@@ -18,10 +18,15 @@
 
 package pl.edu.icm.cermine;
 
+import com.google.common.collect.Lists;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.cli.*;
+import org.apache.commons.lang.ArrayUtils;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
 
@@ -39,29 +44,75 @@ public class CommandLineOptionsParser {
     public CommandLineOptionsParser() {
         options = new Options();
         options.addOption("path", true, "file or directory path");
+        options.addOption("output", true, "types of the output");
+        options.addOption("exts", true, "extensions of the output files");
         options.addOption("ext", true, "metadata file extension");
+        options.addOption("override", false, "override existing files");
         options.addOption("str", false, "store structure (TrueViz) files as well");
         options.addOption("strext", true, "structure file extension");
         options.addOption("modelmeta", true, "path to metadata classifier model");
         options.addOption("modelinit", true, "path to initial classifier model");
         options.addOption("threads", true, "number of threads used");
-        options.addOption("output", true, "output path");
         options.addOption("timeout", true, "time in seconds");
     }
     
-    public boolean parse(String[] args) throws ParseException {
+    public String parse(String[] args) throws ParseException {
         CommandLineParser clParser = new GnuParser();
         commandLine = clParser.parse(options, args);
                 
-        return commandLine.getOptionValue("path") != null;
+        if (commandLine.getOptionValue("path") == null) {
+            return "\"path\" parameter not specified";
+        }
+        
+        String output = commandLine.getOptionValue("output");
+        String exts = commandLine.getOptionValue("exts");
+        if (output != null) {
+            List<String> outputs = Lists.newArrayList(output.split(","));
+            outputs.removeAll(Lists.newArrayList("jats", "text", "zones", "trueviz"));
+            if (!outputs.isEmpty()) {
+                return "Unknown output types: " + outputs;
+            }
+            if (exts != null && output.split(",").length != exts.split(",").length) {
+                return "\"output\" and \"exts\" lists have different lengths";
+            }
+        }
+        
+        return null;
     }
 
     public String getPath() {
         return commandLine.getOptionValue("path");
     }
+    
+    public Map<String, String> getTypesAndExtensions() {
+        Map<String, String> typesAndExts = new HashMap<String, String>();
+        typesAndExts.put("jats", "cermxml");
+        typesAndExts.put("text", "cermtxt");
+        typesAndExts.put("zones", "cermzones");
+        typesAndExts.put("trueviz", "cermstr");
 
-    public String getOutput() {
-        return commandLine.getOptionValue("output");
+        String[] types = this.getStringOptionValue("jats", "output").split(",");
+        for (String type: Lists.newArrayList(typesAndExts.keySet())) {
+            if (!ArrayUtils.contains(types, type)) {
+                typesAndExts.remove(type);
+            }
+        }
+        
+        String exts = commandLine.getOptionValue("exts");
+        if (exts != null) {
+            String[] extArr = exts.split(",");
+            if (types.length == extArr.length) {
+                for (int i = 0; i < types.length; i++) {
+                    typesAndExts.put(types[i], extArr[i]);
+                }
+            }
+        }
+        
+        return typesAndExts;
+    }
+    
+    public boolean override() {
+        return commandLine.hasOption("override");
     }
     
     public String getNLMExtension() {

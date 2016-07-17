@@ -91,7 +91,9 @@ public class PdfRawTextWithLabelsExtractor {
     
     public static void main(String[] args) throws ParseException, IOException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
-        if (!parser.parse(args)) {
+        String error = parser.parse(args);
+        if (error != null) {
+            System.err.println(error + "\n");
             System.err.println(
                     "Usage: PdfRawTextWithLabelsExtractor -path <path> [optional parameters]\n\n"
                   + "Tool for extracting labelled full text in the right reading order from PDF files.\n\n"

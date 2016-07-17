@@ -21,11 +21,8 @@ package pl.edu.icm.cermine;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 import org.jdom.Element;
-
 import com.google.common.collect.Lists;
-
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
@@ -107,6 +104,7 @@ public class InternalContentExtractor {
      * Sets the input bx document.
      * 
      * @param bxDocument 
+     * @throws java.io.IOException 
      */
     public void setBxDocument(BxDocument bxDocument) throws IOException {
         reset();

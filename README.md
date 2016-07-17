@@ -49,9 +49,10 @@ CERMINE can be used in Java projects by adding the following dependency and repo
 
 To extract the content from a PDF file:
 
-	PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
+	ContentExtractor extractor = new ContentExtractor();
 	InputStream inputStream = new FileInputStream("path/to/pdf/file");
-	Element result = extractor.extractContent(inputStream);
+    extractor.setPDF(inputStream);
+	Element result = extractor.getNLMContent();
 
 To extract metadata from a reference string:
 
@@ -75,7 +76,7 @@ This will result in a file *cermine-impl-<VERSION>-jar-with-dependencies.jar* in
 
 To extract the content from PDF files:
 
-	$ java -cp target/cermine-impl-<VERSION>-jar-with-dependencies.jar pl.edu.icm.cermine.PdfNLMContentExtractor -path path/to/directory/with/pdfs/or/a/single/pdf
+	$ java -cp target/cermine-impl-<VERSION>-jar-with-dependencies.jar pl.edu.icm.cermine.ContentExtractor -path path/to/directory/with/pdfs/
 
 To extract metadata from a reference string:
 

@@ -64,7 +64,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         WORDS = new HashSet<String>();
         InputStream wis = CitationUtils.class.getResourceAsStream(DEFAULT_WORDS_FILE);
         try {
-            WORDS.addAll(IOUtils.readLines(wis));
+            WORDS.addAll(IOUtils.readLines(wis, "UTF-8"));
         } catch (IOException ex) {
             Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common words!", ex);
         }
@@ -180,7 +180,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         options.addOption("reference", true, "reference text");
         options.addOption("format", true, "output format");
         
-        CommandLineParser clParser = new GnuParser();
+        CommandLineParser clParser = new DefaultParser();
         CommandLine line = clParser.parse(options, args);
         String referenceText = line.getOptionValue("reference");
         String outputFormat = line.getOptionValue("format");

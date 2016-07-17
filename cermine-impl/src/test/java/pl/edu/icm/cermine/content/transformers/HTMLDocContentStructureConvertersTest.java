@@ -55,7 +55,7 @@ public class HTMLDocContentStructureConvertersTest {
     @Test
     public void readerWriterTest() throws URISyntaxException, IOException, TransformationException, SAXException {
         File file = new File(this.getClass().getResource(modelFilePath).toURI());
-        String expectedHTML = FileUtils.readFileToString(file);
+        String expectedHTML = FileUtils.readFileToString(file, "UTF-8");
         
         InputStream is = this.getClass().getResourceAsStream(modelFilePath);
         InputStreamReader isr = new InputStreamReader(is);

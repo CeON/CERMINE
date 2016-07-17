@@ -46,7 +46,7 @@ public abstract class BxDocRewriter {
         options.addOption("input", true, "input path");
         options.addOption("output", true, "output path");
         options.addOption("ext", true, "extension");
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
         String inDir = line.getOptionValue("input");
         String outDir = line.getOptionValue("output");

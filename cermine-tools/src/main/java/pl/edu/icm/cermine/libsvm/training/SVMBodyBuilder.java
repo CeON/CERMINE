@@ -87,7 +87,7 @@ public class SVMBodyBuilder {
         options.addOption("cross", false, "");
         options.addOption("ext", true, "degree");
 
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
         if (!line.hasOption("input") || !line.hasOption("output")) {
             System.err.println("Usage: SVMMetadataBuilder [-kernel <kernel type>] [-d <degree>] [-g <gamma>] [-C <error cost>] [-ext <extension>] -input <input dir> -output <path>");

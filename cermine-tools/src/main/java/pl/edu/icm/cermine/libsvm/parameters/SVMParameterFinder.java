@@ -65,7 +65,7 @@ public abstract class SVMParameterFinder {
         options.addOption("ming", true, "");
         options.addOption("maxg", true, "");
         
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
 
         if (line.hasOption("help")) {

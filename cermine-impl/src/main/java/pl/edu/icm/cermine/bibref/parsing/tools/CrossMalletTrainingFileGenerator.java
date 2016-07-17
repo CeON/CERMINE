@@ -72,8 +72,8 @@ public final class CrossMalletTrainingFileGenerator {
             for (Citation citation : citations) {
                 for (CitationToken ct : citation.getTokens()) {
                     if (ct.getText().matches("^[a-zA-Z]+$")) {
-                        FileUtils.writeStringToFile(validFile, ct.getText().toLowerCase(), true);
-                        FileUtils.writeStringToFile(validFile, "\n", true);
+                        FileUtils.writeStringToFile(validFile, ct.getText().toLowerCase(), "UTF-8", true);
+                        FileUtils.writeStringToFile(validFile, "\n", "UTF-8", true);
                     }
                 }
             }

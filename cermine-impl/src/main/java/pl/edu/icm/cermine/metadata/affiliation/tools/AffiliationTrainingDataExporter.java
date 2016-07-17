@@ -130,7 +130,7 @@ public class AffiliationTrainingDataExporter {
 		options.addOption("add_mock_text", false, "should add TEXT");
 		options.addOption("load_words", false, "read common words from file instead of writing them");
 
-		CommandLineParser clParser = new GnuParser();
+		CommandLineParser clParser = new DefaultParser();
 		CommandLine line = clParser.parse(options, args);
 
 		String inputFileName = line.getOptionValue("input");

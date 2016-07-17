@@ -677,7 +677,7 @@ public class ContentExtractor {
                     if (override || !outputFile.exists()) {
                         Element jats = extractor.getNLMContent();
                         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                        FileUtils.writeStringToFile(outputFile, outputter.outputString(jats));
+                        FileUtils.writeStringToFile(outputFile, outputter.outputString(jats), "UTF-8");
                     }
                 }
                 
@@ -695,7 +695,7 @@ public class ContentExtractor {
                     if (override || !outputFile.exists()) {
                         Element text = extractor.getLabelledRawFullText();
                         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                        FileUtils.writeStringToFile(outputFile, outputter.outputString(text));
+                        FileUtils.writeStringToFile(outputFile, outputter.outputString(text), "UTF-8");
                     }
                 }
                 
@@ -703,7 +703,7 @@ public class ContentExtractor {
                     File outputFile = getOutputFile(pdf, extensions.get("text"));
                     if (override || !outputFile.exists()) {
                         String text = extractor.getRawFullText();
-                        FileUtils.writeStringToFile(outputFile, text);
+                        FileUtils.writeStringToFile(outputFile, text, "UTF-8");
                     }
                 }
                 

@@ -178,7 +178,7 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
         Options options = new Options();
         options.addOption("affiliation", true, "reference text");
 
-        CommandLineParser clParser = new GnuParser();
+        CommandLineParser clParser = new DefaultParser();
         CommandLine line = clParser.parse(options, args);
         String affiliationText = line.getOptionValue("affiliation");
 

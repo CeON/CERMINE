@@ -57,7 +57,7 @@ public class CommandLineOptionsParser {
     }
     
     public String parse(String[] args) throws ParseException {
-        CommandLineParser clParser = new GnuParser();
+        CommandLineParser clParser = new DefaultParser();
         commandLine = clParser.parse(options, args);
                 
         if (commandLine.getOptionValue("path") == null) {

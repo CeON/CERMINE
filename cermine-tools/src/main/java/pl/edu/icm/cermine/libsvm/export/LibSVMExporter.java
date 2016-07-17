@@ -98,7 +98,7 @@ public class LibSVMExporter {
     public static void main(String[] args) throws ParseException, IOException, TransformationException, AnalysisException, CloneNotSupportedException {
         Options options = new Options();
 
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
 
         if (args.length != 2) {

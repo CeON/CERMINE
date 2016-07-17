@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
@@ -47,7 +47,7 @@ public class BxDocShrinker {
         options.addOption("input", true, "input path");
         options.addOption("output", true, "output path");
         options.addOption("ext", true, "extension");
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
         String inDir = line.getOptionValue("input");
         String outDir = line.getOptionValue("output");

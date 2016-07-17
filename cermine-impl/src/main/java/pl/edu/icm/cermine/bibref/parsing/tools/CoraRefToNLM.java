@@ -326,12 +326,12 @@ public final class CoraRefToNLM {
             Element e = conv.convert(CitationUtils.citationToBibref(citation));
             e.setAttribute("id", String.valueOf(k++));
             
-            FileUtils.writeStringToFile(nlm, outputter.outputString(e), true);
-            FileUtils.writeStringToFile(bt, CitationUtils.citationToBibref(citation).toBibTeX(), true);
-            FileUtils.writeStringToFile(txt, CitationUtils.citationToBibref(citation).getText(), true);
-            FileUtils.writeStringToFile(nlm, "\n", true);
-            FileUtils.writeStringToFile(bt, "\n", true);
-            FileUtils.writeStringToFile(txt, "\n", true);
+            FileUtils.writeStringToFile(nlm, outputter.outputString(e), "UTF-8", true);
+            FileUtils.writeStringToFile(bt, CitationUtils.citationToBibref(citation).toBibTeX(), "UTF-8", true);
+            FileUtils.writeStringToFile(txt, CitationUtils.citationToBibref(citation).getText(), "UTF-8", true);
+            FileUtils.writeStringToFile(nlm, "\n", "UTF-8", true);
+            FileUtils.writeStringToFile(bt, "\n", "UTF-8", true);
+            FileUtils.writeStringToFile(txt, "\n", "UTF-8", true);
         }
     }
 

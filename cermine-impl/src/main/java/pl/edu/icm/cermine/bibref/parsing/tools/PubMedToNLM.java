@@ -175,12 +175,12 @@ public final class PubMedToNLM {
             Element e = conv.convert(citation);
             e.setAttribute("id", String.valueOf(k++));
             
-            FileUtils.writeStringToFile(nlm, outputter.outputString(e), true);
-            FileUtils.writeStringToFile(bt, citation.toBibTeX(), true);
-            FileUtils.writeStringToFile(txt, citation.getText(), true);
-            FileUtils.writeStringToFile(nlm, "\n", true);
-            FileUtils.writeStringToFile(bt, "\n", true);
-            FileUtils.writeStringToFile(txt, "\n", true);
+            FileUtils.writeStringToFile(nlm, outputter.outputString(e), "UTF-8", true);
+            FileUtils.writeStringToFile(bt, citation.toBibTeX(), "UTF-8", true);
+            FileUtils.writeStringToFile(txt, citation.getText(), "UTF-8", true);
+            FileUtils.writeStringToFile(nlm, "\n", "UTF-8", true);
+            FileUtils.writeStringToFile(bt, "\n", "UTF-8", true);
+            FileUtils.writeStringToFile(txt, "\n", "UTF-8", true);
         }
 
     }

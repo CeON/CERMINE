@@ -22,7 +22,7 @@ import java.io.*;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
@@ -45,7 +45,7 @@ public class ZonesToCSVExporter {
         Options options = new Options();
         options.addOption("input", true, "input path");
         options.addOption("ext", true, "extension");
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
         String inDir = line.getOptionValue("input");
         String extension = line.getOptionValue("ext");

@@ -41,7 +41,7 @@ public abstract class BxDocStatisticsPrinter {
         Options options = new Options();
         options.addOption("input", true, "input path");
         options.addOption("ext", true, "extension");
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
         String inDir = line.getOptionValue("input");
         String extension = line.getOptionValue("ext");

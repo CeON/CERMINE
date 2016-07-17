@@ -78,7 +78,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
         
         options.addOption("ext", true, "ext");
         
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = parser.parse(options, args);
 
         if (line.hasOption("help")) {

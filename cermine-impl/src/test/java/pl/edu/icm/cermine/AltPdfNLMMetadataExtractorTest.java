@@ -43,11 +43,11 @@ public class AltPdfNLMMetadataExtractorTest {
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test3.pdf";
     static final private String EXP_FILE = "/pl/edu/icm/cermine/test3-met.xml";
     
-    private PdfNLMMetadataExtractor extractor;
+    private ContentExtractor extractor;
     
     @Before
     public void setUp() throws AnalysisException, IOException {
-        extractor = new PdfNLMMetadataExtractor();
+        extractor = new ContentExtractor();
         extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
     }
     
@@ -56,7 +56,8 @@ public class AltPdfNLMMetadataExtractorTest {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
         Element testMetadata;
         try {
-            testMetadata = extractor.extractMetadataAsNLM(testStream);
+            extractor.setPDF(testStream);
+            testMetadata = extractor.getNLMMetadata();
         } finally {
             testStream.close();
         }

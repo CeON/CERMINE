@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -34,7 +34,7 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 /**
  * Classifying zones as: METADATA, BODY, REFERENCES, OTHER.
  *
- * @author Pawel Szostek (p.szostek@icm.edu.pl)
+ * @author Pawel Szostek
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 

@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
-
-import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.InternalContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -36,7 +34,7 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 /**
  * Page segmenter using Docstrum algorithm.
  * 
- * @author krusek
+ * @author Krzysztof Rusek
  */
 public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     
@@ -57,7 +55,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     
     class SingleSegmenter implements Callable<NumBxPage> {
         NumBxPage page;
-        private Timeout timeout;
+        private final Timeout timeout;
 
         public SingleSegmenter(BxPage page, int index, Timeout timeout) {
             this.page = new NumBxPage(page, index);
@@ -77,7 +75,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     
     class ComponentCounter implements Callable<NumBxPage> {
         NumBxPage page;
-        private Timeout timeout;
+        private final Timeout timeout;
 
         public ComponentCounter(BxPage page, Timeout timeout) {
             this.page = new NumBxPage(page);

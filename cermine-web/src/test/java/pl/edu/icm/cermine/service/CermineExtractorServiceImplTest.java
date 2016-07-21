@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -32,8 +32,7 @@ import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
- *
- * @author Aleksander Nowinski <a.nowinski@icm.edu.pl>
+ * @author Aleksander Nowinski (a.nowinski@icm.edu.pl)
  */
 public class CermineExtractorServiceImplTest {
 
@@ -60,6 +59,7 @@ public class CermineExtractorServiceImplTest {
 
     /**
      * Test of extractNLM method, of class CermineExtractorServiceImpl.
+     * @throws java.lang.Exception
      */
     @Test
     public void testExtractNLM() throws Exception {
@@ -71,11 +71,11 @@ public class CermineExtractorServiceImplTest {
         ExtractionResult result = instance.extractNLM(is);
         assertNotNull(result);
         assertTrue(result.isSucceeded());
-
     }
 
     /**
      * Test of extractNLM method, of class CermineExtractorServiceImpl.
+     * @throws java.lang.Exception
      */
     @Test
     public void testQueue() throws Exception {
@@ -129,6 +129,7 @@ public class CermineExtractorServiceImplTest {
 
     /**
      * Test of obtainExtractor method, of class CermineExtractorServiceImpl.
+     * @throws java.lang.Exception
      */
     @Test
     public void testObtainExtractor() throws Exception {

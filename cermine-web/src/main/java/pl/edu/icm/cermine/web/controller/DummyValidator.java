@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -15,21 +15,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.web.controller;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+/**
+ * @author Aleksander Nowinski (a.nowinski@icm.edu.pl)
+ */
 public class DummyValidator implements Validator {
 
-	@Override
-	public boolean supports(Class<?> clazz) {
-		return false;
-	}
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
 
-	@Override
-	public void validate(Object target, Errors errors) {		
-	}
+    @Override
+    public void validate(Object target, Errors errors) {
+    }
 
 }

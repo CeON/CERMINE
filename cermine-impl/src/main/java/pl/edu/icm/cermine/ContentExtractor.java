@@ -53,9 +53,8 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
  * User can set a timeout to limit the processing time of the <code>get*</code>
  * methods of the class.
  *
- * @author Dominika Tkaczyk
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  * @author Mateusz Kobos
- *
  */
 public class ContentExtractor {
 

@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,6 +17,9 @@
  */
 package pl.edu.icm.cermine.tools.classification.general;
 
+/**
+ * @author Pawel Szostek
+ */
 public interface ScalingStrategy {
 
     FeatureVector scaleFeatureVector(double scaledLowerBound,

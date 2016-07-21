@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -38,8 +38,7 @@ import pl.edu.icm.cermine.content.transformers.NLMToHTMLWriter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
- *
- * @author Aleksander Nowinski <a.nowinski@icm.edu.pl>
+ * @author Aleksander Nowinski (a.nowinski@icm.edu.pl)
  */
 @Component
 public class CermineExtractorServiceImpl implements CermineExtractorService {
@@ -60,7 +59,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
     public void init() {
         try {
             processingExecutor = Executors.newFixedThreadPool(threadPoolSize);
-            ArrayBlockingQueue<Runnable> q = null;
+            ArrayBlockingQueue<Runnable> q;
             if (maxQueueForBatch > 0) {
                 q = new ArrayBlockingQueue<Runnable>(maxQueueForBatch);
             } else {

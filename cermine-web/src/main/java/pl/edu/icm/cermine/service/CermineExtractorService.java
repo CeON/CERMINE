@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -26,7 +26,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  * Service is responsible for extraction and proper scheduling and resource
  * allocation.
  *
- * @author Aleksander Nowinski <a.nowinski@icm.edu.pl>
+ * @author Aleksander Nowinski (a.nowinski@icm.edu.pl)
  */
 public interface CermineExtractorService {
 
@@ -37,6 +37,7 @@ public interface CermineExtractorService {
      * @param ii
      * @return result of the extraction, including basic request stats.
      * @throws AnalysisException
+     * @throws pl.edu.icm.cermine.service.ServiceException
      */
     ExtractionResult extractNLM(InputStream ii) throws AnalysisException, ServiceException;
 

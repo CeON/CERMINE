@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -38,11 +38,10 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
 import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
-
 /**
  * Extracts text chunks from PDFs along with their position on the page, width and height.
  *
- * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class ITextCharacterExtractor implements CharacterExtractor {
     

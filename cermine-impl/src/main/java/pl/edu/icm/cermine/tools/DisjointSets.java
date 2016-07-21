@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,7 +23,7 @@ import java.util.*;
 /**
  * A disjoint-set data structure.
  *
- * @author krusek
+ * @author Krzysztof Rusek
  * @param <E> element type
  */
 public class DisjointSets<E> implements Iterable<Set<E>> {

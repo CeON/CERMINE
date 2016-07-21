@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -30,8 +30,7 @@ import pl.edu.icm.cermine.structure.model.BxZone;
  * A set-like data structure for objects placed on a plane. Can efficiently find objects in a certain rectangular area.
  * It maintains two parallel lists of objects, each of which is sorted by its x or y coordinate.
  *
- * @author Pawel Szostek (p.szostek@icm.edu.pl) @date 05.2012
- *
+ * @author Pawel Szostek
  */
 public class DocumentPlane {
 

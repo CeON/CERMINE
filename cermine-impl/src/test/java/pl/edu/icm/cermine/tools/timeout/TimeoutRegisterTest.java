@@ -20,7 +20,6 @@ package pl.edu.icm.cermine.tools.timeout;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
@@ -30,13 +29,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
 import org.junit.Test;
 
 /**
- * 
  * @author Mateusz Kobos
- *
  */
 public class TimeoutRegisterTest {
 

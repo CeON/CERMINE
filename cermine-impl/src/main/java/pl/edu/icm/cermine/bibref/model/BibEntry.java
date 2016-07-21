@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -27,7 +27,6 @@ import org.apache.commons.lang.StringUtils;
  * Bibliographic reference entry, modelled after BibTeX format.
  * 
  * @author Lukasz Bolikowski (bolo@icm.edu.pl)
- * 
  */
 public class BibEntry {
 

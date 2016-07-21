@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -32,10 +32,13 @@ import org.springframework.stereotype.Component;
 /**
  * A simple <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a>
  * implementation in a filter.
+ * 
+ * @author Aleksander Nowinski (a.nowinski@icm.edu.pl)
  */
 @Component
 public class SimpleCORSFilter implements Filter {
 
+    @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         if (((HttpServletRequest) req).getHeader("Origin") != null) {
             HttpServletResponse response = (HttpServletResponse) res;
@@ -47,9 +50,11 @@ public class SimpleCORSFilter implements Filter {
         chain.doFilter(req, res);
     }
 
+    @Override
     public void init(FilterConfig filterConfig) {
     }
 
+    @Override
     public void destroy() {
     }
 }

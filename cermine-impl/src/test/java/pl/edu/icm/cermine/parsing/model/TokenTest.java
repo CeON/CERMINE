@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -24,6 +24,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 
+/**
+ * @author Bartosz Tarnawski
+ */
 public class TokenTest {
 
     @Test

@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -24,7 +24,7 @@ import java.util.List;
  * Feature vector builder (GoF factory pattern). The builder calculates feature
  * vectors for objects using a list of single feature calculators.
  *
- * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  *
  * @param <S> Type of objects for whom features' values can be calculated.
  * @param <T> Type of additional context objects that can be used for

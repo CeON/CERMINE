@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -36,8 +36,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
 
 /**
- *
- * @author Dominika Tkaczyk
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public abstract class SVMParameterFinder {
 

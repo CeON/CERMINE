@@ -19,23 +19,18 @@
 package pl.edu.icm.cermine;
 
 import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.Test;
-
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.tools.timeout.TimeoutException;
 
 /**
- * 
  * @author Mateusz Kobos
- *
  */
 public class ContentExtractorTimeoutTest {
     static final private String COMPLEX_PDF_PATH = "/pl/edu/icm/cermine/tools/timeout/complex.pdf";

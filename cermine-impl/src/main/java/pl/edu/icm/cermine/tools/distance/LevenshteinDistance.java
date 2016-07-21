@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,6 +21,9 @@ package pl.edu.icm.cermine.tools.distance;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Pawel Szostek
+ */
 public class LevenshteinDistance {
 
     public Integer compare(List<String> s1, List<String> s2) {

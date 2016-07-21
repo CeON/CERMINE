@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -24,6 +24,8 @@ import pl.edu.icm.cermine.tools.CountMap;
 /**
  * Models a single page of a document. A page is either segmented (divided into zones)
  * or not segmented (containing a list of chunks that haven't been grouped into zones yet).
+ * 
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public final class BxPage extends BxObject<BxZone, BxPage, BxDocument> {
 

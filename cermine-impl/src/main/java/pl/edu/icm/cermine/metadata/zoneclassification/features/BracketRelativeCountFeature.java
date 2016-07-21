@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -15,19 +15,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
+/**
+ * @author Pawel Szostek
+ */
 public class BracketRelativeCountFeature extends FeatureCalculator<BxZone, BxPage> {
 
-	@Override
-	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		double brackets = new BracketCountFeature().calculateFeatureValue(zone, page);
-		double chars = new CharCountFeature().calculateFeatureValue(zone, page);
-		return brackets/chars; 
-	}
+    @Override
+    public double calculateFeatureValue(BxZone zone, BxPage page) {
+        double brackets = new BracketCountFeature().calculateFeatureValue(zone, page);
+        double chars = new CharCountFeature().calculateFeatureValue(zone, page);
+        return brackets / chars;
+    }
 }

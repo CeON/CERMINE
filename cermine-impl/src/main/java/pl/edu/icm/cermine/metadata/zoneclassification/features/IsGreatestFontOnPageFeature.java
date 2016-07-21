@@ -1,6 +1,6 @@
 /**
  * This file is part of CERMINE project.
- * Copyright (c) 2011-2013 ICM-UW
+ * Copyright (c) 2011-2016 ICM-UW
  *
  * CERMINE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,6 +22,9 @@ import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
+/**
+ * @author Pawel Szostek
+ */
 public class IsGreatestFontOnPageFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 
     @Override

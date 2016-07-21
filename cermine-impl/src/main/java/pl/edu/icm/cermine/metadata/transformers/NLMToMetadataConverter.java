@@ -188,13 +188,13 @@ public class NLMToMetadataConverter implements ModelToModelConverter<Element, Do
             Element author = (Element)a;
             String name = author.getChildText("string-name");
             if (name == null && author.getChild("name") != null) {
-                name = "";
+                StringBuilder sb = new StringBuilder();
                 for (Object gn : author.getChild("name").getChildren("given-names")){
-                    name += XMLTools.getTextContent((Element)gn);
-                    name += " ";
+                    sb.append(XMLTools.getTextContent((Element)gn));
+                    sb.append(" ");
                 }
-                name += author.getChild("name").getChildText("surname");
-                name = name.trim();
+                sb.append(author.getChild("name").getChildText("surname"));
+                name = sb.toString().trim();
             }
             if (name == null) {
                 name = XMLTools.getTextContent(author.getChild("collab"));

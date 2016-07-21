@@ -124,13 +124,13 @@ public class ReferenceParsingEvaluator {
                     }
                 }
                 
-                for (String s : map.keySet()) {
+                for (Map.Entry<String, Result> s : map.entrySet()) {
                     System.out.println("");
-                    System.out.println(s);
-                    System.out.println(map.get(s));
-                    System.out.println(map.get(s).getPrecision());
-                    System.out.println(map.get(s).getRecall());
-                    results.get(s).add(map.get(s));
+                    System.out.println(s.getKey());
+                    System.out.println(s.getValue());
+                    System.out.println(s.getValue().getPrecision());
+                    System.out.println(s.getValue().getRecall());
+                    results.get(s.getKey()).add(s.getValue());
                 }
                 
                 j++;

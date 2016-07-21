@@ -16,7 +16,7 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.metadata.affiliation.tools;
+package pl.edu.icm.cermine.affiliation;
 
 import java.io.*;
 import java.util.*;
@@ -24,6 +24,9 @@ import org.apache.commons.cli.*;
 import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationFeatureExtractor;
+import pl.edu.icm.cermine.metadata.affiliation.tools.AffiliationTokenizer;
+import pl.edu.icm.cermine.metadata.affiliation.tools.NLMAffiliationExtractor;
 import pl.edu.icm.cermine.metadata.model.AffiliationLabel;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.parsing.model.Token;

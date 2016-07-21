@@ -16,7 +16,7 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.bibref.parsing.tools;
+package pl.edu.icm.cermine.bibref;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +33,8 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
+import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
+import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -42,10 +44,10 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public final class PubMedToNLM {
     
-    private static final String NLM_DIR = "/media/4CEE59EAEE59CCB8/data/refs/data/";
-    private static final String OUT_NLM = "/home/domin/phd-metadata-extraction/results/citations/citations.nxml";
-    private static final String OUT_BT = "/home/domin/phd-metadata-extraction/results/citations/citations.bibtex";
-    private static final String OUT_TXT = "/home/domin/phd-metadata-extraction/results/citations/citations.txt";
+    private static final String NLM_DIR = "refs/data/";
+    private static final String OUT_NLM = "results/citations/citations.nxml";
+    private static final String OUT_BT = "results/citations/citations.bibtex";
+    private static final String OUT_TXT = "results/citations/citations.txt";
     
 
     public static void main(String[] args) throws JDOMException, IOException, AnalysisException, TransformationException {

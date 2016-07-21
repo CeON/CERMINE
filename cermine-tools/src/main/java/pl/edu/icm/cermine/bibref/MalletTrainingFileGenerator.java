@@ -16,7 +16,7 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.bibref.parsing.tools;
+package pl.edu.icm.cermine.bibref;
 
 import java.io.*;
 import java.util.Map.Entry;
@@ -25,15 +25,17 @@ import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
+import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
+import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public final class MalletTrainingFileGenerator {
 
-    private static final String NLM_DIR = "/home/domin/cermine-tests/out/";
-    private static final String OUT_FILE = "/tmp/crf-train.txt";
-    private static final String OUT_FILE2 = "/tmp/crf-train-words.txt";
+    private static final String NLM_DIR = "cermine-tests/out/";
+    private static final String OUT_FILE = "crf-train.txt";
+    private static final String OUT_FILE2 = "crf-train-words.txt";
     private static final int MIN_COUNT = 5;
 
     public static void main(String[] args) throws JDOMException, IOException {

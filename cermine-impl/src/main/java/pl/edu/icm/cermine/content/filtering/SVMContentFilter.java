@@ -31,17 +31,6 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
  */
 public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel> implements ContentFilter {
 
-    private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/content/filtering.model";
-    private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/content/filtering.range";
-
-    public SVMContentFilter() throws AnalysisException {
-        this(MODEL_FILE_PATH, RANGE_FILE_PATH);
-    }
-
-    public SVMContentFilter(FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder) throws AnalysisException {
-        this(MODEL_FILE_PATH, RANGE_FILE_PATH, featureVectorBuilder);
-    }
-
     public SVMContentFilter(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
         this(modelFile, rangeFile, ContentFilterTools.VECTOR_BUILDER);
     }

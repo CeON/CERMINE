@@ -19,16 +19,11 @@
 package pl.edu.icm.cermine;
 
 import com.google.common.collect.Lists;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang.ArrayUtils;
-import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -43,14 +38,13 @@ public class CommandLineOptionsParser {
     public CommandLineOptionsParser() {
         options = new Options();
         options.addOption("path", true, "file or directory path");
-        options.addOption("output", true, "types of the output");
+        options.addOption("outputs", true, "types of the output");
         options.addOption("exts", true, "extensions of the output files");
         options.addOption("ext", true, "metadata file extension");
         options.addOption("override", false, "override existing files");
         options.addOption("str", false, "store structure (TrueViz) files as well");
         options.addOption("strext", true, "structure file extension");
-        options.addOption("modelmeta", true, "path to metadata classifier model");
-        options.addOption("modelinit", true, "path to initial classifier model");
+        options.addOption("configuration", true, "path to configuration file");
         options.addOption("threads", true, "number of threads used");
         options.addOption("timeout", true, "time in seconds");
     }
@@ -63,7 +57,7 @@ public class CommandLineOptionsParser {
             return "\"path\" parameter not specified";
         }
         
-        String output = commandLine.getOptionValue("output");
+        String output = commandLine.getOptionValue("outputs");
         String exts = commandLine.getOptionValue("exts");
         if (output != null) {
             List<String> outputs = Lists.newArrayList(output.split(","));
@@ -90,7 +84,7 @@ public class CommandLineOptionsParser {
         typesAndExts.put("zones", "cermzones");
         typesAndExts.put("trueviz", "cermstr");
 
-        String[] types = this.getStringOptionValue("jats", "output").split(",");
+        String[] types = this.getStringOptionValue("jats", "outputs").split(",");
         for (String type: Lists.newArrayList(typesAndExts.keySet())) {
             if (!ArrayUtils.contains(types, type)) {
                 typesAndExts.remove(type);
@@ -146,61 +140,15 @@ public class CommandLineOptionsParser {
         }
     }
     
-    public void updateMetadataModel(ComponentConfiguration conf) throws AnalysisException, IOException {
-        String model = getStringOptionValue(null, "modelmeta");
-        String modelRange = model == null ? null : model + ".range";
-        if ("alt-humanities".equals(model)) {
-            conf.setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
-        } else if (model != null) {
-            InputStream modelIS = null;
-            InputStream modelRangeIS = null;
-            try {
-                modelIS = new FileInputStream(model);
-                try {
-                    modelRangeIS = new FileInputStream(modelRange);
-                    conf.setMetadataZoneClassifier(modelIS, modelRangeIS);
-                } finally {
-                    if (modelRangeIS != null) {
-                       modelRangeIS.close();
-                    }
-                }
-            } finally {
-                if (modelIS != null) {
-                    modelIS.close();
-                }
-            }
-        }
-    }
-    
-    public void updateInitialModel(ComponentConfiguration conf) throws AnalysisException, IOException {
-        String model = getStringOptionValue(null, "modelinit");
-        String modelRange = model == null ? null : model + ".range";
-        if (model != null) {
-            InputStream modelIS = null;
-            InputStream modelRangeIS = null;
-            try {
-                modelIS = new FileInputStream(model);
-                try {
-                    modelRangeIS = new FileInputStream(modelRange);
-                    conf.setInitialZoneClassifier(modelIS, modelRangeIS);
-                } finally {
-                    if (modelRangeIS != null) {
-                       modelRangeIS.close();
-                    }
-                }
-            } finally {
-                if (modelIS != null) {
-                    modelIS.close();
-                }
-            }
-        }
-    }
-    
     public int getThreadsNumber() {
         if (commandLine.hasOption("threads")) {
             return Integer.valueOf(commandLine.getOptionValue("threads"));
         }
         return InternalContentExtractor.THREADS_NUMBER;
+    }
+    
+    public String getConfigurationPath() {
+        return getStringOptionValue(null, "configuration");
     }
 
     private String getStringOptionValue(String defaultValue, String name) {

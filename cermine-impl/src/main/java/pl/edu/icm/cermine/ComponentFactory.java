@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
@@ -40,6 +41,7 @@ import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.parsing.tools.ParsableStringParser;
 import pl.edu.icm.cermine.structure.*;
+import pl.edu.icm.cermine.tools.ResourceUtils;
 
 /**
  * A factory of extraction components.
@@ -76,14 +78,19 @@ public class ComponentFactory {
     }
     
     /**
-     * The method creates an instance of a default initial zone classifier.
+     * The method creates an instance of an initial zone classifier.
      * 
+     * @param modelPath Path to svm model file (can be regular file or a classpath resource).
+     *      For classpath resource, path should be prefixed with <code>classpath:</code>
+     * @param rangePath Path to svm range file (can be regular file or a classpath resource).
+     *      For classpath resource, path should be prefixed with <code>classpath:</code>
      * @return initial zone classifier
-     * @throws pl.edu.icm.cermine.exception.AnalysisException
-     * @throws java.io.IOException
+     * @throws AnalysisException
+     * @throws IOException
      */
-    public static ZoneClassifier getInitialZoneClassifier() throws AnalysisException, IOException {
-        return SVMInitialZoneClassifier.getDefaultInstance();
+    public static ZoneClassifier getInitialZoneClassifier(String modelPath, String rangePath) throws AnalysisException, IOException {
+        
+        return getInitialZoneClassifier(ResourceUtils.openResourceStream(modelPath), ResourceUtils.openResourceStream(rangePath));
     }
     
     /**
@@ -110,14 +117,19 @@ public class ComponentFactory {
     }
     
     /**
-     * The method creates an instance of a default metadata zone classifier.
+     * The method creates an instance of a metadata zone classifier.
      * 
+     * @param modelPath Path to svm model file (can be regular file or a classpath resource).
+     *      For classpath resource, path should be prefixed with <code>classpath:</code>
+     * @param rangePath Path to svm range file (can be regular file or a classpath resource).
+     *      For classpath resource, path should be prefixed with <code>classpath:</code>
      * @return metadata zone classifier
      * @throws pl.edu.icm.cermine.exception.AnalysisException
      * @throws java.io.IOException
      */
-    public static ZoneClassifier getMetadataZoneClassifier() throws AnalysisException, IOException {
-        return SVMMetadataZoneClassifier.getDefaultInstance();
+    public static ZoneClassifier getMetadataZoneClassifier(String modelPath, String rangePath) throws AnalysisException, IOException {
+        
+        return getMetadataZoneClassifier(ResourceUtils.openResourceStream(modelPath), ResourceUtils.openResourceStream(rangePath));
     }
     
     /**
@@ -195,11 +207,16 @@ public class ComponentFactory {
     /**
      * The method creates an instance of a default content filter. 
      * 
+     * @param modelPath Path to svm model file (can be regular file or a classpath resource).
+     *      For classpath resource, path should be prefixed with <code>classpath:</code>
+     * @param rangePath Path to svm range file (can be regular file or a classpath resource).
+     *      For classpath resource, path should be prefixed with <code>classpath:</code>
      * @return content filter
      * @throws AnalysisException 
      */
-    public static ContentFilter getContentFilter() throws AnalysisException {
-        return new SVMContentFilter();
+    public static ContentFilter getContentFilter(String modelPath, String rangePath) throws AnalysisException, IOException {
+        
+        return getContentFilter(ResourceUtils.openResourceStream(modelPath), ResourceUtils.openResourceStream(rangePath));
     }
 
     /**

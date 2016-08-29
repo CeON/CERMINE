@@ -39,6 +39,10 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  */
 public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 
+    protected static final String ZONE_CLASSIFIER_MODEL_PATH = SVMInitialClassifierTest.class.getResource("/pl/edu/icm/cermine/structure/model-initial-default").getPath();
+    
+    protected static final String ZONE_CLASSIFIER_RANGE_PATH = SVMInitialClassifierTest.class.getResource("/pl/edu/icm/cermine/structure/model-initial-default.range").getPath();
+    
     protected static final String ZIP_RESOURCES = "/pl/edu/icm/cermine/structure/roa_test_small.zip";
 
     protected static final double TEST_SUCCESS_PERCENTAGE = 80;
@@ -52,7 +56,7 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
 
     @Before
     public void setUp() throws IOException, AnalysisException {
-        classifier = new SVMInitialZoneClassifier();
+        classifier = new SVMInitialZoneClassifier(ZONE_CLASSIFIER_MODEL_PATH, ZONE_CLASSIFIER_RANGE_PATH);
         ror = new HierarchicalReadingOrderResolver();
         startProcessFlattener = new DocumentProcessor() {
             @Override

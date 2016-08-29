@@ -35,6 +35,8 @@ import java.util.Map;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
@@ -70,30 +72,54 @@ public class ContentExtractor {
      * @throws AnalysisException
      */
     public ContentExtractor() throws AnalysisException {
-        this.extractor = new InternalContentExtractor();
+        this(new ContentExtractorConfigLoader().loadConfiguration());
     }
 
     /**
      * Creates the object and sets the object-bound timeout before any other
      * initialization in the constructor is done.
-     * <p>
-     * See {@link #setTimeout(long)} for more details about the timeout.
+     * <p>See {@link #setTimeout(long)} for more details about the timeout.</p>
      *
      * @param timeoutSeconds approximate timeout in seconds
-     * @throws AnalysisException
+     * @throws AnalysisException thrown when there was an error while initializing object
      * @throws TimeoutException thrown when timeout deadline has passed.
      */
-    public ContentExtractor(long timeoutSeconds)
-            throws AnalysisException, TimeoutException {
+    public ContentExtractor(long timeoutSeconds) throws AnalysisException, TimeoutException {
+        
+        this(new ContentExtractorConfigLoader().loadConfiguration(), timeoutSeconds);
+    }
+    
+    /**
+     * Creates the object with overridden default configuration.
+     * 
+     * @param config - configuration for this content extractor
+     * @throws AnalysisException thrown when there was an error while initializing object
+     */
+    public ContentExtractor(ContentExtractorConfig config) throws AnalysisException {
+        this.extractor = new InternalContentExtractor(config);
+    }
+    
+    /**
+     * Creates the object with overridden default configuration and sets 
+     * the object-bound timeout before any other initialization in the constructor is done.
+     * <p>See {@link #setTimeout(long)} for more details about the timeout.</p>
+     * 
+     * @param config - configuration for this content extractor
+     * @param timeoutSeconds approximate timeout in seconds
+     * @throws AnalysisException thrown when there was an error while initializing object
+     * @throws TimeoutException thrown when timeout deadline has passed.
+     */
+    public ContentExtractor(ContentExtractorConfig config, long timeoutSeconds) throws AnalysisException, TimeoutException {
         this.setTimeout(timeoutSeconds);
         try {
             TimeoutRegister.set(mainTimeout);
             TimeoutRegister.get().check();
-            this.extractor = new InternalContentExtractor();
+            this.extractor = new InternalContentExtractor(config);
         } finally {
             TimeoutRegister.remove();
         }
     }
+
 
     /**
      * Set object-bound timeout.
@@ -637,8 +663,7 @@ public class ContentExtractor {
                     + "                         timeout is used; the value is approximate because in\n"
                     + "                         some cases, the program might be allowed to slightly\n"
                     + "                         exceeded this time, say by a second or two\n"
-                    + "  -modelmeta <path>      (optional) the path to the metadata classifier model\n"
-                    + "  -modelinit <path>      (optional) the path to the initial classifier model\n"
+                    + "  -configuration <path>	(optional) the path to configuration file\n"
                     + "  -threads <num>         (optional) number of threads for parallel processing;\n"
                     + "                         default: 3"
                     );
@@ -655,6 +680,9 @@ public class ContentExtractor {
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
 
+        ContentExtractorConfigLoader configLoader = new ContentExtractorConfigLoader();
+        ContentExtractorConfig config = (parser.getConfigurationPath() == null) ? configLoader.loadConfiguration() : configLoader.loadConfiguration(parser.getConfigurationPath());
+
         int i = 0;
         for (File pdf : files) {
             long start = System.currentTimeMillis();
@@ -664,9 +692,7 @@ public class ContentExtractor {
 
             ContentExtractor extractor = null;
             try {
-                extractor = createContentExtractor(timeoutSeconds);
-                parser.updateMetadataModel(extractor.getConf());
-                parser.updateInitialModel(extractor.getConf());
+                extractor = createContentExtractor(config, timeoutSeconds);
           
                 InputStream in = new FileInputStream(pdf);
                 extractor.setPDF(in);
@@ -728,13 +754,13 @@ public class ContentExtractor {
         }
     }
 
-    private static ContentExtractor createContentExtractor(Long timeoutSeconds)
+    private static ContentExtractor createContentExtractor(ContentExtractorConfig config, Long timeoutSeconds)
             throws TimeoutException, AnalysisException {
         ContentExtractor extractor;
         if (timeoutSeconds != null) {
-            extractor = new ContentExtractor(timeoutSeconds);
+            extractor = new ContentExtractor(config, timeoutSeconds);
         } else {
-            extractor = new ContentExtractor();
+            extractor = new ContentExtractor(config);
         }
         TimeoutRegister.get().check();
         return extractor;

@@ -23,6 +23,9 @@ import java.io.*;
 import java.util.Collection;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
+
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -43,6 +46,10 @@ public class PdfBxStructureExtractor {
 
     public PdfBxStructureExtractor() throws AnalysisException {
         extractor = new ContentExtractor();
+    }
+    
+    public PdfBxStructureExtractor(ContentExtractorConfig configuration) throws AnalysisException {
+        extractor = new ContentExtractor(configuration);
     }
     
     /**
@@ -79,8 +86,7 @@ public class PdfBxStructureExtractor {
                   + "Tool for extracting structured content from PDF files.\n\n"
                   + "Arguments:\n"
                   + "  -path <path>              path to a PDF file or directory containing PDF files\n"
-                  + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
-                  + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
+                  + "  -configuration <path>     (optional) the path to configuration file\n"
                   + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
                   + "                            default: \"cxml\"; used only if passed path is a directory\n"
                   + "  -threads <num>            number of threads for parallel processing\n");
@@ -94,6 +100,9 @@ public class PdfBxStructureExtractor {
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
     
+        ContentExtractorConfigLoader configLoader = new ContentExtractorConfigLoader();
+        ContentExtractorConfig config = (parser.getConfigurationPath() == null) ? configLoader.loadConfiguration() : configLoader.loadConfiguration(parser.getConfigurationPath());
+        
         int i = 0;
         for (File pdf : files) {
             File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));
@@ -108,9 +117,7 @@ public class PdfBxStructureExtractor {
             System.out.println(pdf.getPath());
  
             try {
-                PdfBxStructureExtractor extractor = new PdfBxStructureExtractor();
-                parser.updateMetadataModel(extractor.getConf());
-                parser.updateInitialModel(extractor.getConf());
+                PdfBxStructureExtractor extractor = new PdfBxStructureExtractor(config);
 
                 InputStream in = new FileInputStream(pdf);
                 BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);

@@ -663,7 +663,10 @@ public class ContentExtractor {
                     + "                         timeout is used; the value is approximate because in\n"
                     + "                         some cases, the program might be allowed to slightly\n"
                     + "                         exceeded this time, say by a second or two\n"
-                    + "  -configuration <path>	(optional) the path to configuration file\n"
+                    + "  -configuration <path>	(optional) the path to configuration properties file\n"
+                    + "                         see classpath:/pl/edu/icm/cermine/application-default.properties\n"
+                    + "                         for description of available configuration properties\n"
+                    + "                         and default values\n"
                     + "  -threads <num>         (optional) number of threads for parallel processing;\n"
                     + "                         default: 3"
                     );

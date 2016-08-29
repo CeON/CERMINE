@@ -22,7 +22,7 @@ public class ContentExtractorConfigLoader {
     /**
      * Returns {@link ContentExtractor} default configuration properties.
      * 
-     * @see classpath:/pl/edu/icm/cermine/application-default.properties
+     * @see "classpath:/pl/edu/icm/cermine/application-default.properties"
      */
     public ContentExtractorConfig loadConfiguration() {
         
@@ -34,7 +34,7 @@ public class ContentExtractorConfigLoader {
     }
     
     /**
-     * Returns {@link ContentExtractor} configuration properties from property file.<br/>
+     * Returns {@link ContentExtractor} configuration properties from property file.<br>
      * If some configuration property is not present in provided property file,
      * then the default value will be used.
      */

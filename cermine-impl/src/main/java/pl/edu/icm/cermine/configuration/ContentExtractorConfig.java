@@ -5,7 +5,7 @@ import org.apache.commons.configuration.Configuration;
 import pl.edu.icm.cermine.ContentExtractor;
 
 /**
- * Class that holds configuration for {@link ContentExtractor}.<br/>
+ * Class that holds configuration for {@link ContentExtractor}.<br>
  * An object of this class can be obtained by {@link ContentExtractorConfigLoader}
  * 
  * @author madryk

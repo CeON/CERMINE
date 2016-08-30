@@ -108,10 +108,9 @@ public class PdfRawTextWithLabelsExtractor {
                   + "  -path <path>              path to a PDF file or directory containing PDF files\n"
                   + "  -ext <extension>          (optional) the extension of the resulting text file;\n"
                   + "                            default: \"cermtxt\"; used only if passed path is a directory\n"
-                  + "  -configuration <path>     (optional) the path to configuration properties file\n"
-                  + "                            see classpath:/pl/edu/icm/cermine/application-default.properties\n"
+                  + "  -configuration <path>     (optional) path to configuration properties file\n"
+                  + "                            see https://github.com/CeON/CERMINE\n"
                   + "                            for description of available configuration properties\n"
-                  + "                            and default values\n"
                   + "  -threads <num>            number of threads for parallel processing\n");
             System.exit(1);
         }

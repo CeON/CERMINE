@@ -86,10 +86,9 @@ public class PdfBxStructureExtractor {
                   + "Tool for extracting structured content from PDF files.\n\n"
                   + "Arguments:\n"
                   + "  -path <path>              path to a PDF file or directory containing PDF files\n"
-                  + "  -configuration <path>     (optional) the path to configuration properties file\n"
-                  + "                            see classpath:/pl/edu/icm/cermine/application-default.properties\n"
+                  + "  -configuration <path>     (optional) path to configuration properties file\n"
+                  + "                            see https://github.com/CeON/CERMINE\n"
                   + "                            for description of available configuration properties\n"
-                  + "                            and default values\n"
                   + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
                   + "                            default: \"cxml\"; used only if passed path is a directory\n"
                   + "  -threads <num>            number of threads for parallel processing\n");

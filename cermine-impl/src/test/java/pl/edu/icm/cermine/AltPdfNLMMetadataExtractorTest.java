@@ -33,12 +33,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.AnalysisException;
-import pl.edu.icm.cermine.structure.SVMAlternativeMetadataZoneClassifier;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class AltPdfNLMMetadataExtractorTest {
+    
+    private final static String ALT_METADATA_CLASSIFIER_MODEL_PATH = "classpath:/pl/edu/icm/cermine/structure/model-metadata-humanities";
+    private final static String ALT_METADATA_CLASSIFIER_RANGE_PATH = "classpath:/pl/edu/icm/cermine/structure/model-metadata-humanities.range";
+    
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test3.pdf";
     static final private String EXP_FILE = "/pl/edu/icm/cermine/test3-met.xml";
     
@@ -47,7 +50,8 @@ public class AltPdfNLMMetadataExtractorTest {
     @Before
     public void setUp() throws AnalysisException, IOException {
         extractor = new ContentExtractor();
-        extractor.getConf().setMetadataZoneClassifier(SVMAlternativeMetadataZoneClassifier.getDefaultInstance());
+        
+        extractor.getConf().setMetadataZoneClassifier(ComponentFactory.getMetadataZoneClassifier(ALT_METADATA_CLASSIFIER_MODEL_PATH, ALT_METADATA_CLASSIFIER_RANGE_PATH));
     }
     
     @Test

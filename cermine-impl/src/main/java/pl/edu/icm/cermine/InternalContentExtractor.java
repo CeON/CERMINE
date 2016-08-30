@@ -21,11 +21,13 @@ package pl.edu.icm.cermine;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
 import org.jdom.Element;
 import com.google.common.collect.Lists;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
@@ -85,8 +87,14 @@ public class InternalContentExtractor {
     private List<CitationSentiment> citationSentiments;
     
     
-    public InternalContentExtractor() throws AnalysisException {
-        conf = new ComponentConfiguration();
+    /**
+     * Creates the object with provided configuration.
+     * 
+     * @param config - configuration for this content extractor
+     * @throws AnalysisException thrown when there was an error while initializing object
+     */
+    public InternalContentExtractor(ContentExtractorConfig config) throws AnalysisException {
+        conf = new ComponentConfiguration(config);
     }
 
     /**

@@ -38,16 +38,6 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
  */
 public class SVMInitialZoneClassifier extends SVMZoneClassifier {
 
-    private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-initial-default";
-    private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-initial-default.range";
-
-    private static SVMInitialZoneClassifier defaultInstance;
-
-    public SVMInitialZoneClassifier() throws AnalysisException, IOException {
-        super(getFeatureVectorBuilder());
-        loadModelFromResources(MODEL_FILE_PATH, RANGE_FILE_PATH);
-    }
-
     public SVMInitialZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException, IOException {
         super(getFeatureVectorBuilder());
         loadModelFromFile(modelFile, rangeFile);
@@ -117,13 +107,6 @@ public class SVMInitialZoneClassifier extends SVMZoneClassifier {
                 new RelativeMeanLengthFeature()
         ));
         return vectorBuilder;
-    }
-
-    public static SVMInitialZoneClassifier getDefaultInstance() throws AnalysisException, IOException {
-        if (defaultInstance == null) {
-            defaultInstance = new SVMInitialZoneClassifier();
-        }
-        return defaultInstance;
     }
 
     @Override

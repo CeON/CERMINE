@@ -28,6 +28,9 @@ import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -47,6 +50,10 @@ public class PdfRawTextWithLabelsExtractor {
     
     public PdfRawTextWithLabelsExtractor() throws AnalysisException {
         extractor = new ContentExtractor();
+    }
+    
+    public PdfRawTextWithLabelsExtractor(ContentExtractorConfig configuration) throws AnalysisException {
+        extractor = new ContentExtractor(configuration);
     }
     
     /**
@@ -101,8 +108,9 @@ public class PdfRawTextWithLabelsExtractor {
                   + "  -path <path>              path to a PDF file or directory containing PDF files\n"
                   + "  -ext <extension>          (optional) the extension of the resulting text file;\n"
                   + "                            default: \"cermtxt\"; used only if passed path is a directory\n"
-                  + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
-                  + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
+                  + "  -configuration <path>     (optional) path to configuration properties file\n"
+                  + "                            see https://github.com/CeON/CERMINE\n"
+                  + "                            for description of available configuration properties\n"
                   + "  -threads <num>            number of threads for parallel processing\n");
             System.exit(1);
         }
@@ -111,12 +119,13 @@ public class PdfRawTextWithLabelsExtractor {
         String extension = parser.getTextExtension();
         InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
+        ContentExtractorConfigLoader configLoader = new ContentExtractorConfigLoader();
+        ContentExtractorConfig config = (parser.getConfigurationPath() == null) ? configLoader.loadConfiguration() : configLoader.loadConfiguration(parser.getConfigurationPath());
+
         File file = new File(path);
         if (file.isFile()) {
             try {
-                PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor();
-                parser.updateMetadataModel(extractor.getConf());
-                parser.updateInitialModel(extractor.getConf());
+                PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor(config);
                 InputStream in = new FileInputStream(file);
                 Element result = extractor.extractRawText(in);
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -142,9 +151,7 @@ public class PdfRawTextWithLabelsExtractor {
                 System.out.println(pdf.getPath());
  
                 try {
-                    PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor();
-                    parser.updateMetadataModel(extractor.getConf());
-                    parser.updateInitialModel(extractor.getConf());
+                    PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor(config);
 
                     InputStream in = new FileInputStream(pdf);
                     BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);

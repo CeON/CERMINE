@@ -37,15 +37,6 @@ import pl.edu.icm.cermine.tools.classification.svm.SVMZoneClassifier;
  */
 public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
 
-    private static final String MODEL_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-default";
-    private static final String RANGE_FILE_PATH = "/pl/edu/icm/cermine/structure/model-metadata-default.range";
-
-    private static SVMMetadataZoneClassifier defaultInstance;
-
-    public SVMMetadataZoneClassifier() throws AnalysisException {
-        this(MODEL_FILE_PATH, RANGE_FILE_PATH, true);
-    }
-
     public SVMMetadataZoneClassifier(BufferedReader modelFile, BufferedReader rangeFile) throws AnalysisException {
         super(getFeatureVectorBuilder());
         try {
@@ -132,13 +123,6 @@ public class SVMMetadataZoneClassifier extends SVMZoneClassifier {
                 )
         );
         return vectorBuilder;
-    }
-
-    public static SVMMetadataZoneClassifier getDefaultInstance() throws AnalysisException, IOException {
-        if (defaultInstance == null) {
-            defaultInstance = new SVMMetadataZoneClassifier();
-        }
-        return defaultInstance;
     }
 
     @Override

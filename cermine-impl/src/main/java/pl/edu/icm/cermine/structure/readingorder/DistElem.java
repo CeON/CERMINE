@@ -24,7 +24,6 @@ import pl.edu.icm.cermine.tools.Utils;
  *
  * @author Pawel Szostek
  * @param <E>
- * @date 05.2012
  */
 public class DistElem<E> implements Comparable<DistElem<E>> {
 

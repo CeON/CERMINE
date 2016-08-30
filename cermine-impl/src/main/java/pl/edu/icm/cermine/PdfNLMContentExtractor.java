@@ -27,6 +27,9 @@ import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -55,6 +58,10 @@ public class PdfNLMContentExtractor {
         extractor = new ContentExtractor();
     }
 
+    public PdfNLMContentExtractor(ContentExtractorConfig configuration) throws AnalysisException {
+        extractor = new ContentExtractor(configuration);
+    }
+    
     /**
      * Extracts content from PDF file and stores it in NLM format.
      * 
@@ -162,8 +169,9 @@ public class PdfNLMContentExtractor {
                   + "  -path <path>              path to a PDF file or directory containing PDF files\n"
                   + "  -ext <extension>          (optional) the extension of the resulting metadata file;\n"
                   + "                            default: \"cermxml\"; used only if passed path is a directory\n"
-                  + "  -modelmeta <path>         (optional) the path to the metadata classifier model file\n"
-                  + "  -modelinit <path>         (optional) the path to the initial classifier model file\n"
+                  + "  -configuration <path>     (optional) path to configuration properties file\n"
+                  + "                            see https://github.com/CeON/CERMINE\n"
+                  + "                            for description of available configuration properties\n"
                   + "  -str                      whether to store structure (TrueViz) files as well;\n"
                   + "                            used only if passed path is a directory\n"
                   + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
@@ -178,12 +186,13 @@ public class PdfNLMContentExtractor {
         String strExtension = parser.getBxExtension();
         InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
+        ContentExtractorConfigLoader configLoader = new ContentExtractorConfigLoader();
+        ContentExtractorConfig config = (parser.getConfigurationPath() == null) ? configLoader.loadConfiguration() : configLoader.loadConfiguration(parser.getConfigurationPath());
+
         File file = new File(path);
         if (file.isFile()) {
             try {
-                PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
-                parser.updateMetadataModel(extractor.getConf());
-                parser.updateInitialModel(extractor.getConf());
+                PdfNLMContentExtractor extractor = new PdfNLMContentExtractor(config);
                 InputStream in = new FileInputStream(file);
                 Element result = extractor.extractContent(in);
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -209,9 +218,7 @@ public class PdfNLMContentExtractor {
                 System.out.println(pdf.getPath());
  
                 try {
-                    PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
-                    parser.updateMetadataModel(extractor.getConf());
-                    parser.updateInitialModel(extractor.getConf());
+                    PdfNLMContentExtractor extractor = new PdfNLMContentExtractor(config);
 
                     InputStream in = new FileInputStream(pdf);
                     BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);

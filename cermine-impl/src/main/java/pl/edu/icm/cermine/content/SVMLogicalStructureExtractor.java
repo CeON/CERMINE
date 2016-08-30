@@ -30,8 +30,8 @@ import pl.edu.icm.cermine.exception.AnalysisException;
  */
 public class SVMLogicalStructureExtractor extends LogicalStructureExtractor {
 
-    public SVMLogicalStructureExtractor() throws AnalysisException {
-        this.setContentFilter(new SVMContentFilter());
+    public SVMLogicalStructureExtractor(BufferedReader filterModelFile, BufferedReader filterRangeFile) throws AnalysisException {
+        this.setContentFilter(new SVMContentFilter(filterModelFile, filterRangeFile));
         this.setHeaderExtractor(new SVMContentHeadersExtractor());
         this.setContentCleaner(new ContentCleaner());
         this.setConverter(new BxContentToDocContentConverter());

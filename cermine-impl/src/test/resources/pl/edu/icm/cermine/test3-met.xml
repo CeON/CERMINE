@@ -12,7 +12,7 @@
       <contrib-group>
         <contrib contrib-type="author">
           <string-name>Farzana Alam</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="2">2</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Mohammad S. Rahman</string-name>
@@ -20,7 +20,7 @@
         </contrib>
         <contrib contrib-type="author">
           <string-name>Md. Shahanur Alam</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="2">2</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Md. Khalid Hossain</string-name>
@@ -34,12 +34,12 @@
           <string-name>Mohammad A. Rashid</string-name>
           <email>rashidma@univdhaka.edu</email>
           <email>rashid_phdu@yahoo.com</email>
+          <xref ref-type="aff" rid="0">0</xref>
           <xref ref-type="aff" rid="1">1</xref>
-          <xref ref-type="aff" rid="2">2</xref>
         </contrib>
         <aff id="0">
           <label>0</label>
-          <institution>Department of Pharmacy, The University of Asia Pacific</institution>
+          <institution>Centre for Biomedical Research, University of Dhaka</institution>
           ,
           <addr-line>Dhaka-1000</addr-line>
           ,
@@ -55,7 +55,7 @@
         </aff>
         <aff id="2">
           <label>2</label>
-          <institution>Centre for Biomedical Research, University of Dhaka</institution>
+          <institution>Department of Pharmacy, The University of Asia Pacific</institution>
           ,
           <addr-line>Dhaka-1000</addr-line>
           ,

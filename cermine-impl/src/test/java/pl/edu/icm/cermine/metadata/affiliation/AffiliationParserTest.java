@@ -37,6 +37,20 @@ public class AffiliationParserTest {
         String actual = outputter.outputString(parser.parse(input));
         assertEquals(expected, actual);
     }
+    
+    @Test
+    public void testTooLong() throws AnalysisException, TransformationException {
+        CRFAffiliationParser parser = new CRFAffiliationParser();
+        XMLOutputter outputter = new XMLOutputter();
+        StringBuilder inputSB = new StringBuilder();
+        for (int i = 0; i < 40; i++) {
+            inputSB.append("Department of Oncology - Pathology, Karolinska Institutet, Stockholm, Sweden, ");
+        }
+        String input = inputSB.toString();
+        String expected = "<aff id=\"id\"><label>id</label>" + input + "</aff>";
+        String actual = outputter.outputString(parser.parse(input));
+        assertEquals(expected, actual);
+    }
 
     @Test
     public void testOriental() throws AnalysisException, TransformationException {

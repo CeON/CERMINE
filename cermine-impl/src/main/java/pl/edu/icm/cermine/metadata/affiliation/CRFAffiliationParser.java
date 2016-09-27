@@ -50,6 +50,8 @@ import pl.edu.icm.cermine.tools.ResourcesReader;
  */
 public class CRFAffiliationParser implements ParsableStringParser<DocumentAffiliation> {
 
+    private static final int MAX_LENGTH = 3000;
+    
     private AffiliationTokenizer tokenizer = null;
     private AffiliationFeatureExtractor featureExtractor = null;
     private AffiliationCRFTokenClassifier classifier = null;
@@ -121,6 +123,10 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
         affiliation.setTokens(tokenizer.tokenize(affiliation.getRawText()));
         for (Token<AffiliationLabel> t : affiliation.getTokens()) {
             t.setLabel(AffiliationLabel.TEXT);
+        }
+        if (affiliation.getRawText().length() > MAX_LENGTH) {
+            affiliation.mergeTokens();
+            return;
         }
         featureExtractor.calculateFeatures(affiliation);
         classifier.classify(affiliation.getTokens());

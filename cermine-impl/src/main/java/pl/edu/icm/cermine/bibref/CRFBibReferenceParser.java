@@ -51,7 +51,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     
-    private static final int MAX_REFERENCE_LENGTH = 2000;
+    private static final int MAX_REFERENCE_LENGTH = 3000;
     
     private ACRF model;
     

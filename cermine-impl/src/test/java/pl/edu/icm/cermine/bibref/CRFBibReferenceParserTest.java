@@ -21,6 +21,9 @@ package pl.edu.icm.cermine.bibref;
 import org.junit.Before;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.exception.AnalysisException;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -45,4 +48,18 @@ public class CRFBibReferenceParserTest extends AbstractBibReferenceParserTest {
     protected double getMinPercentage() {
         return minPercentage;
     }
+    
+    @Test
+    public void testTooLong() throws AnalysisException {
+        StringBuilder inputSB = new StringBuilder();
+        for (int i = 0; i < 100; i++) {
+            inputSB.append("Johnson J, Dutton S, Briffa E, ");
+        }
+        inputSB.append("Broadband learning for doctors. BMJ 2006, 332, 1403-1404.");
+        String input = inputSB.toString();
+        BibEntry actual = parser.parseBibReference(input);
+        assertEquals(input, actual.getText());
+        assertTrue(actual.getFieldKeys().isEmpty());
+    }
+    
 }

@@ -31,6 +31,7 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import com.google.common.collect.Lists;
+import java.util.HashMap;
 import java.util.Map;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
@@ -687,6 +688,18 @@ public class ContentExtractor {
 
         int i = 0;
         for (File pdf : files) {
+            Map<String, File> outputs = new HashMap<String, File>();
+            for (Map.Entry<String, String> entry : extensions.entrySet()) {
+                File outputFile = getOutputFile(pdf, entry.getValue());
+                if (override || !outputFile.exists()) {
+                    outputs.put(entry.getKey(), outputFile);
+                }
+            }
+            if (outputs.isEmpty()) {
+                i++;
+                continue;
+            }
+            
             long start = System.currentTimeMillis();
             float elapsed;
 
@@ -699,39 +712,27 @@ public class ContentExtractor {
                 InputStream in = new FileInputStream(pdf);
                 extractor.setPDF(in);
 
-                if (extensions.containsKey("jats")) {
-                    File outputFile = getOutputFile(pdf, extensions.get("jats"));
-                    if (override || !outputFile.exists()) {
-                        Element jats = extractor.getNLMContent();
-                        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                        FileUtils.writeStringToFile(outputFile, outputter.outputString(jats), "UTF-8");
-                    }
+                if (outputs.containsKey("jats")) {
+                    Element jats = extractor.getNLMContent();
+                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8");
                 }
                 
-                if (extensions.containsKey("trueviz")) {
-                    File outputFile = getOutputFile(pdf, extensions.get("trueviz"));
-                    if (override || !outputFile.exists()) {
-                        BxDocument doc = extractor.getBxDocument();
-                        BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                        writer.write(new FileWriter(outputFile), Lists.newArrayList(doc));
-                    }
+                if (outputs.containsKey("trueviz")) {
+                    BxDocument doc = extractor.getBxDocument();
+                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                    writer.write(new FileWriter(outputs.get("trueviz")), Lists.newArrayList(doc));
                 }
                 
-                if (extensions.containsKey("zones")) {
-                    File outputFile = getOutputFile(pdf, extensions.get("zones"));
-                    if (override || !outputFile.exists()) {
-                        Element text = extractor.getLabelledRawFullText();
-                        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                        FileUtils.writeStringToFile(outputFile, outputter.outputString(text), "UTF-8");
-                    }
+                if (outputs.containsKey("zones")) {
+                    Element text = extractor.getLabelledRawFullText();
+                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                    FileUtils.writeStringToFile(outputs.get("zones"), outputter.outputString(text), "UTF-8");
                 }
                 
-                if (extensions.containsKey("text")) {
-                    File outputFile = getOutputFile(pdf, extensions.get("text"));
-                    if (override || !outputFile.exists()) {
-                        String text = extractor.getRawFullText();
-                        FileUtils.writeStringToFile(outputFile, text, "UTF-8");
-                    }
+                if (outputs.containsKey("text")) {
+                    String text = extractor.getRawFullText();
+                    FileUtils.writeStringToFile(outputs.get("text"), text, "UTF-8");
                 }
                 
             } catch (AnalysisException ex) {

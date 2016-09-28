@@ -46,7 +46,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
     protected boolean enhanceMetadata(BxDocument document, DocumentMetadata metadata) {
         boolean enhanced = false;
         for (BxPage page : filterPages(document)) {
-            for (BxZone zone : filterZones(page)) {              
+            for (BxZone zone : filterZones(page)) {
                 List<BxChunk> chunks = new ArrayList<BxChunk>();
                 for (BxLine l : zone) {
                     for (BxWord w : l) {
@@ -114,23 +114,27 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         refs.add(simpleRefMatcher.group(1));
                         auth = false;
                     } else {
-                        double chunkY = chunks.get(index).getY();
-                        double chunkH = chunks.get(index).getHeight();
-                        BxLine line = chunks.get(index).getParent().getParent();
+                        BxChunk chunk = chunks.get(index);
+                        double chunkY = 0;
+                        double chunkH = 0;
                         double meanY = 0;
                         double meanH = 0;
-                        int total = 0;
-                        for (BxWord w : line) {
-                            for (BxChunk ch : w) {
-                                meanY += ch.getY();
-                                meanH += ch.getHeight();
-                                total++;
+                        if (chunk.getBounds() != null) {
+                            chunkY = chunk.getY();
+                            chunkH = chunk.getHeight();
+                            BxLine line = chunk.getParent().getParent();
+                            int total = 0;
+                            for (BxWord w : line) {
+                                for (BxChunk ch : w) {
+                                    meanY += ch.getY();
+                                    meanH += ch.getHeight();
+                                    total++;
+                                }
                             }
+                            meanY /= total;
+                            meanH /= total;
                         }
-                        meanY /= total;
-                        meanH /= total;
-        
-                        if (chunks.get(index).toText().matches("[a-f]") && Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2) {
+                        if (chunk.toText().matches("[a-f]") && Math.abs(chunkY-meanY)+ Math.abs(meanH-chunkH) > 2) {
                             index += 1;
                             afterSep = true;
                             refs.add(text.substring(0, 1));

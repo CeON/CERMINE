@@ -19,6 +19,7 @@
 package pl.edu.icm.cermine.bibref;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -132,7 +133,9 @@ public abstract class AbstractBibReferenceParserTest {
 
     @Test
     public void bibReferenceEmptyParserTest() throws AnalysisException {
-        System.out.println(getParser().parseBibReference("").toBibTeX());
+        BibEntry be = getParser().parseBibReference("");
+        assertEquals("", be.getText());
+        assertTrue(be.getFieldKeys().isEmpty());
     }
     
     @Test
@@ -145,14 +148,10 @@ public abstract class AbstractBibReferenceParserTest {
                 allFields++;
                 if (entry.getAllFieldValues(key).equals(testEntry.getAllFieldValues(key))) {
                     parsedFields++;
-                } else {
-                    System.out.println(entry.getAllFieldValues(key));
-                    System.out.println(testEntry.getAllFieldValues(key));
                 }
             }
         }
         
-        System.out.println((double) parsedFields / (double) allFields);
         assertTrue((double) parsedFields / (double) allFields >= getMinPercentage());
     }
     

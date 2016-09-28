@@ -40,7 +40,6 @@ public class AffiliationFeatureExtractorTest {
 
     static {
         try {
-            // Test all available features but IsRare, IsWord and IsAllLowerCase
             List<BinaryTokenFeatureCalculator> binaryFeatures
                     = Arrays.<BinaryTokenFeatureCalculator>asList(
                             new IsNumberFeature(),
@@ -48,8 +47,6 @@ public class AffiliationFeatureExtractorTest {
                             new IsAllUpperCaseFeature(),
                             new IsSeparatorFeature(),
                             new IsNonAlphanumFeature()
-                    // new IsAllLowerCaseFeature(), appears too often, too much typing
-                    // new IsWord(), appears too often, too much typing
                     );
 
             @SuppressWarnings("unchecked")
@@ -96,7 +93,6 @@ public class AffiliationFeatureExtractorTest {
                 Collections.sort(expected);
                 Collections.sort(actual);
                 assertEquals(expected, actual);
-
             }
         }
     }
@@ -112,19 +108,19 @@ public class AffiliationFeatureExtractorTest {
         tc.add(",", "W=,", "IsSeparator");
         tc.add("@", "W=@", "IsNonAlphanum");
 
-        tc.add("Maluwang", "W=Maluwang", "IsUpperCase"); // sole "Maluwang" is not an address keyword
+        tc.add("Maluwang", "W=Maluwang", "IsUpperCase");
 
         tc.add("Maluwang", "W=Maluwang", "IsUpperCase", "KeywordAddress");
         tc.add("na", "W=na", "KeywordAddress");
-        tc.add("lansangan", "W=lansangan", "KeywordAddress"); // maluwang na lansangan -- address keyword
+        tc.add("lansangan", "W=lansangan", "KeywordAddress");
 
         tc.add(".", "W=.", "IsSeparator");
 
         tc.add("les", "W=les");
-        tc.add("escaldes", "W=escaldes"); // Les Escaldes -- city keyword, needs uppercase
+        tc.add("escaldes", "W=escaldes");
 
         tc.add("les", "W=les", "KeywordCity");
-        tc.add("Escaldes", "W=Escaldes", "KeywordCity", "IsUpperCase"); // Les Escaldes -- city keyword, needs uppercase
+        tc.add("Escaldes", "W=Escaldes", "KeywordCity", "IsUpperCase");
 
         tc.add("mhm", "W=mhm");
 
@@ -133,14 +129,14 @@ public class AffiliationFeatureExtractorTest {
         tc.add("S", "W=S", "KeywordCountry", "IsUpperCase", "IsAllUpperCase");
         tc.add(".", "W=.", "IsSeparator", "KeywordCountry");
         tc.add("A", "W=A", "KeywordCountry", "IsUpperCase", "IsAllUpperCase");
-        tc.add(".", "W=.", "IsSeparator", "KeywordCountry"); // U.S.A -- country keyword
+        tc.add(".", "W=.", "IsSeparator", "KeywordCountry");
 
         tc.add("New", "W=New", "IsUpperCase", "KeywordState");
-        tc.add("Hampshire", "W=Hampshire", "IsUpperCase", "KeywordState"); // New Hampshire -- state keyword
+        tc.add("Hampshire", "W=Hampshire", "IsUpperCase", "KeywordState");
 
         tc.add("KS", "W=KS", "IsAllUpperCase", "KeywordStateCode"); // KS -- state code keyword
 
-        tc.add("du", "W=du", "KeywordStopWord"); // du -- a stop word
+        tc.add("du", "W=du", "KeywordStopWord");
 
         DocumentAffiliation instance = new DocumentAffiliation("");
         instance.setTokens(tc.tokens);

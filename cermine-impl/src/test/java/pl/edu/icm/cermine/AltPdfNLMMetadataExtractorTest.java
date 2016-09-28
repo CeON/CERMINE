@@ -79,7 +79,6 @@ public class AltPdfNLMMetadataExtractorTest {
                 
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         Diff diff = new Diff(outputter.outputString(expMetadata), outputter.outputString(testMetadata));
-        System.out.println(outputter.outputString(testMetadata));
         assertTrue(diff.similar());
     }
 }

@@ -35,9 +35,7 @@ public class AffiliationTokenizerTest {
 
     @Test
     public void testTokenizeAscii() {
-        //              012345678901234567
         String input = "ko  pi_es123_@@123Kot";
-        // "ko", "pi" ,"_", "es", "123", "_", "@", "@", "123"
 
         List<Token<AffiliationLabel>> expected = Arrays.asList(
                 new Token<AffiliationLabel>("ko", 0, 2),
@@ -61,10 +59,7 @@ public class AffiliationTokenizerTest {
     public void testTokenizeNonAscii() {
         String input = "śćdź óó";
         input = MetadataTools.cleanAndNormalize(input);
-        //input = new AffiliationNormalizer().normalize(input);
 
-        //          012345678901
-        // input = "s'c'dz' o'o'"
         List<Token<AffiliationLabel>> expected = Arrays.asList(
                 new Token<AffiliationLabel>("scdz", 0, 7),
                 new Token<AffiliationLabel>("oo", 8, 12)
@@ -77,8 +72,6 @@ public class AffiliationTokenizerTest {
 
     @Test
     public void testTokenizeWithDocumentAffiliation() {
-        // 0123456789012345
-        // Co'z' ro123bic'?
         String text = "Cóż ro123bić?";
         List<Token<AffiliationLabel>> expected = Arrays.asList(
                 new Token<AffiliationLabel>("Coz", 0, 5),
@@ -91,8 +84,6 @@ public class AffiliationTokenizerTest {
         DocumentAffiliation instance = new DocumentAffiliation(text);
 
         List<Token<AffiliationLabel>> actual = TOKENIZER.tokenize(instance.getRawText());
-
-        System.out.println(actual);
 
         assertEquals(expected, actual);
     }

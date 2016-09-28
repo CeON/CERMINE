@@ -59,19 +59,13 @@ public class TrueVizToBxDocumentReaderTest {
             if (zone.getLabel() != null) {
                 if (zone.getLabel().equals(BxZoneLabel.MET_AUTHOR)) {
                     contains = true;
-                    System.out.println(zone.toText());
-                    // takie cos na toplevelu                 Howard M. Schachter,* Ba' Pham,* Jim King,tt  Stephanie Langford,* David Moher*$
                     if (zone.toText().trim().equalsIgnoreCase("Howard M  Schachter   Ba  Pham   Jim King tt\nStephanie Langford   David Moher".trim())) {
                         rightText = true;
                     }
                     if (zone.getBounds().getX() == 72 && zone.getBounds().getY() == 778 && zone.getBounds().getWidth() == 989 && zone.getBounds().getHeight() == 122) {
                         rightSize = true;
-                    } else {
-                        System.out.println(zone.getBounds().getX() + " " + zone.getBounds().getY() + " " + zone.getBounds().getWidth() + " " + zone.getBounds().getHeight());
                     }
                 }
-            } else {
-                System.out.println("Zone with no label: " + zone.toText());
             }
         }
         assertTrue(contains);
@@ -98,7 +92,7 @@ public class TrueVizToBxDocumentReaderTest {
     @Test
     public void testAllNextsAreSet1() throws TransformationException, IOException, URISyntaxException {
         BxDocument orderedDoc = getDocumentFromZipFile("roa_test.zip", "1748717X.xml.out");
-        //walk through document's structure
+        
         Integer nextNulls = 0;
         for (BxPage page : orderedDoc.asPages()) {
             if (page.getNext() == null) {

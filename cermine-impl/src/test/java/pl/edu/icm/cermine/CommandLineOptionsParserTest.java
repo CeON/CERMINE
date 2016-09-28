@@ -20,7 +20,6 @@ public class CommandLineOptionsParserTest {
     
     @Test
     public void parse_NO_PATH() throws ParseException {
-        
         // execute
         String error = cmdLineOptionsParser.parse(new String[] {});
         
@@ -30,14 +29,12 @@ public class CommandLineOptionsParserTest {
     
     @Test(expected = ParseException.class)
     public void parse_NO_PATH_VALUE() throws ParseException {
-        
         // execute
         cmdLineOptionsParser.parse(new String[] {"-path"});
     }
     
     @Test
     public void parse_WITH_PATH() throws ParseException {
-        
         // execute
         
         String error = cmdLineOptionsParser.parse(new String[] {"-path", "/path/to/pdfs/folder"});
@@ -64,7 +61,6 @@ public class CommandLineOptionsParserTest {
     
     @Test
     public void parse_OVERRIDE_DEFAULTS() throws ParseException {
-        
         // execute
         
         String error = cmdLineOptionsParser.parse(new String[] {
@@ -104,7 +100,6 @@ public class CommandLineOptionsParserTest {
     
     @Test
     public void parse_INVALID_EXTENSIONS_LIST_SIZE() throws ParseException {
-        
         // execute
         
         String error = cmdLineOptionsParser.parse(new String[] {
@@ -119,7 +114,6 @@ public class CommandLineOptionsParserTest {
     
     @Test
     public void parse_UNKNOWN_OUTPUT_TYPE() throws ParseException {
-        
         // execute
         
         String error = cmdLineOptionsParser.parse(new String[] {

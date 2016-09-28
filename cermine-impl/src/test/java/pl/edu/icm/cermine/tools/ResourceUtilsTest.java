@@ -19,14 +19,12 @@ public class ResourceUtilsTest {
 
     private InputStream resourceStream = null;
     
-    
     @After
     public void cleanup() throws IOException {
         if (resourceStream != null) {
             resourceStream.close();
         }
     }
-    
     
     @Test
     public void openResourceStream_FROM_CLASSPATH() throws IOException {
@@ -38,12 +36,9 @@ public class ResourceUtilsTest {
     
     @Test
     public void openResourceStream_FROM_FILE() throws IOException {
-        
         URL resourceUrl = ResourceUtilsTest.class.getClassLoader().getResource("pl/edu/icm/cermine/tools/resourceFile.txt");
         
-        
         InputStream inputStream = ResourceUtils.openResourceStream(resourceUrl.getPath());
-        
         
         assertResourceContent(inputStream);
     }

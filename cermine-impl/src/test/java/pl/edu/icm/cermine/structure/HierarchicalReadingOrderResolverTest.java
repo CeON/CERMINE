@@ -106,7 +106,6 @@ public class HierarchicalReadingOrderResolverTest {
     public void testSetReadingOrder() throws TransformationException, IOException {
         for (Enumeration<? extends ZipEntry> e = zipFile.entries(); e.hasMoreElements();) {
             String filename = e.nextElement().getName();
-            System.out.println(filename);
             if (!filename.endsWith(".xml")) {
                 continue;
             }

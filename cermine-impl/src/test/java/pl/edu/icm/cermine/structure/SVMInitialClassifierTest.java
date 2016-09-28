@@ -76,9 +76,6 @@ public class SVMInitialClassifierTest extends AbstractDocumentProcessorTest {
     public void SVMInitialZoneClassifierTest() throws URISyntaxException, ZipException, IOException,
             ParserConfigurationException, SAXException, AnalysisException, TransformationException {
         testAllFilesFromZip(Arrays.asList(ZIP_RESOURCES), TEST_SUCCESS_PERCENTAGE);
-
-        System.out.println("all zones: " + this.allZones);
-        System.out.println("bad zones: " + this.badZones);
     }
 
     @Override

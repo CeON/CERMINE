@@ -45,15 +45,9 @@ public class AffiliationDictionaryFeatureTest {
         }
     }
 
-    /* mock-dictionary.txt content:
-                Elo Melo 320
-                Hejka ziomeczku, :-P
-                W chrząszczu Szczebrzeszyn.
-     */
     @Test
     public void testAddFeatures() {
         String text = "elo meLo  320, Elo Melo 32.0. Hejka ziomeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
-        //            "n...n.....n..n.n...n....n.nnn.y.....y........yyyyn.n.n.n..........n.............nn"
         int expectFeature[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0};
         List<Token<AffiliationLabel>> tokens
                 = new AffiliationTokenizer().tokenize(MetadataTools.cleanAndNormalize(text));
@@ -66,7 +60,6 @@ public class AffiliationDictionaryFeatureTest {
         }
 
         text = "elo meLo  320, Elo Melo 32.0. Hejka ziómeczku,:-P. W W chrzaszczu szczebrzeszyn ..";
-        //     "y...y.....y..n.n...n....n.nnn.y.....y........yyyyn.n.y.y..........y.............yn"
         int expectFeature2[] = {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0};
         tokens = new AffiliationTokenizer().tokenize(MetadataTools.cleanAndNormalize(text));
         assertEquals(expectFeature2.length, tokens.size());

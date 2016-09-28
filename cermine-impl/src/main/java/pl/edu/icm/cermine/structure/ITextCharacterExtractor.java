@@ -273,6 +273,9 @@ public class ITextCharacterExtractor implements CharacterExtractor {
         public void renderText(TextRenderInfo tri) {
             for (TextRenderInfo charTri : tri.getCharacterRenderInfos()) {
                 String text = charTri.getText();
+                if (text == null || text.isEmpty()) {
+                    continue;
+                }
                 char ch = charTri.getText().charAt(0);
                 if (ch <= ' ' || text.matches("^[\uD800-\uD8FF]$")
                         || text.matches("^[\uDC00-\uDFFF]$")

@@ -50,8 +50,10 @@ public class AffiliationCRFTokenClassifier implements TokenClassifier<Token<Affi
      * @throws AnalysisException if the model cannot be loaded
      */
     public AffiliationCRFTokenClassifier(InputStream modelInputStream) throws AnalysisException {
+        // prevents MALLET from printing info messages
         System.setProperty("java.util.logging.config.file",
                 "edu/umass/cs/mallet/base/util/resources/logging.properties");
+        
         if (modelInputStream == null) {
             throw new AnalysisException("Cannot set model, input stream is null!");
         }

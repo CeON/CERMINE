@@ -25,6 +25,9 @@ public class ContentExtractorConfigLoader {
      * @see "classpath:/pl/edu/icm/cermine/application-default.properties"
      */
     public ContentExtractorConfig loadConfiguration() {
+        // prevents MALLET from printing info messages
+        System.setProperty("java.util.logging.config.file",
+            "edu/umass/cs/mallet/base/util/resources/logging.properties");
         
         CompositeConfiguration configuration = new CompositeConfiguration();
         
@@ -39,6 +42,9 @@ public class ContentExtractorConfigLoader {
      * then the default value will be used.
      */
     public ContentExtractorConfig loadConfiguration(String configurationFilePath) {
+        // prevents MALLET from printing info messages
+        System.setProperty("java.util.logging.config.file",
+            "edu/umass/cs/mallet/base/util/resources/logging.properties");
         
         CompositeConfiguration configuration = new CompositeConfiguration();
         

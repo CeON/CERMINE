@@ -635,8 +635,7 @@ public class ContentExtractor {
 
     private Timeout combineWithMainTimeout(long timeoutSeconds) {
         Timeout local = new Timeout(timeoutSeconds * SECONDS_TO_MILLIS);
-        Timeout t = Timeout.min(mainTimeout, local);
-        return t;
+        return Timeout.min(mainTimeout, local);
     }
 
     public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {

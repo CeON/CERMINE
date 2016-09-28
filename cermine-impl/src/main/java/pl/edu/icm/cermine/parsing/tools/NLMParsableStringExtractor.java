@@ -41,9 +41,9 @@ import pl.edu.icm.cermine.parsing.model.Token;
  *
  * @param <L> label type
  * @param <T> token type
- * @param <PS> parsable string type
+ * @param <P> parsable string type
  */
-public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS extends ParsableString<T>> {
+public abstract class NLMParsableStringExtractor<L, T extends Token<L>, P extends ParsableString<T>> {
 
     protected abstract List<String> getTags();
 
@@ -51,9 +51,9 @@ public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS exten
 
     protected abstract Map<String, L> getTagLabelMap();
 
-    protected abstract PS createParsableString();
+    protected abstract P createParsableString();
 
-    protected abstract PS createParsableString(String text);
+    protected abstract P createParsableString(String text);
 
     /**
      * @param source the InputSoruce representing the XML document
@@ -61,7 +61,7 @@ public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS exten
      * @throws JDOMException
      * @throws IOException
      */
-    public List<PS> extractStrings(InputSource source) throws JDOMException, IOException {
+    public List<P> extractStrings(InputSource source) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         builder.setValidation(false);
         builder.setFeature("http://xml.org/sax/features/validation", false);
@@ -77,17 +77,17 @@ public abstract class NLMParsableStringExtractor<L, T extends Token<L>, PS exten
             }
         });
 
-        List<PS> stringSet = new ArrayList<PS>();
+        List<P> stringSet = new ArrayList<P>();
 
         while (mixedStrings.hasNext()) {
-            PS instance = createParsableString();
+            P instance = createParsableString();
             readElement((Element) mixedStrings.next(), instance);
             stringSet.add(instance);
         }
         return stringSet;
     }
 
-    private void readElement(Element element, PS instance) {
+    private void readElement(Element element, P instance) {
         for (Object content : element.getContent()) {
             if (content instanceof Text) {
                 String contentText = ((Text) content).getText();

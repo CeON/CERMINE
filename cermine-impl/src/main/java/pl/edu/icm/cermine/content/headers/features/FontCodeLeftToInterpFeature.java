@@ -36,8 +36,9 @@ public class FontCodeLeftToInterpFeature extends FeatureCalculator<BxLine, BxPag
 
     public FontCodeLeftToInterpFeature(List<Map.Entry<String, Integer>> fontNames2) {
         String[] fontNamesTmp = new String[fontNames2.size()];
-        for(int i = 0; i < fontNamesTmp.length; i++)
+        for(int i = 0; i < fontNamesTmp.length; i++) {
             fontNamesTmp[i] = fontNames2.get(i).getKey();
+        }
         fontNames = fontNamesTmp;       
     }
        

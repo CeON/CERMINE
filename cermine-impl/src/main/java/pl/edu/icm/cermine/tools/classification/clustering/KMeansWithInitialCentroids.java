@@ -139,10 +139,12 @@ public class KMeansWithInitialCentroids {
     }
     
     public List<FeatureVector>[] cluster(List<FeatureVector> data) {
-        if (data.isEmpty())
+        if (data.isEmpty()) {
             throw new RuntimeException("The dataset should not be empty");
-        if (numberOfClusters == 0)
+        }
+        if (numberOfClusters == 0) {
             throw new RuntimeException("There should be at least one cluster");
+        }
         // Place K points into the space represented by the objects that are
         // being clustered. These points represent the initial group of
         // centroids.
@@ -245,8 +247,9 @@ public class KMeansWithInitialCentroids {
             }
         }
         List<FeatureVector>[] output = new List[centroids.length];
-        for (int i = 0; i < centroids.length; i++)
+        for (int i = 0; i < centroids.length; i++) {
             output[i] = new ArrayList<FeatureVector>();
+        }
         for (int i = 0; i < data.size(); i++) {
             int tmpCluster = 0;
             double minDistance = dm.getDistance(centroids[0], data.get(i));

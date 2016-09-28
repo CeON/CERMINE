@@ -47,7 +47,7 @@ public class HTMLToDocContentReader implements FormatToModelReader<ContentStruct
     public ContentStructure read(Reader reader, Object... hints) throws TransformationException {
         try {
             Element root = getRoot(reader);
-            ContentStructure dcs = new ContentStructure();//createDocContentStruct(root.getChildren(), 0);
+            ContentStructure dcs = new ContentStructure();
             List<Element> elements = root.getChildren();
             if (elements.isEmpty()) {
                 return dcs;

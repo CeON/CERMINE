@@ -113,7 +113,6 @@ public class DocumentPlane {
         /*
          * the rectangle area must contain at least obj1 and obj2
          */
-        //	assert objsBetween.size() >= 2;
         objsBetween.remove(obj1);
         objsBetween.remove(obj2);
         return objsBetween;

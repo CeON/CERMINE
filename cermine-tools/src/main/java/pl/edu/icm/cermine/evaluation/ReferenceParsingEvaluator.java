@@ -139,15 +139,15 @@ public class ReferenceParsingEvaluator {
             
         }
         
-        for (String s : results.keySet()) {
+        for (Map.Entry<String, List<Result>> e : results.entrySet()) {
             System.out.println("");
-            System.out.println(s);
-            System.out.println(results.get(s).size());
+            System.out.println(e.getKey());
+            System.out.println(e.getValue().size());
             double precision = 0;
             int precisionCount = 0;
             double recall = 0;
             int recallCount = 0;
-            for (Result r : results.get(s)) {
+            for (Result r : e.getValue()) {
                 if (r.getPrecision() != null) {
                     precision += r.getPrecision();
                     precisionCount++;
@@ -161,7 +161,6 @@ public class ReferenceParsingEvaluator {
             System.out.println("Mean precision "+(precision / precisionCount));
             System.out.println("Recall count "+recallCount);
             System.out.println("Mean recall "+(recall / recallCount));
-            
         }
     }
     

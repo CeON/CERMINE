@@ -36,7 +36,7 @@ import pl.edu.icm.cermine.tools.DisjointSets;
  */
 public class PubmedZoneMerger {
 
-    public static void main(String[] args) throws FileNotFoundException, TransformationException, AnalysisException, IOException {
+    public static void main(String[] args) throws TransformationException, AnalysisException, IOException {
         ReadingOrderResolver roResolver = new HierarchicalReadingOrderResolver();
         File dir = new File(args[0]);
         int i = 0;
@@ -83,9 +83,6 @@ public class PubmedZoneMerger {
                 }
 
                 double diff = y2 - y1 - h1;
-                double avgH = (h1 + h2) / 2;
-                double diffR = diff / avgH;
-
                 if (line.getParent().equals(line.getNext().getParent())) {
                     avgDiffZone += diff;
                     countDZ++;
@@ -134,16 +131,11 @@ public class PubmedZoneMerger {
                     }
 
                     double diff = y2 - y1 - h1;
-                    double avgH = (h1 + h2) / 2;
-                    double diffR = diff / avgH;
-
                     if (!line.getParent().equals(line.getNext().getParent())
                             && (line.getParent().getLabel().equals(line.getNext().getParent().getLabel())
                             || line.getParent().getLabel().equals(BxZoneLabel.OTH_UNKNOWN)
                             || line.getParent().getNext().getLabel().equals(BxZoneLabel.OTH_UNKNOWN))) {
                         if (diff < 4.5 && Math.abs(diff - avgDiffZone) < 4.5) {
-                            BxPage p = line.getParent().getParent();
-
                             dLines.union(line, line.getNext());
                         }
                     }
@@ -171,16 +163,13 @@ public class PubmedZoneMerger {
                         }
                         BxBounds bb2 = b2.getBounds();
 
-                        if (l1.iterator().next().getParent().getLabel().equals(l2.iterator().next().getParent().getLabel())) {
-                            if (bb1.getX() <= bb2.getX() + bb2.getWidth()
-                                    && bb2.getX() <= bb1.getX() + bb1.getWidth()
-                                    && bb1.getY() <= bb2.getY() + bb2.getHeight()
-                                    && bb2.getY() <= bb1.getY() + bb1.getHeight()) {
-                                dLines.union(l1.iterator().next(), l2.iterator().next());
-                            }
-
+                        if (l1.iterator().next().getParent().getLabel().equals(l2.iterator().next().getParent().getLabel())
+                                && bb1.getX() <= bb2.getX() + bb2.getWidth()
+                                && bb2.getX() <= bb1.getX() + bb1.getWidth()
+                                && bb1.getY() <= bb2.getY() + bb2.getHeight()
+                                && bb2.getY() <= bb1.getY() + bb1.getHeight()) {
+                            dLines.union(l1.iterator().next(), l2.iterator().next());
                         }
-
                     }
                 }
 
@@ -218,7 +207,6 @@ public class PubmedZoneMerger {
                                 prev.setParent(zone);
                                 prev = line;
                             }
-
                         } else {
                             prev = line;
                         }

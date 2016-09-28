@@ -35,7 +35,9 @@ public class MajorityFontFeature extends FeatureCalculator<BxLine, BxZone> {
     @Override
     public double calculateFeatureValue(BxLine object, BxZone context) {
         String fn = object.getMostPopularFontName();
-        if (mostPopularFont == null) return 0;
+        if (mostPopularFont == null) {
+            return 0;
+        }
         return (fn.equals(mostPopularFont) ? 1 : 0);
     }
 

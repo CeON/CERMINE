@@ -19,7 +19,6 @@
 package pl.edu.icm.cermine.bx;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,7 +40,7 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  */
 public class BxDocShrinker {
 
-    public static void main(String[] args) throws ParseException, TransformationException, FileNotFoundException, IOException {
+    public static void main(String[] args) throws ParseException, TransformationException, IOException {
         Options options = new Options();
         options.addOption("input", true, "input path");
         options.addOption("output", true, "output path");

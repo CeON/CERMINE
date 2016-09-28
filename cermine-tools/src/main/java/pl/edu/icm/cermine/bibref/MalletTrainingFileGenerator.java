@@ -116,7 +116,6 @@ public final class MalletTrainingFileGenerator {
             writer2.flush();
             writer2.close();
             System.out.println(allcitations.size());
-            int ind = 0;
             for (Citation citation : allcitations) {
                 List<String> tokens = CitationUtils.citationToMalletInputFormat(citation);
                 for (String token : tokens) {
@@ -124,7 +123,6 @@ public final class MalletTrainingFileGenerator {
                     writer.write("\n");
                 }
                 writer.write("\n");
-                ind++;
             }
 
             writer.flush();

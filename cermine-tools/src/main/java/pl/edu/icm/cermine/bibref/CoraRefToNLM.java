@@ -71,25 +71,22 @@ public final class CoraRefToNLM {
             boolean pagef = true;
 
             for (CitationToken ct : citation.getTokens()) {
-                if (CitationTokenLabel.YEAR.equals(ct.getLabel())) {
-                    if (ct.getText().length() < 4) {
+                if (CitationTokenLabel.YEAR.equals(ct.getLabel())
+                        && ct.getText().length() < 4) {
+                    ct.setLabel(CitationTokenLabel.TEXT);
+                }
+                if (CitationTokenLabel.ARTICLE_TITLE.equals(ct.getLabel())
+                        && ind < citation.getTokens().size() - 1) {
+                    CitationToken next = citation.getTokens().get(ind + 1);
+                    if ((ct.getText().equals(".") || ct.getText().equals(",")) && !CitationTokenLabel.ARTICLE_TITLE.equals(next.getLabel())) {
                         ct.setLabel(CitationTokenLabel.TEXT);
                     }
                 }
-                if (CitationTokenLabel.ARTICLE_TITLE.equals(ct.getLabel())) {
-                    if (ind < citation.getTokens().size() - 1) {
-                        CitationToken next = citation.getTokens().get(ind + 1);
-                        if ((ct.getText().equals(".") || ct.getText().equals(",")) && !CitationTokenLabel.ARTICLE_TITLE.equals(next.getLabel())) {
-                            ct.setLabel(CitationTokenLabel.TEXT);
-                        }
-                    }
-                }
-                if (CitationTokenLabel.SOURCE.equals(ct.getLabel())) {
-                    if (ind < citation.getTokens().size() - 1) {
-                        CitationToken next = citation.getTokens().get(ind + 1);
-                        if ((ct.getText().equals(".") || ct.getText().equals(",")) && !CitationTokenLabel.SOURCE.equals(next.getLabel())) {
-                            ct.setLabel(CitationTokenLabel.TEXT);
-                        }
+                if (CitationTokenLabel.SOURCE.equals(ct.getLabel())
+                        && ind < citation.getTokens().size() - 1) {
+                    CitationToken next = citation.getTokens().get(ind + 1);
+                    if ((ct.getText().equals(".") || ct.getText().equals(",")) && !CitationTokenLabel.SOURCE.equals(next.getLabel())) {
+                        ct.setLabel(CitationTokenLabel.TEXT);
                     }
                 }
                 if (CitationTokenLabel.PAGEF.equals(ct.getLabel())) {

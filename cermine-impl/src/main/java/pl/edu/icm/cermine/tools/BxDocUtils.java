@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.apache.commons.io.FileUtils;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -34,7 +35,7 @@ public class BxDocUtils {
 
     public static List<BxDocument> getDocumentsFromPath(String inputDirPath) throws TransformationException {
         if (inputDirPath == null) {
-            throw new NullPointerException("Input directory must not be null.");
+            throw new IllegalArgumentException("Input directory must not be null.");
         }
 
         if (!inputDirPath.endsWith(File.separator)) {
@@ -98,6 +99,9 @@ public class BxDocUtils {
                 @Override
                 public BxDocument next() {
                     ++curIdx;
+                    if (curIdx >= files.length) {
+                        throw new NoSuchElementException();
+                    }
                     try {
                         return getDocument(files[curIdx]);
                     } catch (IOException e) {

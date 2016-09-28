@@ -205,7 +205,7 @@ public class ContentCleaner {
             if (line.matches("^.*["+hyphenList+"]$")) {
                 line = line.substring(0, line.length()-1);
                 sb.append(line);
-                int idx = next.indexOf(" ");
+                int idx = next.indexOf(' ');
                 if (idx < 0) {
                     sb.append(next);
                     i++;

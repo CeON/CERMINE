@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.configuration;
 
 import org.apache.commons.configuration.Configuration;
 
-import pl.edu.icm.cermine.ContentExtractor;
 
 /**
  * Class that holds configuration for {@link ContentExtractor}.<br>

@@ -527,8 +527,7 @@ public class ExtractionUtils {
      */
     public static List<List<CitationPosition>> findCitationPositions(ComponentConfiguration conf, 
             String fullText, List<BibEntry> citations) {
-        List<List<CitationPosition>> positions = conf.citationPositionFinder.findReferences(fullText, citations);
-        return positions;
+        return conf.citationPositionFinder.findReferences(fullText, citations);
     }
     
     //3.2 Reference parsing

@@ -17,7 +17,6 @@
  */
 package pl.edu.icm.cermine.bx;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -31,7 +30,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
  */
 public class BxReadingOrderSetter extends BxDocRewriter {
 
-    public static void main(String[] args) throws ParseException, TransformationException, IOException, FileNotFoundException, AnalysisException {
+    public static void main(String[] args) throws ParseException, TransformationException, IOException, AnalysisException {
         BxReadingOrderSetter corrector = new BxReadingOrderSetter();
         corrector.run(args);
     }

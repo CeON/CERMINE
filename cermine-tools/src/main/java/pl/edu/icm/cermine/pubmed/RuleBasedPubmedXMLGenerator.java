@@ -691,7 +691,7 @@ public class RuleBasedPubmedXMLGenerator {
                         z.setLabel(BxZoneLabel.BODY_ACKNOWLEDGMENT);
                     }
                     if (text.startsWith("introduction")
-                            && z.hasPrev() && !z.getPrev().toText().toLowerCase().equals("abstract")) {
+                            && z.hasPrev() && !z.getPrev().toText().equalsIgnoreCase("abstract")) {
                         wasIntro = true;
                     }
                     if (wasIntro && z.getLabel().equals(BxZoneLabel.MET_ABSTRACT)) {
@@ -734,7 +734,7 @@ public class RuleBasedPubmedXMLGenerator {
                         z.setLabel(BxZoneLabel.MET_BIB_INFO);
                     }
                     if ((z.getLabel().equals(BxZoneLabel.BODY_CONTENT) || z.getLabel().equals(BxZoneLabel.OTH_UNKNOWN))
-                            && firstLine.toText().toLowerCase().equals("author details")) {
+                            && firstLine.toText().equalsIgnoreCase("author details")) {
                         z.setLabel(BxZoneLabel.MET_AFFILIATION);
                     }
                     if ((z.getLabel().equals(BxZoneLabel.BODY_CONTENT) || z.getLabel().equals(BxZoneLabel.OTH_UNKNOWN))
@@ -750,7 +750,7 @@ public class RuleBasedPubmedXMLGenerator {
                         z.setLabel(BxZoneLabel.OTH_PAGE_NUMBER);
                     }
                     if ((z.getLabel().equals(BxZoneLabel.BODY_CONTENT) || z.getLabel().equals(BxZoneLabel.OTH_UNKNOWN))
-                            && firstLine.toText().toLowerCase().equals("references")) {
+                            && firstLine.toText().equalsIgnoreCase("references")) {
                         z.setLabel(BxZoneLabel.REFERENCES);
                     }
                     if (z.getLabel().equals(BxZoneLabel.BODY_CONTENT)

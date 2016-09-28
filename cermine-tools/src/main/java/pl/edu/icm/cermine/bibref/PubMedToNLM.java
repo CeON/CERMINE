@@ -78,7 +78,8 @@ public final class PubMedToNLM {
             List<BibEntry> entries = new ArrayList<BibEntry>();
 
             for (int j = 0; j < 10; j++) {
-                int index = (int) (origCitations.size() * Math.random());
+                Random r = new Random();
+                int index = r.nextInt(origCitations.size());
                 Citation chosen = origCitations.get(index);
                 BibEntry be = CitationUtils.citationToBibref(chosen);
                 String title = be.getFirstFieldValue(BibEntry.FIELD_TITLE);

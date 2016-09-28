@@ -30,9 +30,10 @@ public class SpaceBetweenLineAboveFeature extends FeatureCalculator<BxLine, BxPa
 
     @Override
     public double calculateFeatureValue(BxLine object, BxPage context) {
-        if (object.getPrev() == null || !object.getPrev().getParent().getLabel().equals(BxZoneLabel.BODY_CONTENT)) // cos innego w okolicy
+        if (object.getPrev() == null || !object.getPrev().getParent().getLabel().equals(BxZoneLabel.BODY_CONTENT)) {
             return -2; 
-        double space = object.getBounds().getY() - object.getPrev().getBounds().getY() - object.getPrev().getBounds().getHeight(); // uwaga na nulle w getPrev (!?)
+        }
+        double space = object.getBounds().getY() - object.getPrev().getBounds().getY() - object.getPrev().getBounds().getHeight();
         return (space < 0 ? -1 : space);
     }
 }

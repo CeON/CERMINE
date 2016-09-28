@@ -71,7 +71,7 @@ public class BxZoneTree {
                 return parent;
             } else if (this.tuple.getOrder() > tuple.getOrder()) {
                 return parent.addChild(tuple);
-            } else { // if(zone.getOrder() < tuple.getOrder())
+            } else {
                 if (children.isEmpty()) {
                     children.add(new BxZoneTreeNode(tuple, this));
                     return this;
@@ -81,7 +81,7 @@ public class BxZoneTree {
                             || lastChild.getTuple().getOrder() > tuple.getOrder()) {
                         children.add(new BxZoneTreeNode(tuple, this));
                         return this;
-                    } else { // lastChild.getZone().getOrder() > tuple.getOrder()
+                    } else {
                         return lastChild.addChild(tuple);
                     }
                 }
@@ -146,4 +146,4 @@ public class BxZoneTree {
         return root.correspondsTo(other.root);
     }
 
-};
+}

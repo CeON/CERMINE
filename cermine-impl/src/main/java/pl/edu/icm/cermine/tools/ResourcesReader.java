@@ -59,7 +59,7 @@ public class ResourcesReader {
         return lines;
     }
     
-    public static interface StringTransformer {
+    public interface StringTransformer {
         String transform(String original);
     }
     

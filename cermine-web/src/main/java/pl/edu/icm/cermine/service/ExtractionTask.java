@@ -83,7 +83,7 @@ public class ExtractionTask {
     }
 
     public void setPdf(byte[] pdf) {
-        this.pdf = pdf;
+        this.pdf = pdf.clone();
     }
 
     public String getMd5Sum() {

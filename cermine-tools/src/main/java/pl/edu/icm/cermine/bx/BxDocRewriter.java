@@ -20,7 +20,6 @@ package pl.edu.icm.cermine.bx;
 
 import com.google.common.collect.Lists;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,7 +39,7 @@ public abstract class BxDocRewriter {
 
     protected abstract BxDocument transform(BxDocument document) throws AnalysisException;
     
-    public void run(String[] args) throws ParseException, TransformationException, FileNotFoundException, IOException, AnalysisException {
+    public void run(String[] args) throws ParseException, TransformationException, IOException, AnalysisException {
         Options options = new Options();
         options.addOption("input", true, "input path");
         options.addOption("output", true, "output path");

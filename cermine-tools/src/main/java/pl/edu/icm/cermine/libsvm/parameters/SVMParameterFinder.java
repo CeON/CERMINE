@@ -198,7 +198,7 @@ public abstract class SVMParameterFinder {
         }
 
         @Override
-        public EvaluationParams call() throws Exception {
+        public EvaluationParams call() throws AnalysisException, IOException, CloneNotSupportedException {
             double gamma = Math.pow(2, params.glog);
             double c = Math.pow(2, params.clog);
             double rate = evaluate(samples, kernel, gamma, c, degree);

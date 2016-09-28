@@ -221,7 +221,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     private boolean looksLikeHeader(BxLine line) {
         String text = line.toText();
         return text.matches("^[A-Z].*") || text.matches("^[1-9].*[a-zA-Z].*") || text.matches("^[a-h]\\).*[a-zA-Z].*");
-        }
+    }
 
     private boolean looksLikeEquation(BxLine line) {
         return line.toText().contains("=");
@@ -238,7 +238,9 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     private boolean containsMostlyLetters(BxLine line) {
         double letterCount = 0;
         for (char ch : line.toText().toCharArray()) {
-            if (Character.isLetter(ch)) letterCount++;
+            if (Character.isLetter(ch)) {
+                letterCount++;
+            }
         }
         return 2*letterCount > line.toText().length();
     }

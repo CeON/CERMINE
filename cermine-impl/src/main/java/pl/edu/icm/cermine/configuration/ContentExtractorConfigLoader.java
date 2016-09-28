@@ -2,12 +2,9 @@ package pl.edu.icm.cermine.configuration;
 
 import java.io.File;
 import java.net.URL;
-
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-
-import pl.edu.icm.cermine.ContentExtractor;
 
 /**
  * Loader of configuration properties for {@link ContentExtractor}

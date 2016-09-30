@@ -255,7 +255,7 @@ public abstract class SystemEvaluator {
             
             if (mode == 1) {
                 results.printCSV(file);
-            } else {
+            } else if (mode == 0) {
                 results.printDocument(file, i);
             }
         }

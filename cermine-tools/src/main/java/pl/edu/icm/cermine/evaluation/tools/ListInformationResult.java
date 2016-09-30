@@ -190,13 +190,12 @@ public class ListInformationResult implements SingleInformationDocResult<List<St
     @Override
     public void printCSV() {
         if (!hasExtracted() && !hasExpected()) {
-            System.out.print("null");
+            System.out.print("NA");
         } else if (!hasExtracted() || !hasExpected()) {
             System.out.print("0");
         } else {
             System.out.print(getF1());
         }
-        System.out.print(",");
     }
     
 }

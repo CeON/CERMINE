@@ -138,7 +138,7 @@ public class DocumentSetResult {
         Map<EvalInformationType, SingleInformationDocResult> docResults = results.get(doc);
         System.out.print(doc);
         for (EvalInformationType type: evalTypes) {
-            System.out.println(",");
+            System.out.print(",");
             docResults.get(type).printCSV();
         }
         System.out.println("");

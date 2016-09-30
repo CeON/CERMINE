@@ -124,7 +124,7 @@ public class SimpleInformationResult implements SingleInformationDocResult<Strin
     @Override
     public void printCSV() {
         if (!hasExtracted() && !hasExpected()) {
-            System.out.print("null");
+            System.out.print("NA");
         } else if (!hasExtracted() || !hasExpected()) {
             System.out.print("0");
         } else {

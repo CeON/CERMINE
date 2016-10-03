@@ -718,6 +718,7 @@ public class ContentExtractor {
                 }
                 
                 if (outputs.containsKey("trueviz")) {
+                    extractor.getLabelledRawFullText();
                     BxDocument doc = extractor.getBxDocument();
                     BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                     writer.write(new FileWriter(outputs.get("trueviz")), Lists.newArrayList(doc));

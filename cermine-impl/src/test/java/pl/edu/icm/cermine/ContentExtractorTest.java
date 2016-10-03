@@ -20,10 +20,8 @@ package pl.edu.icm.cermine;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipFile;
 import org.custommonkey.xmlunit.Diff;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -46,21 +44,24 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  */
 public class ContentExtractorTest {
     static final private String TEST_PDF_1 = "/pl/edu/icm/cermine/test1.pdf";
-    static final private String EXP_STR_1 = "test1-str.xml";
-    static final private String EXP_ZIP_STR_1 = "/pl/edu/icm/cermine/test1-str.xml.zip";
-    static final private String EXP_MET_1 = "/pl/edu/icm/cermine/test1-met.xml";
+    static final private String EXP_STR_1 = "/pl/edu/icm/cermine/test1-structure.xml";
+    static final private String EXP_STR_LAB_1 = "/pl/edu/icm/cermine/test1-structure-fully-labelled.xml";
+    static final private String EXP_MET_1 = "/pl/edu/icm/cermine/test1-metadata.xml";
    
     static final private String TEST_PDF_2 = "/pl/edu/icm/cermine/test2.pdf";
-    static final private String EXP_CONTENT_2 = "/pl/edu/icm/cermine/test2-cont.xml";
-    static final private String EXP_TEXT_2 = "/pl/edu/icm/cermine/test2.txt";
+    static final private String EXP_CONT_2 = "/pl/edu/icm/cermine/test2-content.xml";
+    static final private String EXP_TEXT_2 = "/pl/edu/icm/cermine/test2-fulltext.txt";
+    static final private String EXP_ZONES_2 = "/pl/edu/icm/cermine/test2-zones.xml";
     
     private ContentExtractor extractor;
+    SAXBuilder saxBuilder;
     
     @Before
     public void setUp() throws AnalysisException, IOException {
         extractor = new ContentExtractor();
+        saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
     }
-  
+
     @Test
     public void getBxDocumentTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
@@ -71,15 +72,31 @@ public class ContentExtractorTest {
         } finally {
             testStream.close();
         }
-        
-        URL url = this.getClass().getResource(EXP_ZIP_STR_1);
-        ZipFile zipFile = new ZipFile(new File(url.toURI()));
-        InputStream inputStream = zipFile.getInputStream(zipFile.getEntry(EXP_STR_1));
+
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(inputStream)));
+        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
         
         assertTrue(BxModelUtils.areEqual(expDocument, testDocument));
-        assertEquals(testDocument, extractor.getBxDocument());
+    }
+
+    @Test
+    public void getBxDocumentFullyLabelledTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
+        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
+        BxDocument testDocument;
+        try {
+            extractor.setPDF(testStream);
+            extractor.getLabelledRawFullText();
+            testDocument = extractor.getBxDocument();
+        } finally {
+            testStream.close();
+        }
+
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_LAB_1);
+        TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
+        
+        assertTrue(BxModelUtils.areEqual(expDocument, testDocument));
     }
     
     @Test
@@ -93,12 +110,12 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_TEXT_2);
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_TEXT_2);        
         InputStreamReader expReader = new InputStreamReader(expStream);
         BufferedReader reader = new BufferedReader(expReader);
         
-        String line;
         StringBuilder expectedContent = new StringBuilder();
+        String line;
         try {
             while ((line = reader.readLine()) != null) {
                 expectedContent.append(line);
@@ -111,9 +128,35 @@ public class ContentExtractorTest {
         }
         
         assertEquals(testContent.trim(), expectedContent.toString().trim());
-        assertEquals(testContent, extractor.getRawFullText());
     }
-
+    
+    @Test
+    public void getFullTextWithLabelsTest() throws AnalysisException, IOException, JDOMException, SAXException {
+        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
+        Element testContent;
+        try {
+            extractor.setPDF(testStream);
+            testContent = extractor.getLabelledRawFullText();
+        } finally {
+            testStream.close();
+        }
+        
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_ZONES_2);
+        InputStreamReader expReader = new InputStreamReader(expStream);
+        Document dom;
+        try {
+            dom = saxBuilder.build(expReader);
+        } finally {
+            expStream.close();
+            expReader.close();
+        }
+        Element expMetadata = dom.getRootElement();
+                
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+        Diff diff = new Diff(outputter.outputString(expMetadata), outputter.outputString(testContent));
+        assertTrue(diff.similar());
+    }
+    
     @Test
     public void getNLMMetadataTest() throws AnalysisException, IOException, JDOMException, SAXException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
@@ -127,7 +170,6 @@ public class ContentExtractorTest {
         
         InputStream expStream = this.getClass().getResourceAsStream(EXP_MET_1);
         InputStreamReader expReader = new InputStreamReader(expStream);
-        SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -140,7 +182,34 @@ public class ContentExtractorTest {
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         Diff diff = new Diff(outputter.outputString(expMetadata), outputter.outputString(testMetadata));
         assertTrue(diff.similar());
-        assertEquals(testMetadata, extractor.getNLMMetadata());
+    }
+
+    @Test
+    public void getNLMBodyTest() throws AnalysisException, IOException, JDOMException, SAXException {
+        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
+        Element testBody;
+        try {
+            extractor.setPDF(testStream);
+            testBody = extractor.getNLMText();
+        } finally {
+            testStream.close();
+        }
+        
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_2);
+        InputStreamReader expReader = new InputStreamReader(expStream);
+        Document dom;
+        try {
+            dom = saxBuilder.build(expReader);
+        } finally {
+            expStream.close();
+            expReader.close();
+        }
+        Element expMetadata = dom.getRootElement();
+        Element expContent = expMetadata.getChild("body");
+                
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+        Diff diff = new Diff(outputter.outputString(expContent), outputter.outputString(testBody));
+        assertTrue(diff.similar());
     }
     
     @Test
@@ -154,9 +223,8 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONTENT_2);
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_2);
         InputStreamReader expReader = new InputStreamReader(expStream);
-        SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -183,7 +251,6 @@ public class ContentExtractorTest {
             Diff diff = new Diff(outputter.outputString(testReferences.get(i)), outputter.outputString(expReferences.get(i)));
             assertTrue(diff.similar());
         }
-        assertEquals(testReferences, extractor.getNLMReferences());
     }
     
     @Test
@@ -197,9 +264,8 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONTENT_2);
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_2);
         InputStreamReader expReader = new InputStreamReader(expStream);
-        SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -212,7 +278,6 @@ public class ContentExtractorTest {
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         Diff diff = new Diff(outputter.outputString(expContent), outputter.outputString(testContent));
         assertTrue(diff.similar());
-        assertEquals(testContent, extractor.getNLMContent());
     }
 
 }

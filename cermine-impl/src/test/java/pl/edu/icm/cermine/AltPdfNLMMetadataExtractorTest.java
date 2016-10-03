@@ -43,7 +43,7 @@ public class AltPdfNLMMetadataExtractorTest {
     private final static String ALT_METADATA_CLASSIFIER_RANGE_PATH = "classpath:/pl/edu/icm/cermine/structure/model-metadata-humanities.range";
     
     static final private String TEST_FILE = "/pl/edu/icm/cermine/test3.pdf";
-    static final private String EXP_FILE = "/pl/edu/icm/cermine/test3-met.xml";
+    static final private String EXP_FILE = "/pl/edu/icm/cermine/test3-metadata.xml";
     
     private ContentExtractor extractor;
     

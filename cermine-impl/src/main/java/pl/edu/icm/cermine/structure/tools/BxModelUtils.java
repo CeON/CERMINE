@@ -357,6 +357,9 @@ public final class BxModelUtils {
         if (!chunk1.toText().equals(chunk2.toText())) {
             return false;
         }
+        if (!chunk1.getFontName().equals(chunk2.getFontName())) {
+            return false;
+        }
         return chunk1.getBounds().isSimilarTo(chunk2.getBounds(), SIMILARITY_TOLERANCE);
     }
 
@@ -385,6 +388,9 @@ public final class BxModelUtils {
     }
 
     public static boolean areEqual(BxZone zone1, BxZone zone2) {
+        if (zone1.getLabel() != zone2.getLabel()){
+            return false;
+        }
         if (zone1.childrenCount() != zone2.childrenCount()) {
             return false;
         }

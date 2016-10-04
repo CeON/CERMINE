@@ -221,7 +221,7 @@ public class InternalContentExtractor {
         if (citationPositions == null) {
             getRawFullText();
             getReferences();
-            citationPositions = ExtractionUtils.findCitationPositions(conf, rawFullText, references);
+            citationPositions = SingleStepUtils.findCitationPositions(conf, rawFullText, references);
         }
         return citationPositions;
     }

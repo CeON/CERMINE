@@ -160,13 +160,6 @@ public class ContentExtractorTimeoutTest {
             @Override
             public void run(ContentExtractor extractor)
                     throws TimeoutException, AnalysisException {
-                extractor.getCitationPositions(0);
-            }
-        },
-                new ExtractorOperation() {
-            @Override
-            public void run(ContentExtractor extractor)
-                    throws TimeoutException, AnalysisException {
                 extractor.getRawFullText(0);
             }
         },

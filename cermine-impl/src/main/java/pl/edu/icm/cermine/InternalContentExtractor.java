@@ -24,7 +24,6 @@ import java.util.List;
 import org.jdom.Element;
 import com.google.common.collect.Lists;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -77,9 +76,6 @@ public class InternalContentExtractor {
     
     /** extracted content in NLM format */
     private Element nlmContent;
-
-    /** citation positions */
-    private List<List<CitationPosition>> citationPositions;
     
     
     /**
@@ -212,21 +208,6 @@ public class InternalContentExtractor {
     }
 
     /**
-     * Extracts the locations of the document's citations.
-     * 
-     * @return the locations
-     * @throws AnalysisException 
-     */
-    public List<List<CitationPosition>> getCitationPositions() throws AnalysisException {
-        if (citationPositions == null) {
-            getRawFullText();
-            getReferences();
-            citationPositions = SingleStepUtils.findCitationPositions(conf, rawFullText, references);
-        }
-        return citationPositions;
-    }
-    
-    /**
      * Extracts raw text.
      * 
      * @return raw text
@@ -264,7 +245,7 @@ public class InternalContentExtractor {
         if (nlmFullText == null) {
             getBxDocument();
             getReferences();
-            nlmFullText = ExtractionUtils.extractTextAsNLM(conf, bxDocument, references);
+            nlmFullText = ExtractionUtils.extractBodyAsNLM(conf, bxDocument, references);
         }
         return nlmFullText;
     }

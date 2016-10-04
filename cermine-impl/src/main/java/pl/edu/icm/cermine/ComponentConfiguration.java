@@ -23,9 +23,9 @@ import java.io.InputStream;
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.content.citations.CitationPositionFinder;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig.ConfigurationProperty;
+import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.headers.ContentHeadersExtractor;
@@ -51,46 +51,46 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 public class ComponentConfiguration {
 
     /** character extractor */
-    CharacterExtractor characterExtractor;
+    private CharacterExtractor characterExtractor;
     
     /** document object segmenter */
-    DocumentSegmenter documentSegmenter;
+    private DocumentSegmenter documentSegmenter;
     
     /** reading order resolver */
-    ReadingOrderResolver readingOrderResolver;
+    private ReadingOrderResolver readingOrderResolver;
     
     /** initial zone classifier */
-    ZoneClassifier initialClassifier;
+    private ZoneClassifier initialClassifier;
     
     /** metadata zone classifier */
-    ZoneClassifier metadataClassifier;
+    private ZoneClassifier metadataClassifier;
 
     /** metadata extractor from labelled zones */
-    MetadataExtractor<DocumentMetadata> metadataExtractor;
+    private MetadataExtractor<DocumentMetadata> metadataExtractor;
     
     /** affiliation parser **/
-    ParsableStringParser<DocumentAffiliation> affiliationParser;
+    private ParsableStringParser<DocumentAffiliation> affiliationParser;
     
     /** references strings extractor */
-    BibReferenceExtractor bibReferenceExtractor;
+    private BibReferenceExtractor bibReferenceExtractor;
     
     /** bibliographic references parser */
-    BibReferenceParser<BibEntry> bibReferenceParser;
+    private BibReferenceParser<BibEntry> bibReferenceParser;
     
     /** content filter */
-    ContentFilter contentFilter;
+    private ContentFilter contentFilter;
     
     /** content header extractor */
-    ContentHeadersExtractor contentHeaderExtractor;
+    private ContentHeadersExtractor contentHeaderExtractor;
     
     /** content header clusterizer */
-    HeadersClusterizer contentHeaderClusterizer;
+    private HeadersClusterizer contentHeaderClusterizer;
     
     /** content cleaner */
-    ContentCleaner contentCleaner;
+    private ContentCleaner contentCleaner;
   
     /** citation position finder */
-    CitationPositionFinder citationPositionFinder;
+    private ContentCitationPositionFinder citationPositionFinder;
     
    
     boolean timeDebug = false;
@@ -251,11 +251,11 @@ public class ComponentConfiguration {
         return readingOrderResolver;
     }
 
-    public CitationPositionFinder getCitationPositionFinder() {
+    public ContentCitationPositionFinder getCitationPositionFinder() {
         return citationPositionFinder;
     }
 
-    public void setCitationPositionFinder(CitationPositionFinder citationPositionFinder) {
+    public void setCitationPositionFinder(ContentCitationPositionFinder citationPositionFinder) {
         this.citationPositionFinder = citationPositionFinder;
     }
 

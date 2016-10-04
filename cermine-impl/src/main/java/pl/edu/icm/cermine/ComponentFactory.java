@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine;
 
-import pl.edu.icm.cermine.content.citations.CitationPositionFinder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +27,7 @@ import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.KMeansBibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.filtering.SVMContentFilter;
@@ -213,8 +213,7 @@ public class ComponentFactory {
      * @return content filter
      * @throws AnalysisException 
      */
-    public static ContentFilter getContentFilter(String modelPath, String rangePath) throws AnalysisException, IOException {
-        
+    public static ContentFilter getContentFilter(String modelPath, String rangePath) throws AnalysisException, IOException {      
         return getContentFilter(ResourceUtils.openResourceStream(modelPath), ResourceUtils.openResourceStream(rangePath));
     }
 
@@ -292,8 +291,8 @@ public class ComponentFactory {
      * 
      * @return citation reference finder
      */
-    public static CitationPositionFinder getCitationPositionFinder() {
-        return new CitationPositionFinder();
+    public static ContentCitationPositionFinder getCitationPositionFinder() {
+        return new ContentCitationPositionFinder();
     }
     
 }

@@ -21,8 +21,9 @@ package pl.edu.icm.cermine;
 import java.io.InputStream;
 import java.util.List;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.content.citations.CitationPosition;
+import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
@@ -47,7 +48,7 @@ public class SingleStepUtils {
     public static BxDocument extractCharacters(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        BxDocument doc = conf.characterExtractor.extractCharacters(stream);
+        BxDocument doc = conf.getCharacterExtractor().extractCharacters(stream);
         debug(conf, start, "1.1 Character extraction");
         return doc;
     }
@@ -57,7 +58,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         TimeoutRegister.get().check();
-        doc = conf.documentSegmenter.segmentDocument(doc);
+        doc = conf.getDocumentSegmenter().segmentDocument(doc);
         debug(conf, start, "1.2 Page segmentation");
         return doc;
     }
@@ -66,7 +67,7 @@ public class SingleStepUtils {
     public static BxDocument resolveReadingOrder(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        doc = conf.readingOrderResolver.resolve(doc);
+        doc = conf.getReadingOrderResolver().resolve(doc);
         debug(conf, start, "1.3 Reading order resolving");
         return doc;
     }
@@ -75,7 +76,7 @@ public class SingleStepUtils {
     public static BxDocument classifyInitially(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        doc = conf.initialClassifier.classifyZones(doc);
+        doc = conf.getInitialClassifier().classifyZones(doc);
         debug(conf, start, "1.4 Initial classification");
         return doc;
     }
@@ -84,7 +85,7 @@ public class SingleStepUtils {
     public static BxDocument classifyMetadata(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        doc = conf.metadataClassifier.classifyZones(doc);
+        doc = conf.getMetadataClassifier().classifyZones(doc);
         debug(conf, start, "2.1 Metadata classification");
         return doc;
     }
@@ -93,7 +94,7 @@ public class SingleStepUtils {
     public static DocumentMetadata cleanMetadata(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        DocumentMetadata metadata = conf.metadataExtractor.extractMetadata(doc);
+        DocumentMetadata metadata = conf.getMetadataExtractor().extractMetadata(doc);
         debug(conf, start, "2.2 Metadata cleaning");
         return metadata;
     }
@@ -103,7 +104,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
     	for (DocumentAffiliation aff : metadata.getAffiliations()) {
-    		conf.affiliationParser.parse(aff);
+            conf.getAffiliationParser().parse(aff);
     	}
         debug(conf, start, "2.3 Affiliation parsing");
         return metadata;
@@ -113,7 +114,7 @@ public class SingleStepUtils {
     public static String[] extractRefStrings(ComponentConfiguration conf, BxDocument doc)
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        String[] refs = conf.bibReferenceExtractor.extractBibReferences(doc);
+        String[] refs = conf.getBibRefExtractor().extractBibReferences(doc);
         debug(conf, start, "3.1 Reference extraction");
         return refs;
     }
@@ -124,7 +125,7 @@ public class SingleStepUtils {
         long start = System.currentTimeMillis();
         BibEntry[] parsedRefs = new BibEntry[refs.length];
         for (int i = 0; i < refs.length; i++) {
-            parsedRefs[i] = conf.bibReferenceParser.parseBibReference(refs[i]);
+            parsedRefs[i] = conf.getBibRefParser().parseBibReference(refs[i]);
         }
         debug(conf, start, "3.2 Reference parsing");
         return parsedRefs;
@@ -134,7 +135,7 @@ public class SingleStepUtils {
     public static BxDocument filterContent(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        doc = conf.contentFilter.filter(doc);
+        doc = conf.getContentFilter().filter(doc);
         debug(conf, start, "4.1 Content filtering");
         return doc;
     }
@@ -143,7 +144,7 @@ public class SingleStepUtils {
     public static BxContentStructure extractHeaders(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        BxContentStructure contentStructure = conf.contentHeaderExtractor.extractHeaders(doc);
+        BxContentStructure contentStructure = conf.getContentHeaderExtractor().extractHeaders(doc);
         debug(conf, start, "4.2 Headers extraction");
         return contentStructure;
     }
@@ -152,18 +153,27 @@ public class SingleStepUtils {
     public static BxContentStructure clusterHeaders(ComponentConfiguration conf, BxContentStructure contentStructure) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
-        conf.contentHeaderClusterizer.clusterHeaders(contentStructure);
+        conf.getContentHeaderClusterizer().clusterHeaders(contentStructure);
         debug(conf, start, "4.3 Headers clustering");
         return contentStructure;
     }
-
-    //4.4 Citation positions finding
-    public static List<List<CitationPosition>> findCitationPositions(ComponentConfiguration conf, 
-            String fullText, List<BibEntry> citations) {
+    
+    //4.4 Content cleaner
+    public static BxContentStructure cleanStructure(ComponentConfiguration conf, BxContentStructure contentStructure) 
+            throws AnalysisException {
         long start = System.currentTimeMillis();
-        List<List<CitationPosition>> pos = conf.citationPositionFinder.findReferences(fullText, citations);
-        debug(conf, start, "4.4 Citation positions finding");
-        return pos;
+        conf.getContentCleaner().cleanupContent(contentStructure);
+        debug(conf, start, "4.4 Content cleaning");
+        return contentStructure;
+    }
+
+    //4.5 Citation positions finding
+    public static ContentStructureCitationPositions findCitationPositions(ComponentConfiguration conf, 
+            ContentStructure struct, List<BibEntry> citations) {
+        long start = System.currentTimeMillis();
+        ContentStructureCitationPositions positions = conf.getCitationPositionFinder().findReferences(struct, citations);
+        debug(conf, start, "4.5 Citation positions finding");
+        return positions;
     }
     
 }

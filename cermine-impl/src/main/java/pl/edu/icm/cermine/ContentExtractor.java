@@ -34,7 +34,6 @@ import com.google.common.collect.Lists;
 import java.util.HashMap;
 import java.util.Map;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -393,44 +392,6 @@ public class ContentExtractor {
     public List<Element> getNLMReferences(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
         return getNLMReferences(combineWithMainTimeout(timeoutSeconds));
-    }
-
-    private List<List<CitationPosition>> getCitationPositions(Timeout timeout)
-            throws AnalysisException, TimeoutException {
-        try {
-            TimeoutRegister.set(timeout);
-            TimeoutRegister.get().check();
-            return extractor.getCitationPositions();
-        } finally {
-            TimeoutRegister.remove();
-        }
-    }
-
-    /**
-     * Extracts the locations of the document's citations.
-     *
-     * @return the locations
-     * @throws AnalysisException
-     * @throws TimeoutException thrown when timeout deadline has passed. See
-     * {@link #setTimeout(long)} for additional information about the timeout.
-     */
-    public List<List<CitationPosition>> getCitationPositions()
-            throws AnalysisException, TimeoutException {
-        return getCitationPositions(mainTimeout);
-    }
-
-    /**
-     * The same as {@link #getCitationPositions()} but with a timeout.
-     *
-     * @param timeoutSeconds approximate timeout in seconds
-     * @return the list of positions
-     * @throws AnalysisException
-     * @throws TimeoutException thrown when timeout deadline has passed. See
-     * {@link #setTimeout(long)} for additional information about the timeout.
-     */
-    public List<List<CitationPosition>> getCitationPositions(long timeoutSeconds)
-            throws AnalysisException, TimeoutException {
-        return getCitationPositions(combineWithMainTimeout(timeoutSeconds));
     }
 
     private String getRawFullText(Timeout timeout)

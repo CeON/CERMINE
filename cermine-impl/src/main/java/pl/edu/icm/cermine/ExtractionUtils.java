@@ -26,7 +26,6 @@ import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
-import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
@@ -48,6 +47,10 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  */
 public class ExtractionUtils {
    
+    /*
+        Box structure
+    */
+    
     /**
      * Extracts box structure from input stream.
      * 
@@ -65,6 +68,11 @@ public class ExtractionUtils {
         doc =  SingleStepUtils.classifyInitially(conf, doc);
         return doc;
     }
+    
+    
+    /*
+        Basic metadata
+    */
     
     /**
      * Extracts metadata from input stream.
@@ -132,36 +140,11 @@ public class ExtractionUtils {
         }
     }
 
-    /**
-     * Extracts raw text from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return raw text content
-     * @throws AnalysisException 
-     */
-    public static String extractRawText(ComponentConfiguration conf, InputStream stream)
-            throws AnalysisException {
-        BxDocument doc = SingleStepUtils.extractCharacters(conf, stream);
-        doc = SingleStepUtils.segmentPages(conf, doc);
-        doc = SingleStepUtils.resolveReadingOrder(conf, doc);
-        String text = extractRawText(conf, doc);
-        return text;
-    }
+
+    /*
+        References
+    */
     
-    /**
-     * Extracts raw text from document's box structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @return raw text content
-     * @throws AnalysisException 
-     */
-    public static String extractRawText(ComponentConfiguration conf, BxDocument document) 
-            throws AnalysisException {
-        return ContentCleaner.cleanAll(document.toText());
-    }
-  
     /**
      * Extracts references from input stream.
      * 
@@ -238,6 +221,11 @@ public class ExtractionUtils {
         return elements.toArray(new Element[entries.length]);
     }
     
+    
+    /*
+        Body
+    */
+
     /**
      * Extracts full text from input stream.
      * 
@@ -246,10 +234,10 @@ public class ExtractionUtils {
      * @return document's full text in NLM format
      * @throws AnalysisException 
      */
-    public static Element extractTextAsNLM(ComponentConfiguration conf, InputStream stream) 
+    public static Element extractBodyAsNLM(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         BxDocument doc = extractStructure(conf, stream);
-        return extractTextAsNLM(conf, doc, null);
+        return extractBodyAsNLM(conf, doc, null);
     }
 
     /**
@@ -261,18 +249,17 @@ public class ExtractionUtils {
      * @return document's full text in NLM format
      * @throws AnalysisException 
      */
-    public static Element extractTextAsNLM(ComponentConfiguration conf, BxDocument document,
+    public static Element extractBodyAsNLM(ComponentConfiguration conf, BxDocument document,
             List<BibEntry> references) 
             throws AnalysisException {
         try {
             ModelToModelConverter<ContentStructure, Element> converter
                     = new DocContentStructToNLMElementConverter();
-            ContentStructure struct = extractText(conf, document);
+            ContentStructure struct = extractBody(conf, document);
             if (references == null) {
                 references = Arrays.asList(extractReferences(conf, document));
             }
-            ContentCitationPositionFinder finder = new ContentCitationPositionFinder();
-            ContentStructureCitationPositions positions = finder.findReferences(struct, references);
+            ContentStructureCitationPositions positions = conf.getCitationPositionFinder().findReferences(struct, references);
             return converter.convert(struct, positions);
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract text from document!", ex);
@@ -287,10 +274,10 @@ public class ExtractionUtils {
      * @return document's full text
      * @throws AnalysisException 
      */
-    public static ContentStructure extractText(ComponentConfiguration conf, InputStream stream) 
+    public static ContentStructure extractBody(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         BxDocument doc = extractStructure(conf, stream);
-        return extractText(conf, doc);
+        return extractBody(conf, doc);
     }
 
     /**
@@ -301,13 +288,13 @@ public class ExtractionUtils {
      * @return document's full text
      * @throws AnalysisException 
      */
-    public static ContentStructure extractText(ComponentConfiguration conf, BxDocument document) 
+    public static ContentStructure extractBody(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
         try {
             BxDocument doc = SingleStepUtils.filterContent(conf, document);
             BxContentStructure tmpContentStructure = SingleStepUtils.extractHeaders(conf, doc);
             tmpContentStructure = SingleStepUtils.clusterHeaders(conf, tmpContentStructure);
-            conf.contentCleaner.cleanupContent(tmpContentStructure);
+            SingleStepUtils.cleanStructure(conf, tmpContentStructure);
             BxContentToDocContentConverter converter = 
                     new BxContentToDocContentConverter();
             ContentStructure structure = converter.convert(tmpContentStructure);
@@ -315,6 +302,41 @@ public class ExtractionUtils {
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract content from the document!", ex);
         }
+    }    
+    
+    
+    /*
+        Raw text
+    */
+    
+    /**
+     * Extracts raw text from input stream.
+     * 
+     * @param conf extraction configuration
+     * @param stream PDF stream
+     * @return raw text content
+     * @throws AnalysisException 
+     */
+    public static String extractRawText(ComponentConfiguration conf, InputStream stream)
+            throws AnalysisException {
+        BxDocument doc = SingleStepUtils.extractCharacters(conf, stream);
+        doc = SingleStepUtils.segmentPages(conf, doc);
+        doc = SingleStepUtils.resolveReadingOrder(conf, doc);
+        String text = extractRawText(conf, doc);
+        return text;
+    }
+    
+    /**
+     * Extracts raw text from document's box structure.
+     * 
+     * @param conf extraction configuration
+     * @param document box structure
+     * @return raw text content
+     * @throws AnalysisException 
+     */
+    public static String extractRawText(ComponentConfiguration conf, BxDocument document) 
+            throws AnalysisException {
+        return ContentCleaner.cleanAll(document.toText());
     }
     
     /**

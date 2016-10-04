@@ -23,7 +23,7 @@ import java.io.InputStream;
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.CitationPositionFinder;
+import pl.edu.icm.cermine.content.citations.CitationPositionFinder;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig.ConfigurationProperty;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;

@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.jdom.Element;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
+import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentSection;

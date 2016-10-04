@@ -24,7 +24,7 @@ import java.util.List;
 import org.jdom.Element;
 import com.google.common.collect.Lists;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
+import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;

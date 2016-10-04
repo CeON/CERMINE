@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
 import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.tools.Pair;
 

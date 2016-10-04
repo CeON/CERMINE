@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine;
 
+import pl.edu.icm.cermine.content.citations.CitationPositionFinder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,6 @@ import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.KMeansBibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.*;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
 import pl.edu.icm.cermine.content.filtering.SVMContentFilter;

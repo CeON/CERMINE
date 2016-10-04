@@ -16,7 +16,7 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.bibref.sentiment;
+package pl.edu.icm.cermine.content.citations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
+import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.tools.CharacterUtils;
 import pl.edu.icm.cermine.tools.TextUtils;
 

@@ -34,7 +34,7 @@ import com.google.common.collect.Lists;
 import java.util.HashMap;
 import java.util.Map;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
+import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;

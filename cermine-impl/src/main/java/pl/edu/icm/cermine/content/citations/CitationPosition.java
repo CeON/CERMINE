@@ -16,7 +16,7 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.edu.icm.cermine.bibref.sentiment.model;
+package pl.edu.icm.cermine.content.citations;
 
 /**
  * A class for storing the position of a single reference to another document in a document's text.

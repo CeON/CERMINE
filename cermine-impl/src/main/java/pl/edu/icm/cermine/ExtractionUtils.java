@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
+import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;

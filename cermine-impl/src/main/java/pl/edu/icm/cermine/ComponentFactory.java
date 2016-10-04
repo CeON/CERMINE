@@ -22,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import pl.edu.icm.cermine.bibref.BibReferenceExtractor;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
@@ -297,30 +296,4 @@ public class ComponentFactory {
         return new CitationPositionFinder();
     }
     
-    /**
-     * The method creates an instance of the default citation context finder.
-     * 
-     * @return citation context finder
-     */
-    public static CitationContextFinder getCitationContextFinder() {
-        return new CitationContextFinder();
-    }
-    
-    /**
-     * The method creates an instance of the default citation sentiment analyser.
-     * 
-     * @return citation sentiment analyser
-     */
-    public static CitationSentimentAnalyser getCitationSentimentAnalyser() {
-        return new DefaultCitationSentimentAnalyser();
-    }
-    
-    /**
-     * The method creates an instance of the random citation sentiment analyser.
-     * 
-     * @return citation sentiment analyser
-     */
-    public static CitationSentimentAnalyser getRandomCitationSentimentAnalyser() {
-        return new RandomCitationSentimentAnalyser();
-    }
 }

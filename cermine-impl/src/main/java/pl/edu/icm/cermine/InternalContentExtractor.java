@@ -21,12 +21,10 @@ package pl.edu.icm.cermine;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 import org.jdom.Element;
 import com.google.common.collect.Lists;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -83,9 +81,6 @@ public class InternalContentExtractor {
     /** citation positions */
     private List<List<CitationPosition>> citationPositions;
     
-    /** citation sentiments */
-    private List<CitationSentiment> citationSentiments;
-    
     
     /**
      * Creates the object with provided configuration.
@@ -119,15 +114,6 @@ public class InternalContentExtractor {
         this.bxDocument = bxDocument;
     }
     
-    /**
-     * Stores citation locations.
-     * 
-     * @param citationPositions citation locations
-     */
-    public void setCitationPositions(List<List<CitationPosition>> citationPositions) {
-        this.citationPositions = citationPositions;
-    }
-
     /**
      * Stores the document's raw full text.
      * 
@@ -238,20 +224,6 @@ public class InternalContentExtractor {
             citationPositions = ExtractionUtils.findCitationPositions(conf, rawFullText, references);
         }
         return citationPositions;
-    }
-    
-    /**
-     * Extractes the sentiments of the document's citations.
-     * 
-     * @return the citation sentiments
-     * @throws AnalysisException 
-     */
-    public List<CitationSentiment> getCitationSentiments() throws AnalysisException {
-        if (citationSentiments == null) {
-            getCitationPositions();
-            citationSentiments = ExtractionUtils.analyzeSentimentFromPositions(conf, rawFullText, citationPositions);
-        }
-        return citationSentiments;
     }
     
     /**

@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -169,15 +168,6 @@ public class ContentExtractor {
      */
     public void setBxDocument(BxDocument bxDocument) throws IOException {
         this.extractor.setBxDocument(bxDocument);
-    }
-
-    /**
-     * Stores citation locations.
-     *
-     * @param citationPositions citation locations
-     */
-    public void setCitationPositions(List<List<CitationPosition>> citationPositions) {
-        this.extractor.setCitationPositions(citationPositions);
     }
 
     /**
@@ -441,44 +431,6 @@ public class ContentExtractor {
     public List<List<CitationPosition>> getCitationPositions(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
         return getCitationPositions(combineWithMainTimeout(timeoutSeconds));
-    }
-
-    private List<CitationSentiment> getCitationSentiments(Timeout timeout)
-            throws AnalysisException, TimeoutException {
-        try {
-            TimeoutRegister.set(timeout);
-            TimeoutRegister.get().check();
-            return extractor.getCitationSentiments();
-        } finally {
-            TimeoutRegister.remove();
-        }
-    }
-
-    /**
-     * Extracts the sentiments of the document's citations.
-     *
-     * @return the citation sentiments
-     * @throws AnalysisException
-     * @throws TimeoutException thrown when timeout deadline has passed. See
-     * {@link #setTimeout(long)} for additional information about the timeout.
-     */
-    public List<CitationSentiment> getCitationSentiments()
-            throws AnalysisException, TimeoutException {
-        return getCitationSentiments(mainTimeout);
-    }
-
-    /**
-     * The same as {@link #getCitationSentiments()} but with a timeout.
-     *
-     * @param timeoutSeconds approximate timeout in seconds
-     * @return the list of sentiment labels
-     * @throws AnalysisException
-     * @throws TimeoutException thrown when timeout deadline has passed. See
-     * {@link #setTimeout(long)} for additional information about the timeout.
-     */
-    public List<CitationSentiment> getCitationSentiments(long timeoutSeconds)
-            throws AnalysisException, TimeoutException {
-        return getCitationSentiments(combineWithMainTimeout(timeoutSeconds));
     }
 
     private String getRawFullText(Timeout timeout)

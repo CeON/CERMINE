@@ -25,7 +25,6 @@ import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.sentiment.model.CitationPosition;
-import pl.edu.icm.cermine.bibref.sentiment.model.CitationSentiment;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;
@@ -382,7 +381,7 @@ public class ExtractionUtils {
         }
         return rawText;
     }
-    
+
     
     //Single workflow steps
     
@@ -486,44 +485,12 @@ public class ExtractionUtils {
     }
 
     /**
-     * Extracts citation sentiments.
-     * 
-     * @param conf extraction configuration
-     * @param fullText the full text
-     * @param citations citation list
-     * @return citation sentiments
-     */
-    public static List<CitationSentiment> analyzeSentiment(ComponentConfiguration conf, 
-            String fullText, List<BibEntry> citations) {
-        List<List<CitationPosition>> positions = findCitationPositions(conf, fullText, citations);
-        return analyzeSentimentFromPositions(conf, fullText, positions);
-    }
-
-    /**
-     * Extracts citation sentiments.
-     * 
-     * @param conf extraction configuration
-     * @param fullText the full text
-     * @param positions citation positions
-     * @return  citation sentiments
-     */
-    public static List<CitationSentiment> analyzeSentimentFromPositions(ComponentConfiguration conf, 
-            String fullText, List<List<CitationPosition>> positions) {
-        List<CitationSentiment> sentiments = new ArrayList<CitationSentiment>(positions.size());
-        List<List<String>> contexts = conf.citationContextFinder.findContext(fullText, positions);
-        for (List<String> context : contexts) {
-            sentiments.add(conf.citationSentimentAnalyser.analyzeSentiment(context));
-        }
-        return sentiments;
-    }
-
-    /**
      * Extracts citation locations.
      * 
      * @param conf extraction configuration
      * @param fullText the full text
      * @param citations citation list
-     * @return  citation loations
+     * @return  citation locations
      */
     public static List<List<CitationPosition>> findCitationPositions(ComponentConfiguration conf, 
             String fullText, List<BibEntry> citations) {
@@ -537,7 +504,7 @@ public class ExtractionUtils {
         BibEntry[] parsedRefs = new BibEntry[refs.length];
         for (int i = 0; i < refs.length; i++) {
             parsedRefs[i] = conf.bibReferenceParser.parseBibReference(refs[i]);
-        }
+}
         if (conf.timeDebug) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println("3.2 Reference parsing: "+elapsed);

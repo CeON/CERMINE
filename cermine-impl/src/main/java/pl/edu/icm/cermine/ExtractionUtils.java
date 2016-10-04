@@ -58,16 +58,11 @@ public class ExtractionUtils {
      */
     public static BxDocument extractStructure(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
-        long start = System.currentTimeMillis();
         BxDocument doc = SingleStepUtils.extractCharacters(conf, stream);
         TimeoutRegister.get().check();
         doc = SingleStepUtils.segmentPages(conf, doc);
         doc = SingleStepUtils.resolveReadingOrder(conf, doc);
         doc =  SingleStepUtils.classifyInitially(conf, doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("1. Structure extraction: " + elapsed);
-        }
         return doc;
     }
     
@@ -113,14 +108,9 @@ public class ExtractionUtils {
      */
     public static DocumentMetadata extractMetadata(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
-        long start = System.currentTimeMillis();
         BxDocument doc = SingleStepUtils.classifyMetadata(conf, document);
         DocumentMetadata metadata = SingleStepUtils.cleanMetadata(conf, doc);
     	metadata = SingleStepUtils.parseAffiliations(conf, metadata);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("2. Metadata extraction: " + elapsed);
-        }
         return metadata;
     }
     
@@ -152,15 +142,10 @@ public class ExtractionUtils {
      */
     public static String extractRawText(ComponentConfiguration conf, InputStream stream)
             throws AnalysisException {
-        long start = System.currentTimeMillis();
         BxDocument doc = SingleStepUtils.extractCharacters(conf, stream);
         doc = SingleStepUtils.segmentPages(conf, doc);
         doc = SingleStepUtils.resolveReadingOrder(conf, doc);
         String text = extractRawText(conf, doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("Raw text extraction: " + elapsed);
-        }
         return text;
     }
     
@@ -201,13 +186,8 @@ public class ExtractionUtils {
      */
     public static BibEntry[] extractReferences(ComponentConfiguration conf, BxDocument document)
             throws AnalysisException {
-        long start = System.currentTimeMillis();
         String[] refs = SingleStepUtils.extractRefStrings(conf, document);
         BibEntry[] parsed =  SingleStepUtils.parseReferences(conf, refs);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("3. References extraction: " + elapsed);
-        }
         return parsed;
     }
     
@@ -324,7 +304,6 @@ public class ExtractionUtils {
     public static ContentStructure extractText(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
         try {
-            long start = System.currentTimeMillis();
             BxDocument doc = SingleStepUtils.filterContent(conf, document);
             BxContentStructure tmpContentStructure = SingleStepUtils.extractHeaders(conf, doc);
             tmpContentStructure = SingleStepUtils.clusterHeaders(conf, tmpContentStructure);
@@ -332,10 +311,6 @@ public class ExtractionUtils {
             BxContentToDocContentConverter converter = 
                     new BxContentToDocContentConverter();
             ContentStructure structure = converter.convert(tmpContentStructure);
-            if (conf.timeDebug) {
-                double elapsed = (System.currentTimeMillis() - start) / 1000.;
-                System.out.println("4. Body extraction: " + elapsed);
-            }
             return structure;
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract content from the document!", ex);
@@ -366,17 +341,12 @@ public class ExtractionUtils {
      */
     public static Element extractRawTextWithLabels(ComponentConfiguration conf, BxDocument document) 
             throws AnalysisException {
-        long start = System.currentTimeMillis();
         BxDocument doc = SingleStepUtils.classifyMetadata(conf, document);
         doc = SingleStepUtils.filterContent(conf, doc);
         BxContentStructure contentStr = SingleStepUtils.extractHeaders(conf, doc);
         contentStr = SingleStepUtils.clusterHeaders(conf, contentStr);
         RawTextWithLabelsExtractor textExtractor = new RawTextWithLabelsExtractor();
         Element rawText = textExtractor.extractRawTextWithLabels(document, contentStr);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("Raw text with labels extraction: " + elapsed);
-        }
         return rawText;
     }
 

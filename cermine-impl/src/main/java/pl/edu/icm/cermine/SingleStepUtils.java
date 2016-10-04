@@ -35,16 +35,20 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class SingleStepUtils {
-   
+
+    private static void debug(ComponentConfiguration conf, double start, String msg) {
+        if (conf.timeDebug) {
+            double elapsed = (System.currentTimeMillis() - start) / 1000.;
+            System.out.println(msg + ": " + elapsed);
+        }
+    }
+    
     //1.1 Character extraction
     public static BxDocument extractCharacters(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxDocument doc = conf.characterExtractor.extractCharacters(stream);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("1.1 Character extraction: "+elapsed);
-        }
+        debug(conf, start, "1.1 Character extraction");
         return doc;
     }
     
@@ -54,10 +58,7 @@ public class SingleStepUtils {
         long start = System.currentTimeMillis();
         TimeoutRegister.get().check();
         doc = conf.documentSegmenter.segmentDocument(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("1.2 Page segmentation: "+elapsed);
-        }
+        debug(conf, start, "1.2 Page segmentation");
         return doc;
     }
     
@@ -66,10 +67,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.readingOrderResolver.resolve(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("1.3 Reading order resolving: "+elapsed);
-        }
+        debug(conf, start, "1.3 Reading order resolving");
         return doc;
     }
     
@@ -78,10 +76,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.initialClassifier.classifyZones(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("1.4 Initial classification: "+elapsed);
-        }
+        debug(conf, start, "1.4 Initial classification");
         return doc;
     }
     
@@ -90,10 +85,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.metadataClassifier.classifyZones(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("2.1 Metadata classification: "+elapsed);
-        }
+        debug(conf, start, "2.1 Metadata classification");
         return doc;
     }
     
@@ -102,10 +94,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         DocumentMetadata metadata = conf.metadataExtractor.extractMetadata(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("2.2 Metadata cleaning: "+elapsed);
-        }
+        debug(conf, start, "2.2 Metadata cleaning");
         return metadata;
     }
     
@@ -116,10 +105,7 @@ public class SingleStepUtils {
     	for (DocumentAffiliation aff : metadata.getAffiliations()) {
     		conf.affiliationParser.parse(aff);
     	}
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("2.3 Affiliation parsing: "+elapsed);
-        }
+        debug(conf, start, "2.3 Affiliation parsing");
         return metadata;
     }
     
@@ -128,10 +114,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         String[] refs = conf.bibReferenceExtractor.extractBibReferences(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("3.1 Reference extraction: "+elapsed);
-        }
+        debug(conf, start, "3.1 Reference extraction");
         return refs;
     }
 
@@ -142,11 +125,8 @@ public class SingleStepUtils {
         BibEntry[] parsedRefs = new BibEntry[refs.length];
         for (int i = 0; i < refs.length; i++) {
             parsedRefs[i] = conf.bibReferenceParser.parseBibReference(refs[i]);
-}
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("3.2 Reference parsing: "+elapsed);
         }
+        debug(conf, start, "3.2 Reference parsing");
         return parsedRefs;
     }
     
@@ -155,10 +135,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.contentFilter.filter(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("4.1 Content filtering: "+elapsed);
-        }
+        debug(conf, start, "4.1 Content filtering");
         return doc;
     }
     
@@ -167,10 +144,7 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxContentStructure contentStructure = conf.contentHeaderExtractor.extractHeaders(doc);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("4.2 Headers extraction: "+elapsed);
-        }
+        debug(conf, start, "4.2 Headers extraction");
         return contentStructure;
     }
     
@@ -179,17 +153,17 @@ public class SingleStepUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         conf.contentHeaderClusterizer.clusterHeaders(contentStructure);
-        if (conf.timeDebug) {
-            double elapsed = (System.currentTimeMillis() - start) / 1000.;
-            System.out.println("4.3 Headers clustering: "+elapsed);
-        }
+        debug(conf, start, "4.3 Headers clustering");
         return contentStructure;
     }
 
     //4.4 Citation positions finding
     public static List<List<CitationPosition>> findCitationPositions(ComponentConfiguration conf, 
             String fullText, List<BibEntry> citations) {
-        return conf.citationPositionFinder.findReferences(fullText, citations);
+        long start = System.currentTimeMillis();
+        List<List<CitationPosition>> pos = conf.citationPositionFinder.findReferences(fullText, citations);
+        debug(conf, start, "4.4 Citation positions finding");
+        return pos;
     }
     
 }

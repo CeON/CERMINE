@@ -25,6 +25,7 @@ import org.jdom.Element;
 import com.google.common.collect.Lists;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
@@ -56,26 +57,11 @@ public class InternalContentExtractor {
     /** document's metadata */
     private DocumentMetadata metadata;
     
-    /** document's metadata in NLM format */
-    private Element nlmMetadata;
-    
     /** document's list of references */
     private List<BibEntry> references;
     
-    /** document's list of references in NLM format */
-    private List<Element> nlmReferences;
-    
-    /** raw full text */
-    private String rawFullText;
-    
-    /** labelled full text format */
-    private Element labelledFullText;
-    
-    /** structured full text in NLM format */
-    private Element nlmFullText;
-    
-    /** extracted content in NLM format */
-    private Element nlmContent;
+    /** body structure */
+    private ContentStructure body;
     
     
     /**
@@ -110,15 +96,6 @@ public class InternalContentExtractor {
         this.bxDocument = bxDocument;
     }
     
-    /**
-     * Stores the document's raw full text.
-     * 
-     * @param rawFullText raw full text
-     */
-    public void setRawFullText(String rawFullText) {
-        this.rawFullText = rawFullText;
-    }
-
     /**
      * Stores the document's references.
      * 
@@ -167,12 +144,11 @@ public class InternalContentExtractor {
      */
     public Element getNLMMetadata() throws AnalysisException {
         try {
-            if (nlmMetadata == null) {
+            if (metadata == null) {
                 getMetadata();
-                MetadataToNLMConverter converter = new MetadataToNLMConverter();
-                nlmMetadata = converter.convert(metadata);
             }
-            return nlmMetadata;
+            MetadataToNLMConverter converter = new MetadataToNLMConverter();
+            return converter.convert(metadata);
         } catch (TransformationException ex) {
             throw new AnalysisException("Cannot extract metadata!", ex);
         }
@@ -199,12 +175,11 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public List<Element> getNLMReferences() throws AnalysisException {
-        if (nlmReferences == null) {
+        if (references == null) {
             getReferences();
-            nlmReferences = Lists.newArrayList(
-                ExtractionUtils.convertReferences(references.toArray(new BibEntry[]{})));
         }
-        return nlmReferences;
+        return Lists.newArrayList(
+                ExtractionUtils.convertReferences(references.toArray(new BibEntry[]{})));
     }
 
     /**
@@ -214,11 +189,8 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public String getRawFullText() throws AnalysisException {
-        if (rawFullText == null) {
-            getBxDocument();
-            rawFullText = ExtractionUtils.extractRawText(conf, bxDocument);
-        }
-        return rawFullText;
+        getBxDocument();
+        return ExtractionUtils.extractRawText(conf, bxDocument);
     }
 
     /**
@@ -228,11 +200,8 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public Element getLabelledRawFullText() throws AnalysisException {
-        if (labelledFullText == null) {
-            getBxDocument();
-            labelledFullText = ExtractionUtils.extractRawTextWithLabels(conf, bxDocument);
-        }
-        return labelledFullText;
+        getBxDocument();
+        return ExtractionUtils.extractRawTextWithLabels(conf, bxDocument);
     }
     
     /**
@@ -242,12 +211,9 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public Element getNLMText() throws AnalysisException {
-        if (nlmFullText == null) {
-            getBxDocument();
-            getReferences();
-            nlmFullText = ExtractionUtils.extractBodyAsNLM(conf, bxDocument, references);
-        }
-        return nlmFullText;
+        getBxDocument();
+        getReferences();
+        return ExtractionUtils.extractBodyAsNLM(conf, bxDocument, references);
     }
     
     /**
@@ -257,30 +223,28 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public Element getNLMContent() throws AnalysisException {
-        if (nlmContent == null) {
-            getNLMMetadata();
-            getNLMReferences();
-            getNLMText();
+        Element nlmMetadata = getNLMMetadata();
+        List<Element> nlmReferences = getNLMReferences();
+        Element nlmFullText = getNLMText();
             
-            nlmContent = new Element("article");
+        Element nlmContent = new Element("article");
             
-            Element meta = (Element) nlmMetadata.getChild("front").clone();
-            nlmContent.addContent(meta);
+        Element meta = (Element) nlmMetadata.getChild("front").clone();
+        nlmContent.addContent(meta);
             
-            nlmContent.addContent(nlmFullText);
+        nlmContent.addContent(nlmFullText);
             
-            Element back = new Element("back");
-            Element refList = new Element("ref-list");
-            for (int i = 0; i < nlmReferences.size(); i++) {
-                Element ref = nlmReferences.get(i);
-                Element r = new Element("ref");
-                r.setAttribute("id", String.valueOf(i+1));
-                r.addContent(ref);
-                refList.addContent(r);
-            }
-            back.addContent(refList);
-            nlmContent.addContent(back);
+        Element back = new Element("back");
+        Element refList = new Element("ref-list");
+        for (int i = 0; i < nlmReferences.size(); i++) {
+            Element ref = nlmReferences.get(i);
+            Element r = new Element("ref");
+            r.setAttribute("id", String.valueOf(i+1));
+            r.addContent(ref);
+            refList.addContent(r);
         }
+        back.addContent(refList);
+        nlmContent.addContent(back);
         return nlmContent;
     }
     
@@ -292,12 +256,7 @@ public class InternalContentExtractor {
     public void reset() throws IOException {
         bxDocument = null;
         metadata = null;
-        nlmMetadata = null;
         references = null;
-        nlmReferences = null;
-        rawFullText = null;
-        nlmFullText = null;
-        nlmContent = null;
         if (pdfFile != null) {
             pdfFile.close();
         }

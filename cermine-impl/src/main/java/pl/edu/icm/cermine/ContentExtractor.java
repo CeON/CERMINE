@@ -170,15 +170,6 @@ public class ContentExtractor {
     }
 
     /**
-     * Stores the document's raw full text.
-     *
-     * @param rawFullText raw full text
-     */
-    public void setRawFullText(String rawFullText) {
-        this.extractor.setRawFullText(rawFullText);
-    }
-
-    /**
      * Stores the document's references.
      *
      * @param references the document's references

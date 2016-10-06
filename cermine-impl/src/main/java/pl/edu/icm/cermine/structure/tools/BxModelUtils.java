@@ -24,6 +24,7 @@ import pl.edu.icm.cermine.tools.Utils;
 
 /**
  * @author Krzysztof Rusek
+ * @author Dominika Tkaczyk
  */
 public final class BxModelUtils {
 
@@ -156,6 +157,18 @@ public final class BxModelUtils {
         }
     }
 
+    public static BxBounds deepClone(BxBounds bounds) {
+        return new BxBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+    }
+    
+    public static BxChunk deepClone(BxChunk chunk) {
+        BxChunk copy = new BxChunk(deepClone(chunk.getBounds()), chunk.toText());
+        copy.setFontName(chunk.getFontName());
+        copy.setId(chunk.getId());
+        copy.setNextId(chunk.getNextId());
+        return copy;
+    }
+    
     /**
      * Creates a deep copy of the word.
      *
@@ -163,11 +176,18 @@ public final class BxModelUtils {
      * @return
      */
     public static BxWord deepClone(BxWord word) {
-        BxWord copy = new BxWord().setBounds(word.getBounds());
+        BxWord copy = new BxWord().setBounds(deepClone(word.getBounds()));
+        copy.setId(word.getId());
+        copy.setNextId(word.getNextId());
+        BxChunk prev = null;
         for (BxChunk chunk : word) {
             BxChunk copiedChunk = deepClone(chunk);
-            copiedChunk.setParent(copy);
-            copy.addChunk(chunk);
+            copiedChunk.setPrev(prev);
+            if (prev != null) {
+                prev.setNext(copiedChunk);
+            }
+            prev = copiedChunk;
+            copy.addChunk(copiedChunk);
         }
         return copy;
     }
@@ -179,17 +199,28 @@ public final class BxModelUtils {
      * @return
      */
     public static BxLine deepClone(BxLine line) {
-        BxLine copy = new BxLine().setBounds(line.getBounds());
+        BxLine copy = new BxLine().setBounds(deepClone(line.getBounds()));
+        copy.setId(line.getId());
+        copy.setNextId(line.getNextId());
+        BxWord prevW = null;
+        BxChunk prevC = null;
         for (BxWord word : line) {
             BxWord copiedWord = deepClone(word);
-            copiedWord.setParent(copy);
+            copiedWord.setPrev(prevW);
+            if (prevW != null) {
+                prevW.setNext(copiedWord);
+            }
+            prevW = copiedWord;
+            for (BxChunk ch : copiedWord) {
+                ch.setPrev(prevC);
+                if (prevC != null) {
+                    prevC.setNext(ch);
+                }
+                prevC = ch;
+            }
             copy.addWord(copiedWord);
         }
         return copy;
-    }
-
-    public static BxChunk deepClone(BxChunk chunk) {
-        return new BxChunk(chunk.getBounds(), chunk.toText());
     }
 
     /**
@@ -199,10 +230,33 @@ public final class BxModelUtils {
      * @return
      */
     public static BxZone deepClone(BxZone zone) {
-        BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(zone.getBounds());
+        BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(deepClone(zone.getBounds()));
+        copy.setId(zone.getId());
+        copy.setNextId(zone.getNextId());
+        BxLine prevL = null;
+        BxWord prevW = null;
+        BxChunk prevC = null;
         for (BxLine line : zone) {
             BxLine copiedLine = deepClone(line);
-            copiedLine.setParent(copy);
+            copiedLine.setPrev(prevL);
+            if (prevL != null) {
+                prevL.setNext(copiedLine);
+            }
+            prevL = copiedLine;
+            for (BxWord w : copiedLine) {
+                w.setPrev(prevW);
+                if (prevW != null) {
+                    prevW.setNext(w);
+                }
+                prevW = w;
+                for (BxChunk ch : w) {
+                    ch.setPrev(prevC);
+                    if (prevC != null) {
+                        prevC.setNext(ch);
+                    }
+                    prevC = ch;
+                }
+            }
             copy.addLine(copiedLine);
         }
         for (BxChunk chunk : zone.getChunks()) {
@@ -218,15 +272,46 @@ public final class BxModelUtils {
      * @return
      */
     public static BxPage deepClone(BxPage page) {
-        BxPage copy = new BxPage().setBounds(page.getBounds());
+        BxPage copy = new BxPage().setBounds(deepClone(page.getBounds()));
+        copy.setId(page.getId());
+        copy.setNextId(page.getNextId());
+        BxZone prevZ = null;
+        BxLine prevL = null;
+        BxWord prevW = null;
+        BxChunk prevC = null;
         for (BxZone zone : page) {
             BxZone copiedZone = deepClone(zone);
-            copiedZone.setParent(copy);
+            copiedZone.setPrev(prevZ);
+            if (prevZ != null) {
+                prevZ.setNext(copiedZone);
+            }
+            prevZ = copiedZone;
+            for (BxLine l : copiedZone) {
+                l.setPrev(prevL);
+                if (prevL != null) {
+                    prevL.setNext(l);
+                }
+                prevL = l;
+                for (BxWord w : l) {
+                    w.setPrev(prevW);
+                    if (prevW != null) {
+                        prevW.setNext(w);
+                    }
+                    prevW = w;
+                    for (BxChunk ch : w) {
+                        ch.setPrev(prevC);
+                        if (prevC != null) {
+                            prevC.setNext(ch);
+                        }
+                        prevC = ch;
+                    }
+                }
+            }
             copy.addZone(copiedZone);
         }
         Iterator<BxChunk> chunks = page.getChunks();
         while (chunks.hasNext()) {
-            copy.addChunk(chunks.next());
+            copy.addChunk(deepClone(chunks.next()));
         }
         return copy;
     }
@@ -240,9 +325,46 @@ public final class BxModelUtils {
     public static BxDocument deepClone(BxDocument document) {
         BxDocument copy = new BxDocument();
         copy.setFilename(document.getFilename());
+        BxPage prevP = null;
+        BxZone prevZ = null;
+        BxLine prevL = null;
+        BxWord prevW = null;
+        BxChunk prevC = null;
         for (BxPage page : document) {
             BxPage copiedPage = deepClone(page);
-            copiedPage.setParent(copy);
+            copiedPage.setPrev(prevP);
+            if (prevP != null) {
+                prevP.setNext(copiedPage);
+            }
+            prevP = copiedPage;
+            for (BxZone z : copiedPage) {
+                z.setPrev(prevZ);
+                if (prevZ != null) {
+                    prevZ.setNext(z);
+                }
+                prevZ = z;
+                for (BxLine l : z) {
+                    l.setPrev(prevL);
+                    if (prevL != null) {
+                        prevL.setNext(l);
+                    }
+                    prevL = l;
+                    for (BxWord w : l) {
+                        w.setPrev(prevW);
+                        if (prevW != null) {
+                            prevW.setNext(w);
+                        }
+                        prevW = w;
+                        for (BxChunk ch : w) {
+                            ch.setPrev(prevC);
+                            if (prevC != null) {
+                                prevC.setNext(ch);
+                            }
+                            prevC = ch;
+                        }
+                    }
+                }
+            }
             copy.addPage(copiedPage);
         }
         return copy;
@@ -360,10 +482,16 @@ public final class BxModelUtils {
         if (!chunk1.getFontName().equals(chunk2.getFontName())) {
             return false;
         }
+        if (!chunk1.getId().equals(chunk2.getId())) {
+            return false;
+        }
         return chunk1.getBounds().isSimilarTo(chunk2.getBounds(), SIMILARITY_TOLERANCE);
     }
 
     public static boolean areEqual(BxWord word1, BxWord word2) {
+        if (!word1.getId().equals(word2.getId())) {
+            return false;
+        }
         if (word1.childrenCount() != word2.childrenCount()) {
             return false;
         }
@@ -376,6 +504,9 @@ public final class BxModelUtils {
     }
 
     public static boolean areEqual(BxLine line1, BxLine line2) {
+        if (!line1.getId().equals(line2.getId())) {
+            return false;
+        }
         if (line1.childrenCount() != line2.childrenCount()) {
             return false;
         }
@@ -388,6 +519,9 @@ public final class BxModelUtils {
     }
 
     public static boolean areEqual(BxZone zone1, BxZone zone2) {
+        if (!zone1.getId().equals(zone2.getId())) {
+            return false;
+        }
         if (zone1.getLabel() != zone2.getLabel()){
             return false;
         }
@@ -403,6 +537,9 @@ public final class BxModelUtils {
     }
 
     public static boolean areEqual(BxPage page1, BxPage page2) {
+        if (!page1.getId().equals(page2.getId())) {
+            return false;
+        }
         if (page1.childrenCount() != page2.childrenCount()) {
             return false;
 
@@ -416,6 +553,16 @@ public final class BxModelUtils {
     }
 
     public static boolean areEqual(BxDocument doc1, BxDocument doc2) {
+        if (doc1.getFilename() == null && doc2.getFilename() != null) {
+            return false;
+        }
+        if (doc1.getFilename() != null && doc2.getFilename() == null) {
+            return false;
+        }
+        if (doc1.getFilename() != null && doc2.getFilename() != null
+                && !doc1.getFilename().equals(doc2.getFilename())) {
+            return false;
+        }
         if (doc1.childrenCount() != doc2.childrenCount()) {
             return false;
         }

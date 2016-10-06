@@ -56,7 +56,8 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         chunks.add(new BxChunk(null, " "));
                     }
                 }
-                
+                chunks.remove(chunks.size()-1);
+
                 Pattern white = Pattern.compile("(\\s+)(.*)");
                 Pattern simpleRef = Pattern.compile("(\\d+|\\*|∗|⁎|†|‡|§|\\(..?\\)|\\{|¶|\\[..?\\]|\\+|\\||⊥|\\^|¹|²|³|#|α|β|λ|ξ|ψ)(.*)");
                 Pattern title = Pattern.compile("(MD|Prof.|PhD|Phd|MPH|RD|LD|BCh|BAO|PharmD|BSc|FRCP|PA-C|RAC|MBA|DrPH|MBChB|BM|RGN|BA|FCCP)([^a-zA-Z].*)");
@@ -64,18 +65,18 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 Pattern separator = Pattern.compile("(,|;|&|•|·|Æ)(.*)");
                 Pattern andSeparator = Pattern.compile("(and|AND)\\b(.*)");
                 Pattern andEndSeparator = Pattern.compile("(and|AND)");
-                
+
                 boolean afterSep = true;
                 int index = 0;
                 String text = zone.toText().replaceAll("\n", " ");
                 String author = "";
                 List<String> refs = new ArrayList<String>();
                 boolean auth = false;
-                
+
                 if (text.toLowerCase().contains("vol") && text.toLowerCase().contains("no")) {
                     continue;
                 }
-                
+
                 while (!text.isEmpty()) {
                     Matcher whiteMatcher = white.matcher(text);
                     Matcher simpleRefMatcher = simpleRef.matcher(text);
@@ -165,7 +166,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         metadata.addAuthor(author, refs);
                     }
                 }
-                
+
                 enhanced = true;
             }
             if (enhanced) {

@@ -276,12 +276,6 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 if (text == null || text.isEmpty()) {
                     continue;
                 }
-                char ch = charTri.getText().charAt(0);
-                if (ch <= ' ' || text.matches("^[\uD800-\uD8FF]$")
-                        || text.matches("^[\uDC00-\uDFFF]$")
-                        || text.matches("^[\uFFF0-\uFFFF]$")) {
-                    continue;
-                }
                 
                 float absoluteCharLeft = charTri.getDescentLine().getStartPoint().get(Vector.I1);
                 float absoluteCharBottom = charTri.getDescentLine().getStartPoint().get(Vector.I2);
@@ -317,11 +311,23 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                         || Double.isNaN(bounds.getWidth()) || Double.isInfinite(bounds.getWidth())) {
                     continue;
                 }
-              
-                BxChunk chunk = new BxChunk(bounds, text);
-                chunk.setFontName(tri.getFont().getFullFontName()[0][3]);
-                actPage.addChunk(chunk);
-                boundsBuilder.expand(bounds);
+         
+                char[] textChars = text.toCharArray();
+                double chw = bounds.getWidth() / textChars.length;
+                for (int i = 0; i < textChars.length; i++) {
+                    char ch = textChars[i];
+                    if (ch <= ' ' || text.matches("^[\uD800-\uD8FF]$")
+                        || text.matches("^[\uDC00-\uDFFF]$")
+                        || text.matches("^[\uFFF0-\uFFFF]$")) {
+                        continue;
+                    }
+                    BxBounds chBounds = new BxBounds(bounds.getX() + i * chw,
+                            bounds.getY(), chw, bounds.getHeight());
+                    BxChunk chunk = new BxChunk(chBounds, String.valueOf(ch));
+                    chunk.setFontName(tri.getFont().getFullFontName()[0][3]);
+                    actPage.addChunk(chunk);
+                    boundsBuilder.expand(bounds);
+                }
             }
         }
 

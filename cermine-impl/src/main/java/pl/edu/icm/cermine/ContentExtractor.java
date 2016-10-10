@@ -36,6 +36,7 @@ import java.util.Map;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
+import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
@@ -170,15 +171,6 @@ public class ContentExtractor {
     }
 
     /**
-     * Stores the document's references.
-     *
-     * @param references the document's references
-     */
-    public void setReferences(List<BibEntry> references) {
-        this.extractor.setReferences(references);
-    }
-
-    /**
      * Resets the extraction results.
      *
      * @throws IOException
@@ -232,7 +224,83 @@ public class ContentExtractor {
             throws AnalysisException, TimeoutException {
         return getBxDocument(combineWithMainTimeout(timeoutSeconds));
     }
+    
+    private BxDocument getBxDocumentWithGeneralLabels(Timeout timeout)
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getBxDocumentWithGeneralLabels();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
 
+    /**
+     * Extracts geometric structure with general labels.
+     *
+     * @return geometric structure
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public BxDocument getBxDocumentWithGeneralLabels()
+            throws AnalysisException, TimeoutException {
+        return getBxDocumentWithGeneralLabels(mainTimeout);
+    }
+
+    /**
+     * The same as {@link #getBxDocumentWithGeneralLabels()} but with a timeout.
+     *
+     * @param timeoutSeconds approximate timeout in seconds
+     * @return
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public BxDocument getBxDocumentWithGeneralLabels(long timeoutSeconds)
+            throws AnalysisException, TimeoutException {
+        return getBxDocumentWithGeneralLabels(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    private BxDocument getBxDocumentWithSpecificLabels(Timeout timeout)
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getBxDocumentWithSpecificLabels();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+
+    /**
+     * Extracts geometric structure with specific labels.
+     *
+     * @return geometric structure
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public BxDocument getBxDocumentWithSpecificLabels()
+            throws AnalysisException, TimeoutException {
+        return getBxDocumentWithSpecificLabels(mainTimeout);
+    }
+
+    /**
+     * The same as {@link #getBxDocumentWithSpecificLabels()} but with a timeout.
+     *
+     * @param timeoutSeconds approximate timeout in seconds
+     * @return
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public BxDocument getBxDocumentWithSpecificLabels(long timeoutSeconds)
+            throws AnalysisException, TimeoutException {
+        return getBxDocumentWithSpecificLabels(combineWithMainTimeout(timeoutSeconds));
+    }
+    
     private DocumentMetadata getMetadata(Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
@@ -271,12 +339,12 @@ public class ContentExtractor {
         return getMetadata(combineWithMainTimeout(timeoutSeconds));
     }
 
-    private Element getNLMMetadata(Timeout timeout)
+    private Element getMetadataAsNLM(Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
             TimeoutRegister.set(timeout);
             TimeoutRegister.get().check();
-            return extractor.getNLMMetadata();
+            return extractor.getMetadataAsNLM();
         } finally {
             TimeoutRegister.remove();
         }
@@ -290,9 +358,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getNLMMetadata()
+    public Element getMetadataAsNLM()
             throws AnalysisException, TimeoutException {
-        return getNLMMetadata(mainTimeout);
+        return getMetadataAsNLM(mainTimeout);
     }
 
     /**
@@ -304,9 +372,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getNLMMetadata(long timeoutSeconds)
+    public Element getMetadataAsNLM(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
-        return getNLMMetadata(combineWithMainTimeout(timeoutSeconds));
+        return getMetadataAsNLM(combineWithMainTimeout(timeoutSeconds));
     }
 
     private List<BibEntry> getReferences(Timeout timeout)
@@ -347,12 +415,12 @@ public class ContentExtractor {
         return getReferences(combineWithMainTimeout(timeoutSeconds));
     }
 
-    private List<Element> getNLMReferences(Timeout timeout)
+    private List<Element> getReferencesAsNLM(Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
             TimeoutRegister.set(timeout);
             TimeoutRegister.get().check();
-            return extractor.getNLMReferences();
+            return extractor.getReferencesAsNLM();
         } finally {
             TimeoutRegister.remove();
         }
@@ -366,9 +434,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public List<Element> getNLMReferences()
+    public List<Element> getReferencesAsNLM()
             throws AnalysisException, TimeoutException {
-        return getNLMReferences(mainTimeout);
+        return getReferencesAsNLM(mainTimeout);
     }
 
     /**
@@ -380,9 +448,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public List<Element> getNLMReferences(long timeoutSeconds)
+    public List<Element> getReferencesAsNLM(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
-        return getNLMReferences(combineWithMainTimeout(timeoutSeconds));
+        return getReferencesAsNLM(combineWithMainTimeout(timeoutSeconds));
     }
 
     private String getRawFullText(Timeout timeout)
@@ -423,17 +491,16 @@ public class ContentExtractor {
         return getRawFullText(combineWithMainTimeout(timeoutSeconds));
     }
 
-    private Element getLabelledRawFullText(Timeout timeout)
+    private Element getLabelledFullText(Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
             TimeoutRegister.set(timeout);
             TimeoutRegister.get().check();
-            return extractor.getLabelledRawFullText();
+            return extractor.getLabelledFullText();
         } finally {
             TimeoutRegister.remove();
         }
     }
-
     /**
      * Extracts labeled raw text.
      *
@@ -442,9 +509,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getLabelledRawFullText()
+    public Element getLabelledFullText()
             throws AnalysisException, TimeoutException {
-        return getLabelledRawFullText(mainTimeout);
+        return getLabelledFullText(mainTimeout);
     }
 
     /**
@@ -456,17 +523,55 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getLabelledRawFullText(long timeoutSeconds)
+    public Element getLabelledFullText(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
-        return getLabelledRawFullText(combineWithMainTimeout(timeoutSeconds));
+        return getLabelledFullText(combineWithMainTimeout(timeoutSeconds));
     }
-
-    private Element getNLMText(Timeout timeout)
+    
+    private ContentStructure getBody(Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
             TimeoutRegister.set(timeout);
             TimeoutRegister.get().check();
-            return extractor.getNLMText();
+            return extractor.getBody();
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+
+    /**
+     * Extracts structured full text.
+     *
+     * @return full text
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public ContentStructure getBody()
+            throws AnalysisException, TimeoutException {
+        return getBody(mainTimeout);
+    }
+
+    /**
+     * The same as {@link #getNLMText()} but with a timeout.
+     *
+     * @param timeoutSeconds approximate timeout in seconds
+     * @return full text
+     * @throws AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public ContentStructure getBody(long timeoutSeconds)
+            throws AnalysisException, TimeoutException {
+        return getBody(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    private Element getBodyAsNLM(Timeout timeout)
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getBodyAsNLM();
         } finally {
             TimeoutRegister.remove();
         }
@@ -480,9 +585,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getNLMText()
+    public Element getBodyAsNLM()
             throws AnalysisException, TimeoutException {
-        return getNLMText(mainTimeout);
+        return getBodyAsNLM(mainTimeout);
     }
 
     /**
@@ -494,17 +599,17 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getNLMText(long timeoutSeconds)
+    public Element getBodyAsNLM(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
-        return getNLMText(combineWithMainTimeout(timeoutSeconds));
+        return getBodyAsNLM(combineWithMainTimeout(timeoutSeconds));
     }
 
-    private Element getNLMContent(Timeout timeout)
+    private Element getContentAsNLM(Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
             TimeoutRegister.set(timeout);
             TimeoutRegister.get().check();
-            return extractor.getNLMContent();
+            return extractor.getContentAsNLM();
         } finally {
             TimeoutRegister.remove();
         }
@@ -518,9 +623,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getNLMContent()
+    public Element getContentAsNLM()
             throws AnalysisException, TimeoutException {
-        return getNLMContent(mainTimeout);
+        return getContentAsNLM(mainTimeout);
     }
 
     /**
@@ -532,9 +637,9 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
-    public Element getNLMContent(long timeoutSeconds)
+    public Element getContentAsNLM(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
-        return getNLMContent(combineWithMainTimeout(timeoutSeconds));
+        return getContentAsNLM(combineWithMainTimeout(timeoutSeconds));
     }
 
     private Timeout combineWithMainTimeout(long timeoutSeconds) {
@@ -616,20 +721,19 @@ public class ContentExtractor {
                 extractor.setPDF(in);
 
                 if (outputs.containsKey("jats")) {
-                    Element jats = extractor.getNLMContent();
+                    Element jats = extractor.getContentAsNLM();
                     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                     FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8");
                 }
                 
                 if (outputs.containsKey("trueviz")) {
-                    extractor.getLabelledRawFullText();
-                    BxDocument doc = extractor.getBxDocument();
+                    BxDocument doc = extractor.getBxDocumentWithSpecificLabels();
                     BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                     writer.write(new FileWriter(outputs.get("trueviz")), Lists.newArrayList(doc));
                 }
                 
                 if (outputs.containsKey("zones")) {
-                    Element text = extractor.getLabelledRawFullText();
+                    Element text = extractor.getLabelledFullText();
                     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                     FileUtils.writeStringToFile(outputs.get("zones"), outputter.outputString(text), "UTF-8");
                 }

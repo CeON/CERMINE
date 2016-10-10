@@ -60,7 +60,7 @@ public class AltPdfNLMMetadataExtractorTest {
         Element testMetadata;
         try {
             extractor.setPDF(testStream);
-            testMetadata = extractor.getNLMMetadata();
+            testMetadata = extractor.getMetadataAsNLM();
         } finally {
             testStream.close();
         }

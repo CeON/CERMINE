@@ -66,7 +66,7 @@ public class PdfRawTextWithLabelsExtractor {
     public Element extractRawText(InputStream stream) throws AnalysisException {
         try {
             extractor.setPDF(stream);
-            return extractor.getLabelledRawFullText();
+            return extractor.getLabelledFullText();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
@@ -82,7 +82,7 @@ public class PdfRawTextWithLabelsExtractor {
     public Element extractRawText(BxDocument document) throws AnalysisException {
         try {
             extractor.setBxDocument(document);
-            return extractor.getLabelledRawFullText();
+            return extractor.getLabelledFullText();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
@@ -154,8 +154,7 @@ public class PdfRawTextWithLabelsExtractor {
                     PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor(config);
 
                     InputStream in = new FileInputStream(pdf);
-                    BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
-                    Element result = extractor.extractRawText(doc);
+                    Element result = extractor.extractRawText(in);
 
                     long end = System.currentTimeMillis();
                     elapsed = (end - start) / 1000F;

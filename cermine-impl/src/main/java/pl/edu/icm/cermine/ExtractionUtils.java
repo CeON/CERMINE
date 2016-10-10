@@ -18,27 +18,21 @@
 
 package pl.edu.icm.cermine;
 
+import com.google.common.collect.Lists;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
-import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
-import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.transformers.BxContentToDocContentConverter;
-import pl.edu.icm.cermine.content.transformers.DocContentStructToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
-import pl.edu.icm.cermine.metadata.transformers.MetadataToNLMConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
-import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
  * Extraction utility class
@@ -46,330 +40,193 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class ExtractionUtils {
-   
-    /*
-        Box structure
-    */
+
+    private static void debug(ComponentConfiguration conf, double start, String msg) {
+        if (conf.timeDebug) {
+            double elapsed = (System.currentTimeMillis() - start) / 1000.;
+            System.out.println(msg + ": " + elapsed);
+        }
+    }
     
-    /**
-     * Extracts box structure from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return box structure
-     * @throws AnalysisException 
-     */
-    public static BxDocument extractStructure(ComponentConfiguration conf, InputStream stream) 
+    //1.1 Character extraction
+    public static BxDocument extractCharacters(ComponentConfiguration conf, InputStream stream) 
             throws AnalysisException {
-        BxDocument doc = SingleStepUtils.extractCharacters(conf, stream);
-        TimeoutRegister.get().check();
-        doc = SingleStepUtils.segmentPages(conf, doc);
-        doc = SingleStepUtils.resolveReadingOrder(conf, doc);
-        doc =  SingleStepUtils.classifyInitially(conf, doc);
+        long start = System.currentTimeMillis();
+        BxDocument doc = conf.getCharacterExtractor().extractCharacters(stream);
+        debug(conf, start, "1.1 Character extraction");
         return doc;
     }
     
-    
-    /*
-        Basic metadata
-    */
-    
-    /**
-     * Extracts metadata from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return document's metadata
-     * @throws AnalysisException 
-     */
-    public static DocumentMetadata extractMetadata(ComponentConfiguration conf, InputStream stream) 
+    //1.2 Page segmentation
+    public static BxDocument segmentPages(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
-        BxDocument doc = extractStructure(conf, stream);
-        return extractMetadata(conf, doc);
+        long start = System.currentTimeMillis();
+        TimeoutRegister.get().check();
+        doc = conf.getDocumentSegmenter().segmentDocument(doc);
+        debug(conf, start, "1.2 Page segmentation");
+        return doc;
     }
     
-    /**
-     * Extracts NLM metadata from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return document's metadata in NLM format
-     * @throws AnalysisException 
-     */
-    public static Element extractMetadataAsNLM(ComponentConfiguration conf, InputStream stream) 
+    //1.3 Reading order resolving
+    public static BxDocument resolveReadingOrder(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
-        try {
-            MetadataToNLMConverter converter = new MetadataToNLMConverter();
-            return converter.convert(extractMetadata(conf, stream));
-        } catch (TransformationException ex) {
-            throw new AnalysisException("Cannot extract metadata from the document!", ex);
-        }
+        long start = System.currentTimeMillis();
+        doc = conf.getReadingOrderResolver().resolve(doc);
+        debug(conf, start, "1.3 Reading order resolving");
+        return doc;
     }
     
-    /**
-     * Extracts metadata from document's structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @return document's metadata
-     * @throws AnalysisException 
-     */
-    public static DocumentMetadata extractMetadata(ComponentConfiguration conf, BxDocument document) 
+    //1.4 Initial classification
+    public static BxDocument classifyInitially(ComponentConfiguration conf, BxDocument doc) 
             throws AnalysisException {
-        BxDocument doc = SingleStepUtils.classifyMetadata(conf, document);
-        DocumentMetadata metadata = SingleStepUtils.cleanMetadata(conf, doc);
-    	metadata = SingleStepUtils.parseAffiliations(conf, metadata);
+        long start = System.currentTimeMillis();
+        doc = conf.getInitialClassifier().classifyZones(doc);
+        debug(conf, start, "1.4 Initial classification");
+        return doc;
+    }
+    
+    //2.1 Metadata classification
+    public static BxDocument classifyMetadata(ComponentConfiguration conf, BxDocument doc) 
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+        doc = conf.getMetadataClassifier().classifyZones(doc);
+        debug(conf, start, "2.1 Metadata classification");
+        return doc;
+    }
+    
+    //2.2 Metadata cleaning
+    public static DocumentMetadata cleanMetadata(ComponentConfiguration conf, BxDocument doc) 
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+        DocumentMetadata metadata = conf.getMetadataExtractor().extractMetadata(doc);
+        debug(conf, start, "2.2 Metadata cleaning");
         return metadata;
     }
     
-    /**
-     * Extracts NLM metadata from document's structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @return document's metadata in NLM format
-     * @throws AnalysisException 
-     */
-    public static Element extractMetadataAsNLM(ComponentConfiguration conf, BxDocument document) 
+    //2.3 Affiliation parsing
+    public static DocumentMetadata parseAffiliations(ComponentConfiguration conf, DocumentMetadata metadata)
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+    	for (DocumentAffiliation aff : metadata.getAffiliations()) {
+            conf.getAffiliationParser().parse(aff);
+    	}
+        debug(conf, start, "2.3 Affiliation parsing");
+        return metadata;
+    }
+    
+    //3.1 Reference extraction
+    public static List<String> extractRefStrings(ComponentConfiguration conf, BxDocument doc)
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+        String[] refs = conf.getBibRefExtractor().extractBibReferences(doc);
+        List<String> references = Lists.newArrayList(refs);
+        debug(conf, start, "3.1 Reference extraction");
+        return references;
+    }
+
+    //3.2 Reference parsing
+    public static List<BibEntry> parseReferences(ComponentConfiguration conf, List<String> refs)
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+        List<BibEntry> parsedRefs = new ArrayList<BibEntry>();
+        for (String ref : refs) {
+            parsedRefs.add(conf.getBibRefParser().parseBibReference(ref));
+        }
+        debug(conf, start, "3.2 Reference parsing");
+        return parsedRefs;
+    }
+    
+    //4.1 Content filtering
+    public static BxDocument filterContent(ComponentConfiguration conf, BxDocument doc) 
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+        doc = conf.getContentFilter().filter(doc);
+        debug(conf, start, "4.1 Content filtering");
+        return doc;
+    }
+    
+    //4.2 Headers extraction
+    public static BxContentStructure extractHeaders(ComponentConfiguration conf, BxDocument doc) 
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+        BxContentStructure contentStructure = conf.getContentHeaderExtractor().extractHeaders(doc);
+        debug(conf, start, "4.2 Headers extraction");
+        return contentStructure;
+    }
+    
+    //4.3 Headers clustering
+    public static BxContentStructure clusterHeaders(ComponentConfiguration conf, BxContentStructure contentStructure) 
+            throws AnalysisException {
+        long start = System.currentTimeMillis();
+        conf.getContentHeaderClusterizer().clusterHeaders(contentStructure);
+        debug(conf, start, "4.3 Headers clustering");
+        return contentStructure;
+    }
+    
+    //4.4 Content cleaner
+    public static ContentStructure cleanStructure(ComponentConfiguration conf, BxContentStructure contentStructure) 
             throws AnalysisException {
         try {
-            MetadataToNLMConverter converter = new MetadataToNLMConverter();
-            return converter.convert(extractMetadata(conf, document));
-        } catch (TransformationException ex) {
-            throw new AnalysisException("Cannot extract metadata from the document!", ex);
-        }
-    }
-
-
-    /*
-        References
-    */
-    
-    /**
-     * Extracts references from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return document's references
-     * @throws AnalysisException 
-     */
-    public static BibEntry[] extractReferences(ComponentConfiguration conf, InputStream stream)
-            throws AnalysisException {
-        BxDocument doc = extractStructure(conf, stream);
-        return extractReferences(conf, doc);
-    }
-
-    /**
-     * Extracts references from document's box structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @return document's references
-     * @throws AnalysisException 
-     */
-    public static BibEntry[] extractReferences(ComponentConfiguration conf, BxDocument document)
-            throws AnalysisException {
-        String[] refs = SingleStepUtils.extractRefStrings(conf, document);
-        BibEntry[] parsed =  SingleStepUtils.parseReferences(conf, refs);
-        return parsed;
-    }
-    
-    /**
-     * Extracts references from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return document's references in NLM format
-     * @throws AnalysisException 
-     */
-    public static Element[] extractReferencesAsNLM(ComponentConfiguration conf, InputStream stream)
-            throws AnalysisException {
-        return convertReferences(extractReferences(conf, stream));
-    }
-
-    /**
-     * Extracts references from document's box structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @return document's references in NLM format
-     * @throws AnalysisException 
-     */
-    public static Element[] extractReferencesAsNLM(ComponentConfiguration conf, BxDocument document) 
-            throws AnalysisException {
-        return convertReferences(extractReferences(conf, document));
-    }
-    
-    /**
-     * Converts references from BibEntry model to NLM
-     * 
-     * @param entries BibEntry objects
-     * @return bib entries in NLM format
-     * @throws AnalysisException 
-     */
-    public static Element[] convertReferences(BibEntry[] entries) 
-            throws AnalysisException {
-        List<Element> elements = new ArrayList<Element>(entries.length);
-        BibEntryToNLMConverter converter = new BibEntryToNLMConverter();
-        for (BibEntry entry : entries) {
-            try {
-                elements.add(converter.convert(entry));
-            } catch (TransformationException ex) {
-                throw new AnalysisException("Cannot convert references!", ex);
-            }
-        }
-        return elements.toArray(new Element[entries.length]);
-    }
-    
-    
-    /*
-        Body
-    */
-
-    /**
-     * Extracts full text from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return document's full text in NLM format
-     * @throws AnalysisException 
-     */
-    public static Element extractBodyAsNLM(ComponentConfiguration conf, InputStream stream) 
-            throws AnalysisException {
-        BxDocument doc = extractStructure(conf, stream);
-        return extractBodyAsNLM(conf, doc, null);
-    }
-
-    /**
-     * Extracts full text from document's box structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @param references references
-     * @return document's full text in NLM format
-     * @throws AnalysisException 
-     */
-    public static Element extractBodyAsNLM(ComponentConfiguration conf, BxDocument document,
-            List<BibEntry> references) 
-            throws AnalysisException {
-        try {
-            ModelToModelConverter<ContentStructure, Element> converter
-                    = new DocContentStructToNLMElementConverter();
-            ContentStructure struct = extractBody(conf, document);
-            if (references == null) {
-                references = Arrays.asList(extractReferences(conf, document));
-            }
-            ContentStructureCitationPositions positions = conf.getCitationPositionFinder().findReferences(struct, references);
-            return converter.convert(struct, positions);
-        } catch (TransformationException ex) {
-            throw new AnalysisException("Cannot extract text from document!", ex);
-        }
-    }
-    
-    /**
-     * Extracts full text from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return document's full text
-     * @throws AnalysisException 
-     */
-    public static ContentStructure extractBody(ComponentConfiguration conf, InputStream stream) 
-            throws AnalysisException {
-        BxDocument doc = extractStructure(conf, stream);
-        return extractBody(conf, doc);
-    }
-
-    /**
-     * Extracts full text from document's box structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @return document's full text
-     * @throws AnalysisException 
-     */
-    public static ContentStructure extractBody(ComponentConfiguration conf, BxDocument document) 
-            throws AnalysisException {
-        try {
-            BxDocument doc = SingleStepUtils.filterContent(conf, document);
-            BxContentStructure tmpContentStructure = SingleStepUtils.extractHeaders(conf, doc);
-            tmpContentStructure = SingleStepUtils.clusterHeaders(conf, tmpContentStructure);
-            SingleStepUtils.cleanStructure(conf, tmpContentStructure);
-            BxContentToDocContentConverter converter = 
-                    new BxContentToDocContentConverter();
-            ContentStructure structure = converter.convert(tmpContentStructure);
+            long start = System.currentTimeMillis();
+            conf.getContentCleaner().cleanupContent(contentStructure);
+            BxContentToDocContentConverter converter = new BxContentToDocContentConverter();
+            ContentStructure structure = converter.convert(contentStructure);
+            debug(conf, start, "4.4 Content cleaning");
             return structure;
         } catch (TransformationException ex) {
-            throw new AnalysisException("Cannot extract content from the document!", ex);
+            throw new AnalysisException(ex);
         }
-    }    
-    
-    
-    /*
-        Raw text
-    */
-    
-    /**
-     * Extracts raw text from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return raw text content
-     * @throws AnalysisException 
-     */
-    public static String extractRawText(ComponentConfiguration conf, InputStream stream)
-            throws AnalysisException {
-        BxDocument doc = SingleStepUtils.extractCharacters(conf, stream);
-        doc = SingleStepUtils.segmentPages(conf, doc);
-        doc = SingleStepUtils.resolveReadingOrder(conf, doc);
-        String text = extractRawText(conf, doc);
-        return text;
-    }
-    
-    /**
-     * Extracts raw text from document's box structure.
-     * 
-     * @param conf extraction configuration
-     * @param document box structure
-     * @return raw text content
-     * @throws AnalysisException 
-     */
-    public static String extractRawText(ComponentConfiguration conf, BxDocument document) 
-            throws AnalysisException {
-        return ContentCleaner.cleanAll(document.toText());
-    }
-    
-    /**
-     * Extracts raw text with labels from input stream.
-     * 
-     * @param conf extraction configuration
-     * @param stream PDF stream
-     * @return raw text with labels
-     * @throws AnalysisException 
-     */
-    public static Element extractRawTextWithLabels(ComponentConfiguration conf, InputStream stream) 
-            throws AnalysisException {
-        BxDocument doc = extractStructure(conf, stream);
-        return extractRawTextWithLabels(conf, doc);
-    }
-    
-    /**
-     * Extracts raw text with labels from document's box structure.
-     * 
-     * @param conf extraction configuration
-     * @param document document's box structure
-     * @return raw text with labels
-     * @throws AnalysisException 
-     */
-    public static Element extractRawTextWithLabels(ComponentConfiguration conf, BxDocument document) 
-            throws AnalysisException {
-        BxDocument doc = SingleStepUtils.classifyMetadata(conf, document);
-        doc = SingleStepUtils.filterContent(conf, doc);
-        BxContentStructure contentStr = SingleStepUtils.extractHeaders(conf, doc);
-        contentStr = SingleStepUtils.clusterHeaders(conf, contentStr);
-        RawTextWithLabelsExtractor textExtractor = new RawTextWithLabelsExtractor();
-        Element rawText = textExtractor.extractRawTextWithLabels(document, contentStr);
-        return rawText;
     }
 
+    //4.5 Citation positions finding
+    public static ContentStructureCitationPositions findCitationPositions(ComponentConfiguration conf, 
+            ContentStructure struct, List<BibEntry> citations) {
+        long start = System.currentTimeMillis();
+        ContentStructureCitationPositions positions = conf.getCitationPositionFinder().findReferences(struct, citations);
+        debug(conf, start, "4.5 Citation positions finding");
+        return positions;
+    }
+  
+    public enum Step {
+        
+        CHARACTER_EXTRACTION    (null),
+        
+        PAGE_SEGMENTATION       (CHARACTER_EXTRACTION),
+        
+        READING_ORDER           (PAGE_SEGMENTATION),
+        
+        INITIAL_CLASSIFICATION  (READING_ORDER),
+     
+        METADATA_CLASSIFICATION (INITIAL_CLASSIFICATION),
+        
+        METADATA_CLEANING       (METADATA_CLASSIFICATION),
+        
+        AFFIIATION_PARSING      (METADATA_CLEANING),
+        
+        REFERENCE_EXTRACTION    (INITIAL_CLASSIFICATION),
+        
+        REFERENCE_PARSING       (REFERENCE_EXTRACTION),
+        
+        CONTENT_FILTERING       (INITIAL_CLASSIFICATION),
+        
+        HEADER_DETECTION        (CONTENT_FILTERING),
+        
+        TOC_EXTRACTION          (HEADER_DETECTION),
+        
+        CONTENT_CLEANING        (TOC_EXTRACTION),
+        
+        CITPOS_DETECTION        (CONTENT_CLEANING);
+        
+        private final Step previous;
+        
+        Step(Step previous) {
+            this.previous = previous;
+        }
+
+        public Step getPrevious() {
+            return previous;
+        }
+        
+    }
+    
 }

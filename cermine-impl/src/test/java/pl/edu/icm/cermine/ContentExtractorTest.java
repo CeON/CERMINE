@@ -45,7 +45,8 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 public class ContentExtractorTest {
     static final private String TEST_PDF_1 = "/pl/edu/icm/cermine/test1.pdf";
     static final private String EXP_STR_1 = "/pl/edu/icm/cermine/test1-structure.xml";
-    static final private String EXP_STR_LAB_1 = "/pl/edu/icm/cermine/test1-structure-fully-labelled.xml";
+    static final private String EXP_STR_GEN_1 = "/pl/edu/icm/cermine/test1-structure-general.xml";
+    static final private String EXP_STR_SPE_1 = "/pl/edu/icm/cermine/test1-structure-specific.xml";
     static final private String EXP_MET_1 = "/pl/edu/icm/cermine/test1-metadata.xml";
    
     static final private String TEST_PDF_2 = "/pl/edu/icm/cermine/test2.pdf";
@@ -81,18 +82,35 @@ public class ContentExtractorTest {
     }
 
     @Test
-    public void getBxDocumentFullyLabelledTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
+    public void getBxDocumentWithGeneralLabelsTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
         InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
         BxDocument testDocument;
         try {
             extractor.setPDF(testStream);
-            extractor.getLabelledRawFullText();
-            testDocument = extractor.getBxDocument();
+            testDocument = extractor.getBxDocumentWithGeneralLabels();
         } finally {
             testStream.close();
         }
 
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_LAB_1);
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_GEN_1);
+        TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
+        
+        assertTrue(BxModelUtils.areEqual(expDocument, testDocument));
+    }
+    
+    @Test
+    public void getBxDocumentWithSpecificLabelsTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
+        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
+        BxDocument testDocument;
+        try {
+            extractor.setPDF(testStream);
+            testDocument = extractor.getBxDocumentWithSpecificLabels();
+        } finally {
+            testStream.close();
+        }
+
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_SPE_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
         
@@ -136,7 +154,7 @@ public class ContentExtractorTest {
         Element testContent;
         try {
             extractor.setPDF(testStream);
-            testContent = extractor.getLabelledRawFullText();
+            testContent = extractor.getLabelledFullText();
         } finally {
             testStream.close();
         }
@@ -163,7 +181,7 @@ public class ContentExtractorTest {
         Element testMetadata;
         try {
             extractor.setPDF(testStream);
-            testMetadata = extractor.getNLMMetadata();
+            testMetadata = extractor.getMetadataAsNLM();
         } finally {
             testStream.close();
         }
@@ -190,7 +208,7 @@ public class ContentExtractorTest {
         Element testBody;
         try {
             extractor.setPDF(testStream);
-            testBody = extractor.getNLMText();
+            testBody = extractor.getBodyAsNLM();
         } finally {
             testStream.close();
         }
@@ -218,7 +236,7 @@ public class ContentExtractorTest {
         List<Element> testReferences;
         try {
             extractor.setPDF(testStream);
-            testReferences = extractor.getNLMReferences();
+            testReferences = extractor.getReferencesAsNLM();
         } finally {
             testStream.close();
         }
@@ -259,7 +277,7 @@ public class ContentExtractorTest {
         Element testContent;
         try {
             extractor.setPDF(testStream);
-            testContent = extractor.getNLMContent();
+            testContent = extractor.getContentAsNLM();
         } finally {
             testStream.close();
         }

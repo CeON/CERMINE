@@ -122,7 +122,7 @@ public class PdfBxStructureExtractor {
                 PdfBxStructureExtractor extractor = new PdfBxStructureExtractor(config);
 
                 InputStream in = new FileInputStream(pdf);
-                BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
+                BxDocument doc = extractor.extractStructure(in);
                 doc = extractor.getConf().getMetadataClassifier().classifyZones(doc);
 
                 long end = System.currentTimeMillis();

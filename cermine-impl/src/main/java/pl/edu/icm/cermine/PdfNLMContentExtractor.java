@@ -21,7 +21,6 @@ package pl.edu.icm.cermine;
 import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Collection;
-import java.util.List;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
@@ -71,9 +70,9 @@ public class PdfNLMContentExtractor {
      */
     public Element extractContent(InputStream stream) throws AnalysisException {
         try {
+            extractor.reset();
             extractor.setPDF(stream);
-            BxDocument doc = extractor.getBxDocument();
-            return extractContent(doc);
+            return extractor.getContentAsNLM();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
@@ -88,43 +87,24 @@ public class PdfNLMContentExtractor {
      */
     public Element extractContent(BxDocument document) throws AnalysisException {
         try {
+            extractor.reset();
             extractor.setBxDocument(document);
-            Element content = new Element("article");
-            
-            Element metadata = new Element("front");
-            if (extractMetadata) {
-                Element meta = extractor.getNLMMetadata();
-                metadata = (Element) meta.getChild("front").clone();
-            }
-            content.addContent(metadata);
-            
-            Element text = new Element("body");
-            if (extractText) {
-                text = extractor.getNLMText();
-            }
-            content.addContent(text);
-           
-            Element back = new Element("back");
-            Element refList = new Element("ref-list");
-            if (extractReferences) {
-                List<Element> references = extractor.getNLMReferences();
-                for (int i = 0; i < references.size(); i++) {
-                    Element ref = references.get(i);
-                    Element r = new Element("ref");
-                    r.setAttribute("id", String.valueOf(i+1));
-                    r.addContent((Element)ref.clone());
-                    refList.addContent(r);
-                }
-            }
-            back.addContent(refList);
-            content.addContent(back);
-  
-            return content;
+            return extractor.getContentAsNLM();
         } catch (IOException ex) {
             throw new AnalysisException(ex);
         }
     }
 
+    public BxDocument extractBxDocument(InputStream stream) throws AnalysisException {
+        try {
+            extractor.reset();
+            extractor.setPDF(stream);
+            return extractor.getBxDocument();
+        } catch (IOException ex) {
+            throw new AnalysisException(ex);
+        }
+    }
+    
     public ComponentConfiguration getConf() {
         return extractor.getConf();
     }
@@ -221,7 +201,7 @@ public class PdfNLMContentExtractor {
                     PdfNLMContentExtractor extractor = new PdfNLMContentExtractor(config);
 
                     InputStream in = new FileInputStream(pdf);
-                    BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
+                    BxDocument doc = extractor.extractBxDocument(in);
                     Element result = extractor.extractContent(doc);
 
                     long end = System.currentTimeMillis();

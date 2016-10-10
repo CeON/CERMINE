@@ -22,15 +22,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import org.jdom.Element;
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.Set;
+import pl.edu.icm.cermine.ExtractionUtils.Step;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
+import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
+import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
+import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
+import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.ContentStructure;
+import pl.edu.icm.cermine.content.transformers.DocContentStructToNLMElementConverter;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.MetadataToNLMConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxZone;
+import pl.edu.icm.cermine.structure.model.BxZoneLabel;
+import pl.edu.icm.cermine.structure.tools.BxModelUtils;
+import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
 /**
  * Content extractor from PDF files.
@@ -64,6 +77,15 @@ public class InternalContentExtractor {
     private ContentStructure body;
     
     
+    private List<String> referenceStrings;
+    
+    private BxContentStructure bxBody;
+    
+    private ContentStructureCitationPositions citationPositions;
+    
+    private Set<Step> stepsDone;
+            
+    
     /**
      * Creates the object with provided configuration.
      * 
@@ -72,6 +94,7 @@ public class InternalContentExtractor {
      */
     public InternalContentExtractor(ContentExtractorConfig config) throws AnalysisException {
         conf = new ComponentConfiguration(config);
+        stepsDone = EnumSet.noneOf(Step.class);
     }
 
     /**
@@ -97,29 +120,50 @@ public class InternalContentExtractor {
     }
     
     /**
-     * Stores the document's references.
-     * 
-     * @param references the document's references
-     */
-    public void setReferences(List<BibEntry> references) {
-        this.references = references;
-    }
-    
-    /**
      * Extracts geometric structure.
      * 
      * @return geometric structure
      * @throws AnalysisException 
      */
     public BxDocument getBxDocument() throws AnalysisException {
-        if (bxDocument != null) {
-            return bxDocument;
+        doWork(Step.INITIAL_CLASSIFICATION);
+        return BxModelUtils.deepClone(bxDocument);
+    }
+    
+    /**
+     * Extracts geometric structure with general labels.
+     * 
+     * @return geometric structure
+     * @throws AnalysisException 
+     */
+    public BxDocument getBxDocumentWithGeneralLabels() throws AnalysisException {
+        doWork(Step.INITIAL_CLASSIFICATION);
+        BxDocument doc = BxModelUtils.deepClone(bxDocument);
+        for (BxZone zone : doc.asZones()) {
+            zone.setLabel(zone.getLabel().getGeneralLabel());
         }
-        if (pdfFile == null) {
-            throw new AnalysisException("No PDF document uploaded!");
+        return doc;
+    }
+    
+    /**
+     * Extracts geometric structure with specific labels.
+     * 
+     * @return geometric structure
+     * @throws AnalysisException 
+     */
+    public BxDocument getBxDocumentWithSpecificLabels() throws AnalysisException {
+        doWork(Step.METADATA_CLASSIFICATION);
+        doWork(Step.CONTENT_FILTERING);
+        BxDocument doc = BxModelUtils.deepClone(bxDocument);
+        for (BxZone zone : doc.asZones()) {
+            if (BxZoneLabel.GEN_REFERENCES.equals(zone.getLabel())) {
+                zone.setLabel(BxZoneLabel.REFERENCES);
+            }
+            if (BxZoneLabel.GEN_OTHER.equals(zone.getLabel())) {
+                zone.setLabel(BxZoneLabel.OTH_UNKNOWN);
+            }
         }
-        bxDocument = ExtractionUtils.extractStructure(conf, pdfFile);
-        return bxDocument;
+        return doc;
     }
     
     /**
@@ -129,10 +173,7 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public DocumentMetadata getMetadata() throws AnalysisException {
-        if (metadata == null) {
-            getBxDocument();
-            metadata = ExtractionUtils.extractMetadata(conf, bxDocument);
-        }
+        doWork(Step.AFFIIATION_PARSING);
         return metadata;
     }
     
@@ -142,15 +183,13 @@ public class InternalContentExtractor {
      * @return the metadata in NLM format
      * @throws AnalysisException 
      */
-    public Element getNLMMetadata() throws AnalysisException {
+    public Element getMetadataAsNLM() throws AnalysisException {
         try {
-            if (metadata == null) {
-                getMetadata();
-            }
+            doWork(Step.AFFIIATION_PARSING);
             MetadataToNLMConverter converter = new MetadataToNLMConverter();
             return converter.convert(metadata);
         } catch (TransformationException ex) {
-            throw new AnalysisException("Cannot extract metadata!", ex);
+            throw new AnalysisException(ex);
         }
     }
     
@@ -161,25 +200,28 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public List<BibEntry> getReferences() throws AnalysisException {
-        if (references == null) {
-            getBxDocument();
-            references = Lists.newArrayList(ExtractionUtils.extractReferences(conf, bxDocument));
-        }
+        doWork(Step.REFERENCE_PARSING);
         return references;
     }
-    
+  
     /**
      * Extracts the references in NLM format.
      * 
      * @return the list of references
      * @throws AnalysisException 
      */
-    public List<Element> getNLMReferences() throws AnalysisException {
-        if (references == null) {
-            getReferences();
+    public List<Element> getReferencesAsNLM() throws AnalysisException {
+        doWork(Step.REFERENCE_PARSING);
+        List<Element> refs = new ArrayList<Element>();
+        BibEntryToNLMConverter converter = new BibEntryToNLMConverter();
+        for (BibEntry ref : references) {
+            try {
+                refs.add(converter.convert(ref));
+            } catch (TransformationException ex) {
+                throw new AnalysisException(ex);
+            }
         }
-        return Lists.newArrayList(
-                ExtractionUtils.convertReferences(references.toArray(new BibEntry[]{})));
+        return refs;
     }
 
     /**
@@ -189,8 +231,8 @@ public class InternalContentExtractor {
      * @throws AnalysisException 
      */
     public String getRawFullText() throws AnalysisException {
-        getBxDocument();
-        return ExtractionUtils.extractRawText(conf, bxDocument);
+        doWork(Step.READING_ORDER);
+        return ContentCleaner.cleanAll(bxDocument.toText());
     }
 
     /**
@@ -199,9 +241,22 @@ public class InternalContentExtractor {
      * @return labelled raw text
      * @throws AnalysisException 
      */
-    public Element getLabelledRawFullText() throws AnalysisException {
-        getBxDocument();
-        return ExtractionUtils.extractRawTextWithLabels(conf, bxDocument);
+    public Element getLabelledFullText() throws AnalysisException {
+        doWork(Step.METADATA_CLASSIFICATION);
+        doWork(Step.TOC_EXTRACTION);
+        RawTextWithLabelsExtractor textExtractor = new RawTextWithLabelsExtractor();
+        return textExtractor.extractRawTextWithLabels(bxDocument, bxBody);
+    }
+    
+    /**
+     * Extracts structured full text.
+     * 
+     * @return full text model
+     * @throws AnalysisException 
+     */
+    public ContentStructure getBody() throws AnalysisException {
+        doWork(Step.CONTENT_CLEANING);
+        return body;
     }
     
     /**
@@ -210,22 +265,31 @@ public class InternalContentExtractor {
      * @return full text in NLM format
      * @throws AnalysisException 
      */
-    public Element getNLMText() throws AnalysisException {
-        getBxDocument();
-        getReferences();
-        return ExtractionUtils.extractBodyAsNLM(conf, bxDocument, references);
+    public Element getBodyAsNLM() throws AnalysisException {
+        try {
+            doWork(Step.CITPOS_DETECTION);
+            ModelToModelConverter<ContentStructure, Element> converter
+                    = new DocContentStructToNLMElementConverter();
+            return converter.convert(body, citationPositions);
+        } catch (TransformationException ex) {
+            throw new AnalysisException(ex);
+        }
     }
-    
+
     /**
      * Extracts full content in NLM format.
      * 
      * @return full content in NLM format
      * @throws AnalysisException 
      */
-    public Element getNLMContent() throws AnalysisException {
-        Element nlmMetadata = getNLMMetadata();
-        List<Element> nlmReferences = getNLMReferences();
-        Element nlmFullText = getNLMText();
+    public Element getContentAsNLM() throws AnalysisException {
+        doWork(Step.AFFIIATION_PARSING);
+        doWork(Step.REFERENCE_PARSING);
+        doWork(Step.CITPOS_DETECTION);
+        
+        Element nlmMetadata = getMetadataAsNLM();
+        List<Element> nlmReferences = getReferencesAsNLM();
+        Element nlmFullText = getBodyAsNLM();
             
         Element nlmContent = new Element("article");
             
@@ -246,6 +310,64 @@ public class InternalContentExtractor {
         back.addContent(refList);
         nlmContent.addContent(back);
         return nlmContent;
+    }
+    
+    
+    private void doWork(Step step) throws AnalysisException {
+        if (step == null || stepsDone.contains(step)) {
+            return;
+        }
+        doWork(step.getPrevious());
+        switch (step) {
+            case CHARACTER_EXTRACTION:
+                if (pdfFile == null) {
+                    throw new AnalysisException("No PDF document uploaded!");
+                }
+                bxDocument = ExtractionUtils.extractCharacters(conf, pdfFile);
+                break;
+            case PAGE_SEGMENTATION:
+                bxDocument = ExtractionUtils.segmentPages(conf, bxDocument);
+                break;
+            case READING_ORDER:
+                bxDocument = ExtractionUtils.resolveReadingOrder(conf, bxDocument);
+                break;
+            case INITIAL_CLASSIFICATION:
+                bxDocument = ExtractionUtils.classifyInitially(conf, bxDocument);
+                break;
+            case METADATA_CLASSIFICATION:
+                bxDocument = ExtractionUtils.classifyMetadata(conf, bxDocument);
+                break;
+            case METADATA_CLEANING:
+                metadata = ExtractionUtils.cleanMetadata(conf, bxDocument);
+                break;
+            case AFFIIATION_PARSING:
+                metadata = ExtractionUtils.parseAffiliations(conf, metadata);
+                break;
+            case REFERENCE_EXTRACTION:
+                referenceStrings = ExtractionUtils.extractRefStrings(conf, bxDocument);
+                break;
+            case REFERENCE_PARSING:
+                references = ExtractionUtils.parseReferences(conf, referenceStrings);
+                break;
+            case CONTENT_FILTERING:
+                bxDocument = ExtractionUtils.filterContent(conf, bxDocument);
+                break;
+            case HEADER_DETECTION:
+                bxBody = ExtractionUtils.extractHeaders(conf, bxDocument);
+                break;
+            case TOC_EXTRACTION:
+                bxBody = ExtractionUtils.clusterHeaders(conf, bxBody);
+                break;
+            case CONTENT_CLEANING:
+                body = ExtractionUtils.cleanStructure(conf, bxBody);
+                break;
+            case CITPOS_DETECTION:
+                doWork(Step.REFERENCE_PARSING);
+                citationPositions = ExtractionUtils.findCitationPositions(conf, body, references);
+                break;
+            default: break;
+        }
+        stepsDone.add(step);
     }
     
     /**

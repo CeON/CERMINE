@@ -132,6 +132,20 @@ public class ContentExtractorTimeoutTest {
             @Override
             public void run(ContentExtractor extractor)
                     throws TimeoutException, AnalysisException {
+                extractor.getBxDocumentWithGeneralLabels(0);
+            }
+        },
+                new ExtractorOperation() {
+            @Override
+            public void run(ContentExtractor extractor)
+                    throws TimeoutException, AnalysisException {
+                extractor.getBxDocumentWithSpecificLabels(0);
+            }
+        },
+                new ExtractorOperation() {
+            @Override
+            public void run(ContentExtractor extractor)
+                    throws TimeoutException, AnalysisException {
                 extractor.getMetadata(0);
             }
         },
@@ -139,7 +153,7 @@ public class ContentExtractorTimeoutTest {
             @Override
             public void run(ContentExtractor extractor)
                     throws TimeoutException, AnalysisException {
-                extractor.getNLMMetadata(0);
+                extractor.getMetadataAsNLM(0);
             }
         },
                 new ExtractorOperation() {
@@ -153,7 +167,7 @@ public class ContentExtractorTimeoutTest {
             @Override
             public void run(ContentExtractor extractor)
                     throws TimeoutException, AnalysisException {
-                extractor.getNLMReferences(0);
+                extractor.getReferencesAsNLM(0);
             }
         },
                 new ExtractorOperation() {
@@ -167,21 +181,28 @@ public class ContentExtractorTimeoutTest {
             @Override
             public void run(ContentExtractor extractor)
                     throws TimeoutException, AnalysisException {
-                extractor.getLabelledRawFullText(0);
+                extractor.getLabelledFullText(0);
             }
         },
                 new ExtractorOperation() {
             @Override
             public void run(ContentExtractor extractor)
                     throws TimeoutException, AnalysisException {
-                extractor.getNLMText(0);
+                extractor.getBody(0);
             }
         },
                 new ExtractorOperation() {
             @Override
             public void run(ContentExtractor extractor)
                     throws TimeoutException, AnalysisException {
-                extractor.getNLMContent(0);
+                extractor.getBodyAsNLM(0);
+            }
+        },
+                new ExtractorOperation() {
+            @Override
+            public void run(ContentExtractor extractor)
+                    throws TimeoutException, AnalysisException {
+                extractor.getContentAsNLM(0);
             }
         });
         assumeOperationsEndInTimeout(list);

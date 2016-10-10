@@ -174,7 +174,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
             result.processingStart = new Date();
             log.debug("Starting extraction on the input stream...");
             e.setPDF(input);
-            Element resEl = e.getNLMContent();
+            Element resEl = e.getContentAsNLM();
             log.debug("Extraction ok..");
             XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
             Document doc = new Document(resEl);

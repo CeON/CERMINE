@@ -136,8 +136,7 @@ public class PdfRawTextExtractor {
                 try {
                     PdfRawTextExtractor extractor = new PdfRawTextExtractor();
                     InputStream in = new FileInputStream(pdf);
-                    BxDocument doc = ExtractionUtils.extractStructure(extractor.getConf(), in);
-                    String result = extractor.extractText(doc);
+                    String result = extractor.extractText(in);
 
                     long end = System.currentTimeMillis();
                     elapsed = (end - start) / 1000F;

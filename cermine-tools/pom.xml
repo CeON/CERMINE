@@ -4,11 +4,11 @@
     <parent>
         <groupId>pl.edu.icm.cermine</groupId>
         <artifactId>cermine-parent</artifactId>
-        <version>1.10</version>
+        <version>1.11-SNAPSHOT</version>
     </parent>
     <groupId>pl.edu.icm.cermine</groupId>
     <artifactId>cermine-tools</artifactId>
-    <version>1.10</version>
+    <version>1.11-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>CERMINE Tools - ${project.version}</name>
     

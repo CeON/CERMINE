@@ -115,6 +115,10 @@ public class AuthorAffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                 continue;
             }
             
+            emailText = emailText
+                    .replaceFirst("^[Ee]mails?: *", "")
+                    .replaceFirst("^[Ee]- *[Mm]ails?: *", "");
+            
             metadata.addAuthor(authorText, Lists.newArrayList(String.valueOf(ind)), emailText);
             metadata.setAffiliationByIndex(String.valueOf(ind), affText);
             added = true;

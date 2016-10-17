@@ -22,6 +22,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang.StringUtils;
 import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -55,7 +56,9 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
             String domain = matcher.group(2);
             String[] names = emails.split("[\\|, ]+");
             for (String name : names) {
-                addEmail(metadata, name+"@"+domain);
+                if (!name.isEmpty()) {
+                    addEmail(metadata, name+"@"+domain);
+                }
             }
         }
         matcher = PATTERN.matcher(zone.toText());
@@ -74,16 +77,26 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
         
         for (DocumentAuthor a : metadata.getAuthors()) {
             String[] names = a.getName().split(" ");
-            for (String namePart : names) {
-                if (namePart.length() > 2 && email.toLowerCase().contains(namePart.toLowerCase())) {
-                    if (author == null) {
-                        author = a;
-                        break;
-                    } else {
-                        one = false;
+            String fname = StringUtils.join(names, "");
+            if (fname.toLowerCase().contains(email.toLowerCase().replaceFirst("@.*", ""))) {
+                if (author == null) {
+                    author = a;
+                    break;
+                } else {
+                    one = false;
+                }
+            } else {
+                for (String namePart : names) {
+                    if (namePart.length() > 2 && email.toLowerCase().contains(namePart.toLowerCase())) {
+                        if (author == null) {
+                            author = a;
+                            break;
+                        } else {
+                            one = false;
+                        }
                     }
+                }
             }
-        }
         }
         
         if (author != null && one) {

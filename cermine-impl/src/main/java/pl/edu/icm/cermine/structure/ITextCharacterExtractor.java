@@ -108,7 +108,11 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 TimeoutRegister.get().check();
             }
 
-            return filterComponents(removeDuplicateChunks(documentCreator.document));
+            BxDocument doc = filterComponents(removeDuplicateChunks(documentCreator.document));
+            if (doc.getFirstChild() == null) {
+                throw new AnalysisException("Document contains no pages");
+            }
+            return doc;
         } catch (InvalidPdfException ex) {
             throw new AnalysisException("Invalid PDF file", ex);
         } catch (IOException ex) {
@@ -129,6 +133,9 @@ public class ITextCharacterExtractor implements CharacterExtractor {
      * this method will change alternative names to standard ones before PDF's parsing process
      */
     private void processAlternativeFontNames(PdfDictionary resources) {
+        if (resources == null) {
+            return;
+        }
         PdfDictionary fontsDictionary = resources.getAsDict(PdfName.FONT);
 
         if (fontsDictionary == null) {
@@ -139,6 +146,9 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 return;
             }
             PRIndirectReference indRef = (PRIndirectReference) fontsDictionary.get(pdfFontName);
+            if (!(PdfReader.getPdfObjectRelease(indRef) instanceof PdfDictionary)) {
+                return;
+            }
             PdfDictionary fontDictionary = (PdfDictionary) PdfReader.getPdfObjectRelease(indRef);
 
             PdfName baseFont = fontDictionary.getAsName(PdfName.BASEFONT);
@@ -152,6 +162,9 @@ public class ITextCharacterExtractor implements CharacterExtractor {
     }
 
     private void processAlternativeColorSpace(PdfDictionary resources) {
+        if (resources == null) {
+            return;
+        }
         PdfDictionary csDictionary = resources.getAsDict(PdfName.COLORSPACE);
         if (csDictionary == null) {
             return;

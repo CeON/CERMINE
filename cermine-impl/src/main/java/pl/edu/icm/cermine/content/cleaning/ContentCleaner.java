@@ -173,7 +173,7 @@ public class ContentCleaner {
         str = str.replace("$", "\\$");
         
         String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
-        Pattern p = Pattern.compile("([^" + hyphenList + "]*\\S+)[" + hyphenList + "]\n", Pattern.DOTALL);
+        Pattern p = Pattern.compile("(\\S)[" + hyphenList + "]\n", Pattern.DOTALL);
         Matcher m = p.matcher(str);
         StringBuffer sb = new StringBuffer();
         while (m.find()) {
@@ -232,7 +232,7 @@ public class ContentCleaner {
     public static String cleanAllAndBreaks(String str) {
         if (str == null) {
             return null;
-        }
+         }
         return clean(cleanHyphenationAndBreaks(str));
     }
 

@@ -4,7 +4,7 @@
     <groupId>pl.edu.icm.cermine</groupId>
     <artifactId>cermine-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.11-SNAPSHOT</version>
+    <version>1.12-SNAPSHOT</version>
     <name>CERMINE Content Extractor and Miner</name>
     <organization>
         <name>ICM, Warsaw University</name>

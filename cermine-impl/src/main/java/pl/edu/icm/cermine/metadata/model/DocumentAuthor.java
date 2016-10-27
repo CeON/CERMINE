@@ -92,9 +92,6 @@ public class DocumentAuthor {
             newEmails.add(ContentCleaner.clean(email));
         }
         emails = newEmails;
-        for (DocumentAffiliation affiliation : affiliations){
-            affiliation.clean();
-        }
     }
     
 }

@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
+import pl.edu.icm.cermine.tools.timeout.Timeout;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -261,8 +263,13 @@ public class DocumentMetadata {
         for (String id : ids.keySet()) {
             ids.put(id, ContentCleaner.clean(ids.get(id)));
         }
+        for (DocumentAffiliation affiliation : affiliations) {
+            affiliation.clean();
+            TimeoutRegister.get().check();
+        }
         for (DocumentAuthor author : authors) {
             author.clean();
+            TimeoutRegister.get().check();
         }
         for (DocumentAuthor editor : editors) {
             editor.clean();

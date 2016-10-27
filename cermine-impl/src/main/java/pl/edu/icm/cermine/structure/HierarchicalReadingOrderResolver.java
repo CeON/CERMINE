@@ -212,7 +212,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
                 dists.add(new DistElem<BxObject>(true, distElem.getDist(), distElem.getObj1(), distElem.getObj2()));
                 continue;
             }
-
+            TimeoutRegister.get().check();
             BxZoneGroup newGroup = new BxZoneGroup(distElem.getObj1(), distElem.getObj2());
             plane.remove(distElem.getObj1()).remove(distElem.getObj2());
             dists = removeDistElementsContainingObject(dists, distElem.getObj1());
@@ -220,6 +220,7 @@ public class HierarchicalReadingOrderResolver implements ReadingOrderResolver {
             for (BxObject other : plane.getObjects()) {
                 dists.add(new DistElem<BxObject>(false, distance(other,
                         newGroup), newGroup, other));
+                TimeoutRegister.get().check();
             }
             Collections.sort(dists);
             TimeoutRegister.get().check();

@@ -26,6 +26,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.extraction.enhancers.*;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
  * Extracting metadata from labelled zones. 
@@ -100,6 +101,7 @@ public class EnhancerMetadataExtractor implements MetadataExtractor<DocumentMeta
         
         for (Enhancer enhancer : enhancers) {
             enhancer.enhanceMetadata(document, metadata, enhancedFields);
+            TimeoutRegister.get().check();
         }
         metadata.clean();
         return metadata;

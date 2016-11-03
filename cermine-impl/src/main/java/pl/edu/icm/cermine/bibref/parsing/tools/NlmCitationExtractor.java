@@ -39,7 +39,7 @@ import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 public final class NlmCitationExtractor {
 
     public static final List<String> TAGS_CITATION = Arrays.asList(
-            "mixed-citation", "citation");
+            "mixed-citation", "citation", "element-citation");
 
     public static final String KEY_TEXT = "text";
 

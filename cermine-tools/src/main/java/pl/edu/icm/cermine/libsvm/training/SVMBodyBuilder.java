@@ -132,7 +132,7 @@ public class SVMBodyBuilder {
             System.exit(1);
         }
 
-        String ext = "cxml";
+        String ext = "cermstr";
         if (line.hasOption("ext")) {
             ext = line.getOptionValue("ext");
         }

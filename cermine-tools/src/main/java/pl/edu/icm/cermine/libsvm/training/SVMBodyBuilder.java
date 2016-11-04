@@ -71,7 +71,6 @@ public class SVMBodyBuilder {
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
         zoneClassifier.printWeigths(featureVectorBuilder);
-        zoneClassifier.saveModel("svm_body_classifier");
         return zoneClassifier;
     }
 

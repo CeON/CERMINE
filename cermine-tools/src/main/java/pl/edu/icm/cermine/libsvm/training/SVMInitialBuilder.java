@@ -67,7 +67,6 @@ public class SVMInitialBuilder {
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
         zoneClassifier.printWeigths(featureVectorBuilder);
-        zoneClassifier.saveModel("svm_initial_classifier");
         return zoneClassifier;
     }
 

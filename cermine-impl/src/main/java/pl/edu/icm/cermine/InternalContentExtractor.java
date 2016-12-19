@@ -317,7 +317,9 @@ public class InternalContentExtractor {
         if (step == null || stepsDone.contains(step)) {
             return;
         }
-        doWork(step.getPrevious());
+        for (Step ps : step.getPrerequisites()) {
+            doWork(ps);
+        }
         switch (step) {
             case CHARACTER_EXTRACTION:
                 if (pdfFile == null) {
@@ -362,7 +364,6 @@ public class InternalContentExtractor {
                 body = ExtractionUtils.cleanStructure(conf, bxBody);
                 break;
             case CITPOS_DETECTION:
-                doWork(Step.REFERENCE_PARSING);
                 citationPositions = ExtractionUtils.findCitationPositions(conf, body, references);
                 break;
             default: break;

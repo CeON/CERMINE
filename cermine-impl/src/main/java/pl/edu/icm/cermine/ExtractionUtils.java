@@ -19,9 +19,12 @@
 package pl.edu.icm.cermine;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
@@ -191,40 +194,54 @@ public class ExtractionUtils {
         
         CHARACTER_EXTRACTION    (null),
         
-        PAGE_SEGMENTATION       (CHARACTER_EXTRACTION),
+        PAGE_SEGMENTATION       (setOf(CHARACTER_EXTRACTION)),
         
-        READING_ORDER           (PAGE_SEGMENTATION),
+        READING_ORDER           (setOf(PAGE_SEGMENTATION)),
         
-        INITIAL_CLASSIFICATION  (READING_ORDER),
+        INITIAL_CLASSIFICATION  (setOf(READING_ORDER)),
      
-        METADATA_CLASSIFICATION (INITIAL_CLASSIFICATION),
+        METADATA_CLASSIFICATION (setOf(INITIAL_CLASSIFICATION)),
         
-        METADATA_CLEANING       (METADATA_CLASSIFICATION),
+        METADATA_CLEANING       (setOf(METADATA_CLASSIFICATION)),
         
-        AFFIIATION_PARSING      (METADATA_CLEANING),
+        AFFIIATION_PARSING      (setOf(METADATA_CLEANING)),
         
-        REFERENCE_EXTRACTION    (INITIAL_CLASSIFICATION),
+        REFERENCE_EXTRACTION    (setOf(INITIAL_CLASSIFICATION)),
         
-        REFERENCE_PARSING       (REFERENCE_EXTRACTION),
+        REFERENCE_PARSING       (setOf(REFERENCE_EXTRACTION)),
         
-        CONTENT_FILTERING       (INITIAL_CLASSIFICATION),
+        CONTENT_FILTERING       (setOf(INITIAL_CLASSIFICATION)),
         
-        HEADER_DETECTION        (CONTENT_FILTERING),
+        HEADER_DETECTION        (setOf(CONTENT_FILTERING)),
         
-        TOC_EXTRACTION          (HEADER_DETECTION),
+        TOC_EXTRACTION          (setOf(HEADER_DETECTION)),
         
-        CONTENT_CLEANING        (TOC_EXTRACTION),
+        CONTENT_CLEANING        (setOf(TOC_EXTRACTION)),
         
-        CITPOS_DETECTION        (CONTENT_CLEANING);
+        CITPOS_DETECTION        (setOf(CONTENT_CLEANING, REFERENCE_PARSING));
         
-        private final Step previous;
-        
-        Step(Step previous) {
-            this.previous = previous;
+        private Set<Step> prerequisites;
+
+        Step(Set<Step> prerequisites) {
+            this.prerequisites = prerequisites;
         }
 
-        public Step getPrevious() {
-            return previous;
+        public Set<Step> getPrerequisites() {
+            return prerequisites;
+        }
+        
+        private static Set<Step> setOf(Step... steps) {
+            return Sets.newHashSet(steps);
+        }
+
+        static {
+            for (Step s : values()) {
+                if (s.prerequisites == null) {
+                    s.prerequisites = EnumSet.noneOf(Step.class);
+                } else {
+                    s.prerequisites = EnumSet.copyOf(s.prerequisites);
+                }
+            }
         }
         
     }

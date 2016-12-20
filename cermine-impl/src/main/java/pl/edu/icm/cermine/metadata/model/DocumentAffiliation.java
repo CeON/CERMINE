@@ -34,7 +34,7 @@ import pl.edu.icm.cermine.parsing.model.Token;
  */
 public class DocumentAffiliation implements ParsableString<Token<AffiliationLabel>> {
 
-    private String id;
+    private String id = "";
 
     private String index;
 
@@ -43,15 +43,10 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
     private List<Token<AffiliationLabel>> tokens;
 
     public DocumentAffiliation(String rawText) {
-        this("id", rawText);
+        this(null, rawText);
     }
 
-    public DocumentAffiliation(String id, String rawText) {
-        this(id, null, rawText);
-    }
-
-    public DocumentAffiliation(String id, String index, String rawText) {
-        this.id = id;
+    public DocumentAffiliation(String index, String rawText) {
         this.index = ContentCleaner.clean(index);
         if (rawText.matches(".+ \\([^\\(\\)]*\\)$")) {
             rawText = StringUtils.reverse(rawText).replaceFirst("\\)", "")
@@ -66,6 +61,10 @@ public class DocumentAffiliation implements ParsableString<Token<AffiliationLabe
         return id;
     }
 
+    void setId(String id) {
+        this.id = id;
+    }
+    
     public String getIndex() {
         return index;
     }

@@ -13,38 +13,38 @@
       <contrib-group>
         <contrib contrib-type="author">
           <string-name>Indraneel Datta</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="1">1</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Chad G Ball</string-name>
           <email>ball.chad@gmail.com</email>
-          <xref ref-type="aff" rid="0">0</xref>
-        </contrib>
-        <contrib contrib-type="author">
-          <string-name>Lucas Rudmik</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
-        </contrib>
-        <contrib contrib-type="author">
-          <string-name>S Morad Hameed</string-name>
           <xref ref-type="aff" rid="1">1</xref>
         </contrib>
         <contrib contrib-type="author">
-          <string-name>John B Kortbeek</string-name>
+          <string-name>Lucas Rudmik</string-name>
+          <xref ref-type="aff" rid="1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>S Morad Hameed</string-name>
           <xref ref-type="aff" rid="0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>John B Kortbeek</string-name>
+          <xref ref-type="aff" rid="1">1</xref>
         </contrib>
         <aff id="0">
           <label>0</label>
-          <institution>Department of Surgery, University of Calgary</institution>
+          <institution>Department of Surgery, University of British Columbia</institution>
           ,
-          <addr-line>Calgary</addr-line>
+          <addr-line>Vancouver</addr-line>
           ,
           <country country="CA">Canada</country>
         </aff>
         <aff id="1">
           <label>1</label>
-          <institution>Department of Surgery, University of British Columbia</institution>
+          <institution>Department of Surgery, University of Calgary</institution>
           ,
-          <addr-line>Vancouver</addr-line>
+          <addr-line>Calgary</addr-line>
           ,
           <country country="CA">Canada</country>
         </aff>

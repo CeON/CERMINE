@@ -33,7 +33,7 @@ public class AffiliationParserTest {
         CRFAffiliationParser parser = new CRFAffiliationParser();
         XMLOutputter outputter = new XMLOutputter();
         String input = "";
-        String expected = "<aff id=\"id\"><label>id</label></aff>";
+        String expected = "<aff id=\"\"><label></label></aff>";
         String actual = outputter.outputString(parser.parse(input));
         assertEquals(expected, actual);
     }
@@ -47,7 +47,7 @@ public class AffiliationParserTest {
             inputSB.append("Department of Oncology - Pathology, Karolinska Institutet, Stockholm, Sweden, ");
         }
         String input = inputSB.toString();
-        String expected = "<aff id=\"id\"><label>id</label>" + input + "</aff>";
+        String expected = "<aff id=\"\"><label></label>" + input + "</aff>";
         String actual = outputter.outputString(parser.parse(input));
         assertEquals(expected, actual);
     }
@@ -57,7 +57,7 @@ public class AffiliationParserTest {
         CRFAffiliationParser parser = new CRFAffiliationParser();
         XMLOutputter outputter = new XMLOutputter();
         String input = "山梨大学大学院医学工学総合研究部　社会医学講座";
-        String expected = "<aff id=\"id\"><label>id</label></aff>";
+        String expected = "<aff id=\"\"><label></label></aff>";
         String actual = outputter.outputString(parser.parse(input));
         assertEquals(expected, actual);
     }
@@ -67,7 +67,7 @@ public class AffiliationParserTest {
         CRFAffiliationParser parser = new CRFAffiliationParser();
         XMLOutputter outputter = new XMLOutputter();
         String input = "Department of Dinozauring, Dino Institute, Tyranosaurus Route 35, Boston, MA, USA";
-        String expected = "<aff id=\"id\"><label>id</label>"
+        String expected = "<aff id=\"\"><label></label>"
                 + "<institution>Department of Dinozauring, Dino Institute</institution>"
                 + ", "
                 + "<addr-line>Tyranosaurus Route 35, Boston, MA</addr-line>"
@@ -85,7 +85,7 @@ public class AffiliationParserTest {
                 "acrf-affiliations-with-author.ser.gz");
         XMLOutputter outputter = new XMLOutputter();
         String input = "Andrew McDino and Elizabeth Pterodactyl, Department of Dinozauring, Dino Institute, Tyranosaurus Route 35, Boston, MA, USA";
-        String expected = "<aff id=\"id\"><label>id</label>"
+        String expected = "<aff id=\"\"><label></label>"
                 + //				"<author>Andrew McDino and Elizabeth Pterodactyl</author>" +
                 ", "
                 + "<institution>Department of Dinozauring, Dino Institute</institution>"

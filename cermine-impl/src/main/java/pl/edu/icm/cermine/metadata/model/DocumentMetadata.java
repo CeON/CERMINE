@@ -19,11 +19,12 @@
 package pl.edu.icm.cermine.metadata.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
-import pl.edu.icm.cermine.tools.timeout.Timeout;
 import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 
 /**
@@ -93,7 +94,7 @@ public class DocumentMetadata {
     public void addAffiliationToAllAuthors(String affiliation) {
         DocumentAffiliation aff = getAffiliationByName(affiliation);
         if (aff == null) {
-            aff = new DocumentAffiliation(String.valueOf(affiliations.size()), affiliation);
+            aff = new DocumentAffiliation(affiliation);
             affiliations.add(aff);
         }
         for (DocumentAuthor author : authors) {
@@ -104,7 +105,7 @@ public class DocumentMetadata {
     public void setAffiliationByIndex(String index, String affiliation) {
         DocumentAffiliation aff = getAffiliationByName(affiliation);
         if (aff == null) {
-            aff = new DocumentAffiliation(String.valueOf(affiliations.size()), affiliation);
+            aff = new DocumentAffiliation(affiliation);
             affiliations.add(aff);
         }
         for (DocumentAuthor author : authors) {
@@ -158,7 +159,7 @@ public class DocumentMetadata {
         for (String affiliation: affiliations) {
             DocumentAffiliation aff = getAffiliationByName(affiliation);
             if (aff == null) {
-                aff = new DocumentAffiliation(String.valueOf(affiliations.size()), affiliation);
+                aff = new DocumentAffiliation(affiliation);
                 this.affiliations.add(aff);
                 author.addAffiliation(aff);
             }
@@ -267,13 +268,35 @@ public class DocumentMetadata {
             affiliation.clean();
             TimeoutRegister.get().check();
         }
+        Collections.sort(affiliations, new Comparator<DocumentAffiliation>() {
+            @Override
+            public int compare(DocumentAffiliation a1, DocumentAffiliation a2) {
+                return a1.getRawText().compareTo(a2.getRawText());
+            }
+        });
+        int id = 0;
+        for (DocumentAffiliation affiliation : affiliations) {
+            affiliation.setId(String.valueOf(id++));
+        }
         for (DocumentAuthor author : authors) {
             author.clean();
+            Collections.sort(author.getAffiliationRefs());
+            Collections.sort(author.getEmails());
+            Collections.sort(author.getAffiliations(), new Comparator<DocumentAffiliation>() {
+                @Override
+                public int compare(DocumentAffiliation a1, DocumentAffiliation a2) {
+                    if (!a1.getId().equals(a2.getId())) {
+                        return a1.getId().compareTo(a2.getId());
+                    }
+                    return a1.getRawText().compareTo(a2.getRawText());
+                }
+            });
             TimeoutRegister.get().check();
         }
         for (DocumentAuthor editor : editors) {
             editor.clean();
         }
+        Collections.sort(emails);
         abstrakt = ContentCleaner.cleanAllAndBreaks(abstrakt);
         List<String> newKeywords = new ArrayList<String>(keywords.size());
         for (String keyword : keywords) {

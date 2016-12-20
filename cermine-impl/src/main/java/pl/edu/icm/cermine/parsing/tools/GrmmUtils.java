@@ -35,8 +35,8 @@ public class GrmmUtils {
     private static final String CONNECTOR = "@";
 
     /**
-     * @param label
-     * @param features
+     * @param label label
+     * @param features features
      * @return GRMM 'timestep' representing a token with the label and the
      * features
      */
@@ -74,7 +74,7 @@ public class GrmmUtils {
     }
 
     /**
-     * @param <T>
+     * @param <T> token type
      * @param tokens the tokens whose feature lists should be exported
      * @param neighborInfluenceThreshold the maximum distance of token's
      * neighbor whose local features will be added to the token's feature list

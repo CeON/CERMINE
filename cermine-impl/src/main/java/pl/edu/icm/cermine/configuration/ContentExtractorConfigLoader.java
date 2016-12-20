@@ -7,7 +7,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 /**
- * Loader of configuration properties for {@link ContentExtractor}
+ * Loader of configuration properties for {@link pl.edu.icm.cermine.ContentExtractor}
  * 
  * @author madryk
  */
@@ -17,8 +17,9 @@ public class ContentExtractorConfigLoader {
     
     
     /**
-     * Returns {@link ContentExtractor} default configuration properties.
+     * Returns {@link pl.edu.icm.cermine.ContentExtractor} default configuration properties.
      * 
+     * @return ContentExtractorConfig
      * @see "classpath:/pl/edu/icm/cermine/application-default.properties"
      */
     public ContentExtractorConfig loadConfiguration() {
@@ -34,9 +35,11 @@ public class ContentExtractorConfigLoader {
     }
     
     /**
-     * Returns {@link ContentExtractor} configuration properties from property file.<br>
+     * Returns {@link pl.edu.icm.cermine.ContentExtractor} configuration properties from property file.<br>
      * If some configuration property is not present in provided property file,
      * then the default value will be used.
+     * @param configurationFilePath file path
+     * @return ContentExtractorConfig
      */
     public ContentExtractorConfig loadConfiguration(String configurationFilePath) {
         // prevents MALLET from printing info messages

@@ -20,7 +20,7 @@ package pl.edu.icm.cermine.evaluation.tools;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
- * @param <T>
+ * @param <T> result type
  */
 public interface SingleInformationDocResult<T> {
 

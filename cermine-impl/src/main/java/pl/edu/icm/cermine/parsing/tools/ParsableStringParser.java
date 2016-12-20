@@ -37,15 +37,15 @@ public interface ParsableStringParser<PS extends ParsableString<?>> {
      * the tagging of its text content.
      *
      * @param text the parsable string instance to parse
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     void parse(PS text) throws AnalysisException;
 
     /**
      * @param text string to parse
      * @return XML Element with the tagged text in NLM format
-     * @throws TransformationException
-     * @throws AnalysisException
+     * @throws TransformationException TransformationException
+     * @throws AnalysisException AnalysisException
      */
     Element parse(String text) throws AnalysisException, TransformationException;
 }

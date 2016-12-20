@@ -25,8 +25,8 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
 /**
  * @author Pawel Szostek
- * @param <S>
- * @param <T> 
+ * @param <S> object class
+ * @param <T> context class
  */
 public abstract class AbstractFeatureCalculator<S, T> extends FeatureCalculator<S, T> {
 

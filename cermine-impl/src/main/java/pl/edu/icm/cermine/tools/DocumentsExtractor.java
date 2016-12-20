@@ -32,7 +32,7 @@ public interface DocumentsExtractor {
      * Extracts documents.
      *
      * @return a list of extracted documents
-     * @throws TransformationException
+     * @throws TransformationException TransformationException
      */
     List<BxDocument> getDocuments() throws TransformationException;
 

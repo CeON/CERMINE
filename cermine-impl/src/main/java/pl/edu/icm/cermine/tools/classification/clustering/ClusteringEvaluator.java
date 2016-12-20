@@ -28,8 +28,8 @@ public interface ClusteringEvaluator {
     /**
      * Checks, whether the effects of clustering are acceptable
      * 
-     * @param clusters
-     * @return 
+     * @param clusters clusters
+     * @return whether clustering is acceptable
      */
     boolean isAcceptable(int[] clusters);
     

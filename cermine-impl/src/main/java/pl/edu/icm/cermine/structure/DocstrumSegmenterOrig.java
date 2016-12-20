@@ -120,7 +120,7 @@ public class DocstrumSegmenterOrig implements DocumentSegmenter {
      *
      * @param page page containing chunks
      * @return array of components
-     * @throws pl.edu.icm.cermine.exception.AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     protected List<Component> createComponents(BxPage page) throws AnalysisException {
         List<BxChunk> chunks = Lists.newArrayList(page.getChunks());
@@ -201,7 +201,7 @@ public class DocstrumSegmenterOrig implements DocumentSegmenter {
     /**
      * Computes initial orientation estimation based on nearest-neighbors' angles.
      * 
-     * @param components
+     * @param components components
      * @return initial orientation estimation
      */
     private double computeInitialOrientation(List<Component> components) {
@@ -236,7 +236,7 @@ public class DocstrumSegmenterOrig implements DocumentSegmenter {
     /**
      * Computes within-line spacing based on nearest-neighbors distances.
      *
-     * @param components
+     * @param components components
      * @param orientation estimated text orientation
      * @return estimated within-line spacing
      */
@@ -321,21 +321,6 @@ public class DocstrumSegmenterOrig implements DocumentSegmenter {
         return valueSum / weightSum;
     }
 
-    /**
-     * Groups text lines into zones.
-     * 
-     * @param lines
-     * @param orientation
-     * @param minHorizontalDistance
-     * @param maxHorizontalDistance
-     * @param minVerticalDistance
-     * @param maxVerticalDistance
-     * @param minHorizontalMergeDistance
-     * @param maxHorizontalMergeDistance
-     * @param minVerticalMergeDistance
-     * @param maxVerticalMergeDistance
-     * @return
-     */
     private List<List<ComponentLine>> determineZones(List<ComponentLine> lines, double orientation,
             double minHorizontalDistance, double maxHorizontalDistance,
             double minVerticalDistance, double maxVerticalDistance,
@@ -478,9 +463,9 @@ public class DocstrumSegmenterOrig implements DocumentSegmenter {
         /**
          * Computes horizontal distance between components.
          * 
-         * @param c
-         * @param orientation
-         * @return
+         * @param c component
+         * @param orientation orientation angle
+         * @return distance
          */
         public double horizontalDistance(Component c, double orientation) {
             // TODO: take orientation into account

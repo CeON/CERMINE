@@ -46,8 +46,8 @@ public class WordFeatureCalculator {
     }
 
     /**
-     * @param token
-     * @param context
+     * @param token token
+     * @param context context
      * @return the word represented by the token in an appropriate format or
      * null if the token has a blocking feature
      */

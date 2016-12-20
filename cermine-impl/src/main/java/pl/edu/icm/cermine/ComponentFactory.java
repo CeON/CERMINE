@@ -84,8 +84,8 @@ public class ComponentFactory {
      * @param rangePath Path to svm range file (can be regular file or a classpath resource).
      *      For classpath resource, path should be prefixed with <code>classpath:</code>
      * @return initial zone classifier
-     * @throws AnalysisException
-     * @throws IOException
+     * @throws AnalysisException AnalysisException
+     * @throws IOException IOException
      */
     public static ZoneClassifier getInitialZoneClassifier(String modelPath, String rangePath) throws AnalysisException, IOException {
         
@@ -98,8 +98,8 @@ public class ComponentFactory {
      * @param model svm model
      * @param range svm range file
      * @return initial zone classifier
-     * @throws AnalysisException
-     * @throws IOException 
+     * @throws AnalysisException AnalysisException
+     * @throws IOException IOException
      */
     public static ZoneClassifier getInitialZoneClassifier(InputStream model, InputStream range)
             throws AnalysisException, IOException {
@@ -123,8 +123,8 @@ public class ComponentFactory {
      * @param rangePath Path to svm range file (can be regular file or a classpath resource).
      *      For classpath resource, path should be prefixed with <code>classpath:</code>
      * @return metadata zone classifier
-     * @throws pl.edu.icm.cermine.exception.AnalysisException
-     * @throws java.io.IOException
+     * @throws AnalysisException AnalysisException
+     * @throws IOException IOException
      */
     public static ZoneClassifier getMetadataZoneClassifier(String modelPath, String rangePath) throws AnalysisException, IOException {
         
@@ -137,8 +137,8 @@ public class ComponentFactory {
      * @param model svm model
      * @param range svm range file
      * @return metadata zone classifier
-     * @throws AnalysisException
-     * @throws IOException 
+     * @throws AnalysisException AnalysisException
+     * @throws IOException IOException
      */
     public static ZoneClassifier getMetadataZoneClassifier(InputStream model, InputStream range) 
             throws AnalysisException, IOException {
@@ -167,7 +167,7 @@ public class ComponentFactory {
      * The method creates an instance of a default affiliation parser.
      * 
      * @return affiliation parser
-     * @throws pl.edu.icm.cermine.exception.AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public static ParsableStringParser<DocumentAffiliation> getAffiliationParser() throws AnalysisException {
         return new CRFAffiliationParser();
@@ -186,7 +186,7 @@ public class ComponentFactory {
      * The method creates an instance of a default bib reference parser.
      * 
      * @return bib reference parser
-     * @throws pl.edu.icm.cermine.exception.AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public static BibReferenceParser<BibEntry> getBibReferenceParser() throws AnalysisException {
         return CRFBibReferenceParser.getInstance();
@@ -197,7 +197,7 @@ public class ComponentFactory {
      * 
      * @param model crf model 
      * @return parser
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public static BibReferenceParser<BibEntry> getBibReferenceParser(InputStream model) throws AnalysisException {
         return new CRFBibReferenceParser(model);
@@ -211,9 +211,10 @@ public class ComponentFactory {
      * @param rangePath Path to svm range file (can be regular file or a classpath resource).
      *      For classpath resource, path should be prefixed with <code>classpath:</code>
      * @return content filter
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
+     * @throws IOException IOException
      */
-    public static ContentFilter getContentFilter(String modelPath, String rangePath) throws AnalysisException, IOException {      
+    public static ContentFilter getContentFilter(String modelPath, String rangePath) throws AnalysisException, IOException {
         return getContentFilter(ResourceUtils.openResourceStream(modelPath), ResourceUtils.openResourceStream(rangePath));
     }
 
@@ -223,8 +224,8 @@ public class ComponentFactory {
      * @param model svm model file
      * @param range svm range file
      * @return content filter
-     * @throws AnalysisException
-     * @throws IOException 
+     * @throws AnalysisException AnalysisException
+     * @throws IOException IOException
      */
     public static ContentFilter getContentFilter(InputStream model, InputStream range) 
             throws AnalysisException, IOException {
@@ -244,7 +245,7 @@ public class ComponentFactory {
      * The method creates an instance of a default content header extractor. 
      * 
      * @return content header extractor
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public static ContentHeadersExtractor getContentHeaderExtractor() throws AnalysisException {
         return new HeuristicContentHeadersExtractor();
@@ -260,8 +261,8 @@ public class ComponentFactory {
      * @param model svm model file
      * @param range svm range file
      * @return content header extractor
-     * @throws AnalysisException
-     * @throws IOException 
+     * @throws AnalysisException AnalysisException
+     * @throws IOException IOException
      */
     public static ContentHeadersExtractor getContentHeaderExtractor(InputStream model, InputStream range) 
             throws AnalysisException, IOException {

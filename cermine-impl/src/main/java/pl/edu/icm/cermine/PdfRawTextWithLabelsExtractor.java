@@ -61,7 +61,7 @@ public class PdfRawTextWithLabelsExtractor {
      * 
      * @param stream input stream
      * @return pdf's content as plain text
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element extractRawText(InputStream stream) throws AnalysisException {
         try {
@@ -77,7 +77,7 @@ public class PdfRawTextWithLabelsExtractor {
      * 
      * @param document document's structure
      * @return pdf's content as plain text
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element extractRawText(BxDocument document) throws AnalysisException {
         try {

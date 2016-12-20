@@ -29,7 +29,7 @@ import pl.edu.icm.cermine.parsing.model.Token;
 public interface TextTokenizer<T extends Token<?>> {
 
     /**
-     * @param text
+     * @param text text
      * @return list of tokens, a sequence of atomic parts of the text
      */
     List<T> tokenize(String text);

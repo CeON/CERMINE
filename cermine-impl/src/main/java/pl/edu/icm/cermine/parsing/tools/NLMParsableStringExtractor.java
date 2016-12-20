@@ -58,8 +58,8 @@ public abstract class NLMParsableStringExtractor<L, T extends Token<L>, P extend
     /**
      * @param source the InputSoruce representing the XML document
      * @return parsable string representing the source
-     * @throws JDOMException
-     * @throws IOException
+     * @throws JDOMException JDOMException
+     * @throws IOException IOException
      */
     public List<P> extractStrings(InputSource source) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");

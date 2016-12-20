@@ -30,8 +30,8 @@ public interface FeatureVectorDistanceMetric {
     /**
      * Calculates distance between two feature vectors.
      * 
-     * @param vector1
-     * @param vector2
+     * @param vector1 vector
+     * @param vector2 vector
      * @return the distance
      */
     double getDistance(FeatureVector vector1, FeatureVector vector2);

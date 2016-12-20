@@ -97,7 +97,7 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
      * common words list
      * @param acrfFileName the name of the package resource to be used as the
      * ACRF model
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public CRFAffiliationParser(String wordsFileName, String acrfFileName) throws AnalysisException {
         List<String> commonWords = loadWords(wordsFileName);
@@ -115,8 +115,8 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
      * Sets the token list of the affiliation so that their labels determine the
      * tagging of its text content.
      *
-     * @param affiliation
-     * @throws AnalysisException
+     * @param affiliation affiliation
+     * @throws AnalysisException AnalysisException
      */
     @Override
     public void parse(DocumentAffiliation affiliation) throws AnalysisException {
@@ -168,8 +168,8 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
      * @param affiliationString string representation of the affiliation to
      * parse
      * @return XML Element with the tagged affiliation in NLM format
-     * @throws AnalysisException
-     * @throws TransformationException
+     * @throws AnalysisException AnalysisException
+     * @throws TransformationException TransformationException
      */
     @Override
     public Element parse(String affiliationString) throws AnalysisException,

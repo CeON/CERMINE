@@ -32,9 +32,9 @@ public interface CharacterExtractor {
     /**
      * Extracts characters from the file.
      * 
-     * @param stream
+     * @param stream PDF stream
      * @return a document containing pages with individual characters.
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     BxDocument extractCharacters(InputStream stream) throws AnalysisException;
 }

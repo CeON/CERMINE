@@ -36,7 +36,7 @@ public class AffiliationDictionaryFeature extends KeywordFeatureCalculator<Token
      * @param dictionaryFileName the name of the dictionary to be used (must be
      * a package resource)
      * @param caseSensitive whether dictionary lookups should be case sensitive
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public AffiliationDictionaryFeature(String FeatureString, String dictionaryFileName,
             boolean caseSensitive) throws AnalysisException {

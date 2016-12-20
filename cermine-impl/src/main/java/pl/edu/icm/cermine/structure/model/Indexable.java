@@ -19,42 +19,43 @@ package pl.edu.icm.cermine.structure.model;
 
 /**
  * @author Pawel Szostek
+ * @param <A> indexable object class
  */
 public interface Indexable<A> {
 
     /**
      * Getter for the value based on TrueViz XxxID field
-     * @return 
+     * @return id
      */
     String getId();
 
     /**
      * Getter for the value based on TrueViz XxxNext field
-     * @return 
+     * @return next id
      */
     String getNextId();
 
     /**
      * Setter for the value based on TrueViz XxxID field
-     * @param id
+     * @param id id
      */
     void setId(String id);
 
     /**
      * Setter for the value based on TrueViz XxxNext field
-     * @param nextId
+     * @param nextId next id
      */
     void setNextId(String nextId);
 
     /**
      * Get next linked list element
-     * @return 
+     * @return next object
      */
     A getNext();
 
     /**
      * Set next linked list element
-     * @param elem
+     * @param elem next object
      */
     void setNext(A elem);
 

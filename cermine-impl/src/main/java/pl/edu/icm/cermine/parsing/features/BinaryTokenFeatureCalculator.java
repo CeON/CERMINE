@@ -31,8 +31,8 @@ public abstract class BinaryTokenFeatureCalculator extends
         FeatureCalculator<Token<?>, ParsableString<?>> {
 
     /**
-     * @param token
-     * @param context
+     * @param token token
+     * @param context context
      * @return whether the token in the context has the feature represented by
      * the class
      */

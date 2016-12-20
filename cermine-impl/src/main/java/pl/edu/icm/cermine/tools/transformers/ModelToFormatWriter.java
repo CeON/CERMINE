@@ -36,7 +36,7 @@ public interface ModelToFormatWriter<T> {
      * @param object a model object
      * @param hints additional hints used during the conversion
      * @return written object
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     String write(T object, Object... hints) throws TransformationException;
     
@@ -46,7 +46,7 @@ public interface ModelToFormatWriter<T> {
      * @param objects a list of model objects
      * @param hints additional hints used during the conversion
      * @return written object
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     String writeAll(List<T> objects, Object... hints) throws TransformationException;
     
@@ -56,7 +56,7 @@ public interface ModelToFormatWriter<T> {
      * @param writer writer
      * @param object a model object
      * @param hints additional hints used during the conversion
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     void write(Writer writer, T object, Object... hints) throws TransformationException;
 
@@ -66,7 +66,7 @@ public interface ModelToFormatWriter<T> {
      * @param writer writer
      * @param objects a list of model objects
      * @param hints additional hints used during the conversion
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     void writeAll(Writer writer, List<T> objects, Object... hints) throws TransformationException;
     

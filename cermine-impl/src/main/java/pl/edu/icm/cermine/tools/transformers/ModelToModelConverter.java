@@ -36,7 +36,7 @@ public interface ModelToModelConverter<S, T> {
      * @param source the source object
      * @param hints additional hints used during the conversion
      * @return the converted object
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     T convert(S source, Object... hints) throws TransformationException;
     
@@ -46,7 +46,7 @@ public interface ModelToModelConverter<S, T> {
      * @param source the list of source objects
      * @param hints additional hints used during the conversion
      * @return the list of converted objects
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     List<T> convertAll(List<S> source, Object... hints) throws TransformationException;
 }

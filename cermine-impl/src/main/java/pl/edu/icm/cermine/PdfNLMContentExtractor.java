@@ -66,7 +66,7 @@ public class PdfNLMContentExtractor {
      * 
      * @param stream input stream
      * @return extracted content in NLM format
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element extractContent(InputStream stream) throws AnalysisException {
         try {
@@ -83,7 +83,7 @@ public class PdfNLMContentExtractor {
      * 
      * @param document document's structure
      * @return extracted content in NLM format
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element extractContent(BxDocument document) throws AnalysisException {
         try {

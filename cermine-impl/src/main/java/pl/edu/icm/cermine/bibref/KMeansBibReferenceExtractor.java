@@ -67,9 +67,9 @@ public class KMeansBibReferenceExtractor implements BibReferenceExtractor {
      * is then assumed to be the set of all first lines, which allows for splitting references blocks
      * into individual references.
      * 
-     * @param document
+     * @param document document
      * @return an array of extracted references
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     @Override
     public String[] extractBibReferences(BxDocument document) throws AnalysisException {

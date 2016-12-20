@@ -80,7 +80,7 @@ public class AffiliationCRFTokenClassifier implements TokenClassifier<Token<Affi
     /**
      * Uses the default ACRF model.
      *
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public AffiliationCRFTokenClassifier() throws AnalysisException {
         this(AffiliationCRFTokenClassifier.class.getResourceAsStream(DEFAULT_MODEL_FILE));

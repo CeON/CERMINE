@@ -66,7 +66,7 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
      * a package resource)
      * @param caseSensitive whether dictionary lookups should be case sensitive
      * @param tokenizer used for dictionary entries splitting
-     * @throws pl.edu.icm.cermine.exception.AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public KeywordFeatureCalculator(String FeatureString, String dictionaryFileName,
             boolean caseSensitive, TextTokenizer<T> tokenizer) throws AnalysisException {
@@ -133,7 +133,7 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
      * of the tokens and marks the corresponding tokens by adding an appropriate
      * string to their feature lists.
      *
-     * @param tokens
+     * @param tokens tokens
      */
     public void calculateDictionaryFeatures(List<T> tokens) {
 

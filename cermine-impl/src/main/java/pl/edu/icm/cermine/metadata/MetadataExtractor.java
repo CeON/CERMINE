@@ -31,9 +31,9 @@ public interface MetadataExtractor<T> {
     /**
      * Extracts metadata from the document.
      *
-     * @param document
+     * @param document document
      * @return extracted metadata
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     T extractMetadata(BxDocument document) throws AnalysisException;
 }

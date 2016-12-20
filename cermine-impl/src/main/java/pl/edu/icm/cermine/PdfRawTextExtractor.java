@@ -51,7 +51,7 @@ public class PdfRawTextExtractor {
      * 
      * @param stream input stream
      * @return pdf's content as plain text
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public String extractText(InputStream stream) throws AnalysisException {
         try {
@@ -67,7 +67,7 @@ public class PdfRawTextExtractor {
      * 
      * @param document document's structure
      * @return pdf's content as plain text
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public String extractText(BxDocument document) throws AnalysisException {
         try {

@@ -27,9 +27,14 @@ import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.*;
 import com.itextpdf.text.pdf.parser.Vector;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -82,7 +87,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
      * (Tj, TJ, ' and ").
      * @param stream PDF's stream
      * @return BxDocument containing pages with extracted chunks stored as BxChunk lists
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     @Override
     public BxDocument extractCharacters(InputStream stream) throws AnalysisException {
@@ -366,6 +371,8 @@ public class ITextCharacterExtractor implements CharacterExtractor {
      * Sets the number of front and back pages to be processed and returned.
      * If any of the values is set to 0 or less, the whole document is processed.
      * This may cause long processing time for large documents.
+     * @param frontPagesLimit front pages limit
+     * @param backPagesLimit back pages limit
      */
     public void setPagesLimits(int frontPagesLimit, int backPagesLimit) {
         this.frontPagesLimit = frontPagesLimit;

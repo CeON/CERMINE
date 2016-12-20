@@ -34,10 +34,10 @@ public interface CermineExtractorService {
      * Method to extract metadata from the given pdf file. File is represented
      * as a InputStream, which will be passed to the extractor itself.
      *
-     * @param ii
+     * @param ii input stream
      * @return result of the extraction, including basic request stats.
-     * @throws AnalysisException
-     * @throws pl.edu.icm.cermine.service.ServiceException
+     * @throws AnalysisException AnalysisException
+     * @throws ServiceException ServiceException
      */
     ExtractionResult extractNLM(InputStream ii) throws AnalysisException, ServiceException;
 

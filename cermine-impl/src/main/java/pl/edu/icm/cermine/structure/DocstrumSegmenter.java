@@ -123,6 +123,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      *
      * @param page page containing chunks
      * @return array of components
+     * @throws AnalysisException AnalysisException
      */
     protected List<Component> createComponents(BxPage page) throws AnalysisException {
         List<BxChunk> chunks = Lists.newArrayList(page.getChunks());
@@ -274,7 +275,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     /**
      * Groups components into text lines.
      *
-     * @param components
+     * @param components component list
      * @param orientation - estimated text orientation
      * @param maxHorizontalDistance - maximum horizontal distance between components
      * @param maxVerticalDistance - maximum vertical distance between components
@@ -313,21 +314,6 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         return valueSum / weightSum;
     }
 
-    /**
-     * Groups text lines into zones.
-     * 
-     * @param lines
-     * @param orientation
-     * @param minHorizontalDistance
-     * @param maxHorizontalDistance
-     * @param minVerticalDistance
-     * @param maxVerticalDistance
-     * @param minHorizontalMergeDistance
-     * @param maxHorizontalMergeDistance
-     * @param minVerticalMergeDistance
-     * @param maxVerticalMergeDistance
-     * @return
-     */
     private List<List<ComponentLine>> determineZones(List<ComponentLine> lines, double orientation,
             double minHorizontalDistance, double maxHorizontalDistance,
             double minVerticalDistance, double maxVerticalDistance,
@@ -568,9 +554,9 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         /**
          * Computes horizontal distance between components.
          * 
-         * @param c
-         * @param orientation
-         * @return
+         * @param c component
+         * @param orientation orientation angle
+         * @return distance
          */
         public double horizontalDistance(Component c, double orientation) {
             // TODO: take orientation into account

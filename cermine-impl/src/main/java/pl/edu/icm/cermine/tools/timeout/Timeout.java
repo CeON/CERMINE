@@ -54,7 +54,7 @@ public class Timeout {
     /**
      * Throw exception if it already is the deadline time or past it.
      *
-     * @throws TimeoutException
+     * @throws TimeoutException TimeoutException
      */
     public void check() throws TimeoutException {
         long currTimeMillis = getCurrentTime();
@@ -69,8 +69,8 @@ public class Timeout {
 
     /**
      * Return the timeout corresponding to the more immediate deadline.
-     * @param t0
-     * @param t1
+     * @param t0 timeout
+     * @param t1 timeout
      * @return earlier timeout
      */
     public static Timeout min(Timeout t0, Timeout t1) {

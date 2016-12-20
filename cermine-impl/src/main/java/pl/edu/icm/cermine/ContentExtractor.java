@@ -69,7 +69,7 @@ public class ContentExtractor {
     /**
      * Creates the object.
      *
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public ContentExtractor() throws AnalysisException {
         this(new ContentExtractorConfigLoader().loadConfiguration());
@@ -154,7 +154,7 @@ public class ContentExtractor {
      * Stores the input PDF stream.
      *
      * @param pdfFile PDF stream
-     * @throws IOException
+     * @throws IOException IOException
      */
     public void setPDF(InputStream pdfFile) throws IOException {
         this.extractor.setPDF(pdfFile);
@@ -163,8 +163,8 @@ public class ContentExtractor {
     /**
      * Sets the input bx document.
      *
-     * @param bxDocument
-     * @throws java.io.IOException
+     * @param bxDocument bx document
+     * @throws IOException IOException
      */
     public void setBxDocument(BxDocument bxDocument) throws IOException {
         this.extractor.setBxDocument(bxDocument);
@@ -173,7 +173,7 @@ public class ContentExtractor {
     /**
      * Resets the extraction results.
      *
-     * @throws IOException
+     * @throws IOException IOException
      */
     public void reset() throws IOException {
         this.extractor.reset();
@@ -202,7 +202,7 @@ public class ContentExtractor {
      * Extracts geometric structure.
      *
      * @return geometric structure
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -215,8 +215,8 @@ public class ContentExtractor {
      * The same as {@link #getBxDocument()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
-     * @return
-     * @throws AnalysisException
+     * @return geometric structure
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -240,7 +240,7 @@ public class ContentExtractor {
      * Extracts geometric structure with general labels.
      *
      * @return geometric structure
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -253,8 +253,8 @@ public class ContentExtractor {
      * The same as {@link #getBxDocumentWithGeneralLabels()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
-     * @return
-     * @throws AnalysisException
+     * @return geometric structure
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -278,7 +278,7 @@ public class ContentExtractor {
      * Extracts geometric structure with specific labels.
      *
      * @return geometric structure
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -291,8 +291,8 @@ public class ContentExtractor {
      * The same as {@link #getBxDocumentWithSpecificLabels()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
-     * @return
-     * @throws AnalysisException
+     * @return geometric structure
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -316,7 +316,7 @@ public class ContentExtractor {
      * Extracts the metadata.
      *
      * @return the metadata
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -330,7 +330,7 @@ public class ContentExtractor {
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return metadata
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -354,7 +354,7 @@ public class ContentExtractor {
      * Extracts the metadata in NLM format.
      *
      * @return the metadata in NLM format
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -364,11 +364,11 @@ public class ContentExtractor {
     }
 
     /**
-     * The same as {@link #getNLMMetadata()} but with a timeout.
+     * The same as {@link #getMetadataAsNLM()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return metadata in NLM
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -392,7 +392,7 @@ public class ContentExtractor {
      * Extracts the references.
      *
      * @return the list of references
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -406,7 +406,7 @@ public class ContentExtractor {
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return list of references
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -430,7 +430,7 @@ public class ContentExtractor {
      * Extracts the references in NLM format.
      *
      * @return the list of references
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -440,11 +440,11 @@ public class ContentExtractor {
     }
 
     /**
-     * The same as {@link #getNLMReferences()} but with a timeout.
+     * The same as {@link #getReferencesAsNLM()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return the list of references
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -468,7 +468,7 @@ public class ContentExtractor {
      * Extracts raw text.
      *
      * @return raw text
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -482,7 +482,7 @@ public class ContentExtractor {
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return full text
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -505,7 +505,7 @@ public class ContentExtractor {
      * Extracts labeled raw text.
      *
      * @return labeled raw text
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -515,11 +515,11 @@ public class ContentExtractor {
     }
 
     /**
-     * The same as {@link #getLabelledRawFullText()} but with a timeout.
+     * The same as {@link #getLabelledFullText()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return labelled full text
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -543,7 +543,7 @@ public class ContentExtractor {
      * Extracts structured full text.
      *
      * @return full text
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -553,11 +553,11 @@ public class ContentExtractor {
     }
 
     /**
-     * The same as {@link #getNLMText()} but with a timeout.
+     * The same as {@link #getBody()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return full text
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -581,7 +581,7 @@ public class ContentExtractor {
      * Extracts structured full text.
      *
      * @return full text in NLM format
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -591,11 +591,11 @@ public class ContentExtractor {
     }
 
     /**
-     * The same as {@link #getNLMText()} but with a timeout.
+     * The same as {@link #getBodyAsNLM()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return full text in NLM
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -619,7 +619,7 @@ public class ContentExtractor {
      * Extracts full content in NLM format.
      *
      * @return full content in NLM format
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */
@@ -629,11 +629,11 @@ public class ContentExtractor {
     }
 
     /**
-     * The same as {@link #getNLMContent()} but with a timeout.
+     * The same as {@link #getContentAsNLM()} but with a timeout.
      *
      * @param timeoutSeconds approximate timeout in seconds
      * @return the content in NLM
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      * @throws TimeoutException thrown when timeout deadline has passed. See
      * {@link #setTimeout(long)} for additional information about the timeout.
      */

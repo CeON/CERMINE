@@ -36,7 +36,7 @@ public interface FormatToModelReader<T> {
      * @param string input object in a certain format
      * @param hints additional hints used during the conversion
      * @return a model object
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     T read(String string, Object... hints) throws TransformationException;
     
@@ -46,7 +46,7 @@ public interface FormatToModelReader<T> {
      * @param string input object in a certain format
      * @param hints additional hints used during the conversion
      * @return a list of model object
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     List<T> readAll(String string, Object... hints) throws TransformationException;
     
@@ -56,7 +56,7 @@ public interface FormatToModelReader<T> {
      * @param reader input reader
      * @param hints additional hints used during the conversion
      * @return a model object
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     T read(Reader reader, Object... hints) throws TransformationException;
 
@@ -66,7 +66,7 @@ public interface FormatToModelReader<T> {
      * @param reader input reader
      * @param hints additional hints used during the conversion
      * @return a list of model objects
-     * @throws TransformationException 
+     * @throws TransformationException TransformationException
      */
     List<T> readAll(Reader reader, Object... hints) throws TransformationException;
 }

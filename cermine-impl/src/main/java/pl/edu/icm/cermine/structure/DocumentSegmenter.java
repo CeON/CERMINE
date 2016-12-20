@@ -31,9 +31,9 @@ public interface DocumentSegmenter {
     /**
      * Builds hierarchical structure of the document.
      * 
-     * @param document
+     * @param document document
      * @return the document storing hierarchical structure.
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     BxDocument segmentDocument(BxDocument document) throws AnalysisException;
 }

@@ -84,8 +84,8 @@ public class Token<L> {
      * @param text the normalized string corresponding to the
      * substring(startIndex, endIndex) of the parsable string the token belongs
      * to
-     * @param startIndex
-     * @param endIndex
+     * @param startIndex start index
+     * @param endIndex end index
      * @param label may be null if the token is not classified yet
      */
     public Token(String text, int startIndex, int endIndex, L label) {
@@ -100,8 +100,8 @@ public class Token<L> {
      * @param text the normalized string corresponding to the
      * substring(startIndex, endIndex) of the parsable string the token belongs
      * to
-     * @param startIndex
-     * @param endIndex
+     * @param startIndex start index
+     * @param endIndex end index
      */
     public Token(String text, int startIndex, int endIndex) {
         this(text, startIndex, endIndex, null);
@@ -148,10 +148,10 @@ public class Token<L> {
     /**
      * Compares text strings represented by sequences of tokens
      *
-     * @param <T>
-     * @param lhs
-     * @param rhs
-     * @param caseSensitive
+     * @param <T> token type
+     * @param lhs token sequence
+     * @param rhs token sequence
+     * @param caseSensitive whether case sensitive
      * @return whether the corresponding strings are equal
      */
     @SuppressWarnings("rawtypes")

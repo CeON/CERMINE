@@ -31,9 +31,9 @@ public interface BibReferenceExtractor {
     /**
      * Extracts individual reference strings from the document.
      * 
-     * @param document
+     * @param document document
      * @return extracted references
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     String[] extractBibReferences(BxDocument document) throws AnalysisException;
 }

@@ -33,8 +33,8 @@ public interface TokenClassifier<T extends Token<?>> {
      * Predicts and sets a label for each of the tokens. The tokens are assumed
      * to hold appropriate lists of features.
      *
-     * @param tokens
-     * @throws AnalysisException
+     * @param tokens tokens
+     * @throws AnalysisException AnalysisException
      */
     void classify(List<T> tokens) throws AnalysisException;
 }

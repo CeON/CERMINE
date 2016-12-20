@@ -57,7 +57,7 @@ public class PdfBxStructureExtractor {
      * 
      * @param stream PDF stream
      * @return BxDocument object storing the geometric structure
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public BxDocument extractStructure(InputStream stream) throws AnalysisException {
         try {

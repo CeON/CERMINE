@@ -31,9 +31,9 @@ public interface ReadingOrderResolver {
     /**
      * Resolves the reading order of the document's objects.
      * 
-     * @param document
+     * @param document document
      * @return the document with the reading order set.
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     BxDocument resolve(BxDocument document) throws AnalysisException;
     

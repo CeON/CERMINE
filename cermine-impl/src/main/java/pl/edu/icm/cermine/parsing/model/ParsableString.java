@@ -54,7 +54,7 @@ public interface ParsableString<T extends Token<?>> {
     /**
      * Appends the text to the text content
      *
-     * @param text
+     * @param text text
      */
     void appendText(String text);
 

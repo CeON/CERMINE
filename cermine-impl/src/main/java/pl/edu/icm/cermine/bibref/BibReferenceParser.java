@@ -31,10 +31,10 @@ public interface BibReferenceParser<T> {
     /**
      * Parses a text of a reference.
      *
-     * @param text
+     * @param text text
      * @return Parsed reference, or <code>null</code> if the specified text
      * couldn't be parsed.
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     T parseBibReference(String text) throws AnalysisException;
 

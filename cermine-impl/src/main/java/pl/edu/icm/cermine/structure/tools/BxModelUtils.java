@@ -172,8 +172,8 @@ public final class BxModelUtils {
     /**
      * Creates a deep copy of the word.
      *
-     * @param word
-     * @return
+     * @param word word
+     * @return copy
      */
     public static BxWord deepClone(BxWord word) {
         BxWord copy = new BxWord().setBounds(deepClone(word.getBounds()));
@@ -195,8 +195,8 @@ public final class BxModelUtils {
     /**
      * Creates a deep copy of the line.
      *
-     * @param line
-     * @return
+     * @param line line
+     * @return copy
      */
     public static BxLine deepClone(BxLine line) {
         BxLine copy = new BxLine().setBounds(deepClone(line.getBounds()));
@@ -226,8 +226,8 @@ public final class BxModelUtils {
     /**
      * Creates a deep copy of the zone.
      *
-     * @param zone
-     * @return
+     * @param zone zone
+     * @return copy
      */
     public static BxZone deepClone(BxZone zone) {
         BxZone copy = new BxZone().setLabel(zone.getLabel()).setBounds(deepClone(zone.getBounds()));
@@ -268,8 +268,8 @@ public final class BxModelUtils {
     /**
      * Creates a deep copy of the page.
      *
-     * @param page
-     * @return
+     * @param page page
+     * @return copy
      */
     public static BxPage deepClone(BxPage page) {
         BxPage copy = new BxPage().setBounds(deepClone(page.getBounds()));
@@ -319,8 +319,8 @@ public final class BxModelUtils {
     /**
      * Creates a deep copy of the document.
      *
-     * @param document
-     * @return
+     * @param document document
+     * @return copy
      */
     public static BxDocument deepClone(BxDocument document) {
         BxDocument copy = new BxDocument();
@@ -381,8 +381,8 @@ public final class BxModelUtils {
     /**
      * Maps segmented chunks to words which they belong to.
      *
-     * @param page
-     * @return
+     * @param page page
+     * @return map
      */
     public static Map<BxChunk, BxWord> mapChunksToWords(BxPage page) {
         Map<BxChunk, BxWord> map = new HashMap<BxChunk, BxWord>();
@@ -401,8 +401,8 @@ public final class BxModelUtils {
     /**
      * Maps segmented chunks to lines which they belong to.
      *
-     * @param page
-     * @return
+     * @param page page
+     * @return map
      */
     public static Map<BxChunk, BxLine> mapChunksToLines(BxPage page) {
         Map<BxChunk, BxLine> map = new HashMap<BxChunk, BxLine>();
@@ -422,7 +422,7 @@ public final class BxModelUtils {
      * Maps segmented chunks to zones which they belong to.
      *
      * @param page page containing zones
-     * @return
+     * @return map
      */
     public static Map<BxChunk, BxZone> mapChunksToZones(BxPage page) {
         Map<BxChunk, BxZone> map = new HashMap<BxChunk, BxZone>();
@@ -441,7 +441,7 @@ public final class BxModelUtils {
     /**
      * Counts segmented chunks in line.
      *
-     * @param line
+     * @param line line
      * @return number of segmented chunks
      */
     public static int countChunks(BxLine line) {
@@ -455,7 +455,7 @@ public final class BxModelUtils {
     /**
      * Counts segmented chunks in zone.
      *
-     * @param zone
+     * @param zone zone
      * @return number of segmented chunks
      */
     public static int countChunks(BxZone zone) {

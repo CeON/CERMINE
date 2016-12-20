@@ -81,7 +81,7 @@ public class DocumentPlane {
         public String toString() {
             return "(" + x + "," + y + ")";
         }
-    }; //class GridXY
+    }
 
     public List<BxObject> getObjects() {
         return objs;
@@ -98,9 +98,9 @@ public class DocumentPlane {
 
     /**
      * Looks for objects placed between obj1 and obj2 excluding them
-     * @param obj1
-     * @param obj2
-     * @return 
+     * @param obj1 object
+     * @param obj2 object
+     * @return object list
      */
     public List<BxObject> findObjectsBetween(BxObject obj1, BxObject obj2) {
         double x0 = Math.min(obj1.getX(), obj2.getX());
@@ -120,9 +120,9 @@ public class DocumentPlane {
 
     /**
      * Checks if there is any object placed between obj1 and obj2
-     * @param obj1
-     * @param obj2
-     * @return 
+     * @param obj1 object
+     * @param obj2 object
+     * @return true if anything is placed between, false otherwise
      */
     public boolean anyObjectsBetween(BxObject obj1, BxObject obj2) {
         List<BxObject> lObjs = findObjectsBetween(obj1, obj2);
@@ -131,8 +131,8 @@ public class DocumentPlane {
 
     /**
      * Adds object to the plane
-     * @param obj
-     * @return 
+     * @param obj object
+     * @return document plane
      */
     public DocumentPlane add(BxObject obj) {
         int objsBefore = this.objs.size();
@@ -231,7 +231,7 @@ public class DocumentPlane {
 
     /**
      * Count objects stored in objects dictionary
-     * @return 
+     * @return number of elements
      */
     protected int elementsInGrid() {
         List<BxObject> objs_ = new ArrayList<BxObject>();
@@ -245,10 +245,6 @@ public class DocumentPlane {
         return objs_.size();
     }
 
-    /**
-     * Used for debugging purposes
-     * @return 
-     */
     public String dump() {
         StringBuilder sb = new StringBuilder();
         for (GridXY iter : grid.keySet()) {

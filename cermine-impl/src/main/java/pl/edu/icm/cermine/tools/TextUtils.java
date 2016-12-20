@@ -173,7 +173,7 @@ public class TextUtils {
     private static final Pattern NOT_ALPHANUM_PATTERN = Pattern.compile("[^a-zA-Z0-9]");
 
     /**
-     * @param text
+     * @param text text
      * @return whether the text is a single word
      */
     public static boolean isWord(String text) {
@@ -181,7 +181,7 @@ public class TextUtils {
     }
 
     /**
-     * @param text
+     * @param text text
      * @return whether the text is a single number
      */
     public static boolean isNumber(String text) {
@@ -189,7 +189,7 @@ public class TextUtils {
     }
 
     /**
-     * @param text
+     * @param text text
      * @return whether the text is a single word with the first letter in upper
      * case and all the rest in lower case
      */
@@ -200,7 +200,7 @@ public class TextUtils {
     }
 
     /**
-     * @param text
+     * @param text text
      * @return whether the text is a single word with all letters in upper case
      */
     public static boolean isAllUpperCase(String text) {
@@ -208,7 +208,7 @@ public class TextUtils {
     }
 
     /**
-     * @param text
+     * @param text text
      * @return whether the text is a single word with all letters in upper case
      */
     public static boolean isAllLowerCase(String text) {
@@ -216,7 +216,7 @@ public class TextUtils {
     }
 
     /**
-     * @param text
+     * @param text text
      * @return whether the word is a commonly used separator ("." "," ";")
      */
     public static boolean isSeparator(String text) {
@@ -224,7 +224,7 @@ public class TextUtils {
     }
 
     /**
-     * @param text
+     * @param text text
      * @return whether the word is not alphanumeric and is not a separator
      */
     public static boolean isNonAlphanumSep(String text) {

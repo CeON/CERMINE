@@ -41,7 +41,7 @@ public class BxBoundsBuilder {
      * Expands current bounding box so that it contains bounding boxes
      * of page zones.
      *
-     * @param page
+     * @param page page
      */
     public void expandByZones(BxPage page) {
         for (BxZone zone : page) {
@@ -53,7 +53,7 @@ public class BxBoundsBuilder {
      * Expands current bounding box so that it contains bounding boxes
      * of zone lines.
      *
-     * @param zone
+     * @param zone zone
      */
     public void expandByLines(BxZone zone) {
         for (BxLine line : zone) {
@@ -65,7 +65,7 @@ public class BxBoundsBuilder {
      * Expands current bounding box so that it contains bounding boxes
      * of line words.
      *
-     * @param line
+     * @param line line
      */
     public void expandByWords(BxLine line) {
         for (BxWord word : line) {
@@ -77,7 +77,7 @@ public class BxBoundsBuilder {
      * Expands current bounding box so that it contains bounding boxes
      * of word chunks.
      *
-     * @param word
+     * @param word word
      */
     public void expandByChunks(BxWord word) {
         for (BxChunk chunk : word) {
@@ -102,7 +102,7 @@ public class BxBoundsBuilder {
      * Expands current bounding box so that it contains given bounding box.
      * If given bounding box is null, this method has no effect.
      * 
-     * @param bounds
+     * @param bounds bounds
      */
     public void expand(BxBounds bounds) {
         if (bounds != null) {
@@ -116,7 +116,7 @@ public class BxBoundsBuilder {
     /**
      * Returns current bounding box or null if current bounding box is empty.
      *
-     * @return
+     * @return bounds
      */
     public BxBounds getBounds() {
         if (minX <= maxX && minY <= maxY) {
@@ -139,7 +139,7 @@ public class BxBoundsBuilder {
     /**
      * Sets the bounding box of page based on bounding boxes of page zones.
      *
-     * @param page
+     * @param page page
      */
     public static void setBounds(BxPage page) {
         BxBoundsBuilder builder = new BxBoundsBuilder();
@@ -150,7 +150,7 @@ public class BxBoundsBuilder {
     /**
      * Sets the bounding box of zone based on bounding boxes of zone lines.
      *
-     * @param zone
+     * @param zone zone
      */
     public static void setBounds(BxZone zone) {
         BxBoundsBuilder builder = new BxBoundsBuilder();
@@ -161,7 +161,7 @@ public class BxBoundsBuilder {
     /**
      * Sets the bounding box of line based on bounding boxes of line words.
      *
-     * @param line
+     * @param line line
      */
     public static void setBounds(BxLine line) {
         BxBoundsBuilder builder = new BxBoundsBuilder();
@@ -172,7 +172,7 @@ public class BxBoundsBuilder {
     /**
      * Sets the bounding box of word based on bounding boxes of word chunks.
      *
-     * @param word
+     * @param word word
      */
     public static void setBounds(BxWord word) {
         BxBoundsBuilder builder = new BxBoundsBuilder();

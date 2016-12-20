@@ -28,9 +28,9 @@ public class Utils {
     /**
      * Compares two doubles according to a given precision.
      * 
-     * @param d1
-     * @param d2
-     * @param precision
+     * @param d1 double
+     * @param d2 double
+     * @param precision precision
      * @return 0 if arguments are equal, 1 if the first argument is greater, -1 otherwise
      */
     public static int compareDouble(double d1, double d2, double precision) {

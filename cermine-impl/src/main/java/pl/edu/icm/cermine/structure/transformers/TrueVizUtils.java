@@ -36,8 +36,8 @@ public final class TrueVizUtils {
 
     /**
      * Returns new document builder for creating/parsing TrueViz/Marg documents.
-     * @return 
-     * @throws javax.xml.parsers.ParserConfigurationException
+     * @return DocumentBuilder
+     * @throws ParserConfigurationException ParserConfigurationException
      */
     public static DocumentBuilder newDocumentBuilder() throws ParserConfigurationException {
         return newDocumentBuilder(false);
@@ -47,8 +47,8 @@ public final class TrueVizUtils {
      * Returns new document builder for creating/parsing TrueViz/Marg documents.
      * @param validating true if the builder produced will validate documents
      * as they are parsed; false otherwise
-     * @return 
-     * @throws javax.xml.parsers.ParserConfigurationException
+     * @return DocumentBuilder
+     * @throws ParserConfigurationException ParserConfigurationException
      */
     public static DocumentBuilder newDocumentBuilder(boolean validating) throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

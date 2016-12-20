@@ -4,15 +4,15 @@ import org.apache.commons.configuration.Configuration;
 
 
 /**
- * Class that holds configuration for {@link ContentExtractor}.<br>
- * An object of this class can be obtained by {@link ContentExtractorConfigLoader}
+ * Class that holds configuration for {@link pl.edu.icm.cermine.ContentExtractor}.<br>
+ * An object of this class can be obtained by {@link pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader}
  * 
  * @author madryk
  */
 public class ContentExtractorConfig {
 
     /**
-     * Enumeration that contains all available configuration properties for {@link ContentExtractor}
+     * Enumeration that contains all available configuration properties for {@link pl.edu.icm.cermine.ContentExtractor}
      */
     public enum ConfigurationProperty {
         
@@ -51,6 +51,8 @@ public class ContentExtractorConfig {
     
     /**
      * Returns value of the configuration property
+     * @param property property
+     * @return property value
      */
     public String getProperty(ConfigurationProperty property) {
         return configuration.getString(property.getPropertyKey());

@@ -63,7 +63,7 @@ public class AffiliationFeatureExtractor implements FeatureExtractor<DocumentAff
 
     /**
      * @param commonWords the words that are not considered 'Rare'
-     * @throws AnalysisException
+     * @throws AnalysisException AnalysisException
      */
     public AffiliationFeatureExtractor(List<String> commonWords) throws AnalysisException {
         this();

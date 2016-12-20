@@ -23,7 +23,7 @@ import pl.edu.icm.cermine.tools.Utils;
  * Tuple containing magic value c, object1, object2 and distance between them.
  *
  * @author Pawel Szostek
- * @param <E>
+ * @param <E> element type
  */
 public class DistElem<E> implements Comparable<DistElem<E>> {
 

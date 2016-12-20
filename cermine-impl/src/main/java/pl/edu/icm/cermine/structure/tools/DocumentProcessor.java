@@ -31,8 +31,8 @@ public interface DocumentProcessor {
     /**
      * Performs an operation on a document.
      * 
-     * @param document 
-     * @throws pl.edu.icm.cermine.exception.AnalysisException 
+     * @param document document
+     * @throws AnalysisException AnalysisException
      */
     void process(BxDocument document) throws AnalysisException;
 }

@@ -101,7 +101,7 @@ public class InternalContentExtractor {
      * Stores the input PDF stream.
      * 
      * @param pdfFile PDF stream
-     * @throws IOException 
+     * @throws IOException IOException
      */
     public void setPDF(InputStream pdfFile) throws IOException {
         reset();
@@ -111,8 +111,8 @@ public class InternalContentExtractor {
     /**
      * Sets the input bx document.
      * 
-     * @param bxDocument 
-     * @throws java.io.IOException 
+     * @param bxDocument geometric structure
+     * @throws IOException IOException
      */
     public void setBxDocument(BxDocument bxDocument) throws IOException {
         reset();
@@ -123,7 +123,7 @@ public class InternalContentExtractor {
      * Extracts geometric structure.
      * 
      * @return geometric structure
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public BxDocument getBxDocument() throws AnalysisException {
         doWork(Step.INITIAL_CLASSIFICATION);
@@ -134,7 +134,7 @@ public class InternalContentExtractor {
      * Extracts geometric structure with general labels.
      * 
      * @return geometric structure
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public BxDocument getBxDocumentWithGeneralLabels() throws AnalysisException {
         doWork(Step.INITIAL_CLASSIFICATION);
@@ -149,7 +149,7 @@ public class InternalContentExtractor {
      * Extracts geometric structure with specific labels.
      * 
      * @return geometric structure
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public BxDocument getBxDocumentWithSpecificLabels() throws AnalysisException {
         doWork(Step.METADATA_CLASSIFICATION);
@@ -170,7 +170,7 @@ public class InternalContentExtractor {
      * Extracts the metadata.
      * 
      * @return the metadata
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public DocumentMetadata getMetadata() throws AnalysisException {
         doWork(Step.AFFIIATION_PARSING);
@@ -181,7 +181,7 @@ public class InternalContentExtractor {
      * Extracts the metadata in NLM format.
      * 
      * @return the metadata in NLM format
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element getMetadataAsNLM() throws AnalysisException {
         try {
@@ -197,7 +197,7 @@ public class InternalContentExtractor {
      * Extracts the references.
      * 
      * @return the list of references
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public List<BibEntry> getReferences() throws AnalysisException {
         doWork(Step.REFERENCE_PARSING);
@@ -208,7 +208,7 @@ public class InternalContentExtractor {
      * Extracts the references in NLM format.
      * 
      * @return the list of references
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public List<Element> getReferencesAsNLM() throws AnalysisException {
         doWork(Step.REFERENCE_PARSING);
@@ -228,7 +228,7 @@ public class InternalContentExtractor {
      * Extracts raw text.
      * 
      * @return raw text
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public String getRawFullText() throws AnalysisException {
         doWork(Step.READING_ORDER);
@@ -239,7 +239,7 @@ public class InternalContentExtractor {
      * Extracts labelled raw text.
      * 
      * @return labelled raw text
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element getLabelledFullText() throws AnalysisException {
         doWork(Step.METADATA_CLASSIFICATION);
@@ -252,7 +252,7 @@ public class InternalContentExtractor {
      * Extracts structured full text.
      * 
      * @return full text model
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public ContentStructure getBody() throws AnalysisException {
         doWork(Step.CONTENT_CLEANING);
@@ -263,7 +263,7 @@ public class InternalContentExtractor {
      * Extracts structured full text.
      * 
      * @return full text in NLM format
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element getBodyAsNLM() throws AnalysisException {
         try {
@@ -280,7 +280,7 @@ public class InternalContentExtractor {
      * Extracts full content in NLM format.
      * 
      * @return full content in NLM format
-     * @throws AnalysisException 
+     * @throws AnalysisException AnalysisException
      */
     public Element getContentAsNLM() throws AnalysisException {
         doWork(Step.AFFIIATION_PARSING);
@@ -374,7 +374,7 @@ public class InternalContentExtractor {
     /**
      * Resets the extraction results.
      * 
-     * @throws IOException 
+     * @throws IOException IOException
      */
     public void reset() throws IOException {
         bxDocument = null;

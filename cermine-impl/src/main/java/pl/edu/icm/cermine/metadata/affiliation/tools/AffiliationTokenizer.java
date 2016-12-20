@@ -74,7 +74,7 @@ public class AffiliationTokenizer implements TextTokenizer<Token<AffiliationLabe
      * Returns a list of indices of all ASCII characters in the text
      *
      * @param text
-     * @return
+     * @return list of indices
      */
     private static List<Integer> getAsciiSubstringIndices(String text) {
         List<Integer> indices = new ArrayList<Integer>();
@@ -91,7 +91,7 @@ public class AffiliationTokenizer implements TextTokenizer<Token<AffiliationLabe
      *
      * @param text
      * @param indices
-     * @return
+     * @return a substring
      */
     private static String getSubstring(String text, List<Integer> indices) {
         StringBuilder substringBuilder = new StringBuilder();

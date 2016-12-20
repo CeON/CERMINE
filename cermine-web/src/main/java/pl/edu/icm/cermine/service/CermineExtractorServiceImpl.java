@@ -165,7 +165,7 @@ public class CermineExtractorServiceImpl implements CermineExtractorService {
      *
      * @param result
      * @param input
-     * @return
+     * @return extraction results
      */
     private ExtractionResult performExtraction(ExtractionResult result, InputStream input) {
         ContentExtractor e = null;

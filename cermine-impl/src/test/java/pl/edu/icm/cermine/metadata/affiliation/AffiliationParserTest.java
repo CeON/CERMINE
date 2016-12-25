@@ -47,7 +47,7 @@ public class AffiliationParserTest {
             inputSB.append("Department of Oncology - Pathology, Karolinska Institutet, Stockholm, Sweden, ");
         }
         String input = inputSB.toString();
-        String expected = "<aff id=\"\"><label></label>" + input + "</aff>";
+        String expected = "<aff id=\"\"><label></label>" + input.trim() + "</aff>";
         String actual = outputter.outputString(parser.parse(input));
         assertEquals(expected, actual);
     }

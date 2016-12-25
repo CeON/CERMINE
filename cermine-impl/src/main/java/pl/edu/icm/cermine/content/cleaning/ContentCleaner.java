@@ -20,8 +20,6 @@ package pl.edu.icm.cermine.content.cleaning;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.BxContentStructure.BxDocContentPart;
 import pl.edu.icm.cermine.structure.model.BxLine;
@@ -170,17 +168,7 @@ public class ContentCleaner {
         if (str == null) {
             return null;
         }
-        str = str.replace("$", "\\$");
-        
-        String hyphenList = "\u002D\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u207B\u208B\u2212-";
-        Pattern p = Pattern.compile("(\\S)[" + hyphenList + "]\n", Pattern.DOTALL);
-        Matcher m = p.matcher(str);
-        StringBuffer sb = new StringBuffer();
-        while (m.find()) {
-            m.appendReplacement(sb, m.group(1));
-        }
-        m.appendTail(sb);
-        return sb.toString().replaceAll("\n", " ").replace("\\$", "$");
+        return cleanHyphenation(str).replaceAll("\n", " ");
     }
     
     public static String cleanHyphenation(String str) {

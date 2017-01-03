@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.structure;
 
 import com.google.common.collect.Lists;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.exceptions.InvalidImageException;
 import com.itextpdf.text.exceptions.InvalidPdfException;
 import com.itextpdf.text.pdf.PRIndirectReference;
 import com.itextpdf.text.pdf.PdfDictionary;
@@ -28,17 +29,14 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.*;
 import com.itextpdf.text.pdf.parser.Vector;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxChunk;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.tools.BxBoundsBuilder;
 import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
@@ -267,6 +265,8 @@ public class ITextCharacterExtractor implements CharacterExtractor {
 
         private BxDocument document = new BxDocument();
         private BxPage actPage;
+        private int pageNumber = 0;
+        private int imageNumber;
 
         private BxBoundsBuilder boundsBuilder = new BxBoundsBuilder();
 
@@ -279,6 +279,8 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             }
             actPage = new BxPage();
             document.addPage(actPage);
+            pageNumber++;
+            imageNumber = 1;
 
             this.pageRectangle = pageRectangle;
         }
@@ -355,6 +357,14 @@ public class ITextCharacterExtractor implements CharacterExtractor {
 
         @Override
         public void renderImage(ImageRenderInfo iri) {
+            try {
+                BufferedImage bi = iri.getImage().getBufferedImage();
+                if (bi != null) {
+                    actPage.addImage(new BxImage(
+                            "img_" + pageNumber + "_" + (imageNumber++) + ".png", bi));
+                }
+            } catch (IOException ex) {
+            } catch (InvalidImageException ex) {}
         }
             
     }

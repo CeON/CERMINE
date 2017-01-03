@@ -33,6 +33,7 @@ import org.jdom.output.XMLOutputter;
 import com.google.common.collect.Lists;
 import java.util.HashMap;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
@@ -41,6 +42,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.timeout.Timeout;
 import pl.edu.icm.cermine.tools.timeout.TimeoutException;
@@ -159,7 +161,7 @@ public class ContentExtractor {
     public void setPDF(InputStream pdfFile) throws IOException {
         this.extractor.setPDF(pdfFile);
     }
-
+    
     /**
      * Sets the input bx document.
      *
@@ -299,6 +301,46 @@ public class ContentExtractor {
     public BxDocument getBxDocumentWithSpecificLabels(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
         return getBxDocumentWithSpecificLabels(combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    private List<BxImage> getImages(String imagesPrefix, Timeout timeout)
+            throws AnalysisException, TimeoutException {
+        try {
+            TimeoutRegister.set(timeout);
+            TimeoutRegister.get().check();
+            return extractor.getImages(imagesPrefix);
+        } finally {
+            TimeoutRegister.remove();
+        }
+    }
+
+    /**
+     * Extracts images.
+     *
+     * @param imagesPrefix images prefix
+     * @return images
+     * @throws AnalysisException AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public List<BxImage> getImages(String imagesPrefix)
+            throws AnalysisException, TimeoutException {
+        return getImages(imagesPrefix, mainTimeout);
+    }
+
+    /**
+     * The same as {@link #getImages(String)} but with a timeout.
+     *
+     * @param imagesPrefix imagesPrefix
+     * @param timeoutSeconds approximate timeout in seconds
+     * @return images
+     * @throws AnalysisException AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public List<BxImage> getImages(String imagesPrefix, long timeoutSeconds)
+            throws AnalysisException, TimeoutException {
+        return getImages(imagesPrefix, combineWithMainTimeout(timeoutSeconds));
     }
     
     private DocumentMetadata getMetadata(Timeout timeout)
@@ -566,12 +608,12 @@ public class ContentExtractor {
         return getBody(combineWithMainTimeout(timeoutSeconds));
     }
     
-    private Element getBodyAsNLM(Timeout timeout)
+    private Element getBodyAsNLM(String imagesPrefix, Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
             TimeoutRegister.set(timeout);
             TimeoutRegister.get().check();
-            return extractor.getBodyAsNLM();
+            return extractor.getBodyAsNLM(imagesPrefix);
         } finally {
             TimeoutRegister.remove();
         }
@@ -587,7 +629,21 @@ public class ContentExtractor {
      */
     public Element getBodyAsNLM()
             throws AnalysisException, TimeoutException {
-        return getBodyAsNLM(mainTimeout);
+        return getBodyAsNLM(null, mainTimeout);
+    } 
+    
+    /**
+     * Extracts structured full text.
+     *
+     * @param imagesPrefix images prefix
+     * @return full text in NLM format
+     * @throws AnalysisException AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public Element getBodyAsNLM(String imagesPrefix)
+            throws AnalysisException, TimeoutException {
+        return getBodyAsNLM(imagesPrefix, mainTimeout);
     }
 
     /**
@@ -601,15 +657,30 @@ public class ContentExtractor {
      */
     public Element getBodyAsNLM(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
-        return getBodyAsNLM(combineWithMainTimeout(timeoutSeconds));
+        return getBodyAsNLM(null, combineWithMainTimeout(timeoutSeconds));
     }
-
-    private Element getContentAsNLM(Timeout timeout)
+    
+    /**
+     * The same as {@link #getBodyAsNLM()} but with a timeout.
+     *
+     * @param imagesPrefix images prefix
+     * @param timeoutSeconds approximate timeout in seconds
+     * @return full text in NLM
+     * @throws AnalysisException AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public Element getBodyAsNLM(String imagesPrefix, long timeoutSeconds)
+            throws AnalysisException, TimeoutException {
+        return getBodyAsNLM(imagesPrefix, combineWithMainTimeout(timeoutSeconds));
+    }
+    
+    private Element getContentAsNLM(String imagesPrefix, Timeout timeout)
             throws AnalysisException, TimeoutException {
         try {
             TimeoutRegister.set(timeout);
             TimeoutRegister.get().check();
-            return extractor.getContentAsNLM();
+            return extractor.getContentAsNLM(imagesPrefix);
         } finally {
             TimeoutRegister.remove();
         }
@@ -625,7 +696,21 @@ public class ContentExtractor {
      */
     public Element getContentAsNLM()
             throws AnalysisException, TimeoutException {
-        return getContentAsNLM(mainTimeout);
+        return getContentAsNLM(null, mainTimeout);
+    }
+    
+    /**
+     * Extracts full content in NLM format.
+     *
+     * @param imagesPrefix imagesPrefix
+     * @return full content in NLM format
+     * @throws AnalysisException AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public Element getContentAsNLM(String imagesPrefix)
+            throws AnalysisException, TimeoutException {
+        return getContentAsNLM(imagesPrefix, mainTimeout);
     }
 
     /**
@@ -639,9 +724,24 @@ public class ContentExtractor {
      */
     public Element getContentAsNLM(long timeoutSeconds)
             throws AnalysisException, TimeoutException {
-        return getContentAsNLM(combineWithMainTimeout(timeoutSeconds));
+        return getContentAsNLM(null, combineWithMainTimeout(timeoutSeconds));
     }
-
+    
+    /**
+     * The same as {@link #getContentAsNLM()} but with a timeout.
+     *
+     * @param imagesPrefix images prefix
+     * @param timeoutSeconds approximate timeout in seconds
+     * @return the content in NLM
+     * @throws AnalysisException AnalysisException
+     * @throws TimeoutException thrown when timeout deadline has passed. See
+     * {@link #setTimeout(long)} for additional information about the timeout.
+     */
+    public Element getContentAsNLM(String imagesPrefix, long timeoutSeconds)
+            throws AnalysisException, TimeoutException {
+        return getContentAsNLM(imagesPrefix, combineWithMainTimeout(timeoutSeconds));
+    }
+    
     private Timeout combineWithMainTimeout(long timeoutSeconds) {
         Timeout local = new Timeout(timeoutSeconds * SECONDS_TO_MILLIS);
         return Timeout.min(mainTimeout, local);
@@ -707,7 +807,7 @@ public class ContentExtractor {
                 i++;
                 continue;
             }
-            
+          
             long start = System.currentTimeMillis();
             float elapsed;
 
@@ -719,9 +819,24 @@ public class ContentExtractor {
           
                 InputStream in = new FileInputStream(pdf);
                 extractor.setPDF(in);
-
+                
+                if (outputs.containsKey("images")) {
+                    List<BxImage> images = extractor.getImages(outputs.get("images").getPath());
+                    FileUtils.forceMkdir(outputs.get("images"));
+                    if (images != null) {
+                        for (BxImage image : images) {
+                            ImageIO.write(image.getImage(), "png", new File(image.getPath()));
+                        }
+                    }
+                }
+                
                 if (outputs.containsKey("jats")) {
-                    Element jats = extractor.getContentAsNLM();
+                    Element jats;
+                    if (outputs.containsKey("images")) {
+                        jats = extractor.getContentAsNLM(outputs.get("images").getPath());
+                    } else {
+                        jats = extractor.getContentAsNLM(null);
+                    }
                     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
                     FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8");
                 }

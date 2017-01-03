@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.jdom.Element;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Set;
+import org.jdom.Namespace;
 import pl.edu.icm.cermine.ExtractionUtils.Step;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
@@ -40,6 +42,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.metadata.transformers.MetadataToNLMConverter;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
@@ -165,6 +168,15 @@ public class InternalContentExtractor {
         }
         return doc;
     }
+
+    public List<BxImage> getImages(String imagesPrefix) throws AnalysisException {
+        doWork(Step.CHARACTER_EXTRACTION);
+        List<BxImage> images = Lists.newArrayList(bxDocument.asImages());
+        for (BxImage image : images) {
+            image.setPrefix(imagesPrefix);
+        }
+        return images;
+    }
     
     /**
      * Extracts the metadata.
@@ -262,15 +274,19 @@ public class InternalContentExtractor {
     /**
      * Extracts structured full text.
      * 
+     * @param imagesPrefix images prefix
      * @return full text in NLM format
      * @throws AnalysisException AnalysisException
      */
-    public Element getBodyAsNLM() throws AnalysisException {
+    public Element getBodyAsNLM(String imagesPrefix) throws AnalysisException {
         try {
             doWork(Step.CITPOS_DETECTION);
             ModelToModelConverter<ContentStructure, Element> converter
                     = new DocContentStructToNLMElementConverter();
-            return converter.convert(body, citationPositions);
+            if (imagesPrefix == null) {
+                return converter.convert(body, citationPositions);
+            }
+            return converter.convert(body, citationPositions, getImages(imagesPrefix));
         } catch (TransformationException ex) {
             throw new AnalysisException(ex);
         }
@@ -279,20 +295,27 @@ public class InternalContentExtractor {
     /**
      * Extracts full content in NLM format.
      * 
+     * @param imagesPrefix images prefix
      * @return full content in NLM format
      * @throws AnalysisException AnalysisException
      */
-    public Element getContentAsNLM() throws AnalysisException {
+    public Element getContentAsNLM(String imagesPrefix) throws AnalysisException {
         doWork(Step.AFFIIATION_PARSING);
         doWork(Step.REFERENCE_PARSING);
         doWork(Step.CITPOS_DETECTION);
         
         Element nlmMetadata = getMetadataAsNLM();
         List<Element> nlmReferences = getReferencesAsNLM();
-        Element nlmFullText = getBodyAsNLM();
-            
+        Element nlmFullText = getBodyAsNLM(imagesPrefix);
+        
         Element nlmContent = new Element("article");
-            
+        
+        for (Object ns : nlmFullText.getAdditionalNamespaces()) {
+            if (ns instanceof Namespace) {
+                nlmContent.addNamespaceDeclaration((Namespace)ns);
+            }
+        }
+
         Element meta = (Element) nlmMetadata.getChild("front").clone();
         nlmContent.addContent(meta);
             
@@ -311,7 +334,6 @@ public class InternalContentExtractor {
         nlmContent.addContent(back);
         return nlmContent;
     }
-    
     
     private void doWork(Step step) throws AnalysisException {
         if (step == null || stepsDone.contains(step)) {

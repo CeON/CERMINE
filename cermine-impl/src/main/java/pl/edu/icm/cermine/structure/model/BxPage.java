@@ -37,6 +37,7 @@ public final class BxPage extends BxObject<BxZone, BxPage, BxDocument> {
     /** list of page's text chunks (if the page is not segmented) */
     private final List<BxChunk> chunks = new ArrayList<BxChunk>();
 
+    private final List<BxImage> images = new ArrayList<BxImage>();
 
     public BxPage setZones(Collection<BxZone> zones) {
         resetText();
@@ -78,7 +79,21 @@ public final class BxPage extends BxObject<BxZone, BxPage, BxDocument> {
         }
         return this;
     }
+    
+    public BxPage addImage(BxImage image) {
+        images.add(image);
+        return this;
+    }
+    
+    public BxPage addImages(Collection<BxImage> image) {
+        images.addAll(image);
+        return this;
+    }
 
+    public List<BxImage> getImages() {
+        return images;
+    }
+    
     @Override
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();

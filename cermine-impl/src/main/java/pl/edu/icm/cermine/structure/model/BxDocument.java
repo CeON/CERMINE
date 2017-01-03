@@ -177,6 +177,20 @@ public final class BxDocument extends BxObject<BxPage, BxDocument, Object> {
         };
     }
     
+    public Iterable<BxImage> asImages() {
+    	return new Iterable<BxImage>() {
+            
+            @Override
+            public Iterator<BxImage> iterator() {
+                List<BxImage> images = new ArrayList<BxImage>();
+            	for (BxPage page : asPages()) {
+                    images.addAll(page.getImages());
+                }
+                return images.listIterator();
+            }
+        };
+    }
+    
     @Override
     public String getMostPopularFontName() {
         CountMap<String> map = new CountMap<String>();

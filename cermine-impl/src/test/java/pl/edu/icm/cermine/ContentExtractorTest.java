@@ -18,10 +18,15 @@
 
 package pl.edu.icm.cermine;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import javax.imageio.ImageIO;
+import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.Diff;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -36,6 +41,7 @@ import org.xml.sax.SAXException;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
+import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.structure.tools.BxModelUtils;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 
@@ -53,6 +59,10 @@ public class ContentExtractorTest {
     static final private String EXP_CONT_2 = "/pl/edu/icm/cermine/test2-content.xml";
     static final private String EXP_TEXT_2 = "/pl/edu/icm/cermine/test2-fulltext.txt";
     static final private String EXP_ZONES_2 = "/pl/edu/icm/cermine/test2-zones.xml";
+
+    static final private String TEST_PDF_4 = "/pl/edu/icm/cermine/test4.pdf";
+    static final private String EXP_CONT_4 = "/pl/edu/icm/cermine/test4-content-images.xml";
+    static final private String EXP_IMGS_4 = "/pl/edu/icm/cermine/test4-images/";
     
     private ContentExtractor extractor;
     SAXBuilder saxBuilder;
@@ -283,6 +293,70 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_2);
+        InputStreamReader expReader = new InputStreamReader(expStream);
+        Document dom;
+        try {
+            dom = saxBuilder.build(expReader);
+        } finally {
+            expStream.close();
+            expReader.close();
+        }
+        Element expContent = dom.getRootElement();
+        
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+        Diff diff = new Diff(outputter.outputString(expContent), outputter.outputString(testContent));
+        assertTrue(diff.similar());
+    }
+
+    @Test
+    public void getImagesTest() throws IOException, AnalysisException, JDOMException, SAXException {
+        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_4);
+        List<BxImage> images;
+        try {
+            extractor.setPDF(testStream);
+            images = extractor.getImages("pref");
+        } finally {
+            testStream.close();
+        }
+        
+        assertEquals(8, images.size());
+        Collections.sort(images, new Comparator<BxImage>(){
+            @Override
+            public int compare(BxImage o1, BxImage o2) {
+                return o1.getFilename().compareTo(o2.getFilename());
+            }
+        });
+        
+        List<String> files = IOUtils.readLines(this.getClass().getResourceAsStream(EXP_IMGS_4), "UTF-8");
+        Collections.sort(files);
+        for (int i = 0; i < files.size(); i++) {
+            String fileName = files.get(i);
+            BxImage image = images.get(i);
+            assertEquals(fileName, image.getFilename());
+            BufferedImage expImg = ImageIO.read(this.getClass().getResourceAsStream(EXP_IMGS_4+fileName));
+            BufferedImage testImg = image.getImage();
+            assertEquals(expImg.getHeight(), testImg.getHeight());
+            assertEquals(expImg.getWidth(), testImg.getWidth());
+            for (int y = 0; y < expImg.getHeight(); y++) {
+                for (int x = 0; x < expImg.getWidth(); x++) {
+                    assertEquals(expImg.getRGB(x, y), testImg.getRGB(x, y));
+                }
+            }   
+        }
+    }
+    
+    @Test
+    public void getContentWithImagesTest() throws IOException, AnalysisException, JDOMException, SAXException {
+        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_4);
+        Element testContent;
+        try {
+            extractor.setPDF(testStream);
+            testContent = extractor.getContentAsNLM("pref");
+        } finally {
+            testStream.close();
+        }
+        
+        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_4);
         InputStreamReader expReader = new InputStreamReader(expStream);
         Document dom;
         try {

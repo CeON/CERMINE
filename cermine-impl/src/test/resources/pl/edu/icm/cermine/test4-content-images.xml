@@ -1,0 +1,1585 @@
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>BMC Molecular Biology</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>The four Zn fingers of MBNL1 provide a flexible platform for recognition of its RNA binding elements</article-title>
+      </title-group>
+      <article-id pub-id-type="doi">10.1186/1471-2199-12-20</article-id>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Danielle Cass</string-name>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Rachel Hotchko</string-name>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Paul Barber</string-name>
+          <xref ref-type="aff" rid="0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Kimberly Jones</string-name>
+          <xref ref-type="aff" rid="0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Devika P Gates</string-name>
+          <xref ref-type="aff" rid="0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>J Andrew Berglund</string-name>
+          <email>aberglund@molbio.uoregon.edu</email>
+          <xref ref-type="aff" rid="0">0</xref>
+        </contrib>
+        <aff id="0">
+          <label>0</label>
+          <institution>Department of Chemistry and Institute of Molecular Biology, University of Oregon</institution>
+          ,
+          <addr-line>Eugene, OR 97403</addr-line>
+          ,
+          <country country="US">USA</country>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>Background: Muscleblind-like 1 (MBNL1) is an alternative splicing factor containing four CCCH Zinc fingers (ZnFs). The sequestration of MBNL1 by expanded CUG and CCUG repeats is a major component in causing myotonic dystrophy. In addition to binding the structured expanded CUG and CCUG repeats; previous results suggested that MBNL1 binds single-stranded RNAs containing GC dinucleotides. Results: We performed a systematic analysis of MBNL1 binding to single-stranded RNAs. These studies revealed that a single GC dinucleotide in poly-uridine is sufficient for MBNL1 binding and that a second GC dinucleotide confers higher affinity MBNL1 binding. However additional GC dinucleotides do not enhance RNA binding. We also showed that the RNA sequences adjacent to the GC dinucleotides play an important role in MBNL1 binding with the following preference: uridines &gt;cytidines &gt;adenosines &gt;guanosines. For high affinity binding by MBNL1, the distance between the two GC dinucleotides can vary from 1 to 17 nucleotides. Conclusions: These results suggest that MBNL1 is highly flexible and able to adopt different conformations to recognize RNAs with varying sequence configurations. Although MBNL1 contains four ZnFs, only two ZnF - GC dinucleotide interactions are necessary for high affinity binding.</p>
+      </abstract>
+      <volume>12</volume>
+      <issue>20</issue>
+      <fpage>12</fpage>
+      <lpage>20</lpage>
+      <pub-date>
+        <day>6</day>
+        <month>5</month>
+        <year>2011</year>
+      </pub-date>
+      <history>
+        <date date-type="accepted">
+          <day>6</day>
+          <month>5</month>
+          <year>2011</year>
+        </date>
+        <date date-type="received">
+          <day>11</day>
+          <month>1</month>
+          <year>2011</year>
+        </date>
+      </history>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="1">
+      <title>Background</title>
+      <p>
+        Alternative pre-mRNA splicing significantly increases
+genome diversity with recent measurements suggesting that
+greater than 90% of genes undergo alternative splicing
+[
+        <xref ref-type="bibr" rid="3 2">1-3</xref>
+        ]. The different protein isoforms generated through
+alternative splicing can alter function or cellular
+localization, or it may provide a mechanism to regulate the levels
+of the protein by leading to non-productive splicing and
+RNA turnover (reviewed in [
+        <xref ref-type="bibr" rid="5 4">4,5</xref>
+        ]). Regulated alternative
+splicing is dependent upon the alternative splicing factors
+present in specific cell types or at different developmental
+stages. Many of these alternative splicing factors appear to
+regulate hundreds of exons and they function by
+recognizing specific RNA sequence elements within or near the
+regulated exons (reviewed in [6]).
+      </p>
+      <p>
+        Muscleblind-like 1 (MBNL1) is an alternative splicing
+factor that is associated with the disease myotonic
+dystrophy (DM). Patients with DM have a CTG or
+CCTG repeat expansion in an untranslated region of
+their genome. For DM type 1 (DM1), the CTG repeats
+are found in the 3’ UTR of the DMPK gene, and for
+DM type 2 (DM2), the CCTG repeats are found within
+intron 1 of the CCHC-type zinc finger (ZnF), nucleic
+acid binding protein (CNBP) gene [
+        <xref ref-type="bibr" rid="7 8">7,8</xref>
+        ]. These CTG and
+CCTG repeats, when transcribed, form CUG/CCUG
+RNA stem loops that bind and sequester MBNL1 into
+nuclear foci resulting in a loss of normal MBNL1
+function in the cell (reviewed in [9]). In studying the
+molecular basis of DM and the role MBNL1 plays, it was
+discovered that MBNL1 regulates the alternative splicing
+of a host of developmentally regulated transcripts
+[
+        <xref ref-type="bibr" rid="13 12 11">10-13</xref>
+        ]. In the cells of DM patients, adult splicing
+patterns revert back to embryonic splicing patterns and
+these incorrect splicing events are thought to cause
+many of the symptoms of the disease (reviewed in [9]).
+      </p>
+      <p>
+        Several MBNL1 binding sites have been identified, and
+a few of these have been characterized [
+        <xref ref-type="bibr" rid="10 17 15">10,14-17</xref>
+        ].
+Complicating the analysis of MBNL1 binding to these sites
+and the CUG and CCUG repeats has been
+differentiating between the effects of RNA structure on MBNL1
+binding and sequence specific RNA binding. MBNL1
+interacts with RNA through its four CCCH ZnFs,
+although it is possible that other regions of the protein
+interact with RNA as well or play an important role in
+regulating splicing [
+        <xref ref-type="bibr" rid="18">18</xref>
+        ]. The ZnFs of MBNL1 fold into
+two compact domains ZnFs1/2 and ZnFs3/4 [
+        <xref ref-type="bibr" rid="20 19">19,20</xref>
+        ]. A
+crystal structure of ZnFs3/4 in complex with a 6 mer
+RNA (CGCUGU) revealed that these ZnFs bind
+singlestranded RNA through specific recognition of the
+Watson-Crick face of the GC dinucleotide [20]. Each ZnF (3
+and 4) interacts with RNA in a similar manner and the
+structure of the ZnFs domain in complex with RNA
+lead Teplova and Patel to propose that MBNL1 binds
+RNA in a looped conformation [
+        <xref ref-type="bibr" rid="20">20</xref>
+        ]. This model
+predicts that for each ZnF to bind a GC dinucleotide a
+significant RNA linker must separate the GC dinucleotides
+because the RNA binding surfaces of ZnFs3/4 (or 1/2)
+are on opposing sides of the domain [
+        <xref ref-type="bibr" rid="20">20</xref>
+        ]. Binding to
+RNAs containing three different RNA linkers of 5, 10
+and 15 nucleotides between the GC dinucleotides to
+ZnFs3/4 of MBNL1 supported this model [
+        <xref ref-type="bibr" rid="20">20</xref>
+        ]. However
+these experiments were only performed with the isolated
+ZnFs3/4 and it was unclear if the spacer would be
+important in the context of the four ZnFs of MBNL1.
+To determine if the spacing between GC dinucleotides
+was important for MBNL1 binding and to determine if
+the sequence of the RNA linker between the GC
+dinucleotides affected RNA binding, a series of
+singlestranded RNAs varying linker distances and different
+linker sequences were studied with MBNL1.
+      </p>
+    </sec>
+    <sec id="2">
+      <title>Results and discussion</title>
+      <p>
+        To better understand the RNA binding specificity of
+human MBNL1, we used a version of the protein that
+contains amino acids 2-260. Previous studies have
+shown that MBNL1 2-260, which contains all four ZnFs,
+binds RNA as well as the corresponding full-length
+protein [
+        <xref ref-type="bibr" rid="14">14</xref>
+        ]. This version of the protein was used due to its
+ease in expression and purification in a bacterial system.
+This region of the protein has been shown to be
+sufficient for splicing regulation [
+        <xref ref-type="bibr" rid="18">18</xref>
+        ].
+      </p>
+      <sec id="2-1">
+        <title>Determination of the number of GC dinucleotides required for high affinity binding by MBNL1</title>
+        <p>
+          According to the crystal structure of the MBNL1 ZnFs3/
+4 - RNA complex [
+          <xref ref-type="bibr" rid="20">20</xref>
+          ], the primary determinant of RNA
+specificity is the recognition of the Watson-Crick faces
+of the GC dinucleotide by the ZnFs. To test the
+importance of the GC dinucleotide in the context of
+singlestranded RNA for binding to MBNL1, one to four of
+these motifs were placed into a poly-uridine RNA
+(Figure 1A). Uridines were chosen as the template because
+we had previously shown that MBNL1 generally prefers
+uridines compared to the other three nucleotides [
+          <xref ref-type="bibr" rid="21">21</xref>
+          ].
+Additionally, poly-uridine lacks RNA structure so the
+role of RNA structure in binding can be minimized
+allowing the focus to be on the role of specificity in a
+single-stranded RNA substrate.
+        </p>
+        <p>
+          To determine if these RNAs are single-stranded, a
+thermal denaturation assay was used to monitor the
+structure of these RNAs. For all RNAs tested with one
+to four GC dinucleotides, the melting point was below
+40°C (Figure 1G), while the (CUG)4 RNA which was
+previously shown to be structured and bind MBNL1
+[
+          <xref ref-type="bibr" rid="14">14</xref>
+          ] has a melting point of 60.6 +/- 0.6°C (Figure 1G).
+These thermal denaturation results indicate that these
+model RNAs are primarily single-stranded and can be
+used to test MBNL1’s specificity in the absence of RNA
+structure. A possibility we cannot discount is that when
+MBNL1 binds RNA it could stabilize weak RNA
+structures; therefore we cannot completely rule out the role
+of RNA structure. Further experiments would be needed
+to explore this possibility.
+        </p>
+        <p>
+          As expected, when both GC dinucleotides are mutated
+to any other sequence or their polarity is reversed (2CC,
+2GG and 2CG), MBNL1 binding is eliminated at the
+concentrations of protein tested (Figure 1B). Although
+we had found previously that MBNL1 prefers uridines
+over the other three nucleotides [
+          <xref ref-type="bibr" rid="21">21</xref>
+          ], these results
+showed that MBNL1 does not bind to long stretches of
+uridines alone with appreciable affinity.
+        </p>
+        <p>Surprisingly, the presence of a single GC dinucleotide
+was sufficient for high affinity binding by MBNL1 (Figure
+1C). The 1GC RNA bound with a Kd of 45 nM while the
+2GC RNA bound with a Kd of 11 nM. These results
+indicate that MBNL1 requires only one GC dinucleotide for
+one of its four ZnFs to achieve significant RNA binding.
+Although the 1GC RNA bound with relatively high
+affinity, the complex appeared to dissociate during the gel
+shift assay based on the observed smearing (Figure 1C).
+To confirm the gel shift assay results, a competition assay
+was used. In this assay, MBNL1 was pre-bound to a
+radioactive 2GC RNA to form a stable complex. Then
+increasing amounts of cold competitive RNA were added
+(Figure 1D). The competition results showed a larger
+difference between the 1GC and 2GC RNAs compared to
+the binding assays (15-fold in the competition assay
+versus 4-fold in the gel shift assay); however these results
+are consistent with the gel shift assay and further
+demonstrate that MBNL1 only requires one GC dinucleotide for
+nanomolar affinity binding by MBNL1 to RNA. The
+differences in relative affinities between the 2GC and 1GC
+RNAs in the gel shift and competition assays may be due
+to the instability of the 1GC-MBNL complex making
+quantification of this complex in the gel shift assay
+difficult to measure accurately.</p>
+        <p>To determine if more than two GC dinucleotides
+increased RNA binding by MBNL1, a longer RNA (29
+nucleotides, Figure 1E) containing up to four GC
+dinucleotides was used for binding studies. The
+oligonucleotides with two, three, or four dinucleotides all behaved
+in a similar manner (Figure 1F). MBNL1 formed a
+single complex with all RNAs and the Kds were all within
+error of each other (2.5 to 4.0 nM). A RNA containing
+one GC dinucleotide (1GC#2) was also tested in the
+context of the longer RNA and it showed an
+approximately 5-fold increase in Kd with lower complex
+stability (smearing) as seen with the shorter 1GC RNA
+(Figure 1, compare 1GC and 1GC#2). These results
+indicate that adding more than two GC dinucleotides
+did not enhance MBNL1 binding to RNA in this
+context.</p>
+        <p>
+          The observation that RNAs containing three or four
+GC dinucleotides didn’t bind MBNL1 better than RNAs
+containing just two GC dinucleotides was surprising. It
+suggests that only two of the four ZnFs require GC
+motifs for high affinity binding while the other two
+ZnFs may bind other sequences such as a poly-uridine
+or are involved in an intramolecular interaction that
+precludes RNA binding. This intramolecular interaction
+is supported by the MBNL1 ZnFs3/4 crystal structure
+which formed a ZnF4 - ZnF4 interaction with a 1320 Å2
+interface that would preclude ZnF4 from binding RNA
+[
+          <xref ref-type="bibr" rid="20">20</xref>
+          ]. Thus we might predict that ZnF2 and ZnF4 are
+involved in a higher order structure while ZnF1 and
+ZnF3 are involved in RNA binding. Although it is
+possible that the two ZnFs involved in RNA binding could be
+any of the four ZnFs, as none of the ZnFs alone have
+been directly tested for RNA binding. In comparing this
+model with the known endogenous MBNL1 targets, it
+can be seen that many of these binding sites contain
+only two YGCY motifs suggesting that a mode in which
+MBNL1 uses only two of its ZnFs to bind YGCY motifs
+could be a common type of interaction for MBNL1
+[
+          <xref ref-type="bibr" rid="10 15 14">10,14-16</xref>
+          ].
+        </p>
+        <p>
+          An alternative explanation for the lack of increased
+MBNL1 binding to more than two GC motifs is that the
+RNA we used may not allow all four GC dinucleotides
+to bind all four ZnFs. However, in RNA 3GC#3 the
+three GC dinucleotides are spaced by nine and twelve
+nucleotides, and the model proposed by Teplova and
+Patel describing MBNL1 binding to RNAs with multiple
+GC dinucleotides suggests that this type of spacing
+would allow for binding by three of the four ZnFs [
+          <xref ref-type="bibr" rid="20">20</xref>
+          ].
+Our data described later also suggests that an RNA
+containing two GC dinucleotides with only a single
+nucleotide spacing does not result in a dramatic decrease in
+binding. This supports the idea that the spacing of the
+GC dinucleotides was not a problem in these RNA
+constructs.
+        </p>
+      </sec>
+      <sec id="2-2">
+        <title>The role of nucleotides adjacent to the GC dinucleotides in MBNL1 RNA binding</title>
+        <p>
+          Our previous research showed enrichment for YGCY in
+a SELEX assay of MBNL1 2-260, however the
+importance of the pyrimidines upstream and downstream of
+the GC was never directly tested [
+          <xref ref-type="bibr" rid="21">21</xref>
+          ]. Therefore we set
+about to determine the importance of nucleotides
+upstream and downstream of the GC dinucleotide by
+making mutations to these nucleotides in the context of
+the 2GC RNA (Figure 2A). The CGCC RNA bound as
+well as the 2GC RNA, with Kds of 7 nM and 11 nM
+respectively (Figure 2B). Replacing all of the uridines
+with cytidines decreased binding by 10-fold (Figure 2C,
+RNA C with a Kd of 111 nM). However if the upstream
+and downstream cytidines were replaced with uridines
+(RNA C4, Figure 2C), wild type levels of RNA binding
+were restored. These results suggest that MBNL1
+requires some uridines to be near the GC dinucleotides
+but that there is some flexibility in their location relative
+to the GC motifs.
+        </p>
+        <p>Replacing the pyrimidines with purines between the
+GC motifs significantly reduced MBNL1 binding. The
+Figure 2 Determination of the importance of nucleotides
+adjacent to the GC dinucleotides for MBNL1 binding. A) RNAs
+used to analyze the sequence outside of the GC dinucleotides.
+Nucleotides that have been changed from the 2GC RNA are in bold.
+Next to the RNAs are the corresponding Kds, averaged over at least
+three independent experiments. B and C) Representative gel shifts
+assays. MBNL1 concentrations are at the top of each column. RNA
+being tested is on the left side of the gels.
+presence of adenosines adjacent to the GC dinucleotide
+weakened binding to MBNL1 by 5-fold while guanosines
+in these positions reduced binding by 40-fold (Figure
+2B, RNAs AGCA and GGCG). Placing two UGCU
+motifs into a polyA RNA resulted in more than a
+10fold reduction in binding compared to the 2GC RNA
+(Figure 2C, A4 RNA), indicating that positions outside
+of the UGCU motifs also affect MBNL1’s ability to bind
+RNA.</p>
+        <p>
+          Our characterization of MBNL1 binding specificity is
+consistent with our previously proposed MBNL1
+binding site motif of YGCY [
+          <xref ref-type="bibr" rid="21">21</xref>
+          ]. However, there seems to
+be an additional requirement of a uridine rich context
+as seen by the 10-fold decrease in binding between a
+cytidine rich and a uridine rich environment. This
+YGCY and U-rich requirement is not explained by the
+crystal structure of ZnFs3/4 in complex with RNA. In
+this structure ZnF3 only interacts with the GC
+dinucleotide and ZnF4 makes one base specific contact with the
+downstream uridine, therefore recognizing a GCU motif
+[
+          <xref ref-type="bibr" rid="20">20</xref>
+          ]. One explanation for this apparent discrepancy
+between our results and the crystal structure is that
+important protein-RNA contacts were not captured in
+the crystal structure. It is possible that ZnFs1/2 makes
+different RNA contacts than ZnFs3/4 or amino acids
+outside of the crystallized domains interact with RNA.
+Further studies are required to determine which regions
+of the protein are responsible for these additional RNA
+sequence requirements.
+        </p>
+      </sec>
+      <sec id="2-3">
+        <title>The effects of the separation between GC dinucleotides in</title>
+      </sec>
+      <sec id="2-4">
+        <title>MBNL1 RNA binding</title>
+        <p>
+          The crystal structures of the individual ZnFs domains of
+MBNL1 suggested that a RNA linker of 20 Å would be
+required to allow two ZnFs in one domain to each bind
+a GC dinucleotide [
+          <xref ref-type="bibr" rid="20">20</xref>
+          ]. In support of this model,
+Teplova and Patel showed that decreasing the GC
+dinucleotide linker from 15 or 10 nucleotides to 5
+nucleotides reduced RNA binding with the ZnFs3/4 domain
+[
+          <xref ref-type="bibr" rid="20">20</xref>
+          ]. To determine if the distance between the two GC
+dinucleotides affects the binding of MBNL1 containing
+four ZnFs we systematically varied the distance between
+the GC motifs in the 2GC RNA (Figure 3A).
+Interestingly, the RNAs that bound MBNL1 with the highest
+affinity (Kds of 4-6 nM) had the longest and shortest
+linkers (Figure 3B). The RNAs with intermediate length
+RNA linkers of seven to 11 nucleotides bound MBNL1
+with Kds between 20 and 30 nM. MBNL1’s ability to
+bind all of these RNAs with relatively high affinity
+suggests that the two ZnFs domains can adopt different
+orientations to recognize the GC dinucleotides. The
+weaker binding to the RNAs containing intermediate
+length RNA linkers could be due to MBNL1 needing to
+adopt a slightly less favorable conformation to bind the
+        </p>
+        <p>RNA compared to the conformation adopted when
+binding short or long linker RNAs.</p>
+        <p>In MBNL1, the ZnFs domains are separated by 114
+amino acids and we propose that this region of the
+protein provides flexibility that allows the ZnFs domains to
+bind RNAs with a wide range of spacing between the
+primary GC motifs. Figure 4 shows a model in which
+the ZnFs domains are oriented such that ZnF1 and
+ZnF3 are binding an RNA with a single nucleotide
+spacer between the GC dinucleotides. Although ZnFs3/4
+was crystallized with a single GC RNA, there are
+multiple RNAs bound to this domain in the crystal structure.
+This structure allowed us to model how MBNL1 might
+bind an RNA containing two GC dinucleotides,
+assuming that the two RNAs observed in the crystal structure
+would normally be found in one longer RNA. The
+orientation of the ZnFs domains shown in Figure 4 may
+favor ZnFs domain-domain interactions that could
+contribute to the high affinity RNA binding seen with
+the 1 and 3 nucleotide spacer RNAs (Figure 3A). Other
+orientations of the ZnFs domains are possible such that
+ZnF2 and ZnF4 bind the RNA for example. The
+flexibility of MBNL1 may explain why it is able to recognize a
+diverse set of RNA targets that include the toxic CUG/
+CCUG repeats and many different sites within
+premRNAs.</p>
+        <p>The proposed model explains how MBNL1 may
+recognize a wide range of single-stranded RNA targets,
+but it does not address how MBNL1 interacts with
+structured RNAs such as the CUG/CCUG repeats or
+stem-loop targets found in its pre-mRNA targets. It is
+possible that MBNL1 binds the YGCY motifs in the
+structured RNAs when these nucleotides are accessible
+(GC dinucleotides flipped out so the Watson-Crick face
+of the GC dinucleotides can be bound by the ZnFs
+domains) in these RNA targets. The flexibility of the
+linker between the ZnFs domains would allow MNBL1 to
+easily reach two sites on different parts of a structured
+RNA. Alternatively, MBNL1 may recognize its
+structured RNA targets using a different mode of
+recognition. In the future biochemical approaches using
+techniques in addition to the gel shift assay and
+structural studies will be necessary to determine if MBNL1
+use one or more modes of binding to recognize
+singlestranded and structured RNA substrates.</p>
+      </sec>
+    </sec>
+    <sec id="3">
+      <title>Conclusions</title>
+      <p>This study suggests that the ZnFs domains of MBNL1
+are linked together by a highly flexible linker (Figure 4),
+which allows MBNL1 to recognize a wide variety of
+RNA targets. Although MBNL1 contains four ZnFs, it
+appears that only two ZnFs binding GC motifs are
+necessary for high affinity RNA binding.</p>
+    </sec>
+    <sec id="4">
+      <title>Materials and methods</title>
+      <sec id="4-1">
+        <title>Protein Purification</title>
+        <p>
+          The MBNL1 protein used in these studies contains
+amino acids 2-260 and was described previously [
+          <xref ref-type="bibr" rid="14">14</xref>
+          ].
+Purification of the protein and removal of the GST tag
+was described previously [
+          <xref ref-type="bibr" rid="14">14</xref>
+          ] except that for our studies
+the protein was stored at -80°C rather than at -20°C.
+        </p>
+      </sec>
+      <sec id="4-2">
+        <title>RNA synthesis, labeling, and purification</title>
+        <p>All RNAs were synthesized by Integrated DNA
+Technologies and 5’ end labeled with [g-32P]ATP. RNAs were
+then purified on a 10% denaturing polyacrylamide gel
+(19:1) and eluted into TE Buffer (10 mM Tris, 1 mM
+EDTA). RNA was then ethanol precipitated with
+glycogen and resuspended in TE Buffer. Finally a Bio-spin 6
+column (Bio-Rad) equilibrated in TE Buffer was used.</p>
+      </sec>
+      <sec id="4-3">
+        <title>RNA thermal denaturation assay</title>
+        <p>1.5 μM RNA was incubated at 95°C for two minutes in
+100 mM NaCl, 21 mM Tris 7.5, and 5 mM MgCl2.
+RNA was then incubated on ice for 30 minutes. The
+thermal denaturation analysis was performed on a Carey
+UV/VIS Spectrophotometer. The absorbance of the
+RNA was monitored at 260 nm while the temperature
+was increased from 15-90°C. Melting temperatures were
+determined by calculating the derivative of the
+absorbance versus temperature using the Cary program
+“Thermal”. All RNAs were tested three times and Tm
+values compared. The Tm of all the RNAs used in these
+studies were measured at below 40°C while the (CUG)4
+RNA was measured with a Tm of 60.6 +/- 0.6°C.</p>
+      </sec>
+      <sec id="4-4">
+        <title>Gel mobility shift assay</title>
+        <p>RNA was initially heated to 95 °C for two minutes and
+then placed directly onto ice. RNA was then mixed with
+MBNL1 at concentrations indicated in the figures. The
+final reaction conditions were 100 mM NaCl, 21 mM
+Tris pH 7.5, 0.1 mM EDTA, 2 mg/mL BSA, 0.1 mg/mL
+Heparin, 0.5 mM BME, 5 mM DTT, 0.02% Triton
+X100, 5 mM MgCl2, 10% glycerol, 0.02% bromophenol
+blue, and 0.02 nM RNA. The samples were incubated at
+room temperature for 30 minutes and then loaded onto
+a pre-chilled 6% polyacrylamide (19:1) gel running at 50
+volts. Once the samples were loaded the voltage was
+increased to 150 volts and the gel was run for 30
+minutes. After running, the gel was dried and exposed
+overnight.</p>
+        <p>
+          Quantitation of the binding curve was described
+previously [
+          <xref ref-type="bibr" rid="14">14</xref>
+          ]. The data was fit using the equation
+y =
+m1 × m0 + 0.02 + m2 −
+(−m0 − 0.02 − m2)2 − (4 × 0.02 + m0)
+        </p>
+        <p>2 ∗ 0.02
+where m1 = a fitting factor, m0 = nM protein
+concentration, and m2 = nM Kd.
+tiony =</p>
+      </sec>
+      <sec id="4-5">
+        <title>Competition assay</title>
+        <p>Competition assays were run under the same conditions
+as the gel shift assays except that the protein and
+radioactive RNA were incubated for 20 minutes and then the
+competitive RNA was added to the reaction and allowed
+to equilibrate for 30 minutes.</p>
+        <p>Quantitation of the competition assays was done using
+Kaleidagraph. The data was fit to the
+equa</p>
+        <p>Pt × m2/m1
+m0 + Pt × m2/m1 + m2
+RNA Kd, m1 = Kd to radiolabeled RNA, Pt = total
+protein added in the reaction, and m0 = amount of
+competitive RNA. When the competitive RNA and the
+radiolabeled RNA were the same, the equation was
+simPt
+where</p>
+        <p>m2 = competitive
+, assuming m2 and m1 are the
+m0 + Pt + m2
+plified to y =
+same.</p>
+      </sec>
+      <sec id="4-6">
+        <title>Modeling of MBNL1 binding RNA</title>
+        <p>PDB files 3D2N and 3D2S were used to create Figure 4.
+Each PDB file was opened in separate Pymol windows.
+3d2S contained ZnFs3/4 bound to RNA. The structure
+originally contained a ZnFs3/4 dimer bound to RNA.
+The extra ZnFs3/4 was removed and the RNA bound to
+ZnF4 was removed for the figure. In the other window
+the ZnFs1/2 structure (3D2N) was oriented to place the
+hypothesized cytidine binding pocket towards the
+unbound cytidine from 3D2S. Figures were then made
+of each of these windows and were merged in
+Photoshop. The amino acid linker was then added by linking
+the C-terminal amino acid from ZnFs1/2 with the
+Nterminal amino acid from ZnFs3/4.</p>
+        <p>Acknowledgements and funding
+We thank members of the Berglund lab for experimental advice and critical
+reading of the manuscript. This research was supported by Grants AR053903
+and AR053903-03S1 from NIH to JAB.</p>
+        <p>Author details
+1Department of Chemistry, Reed College, Portland, OR 97202, USA.
+2Department of Chemistry and Biochemistry, St. Mary’s College of Maryland,
+St. Mary’s City, MD 20686, USA. 3Department of Chemistry and Institute of
+Molecular Biology, University of Oregon, Eugene, OR 97403, USA.
+Authors’ contributions
+DC performed most of the experiments, data analysis, and drafted the
+manuscript. RH, PB, and KJ performed many of the replicate binding assays.
+DPG performed the thermal melt analysis. JAB conceived of the project,
+analyzed data and edited the manuscript. All authors read and approved the
+final manuscript.</p>
+      </sec>
+    </sec>
+    <fig>
+      <graphic xlink:href="pref/img_3_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_4_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_5_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_6_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_7_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_7_2.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_7_3.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_7_4.png" />
+    </fig>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="1">
+        <mixed-citation>
+          1.
+          <string-name>
+            <surname>Wang</surname>
+            <given-names>ET</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Sandberg</surname>
+            <given-names>R</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Luo</surname>
+            <given-names>S</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Khrebtukova</surname>
+            <given-names>I</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Zhang</surname>
+            <given-names>L</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Mayr</surname>
+            <given-names>C</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Kingsmore</surname>
+            <given-names>SF</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Schroth</surname>
+            <given-names>GP</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Burge</surname>
+            <given-names>CB</given-names>
+          </string-name>
+          :
+          <article-title>Alternative isoform regulation in human tissue transcriptomes</article-title>
+          .
+          <source>Nature</source>
+          <year>2008</year>
+          ,
+          <volume>456</volume>
+          :
+          <fpage>470</fpage>
+          -
+          <lpage>476</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="2">
+        <mixed-citation>
+          2.
+          <string-name>
+            <surname>Pan</surname>
+            <given-names>Q</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Shai</surname>
+            <given-names>O</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Lee</surname>
+            <given-names>LJ</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Frey</surname>
+            <given-names>BJ</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Blencowe</surname>
+            <given-names>BJ</given-names>
+          </string-name>
+          :
+          <article-title>Deep surveying of alternative splicing complexity in the human transcriptome by high-throughput sequencing</article-title>
+          .
+          <source>Nat Genet</source>
+          <year>2008</year>
+          ,
+          <volume>40</volume>
+          :
+          <fpage>1413</fpage>
+          -
+          <lpage>1415</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="3">
+        <mixed-citation>
+          3.
+          <string-name>
+            <surname>Sultan</surname>
+            <given-names>M</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Schulz</surname>
+            <given-names>MH</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Richard</surname>
+            <given-names>H</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Magen</surname>
+            <given-names>A</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Klingenhoff</surname>
+            <given-names>A</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Scherf</surname>
+            <given-names>M</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Seifert</surname>
+            <given-names>M</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Borodina</surname>
+            <given-names>T</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Soldatov</surname>
+            <given-names>A</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Parkhomchuk</surname>
+            <given-names>D</given-names>
+          </string-name>
+          , et al:
+          <article-title>A global view of gene activity and alternative splicing by deep sequencing of the human transcriptome</article-title>
+          .
+          <source>Science</source>
+          <year>2008</year>
+          ,
+          <volume>321</volume>
+          :
+          <fpage>956</fpage>
+          -
+          <lpage>960</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="4">
+        <mixed-citation>
+          4.
+          <string-name>
+            <surname>Graveley</surname>
+            <given-names>BR</given-names>
+          </string-name>
+          :
+          <article-title>Alternative splicing: increasing diversity in the proteomic world</article-title>
+          .
+          <source>Trends Genet</source>
+          <year>2001</year>
+          ,
+          <volume>17</volume>
+          :
+          <fpage>100</fpage>
+          -
+          <lpage>107</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="5">
+        <mixed-citation>
+          5.
+          <string-name>
+            <surname>Hartmann</surname>
+            <given-names>B</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Valcarcel</surname>
+            <given-names>J</given-names>
+          </string-name>
+          :
+          <article-title>Decrypting the genome's alternative messages</article-title>
+          .
+          <source>Curr Opin Cell Biol</source>
+          <year>2009</year>
+          ,
+          <volume>21</volume>
+          :
+          <fpage>377</fpage>
+          -
+          <lpage>386</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="6">
+        <mixed-citation>
+          6.
+          <string-name>
+            <surname>House</surname>
+            <given-names>AE</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Lynch</surname>
+            <given-names>KW</given-names>
+          </string-name>
+          :
+          <article-title>Regulation of alternative splicing: more than just the ABCs</article-title>
+          .
+          <source>J Biol Chem</source>
+          <year>2008</year>
+          ,
+          <volume>283</volume>
+          :
+          <fpage>1217</fpage>
+          -
+          <lpage>1221</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="7">
+        <mixed-citation>
+          7.
+          <string-name>
+            <surname>Brook</surname>
+            <given-names>JD</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>McCurrach</surname>
+            <given-names>ME</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Harley</surname>
+            <given-names>HG</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Buckler</surname>
+            <given-names>AJ</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Church</surname>
+            <given-names>D</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Aburatani</surname>
+            <given-names>H</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hunter</surname>
+            <given-names>K</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Stanton</surname>
+            <given-names>VP</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Thirion</surname>
+            <given-names>JP</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hudson</surname>
+            <given-names>T</given-names>
+          </string-name>
+          , et al:
+          <article-title>Molecular basis of myotonic dystrophy: expansion of a trinucleotide (CTG) repeat at the 3' end of a transcript encoding a protein kinase family member</article-title>
+          .
+          <source>Cell</source>
+          <year>1992</year>
+          ,
+          <volume>69</volume>
+          :
+          <fpage>385</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="8">
+        <mixed-citation>
+          8.
+          <string-name>
+            <surname>Liquori</surname>
+            <given-names>CL</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Ricker</surname>
+            <given-names>K</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Moseley</surname>
+            <given-names>ML</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Jacobsen</surname>
+            <given-names>JF</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Kress</surname>
+            <given-names>W</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Naylor</surname>
+            <given-names>SL</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Day</surname>
+            <given-names>JW</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Ranum</surname>
+            <given-names>LP</given-names>
+          </string-name>
+          :
+          <article-title>Myotonic dystrophy type 2 caused by a CCTG expansion in intron 1 of ZNF9</article-title>
+          .
+          <source>Science</source>
+          <year>2001</year>
+          ,
+          <volume>293</volume>
+          :
+          <fpage>864</fpage>
+          -
+          <lpage>867</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="9">
+        <mixed-citation>
+          9.
+          <string-name>
+            <surname>Lee</surname>
+            <given-names>JE</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Cooper</surname>
+            <given-names>TA</given-names>
+          </string-name>
+          :
+          <article-title>Pathogenic mechanisms of myotonic dystrophy</article-title>
+          .
+          <source>Biochem Soc Trans</source>
+          <year>2009</year>
+          ,
+          <volume>37</volume>
+          :
+          <fpage>1281</fpage>
+          -
+          <lpage>1286</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="10">
+        <mixed-citation>
+          10.
+          <string-name>
+            <surname>Ho</surname>
+            <given-names>TH</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Charlet</surname>
+            <given-names>BN</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Poulos</surname>
+            <given-names>MG</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Singh</surname>
+            <given-names>G</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Swanson</surname>
+            <given-names>MS</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Cooper</surname>
+            <given-names>TA</given-names>
+          </string-name>
+          :
+          <article-title>Muscleblind proteins regulate alternative splicing</article-title>
+          .
+          <source>EMBO J</source>
+          <year>2004</year>
+          ,
+          <volume>23</volume>
+          :
+          <fpage>3103</fpage>
+          -
+          <lpage>3112</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="11">
+        <mixed-citation>
+          11.
+          <string-name>
+            <surname>Kanadia</surname>
+            <given-names>RN</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Shin</surname>
+            <given-names>J</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Yuan</surname>
+            <given-names>Y</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Beattie</surname>
+            <given-names>SG</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Wheeler</surname>
+            <given-names>TM</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Thornton</surname>
+            <given-names>CA</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Swanson</surname>
+            <given-names>MS</given-names>
+          </string-name>
+          :
+          <article-title>Reversal of RNA missplicing and myotonia after muscleblind overexpression in a mouse poly(CUG) model for myotonic dystrophy</article-title>
+          .
+          <source>Proc Natl Acad Sci USA</source>
+          <year>2006</year>
+          ,
+          <volume>103</volume>
+          :
+          <fpage>11748</fpage>
+          -
+          <lpage>11753</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="12">
+        <mixed-citation>
+          12.
+          <string-name>
+            <surname>Kanadia</surname>
+            <given-names>RN</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Johnstone</surname>
+            <given-names>KA</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Mankodi</surname>
+            <given-names>A</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Lungu</surname>
+            <given-names>C</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Thornton</surname>
+            <given-names>CA</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Esson</surname>
+            <given-names>D</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Timmers</surname>
+            <given-names>AM</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hauswirth</surname>
+            <given-names>WW</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Swanson</surname>
+            <given-names>MS</given-names>
+          </string-name>
+          :
+          <article-title>A muscleblind knockout model for myotonic dystrophy</article-title>
+          .
+          <source>Science</source>
+          <year>2003</year>
+          ,
+          <volume>302</volume>
+          :
+          <fpage>1978</fpage>
+          -
+          <lpage>1980</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="13">
+        <mixed-citation>
+          13.
+          <string-name>
+            <surname>Dansithong</surname>
+            <given-names>W</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Paul</surname>
+            <given-names>S</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Comai</surname>
+            <given-names>L</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Reddy</surname>
+            <given-names>S</given-names>
+          </string-name>
+          :
+          <article-title>MBNL1 is the primary determinant of focus formation and aberrant insulin receptor splicing in DM1</article-title>
+          .
+          <source>J Biol Chem</source>
+          <year>2005</year>
+          ,
+          <volume>280</volume>
+          :
+          <fpage>5773</fpage>
+          -
+          <lpage>5780</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="14">
+        <mixed-citation>
+          14.
+          <string-name>
+            <surname>Warf</surname>
+            <given-names>MB</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Berglund</surname>
+            <given-names>JA</given-names>
+          </string-name>
+          :
+          <article-title>MBNL binds similar RNA structures in the CUG repeats of myotonic dystrophy and its pre-mRNA substrate cardiac troponin T</article-title>
+          .
+          <source>RNA</source>
+          <year>2007</year>
+          ,
+          <volume>13</volume>
+          :
+          <fpage>2238</fpage>
+          -
+          <lpage>2251</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="15">
+        <mixed-citation>
+          15.
+          <string-name>
+            <surname>Yuan</surname>
+            <given-names>Y</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Compton</surname>
+            <given-names>SA</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Sobczak</surname>
+            <given-names>K</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Stenberg</surname>
+            <given-names>MG</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Thornton</surname>
+            <given-names>CA</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Griffith</surname>
+            <given-names>JD</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Swanson</surname>
+            <given-names>MS</given-names>
+          </string-name>
+          :
+          <article-title>Muscleblind-like 1 interacts with RNA hairpins in splicing target and pathogenic RNAs</article-title>
+          .
+          <source>Nucleic Acids Res</source>
+          <year>2007</year>
+          ,
+          <volume>35</volume>
+          :
+          <fpage>5474</fpage>
+          -
+          <lpage>5486</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="16">
+        <mixed-citation>
+          16.
+          <string-name>
+            <surname>Sen</surname>
+            <given-names>S</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Talukdar</surname>
+            <given-names>I</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Liu</surname>
+            <given-names>Y</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Tam</surname>
+            <given-names>J</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Reddy</surname>
+            <given-names>S</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Webster</surname>
+            <given-names>NJ</given-names>
+          </string-name>
+          :
+          <article-title>Muscleblind-like 1 (Mbnl1) promotes insulin receptor exon 11 inclusion via binding to a downstream evolutionarily conserved intronic enhancer</article-title>
+          .
+          <source>J Biol Chem</source>
+          <year>2010</year>
+          ,
+          <volume>285</volume>
+          :
+          <fpage>25426</fpage>
+          -
+          <lpage>25437</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="17">
+        <mixed-citation>
+          17.
+          <string-name>
+            <surname>Du</surname>
+            <given-names>H</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Cline</surname>
+            <given-names>MS</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Osborne</surname>
+            <given-names>RJ</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Tuttle</surname>
+            <given-names>DL</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Clark</surname>
+            <given-names>TA</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Donohue</surname>
+            <given-names>JP</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hall</surname>
+            <given-names>MP</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Shiue</surname>
+            <given-names>L</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Swanson</surname>
+            <given-names>MS</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Thornton</surname>
+            <given-names>CA</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Ares</surname>
+            <given-names>M</given-names>
+          </string-name>
+          Jr:
+          <article-title>Aberrant alternative splicing and extracellular matrix gene expression in mouse models of myotonic dystrophy</article-title>
+          .
+          <source>Nat Struct Mol Biol</source>
+          <year>2010</year>
+          ,
+          <volume>17</volume>
+          :
+          <fpage>187</fpage>
+          -
+          <lpage>193</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="18">
+        <mixed-citation>
+          18.
+          <string-name>
+            <surname>Grammatikakis</surname>
+            <given-names>I</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Goo</surname>
+            <given-names>YH</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Echeverria</surname>
+            <given-names>GV</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Cooper</surname>
+            <given-names>TA</given-names>
+          </string-name>
+          :
+          <article-title>Identification of MBNL1 and MBNL3 domains required for splicing activation and repression</article-title>
+          .
+          <source>Nucleic Acids Res</source>
+          <year>2010</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="19">
+        <mixed-citation>
+          19.
+          <string-name>
+            <surname>He</surname>
+            <given-names>F</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Dang</surname>
+            <given-names>W</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Abe</surname>
+            <given-names>C</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Tsuda</surname>
+            <given-names>K</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Inoue</surname>
+            <given-names>M</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Watanabe</surname>
+            <given-names>S</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Kobayashi</surname>
+            <given-names>N</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Kigawa</surname>
+            <given-names>T</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Matsuda</surname>
+            <given-names>T</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Yabuki</surname>
+            <given-names>T</given-names>
+          </string-name>
+          , et al:
+          <article-title>Solution structure of the RNA binding domain in the human muscleblind-like protein 2</article-title>
+          .
+          <source>Protein Sci</source>
+          <year>2009</year>
+          ,
+          <volume>18</volume>
+          :
+          <fpage>80</fpage>
+          -
+          <lpage>91</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="20">
+        <mixed-citation>
+          20.
+          <string-name>
+            <surname>Teplova</surname>
+            <given-names>M</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Patel</surname>
+            <given-names>DJ</given-names>
+          </string-name>
+          :
+          <article-title>Structural insights into RNA recognition by the alternative-splicing regulator muscleblind-like MBNL1</article-title>
+          .
+          <source>Nat Struct Mol Biol</source>
+          <year>2008</year>
+          ,
+          <volume>15</volume>
+          :
+          <fpage>1343</fpage>
+          -
+          <lpage>1351</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="21">
+        <mixed-citation>
+          21.
+          <string-name>
+            <surname>Goers</surname>
+            <given-names>ES</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Purcell</surname>
+            <given-names>J</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Voelker</surname>
+            <given-names>RB</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Gates</surname>
+            <given-names>DP</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Berglund</surname>
+            <given-names>JA</given-names>
+          </string-name>
+          :
+          <article-title>MBNL1 binds GC motifs embedded in pyrimidines to regulate alternative splicing</article-title>
+          .
+          <source>Nucleic Acids Res</source>
+          <year>2010</year>
+          ,
+          <volume>38</volume>
+          :
+          <fpage>2467</fpage>
+          -
+          <lpage>2484</lpage>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

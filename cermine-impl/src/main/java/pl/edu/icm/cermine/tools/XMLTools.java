@@ -18,6 +18,7 @@
 package pl.edu.icm.cermine.tools;
 
 import org.jdom.Element;
+import org.jdom.Namespace;
 import org.jdom.Text;
 import org.jdom.Verifier;
 
@@ -25,6 +26,9 @@ import org.jdom.Verifier;
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class XMLTools {
+    
+    public static final Namespace NS_XLINK = 
+            Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink");
     
     public static String getTextContent(Element element) {
         StringBuilder ret = new StringBuilder();

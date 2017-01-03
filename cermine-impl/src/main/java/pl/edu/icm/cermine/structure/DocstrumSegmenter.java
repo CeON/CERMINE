@@ -461,6 +461,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      */
     private BxPage convertToBxModel(BxPage origPage, List<List<ComponentLine>> zones, double wordSpacing) {
         BxPage page = new BxPage();
+        page.addImages(origPage.getImages());
         List<BxPage> pages = Lists.newArrayList(origPage.getParent());
         int pageIndex = pages.indexOf(origPage);
         boolean groupped = false;

@@ -45,8 +45,9 @@ public class CommandLineOptionsParserTest {
         assertEquals("/path/to/pdfs/folder", cmdLineOptionsParser.getPath());
         
         Map<String, String> typesAndExtensions = cmdLineOptionsParser.getTypesAndExtensions();
-        assertEquals(1, typesAndExtensions.size());
+        assertEquals(2, typesAndExtensions.size());
         assertEquals("cermxml", typesAndExtensions.get("jats"));
+        assertEquals("images", typesAndExtensions.get("images"));
         
         assertFalse(cmdLineOptionsParser.override());
         assertNull(cmdLineOptionsParser.getTimeout());

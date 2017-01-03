@@ -28,6 +28,7 @@ import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentSection;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.tools.Pair;
 import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
@@ -42,24 +43,40 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
     @Override
     public Element convert(ContentStructure source, Object... hints) throws TransformationException {
         Element body = new Element("body");
+        body.addNamespaceDeclaration(XMLTools.NS_XLINK);
         ContentStructureCitationPositions positions = null;
+        List<BxImage> images = new ArrayList<BxImage>();
         for (Object hint : hints) {
             if (hint instanceof ContentStructureCitationPositions) {
                 positions = (ContentStructureCitationPositions) hint;
-                break;
+            }
+            if (hint instanceof List) {
+                images = (List<BxImage>) hint;
             }
         }
-        body.addContent(toHTML(source, positions));
+        body.addContent(toHTML(source, positions, images));
         addSectionIds(body);
         return body;
     }
     
-    private List<Element> toHTML(ContentStructure dcs, ContentStructureCitationPositions positions) {
+    private List<Element> toHTML(ContentStructure dcs, 
+            ContentStructureCitationPositions positions, List<BxImage> images) {
         List<Element> elements = new ArrayList<Element>();
         for (DocumentSection part : dcs.getSections()) {
             elements.addAll(toHTML(part, positions));
         }
+        for (BxImage image : images) {
+            elements.add(toHTML(image));
+        }
         return elements;
+    }
+    
+    private Element toHTML(BxImage image) {
+        Element fig = new Element("fig");
+        Element graphic = new Element("graphic");
+        graphic.setAttribute("href", image.getPath(), XMLTools.NS_XLINK);
+        fig.addContent(graphic);
+        return fig;
     }
     
     private List<Element> toHTML(DocumentSection part, ContentStructureCitationPositions positions) {

@@ -185,7 +185,7 @@ public class InternalContentExtractor {
      * @throws AnalysisException AnalysisException
      */
     public DocumentMetadata getMetadata() throws AnalysisException {
-        doWork(Step.AFFIIATION_PARSING);
+        doWork(Step.AFFILIATION_PARSING);
         return metadata;
     }
     
@@ -197,7 +197,7 @@ public class InternalContentExtractor {
      */
     public Element getMetadataAsNLM() throws AnalysisException {
         try {
-            doWork(Step.AFFIIATION_PARSING);
+            doWork(Step.AFFILIATION_PARSING);
             MetadataToNLMConverter converter = new MetadataToNLMConverter();
             return converter.convert(metadata);
         } catch (TransformationException ex) {
@@ -300,7 +300,7 @@ public class InternalContentExtractor {
      * @throws AnalysisException AnalysisException
      */
     public Element getContentAsNLM(String imagesPrefix) throws AnalysisException {
-        doWork(Step.AFFIIATION_PARSING);
+        doWork(Step.AFFILIATION_PARSING);
         doWork(Step.REFERENCE_PARSING);
         doWork(Step.CITPOS_DETECTION);
         
@@ -364,7 +364,7 @@ public class InternalContentExtractor {
             case METADATA_CLEANING:
                 metadata = ExtractionUtils.cleanMetadata(conf, bxDocument);
                 break;
-            case AFFIIATION_PARSING:
+            case AFFILIATION_PARSING:
                 metadata = ExtractionUtils.parseAffiliations(conf, metadata);
                 break;
             case REFERENCE_EXTRACTION:

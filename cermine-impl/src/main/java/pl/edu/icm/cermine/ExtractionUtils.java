@@ -204,7 +204,7 @@ public class ExtractionUtils {
         
         METADATA_CLEANING       (setOf(METADATA_CLASSIFICATION)),
         
-        AFFIIATION_PARSING      (setOf(METADATA_CLEANING)),
+        AFFILIATION_PARSING      (setOf(METADATA_CLEANING)),
         
         REFERENCE_EXTRACTION    (setOf(INITIAL_CLASSIFICATION)),
         

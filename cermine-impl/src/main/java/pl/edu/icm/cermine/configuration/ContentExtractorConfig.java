@@ -16,14 +16,14 @@ public class ContentExtractorConfig {
      */
     public enum ConfigurationProperty {
         
-        INITIAL_ZONE_CLASSIFIER_MODEL_PATH("zoneClassifier.initial.default.model"),
-        INITIAL_ZONE_CLASSIFIER_RANGE_PATH("zoneClassifier.initial.default.rangeModel"),
+        INITIAL_ZONE_CLASSIFIER_MODEL_PATH  ("zoneClassifier.initial.model"),
+        INITIAL_ZONE_CLASSIFIER_RANGE_PATH  ("zoneClassifier.initial.ranges"),
         
-        METADATA_ZONE_CLASSIFIER_MODEL_PATH("zoneClassifier.metadata.default.model"),
-        METADATA_ZONE_CLASSIFIER_RANGE_PATH("zoneClassifier.metadata.default.rangeModel"),
+        METADATA_ZONE_CLASSIFIER_MODEL_PATH ("zoneClassifier.metadata.model"),
+        METADATA_ZONE_CLASSIFIER_RANGE_PATH ("zoneClassifier.metadata.ranges"),
         
-        CONTENT_FILTER_MODEL_PATH("contentFilter.default.model"),
-        CONTENT_FILTER_RANGE_PATH("contentFilter.default.rangeModel");
+        CONTENT_FILTER_MODEL_PATH           ("contentFilter.model"),
+        CONTENT_FILTER_RANGE_PATH           ("contentFilter.ranges");
         
         private String propertyKey;
         

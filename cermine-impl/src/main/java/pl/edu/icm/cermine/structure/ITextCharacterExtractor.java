@@ -359,7 +359,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
         public void renderImage(ImageRenderInfo iri) {
             try {
                 BufferedImage bi = iri.getImage().getBufferedImage();
-                if (bi != null) {
+                if (bi != null && bi.getHeight() > 1 && bi.getWidth() > 1) {
                     actPage.addImage(new BxImage(
                             "img_" + pageNumber + "_" + (imageNumber++) + ".png", bi));
                 }

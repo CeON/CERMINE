@@ -319,7 +319,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        assertEquals(8, images.size());
+        assertEquals(4, images.size());
         Collections.sort(images, new Comparator<BxImage>(){
             @Override
             public int compare(BxImage o1, BxImage o2) {

@@ -29,6 +29,7 @@ import org.jdom.output.XMLOutputter;
 
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigBuilder;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -167,7 +168,10 @@ public class PdfNLMContentExtractor {
         InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         if (parser.getConfigurationPath() != null) {
-            ContentExtractorConfigLoader.loadConfiguration(parser.getConfigurationPath());
+            ContentExtractorConfigLoader.set(new ContentExtractorConfigBuilder()
+                    .addConfiguration(parser.getConfigurationPath())
+                    .buildConfiguration()
+            );
         }
         ContentExtractorConfig config = ContentExtractorConfigLoader.get();
         

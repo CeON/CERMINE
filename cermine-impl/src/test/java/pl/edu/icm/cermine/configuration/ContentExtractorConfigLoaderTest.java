@@ -38,7 +38,10 @@ public class ContentExtractorConfigLoaderTest {
             String configFilePath = ContentExtractorConfigLoaderTest.class.getClassLoader().getResource("pl/edu/icm/cermine/configuration/test-config.properties").getPath();
         
             // execute
-            ContentExtractorConfigLoader.loadConfiguration(configFilePath);
+            ContentExtractorConfigLoader.set(new ContentExtractorConfigBuilder()
+                    .addConfiguration(configFilePath)
+                    .buildConfiguration()
+            );
             ContentExtractorConfig configuration = ContentExtractorConfigLoader.get();
        
             // assert

@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigRegister;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigBuilder;
 import pl.edu.icm.cermine.content.model.ContentStructure;
@@ -75,7 +75,7 @@ public class ContentExtractor {
      * @throws AnalysisException AnalysisException
      */
     public ContentExtractor() throws AnalysisException {
-        this(ContentExtractorConfigLoader.get());
+        this(ContentExtractorConfigRegister.get());
     }
 
     /**
@@ -88,7 +88,7 @@ public class ContentExtractor {
      * @throws TimeoutException thrown when timeout deadline has passed.
      */
     public ContentExtractor(long timeoutSeconds) throws AnalysisException, TimeoutException {
-        this(ContentExtractorConfigLoader.get(), timeoutSeconds);
+        this(ContentExtractorConfigRegister.get(), timeoutSeconds);
     }
     
     /**
@@ -793,12 +793,12 @@ public class ContentExtractor {
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
 
         if (parser.getConfigurationPath() != null) {
-            ContentExtractorConfigLoader.set(new ContentExtractorConfigBuilder()
+            ContentExtractorConfigRegister.set(new ContentExtractorConfigBuilder()
                     .addConfiguration(parser.getConfigurationPath())
                     .buildConfiguration()
             );
         }
-        ContentExtractorConfig config = ContentExtractorConfigLoader.get();
+        ContentExtractorConfig config = ContentExtractorConfigRegister.get();
 
         int i = 0;
         for (File pdf : files) {

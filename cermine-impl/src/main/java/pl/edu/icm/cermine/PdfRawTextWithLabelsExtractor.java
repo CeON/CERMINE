@@ -29,7 +29,7 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigRegister;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigBuilder;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -121,12 +121,12 @@ public class PdfRawTextWithLabelsExtractor {
         InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
         if (parser.getConfigurationPath() != null) {
-            ContentExtractorConfigLoader.set(new ContentExtractorConfigBuilder()
+            ContentExtractorConfigRegister.set(new ContentExtractorConfigBuilder()
                     .addConfiguration(parser.getConfigurationPath())
                     .buildConfiguration()
             );
         }
-        ContentExtractorConfig config = ContentExtractorConfigLoader.get();
+        ContentExtractorConfig config = ContentExtractorConfigRegister.get();
         
         File file = new File(path);
         if (file.isFile()) {

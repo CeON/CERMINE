@@ -7,7 +7,7 @@ import com.google.common.base.Preconditions;
  * 
  * @author madryk
  */
-public class ContentExtractorConfigLoader {
+public class ContentExtractorConfigRegister {
 
     private static final ThreadLocal<ContentExtractorConfig> INSTANCE =
             new ThreadLocal<ContentExtractorConfig>() {

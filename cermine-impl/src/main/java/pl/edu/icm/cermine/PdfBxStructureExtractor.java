@@ -24,7 +24,7 @@ import java.util.Collection;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 
-import pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigRegister;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfigBuilder;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -104,12 +104,12 @@ public class PdfBxStructureExtractor {
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
     
         if (parser.getConfigurationPath() != null) {
-            ContentExtractorConfigLoader.set(new ContentExtractorConfigBuilder()
+            ContentExtractorConfigRegister.set(new ContentExtractorConfigBuilder()
                     .addConfiguration(parser.getConfigurationPath())
                     .buildConfiguration()
             );
         }
-        ContentExtractorConfig config = ContentExtractorConfigLoader.get();
+        ContentExtractorConfig config = ContentExtractorConfigRegister.get();
                 
         int i = 0;
         for (File pdf : files) {

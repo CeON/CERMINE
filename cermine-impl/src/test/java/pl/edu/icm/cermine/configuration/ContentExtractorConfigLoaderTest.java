@@ -11,44 +11,47 @@ import pl.edu.icm.cermine.configuration.ContentExtractorConfig.ConfigurationProp
  */
 public class ContentExtractorConfigLoaderTest {
 
-    private ContentExtractorConfigLoader configurationLoader = new ContentExtractorConfigLoader();
-   
     @Test
     public void loadConfiguration_DEFAULT() {
-        // execute
+        try {
+            // execute        
+            ContentExtractorConfig configuration = ContentExtractorConfigLoader.get();
         
-        ContentExtractorConfig configuration = configurationLoader.loadConfiguration();
+            // assert
+            assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_MODEL_PATH));
+            assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default.range", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_RANGE_PATH));
         
-        // assert
+            assertEquals("classpath:/pl/edu/icm/cermine/structure/model-metadata-default", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_MODEL_PATH));
+            assertEquals("classpath:/pl/edu/icm/cermine/structure/model-metadata-default.range", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_RANGE_PATH));
         
-        assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_MODEL_PATH));
-        assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default.range", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_RANGE_PATH));
-        
-        assertEquals("classpath:/pl/edu/icm/cermine/structure/model-metadata-default", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_MODEL_PATH));
-        assertEquals("classpath:/pl/edu/icm/cermine/structure/model-metadata-default.range", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_RANGE_PATH));
-        
-        assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.model", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_MODEL_PATH));
-        assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.range", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_RANGE_PATH));
+            assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.model", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_MODEL_PATH));
+            assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.range", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_RANGE_PATH));
+        } finally {
+            ContentExtractorConfigLoader.remove();
+        }
     }
     
     @Test
     public void loadConfiguration_OVERRIDE_DEFAULTS() {
-        // given
+        try {
+            // given
+            String configFilePath = ContentExtractorConfigLoaderTest.class.getClassLoader().getResource("pl/edu/icm/cermine/configuration/test-config.properties").getPath();
         
-        String configFilePath = ContentExtractorConfigLoaderTest.class.getClassLoader().getResource("pl/edu/icm/cermine/configuration/test-config.properties").getPath();
-        
-        // execute
-        
-        ContentExtractorConfig configuration = configurationLoader.loadConfiguration(configFilePath);
+            // execute
+            ContentExtractorConfigLoader.loadConfiguration(configFilePath);
+            ContentExtractorConfig configuration = ContentExtractorConfigLoader.get();
        
-        // assert
-        assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_MODEL_PATH));
-        assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default.range", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_RANGE_PATH));
+            // assert
+            assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_MODEL_PATH));
+            assertEquals("classpath:/pl/edu/icm/cermine/structure/model-initial-default.range", configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_RANGE_PATH));
         
-        assertEquals("/path/to/metadata/classifier/model", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_MODEL_PATH));
-        assertEquals("/path/to/metadata/classifier/range", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_RANGE_PATH));
+            assertEquals("/path/to/metadata/classifier/model", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_MODEL_PATH));
+            assertEquals("/path/to/metadata/classifier/range", configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_RANGE_PATH));
         
-        assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.model", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_MODEL_PATH));
-        assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.range", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_RANGE_PATH));
+            assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.model", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_MODEL_PATH));
+            assertEquals("classpath:/pl/edu/icm/cermine/content/filtering.range", configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_RANGE_PATH));
+        } finally {
+            ContentExtractorConfigLoader.remove();
+        }
     }
 }

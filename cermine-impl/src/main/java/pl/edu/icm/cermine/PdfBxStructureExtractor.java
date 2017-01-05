@@ -102,9 +102,11 @@ public class PdfBxStructureExtractor {
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
     
-        ContentExtractorConfigLoader configLoader = new ContentExtractorConfigLoader();
-        ContentExtractorConfig config = (parser.getConfigurationPath() == null) ? configLoader.loadConfiguration() : configLoader.loadConfiguration(parser.getConfigurationPath());
-        
+        if (parser.getConfigurationPath() != null) {
+            ContentExtractorConfigLoader.loadConfiguration(parser.getConfigurationPath());
+        }
+        ContentExtractorConfig config = ContentExtractorConfigLoader.get();
+                
         int i = 0;
         for (File pdf : files) {
             File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));

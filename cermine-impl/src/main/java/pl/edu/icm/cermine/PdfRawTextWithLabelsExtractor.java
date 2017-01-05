@@ -119,9 +119,11 @@ public class PdfRawTextWithLabelsExtractor {
         String extension = parser.getTextExtension();
         InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
-        ContentExtractorConfigLoader configLoader = new ContentExtractorConfigLoader();
-        ContentExtractorConfig config = (parser.getConfigurationPath() == null) ? configLoader.loadConfiguration() : configLoader.loadConfiguration(parser.getConfigurationPath());
-
+        if (parser.getConfigurationPath() != null) {
+            ContentExtractorConfigLoader.loadConfiguration(parser.getConfigurationPath());
+        }
+        ContentExtractorConfig config = ContentExtractorConfigLoader.get();
+        
         File file = new File(path);
         if (file.isFile()) {
             try {

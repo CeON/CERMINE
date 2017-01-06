@@ -25,6 +25,7 @@ import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.configuration.ContentExtractorConfig.ConfigurationProperty;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigRegister;
 import pl.edu.icm.cermine.content.citations.ContentCitationPositionFinder;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
 import pl.edu.icm.cermine.content.filtering.ContentFilter;
@@ -95,18 +96,18 @@ public class ComponentConfiguration {
    
     boolean timeDebug = false;
     
-    public ComponentConfiguration(ContentExtractorConfig configuration) throws AnalysisException {
+    public ComponentConfiguration() throws AnalysisException {
         try {
             characterExtractor = ComponentFactory.getCharacterExtractor();
             documentSegmenter = ComponentFactory.getDocumentSegmenter();
             readingOrderResolver = ComponentFactory.getReadingOrderResolver();
             initialClassifier = ComponentFactory.getInitialZoneClassifier(
-                    configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_MODEL_PATH),
-                    configuration.getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_RANGE_PATH));
+                    ContentExtractorConfigRegister.get().getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_MODEL_PATH),
+                    ContentExtractorConfigRegister.get().getProperty(ConfigurationProperty.INITIAL_ZONE_CLASSIFIER_RANGE_PATH));
             TimeoutRegister.get().check();
             metadataClassifier = ComponentFactory.getMetadataZoneClassifier(
-                    configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_MODEL_PATH),
-                    configuration.getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_RANGE_PATH));
+                    ContentExtractorConfigRegister.get().getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_MODEL_PATH),
+                    ContentExtractorConfigRegister.get().getProperty(ConfigurationProperty.METADATA_ZONE_CLASSIFIER_RANGE_PATH));
             TimeoutRegister.get().check();
             metadataExtractor = ComponentFactory.getMetadataExtractor();
             TimeoutRegister.get().check();
@@ -115,8 +116,8 @@ public class ComponentConfiguration {
             bibReferenceExtractor = ComponentFactory.getBibReferenceExtractor();
             bibReferenceParser = ComponentFactory.getBibReferenceParser();
             contentFilter = ComponentFactory.getContentFilter(
-                    configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_MODEL_PATH),
-                    configuration.getProperty(ConfigurationProperty.CONTENT_FILTER_RANGE_PATH));
+                    ContentExtractorConfigRegister.get().getProperty(ConfigurationProperty.CONTENT_FILTER_MODEL_PATH),
+                    ContentExtractorConfigRegister.get().getProperty(ConfigurationProperty.CONTENT_FILTER_RANGE_PATH));
             TimeoutRegister.get().check();
             contentHeaderExtractor = ComponentFactory.getContentHeaderExtractor();
             contentHeaderClusterizer = ComponentFactory.getContentHeaderClusterizer();

@@ -53,10 +53,6 @@ public class PdfRawTextWithLabelsExtractor {
         extractor = new ContentExtractor();
     }
     
-    public PdfRawTextWithLabelsExtractor(ContentExtractorConfig configuration) throws AnalysisException {
-        extractor = new ContentExtractor(configuration);
-    }
-    
     /**
      * Extracts content of a PDF with labels.
      * 
@@ -131,7 +127,7 @@ public class PdfRawTextWithLabelsExtractor {
         File file = new File(path);
         if (file.isFile()) {
             try {
-                PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor(config);
+                PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor();
                 InputStream in = new FileInputStream(file);
                 Element result = extractor.extractRawText(in);
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -157,7 +153,7 @@ public class PdfRawTextWithLabelsExtractor {
                 System.out.println(pdf.getPath());
  
                 try {
-                    PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor(config);
+                    PdfRawTextWithLabelsExtractor extractor = new PdfRawTextWithLabelsExtractor();
 
                     InputStream in = new FileInputStream(pdf);
                     Element result = extractor.extractRawText(in);

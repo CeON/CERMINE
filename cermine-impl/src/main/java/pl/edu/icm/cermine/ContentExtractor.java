@@ -70,35 +70,12 @@ public class ContentExtractor {
     private Timeout mainTimeout = new Timeout();
 
     /**
-     * Creates the object.
+     * Creates the object with overridden default configuration.
      *
-     * @throws AnalysisException AnalysisException
+     * @throws AnalysisException thrown when there was an error while initializing object
      */
     public ContentExtractor() throws AnalysisException {
-        this(ContentExtractorConfigRegister.get());
-    }
-
-    /**
-     * Creates the object and sets the object-bound timeout before any other
-     * initialization in the constructor is done.
-     * <p>See {@link #setTimeout(long)} for more details about the timeout.</p>
-     *
-     * @param timeoutSeconds approximate timeout in seconds
-     * @throws AnalysisException thrown when there was an error while initializing object
-     * @throws TimeoutException thrown when timeout deadline has passed.
-     */
-    public ContentExtractor(long timeoutSeconds) throws AnalysisException, TimeoutException {
-        this(ContentExtractorConfigRegister.get(), timeoutSeconds);
-    }
-    
-    /**
-     * Creates the object with overridden default configuration.
-     * 
-     * @param config - configuration for this content extractor
-     * @throws AnalysisException thrown when there was an error while initializing object
-     */
-    public ContentExtractor(ContentExtractorConfig config) throws AnalysisException {
-        this.extractor = new InternalContentExtractor(config);
+        this.extractor = new InternalContentExtractor();
     }
     
     /**
@@ -106,17 +83,16 @@ public class ContentExtractor {
      * the object-bound timeout before any other initialization in the constructor is done.
      * <p>See {@link #setTimeout(long)} for more details about the timeout.</p>
      * 
-     * @param config - configuration for this content extractor
      * @param timeoutSeconds approximate timeout in seconds
      * @throws AnalysisException thrown when there was an error while initializing object
      * @throws TimeoutException thrown when timeout deadline has passed.
      */
-    public ContentExtractor(ContentExtractorConfig config, long timeoutSeconds) throws AnalysisException, TimeoutException {
+    public ContentExtractor(long timeoutSeconds) throws AnalysisException, TimeoutException {
         this.setTimeout(timeoutSeconds);
         try {
             TimeoutRegister.set(mainTimeout);
             TimeoutRegister.get().check();
-            this.extractor = new InternalContentExtractor(config);
+            this.extractor = new InternalContentExtractor();
         } finally {
             TimeoutRegister.remove();
         }
@@ -890,9 +866,9 @@ public class ContentExtractor {
             throws TimeoutException, AnalysisException {
         ContentExtractor extractor;
         if (timeoutSeconds != null) {
-            extractor = new ContentExtractor(config, timeoutSeconds);
+            extractor = new ContentExtractor(timeoutSeconds);
         } else {
-            extractor = new ContentExtractor(config);
+            extractor = new ContentExtractor();
         }
         TimeoutRegister.get().check();
         return extractor;

@@ -92,11 +92,10 @@ public class InternalContentExtractor {
     /**
      * Creates the object with provided configuration.
      * 
-     * @param config - configuration for this content extractor
      * @throws AnalysisException thrown when there was an error while initializing object
      */
-    public InternalContentExtractor(ContentExtractorConfig config) throws AnalysisException {
-        conf = new ComponentConfiguration(config);
+    public InternalContentExtractor() throws AnalysisException {
+        conf = new ComponentConfiguration();
         stepsDone = EnumSet.noneOf(Step.class);
     }
 

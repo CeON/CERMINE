@@ -48,11 +48,7 @@ public class PdfBxStructureExtractor {
     public PdfBxStructureExtractor() throws AnalysisException {
         extractor = new ContentExtractor();
     }
-    
-    public PdfBxStructureExtractor(ContentExtractorConfig configuration) throws AnalysisException {
-        extractor = new ContentExtractor(configuration);
-    }
-    
+
     /**
      * Extracts the geometric structure from a PDF file and stores it as BxDocument.
      * 
@@ -125,7 +121,7 @@ public class PdfBxStructureExtractor {
             System.out.println(pdf.getPath());
  
             try {
-                PdfBxStructureExtractor extractor = new PdfBxStructureExtractor(config);
+                PdfBxStructureExtractor extractor = new PdfBxStructureExtractor();
 
                 InputStream in = new FileInputStream(pdf);
                 BxDocument doc = extractor.extractStructure(in);

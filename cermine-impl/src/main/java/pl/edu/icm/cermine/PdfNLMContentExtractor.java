@@ -57,10 +57,6 @@ public class PdfNLMContentExtractor {
     public PdfNLMContentExtractor() throws AnalysisException {
         extractor = new ContentExtractor();
     }
-
-    public PdfNLMContentExtractor(ContentExtractorConfig configuration) throws AnalysisException {
-        extractor = new ContentExtractor(configuration);
-    }
     
     /**
      * Extracts content from PDF file and stores it in NLM format.
@@ -178,7 +174,7 @@ public class PdfNLMContentExtractor {
         File file = new File(path);
         if (file.isFile()) {
             try {
-                PdfNLMContentExtractor extractor = new PdfNLMContentExtractor(config);
+                PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
                 InputStream in = new FileInputStream(file);
                 Element result = extractor.extractContent(in);
                 XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -204,7 +200,7 @@ public class PdfNLMContentExtractor {
                 System.out.println(pdf.getPath());
  
                 try {
-                    PdfNLMContentExtractor extractor = new PdfNLMContentExtractor(config);
+                    PdfNLMContentExtractor extractor = new PdfNLMContentExtractor();
 
                     InputStream in = new FileInputStream(pdf);
                     BxDocument doc = extractor.extractBxDocument(in);

@@ -1,5 +1,6 @@
 package pl.edu.icm.cermine.configuration;
 
+import java.nio.charset.Charset;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class ContentExtractorConfigLoaderTest {
         try {
             // given
             String configFilePath = ContentExtractorConfigLoaderTest.class.getClassLoader().getResource("pl/edu/icm/cermine/configuration/test-config.properties").getPath();
-        
+            System.out.println(Charset.defaultCharset());
             // execute
             ContentExtractorConfigRegister.set(new ContentExtractorConfigBuilder()
                     .addConfiguration(configFilePath)

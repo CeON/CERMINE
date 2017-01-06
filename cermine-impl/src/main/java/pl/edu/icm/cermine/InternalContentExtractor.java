@@ -85,7 +85,7 @@ public class InternalContentExtractor {
     
     private ContentStructureCitationPositions citationPositions;
     
-    private Set<Step> stepsDone;
+    private final Set<Step> stepsDone;
             
     
     /**

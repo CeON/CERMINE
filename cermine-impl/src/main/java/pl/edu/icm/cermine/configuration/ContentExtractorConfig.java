@@ -2,7 +2,6 @@ package pl.edu.icm.cermine.configuration;
 
 import org.apache.commons.configuration.Configuration;
 
-
 /**
  * Class that holds configuration for {@link pl.edu.icm.cermine.ContentExtractor}.<br>
  * An object of this class can be obtained by {@link pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader}
@@ -25,7 +24,7 @@ public class ContentExtractorConfig {
         CONTENT_FILTER_MODEL_PATH           ("contentFilter.model"),
         CONTENT_FILTER_RANGE_PATH           ("contentFilter.ranges");
         
-        private String propertyKey;
+        private final String propertyKey;
         
         private ConfigurationProperty(String propertyKey) {
             this.propertyKey = propertyKey;
@@ -37,7 +36,7 @@ public class ContentExtractorConfig {
         
     }
     
-    private Configuration configuration;
+    private final Configuration configuration;
     
     /**
      * Default constructor

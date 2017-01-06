@@ -22,7 +22,7 @@ import org.apache.commons.configuration.Configuration;
 
 /**
  * Class that holds configuration for {@link pl.edu.icm.cermine.ContentExtractor}.<br>
- * An object of this class can be obtained by {@link pl.edu.icm.cermine.configuration.ContentExtractorConfigLoader}
+ * An object of this class can be obtained by {@link pl.edu.icm.cermine.configuration.ExtractionConfigRegister}
  * 
  * @author madryk
  */

@@ -22,7 +22,9 @@ public class ContentExtractorConfig {
         METADATA_ZONE_CLASSIFIER_RANGE_PATH ("zoneClassifier.metadata.ranges"),
         
         CONTENT_FILTER_MODEL_PATH           ("contentFilter.model"),
-        CONTENT_FILTER_RANGE_PATH           ("contentFilter.ranges");
+        CONTENT_FILTER_RANGE_PATH           ("contentFilter.ranges"),
+        
+        DEBUG_PRINT_TIME                    ("debug.print.time");
         
         private final String propertyKey;
         
@@ -57,4 +59,7 @@ public class ContentExtractorConfig {
         return configuration.getString(property.getPropertyKey());
     }
 
+    public Boolean getBooleanProperty(ConfigurationProperty property) {
+        return configuration.getBoolean(property.getPropertyKey());
+    }
 }

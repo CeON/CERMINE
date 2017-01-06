@@ -92,9 +92,6 @@ public class ComponentConfiguration {
     /** citation position finder */
     private ContentCitationPositionFinder citationPositionFinder;
     
-   
-    boolean timeDebug = false;
-    
     public ComponentConfiguration() throws AnalysisException {
         try {
             characterExtractor = ComponentFactory.getCharacterExtractor();
@@ -257,14 +254,6 @@ public class ComponentConfiguration {
 
     public void setCitationPositionFinder(ContentCitationPositionFinder citationPositionFinder) {
         this.citationPositionFinder = citationPositionFinder;
-    }
-
-    public boolean isTimeDebug() {
-        return timeDebug;
-    }
-
-    public void setTimeDebug(boolean timeDebug) {
-        this.timeDebug = timeDebug;
     }
     
 }

@@ -26,6 +26,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
+import pl.edu.icm.cermine.configuration.ContentExtractorConfigRegister;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.ContentStructure;
@@ -44,8 +46,8 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
  */
 public class ExtractionUtils {
 
-    private static void debug(ComponentConfiguration conf, double start, String msg) {
-        if (conf.timeDebug) {
+    private static void debug(double start, String msg) {
+        if (ContentExtractorConfigRegister.get().getBooleanProperty(ContentExtractorConfig.ConfigurationProperty.DEBUG_PRINT_TIME)) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println(msg + ": " + elapsed);
         }
@@ -56,7 +58,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxDocument doc = conf.getCharacterExtractor().extractCharacters(stream);
-        debug(conf, start, "1.1 Character extraction");
+        debug(start, "1.1 Character extraction");
         return doc;
     }
     
@@ -66,7 +68,7 @@ public class ExtractionUtils {
         long start = System.currentTimeMillis();
         TimeoutRegister.get().check();
         doc = conf.getDocumentSegmenter().segmentDocument(doc);
-        debug(conf, start, "1.2 Page segmentation");
+        debug(start, "1.2 Page segmentation");
         return doc;
     }
     
@@ -75,7 +77,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.getReadingOrderResolver().resolve(doc);
-        debug(conf, start, "1.3 Reading order resolving");
+        debug(start, "1.3 Reading order resolving");
         return doc;
     }
     
@@ -84,7 +86,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.getInitialClassifier().classifyZones(doc);
-        debug(conf, start, "1.4 Initial classification");
+        debug(start, "1.4 Initial classification");
         return doc;
     }
     
@@ -93,7 +95,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.getMetadataClassifier().classifyZones(doc);
-        debug(conf, start, "2.1 Metadata classification");
+        debug(start, "2.1 Metadata classification");
         return doc;
     }
     
@@ -102,7 +104,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         DocumentMetadata metadata = conf.getMetadataExtractor().extractMetadata(doc);
-        debug(conf, start, "2.2 Metadata cleaning");
+        debug(start, "2.2 Metadata cleaning");
         return metadata;
     }
     
@@ -113,7 +115,7 @@ public class ExtractionUtils {
     	for (DocumentAffiliation aff : metadata.getAffiliations()) {
             conf.getAffiliationParser().parse(aff);
     	}
-        debug(conf, start, "2.3 Affiliation parsing");
+        debug(start, "2.3 Affiliation parsing");
         return metadata;
     }
     
@@ -123,7 +125,7 @@ public class ExtractionUtils {
         long start = System.currentTimeMillis();
         String[] refs = conf.getBibRefExtractor().extractBibReferences(doc);
         List<String> references = Lists.newArrayList(refs);
-        debug(conf, start, "3.1 Reference extraction");
+        debug(start, "3.1 Reference extraction");
         return references;
     }
 
@@ -135,7 +137,7 @@ public class ExtractionUtils {
         for (String ref : refs) {
             parsedRefs.add(conf.getBibRefParser().parseBibReference(ref));
         }
-        debug(conf, start, "3.2 Reference parsing");
+        debug(start, "3.2 Reference parsing");
         return parsedRefs;
     }
     
@@ -144,7 +146,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         doc = conf.getContentFilter().filter(doc);
-        debug(conf, start, "4.1 Content filtering");
+        debug(start, "4.1 Content filtering");
         return doc;
     }
     
@@ -153,7 +155,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         BxContentStructure contentStructure = conf.getContentHeaderExtractor().extractHeaders(doc);
-        debug(conf, start, "4.2 Headers extraction");
+        debug(start, "4.2 Headers extraction");
         return contentStructure;
     }
     
@@ -162,7 +164,7 @@ public class ExtractionUtils {
             throws AnalysisException {
         long start = System.currentTimeMillis();
         conf.getContentHeaderClusterizer().clusterHeaders(contentStructure);
-        debug(conf, start, "4.3 Headers clustering");
+        debug(start, "4.3 Headers clustering");
         return contentStructure;
     }
     
@@ -174,7 +176,7 @@ public class ExtractionUtils {
             conf.getContentCleaner().cleanupContent(contentStructure);
             BxContentToDocContentConverter converter = new BxContentToDocContentConverter();
             ContentStructure structure = converter.convert(contentStructure);
-            debug(conf, start, "4.4 Content cleaning");
+            debug(start, "4.4 Content cleaning");
             return structure;
         } catch (TransformationException ex) {
             throw new AnalysisException(ex);
@@ -186,7 +188,7 @@ public class ExtractionUtils {
             ContentStructure struct, List<BibEntry> citations) {
         long start = System.currentTimeMillis();
         ContentStructureCitationPositions positions = conf.getCitationPositionFinder().findReferences(struct, citations);
-        debug(conf, start, "4.5 Citation positions finding");
+        debug(start, "4.5 Citation positions finding");
         return positions;
     }
   

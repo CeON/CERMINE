@@ -35,9 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.configuration.ContentExtractorConfigRegister;
-import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
-import pl.edu.icm.cermine.configuration.ContentExtractorConfigBuilder;
+import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
+import pl.edu.icm.cermine.configuration.ExtractionConfig;
+import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -769,12 +769,12 @@ public class ContentExtractor {
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
 
         if (parser.getConfigurationPath() != null) {
-            ContentExtractorConfigRegister.set(new ContentExtractorConfigBuilder()
+            ExtractionConfigRegister.set(new ExtractionConfigBuilder()
                     .addConfiguration(parser.getConfigurationPath())
                     .buildConfiguration()
             );
         }
-        ContentExtractorConfig config = ContentExtractorConfigRegister.get();
+        ExtractionConfig config = ExtractionConfigRegister.get();
 
         int i = 0;
         for (File pdf : files) {
@@ -862,7 +862,7 @@ public class ContentExtractor {
         }
     }
 
-    private static ContentExtractor createContentExtractor(ContentExtractorConfig config, Long timeoutSeconds)
+    private static ContentExtractor createContentExtractor(ExtractionConfig config, Long timeoutSeconds)
             throws TimeoutException, AnalysisException {
         ContentExtractor extractor;
         if (timeoutSeconds != null) {

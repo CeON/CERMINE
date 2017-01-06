@@ -1,3 +1,21 @@
+/**
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2016 ICM-UW
+ *
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package pl.edu.icm.cermine.configuration;
 
 import java.io.File;
@@ -12,20 +30,20 @@ import org.apache.commons.configuration.PropertiesConfiguration;
  * 
  * @author madryk
  */
-public class ContentExtractorConfigBuilder {
+public class ExtractionConfigBuilder {
 
     private static final String DEFAULT_CONFIGURATION_CLASSPATH = "pl/edu/icm/cermine/application-default.properties";
 
     private final CompositeConfiguration configuration;
 
-    public ContentExtractorConfigBuilder() {
+    public ExtractionConfigBuilder() {
         // prevents MALLET from printing info messages
         System.setProperty("java.util.logging.config.file",
             "edu/umass/cs/mallet/base/util/resources/logging.properties");
         this.configuration = new CompositeConfiguration();
     }
     
-    public ContentExtractorConfigBuilder addConfiguration(String configurationFilePath) {
+    public ExtractionConfigBuilder addConfiguration(String configurationFilePath) {
         try {
             configuration.addConfiguration(new PropertiesConfiguration(new File(configurationFilePath)));
         } catch (ConfigurationException e) {
@@ -34,24 +52,24 @@ public class ContentExtractorConfigBuilder {
         return this;
     }
     
-    public ContentExtractorConfigBuilder addConfiguration(Configuration config) {
+    public ExtractionConfigBuilder addConfiguration(Configuration config) {
         configuration.addConfiguration(config);
         return this;
     }
     
-    public ContentExtractorConfigBuilder setProperty(String property, Object value) {
+    public ExtractionConfigBuilder setProperty(String property, Object value) {
         configuration.setProperty(property, value);
         return this;
     }
 
-    public ContentExtractorConfig buildConfiguration() {
-        URL propertiesUrl = ContentExtractorConfigBuilder.class.getClassLoader().getResource(DEFAULT_CONFIGURATION_CLASSPATH);
+    public ExtractionConfig buildConfiguration() {
+        URL propertiesUrl = ExtractionConfigBuilder.class.getClassLoader().getResource(DEFAULT_CONFIGURATION_CLASSPATH);
         try {
             configuration.addConfiguration(new PropertiesConfiguration(propertiesUrl));
         } catch (ConfigurationException e) {
             throw new RuntimeException("Unable to load default configuration", e);
         }
-        return new ContentExtractorConfig(configuration);
+        return new ExtractionConfig(configuration);
     }
     
 }

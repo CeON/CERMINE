@@ -26,8 +26,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
-import pl.edu.icm.cermine.configuration.ContentExtractorConfigRegister;
+import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.model.BxContentStructure;
 import pl.edu.icm.cermine.content.model.ContentStructure;
@@ -47,7 +47,7 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
 public class ExtractionUtils {
 
     private static void debug(double start, String msg) {
-        if (ContentExtractorConfigRegister.get().getBooleanProperty(ContentExtractorConfig.ConfigurationProperty.DEBUG_PRINT_TIME)) {
+        if (ExtractionConfigRegister.get().getBooleanProperty(ExtractionConfigProperty.DEBUG_PRINT_TIME)) {
             double elapsed = (System.currentTimeMillis() - start) / 1000.;
             System.out.println(msg + ": " + elapsed);
         }

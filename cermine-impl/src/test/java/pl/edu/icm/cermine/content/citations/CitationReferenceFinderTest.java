@@ -18,12 +18,10 @@
 
 package pl.edu.icm.cermine.content.citations;
 
-import pl.edu.icm.cermine.content.citations.CitationPositionFinder;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
-import pl.edu.icm.cermine.content.citations.CitationPosition;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

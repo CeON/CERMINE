@@ -59,8 +59,6 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  */
 public class InternalContentExtractor {
 
-    public static int THREADS_NUMBER = 3;
-    
     private ComponentConfiguration conf;
     
     /** input PDF file */

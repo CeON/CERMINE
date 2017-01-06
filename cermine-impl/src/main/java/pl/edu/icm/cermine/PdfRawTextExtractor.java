@@ -25,6 +25,9 @@ import java.io.InputStream;
 import java.util.Collection;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
+import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
+import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 
@@ -104,8 +107,13 @@ public class PdfRawTextExtractor {
         
         String path = parser.getPath();
         String extension = parser.getTextExtension();
-        InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
  
+        ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
+        if (parser.getThreadsNumber() > 0) {
+            builder.setProperty(ExtractionConfigProperty.SEGMENTER_THREADS, parser.getThreadsNumber());
+        }
+        ExtractionConfigRegister.set(builder.buildConfiguration());
+        
         File file = new File(path);
         if (file.isFile()) {
             try {

@@ -51,7 +51,7 @@ public class CommandLineOptionsParserTest {
         
         assertFalse(cmdLineOptionsParser.override());
         assertNull(cmdLineOptionsParser.getTimeout());
-        assertEquals(3, cmdLineOptionsParser.getThreadsNumber());
+        assertEquals(-1, cmdLineOptionsParser.getThreadsNumber());
         assertNull(cmdLineOptionsParser.getConfigurationPath());
         
         assertEquals("cermxml", cmdLineOptionsParser.getNLMExtension());

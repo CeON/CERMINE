@@ -57,8 +57,8 @@ public class ExtractionConfigBuilder {
         return this;
     }
     
-    public ExtractionConfigBuilder setProperty(String property, Object value) {
-        configuration.setProperty(property, value);
+    public ExtractionConfigBuilder setProperty(ExtractionConfigProperty property, Object value) {
+        configuration.setProperty(property.getPropertyKey(), value);
         return this;
     }
 

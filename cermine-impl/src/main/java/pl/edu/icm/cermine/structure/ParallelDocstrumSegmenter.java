@@ -23,7 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
-import pl.edu.icm.cermine.InternalContentExtractor;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
+import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -101,7 +102,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         Map<BxPage, List<Component>> componentMap = new HashMap<BxPage, List<Component>>();
 
         ExecutorService exec = Executors.newFixedThreadPool(
-                InternalContentExtractor.THREADS_NUMBER);
+                ExtractionConfigRegister.get().getIntProperty(ExtractionConfigProperty.SEGMENTER_THREADS));
         ArrayList<Callable<NumBxPage>> tasks = new ArrayList<Callable<NumBxPage>>();
         for (BxPage page : document) {
            tasks.add(new ComponentCounter(page, TimeoutRegister.get()));
@@ -133,7 +134,7 @@ public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
         BxPage[] pages = new BxPage[document.childrenCount()];
         
         exec = Executors.newFixedThreadPool(
-                InternalContentExtractor.THREADS_NUMBER);
+                ExtractionConfigRegister.get().getIntProperty(ExtractionConfigProperty.SEGMENTER_THREADS));
         tasks = new ArrayList<Callable<NumBxPage>>();
         int i = 0;
         for (BxPage page : document) {

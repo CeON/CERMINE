@@ -23,10 +23,9 @@ import java.io.*;
 import java.util.Collection;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
-
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
-import pl.edu.icm.cermine.configuration.ExtractionConfig;
 import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -94,19 +93,19 @@ public class PdfBxStructureExtractor {
         
         String path = parser.getPath();
         String strExtension = parser.getBxExtension();
-        InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
- 
+
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
     
+        ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
-            ExtractionConfigRegister.set(new ExtractionConfigBuilder()
-                    .addConfiguration(parser.getConfigurationPath())
-                    .buildConfiguration()
-            );
+            builder.addConfiguration(parser.getConfigurationPath());
         }
-        ExtractionConfig config = ExtractionConfigRegister.get();
-                
+        if (parser.getThreadsNumber() > 0) {
+            builder.setProperty(ExtractionConfigProperty.SEGMENTER_THREADS, parser.getThreadsNumber());
+        }
+        ExtractionConfigRegister.set(builder.buildConfiguration());
+        
         int i = 0;
         for (File pdf : files) {
             File strF = new File(pdf.getPath().replaceAll("pdf$", strExtension));

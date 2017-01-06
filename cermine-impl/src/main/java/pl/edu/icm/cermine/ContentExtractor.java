@@ -36,8 +36,8 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
-import pl.edu.icm.cermine.configuration.ExtractionConfig;
 import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -758,7 +758,6 @@ public class ContentExtractor {
             System.exit(1);
         }
 
-        InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
         boolean override = parser.override();
         Long timeoutSeconds = parser.getTimeout();
         
@@ -768,13 +767,14 @@ public class ContentExtractor {
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
 
+        ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
-            ExtractionConfigRegister.set(new ExtractionConfigBuilder()
-                    .addConfiguration(parser.getConfigurationPath())
-                    .buildConfiguration()
-            );
+            builder.addConfiguration(parser.getConfigurationPath());
         }
-        ExtractionConfig config = ExtractionConfigRegister.get();
+        if (parser.getThreadsNumber() > 0) {
+            builder.setProperty(ExtractionConfigProperty.SEGMENTER_THREADS, parser.getThreadsNumber());
+        }
+        ExtractionConfigRegister.set(builder.buildConfiguration());
 
         int i = 0;
         for (File pdf : files) {
@@ -797,7 +797,7 @@ public class ContentExtractor {
 
             ContentExtractor extractor = null;
             try {
-                extractor = createContentExtractor(config, timeoutSeconds);
+                extractor = createContentExtractor(timeoutSeconds);
           
                 InputStream in = new FileInputStream(pdf);
                 extractor.setPDF(in);
@@ -862,7 +862,7 @@ public class ContentExtractor {
         }
     }
 
-    private static ContentExtractor createContentExtractor(ExtractionConfig config, Long timeoutSeconds)
+    private static ContentExtractor createContentExtractor(Long timeoutSeconds)
             throws TimeoutException, AnalysisException {
         ContentExtractor extractor;
         if (timeoutSeconds != null) {

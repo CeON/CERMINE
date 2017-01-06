@@ -145,7 +145,7 @@ public class CommandLineOptionsParser {
         if (commandLine.hasOption("threads")) {
             return Integer.valueOf(commandLine.getOptionValue("threads"));
         }
-        return InternalContentExtractor.THREADS_NUMBER;
+        return -1;
     }
     
     public String getConfigurationPath() {

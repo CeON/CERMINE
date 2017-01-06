@@ -26,10 +26,9 @@ import org.apache.commons.io.FileUtils;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
-import pl.edu.icm.cermine.configuration.ExtractionConfig;
 import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -161,16 +160,16 @@ public class PdfNLMContentExtractor {
         String extension = parser.getNLMExtension();
         boolean extractStr = parser.extractStructure();
         String strExtension = parser.getBxExtension();
-        InternalContentExtractor.THREADS_NUMBER = parser.getThreadsNumber();
- 
+                
+        ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
-            ExtractionConfigRegister.set(new ExtractionConfigBuilder()
-                    .addConfiguration(parser.getConfigurationPath())
-                    .buildConfiguration()
-            );
+            builder.addConfiguration(parser.getConfigurationPath());
         }
-        ExtractionConfig config = ExtractionConfigRegister.get();
-        
+        if (parser.getThreadsNumber() > 0) {
+            builder.setProperty(ExtractionConfigProperty.SEGMENTER_THREADS, parser.getThreadsNumber());
+        }
+        ExtractionConfigRegister.set(builder.buildConfiguration());
+                
         File file = new File(path);
         if (file.isFile()) {
             try {

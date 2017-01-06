@@ -1,12 +1,28 @@
+/**
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2016 ICM-UW
+ *
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package pl.edu.icm.cermine;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Map;
-
 import org.apache.commons.cli.ParseException;
 import org.junit.Test;
 
@@ -15,9 +31,8 @@ import org.junit.Test;
  */
 public class CommandLineOptionsParserTest {
 
-    private CommandLineOptionsParser cmdLineOptionsParser = new CommandLineOptionsParser();
-    
-    
+    private final CommandLineOptionsParser cmdLineOptionsParser = new CommandLineOptionsParser();
+      
     @Test
     public void parse_NO_PATH() throws ParseException {
         // execute
@@ -35,12 +50,10 @@ public class CommandLineOptionsParserTest {
     
     @Test
     public void parse_WITH_PATH() throws ParseException {
-        // execute
-        
+        // execute     
         String error = cmdLineOptionsParser.parse(new String[] {"-path", "/path/to/pdfs/folder"});
         
         // assert
-        
         assertNull(error);
         assertEquals("/path/to/pdfs/folder", cmdLineOptionsParser.getPath());
         
@@ -63,7 +76,6 @@ public class CommandLineOptionsParserTest {
     @Test
     public void parse_OVERRIDE_DEFAULTS() throws ParseException {
         // execute
-        
         String error = cmdLineOptionsParser.parse(new String[] {
                 "-path", "/path/to/pdfs/folder",
                 "-outputs", "jats,zones,text",
@@ -78,7 +90,6 @@ public class CommandLineOptionsParserTest {
                 "-strext", "xml3",});
         
         // assert
-        
         assertNull(error);
         assertEquals("/path/to/pdfs/folder", cmdLineOptionsParser.getPath());
         
@@ -102,28 +113,24 @@ public class CommandLineOptionsParserTest {
     @Test
     public void parse_INVALID_EXTENSIONS_LIST_SIZE() throws ParseException {
         // execute
-        
         String error = cmdLineOptionsParser.parse(new String[] {
                 "-path", "/path/to/pdfs/folder",
                 "-outputs", "jats,zones,trueviz",
                 "-exts", "xml,xml2"});
         
         // assert
-        
         assertEquals("\"output\" and \"exts\" lists have different lengths", error);
     }
     
     @Test
     public void parse_UNKNOWN_OUTPUT_TYPE() throws ParseException {
         // execute
-        
         String error = cmdLineOptionsParser.parse(new String[] {
                 "-path", "/path/to/pdfs/folder",
                 "-outputs", "jats,unknown,unknown2",
                 "-exts", "xml,xml2,xml3"});
         
         // assert
-        
         assertEquals("Unknown output types: [unknown, unknown2]", error);
     }
 }

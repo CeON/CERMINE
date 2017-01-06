@@ -30,7 +30,6 @@ import org.jdom.Namespace;
 import pl.edu.icm.cermine.ExtractionUtils.Step;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
-import pl.edu.icm.cermine.configuration.ContentExtractorConfig;
 import pl.edu.icm.cermine.content.RawTextWithLabelsExtractor;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;

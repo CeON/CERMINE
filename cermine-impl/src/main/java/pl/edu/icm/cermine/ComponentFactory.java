@@ -64,7 +64,7 @@ public class ComponentFactory {
      * @return page segmenter
      */
     public static DocumentSegmenter getDocumentSegmenter() {
-        return new ParallelDocstrumSegmenter();
+        return new DocstrumSegmenter();
     }
     
     /**

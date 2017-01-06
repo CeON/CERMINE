@@ -45,7 +45,6 @@ public class CommandLineOptionsParser {
         options.addOption("str", false, "store structure (TrueViz) files as well");
         options.addOption("strext", true, "structure file extension");
         options.addOption("configuration", true, "path to configuration file");
-        options.addOption("threads", true, "number of threads used");
         options.addOption("timeout", true, "time in seconds");
     }
     
@@ -139,13 +138,6 @@ public class CommandLineOptionsParser {
             }
             return value;
         }
-    }
-    
-    public int getThreadsNumber() {
-        if (commandLine.hasOption("threads")) {
-            return Integer.valueOf(commandLine.getOptionValue("threads"));
-        }
-        return -1;
     }
     
     public String getConfigurationPath() {

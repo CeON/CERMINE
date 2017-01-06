@@ -28,7 +28,6 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
-import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -152,7 +151,7 @@ public class PdfNLMContentExtractor {
                   + "                            used only if passed path is a directory\n"
                   + "  -strext <extension>       (optional) the extension of the structure (TrueViz) file;\n"
                   + "                            default: \"cxml\"; used only if passed path is a directory\n"
-                  + "  -threads <num>            number of threads for parallel processing\n");
+                );
             System.exit(1);
         }
         
@@ -164,9 +163,6 @@ public class PdfNLMContentExtractor {
         ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
             builder.addConfiguration(parser.getConfigurationPath());
-        }
-        if (parser.getThreadsNumber() > 0) {
-            builder.setProperty(ExtractionConfigProperty.SEGMENTER_THREADS, parser.getThreadsNumber());
         }
         ExtractionConfigRegister.set(builder.buildConfiguration());
                 

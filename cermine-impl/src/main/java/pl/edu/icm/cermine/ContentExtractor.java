@@ -37,7 +37,6 @@ import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
-import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -752,8 +751,6 @@ public class ContentExtractor {
                     + "  -configuration <path>	(optional) path to configuration properties file\n"
                     + "                         see https://github.com/CeON/CERMINE\n"
                     + "                         for description of available configuration properties\n"
-                    + "  -threads <num>         (optional) number of threads for parallel processing;\n"
-                    + "                         default: 3"
                     );
             System.exit(1);
         }
@@ -770,9 +767,6 @@ public class ContentExtractor {
         ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
             builder.addConfiguration(parser.getConfigurationPath());
-        }
-        if (parser.getThreadsNumber() > 0) {
-            builder.setProperty(ExtractionConfigProperty.SEGMENTER_THREADS, parser.getThreadsNumber());
         }
         ExtractionConfigRegister.set(builder.buildConfiguration());
 

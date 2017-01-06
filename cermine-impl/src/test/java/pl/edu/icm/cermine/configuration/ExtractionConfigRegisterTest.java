@@ -57,9 +57,6 @@ public class ExtractionConfigRegisterTest {
             assertEquals(
                     false, 
                     configuration.getBooleanProperty(ExtractionConfigProperty.DEBUG_PRINT_TIME));
-            assertEquals(
-                    3, 
-                    configuration.getIntProperty(ExtractionConfigProperty.SEGMENTER_THREADS));
         } finally {
             ExtractionConfigRegister.remove();
         }
@@ -103,9 +100,6 @@ public class ExtractionConfigRegisterTest {
             assertEquals(
                     true, 
                     configuration.getBooleanProperty(ExtractionConfigProperty.DEBUG_PRINT_TIME));
-            assertEquals(
-                    1, 
-                    configuration.getIntProperty(ExtractionConfigProperty.SEGMENTER_THREADS));
         } finally {
             ExtractionConfigRegister.remove();
         }

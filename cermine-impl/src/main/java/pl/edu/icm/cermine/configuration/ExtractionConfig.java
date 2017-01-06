@@ -52,8 +52,4 @@ public class ExtractionConfig {
     public boolean getBooleanProperty(ExtractionConfigProperty property) {
         return configuration.getBoolean(property.getPropertyKey());
     }
-    
-    public int getIntProperty(ExtractionConfigProperty property) {
-        return configuration.getInt(property.getPropertyKey());
-    }
 }

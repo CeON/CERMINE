@@ -64,7 +64,6 @@ public class CommandLineOptionsParserTest {
         
         assertFalse(cmdLineOptionsParser.override());
         assertNull(cmdLineOptionsParser.getTimeout());
-        assertEquals(-1, cmdLineOptionsParser.getThreadsNumber());
         assertNull(cmdLineOptionsParser.getConfigurationPath());
         
         assertEquals("cermxml", cmdLineOptionsParser.getNLMExtension());
@@ -83,8 +82,6 @@ public class CommandLineOptionsParserTest {
                 "-override",
                 "-timeout", "120",
                 "-configuration", "config.properties",
-                "-threads", "8",
-                
                 "-ext", "xml2",
                 "-str",
                 "-strext", "xml3",});
@@ -101,7 +98,6 @@ public class CommandLineOptionsParserTest {
         
         assertTrue(cmdLineOptionsParser.override());
         assertEquals(Long.valueOf(120L), cmdLineOptionsParser.getTimeout());
-        assertEquals(8, cmdLineOptionsParser.getThreadsNumber());
         assertEquals("config.properties", cmdLineOptionsParser.getConfigurationPath());
         
         assertEquals("xml2", cmdLineOptionsParser.getNLMExtension());

@@ -19,8 +19,10 @@ package pl.edu.icm.cermine.tools.classification.general;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.*;
 import org.apache.commons.io.IOUtils;
 
@@ -98,7 +100,8 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
         BufferedWriter fp_save = null;
         try {
             Formatter formatter = new Formatter(new StringBuilder());
-            fp_save = new BufferedWriter(new FileWriter(path));
+            Writer fw = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
+            fp_save = new BufferedWriter(fw);
 
             double lower = 0.0;
             double upper = 1.0;

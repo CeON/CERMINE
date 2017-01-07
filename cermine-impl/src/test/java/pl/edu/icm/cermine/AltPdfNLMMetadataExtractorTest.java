@@ -65,7 +65,7 @@ public class AltPdfNLMMetadataExtractorTest {
         }
         
         InputStream expStream = AltPdfNLMMetadataExtractorTest.class.getResourceAsStream(EXP_FILE);
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         Document dom;
         try {

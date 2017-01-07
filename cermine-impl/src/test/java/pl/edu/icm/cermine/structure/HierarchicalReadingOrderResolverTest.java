@@ -62,7 +62,7 @@ public class HierarchicalReadingOrderResolverTest {
         while (entries.hasMoreElements()) {
             ZipEntry zipEntry = (ZipEntry) entries.nextElement();
             if (zipEntry.getName().equals(filename)) {
-                List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry)));
+                List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
                 BxDocument newDoc = new BxDocument();
                 for (BxPage page : pages) {
                     page.setParent(newDoc);

@@ -56,7 +56,7 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 
     public static List<TrainingSample<BxZoneLabel>> loadProblem(File file, FeatureVectorBuilder<BxZone, BxPage> fvb) throws IOException {
         List<TrainingSample<BxZoneLabel>> ret = new ArrayList<TrainingSample<BxZoneLabel>>();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
         String line;
         final Pattern partsPattern = Pattern.compile(" ");
         final Pattern twopartPattern = Pattern.compile(":");

@@ -17,8 +17,12 @@
  */
 package pl.edu.icm.cermine.tools;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
@@ -35,10 +39,22 @@ public class FileExtractor {
     }
 
     public BxDocument getDocument() throws TransformationException {
-        InputStreamReader isr = new InputStreamReader(inputStream);
-
-        TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        return new BxDocument().setPages(reader.read(isr));
+        InputStreamReader isr = null;
+        try {
+            isr = new InputStreamReader(inputStream, "UTF-8");
+            TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+            return new BxDocument().setPages(reader.read(isr));
+        } catch (UnsupportedEncodingException ex) {
+            throw new TransformationException("Unsupported encoding!", ex);
+        } finally {
+            try {
+                if (isr != null) {
+                    isr.close();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(FileExtractor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }

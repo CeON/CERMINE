@@ -108,8 +108,9 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
         if (is == null) {
             throw new AnalysisException("Resource not found: " + dictionaryFileName);
         }
-        BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        BufferedReader in = null;
         try {
+            in = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line;
             int lineNumber = 1;
             while ((line = in.readLine()) != null) {
@@ -120,7 +121,9 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
                     + dictionaryFileName + " was being read: " + readException);
         } finally {
             try {
-                in.close();
+                if (in != null) {
+                    in.close();
+                }
             } catch (IOException closeException) {
                 throw new AnalysisException("An exception occured when the " + dictionaryFileName
                         + "dictionary reader was being closed: " + closeException);

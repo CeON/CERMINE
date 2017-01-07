@@ -20,6 +20,8 @@ package pl.edu.icm.cermine.content.headers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -59,17 +61,25 @@ public class SVMHeaderLinesClassifier extends SVMClassifier<BxLine, BxPage, BxZo
 
     public SVMHeaderLinesClassifier(String modelFilePath, String rangeFilePath, FeatureVectorBuilder<BxLine, BxPage> featureVectorBuilder) throws AnalysisException {
         super(featureVectorBuilder, BxZoneLabel.class);
-        InputStreamReader modelISR = new InputStreamReader(SVMHeaderLinesClassifier.class
-                .getResourceAsStream(modelFilePath));
-        BufferedReader modelFile = new BufferedReader(modelISR);
-
-        InputStreamReader rangeISR = new InputStreamReader(SVMHeaderLinesClassifier.class
-                .getResourceAsStream(rangeFilePath));
-        BufferedReader rangeFile = new BufferedReader(rangeISR);
+        InputStreamReader modelISR = null;
         try {
+            modelISR = new InputStreamReader(SVMHeaderLinesClassifier.class
+                    .getResourceAsStream(modelFilePath), "UTF-8");
+            BufferedReader modelFile = new BufferedReader(modelISR);
+            InputStreamReader rangeISR = new InputStreamReader(SVMHeaderLinesClassifier.class
+                    .getResourceAsStream(rangeFilePath), "UTF-8");
+            BufferedReader rangeFile = new BufferedReader(rangeISR);
             loadModelFromFile(modelFile, rangeFile);
         } catch (IOException ex) {
-            throw new AnalysisException("Cannot create SVM classifier!", ex);
+                throw new AnalysisException("Cannot create SVM classifier!", ex);
+        } finally {
+            try {
+                if (modelISR != null) {
+                    modelISR.close();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(SVMHeaderLinesClassifier.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

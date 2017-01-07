@@ -53,7 +53,7 @@ public class BxDocUtils {
         BxDocument newDoc = new BxDocument();
         InputStream is = new FileInputStream(file);
         try {
-            List<BxPage> pages = tvReader.read(new InputStreamReader(is));
+            List<BxPage> pages = tvReader.read(new InputStreamReader(is, "UTF-8"));
             for (BxPage page : pages) {
                 page.setParent(newDoc);
             }

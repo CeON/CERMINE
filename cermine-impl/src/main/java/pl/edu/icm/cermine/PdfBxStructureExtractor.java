@@ -126,7 +126,8 @@ public class PdfBxStructureExtractor {
                 elapsed = (end - start) / 1000F;
             
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                writer.write(new FileWriter(strF), Lists.newArrayList(doc));
+                Writer fw = new OutputStreamWriter(new FileOutputStream(strF), "UTF-8");
+                writer.write(fw, Lists.newArrayList(doc), "UTF-8");
             } catch (AnalysisException ex) {
                ex.printStackTrace();
             } catch (TransformationException ex) {

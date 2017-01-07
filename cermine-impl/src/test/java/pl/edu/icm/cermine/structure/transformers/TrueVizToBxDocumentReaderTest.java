@@ -48,7 +48,7 @@ public class TrueVizToBxDocumentReaderTest {
     @Test
     public void testImporter() throws IOException, ParserConfigurationException, SAXException,
             TransformationException {
-        BxPage page = new TrueVizToBxDocumentReader().read(new InputStreamReader(TrueVizToBxDocumentReaderTest.class.getResourceAsStream("/pl/edu/icm/cermine/structure/imports/MargImporterTest1.xml"))).get(0);
+        BxPage page = new TrueVizToBxDocumentReader().read(new InputStreamReader(TrueVizToBxDocumentReaderTest.class.getResourceAsStream("/pl/edu/icm/cermine/structure/imports/MargImporterTest1.xml"), "UTF-8")).get(0);
         boolean contains = false;
         boolean rightText = false;
         boolean rightSize = false;
@@ -78,7 +78,7 @@ public class TrueVizToBxDocumentReaderTest {
         URL url = TrueVizToBxDocumentReaderTest.class.getResource(PATH + zipFilename);
         ZipFile zipFile = new ZipFile(new File(url.toURI()));
         InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
-        InputStreamReader isr = new InputStreamReader(is);
+        InputStreamReader isr = new InputStreamReader(is, "UTF-8");
 
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument doc = new BxDocument().setPages(reader.read(isr));

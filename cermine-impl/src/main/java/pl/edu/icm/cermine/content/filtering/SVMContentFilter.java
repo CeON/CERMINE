@@ -20,6 +20,8 @@ package pl.edu.icm.cermine.content.filtering;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
@@ -51,17 +53,25 @@ public class SVMContentFilter extends SVMClassifier<BxZone, BxPage, BxZoneLabel>
     public SVMContentFilter(String modelFilePath, String rangeFilePath, FeatureVectorBuilder<BxZone, BxPage> featureVectorBuilder)
             throws AnalysisException {
         super(featureVectorBuilder, BxZoneLabel.class);
-        InputStreamReader modelISR = new InputStreamReader(SVMContentFilter.class
-                .getResourceAsStream(modelFilePath));
-        BufferedReader modelFile = new BufferedReader(modelISR);
-
-        InputStreamReader rangeISR = new InputStreamReader(SVMContentFilter.class
-                .getResourceAsStream(rangeFilePath));
-        BufferedReader rangeFile = new BufferedReader(rangeISR);
+        InputStreamReader modelISR = null;
         try {
+            modelISR = new InputStreamReader(SVMContentFilter.class
+                    .getResourceAsStream(modelFilePath), "UTF-8");
+            BufferedReader modelFile = new BufferedReader(modelISR);
+            InputStreamReader rangeISR = new InputStreamReader(SVMContentFilter.class
+                    .getResourceAsStream(rangeFilePath), "UTF-8");
+            BufferedReader rangeFile = new BufferedReader(rangeISR);
             loadModelFromFile(modelFile, rangeFile);
         } catch (IOException ex) {
-            throw new AnalysisException("Cannot create SVM classifier!", ex);
+                throw new AnalysisException("Cannot create SVM classifier!", ex);
+        } finally {
+            try {
+                if (modelISR != null) {
+                    modelISR.close();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(SVMContentFilter.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

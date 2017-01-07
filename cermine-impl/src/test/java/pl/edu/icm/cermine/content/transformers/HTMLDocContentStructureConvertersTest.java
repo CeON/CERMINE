@@ -56,7 +56,7 @@ public class HTMLDocContentStructureConvertersTest {
         String expectedHTML = FileUtils.readFileToString(file, "UTF-8");
         
         InputStream is = HTMLDocContentStructureConvertersTest.class.getResourceAsStream(modelFilePath);
-        InputStreamReader isr = new InputStreamReader(is);
+        InputStreamReader isr = new InputStreamReader(is, "UTF-8");
         ContentStructure structure = reader.read(isr);
         String structureHTML = writer.write(structure);
         

@@ -38,10 +38,10 @@ public class BxModelUtilsTest {
     static final private String EXP_STR_LAB_1 = "/pl/edu/icm/cermine/test1-structure-specific.xml";
 
     @Test
-    public void deepCloneTest() throws TransformationException {
+    public void deepCloneTest() throws TransformationException, UnsupportedEncodingException {
         InputStream stream = BxModelUtilsTest.class.getResourceAsStream(EXP_STR_LAB_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument doc = new BxDocument().setPages(reader.read(new InputStreamReader(stream)));
+        BxDocument doc = new BxDocument().setPages(reader.read(new InputStreamReader(stream, "UTF-8")));
         BxDocument copy = BxModelUtils.deepClone(doc);
         
         assertFalse(doc == copy);

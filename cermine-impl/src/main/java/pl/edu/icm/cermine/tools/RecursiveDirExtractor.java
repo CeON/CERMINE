@@ -54,12 +54,14 @@ public class RecursiveDirExtractor implements DocumentsExtractor {
             InputStream is = null;
             try {
                 is = new FileInputStream(file);
-                List<BxPage> pages = tvReader.read(new InputStreamReader(is));
+                List<BxPage> pages = tvReader.read(new InputStreamReader(is, "UTF-8"));
                 BxDocument doc = new BxDocument();
                 doc.setFilename(file.getName());
                 doc.setPages(pages);
                 documents.add(doc);
             } catch (FileNotFoundException ex) {
+                throw new TransformationException(ex);
+            } catch (UnsupportedEncodingException ex) {
                 throw new TransformationException(ex);
             } finally {
                 if (is != null) {

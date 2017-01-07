@@ -27,13 +27,12 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
  */
 public class ContainsCuePhrasesFeature extends FeatureCalculator<BxZone, BxPage> {
 
-    private static final String featureName = "ContainsCuePhrases";
     private static final String[] cuePhrases = {"although", "therefore", "therein", "hereby",
         "nevertheless", "to this end", "however", "moreover", "nonetheless"};
 
     @Override
     public String getFeatureName() {
-        return featureName;
+        return "ContainsCuePhrases";
     }
 
     @Override

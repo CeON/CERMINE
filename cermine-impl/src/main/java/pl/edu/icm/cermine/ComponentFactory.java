@@ -103,8 +103,8 @@ public class ComponentFactory {
      */
     public static ZoneClassifier getInitialZoneClassifier(InputStream model, InputStream range)
             throws AnalysisException, IOException {
-        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model));
-        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range));
+        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model, "UTF-8"));
+        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range, "UTF-8"));
         ZoneClassifier classifier;
         try {
             classifier = new SVMInitialZoneClassifier(modelFileBR, rangeFileBR);
@@ -142,8 +142,8 @@ public class ComponentFactory {
      */
     public static ZoneClassifier getMetadataZoneClassifier(InputStream model, InputStream range) 
             throws AnalysisException, IOException {
-        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model));
-        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range));
+        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model, "UTF-8"));
+        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range, "UTF-8"));
         ZoneClassifier classifier;
         try {
             classifier = new SVMMetadataZoneClassifier(modelFileBR, rangeFileBR);
@@ -229,8 +229,8 @@ public class ComponentFactory {
      */
     public static ContentFilter getContentFilter(InputStream model, InputStream range) 
             throws AnalysisException, IOException {
-        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model));
-        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range));
+        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model, "UTF-8"));
+        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range, "UTF-8"));
         ContentFilter filter;
         try {
             filter = new SVMContentFilter(modelFileBR, rangeFileBR);
@@ -266,8 +266,8 @@ public class ComponentFactory {
      */
     public static ContentHeadersExtractor getContentHeaderExtractor(InputStream model, InputStream range) 
             throws AnalysisException, IOException {
-        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model));
-        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range));
+        BufferedReader modelFileBR = new BufferedReader(new InputStreamReader(model, "UTF-8"));
+        BufferedReader rangeFileBR = new BufferedReader(new InputStreamReader(range, "UTF-8"));
         ContentHeadersExtractor extractor;
         try {
             extractor = new SVMContentHeadersExtractor(modelFileBR, rangeFileBR);

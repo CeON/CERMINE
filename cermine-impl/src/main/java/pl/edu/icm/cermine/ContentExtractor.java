@@ -19,7 +19,6 @@ package pl.edu.icm.cermine;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -31,6 +30,9 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import com.google.common.collect.Lists;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -820,7 +822,8 @@ public class ContentExtractor {
                 if (outputs.containsKey("trueviz")) {
                     BxDocument doc = extractor.getBxDocumentWithSpecificLabels();
                     BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                    writer.write(new FileWriter(outputs.get("trueviz")), Lists.newArrayList(doc));
+                    Writer fw = new OutputStreamWriter(new FileOutputStream(outputs.get("trueviz")), "UTF-8");
+                    writer.write(fw, Lists.newArrayList(doc), "UTF-8");
                 }
                 
                 if (outputs.containsKey("zones")) {

@@ -86,7 +86,7 @@ public class ContentExtractorTest {
 
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_STR_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
+        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream, "UTF-8")));
         
         assertTrue(BxModelUtils.areEqual(expDocument, testDocument));
     }
@@ -104,7 +104,7 @@ public class ContentExtractorTest {
 
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_STR_GEN_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
+        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream, "UTF-8")));
         
         assertTrue(BxModelUtils.areEqual(expDocument, testDocument));
     }
@@ -122,7 +122,7 @@ public class ContentExtractorTest {
 
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_STR_SPE_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
+        BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream, "UTF-8")));
         
         assertTrue(BxModelUtils.areEqual(expDocument, testDocument));
     }
@@ -139,7 +139,7 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_TEXT_2);        
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         BufferedReader reader = new BufferedReader(expReader);
         
         StringBuilder expectedContent = new StringBuilder();
@@ -170,7 +170,7 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_ZONES_2);
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -197,7 +197,7 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_MET_1);
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -224,7 +224,7 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -252,7 +252,7 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -293,7 +293,7 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);
@@ -357,7 +357,7 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_4);
-        InputStreamReader expReader = new InputStreamReader(expStream);
+        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
         Document dom;
         try {
             dom = saxBuilder.build(expReader);

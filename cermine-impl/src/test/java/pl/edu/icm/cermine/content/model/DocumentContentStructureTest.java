@@ -45,7 +45,7 @@ public class DocumentContentStructureTest {
         reader = new HTMLToDocContentReader();
         
         InputStream is = DocumentContentStructureTest.class.getResourceAsStream(modelFilePath);
-        InputStreamReader isr = new InputStreamReader(is);
+        InputStreamReader isr = new InputStreamReader(is, "UTF-8");
         
         structure = reader.read(isr);
     }

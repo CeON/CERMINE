@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.structure;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import pl.edu.icm.cermine.exception.AnalysisException;
@@ -39,8 +40,8 @@ public class DocstrumPageSegmenterTest {
     }
 
     @Test
-    public void testSegmentPages() throws TransformationException, AnalysisException {
-        Reader reader = new InputStreamReader(getResource("DocstrumPageSegmenter01.xml"));
+    public void testSegmentPages() throws TransformationException, AnalysisException, UnsupportedEncodingException {
+        Reader reader = new InputStreamReader(getResource("DocstrumPageSegmenter01.xml"), "UTF-8");
         BxDocument inDoc = new BxDocument().setPages(new TrueVizToBxDocumentReader().read(reader));
         new UnsegmentedPagesFlattener().process(inDoc);
         

@@ -60,7 +60,7 @@ public class DirExtractor implements DocumentsExtractor {
                 InputStream is = null;
                 try {
                     is = new FileInputStream(dirPath + filename);
-                    List<BxPage> pages = tvReader.read(new InputStreamReader(is));
+                    List<BxPage> pages = tvReader.read(new InputStreamReader(is, "UTF-8"));
                     BxDocument newDoc = new BxDocument();
                     for (BxPage page : pages) {
                         page.setParent(newDoc);
@@ -74,6 +74,8 @@ public class DirExtractor implements DocumentsExtractor {
                     throw ex;
                 } catch (FileNotFoundException ex) {
                     throw new TransformationException("File not found!", ex);
+                } catch (UnsupportedEncodingException ex) {
+                    throw new TransformationException("Unsupported encoding!", ex);
                 } finally {
                     if (is != null) {
                         try {

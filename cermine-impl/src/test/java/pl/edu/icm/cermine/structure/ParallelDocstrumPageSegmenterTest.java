@@ -22,6 +22,7 @@ import com.google.common.collect.Lists;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -41,8 +42,8 @@ public class ParallelDocstrumPageSegmenterTest {
     }
 
     @Test
-    public void testSegmentPages() throws TransformationException, AnalysisException {
-        Reader reader = new InputStreamReader(getResource("DocstrumPageSegmenter01.xml"));
+    public void testSegmentPages() throws TransformationException, AnalysisException, UnsupportedEncodingException {
+        Reader reader = new InputStreamReader(getResource("DocstrumPageSegmenter01.xml"), "UTF-8");
         BxDocument inDoc = new BxDocument().setPages(new TrueVizToBxDocumentReader().read(reader));
         new UnsegmentedPagesFlattener().process(inDoc);
         

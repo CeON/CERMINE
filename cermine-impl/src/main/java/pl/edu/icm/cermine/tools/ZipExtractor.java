@@ -65,7 +65,7 @@ public class ZipExtractor implements DocumentsExtractor {
             ZipEntry zipEntry = (ZipEntry) entries.nextElement();
             if (zipEntry.getName().endsWith("xml")) {
                 try {
-                    List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry)));
+                    List<BxPage> pages = tvReader.read(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
                     BxDocument newDoc = new BxDocument();
                     for (BxPage page : pages) {
                         page.setParent(newDoc);

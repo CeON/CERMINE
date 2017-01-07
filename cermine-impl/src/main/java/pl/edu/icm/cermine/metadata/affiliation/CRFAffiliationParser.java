@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.cli.*;
@@ -67,29 +69,31 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
             = "/pl/edu/icm/cermine/metadata/affiliation/features/state_codes.txt";
     
     private List<String> loadWords(String wordsFileName) throws AnalysisException {
-        List<String> commonWords = new ArrayList<String>();
-        InputStream is = CRFAffiliationParser.class.getResourceAsStream(wordsFileName);
-        if (is == null) {
-            throw new AnalysisException("Resource not found: " + wordsFileName);
-        }
-        BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        BufferedReader in = null;
         try {
+            List<String> commonWords = new ArrayList<String>();
+            InputStream is = CRFAffiliationParser.class.getResourceAsStream(wordsFileName);
+            if (is == null) {
+                throw new AnalysisException("Resource not found: " + wordsFileName);
+            }
+            in = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line;
             while ((line = in.readLine()) != null) {
                 commonWords.add(line);
             }
+            return commonWords;
         } catch (IOException readException) {
             throw new AnalysisException("An exception occured when the common word list "
-                    + wordsFileName + " was being read: " + readException);
+                        + wordsFileName + " was being read: " + readException);
         } finally {
             try {
-                in.close();
-            } catch (IOException closeException) {
-                throw new AnalysisException("An exception occured when the stream was being "
-                        + "closed: " + closeException);
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(CRFAffiliationParser.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return commonWords;
     }
 
     /**
@@ -104,7 +108,7 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
         tokenizer = new AffiliationTokenizer();
         featureExtractor = new AffiliationFeatureExtractor(commonWords);
         classifier = new AffiliationCRFTokenClassifier(
-                getClass().getResourceAsStream(acrfFileName));
+                CRFAffiliationParser.class.getResourceAsStream(acrfFileName));
     }
 
     public CRFAffiliationParser() throws AnalysisException {

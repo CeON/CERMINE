@@ -58,8 +58,8 @@ public abstract class AbstractDocumentProcessorTest {
         List<Reader> expectedReaders = new ArrayList<Reader>();
 
         for (String file : files) {
-            testReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file)));
-            expectedReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file)));
+            testReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file), "UTF-8"));
+            expectedReaders.add(new InputStreamReader(AbstractDocumentProcessorTest.class.getResourceAsStream(file), "UTF-8"));
         }
 
         testCollection(testReaders, expectedReaders, percentage);
@@ -107,8 +107,8 @@ public abstract class AbstractDocumentProcessorTest {
 
                     if (dirSamplesCount.get(parent) >= samplesFrom &&
                             (samplesTo < 0 || dirSamplesCount.get(parent) <= samplesTo)) {
-                        testReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry)));
-                        expectedReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry)));
+                        testReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
+                        expectedReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
                     }
                 }
             }

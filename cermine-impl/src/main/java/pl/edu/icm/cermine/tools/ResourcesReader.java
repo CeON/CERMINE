@@ -41,8 +41,9 @@ public class ResourcesReader {
         if (is == null) {
             throw new TransformationException("Resource not found: " + file);
         }
-        BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        BufferedReader in = null;
         try {
+            in = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line;
             while ((line = in.readLine()) != null) {
                 lines.add(transformer.transform(line));
@@ -51,7 +52,9 @@ public class ResourcesReader {
             throw new TransformationException(ex);
         } finally {
             try {
-                in.close();
+                if (in != null) {
+                    in.close();
+                }
             } catch (IOException ex) {
                 throw new TransformationException(ex);
             }

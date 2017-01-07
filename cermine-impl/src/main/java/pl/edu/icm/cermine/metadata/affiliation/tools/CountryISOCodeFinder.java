@@ -41,8 +41,9 @@ public class CountryISOCodeFinder {
         if (is == null) {
             throw new TransformationException("Resource not found: " + CODES_FILE);
         }
-        BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        BufferedReader in = null;
         try {
+            in = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line;
             while ((line = in.readLine()) != null) {
                 String countryName = line.substring(0, line.length() - 3);
@@ -54,7 +55,9 @@ public class CountryISOCodeFinder {
             throw new TransformationException(ex);
         } finally {
             try {
-                in.close();
+                if (in != null) {
+                    in.close();
+                }
             } catch (IOException ex) {
                 throw new TransformationException(ex);
             }

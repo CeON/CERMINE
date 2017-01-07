@@ -104,7 +104,7 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
     }
 
     private void loadDictionary(String dictionaryFileName) throws AnalysisException {
-        InputStream is = getClass().getResourceAsStream(dictionaryFileName);
+        InputStream is = KeywordFeatureCalculator.class.getResourceAsStream(dictionaryFileName);
         if (is == null) {
             throw new AnalysisException("Resource not found: " + dictionaryFileName);
         }

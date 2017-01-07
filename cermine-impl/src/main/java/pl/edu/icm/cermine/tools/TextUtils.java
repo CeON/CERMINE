@@ -146,7 +146,7 @@ public class TextUtils {
 
     public static List<String> produceDates(List<String> date) {
         List<String> ret = new ArrayList<String>();
-        int monthInt = Integer.valueOf(date.get(1));
+        int monthInt = Integer.parseInt(date.get(1));
         if (monthInt >= 1 && monthInt <= 12) {
             DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
             String[] months = dfs.getMonths();

@@ -24,13 +24,15 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class CRFBibReferenceParserTest extends AbstractBibReferenceParserTest {
     
-    private final double minPercentage = 0.8;
+    private static final double MIN_PERCENTAGE = 0.8;
     
     private CRFBibReferenceParser parser;
     
@@ -46,7 +48,7 @@ public class CRFBibReferenceParserTest extends AbstractBibReferenceParserTest {
 
     @Override
     protected double getMinPercentage() {
-        return minPercentage;
+        return MIN_PERCENTAGE;
     }
     
     @Test

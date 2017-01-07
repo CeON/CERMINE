@@ -42,10 +42,11 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  */
 public class HierarchicalReadingOrderResolverTest {
 
-    static final private String PATH = "/pl/edu/icm/cermine/structure/";
-    static final private String[] TEST_FILENAMES = {"1748717X.xml"};
-    static final private String ZIP_FILE_NAME = "roa_test_small.zip";
-    static private ZipFile zipFile;
+    private final static String PATH = "/pl/edu/icm/cermine/structure/";
+    private final static String[] TEST_FILENAMES = {"1748717X.xml"};
+    private final static String ZIP_FILE_NAME = "roa_test_small.zip";
+    
+    private ZipFile zipFile;
 
     @Before
     public void setUp() throws URISyntaxException, ZipException, IOException {

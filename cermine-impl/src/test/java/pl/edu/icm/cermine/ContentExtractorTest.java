@@ -75,7 +75,7 @@ public class ContentExtractorTest {
 
     @Test
     public void getBxDocumentTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_1);
         BxDocument testDocument;
         try {
             extractor.setPDF(testStream);
@@ -84,7 +84,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
 
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_1);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_STR_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
         
@@ -93,7 +93,7 @@ public class ContentExtractorTest {
 
     @Test
     public void getBxDocumentWithGeneralLabelsTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_1);
         BxDocument testDocument;
         try {
             extractor.setPDF(testStream);
@@ -102,7 +102,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
 
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_GEN_1);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_STR_GEN_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
         
@@ -111,7 +111,7 @@ public class ContentExtractorTest {
     
     @Test
     public void getBxDocumentWithSpecificLabelsTest() throws IOException, AnalysisException, URISyntaxException, TransformationException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_1);
         BxDocument testDocument;
         try {
             extractor.setPDF(testStream);
@@ -120,7 +120,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
 
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_STR_SPE_1);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_STR_SPE_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument expDocument = new BxDocument().setPages(reader.read(new InputStreamReader(expStream)));
         
@@ -129,7 +129,7 @@ public class ContentExtractorTest {
     
     @Test
     public void textRawFullTextTest() throws AnalysisException, JDOMException, IOException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_2);
         String testContent;
         try {
             extractor.setPDF(testStream);
@@ -138,7 +138,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_TEXT_2);        
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_TEXT_2);        
         InputStreamReader expReader = new InputStreamReader(expStream);
         BufferedReader reader = new BufferedReader(expReader);
         
@@ -160,7 +160,7 @@ public class ContentExtractorTest {
     
     @Test
     public void getFullTextWithLabelsTest() throws AnalysisException, IOException, JDOMException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_2);
         Element testContent;
         try {
             extractor.setPDF(testStream);
@@ -169,7 +169,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_ZONES_2);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_ZONES_2);
         InputStreamReader expReader = new InputStreamReader(expStream);
         Document dom;
         try {
@@ -187,7 +187,7 @@ public class ContentExtractorTest {
     
     @Test
     public void getNLMMetadataTest() throws AnalysisException, IOException, JDOMException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_1);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_1);
         Element testMetadata;
         try {
             extractor.setPDF(testStream);
@@ -196,7 +196,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_MET_1);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_MET_1);
         InputStreamReader expReader = new InputStreamReader(expStream);
         Document dom;
         try {
@@ -214,7 +214,7 @@ public class ContentExtractorTest {
 
     @Test
     public void getNLMBodyTest() throws AnalysisException, IOException, JDOMException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_2);
         Element testBody;
         try {
             extractor.setPDF(testStream);
@@ -223,7 +223,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_2);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
         InputStreamReader expReader = new InputStreamReader(expStream);
         Document dom;
         try {
@@ -242,7 +242,7 @@ public class ContentExtractorTest {
     
     @Test
     public void getNLMReferencesTest() throws AnalysisException, JDOMException, IOException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_2);
         List<Element> testReferences;
         try {
             extractor.setPDF(testStream);
@@ -251,7 +251,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_2);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
         InputStreamReader expReader = new InputStreamReader(expStream);
         Document dom;
         try {
@@ -283,7 +283,7 @@ public class ContentExtractorTest {
     
     @Test
     public void getNLMContentTest() throws AnalysisException, JDOMException, IOException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_2);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_2);
         Element testContent;
         try {
             extractor.setPDF(testStream);
@@ -292,7 +292,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_2);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
         InputStreamReader expReader = new InputStreamReader(expStream);
         Document dom;
         try {
@@ -310,7 +310,7 @@ public class ContentExtractorTest {
 
     @Test
     public void getImagesTest() throws IOException, AnalysisException, JDOMException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_4);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_4);
         List<BxImage> images;
         try {
             extractor.setPDF(testStream);
@@ -327,13 +327,13 @@ public class ContentExtractorTest {
             }
         });
         
-        List<String> files = IOUtils.readLines(this.getClass().getResourceAsStream(EXP_IMGS_4), "UTF-8");
+        List<String> files = IOUtils.readLines(ContentExtractorTest.class.getResourceAsStream(EXP_IMGS_4), "UTF-8");
         Collections.sort(files);
         for (int i = 0; i < files.size(); i++) {
             String fileName = files.get(i);
             BxImage image = images.get(i);
             assertEquals(fileName, image.getFilename());
-            BufferedImage expImg = ImageIO.read(this.getClass().getResourceAsStream(EXP_IMGS_4+fileName));
+            BufferedImage expImg = ImageIO.read(ContentExtractorTest.class.getResourceAsStream(EXP_IMGS_4+fileName));
             BufferedImage testImg = image.getImage();
             assertEquals(expImg.getHeight(), testImg.getHeight());
             assertEquals(expImg.getWidth(), testImg.getWidth());
@@ -347,7 +347,7 @@ public class ContentExtractorTest {
     
     @Test
     public void getContentWithImagesTest() throws IOException, AnalysisException, JDOMException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_PDF_4);
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_4);
         Element testContent;
         try {
             extractor.setPDF(testStream);
@@ -356,7 +356,7 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_CONT_4);
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_4);
         InputStreamReader expReader = new InputStreamReader(expStream);
         Document dom;
         try {

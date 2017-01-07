@@ -37,7 +37,7 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
  */
 public class ParallelDocstrumSegmenter extends DocstrumSegmenter {
     
-    class NumBxPage {
+    static class NumBxPage {
         int index = -1;
         BxPage page;
         List<Component> components;

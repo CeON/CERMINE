@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.tools.classification.clustering;
 
-import java.util.ArrayList;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 
@@ -27,8 +26,8 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
  */
 public final class FeatureVectorsNormalizer {
     
-    public static void normalize(FeatureVector[] vectors, FeatureVectorBuilder builder) {
-        for (String feature : (ArrayList<String>)builder.getFeatureNames()) {
+    public static void normalize(FeatureVector[] vectors, FeatureVectorBuilder<?,?> builder) {
+        for (String feature : builder.getFeatureNames()) {
             double min = Double.POSITIVE_INFINITY;
             double max = Double.NEGATIVE_INFINITY;
             

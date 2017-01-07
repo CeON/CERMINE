@@ -50,13 +50,12 @@ public class AltPdfNLMMetadataExtractorTest {
     @Before
     public void setUp() throws AnalysisException, IOException {
         extractor = new ContentExtractor();
-        
         extractor.getConf().setMetadataZoneClassifier(ComponentFactory.getMetadataZoneClassifier(ALT_METADATA_CLASSIFIER_MODEL_PATH, ALT_METADATA_CLASSIFIER_RANGE_PATH));
     }
     
     @Test
     public void metadataExtractionTest() throws AnalysisException, IOException, JDOMException, SAXException {
-        InputStream testStream = this.getClass().getResourceAsStream(TEST_FILE);
+        InputStream testStream = AltPdfNLMMetadataExtractorTest.class.getResourceAsStream(TEST_FILE);
         Element testMetadata;
         try {
             extractor.setPDF(testStream);
@@ -65,7 +64,7 @@ public class AltPdfNLMMetadataExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_FILE);
+        InputStream expStream = AltPdfNLMMetadataExtractorTest.class.getResourceAsStream(EXP_FILE);
         InputStreamReader expReader = new InputStreamReader(expStream);
         SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
         Document dom;

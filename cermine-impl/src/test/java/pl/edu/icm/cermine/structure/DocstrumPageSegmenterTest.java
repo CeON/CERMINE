@@ -35,7 +35,7 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 public class DocstrumPageSegmenterTest {
 
     private InputStream getResource(String name) {
-        return this.getClass().getResourceAsStream("/pl/edu/icm/cermine/structure/" + name);
+        return DocstrumPageSegmenterTest.class.getResourceAsStream("/pl/edu/icm/cermine/structure/" + name);
     }
 
     @Test
@@ -45,15 +45,6 @@ public class DocstrumPageSegmenterTest {
         new UnsegmentedPagesFlattener().process(inDoc);
         
         DocstrumSegmenter pageSegmenter = new DocstrumSegmenter();
-        pageSegmenter.setSpacingHistogramResolution(2.0);
-        pageSegmenter.setSpacingHistogramSmoothingWindowLength(10.0);
-        pageSegmenter.setSpacingHistogramSmoothingWindowStdDeviation(2.0);
-        pageSegmenter.setMaxLineSizeScale(1.5);
-        pageSegmenter.setWordDistanceMultiplier(0.5);
-        pageSegmenter.setMinHorizontalDistanceMultiplier(1.5);
-        pageSegmenter.setMaxVerticalDistanceMultiplier(1.3);
-        pageSegmenter.setMaxVerticalMergeDistanceMultiplier(0.5);
-        pageSegmenter.setComponentDistanceCharacterMultiplier(3.0);
         
         BxDocument outDoc = pageSegmenter.segmentDocument(inDoc);
 
@@ -66,8 +57,8 @@ public class DocstrumPageSegmenterTest {
         assertEquals(16, outDoc.getFirstChild().getChild(1).childrenCount());
         assertEquals(16, outDoc.getFirstChild().getChild(2).childrenCount());
 
-        assertEquals(8, outDoc.getFirstChild().getChild(1).getFirstChild().childrenCount());
-        assertEquals("ABSTRACT", outDoc.getFirstChild().getChild(1).getFirstChild().getFirstChild().toText());
+        assertEquals(24, outDoc.getFirstChild().getChild(1).getFirstChild().childrenCount());
+        assertEquals("A", outDoc.getFirstChild().getChild(1).getFirstChild().getFirstChild().toText());
 
         for (BxZone zone : outDoc.getFirstChild()) {
             for (BxLine line : zone) {

@@ -51,9 +51,9 @@ public class AffiliationFeatureExtractor implements FeatureExtractor<DocumentAff
                         ));
 
         keywordFeatures = Arrays.<KeywordFeatureCalculator<Token<AffiliationLabel>>>asList(
-                new AffiliationDictionaryFeature("KeywordAddress", "address_keywords.txt", false),
-                new AffiliationDictionaryFeature("KeywordCountry", "countries2.txt", true),
-                new AffiliationDictionaryFeature("KeywordInstitution", "institution_keywords.txt", false)
+                new AffiliationDictionaryFeature("KeywordAddress", "/pl/edu/icm/cermine/metadata/affiliation/features/address_keywords.txt", false),
+                new AffiliationDictionaryFeature("KeywordCountry", "/pl/edu/icm/cermine/metadata/affiliation/features/countries2.txt", true),
+                new AffiliationDictionaryFeature("KeywordInstitution", "/pl/edu/icm/cermine/metadata/affiliation/features/institution_keywords.txt", false)
         );
 
         wordFeature

@@ -55,7 +55,7 @@ public class BibTeXToBibEntryReader implements FormatToModelReader<BibEntry> {
         List<BibEntry> entries = new ArrayList<BibEntry>();
         String[] split = string.split("\n\n");
         for (String s : split) {
-            entries.add(processBibteX(s.substring(s.indexOf("@"))));
+            entries.add(processBibteX(s.substring(s.indexOf('@'))));
         }
         return entries;
     }

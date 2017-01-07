@@ -240,12 +240,10 @@ public class NLMToMetadataConverter implements ModelToModelConverter<Element, Do
             String id = affiliation.getAttributeValue("id");
             String label = affiliation.getChildText("label");
             String text = XMLTools.getTextContent(affiliation);
-            if (text != null && label != null && text.startsWith(label)) {
+            if (label != null && text.startsWith(label)) {
                 text = text.substring(label.length());
             }
-            if (text != null) {
-                text = text.replaceAll("\\s+", " ").trim();
-            }
+            text = text.replaceAll("\\s+", " ").trim();
             if (id == null) {
                 metadata.addAffiliationToAllAuthors(text);
             } else {

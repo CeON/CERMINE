@@ -87,13 +87,13 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         double lineSpacing = computeLineSpacing(components, orientation);
 
         List<ComponentLine> lines = determineLines(components, orientation,
-                characterSpacing * componentDistanceCharacterMultiplier,
-                lineSpacing * maxVerticalComponentDistanceMultiplier);
+                characterSpacing * COMP_DIST_CHAR,
+                lineSpacing * MAX_VERTICAL_COMP_DIST);
     
         if (Math.abs(orientation) > ORIENTATION_MARGIN) {
             List<ComponentLine> linesZero = determineLines(components, 0,
-                characterSpacing * componentDistanceCharacterMultiplier,
-                lineSpacing * maxVerticalComponentDistanceMultiplier);
+                characterSpacing * COMP_DIST_CHAR,
+                lineSpacing * MAX_VERTICAL_COMP_DIST);
     
             if (Math.abs(lines.size() - LINES_PER_PAGE_MARGIN) > Math.abs(linesZero.size() - LINES_PER_PAGE_MARGIN)) {
                 orientation = 0;
@@ -107,15 +107,15 @@ public class DocstrumSegmenter implements DocumentSegmenter {
         }
         
         List<List<ComponentLine>> zones = determineZones(lines, orientation,
-                characterSpacing * minHorizontalDistanceMultiplier, Double.POSITIVE_INFINITY,
-                lineSpacing * minVerticalDistanceMultiplier, lineSpacing * maxVerticalDistanceMultiplier,
-                characterSpacing * minHorizontalMergeDistanceMultiplier, 0.0,
-                0.0, lineSpacing * maxVerticalMergeDistanceMultiplier);
+                characterSpacing * MIN_HORIZONTAL_DIST, Double.POSITIVE_INFINITY,
+                lineSpacing * MIN_VERTICAL_DIST, lineSpacing * MAX_VERTICAL_DIST,
+                characterSpacing * MIN_HORIZONTAL_MERGE_DIST, 0.0,
+                0.0, lineSpacing * MAX_VERTICAL_MERGE_DIST);
         zones = mergeZones(zones, characterSpacing * 0.5);
         zones = mergeLines(zones, orientation,
                 Double.NEGATIVE_INFINITY, 0.0,
-                0.0, lineSpacing * maxVerticalMergeDistanceMultiplier);
-        return convertToBxModel(page, zones, wordDistanceMultiplier * characterSpacing);
+                0.0, lineSpacing * MAX_VERTICAL_MERGE_DIST);
+        return convertToBxModel(page, zones, WORD_DIST_MULT * characterSpacing);
     }
 
     /**
@@ -158,8 +158,8 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             components[0].setNeighbors(new ArrayList<Neighbor>());
             return;
         }
-        int pageNeighborCount = neighborCount;
-        if (components.length <= neighborCount) {
+        int pageNeighborCount = NEIGHBOUR_COUNT;
+        if (components.length <= NEIGHBOUR_COUNT) {
             pageNeighborCount = components.length - 1;
         }
 
@@ -212,15 +212,15 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * @return initial orientation estimation
      */
     private double computeInitialOrientation(List<Component> components) {
-        Histogram histogram = new Histogram(-Math.PI/2, Math.PI/2, angleHistogramResolution);
+        Histogram histogram = new Histogram(-Math.PI/2, Math.PI/2, ANGLE_HIST_RESOLUTION);
         for (Component component : components) {
             for (Neighbor neighbor : component.getNeighbors()) {
                 histogram.add(neighbor.getAngle());
             }
         }
         // Rectangular smoothing window has been replaced with gaussian smoothing window
-        histogram.circularGaussianSmooth(angleHistogramSmoothingWindowLength,
-                angleHistogramSmoothingWindowStdDeviation);
+        histogram.circularGaussianSmooth(ANGLE_HIST_SMOOTHING_LEN,
+                ANGLE_HIST_SMOOTHING_STDDEV);
         return histogram.getPeakValue();
     }
 
@@ -257,8 +257,8 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                 maxDistance = Math.max(maxDistance, neighbor.getDistance());
             }
         }
-        Histogram histogram = new Histogram(0, maxDistance, spacingHistogramResolution);
-        AngleFilter filter = AngleFilter.newInstance(angle - angleTolerance, angle + angleTolerance);
+        Histogram histogram = new Histogram(0, maxDistance, SPACING_HIST_RESOLUTION);
+        AngleFilter filter = AngleFilter.newInstance(angle - ANGLE_TOLERANCE, angle + ANGLE_TOLERANCE);
         for (Component component : components) {
             for (Neighbor neighbor : component.getNeighbors()) {
                 if (filter.matches(neighbor)) {
@@ -267,8 +267,8 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             }
         }
         // Rectangular smoothing window has been replaced with gaussian smoothing window
-        histogram.gaussianSmooth(spacingHistogramSmoothingWindowLength,
-                spacingHistogramSmoothingWindowStdDeviation);
+        histogram.gaussianSmooth(SPACING_HIST_SMOOTHING_LEN,
+                SPACING_HIST_SMOOTHING_STDDEV);
         return histogram.getPeakValue();
     }
 
@@ -284,7 +284,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     private List<ComponentLine> determineLines(List<Component> components, double orientation,
             double maxHorizontalDistance, double maxVerticalDistance) {
         DisjointSets<Component> sets = new DisjointSets<Component>(components);
-        AngleFilter filter = AngleFilter.newInstance(orientation - angleTolerance, orientation + angleTolerance);
+        AngleFilter filter = AngleFilter.newInstance(orientation - ANGLE_TOLERANCE, orientation + ANGLE_TOLERANCE);
         for (Component component : components) {
             for (Neighbor neighbor : component.getNeighbors()) {
                 double x = neighbor.getHorizontalDistance(orientation) / maxHorizontalDistance;
@@ -335,10 +335,10 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             for (int j = i + 1; j < lines.size(); j++) {
                 ComponentLine lj = lines.get(j);
                 double scale = Math.min(li.getHeight(), lj.getHeight()) / meanHeight;
-                scale = Math.max(minLineSizeScale, Math.min(scale, maxLineSizeScale));
+                scale = Math.max(MIN_LINE_SIZE_SCALE, Math.min(scale, MAX_LINE_SIZE_SCALE));
                 // "<=" is used instead of "<" for consistency and to allow setting minVertical(Merge)Distance
                 // to 0.0 with meaning "no minimal distance required"
-                if (!sets.areTogether(li, lj) && li.angularDifference(lj) <= angleTolerance) {
+                if (!sets.areTogether(li, lj) && li.angularDifference(lj) <= ANGLE_TOLERANCE) {
                     double hDist = li.horizontalDistance(lj, orientation) / scale;
                     double vDist = li.verticalDistance(lj, orientation) / scale;
                     // Line over or above
@@ -894,74 +894,37 @@ public class DocstrumSegmenter implements DocumentSegmenter {
     }
     
     private static final double DISTANCE_STEP = 16.0;
-    
-    public static final double DEFAULT_ANGLE_HIST_RES = Math.toRadians(0.5);
-
-    public static final double DEFAULT_ANGLE_HIST_SMOOTH_LEN = 0.25 * Math.PI;
-
-    public static final double DEFAULT_ANGLE_HIST_SMOOTH_STDDEV = 0.0625 * Math.PI;
-
-    public static final double DEFAULT_SPACE_HIST_RES = 0.5;
-
-    public static final double DEFAULT_SPACE_HIST_SMOOTH_LEN = 2.5;
-    
-    public static final double DEFAULT_SPACE_HIST_SMOOTH_STDDEV = 0.5;
-    
-    public static final double DEFAULT_MAX_VERT_COMP_DIST = 0.67;
-
-    public static final double DEFAULT_MIN_LINE_SIZE_SCALE = 0.9;
-
-    public static final double DEFAULT_MAX_LINE_SIZE_SCALE = 2.5;
-
-    public static final double DEFAULT_MIN_HORIZONTAL_DIST = -0.5;
-
-    public static final double DEFAULT_MIN_VERTICAL_DIST = 0.0;
-
-    public static final double DEFAULT_MAX_VERTICAL_DIST = 1.2;
-
-    public static final double DEFAULT_COMP_DIST_CHAR = 3.5;
-
-    public static final double DEFAULT_WORD_DIST = 0.2;
-
-    public static final double DEFAULT_MIN_HORIZONTAL_MERGE_DIST = -3.0;
-
-    public static final double DEFAULT_MAX_VERTICAL_MERGE_DIST = 0.5;
-
-    public static final double DEFAULT_ANGLE_TOLERANCE = Math.PI / 6;
-
-    public static final int DEFAULT_NEIGHBOR_COUNT = 5;
-    
      
     /**
      * Angle histogram resolution in radians per bin.
      */
-    private double angleHistogramResolution = DEFAULT_ANGLE_HIST_RES;
+    private final double ANGLE_HIST_RESOLUTION = Math.toRadians(0.5);
 
     /**
      * Angle histogram smoothing window length in radians.
      * Length of angle histogram is equal to pi.
      */
-    private double angleHistogramSmoothingWindowLength = DEFAULT_ANGLE_HIST_SMOOTH_LEN;
+    private final double ANGLE_HIST_SMOOTHING_LEN = 0.25 * Math.PI;
 
     /**
      * Angle histogram gaussian smoothing window standard deviation in radians.
      */
-    private double angleHistogramSmoothingWindowStdDeviation = DEFAULT_ANGLE_HIST_SMOOTH_STDDEV;
+    private final double ANGLE_HIST_SMOOTHING_STDDEV = 0.0625 * Math.PI;
 
     /**
      * Spacing histogram resolution per bin.
      */
-    private double spacingHistogramResolution = DEFAULT_SPACE_HIST_RES;
+    private final double SPACING_HIST_RESOLUTION = 0.5;
 
     /**
      * Spacing histogram smoothing window length.
      */
-    private double spacingHistogramSmoothingWindowLength = DEFAULT_SPACE_HIST_SMOOTH_LEN;
+    private final double SPACING_HIST_SMOOTHING_LEN = 2.5;
 
     /**
      * Spacing histogram gaussian smoothing window standard deviation.
      */
-    private double spacingHistogramSmoothingWindowStdDeviation = DEFAULT_SPACE_HIST_SMOOTH_STDDEV;
+    private final double SPACING_HIST_SMOOTHING_STDDEV = 0.5;
     
     /**
      * Maximum vertical component distance multiplier used during line
@@ -971,7 +934,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * to the same line is equal to the product of this value and estimated
      * between-line spacing.
      */
-    private double maxVerticalComponentDistanceMultiplier = DEFAULT_MAX_VERT_COMP_DIST;
+    private final double MAX_VERTICAL_COMP_DIST = 0.67;
 
     /**
      * Minimum line size scale value.
@@ -980,14 +943,14 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * taken into account. To achieve this, line size scale is estimated and
      * limited to range [minLineSizeScale, maxLineSizeScale].
      */
-    private double minLineSizeScale = DEFAULT_MIN_LINE_SIZE_SCALE;
+    private final double MIN_LINE_SIZE_SCALE = 0.9;
 
     /**
      * Maximum line size scale value.
      *
      * See minLineSizeScale for more information.
      */
-    private double maxLineSizeScale = DEFAULT_MAX_LINE_SIZE_SCALE;
+    private final double MAX_LINE_SIZE_SCALE = 2.5;
 
     /**
      * Minimum horizontal line distance multiplier.
@@ -995,7 +958,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Minimum horizontal distance between lines that belong to the same zone
      * is equal to the product of this value and estimated within-line spacing.
      */
-    private double minHorizontalDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_DIST;
+    private final double MIN_HORIZONTAL_DIST = -0.5;
 
     /**
      * Minimum vertical line distance multiplier.
@@ -1003,7 +966,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Minimum vertical distance between lines that belong to the same zone
      * is equal to the product of this value and estimated between-line spacing.
      */
-    private double minVerticalDistanceMultiplier = DEFAULT_MIN_VERTICAL_DIST;
+    private final double MIN_VERTICAL_DIST = 0.0;
 
     /**
      * Maximum vertical line distance multiplier.
@@ -1011,7 +974,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Maximum vertical distance between lines that belong to the same zone
      * is equal to the product of this value and estimated between-line spacing.
      */
-    private double maxVerticalDistanceMultiplier = DEFAULT_MAX_VERTICAL_DIST;
+    private final double MAX_VERTICAL_DIST = 1.2;
 
     /**
      * Component distance character spacing multiplier.
@@ -1022,7 +985,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * lineSpacing and characterSpacing are estimated between-line and
      * within-line spacing, respectively.
      */
-    private double componentDistanceCharacterMultiplier = DEFAULT_COMP_DIST_CHAR;
+    private final double COMP_DIST_CHAR = 3.5;
 
     /**
      * Word distance multiplier.
@@ -1030,7 +993,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Maximum distance between components that belong to the same word is
      * equal to the product of this value and estimated within-line spacing.
      */
-    private double wordDistanceMultiplier = DEFAULT_WORD_DIST;
+    private final double WORD_DIST_MULT = 0.2;
 
     /**
      * Minimum horizontal line merge distance multiplier.
@@ -1041,7 +1004,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * Because split lines do not overlap this value should be negative.
      */
 
-    private double minHorizontalMergeDistanceMultiplier = DEFAULT_MIN_HORIZONTAL_MERGE_DIST;
+    private final double MIN_HORIZONTAL_MERGE_DIST = -3.0;
 
     /**
      * Maximum vertical line merge distance multiplier.
@@ -1050,58 +1013,17 @@ public class DocstrumSegmenter implements DocumentSegmenter {
      * to the product of this value and estimated between-line spacing.
      */
 
-    private double maxVerticalMergeDistanceMultiplier = DEFAULT_MAX_VERTICAL_MERGE_DIST;
-
+    private final double MAX_VERTICAL_MERGE_DIST = 0.5;
+    
     /**
      * Angle tolerance for comparisons of angles between components and angles
      * between lines.
      */
-    private double angleTolerance = DEFAULT_ANGLE_TOLERANCE;
+    private final double ANGLE_TOLERANCE = Math.PI / 6;
 
     /**
      * Number of nearest-neighbors found per component.
      */
-    private int neighborCount = DEFAULT_NEIGHBOR_COUNT;
-    
-
-    public void setSpacingHistogramResolution(double value) {
-        spacingHistogramResolution = value;
-    }
-
-    public void setSpacingHistogramSmoothingWindowLength(double value) {
-        spacingHistogramSmoothingWindowLength = value;
-    }
-    
-    public void setSpacingHistogramSmoothingWindowStdDeviation(double value) {
-        spacingHistogramSmoothingWindowStdDeviation = value;
-    }
-
-    public void setMaxLineSizeScale(double value) {
-        maxLineSizeScale = value;
-    }
-
-    public void setMaxVerticalDistanceMultiplier(double value) {
-        maxVerticalDistanceMultiplier = value;
-    }
-
-    public void setMinHorizontalDistanceMultiplier(double value) {
-        minHorizontalDistanceMultiplier = value;
-    }
-
-    public void setComponentDistanceCharacterMultiplier(double value) {
-        componentDistanceCharacterMultiplier = value;
-    }
-
-    public void setWordDistanceMultiplier(double value) {
-        wordDistanceMultiplier = value;
-    }
-
-    public void setMaxVerticalMergeDistanceMultiplier(double value) {
-        maxVerticalMergeDistanceMultiplier = value;
-    }
-
-    public void setAngleTolerance(double value) {
-        angleTolerance = value;
-    }
+    private final int NEIGHBOUR_COUNT = 5;
 
 }

@@ -63,7 +63,7 @@ import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
  */
 public class ContentExtractor {
 
-    private final long SECONDS_TO_MILLIS = 1000;
+    private static final long SECONDS_TO_MILLIS = 1000;
 
     private final InternalContentExtractor extractor;
 
@@ -801,10 +801,8 @@ public class ContentExtractor {
                 if (outputs.containsKey("images")) {
                     List<BxImage> images = extractor.getImages(outputs.get("images").getPath());
                     FileUtils.forceMkdir(outputs.get("images"));
-                    if (images != null) {
-                        for (BxImage image : images) {
-                            ImageIO.write(image.getImage(), "png", new File(image.getPath()));
-                        }
+                    for (BxImage image : images) {
+                        ImageIO.write(image.getImage(), "png", new File(image.getPath()));
                     }
                 }
                 

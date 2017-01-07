@@ -28,7 +28,7 @@ public class PageNumberFeature extends FeatureCalculator<BxZone, BxPage> {
 
     @Override
     public double calculateFeatureValue(BxZone object, BxPage context) {
-        return (double) Integer.valueOf(context.getId());
+        return (double) Integer.parseInt(context.getId());
     }
 
 }

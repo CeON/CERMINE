@@ -36,9 +36,9 @@ public class AffiliationDictionaryFeatureTest {
 
     static {
         try {
-            FEATURE_CASE_SENSITIVE = new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt",
+            FEATURE_CASE_SENSITIVE = new AffiliationDictionaryFeature("HIT", "/pl/edu/icm/cermine/metadata/affiliation/features/mock-dictionary.txt",
                     true);
-            FEATURE_IGNORE_CASE = new AffiliationDictionaryFeature("HIT", "mock-dictionary.txt",
+            FEATURE_IGNORE_CASE = new AffiliationDictionaryFeature("HIT", "/pl/edu/icm/cermine/metadata/affiliation/features/mock-dictionary.txt",
                     false);
         } catch (AnalysisException e) {
             throw new RuntimeException("Failed to initialize dictionary features");

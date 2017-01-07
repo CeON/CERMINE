@@ -80,7 +80,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
             if (shouldBeRemoved(line, heightPopulation, fontPopulation, distancePopulation, indentationPopulation)) {
                 toDelete.add(line);
             }
-            if (lengthPopulation.getZScore(line.getWidth()) > candMaxLengthZScore) {
+            if (lengthPopulation.getZScore(line.getWidth()) > CAND_MAX_LENGTH_ZSCORE) {
                 toDelete.add(line);
             }
         }
@@ -101,7 +101,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
         }
         for (Entry<String, Integer> entry : fontCandidates.getSortedEntries(3)) {
             if (Math.abs(fontPopulation.getZScore(getFontIndex(entry.getKey(), docFontPopulation))) 
-                    > outlFontZScore) {
+                    > OUTL_FONT_ZSCORE) {
                 headerFonts.add(entry.getKey());
             }
             TimeoutRegister.get().check();
@@ -123,7 +123,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
             if (shouldBeRemoved(line, heightPopulation, fontPopulation, distancePopulation, indentationPopulation)) {
                 toDelete.add(line);
             }
-            if (lengthPopulation.getZScore(line.getWidth()) > candMaxLengthZScore2) {
+            if (lengthPopulation.getZScore(line.getWidth()) > CAND_MAX_LENGTH_ZSCORE_2) {
                 toDelete.add(line);
             }
         }
@@ -141,7 +141,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
                     i++;
                 }
             }
-            if (i == 0 || i > maxSimilarLinesCount) {
+            if (i == 0 || i > MAX_SIMILAR_LINES_COUNT) {
                 toDelete.add(line);
                 for (BxLine line2 : candidates) {
                     if (areSimilar(line, line2)) {
@@ -255,7 +255,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
 
     private boolean areSimilar(BxLine line1, BxLine line2){
         return line1.getMostPopularFontName().equals(line2.getMostPopularFontName())
-                && Math.abs(line1.getHeight()-line2.getHeight()) < maxHeightSimilarity;
+                && Math.abs(line1.getHeight()-line2.getHeight()) < MAX_HEIGHT_SIMILARITY;
     }
     
     private boolean shouldBeRemoved(BxLine line, Population heightPopulation, Population fontPopulation, 
@@ -263,7 +263,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
         if (line.getMostPopularFontName() == null) {
             return true;
         }
-        if (heightPopulation.getZScore(line.getHeight()) < candMinHeightZScore) {
+        if (heightPopulation.getZScore(line.getHeight()) < CAND_MIN_HEIGHT_ZSCORE) {
             return true;
         }
         if (looksLikeEquation(line)) {
@@ -284,10 +284,10 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
         if (startsWithLargeNumber(line)) {
             return true;
         }
-        if (heightPopulation.getZScore(line.getHeight()) < outlHeightZScore
-                && Math.abs(fontPopulation.getZScore(getFontIndex(line))) < outlFontZScore
-                && (!line.hasPrev() || distancePopulation.getZScore(line.getY()-line.getPrev().getY()) < outlDistanceZScore)
-                && Math.abs(indentationPopulation.getZScore(line.getX())) < outlIndentZScore) {
+        if (heightPopulation.getZScore(line.getHeight()) < OUTL_HEIGHT_ZSCORE
+                && Math.abs(fontPopulation.getZScore(getFontIndex(line))) < OUTL_FONT_ZSCORE
+                && (!line.hasPrev() || distancePopulation.getZScore(line.getY()-line.getPrev().getY()) < OUTL_DIST_ZSCORE)
+                && Math.abs(indentationPopulation.getZScore(line.getX())) < OUTL_INDENT_ZSCORE) {
             return true;
         }
         int i = 0;
@@ -297,7 +297,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
             if (actLine.toText().matches("[A-Z].*")) {
                 break;
             }
-            if (i++ == maxHeaderLineCount) {
+            if (i++ == MAX_HEADER_LINE_COUNT) {
                 return true;
             }
         }
@@ -323,26 +323,5 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     private static final int MAX_SIMILAR_LINES_COUNT = 50;
     
     private static final int MAX_HEADER_LINE_COUNT = 5;
-    
-            
-    private final double candMaxLengthZScore = CAND_MAX_LENGTH_ZSCORE;
-    
-    private final double candMaxLengthZScore2 = CAND_MAX_LENGTH_ZSCORE_2;
-    
-    private final double candMinHeightZScore = CAND_MIN_HEIGHT_ZSCORE;
-    
-    private final double outlHeightZScore = OUTL_HEIGHT_ZSCORE;
-            
-    private final double outlFontZScore = OUTL_FONT_ZSCORE;
-    
-    private final double outlDistanceZScore = OUTL_DIST_ZSCORE;
-                            
-    private final double outlIndentZScore = OUTL_INDENT_ZSCORE;
-    
-    private final double maxHeightSimilarity = MAX_HEIGHT_SIMILARITY;
-
-    private final int maxSimilarLinesCount = MAX_SIMILAR_LINES_COUNT;
-    
-    private final int maxHeaderLineCount = MAX_HEADER_LINE_COUNT;
-    
+  
 }

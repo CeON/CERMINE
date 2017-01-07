@@ -24,6 +24,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 /**
  * @author Pawel Szostek
+ * @param <S> sample type
  */
 public class OversamplingSelector<S> implements SampleSelector<S> {
 

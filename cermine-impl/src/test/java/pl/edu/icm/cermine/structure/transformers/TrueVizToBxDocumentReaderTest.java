@@ -45,13 +45,10 @@ public class TrueVizToBxDocumentReaderTest {
 
     static String PATH = "/pl/edu/icm/cermine/structure/";
 
-    public TrueVizToBxDocumentReaderTest() {
-    }
-
     @Test
     public void testImporter() throws IOException, ParserConfigurationException, SAXException,
             TransformationException {
-        BxPage page = new TrueVizToBxDocumentReader().read(new InputStreamReader(this.getClass().getResourceAsStream("/pl/edu/icm/cermine/structure/imports/MargImporterTest1.xml"))).get(0);
+        BxPage page = new TrueVizToBxDocumentReader().read(new InputStreamReader(TrueVizToBxDocumentReaderTest.class.getResourceAsStream("/pl/edu/icm/cermine/structure/imports/MargImporterTest1.xml"))).get(0);
         boolean contains = false;
         boolean rightText = false;
         boolean rightSize = false;
@@ -78,7 +75,7 @@ public class TrueVizToBxDocumentReaderTest {
     }
 
     private BxDocument getDocumentFromZipFile(String zipFilename, String filename) throws TransformationException, IOException, URISyntaxException {
-        URL url = this.getClass().getResource(PATH + zipFilename);
+        URL url = TrueVizToBxDocumentReaderTest.class.getResource(PATH + zipFilename);
         ZipFile zipFile = new ZipFile(new File(url.toURI()));
         InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
         InputStreamReader isr = new InputStreamReader(is);
@@ -134,7 +131,7 @@ public class TrueVizToBxDocumentReaderTest {
         assertEquals(nextNulls, Integer.valueOf(1));
     }
 
-    public <A extends Indexable> Integer countChainedElements(List<A> list) throws TransformationException, IOException {
+    private <A extends Indexable> Integer countChainedElements(List<A> list) throws TransformationException, IOException {
         Set<A> nextSet = new HashSet<A>();
         for (A elem : list) {
             A next = (A) elem.getNext();

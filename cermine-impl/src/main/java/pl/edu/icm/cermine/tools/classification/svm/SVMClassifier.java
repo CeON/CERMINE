@@ -81,7 +81,7 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
         lScaler.setStrategy(new LinearScaling());
 	this.scaler = lScaler;
 		
-        featuresNames = (String[])featureVectorBuilder.getFeatureNames().toArray(new String[0]);
+        featuresNames = featureVectorBuilder.getFeatureNames().toArray(new String[featureVectorBuilder.getFeatureNames().size()]);
 		
 	param = getDefaultParam();
 	}
@@ -228,10 +228,10 @@ public abstract class SVMClassifier<S, T, E extends Enum<E>> {
     }
 
     public void loadModelFromResources(String modelFilePath, String rangeFilePath) throws IOException {
-        InputStreamReader modelISR = new InputStreamReader(this.getClass().getResourceAsStream(modelFilePath));
+        InputStreamReader modelISR = new InputStreamReader(SVMClassifier.class.getResourceAsStream(modelFilePath));
         BufferedReader modelFile = new BufferedReader(modelISR);
 
-        InputStreamReader rangeISR = new InputStreamReader(this.getClass().getResourceAsStream(rangeFilePath));
+        InputStreamReader rangeISR = new InputStreamReader(SVMClassifier.class.getResourceAsStream(rangeFilePath));
         BufferedReader rangeFile = new BufferedReader(rangeISR);
         loadModelFromFile(modelFile, rangeFile);
     }

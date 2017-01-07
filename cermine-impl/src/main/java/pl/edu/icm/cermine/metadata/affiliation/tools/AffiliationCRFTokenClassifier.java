@@ -41,7 +41,7 @@ import pl.edu.icm.cermine.parsing.tools.TokenClassifier;
 public class AffiliationCRFTokenClassifier implements TokenClassifier<Token<AffiliationLabel>> {
 
     private ACRF model;
-    private static final int DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD = 1;
+    private static final int DEFAULT_NEIGHBOR_INFLUENCE = 1;
     private static final String DEFAULT_MODEL_FILE
             = "/pl/edu/icm/cermine/metadata/affiliation/acrf-affiliations-pubmed.ser.gz";
 
@@ -117,7 +117,7 @@ public class AffiliationCRFTokenClassifier implements TokenClassifier<Token<Affi
                 token.setLabel(AffiliationLabel.TEXT);
             }
         }
-        String data = GrmmUtils.toGrmmInput(tokens, DEFAULT_NEIGHBOR_INFLUENCE_THRESHOLD);
+        String data = GrmmUtils.toGrmmInput(tokens, DEFAULT_NEIGHBOR_INFLUENCE);
 
         Pipe pipe = model.getInputPipe();
         InstanceList instanceList = new InstanceList(pipe);

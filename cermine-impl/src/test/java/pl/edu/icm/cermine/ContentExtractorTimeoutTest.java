@@ -40,7 +40,7 @@ public class ContentExtractorTimeoutTest {
     @Test
     public void testNoTimeout()
             throws IOException, TimeoutException, AnalysisException {
-        InputStream in = this.getClass().getResourceAsStream(SIMPLE_PDF_PATH);
+        InputStream in = ContentExtractorTimeoutTest.class.getResourceAsStream(SIMPLE_PDF_PATH);
         ContentExtractor extractor = new ContentExtractor();
         extractor.setPDF(in);
         extractor.getBxDocument();
@@ -49,7 +49,7 @@ public class ContentExtractorTimeoutTest {
     @Test
     public void testObjectTimeoutRemoval()
             throws IOException, TimeoutException, AnalysisException {
-        InputStream in = this.getClass().getResourceAsStream(SIMPLE_PDF_PATH);
+        InputStream in = ContentExtractorTimeoutTest.class.getResourceAsStream(SIMPLE_PDF_PATH);
         ContentExtractor extractor = new ContentExtractor();
         extractor.setPDF(in);
         extractor.setTimeout(0);
@@ -60,7 +60,7 @@ public class ContentExtractorTimeoutTest {
     @Test
     public void testObjectTimeoutSetInConstructor()
             throws IOException, TimeoutException, AnalysisException {
-        InputStream in = this.getClass().getResourceAsStream(COMPLEX_PDF_PATH);
+        InputStream in = ContentExtractorTimeoutTest.class.getResourceAsStream(COMPLEX_PDF_PATH);
         long start = System.currentTimeMillis();
         try {
             ContentExtractor extractor = new ContentExtractor(1);

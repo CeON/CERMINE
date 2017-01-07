@@ -49,7 +49,7 @@ public abstract class AbstractBibReferenceExtractorTest {
     
     @Test
     public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException, TransformationException, URISyntaxException {
-        InputStream expStream = this.getClass().getResourceAsStream(EXP_FILE);
+        InputStream expStream = AbstractBibReferenceExtractorTest.class.getResourceAsStream(EXP_FILE);
         BufferedReader expReader = new BufferedReader(new InputStreamReader(expStream));
         
         StringBuilder sb = new StringBuilder();
@@ -61,7 +61,7 @@ public abstract class AbstractBibReferenceExtractorTest {
         expStream.close();
         expReader.close();
         
-        URL url = this.getClass().getResource(TEST_FILE);
+        URL url = AbstractBibReferenceExtractorTest.class.getResource(TEST_FILE);
         ZipFile zipFile = new ZipFile(new File(url.toURI()));
         InputStream inputStream = zipFile.getInputStream(zipFile.getEntry("out.xml"));
         BxDocument expDocument = new BxDocument().setPages(bxReader.read(new InputStreamReader(inputStream)));

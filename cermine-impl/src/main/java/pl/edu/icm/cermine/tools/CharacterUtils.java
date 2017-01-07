@@ -23,10 +23,10 @@ package pl.edu.icm.cermine.tools;
  */
 public class CharacterUtils {
     
-    public static final char[] DASH_CHARS = {
+    public static char[] DASH_CHARS = {
         '\u002D', '\u00AD', '\u2010', '\u2011', '\u2012', '\u2013', '\u2014', '\u2015', 
         '\u207B', '\u208B', '\u2212', '-'};
     
-    public static final char[] ROMAN_CHARS = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
+    public static char[] ROMAN_CHARS = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
     
 }

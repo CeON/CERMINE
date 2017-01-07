@@ -37,7 +37,7 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
 public class ParallelDocstrumPageSegmenterTest {
 
     private InputStream getResource(String name) {
-        return this.getClass().getResourceAsStream("/pl/edu/icm/cermine/structure/" + name);
+        return ParallelDocstrumPageSegmenterTest.class.getResourceAsStream("/pl/edu/icm/cermine/structure/" + name);
     }
 
     @Test
@@ -47,15 +47,6 @@ public class ParallelDocstrumPageSegmenterTest {
         new UnsegmentedPagesFlattener().process(inDoc);
         
         DocstrumSegmenter pageSegmenter = new ParallelDocstrumSegmenter();
-        pageSegmenter.setSpacingHistogramResolution(2.0);
-        pageSegmenter.setSpacingHistogramSmoothingWindowLength(10.0);
-        pageSegmenter.setSpacingHistogramSmoothingWindowStdDeviation(2.0);
-        pageSegmenter.setMaxLineSizeScale(1.5);
-        pageSegmenter.setWordDistanceMultiplier(0.5);
-        pageSegmenter.setMinHorizontalDistanceMultiplier(1.5);
-        pageSegmenter.setMaxVerticalDistanceMultiplier(1.3);
-        pageSegmenter.setMaxVerticalMergeDistanceMultiplier(0.5);
-        pageSegmenter.setComponentDistanceCharacterMultiplier(3.0);
         
         BxDocument outDoc = pageSegmenter.segmentDocument(inDoc);
 
@@ -69,8 +60,8 @@ public class ParallelDocstrumPageSegmenterTest {
         assertEquals(16, outZones.get(1).childrenCount());
         assertEquals(16, outZones.get(2).childrenCount());
 
-        assertEquals(8, outZones.get(1).getFirstChild().childrenCount());
-        assertEquals("ABSTRACT", outZones.get(1).getFirstChild().getFirstChild().toText());
+        assertEquals(24, outZones.get(1).getFirstChild().childrenCount());
+        assertEquals("A", outZones.get(1).getFirstChild().getFirstChild().toText());
 
         for (BxZone zone : outZones) {
             for (BxLine line : zone) {

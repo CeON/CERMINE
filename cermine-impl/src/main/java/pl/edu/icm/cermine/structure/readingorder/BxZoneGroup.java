@@ -31,6 +31,8 @@ import pl.edu.icm.cermine.structure.model.BxZone;
  */
 public class BxZoneGroup extends BxObject<BxZoneGroup, BxZoneGroup, BxZoneGroup> {
 
+    private static final long serialVersionUID = 1111043717957023347L;
+    
     private BxObject leftChild;
     private BxObject rightChild;
 

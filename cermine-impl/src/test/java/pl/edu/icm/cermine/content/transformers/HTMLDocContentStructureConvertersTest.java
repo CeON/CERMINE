@@ -49,14 +49,13 @@ public class HTMLDocContentStructureConvertersTest {
         reader = new HTMLToDocContentReader();
         writer = new DocContentToHTMLWriter();
     }
-    
- 
+     
     @Test
     public void readerWriterTest() throws URISyntaxException, IOException, TransformationException, SAXException {
-        File file = new File(this.getClass().getResource(modelFilePath).toURI());
+        File file = new File(HTMLDocContentStructureConvertersTest.class.getResource(modelFilePath).toURI());
         String expectedHTML = FileUtils.readFileToString(file, "UTF-8");
         
-        InputStream is = this.getClass().getResourceAsStream(modelFilePath);
+        InputStream is = HTMLDocContentStructureConvertersTest.class.getResourceAsStream(modelFilePath);
         InputStreamReader isr = new InputStreamReader(is);
         ContentStructure structure = reader.read(isr);
         String structureHTML = writer.write(structure);

@@ -83,7 +83,7 @@ public class BxDocUtils {
             this.curIdx = -1;
 
             List<File> list = Lists.newArrayList(FileUtils.listFiles(dir, new String[]{extension}, true));
-            this.files = list.toArray(new File[]{});
+            this.files = list.toArray(new File[list.size()]);
         }
 
         @Override

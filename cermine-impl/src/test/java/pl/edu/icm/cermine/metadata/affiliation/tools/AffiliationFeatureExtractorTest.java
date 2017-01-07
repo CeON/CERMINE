@@ -52,13 +52,13 @@ public class AffiliationFeatureExtractorTest {
             @SuppressWarnings("unchecked")
             List<KeywordFeatureCalculator<Token<AffiliationLabel>>> keywordFeatures
                     = Arrays.<KeywordFeatureCalculator<Token<AffiliationLabel>>>asList(
-                            new AffiliationDictionaryFeature("KeywordAddress", "address_keywords.txt", false),
-                            new AffiliationDictionaryFeature("KeywordCity", "cities.txt", true),
-                            new AffiliationDictionaryFeature("KeywordCountry", "countries2.txt", true),
-                            new AffiliationDictionaryFeature("KeywordInstitution", "institution_keywords.txt", false),
-                            new AffiliationDictionaryFeature("KeywordState", "states.txt", true),
-                            new AffiliationDictionaryFeature("KeywordStateCode", "state_codes.txt", true),
-                            new AffiliationDictionaryFeature("KeywordStopWord", "stop_words_multilang.txt", false)
+                            new AffiliationDictionaryFeature("KeywordAddress", "/pl/edu/icm/cermine/metadata/affiliation/features/address_keywords.txt", false),
+                            new AffiliationDictionaryFeature("KeywordCity", "/pl/edu/icm/cermine/metadata/affiliation/features/cities.txt", true),
+                            new AffiliationDictionaryFeature("KeywordCountry", "/pl/edu/icm/cermine/metadata/affiliation/features/countries2.txt", true),
+                            new AffiliationDictionaryFeature("KeywordInstitution", "/pl/edu/icm/cermine/metadata/affiliation/features/institution_keywords.txt", false),
+                            new AffiliationDictionaryFeature("KeywordState", "/pl/edu/icm/cermine/metadata/affiliation/features/states.txt", true),
+                            new AffiliationDictionaryFeature("KeywordStateCode", "/pl/edu/icm/cermine/metadata/affiliation/features/state_codes.txt", true),
+                            new AffiliationDictionaryFeature("KeywordStopWord", "/pl/edu/icm/cermine/metadata/affiliation/features/stop_words_multilang.txt", false)
                     );
 
             WordFeatureCalculator wordFeature

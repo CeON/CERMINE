@@ -33,7 +33,7 @@ public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>
 
     private static final double EPS = 10.0;
 
-    private static class yCoordinateComparator implements Comparator<BxZone> {
+    private static class YCoordinateComparator implements Comparator<BxZone> {
 
         @Override
         public int compare(BxZone z1, BxZone z2) {
@@ -44,7 +44,7 @@ public class IsHighestOnThePageFeature extends FeatureCalculator<BxZone, BxPage>
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         List<BxZone> zones = Lists.newArrayList(page);
-        Collections.sort(zones, new yCoordinateComparator());
+        Collections.sort(zones, new YCoordinateComparator());
         BxZone firstZone = zones.get(0);
         if (zone.equals(firstZone)) {
             return 1.0;

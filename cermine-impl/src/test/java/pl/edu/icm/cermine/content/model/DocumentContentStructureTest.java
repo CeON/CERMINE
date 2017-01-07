@@ -44,7 +44,7 @@ public class DocumentContentStructureTest {
     public void setUp() throws JDOMException, IOException, TransformationException, URISyntaxException {
         reader = new HTMLToDocContentReader();
         
-        InputStream is = this.getClass().getResourceAsStream(modelFilePath);
+        InputStream is = DocumentContentStructureTest.class.getResourceAsStream(modelFilePath);
         InputStreamReader isr = new InputStreamReader(is);
         
         structure = reader.read(isr);

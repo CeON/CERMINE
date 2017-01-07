@@ -68,7 +68,7 @@ public class CRFAffiliationParser implements ParsableStringParser<DocumentAffili
     
     private List<String> loadWords(String wordsFileName) throws AnalysisException {
         List<String> commonWords = new ArrayList<String>();
-        InputStream is = getClass().getResourceAsStream(wordsFileName);
+        InputStream is = CRFAffiliationParser.class.getResourceAsStream(wordsFileName);
         if (is == null) {
             throw new AnalysisException("Resource not found: " + wordsFileName);
         }

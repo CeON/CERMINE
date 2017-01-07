@@ -39,7 +39,7 @@ public class BxModelUtilsTest {
 
     @Test
     public void deepCloneTest() throws TransformationException {
-        InputStream stream = this.getClass().getResourceAsStream(EXP_STR_LAB_1);
+        InputStream stream = BxModelUtilsTest.class.getResourceAsStream(EXP_STR_LAB_1);
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
         BxDocument doc = new BxDocument().setPages(reader.read(new InputStreamReader(stream)));
         BxDocument copy = BxModelUtils.deepClone(doc);

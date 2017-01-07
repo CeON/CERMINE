@@ -23,6 +23,7 @@ import pl.edu.icm.cermine.tools.classification.general.TrainingSample;
 
 /**
  * @author Pawel Szostek
+ * @param <S> sample type
  */
 public class NormalSelector<S> implements SampleSelector<S> {
 

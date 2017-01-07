@@ -20,6 +20,8 @@ package pl.edu.icm.cermine.tools;
 
 /**
  * @author Pawel Szostek
+ * @param <S> first element
+ * @param <T> second element
  */
 public class Pair<S, T> {
 

@@ -51,7 +51,7 @@ public class ITextCharacterExtractionTest {
     @Test
     public void metadataExtractionTest() throws AnalysisException {
         for (String file : INPUT_FILES) {
-            InputStream testStream = this.getClass().getResourceAsStream(INPUT_DIR + file);
+            InputStream testStream = ITextCharacterExtractionTest.class.getResourceAsStream(INPUT_DIR + file);
             BxDocument testDocument = extractor.extractCharacters(testStream);
             BxPage page = testDocument.getFirstChild();
             List<BxChunk> chunks = Lists.newArrayList(page.getChunks());

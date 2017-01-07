@@ -20,9 +20,11 @@ package pl.edu.icm.cermine.configuration;
 
 import java.io.File;
 import java.net.URL;
-import org.apache.commons.configuration.CompositeConfiguration;
+import java.util.HashMap;
+import java.util.Iterator;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.MapConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 /**
@@ -34,18 +36,30 @@ public class ExtractionConfigBuilder {
 
     private static final String DEFAULT_CONFIGURATION_CLASSPATH = "pl/edu/icm/cermine/application-default.properties";
 
-    private final CompositeConfiguration configuration;
+    private static final Configuration DEFAULT_OTHER = new MapConfiguration(new HashMap<String, Object>());
+    static {
+        DEFAULT_OTHER.addProperty(ExtractionConfigProperty.IMAGES_EXTRACTION.getPropertyKey(), true);
+    }
+    
+    private final Configuration configuration;
 
     public ExtractionConfigBuilder() {
         // prevents MALLET from printing info messages
         System.setProperty("java.util.logging.config.file",
             "edu/umass/cs/mallet/base/util/resources/logging.properties");
-        this.configuration = new CompositeConfiguration();
+        this.configuration = new MapConfiguration(new HashMap<String, Object>());
+        URL propertiesUrl = ExtractionConfigBuilder.class.getClassLoader().getResource(DEFAULT_CONFIGURATION_CLASSPATH);
+        try {
+            update(new PropertiesConfiguration(propertiesUrl));
+        } catch (ConfigurationException e) {
+            throw new RuntimeException("Unable to load default configuration", e);
+        }
+        update(DEFAULT_OTHER);
     }
     
     public ExtractionConfigBuilder addConfiguration(String configurationFilePath) {
         try {
-            configuration.addConfiguration(new PropertiesConfiguration(new File(configurationFilePath)));
+            update(new PropertiesConfiguration(new File(configurationFilePath)));
         } catch (ConfigurationException e) {
             throw new RuntimeException("Unable to load configuration from file " + configurationFilePath, e);
         }
@@ -53,7 +67,7 @@ public class ExtractionConfigBuilder {
     }
     
     public ExtractionConfigBuilder addConfiguration(Configuration config) {
-        configuration.addConfiguration(config);
+        update(config);
         return this;
     }
     
@@ -63,13 +77,15 @@ public class ExtractionConfigBuilder {
     }
 
     public ExtractionConfig buildConfiguration() {
-        URL propertiesUrl = ExtractionConfigBuilder.class.getClassLoader().getResource(DEFAULT_CONFIGURATION_CLASSPATH);
-        try {
-            configuration.addConfiguration(new PropertiesConfiguration(propertiesUrl));
-        } catch (ConfigurationException e) {
-            throw new RuntimeException("Unable to load default configuration", e);
-        }
         return new ExtractionConfig(configuration);
+    }
+    
+    private void update(Configuration conf) {
+        Iterator<String> it = conf.getKeys();
+        while (it.hasNext()) {
+            String key = it.next();
+            configuration.setProperty(key, conf.getProperty(key));
+        }
     }
     
 }

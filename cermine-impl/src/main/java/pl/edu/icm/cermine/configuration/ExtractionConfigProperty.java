@@ -35,6 +35,8 @@ public enum ExtractionConfigProperty {
     CONTENT_FILTER_MODEL_PATH           ("contentFilter.model"),
     CONTENT_FILTER_RANGE_PATH           ("contentFilter.ranges"),
     
+    IMAGES_EXTRACTION                   ("images.extraction"),
+    
     DEBUG_PRINT_TIME                    ("debug.print.time");
     
     private final String propertyKey;

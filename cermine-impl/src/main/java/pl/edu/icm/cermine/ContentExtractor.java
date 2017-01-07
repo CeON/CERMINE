@@ -37,6 +37,7 @@ import javax.imageio.ImageIO;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -768,6 +769,7 @@ public class ContentExtractor {
         if (parser.getConfigurationPath() != null) {
             builder.addConfiguration(parser.getConfigurationPath());
         }
+        builder.setProperty(ExtractionConfigProperty.IMAGES_EXTRACTION, extensions.containsKey("images"));
         ExtractionConfigRegister.set(builder.buildConfiguration());
 
         int i = 0;

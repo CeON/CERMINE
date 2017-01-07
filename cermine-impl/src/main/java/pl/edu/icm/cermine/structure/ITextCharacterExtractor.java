@@ -32,6 +32,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
+import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.structure.model.BxBounds;
 import pl.edu.icm.cermine.structure.model.BxChunk;
@@ -268,7 +270,7 @@ public class ITextCharacterExtractor implements CharacterExtractor {
         private int pageNumber = 0;
         private int imageNumber;
 
-        private BxBoundsBuilder boundsBuilder = new BxBoundsBuilder();
+        private final BxBoundsBuilder boundsBuilder = new BxBoundsBuilder();
 
         private Rectangle pageRectangle;
 
@@ -357,6 +359,9 @@ public class ITextCharacterExtractor implements CharacterExtractor {
 
         @Override
         public void renderImage(ImageRenderInfo iri) {
+            if (!ExtractionConfigRegister.get().getBooleanProperty(ExtractionConfigProperty.IMAGES_EXTRACTION)) {
+                return;
+            }
             try {
                 BufferedImage bi = iri.getImage().getBufferedImage();
                 if (bi != null && bi.getHeight() > 1 && bi.getWidth() > 1) {

@@ -20,6 +20,8 @@ package pl.edu.icm.cermine.configuration;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author madryk
@@ -53,10 +55,10 @@ public class ExtractionConfigRegisterTest {
             assertEquals(
                     "classpath:/pl/edu/icm/cermine/content/filtering.range", 
                     configuration.getStringProperty(ExtractionConfigProperty.CONTENT_FILTER_RANGE_PATH));
+
+            assertTrue(configuration.getBooleanProperty(ExtractionConfigProperty.IMAGES_EXTRACTION));
             
-            assertEquals(
-                    false, 
-                    configuration.getBooleanProperty(ExtractionConfigProperty.DEBUG_PRINT_TIME));
+            assertFalse(configuration.getBooleanProperty(ExtractionConfigProperty.DEBUG_PRINT_TIME));
         } finally {
             ExtractionConfigRegister.remove();
         }
@@ -67,10 +69,11 @@ public class ExtractionConfigRegisterTest {
         try {
             // given
             String configFilePath = ExtractionConfigRegisterTest.class.getClassLoader().getResource("pl/edu/icm/cermine/configuration/test-config.properties").getPath();
-
+            
             // execute
             ExtractionConfigRegister.set(new ExtractionConfigBuilder()
                     .addConfiguration(configFilePath)
+                    .setProperty(ExtractionConfigProperty.IMAGES_EXTRACTION, false)
                     .buildConfiguration()
             );
             ExtractionConfig configuration = ExtractionConfigRegister.get();
@@ -97,9 +100,9 @@ public class ExtractionConfigRegisterTest {
                     "classpath:/pl/edu/icm/cermine/content/filtering.range", 
                     configuration.getStringProperty(ExtractionConfigProperty.CONTENT_FILTER_RANGE_PATH));
             
-            assertEquals(
-                    true, 
-                    configuration.getBooleanProperty(ExtractionConfigProperty.DEBUG_PRINT_TIME));
+            assertFalse(configuration.getBooleanProperty(ExtractionConfigProperty.IMAGES_EXTRACTION));
+                        
+            assertTrue(configuration.getBooleanProperty(ExtractionConfigProperty.DEBUG_PRINT_TIME));
         } finally {
             ExtractionConfigRegister.remove();
         }

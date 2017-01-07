@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.tools;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
 /**
@@ -31,7 +32,7 @@ public class SmartHashMap extends HashMap<String, BxZoneLabel> {
 
     public SmartHashMap putIf(String string, BxZoneLabel label) {
         if (string != null && !string.isEmpty()) {
-            string = string.toLowerCase();
+            string = string.toLowerCase(Locale.ENGLISH);
             put(string, label);
         }
         return this;

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.apache.commons.io.IOUtils;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -84,7 +85,7 @@ public class BibTeXToBibEntryReader implements FormatToModelReader<BibEntry> {
             throw new TransformationException("Cannot parse string as BibTeX!");
         }
         if (indexOfBrace > indexOfAt) {
-            String type = lines[0].substring(indexOfAt + 1, indexOfBrace).toLowerCase();
+            String type = lines[0].substring(indexOfAt + 1, indexOfBrace).toLowerCase(Locale.ENGLISH);
             //list??
             bibEntry.setType(type);
         } else {
@@ -96,7 +97,7 @@ public class BibTeXToBibEntryReader implements FormatToModelReader<BibEntry> {
             if (lines[i].matches("\\s\\w*\\s*=\\s*[{].*[},]")) {
           
                 String[] field = lines[i].split("\\s*=\\s*[{]");
-                String key = field[0].trim().toLowerCase();
+                String key = field[0].trim().toLowerCase(Locale.ENGLISH);
                 String value = field[1].substring(0, field[1].length() - 2);
                 String[] values = value.split(",");
                 if (key.equals(BibEntry.FIELD_AUTHOR)) {

@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.structure.transformers;
 
 import com.google.common.collect.Lists;
 import java.io.StringReader;
+import java.util.Locale;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -54,7 +55,7 @@ public class BxDocumentToMinimalTrueVizWriterTest {
 
     private void assertXpathNoCase(String expr, String expected) throws XPathExpressionException {
         String actual = (String) xpath.evaluate(expr, domDoc, XPathConstants.STRING);
-        assertEquals(expected.toLowerCase(), actual.toLowerCase());
+        assertEquals(expected.toLowerCase(Locale.ENGLISH), actual.toLowerCase(Locale.ENGLISH));
     }
 
     private void assertXpath(String expr, double expected) throws XPathExpressionException {

@@ -64,17 +64,25 @@ public class AltPdfNLMMetadataExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = AltPdfNLMMetadataExtractorTest.class.getResourceAsStream(EXP_FILE);
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
-        SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
+        InputStream expStream = null;
+        InputStreamReader expReader = null;
+        SAXBuilder saxBuilder;
         Document dom;
+        Element expMetadata = null;
         try {
+            expStream = AltPdfNLMMetadataExtractorTest.class.getResourceAsStream(EXP_FILE);
+            expReader = new InputStreamReader(expStream, "UTF-8");
+            saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
             dom = saxBuilder.build(expReader);
+            expMetadata = dom.getRootElement();
         } finally {
-            expStream.close();
-            expReader.close();
+            if (expStream != null) {
+                expStream.close();
+            }
+            if (expReader != null) {
+                expReader.close();
+            }
         }
-        Element expMetadata = dom.getRootElement();
                 
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         Diff diff = new Diff(outputter.outputString(expMetadata), outputter.outputString(testMetadata));

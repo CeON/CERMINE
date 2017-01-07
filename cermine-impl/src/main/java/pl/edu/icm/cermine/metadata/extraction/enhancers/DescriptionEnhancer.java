@@ -22,6 +22,7 @@ import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,7 +60,7 @@ public class DescriptionEnhancer extends AbstractSimpleEnhancer {
         StringBuilder sb = new StringBuilder();
         BxLine prev = null;
         for (BxLine line : lines) {
-            String normalized = line.toText().toLowerCase().trim();
+            String normalized = line.toText().toLowerCase(Locale.ENGLISH).trim();
             if (normalized.startsWith("abstract")
                 || normalized.startsWith("a b s t r a c t")
                 || normalized.startsWith("article info")) {

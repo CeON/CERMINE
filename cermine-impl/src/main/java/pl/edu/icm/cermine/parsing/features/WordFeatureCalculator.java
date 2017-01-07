@@ -18,6 +18,7 @@
 package pl.edu.icm.cermine.parsing.features;
 
 import java.util.List;
+import java.util.Locale;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
 import pl.edu.icm.cermine.parsing.model.Token;
 
@@ -58,7 +59,7 @@ public class WordFeatureCalculator {
             }
         }
         if (toLowerCase) {
-            return PREFIX + token.getText().toLowerCase();
+            return PREFIX + token.getText().toLowerCase(Locale.ENGLISH);
         } else {
             return PREFIX + token.getText();
         }

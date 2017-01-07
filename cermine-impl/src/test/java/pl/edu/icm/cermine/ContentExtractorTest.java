@@ -138,21 +138,24 @@ public class ContentExtractorTest {
             testStream.close();
         }
         
-        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_TEXT_2);        
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
-        BufferedReader reader = new BufferedReader(expReader);
-        
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_TEXT_2);
+        BufferedReader reader = null;
         StringBuilder expectedContent = new StringBuilder();
-        String line;
         try {
+            reader = new BufferedReader(new InputStreamReader(expStream, "UTF-8"));
+            String line;
             while ((line = reader.readLine()) != null) {
                 expectedContent.append(line);
                 expectedContent.append("\n");
             }
         } finally {
-            expStream.close();
-            expReader.close();
-            reader.close();
+            try {
+                expStream.close();
+            } finally {
+                if (reader != null) {
+                    reader.close();
+                }
+            }
         }
         
         assertEquals(testContent.trim(), expectedContent.toString().trim());
@@ -170,13 +173,16 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_ZONES_2);
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
+        InputStreamReader expReader = null;
         Document dom;
         try {
+            expReader = new InputStreamReader(expStream, "UTF-8");
             dom = saxBuilder.build(expReader);
         } finally {
             expStream.close();
-            expReader.close();
+            if (expReader != null) {
+                expReader.close();
+            }
         }
         Element expMetadata = dom.getRootElement();
                 
@@ -197,13 +203,16 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_MET_1);
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
+        InputStreamReader expReader = null;
         Document dom;
         try {
+            expReader = new InputStreamReader(expStream, "UTF-8");
             dom = saxBuilder.build(expReader);
         } finally {
             expStream.close();
-            expReader.close();
+            if (expReader != null) {
+                expReader.close();
+            }
         }
         Element expMetadata = dom.getRootElement();
                 
@@ -224,13 +233,16 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
+        InputStreamReader expReader = null;
         Document dom;
         try {
+            expReader = new InputStreamReader(expStream, "UTF-8");
             dom = saxBuilder.build(expReader);
         } finally {
             expStream.close();
-            expReader.close();
+            if (expReader != null) {
+                expReader.close();
+            }
         }
         Element expMetadata = dom.getRootElement();
         Element expContent = expMetadata.getChild("body");
@@ -252,13 +264,16 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
+        InputStreamReader expReader = null;
         Document dom;
         try {
+            expReader = new InputStreamReader(expStream, "UTF-8");
             dom = saxBuilder.build(expReader);
         } finally {
             expStream.close();
-            expReader.close();
+            if (expReader != null) {
+                expReader.close();
+            }
         }
         Element expNLM = dom.getRootElement();
         Element back = expNLM.getChild("back");
@@ -293,13 +308,16 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_2);
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
+        InputStreamReader expReader = null;
         Document dom;
         try {
+            expReader = new InputStreamReader(expStream, "UTF-8");
             dom = saxBuilder.build(expReader);
         } finally {
             expStream.close();
-            expReader.close();
+            if (expReader != null) {
+                expReader.close();
+            }
         }
         Element expContent = dom.getRootElement();
         
@@ -357,13 +375,16 @@ public class ContentExtractorTest {
         }
         
         InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_4);
-        InputStreamReader expReader = new InputStreamReader(expStream, "UTF-8");
+        InputStreamReader expReader = null;
         Document dom;
         try {
+            expReader = new InputStreamReader(expStream, "UTF-8");
             dom = saxBuilder.build(expReader);
         } finally {
             expStream.close();
-            expReader.close();
+            if (expReader != null) {
+                expReader.close();
+            }
         }
         Element expContent = dom.getRootElement();
         

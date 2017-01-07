@@ -106,10 +106,10 @@ public class FeatureVectorScalerImpl implements FeatureVectorScaler {
             double lower = 0.0;
             double upper = 1.0;
 
-            formatter.format("x\n");
-            formatter.format(Locale.ENGLISH, "%.16g %.16g\n", lower, upper);
+            formatter.format("x%n");
+            formatter.format(Locale.ENGLISH, "%.16g %.16g%n", lower, upper);
             for (int i = 0; i < limits.length; ++i) {
-                formatter.format(Locale.ENGLISH, "%d %.16g %.16g\n", i, limits[i].getMin(), limits[i].getMax());
+                formatter.format(Locale.ENGLISH, "%d %.16g %.16g%n", i, limits[i].getMin(), limits[i].getMax());
             }
 
             fp_save.write(formatter.toString());

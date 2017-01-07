@@ -23,6 +23,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
@@ -136,7 +137,7 @@ public class HTMLToDocContentReader implements FormatToModelReader<ContentStruct
     }
     
     private boolean isHeader(Element element) {
-        return element.getName().toLowerCase().startsWith("h");
+        return element.getName().toLowerCase(Locale.ENGLISH).startsWith("h");
     }
     
     private boolean isParagraph(Element element) {

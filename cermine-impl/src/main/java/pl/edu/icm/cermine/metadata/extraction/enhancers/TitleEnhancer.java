@@ -70,14 +70,14 @@ public class TitleEnhancer extends AbstractSimpleEnhancer {
     protected boolean enhanceMetadata(BxPage page, DocumentMetadata metadata) {
         List<BxZone> titleZones = new ArrayList<BxZone>();
         for (BxZone zone : filterZones(page)) {
-            if (types.contains(zone.toText().toLowerCase().trim())) {
+            if (types.contains(zone.toText().toLowerCase(Locale.ENGLISH).trim())) {
                 continue;
             }
-            if (zone.toText().toLowerCase().startsWith("sponsored document from")
-                    || (zone.hasPrev() && zone.getPrev().childrenCount() == 1 && zone.getPrev().toText().toLowerCase().startsWith("sponsored document from"))) {
+            if (zone.toText().toLowerCase(Locale.ENGLISH).startsWith("sponsored document from")
+                    || (zone.hasPrev() && zone.getPrev().childrenCount() == 1 && zone.getPrev().toText().toLowerCase(Locale.ENGLISH).startsWith("sponsored document from"))) {
                 continue;
             }
-            if (zone.hasNext() && zone.getNext().toText().toLowerCase().replaceAll("[^a-z]", "").startsWith("journalhomepage")) {
+            if (zone.hasNext() && zone.getNext().toText().toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "").startsWith("journalhomepage")) {
                 continue;
             }
             titleZones.add(zone);

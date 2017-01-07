@@ -22,7 +22,6 @@ import java.io.StringWriter;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
 import org.junit.Test;
 import pl.edu.icm.cermine.StandardDataExamples;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
@@ -34,18 +33,10 @@ import pl.edu.icm.cermine.tools.transformers.ModelToFormatWriter;
  */
 public class BibEntryToBibTeXWriterTest {
 
-    private ModelToFormatWriter<BibEntry> writer;
+    private ModelToFormatWriter<BibEntry> writer = new BibEntryToBibTeXWriter();
     
-    private List<BibEntry> bibEntries;
-    private List<String> bibtexEntries;
-
-
-    @Before
-    public void setUp() {
-        writer = new BibEntryToBibTeXWriter();
-        bibEntries = StandardDataExamples.getReferencesAsBibEntry();
-        bibtexEntries = StandardDataExamples.getReferencesAsBibTeX();
-    }
+    private List<BibEntry> bibEntries = StandardDataExamples.getReferencesAsBibEntry();
+    private List<String> bibtexEntries = StandardDataExamples.getReferencesAsBibTeX();
 
     @Test
     public void testWrite() throws TransformationException {

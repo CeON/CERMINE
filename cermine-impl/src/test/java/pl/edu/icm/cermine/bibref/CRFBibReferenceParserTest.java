@@ -18,12 +18,9 @@
 
 package pl.edu.icm.cermine.bibref;
 
-import org.junit.Before;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -34,11 +31,10 @@ public class CRFBibReferenceParserTest extends AbstractBibReferenceParserTest {
     
     private static final double MIN_PERCENTAGE = 0.8;
     
-    private CRFBibReferenceParser parser;
-    
-    @Before
-    public void setUp() throws AnalysisException {
-        parser = CRFBibReferenceParser.getInstance();
+    private final CRFBibReferenceParser parser;
+
+    public CRFBibReferenceParserTest() throws AnalysisException {
+        this.parser = CRFBibReferenceParser.getInstance();
     }
 
     @Override

@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.structure.model.BxPage;
@@ -46,7 +47,7 @@ public class DateFeature extends AbstractFeatureCalculator<BxZone, BxPage> {
 	
 	@Override
 	public double calculateFeatureValue(BxZone zone, BxPage page) {
-		String text = zone.toText().toLowerCase();
+		String text = zone.toText().toLowerCase(Locale.ENGLISH);
 		for(String regex: MONTH_REGEXPS) {
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(text);

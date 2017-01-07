@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import java.util.Locale;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
@@ -30,7 +31,7 @@ public class FigureTableFeature extends FeatureCalculator<BxZone, BxPage> {
     public double calculateFeatureValue(BxZone zone, BxPage page) {
         int i = 0;
         for (BxLine line : zone) {
-            String text = line.toText().toLowerCase();
+            String text = line.toText().toLowerCase(Locale.ENGLISH);
             if (text.matches("figure ?[0-9ivx]+[\\.:].*$") || text.matches("table ?[0-9ivx]+[\\.:].*$")
                     || text.matches("figure ?[0-9ivx]+$") || text.matches("table ?[0-9ivx]+$")) {
                 if (i == 0) {

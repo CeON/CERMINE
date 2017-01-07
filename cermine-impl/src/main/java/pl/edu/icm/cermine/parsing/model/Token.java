@@ -19,6 +19,7 @@ package pl.edu.icm.cermine.parsing.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
@@ -165,8 +166,8 @@ public class Token<L> {
             String lhsString = lhs.get(i).getText();
             String rhsString = rhs.get(i).getText();
             if (!caseSensitive) {
-                lhsString = lhsString.toLowerCase();
-                rhsString = rhsString.toLowerCase();
+                lhsString = lhsString.toLowerCase(Locale.ENGLISH);
+                rhsString = rhsString.toLowerCase(Locale.ENGLISH);
             }
             if (!lhsString.equals(rhsString)) {
                 return false;

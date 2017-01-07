@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.bibref.parsing.tools;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -116,7 +117,7 @@ public final class CitationUtils {
 
         String text = citation.getText();
         BibEntry bibEntry = new BibEntry(BibEntry.TYPE_ARTICLE);
-        String lcText = text.toLowerCase();
+        String lcText = text.toLowerCase(Locale.ENGLISH);
 
         if (lcText.contains("tech report") || lcText.contains("technical report")) {
             bibEntry.setType(BibEntry.TYPE_TECHREPORT);
@@ -208,9 +209,9 @@ public final class CitationUtils {
                 }
             }
             if (CRFBibReferenceParser.getWords() == null) {
-                featureVector.addFeature(token.getText().toLowerCase(), 1);
-            } else if (CRFBibReferenceParser.getWords().contains(token.getText().toLowerCase())) {
-                featureVector.addFeature(token.getText().toLowerCase(), 1);
+                featureVector.addFeature(token.getText().toLowerCase(Locale.ENGLISH), 1);
+            } else if (CRFBibReferenceParser.getWords().contains(token.getText().toLowerCase(Locale.ENGLISH))) {
+                featureVector.addFeature(token.getText().toLowerCase(Locale.ENGLISH), 1);
             }
             featureVectors.add(featureVector);
         }

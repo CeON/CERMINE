@@ -19,6 +19,7 @@ package pl.edu.icm.cermine.parsing.features;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import pl.edu.icm.cermine.parsing.model.ParsableString;
 import pl.edu.icm.cermine.parsing.model.Token;
@@ -47,7 +48,7 @@ public class IsRareFeature extends BinaryTokenFeatureCalculator {
             if (caseSensitive) {
                 commonWords.add(commonWord);
             } else {
-                commonWords.add(commonWord.toLowerCase());
+                commonWords.add(commonWord.toLowerCase(Locale.ENGLISH));
             }
         }
     }
@@ -59,7 +60,7 @@ public class IsRareFeature extends BinaryTokenFeatureCalculator {
             return false;
         }
         if (!caseSensitive) {
-            text = text.toLowerCase();
+            text = text.toLowerCase(Locale.ENGLISH);
         }
         return !commonWords.contains(text);
     }

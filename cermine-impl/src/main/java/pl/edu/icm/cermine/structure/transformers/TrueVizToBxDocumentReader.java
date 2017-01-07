@@ -25,6 +25,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
@@ -127,8 +128,8 @@ public class TrueVizToBxDocumentReader {
     }
 
     protected <A extends Indexable<A>> List<A> reorderList(List<A> list) {
-    	if(list.isEmpty()) {
-    		return list;
+    	if (list.isEmpty()) {
+            return list;
     	}
         Map<String, A> elems = new HashMap<String, A>();
         List<A> ordered = new ArrayList<A>(list.size());
@@ -400,10 +401,10 @@ public class TrueVizToBxDocumentReader {
         	return BxZoneLabel.OTH_UNKNOWN;
         }
 
-        if (ZONE_LABEL_MAP.containsKey(val.toLowerCase())) {
-            return ZONE_LABEL_MAP.get(val.toLowerCase());
+        if (ZONE_LABEL_MAP.containsKey(val.toLowerCase(Locale.ENGLISH))) {
+            return ZONE_LABEL_MAP.get(val.toLowerCase(Locale.ENGLISH));
         } else {
-            return BxZoneLabel.valueOf(val.toUpperCase());
+            return BxZoneLabel.valueOf(val.toUpperCase(Locale.ENGLISH));
         }
     }
 

@@ -36,17 +36,13 @@ import pl.edu.icm.cermine.exception.TransformationException;
  */
 public class BibTeXToBibEntryReaderTest {
     
-    private BibTeXToBibEntryReader reader;
+    private final BibTeXToBibEntryReader reader = new BibTeXToBibEntryReader();
     
-    List<String> bibtex;
-    List<BibEntry> entries;
-    
+    private final List<String> bibtex = StandardDataExamples.getReferencesAsBibTeX();
+    private final List<BibEntry> entries = StandardDataExamples.getReferencesAsBibEntry();
 
     @Before
     public void setUp() {
-        reader = new BibTeXToBibEntryReader();
-        bibtex = StandardDataExamples.getReferencesAsBibTeX();
-        entries = StandardDataExamples.getReferencesAsBibEntry();
         CollectionUtils.forAllDo(entries, new Closure() {
 
             @Override

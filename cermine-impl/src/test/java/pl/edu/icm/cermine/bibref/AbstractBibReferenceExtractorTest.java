@@ -50,22 +50,39 @@ public abstract class AbstractBibReferenceExtractorTest {
     @Test
     public void metadataExtractionTest() throws AnalysisException, JDOMException, IOException, SAXException, TransformationException, URISyntaxException {
         InputStream expStream = AbstractBibReferenceExtractorTest.class.getResourceAsStream(EXP_FILE);
-        BufferedReader expReader = new BufferedReader(new InputStreamReader(expStream, "UTF-8"));
-        
+        BufferedReader expReader = null;
         StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = expReader.readLine()) != null) {
-            sb.append(line);
-            sb.append("\n");
+        try {
+            expReader = new BufferedReader(new InputStreamReader(expStream, "UTF-8"));
+            String line;
+            while ((line = expReader.readLine()) != null) {
+                sb.append(line);
+                sb.append("\n");
+            }
+        } finally {
+            expStream.close();
+            if (expReader != null) {
+                expReader.close();
+            }
         }
-        expStream.close();
-        expReader.close();
         
         URL url = AbstractBibReferenceExtractorTest.class.getResource(TEST_FILE);
-        ZipFile zipFile = new ZipFile(new File(url.toURI()));
-        InputStream inputStream = zipFile.getInputStream(zipFile.getEntry("out.xml"));
-        BxDocument expDocument = new BxDocument().setPages(bxReader.read(new InputStreamReader(inputStream, "UTF-8")));
-        String[] references = getExtractor().extractBibReferences(expDocument);
+        ZipFile zipFile = null;
+        InputStream inputStream = null;
+        String[] references = new String[]{};
+        try {
+            zipFile = new ZipFile(new File(url.toURI()));
+            inputStream = zipFile.getInputStream(zipFile.getEntry("out.xml"));
+            BxDocument expDocument = new BxDocument().setPages(bxReader.read(new InputStreamReader(inputStream, "UTF-8")));
+            references = getExtractor().extractBibReferences(expDocument);
+        } finally {
+            if (zipFile != null) {
+                zipFile.close();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
         
         assertEquals(StringUtils.join(references, "\n"), sb.toString().trim());
     }

@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.content.citations;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,13 +74,13 @@ public class CitationPositionFinder {
     private void findByAuthorYear(String fullText, BibEntry citation, DocumentPositions positions) {
         List<String> tokens = new ArrayList<String>();
         for (CitationToken token : CitationUtils.stringToCitation(citation.getText()).getTokens()) {
-            tokens.add(token.getText().toLowerCase().trim());
+            tokens.add(token.getText().toLowerCase(Locale.ENGLISH).trim());
         }
            
         Pattern refPattern = Pattern.compile("\\([^\\(\\)]+\\d{4}[^\\(\\)]*\\)");
         Matcher refMatcher = refPattern.matcher(fullText);
         while (refMatcher.find()) {
-            String reference = refMatcher.group().toLowerCase().replaceAll("^.", "").replaceAll(".$", "");
+            String reference = refMatcher.group().toLowerCase(Locale.ENGLISH).replaceAll("^.", "").replaceAll(".$", "");
             String[] refs = reference.split(";");
             for (String ref : refs) {
                 Pattern namePattern = Pattern.compile("[a-z]+");

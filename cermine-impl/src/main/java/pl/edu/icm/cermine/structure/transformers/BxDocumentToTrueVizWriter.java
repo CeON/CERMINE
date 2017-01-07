@@ -194,7 +194,7 @@ public class BxDocumentToTrueVizWriter {
         appendProperty(doc, node, "ZoneLines", "");
         if (zone.getLabel() != null) {
             if (ZONE_LABEL_MAP.get(zone.getLabel()) != null && !ZONE_LABEL_MAP.get(zone.getLabel()).isEmpty()) {
-                appendClassification(doc, node, ZONE_LABEL_MAP.get(zone.getLabel()).toUpperCase(), "");
+                appendClassification(doc, node, ZONE_LABEL_MAP.get(zone.getLabel()).toUpperCase(Locale.ENGLISH), "");
             } else {
             	throw new TransformationException("Writing down an unknown zone label: " + zone.getLabel());
             }

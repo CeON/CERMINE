@@ -38,23 +38,30 @@ public class ContentExtractorTimeoutTest {
     static final private long ACCEPTABLE_DELAY_MILLIS = 5000;
 
     @Test
-    public void testNoTimeout()
-            throws IOException, TimeoutException, AnalysisException {
+    public void testNoTimeout() throws AnalysisException, IOException {
         InputStream in = ContentExtractorTimeoutTest.class.getResourceAsStream(SIMPLE_PDF_PATH);
-        ContentExtractor extractor = new ContentExtractor();
-        extractor.setPDF(in);
-        extractor.getBxDocument();
+        try {
+            ContentExtractor extractor = new ContentExtractor();
+            extractor.setPDF(in);
+            extractor.getBxDocument();
+        } finally {
+            in.close();
+        }
     }
 
     @Test
     public void testObjectTimeoutRemoval()
             throws IOException, TimeoutException, AnalysisException {
         InputStream in = ContentExtractorTimeoutTest.class.getResourceAsStream(SIMPLE_PDF_PATH);
-        ContentExtractor extractor = new ContentExtractor();
-        extractor.setPDF(in);
-        extractor.setTimeout(0);
-        extractor.removeTimeout();
-        extractor.getBxDocument();
+        try {
+            ContentExtractor extractor = new ContentExtractor();
+            extractor.setPDF(in);
+            extractor.setTimeout(0);
+            extractor.removeTimeout();
+            extractor.getBxDocument();
+        } finally {
+            in.close();
+        }
     }
 
     @Test
@@ -273,22 +280,24 @@ public class ContentExtractorTimeoutTest {
     private static void assumeOperationsEndInTimeout(
             ContentExtractorFactory factory,
             Collection<? extends ExtractorOperation> operations)
-            throws AnalysisException, IOException {
-        InputStream in = ContentExtractorTimeoutTest.class.getClass()
+                throws AnalysisException, IOException {
+        InputStream in = ContentExtractorTimeoutTest.class
                 .getResourceAsStream(COMPLEX_PDF_PATH);
-        ContentExtractor extractor = factory.create(in);
-        for (ExtractorOperation op : operations) {
-            long start = System.currentTimeMillis();
-            try {
-                op.run(extractor);
-            } catch (TimeoutException ex) {
-                assumeTimeoutWithinTimeBound(start);
-                return;
-            } finally {
-                in.close();
-            }
-            fail("The processing should have been interrupted by timeout "
+        try {
+            ContentExtractor extractor = factory.create(in);
+            for (ExtractorOperation op : operations) {
+                long start = System.currentTimeMillis();
+                try {
+                    op.run(extractor);
+                } catch (TimeoutException ex) {
+                    assumeTimeoutWithinTimeBound(start);
+                    return;
+                }
+                fail("The processing should have been interrupted by timeout "
                     + "but wasn't");
+            }
+        } finally {
+            in.close();
         }
     }
 

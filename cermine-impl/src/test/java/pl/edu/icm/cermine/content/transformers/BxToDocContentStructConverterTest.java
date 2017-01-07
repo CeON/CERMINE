@@ -43,16 +43,19 @@ import pl.edu.icm.cermine.structure.model.BxWord;
  */
 public class BxToDocContentStructConverterTest {
     
-    BxContentToDocContentConverter converter;
-    DocContentToHTMLWriter writer;
+    private final BxContentToDocContentConverter converter = new BxContentToDocContentConverter();
+    private final DocContentToHTMLWriter writer = new DocContentToHTMLWriter();
     
-    String expectedHTML;
-    BxContentStructure bxDocStruct;
+    private static final String expectedHTML = "<html><H1>1. Section</H1><p>par1</p><p>par2</p>"
+            +"<H1>2. Section</H1><p>par3</p>"
+            +"<H2>2.1. Subsection</H2>"
+            +"<H2>2.2. Subsection</H2><p>par4</p><p>par5</p>"
+            +"<H3>2.2.1. Subsubsection</H3><p>par6</p><p>par7</p>"
+            +"<H1>3. Section</H1><p>par8</p><p>par9</p><p>par10</p></html>";
+    private final BxContentStructure bxDocStruct = new BxContentStructure();
     
     @Before
     public void setUp() throws JDOMException, IOException, TransformationException, URISyntaxException {
-        bxDocStruct = new BxContentStructure();
-        
         BxLine line1 = constructLine("1. Section");
         BxLine line2 = constructLine("par1");
         BxLine line3 = constructLine("par2");
@@ -99,16 +102,6 @@ public class BxToDocContentStructConverterTest {
             }
             part.setCleanContentTexts(contentTexts);
         }
-        
-        expectedHTML = "<html><H1>1. Section</H1><p>par1</p><p>par2</p>"
-            +"<H1>2. Section</H1><p>par3</p>"
-            +"<H2>2.1. Subsection</H2>"
-            +"<H2>2.2. Subsection</H2><p>par4</p><p>par5</p>"
-            +"<H3>2.2.1. Subsubsection</H3><p>par6</p><p>par7</p>"
-            +"<H1>3. Section</H1><p>par8</p><p>par9</p><p>par10</p></html>";
-        
-        writer = new DocContentToHTMLWriter();
-        converter = new BxContentToDocContentConverter();
     }
 
     @Test

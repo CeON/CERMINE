@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import java.util.Locale;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
@@ -32,7 +33,7 @@ public class ReferencesTitleFeature extends FeatureCalculator<BxZone, BxPage> {
         String[] keywords = {"referen", "biblio"};
 
         for (String keyword : keywords) {
-            if (zone.toText().toLowerCase().startsWith(keyword)) {
+            if (zone.toText().toLowerCase(Locale.ENGLISH).startsWith(keyword)) {
                 return 1;
             }
         }

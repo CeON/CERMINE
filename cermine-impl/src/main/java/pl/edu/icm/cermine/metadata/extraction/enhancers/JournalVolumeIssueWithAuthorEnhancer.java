@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.metadata.extraction.enhancers;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
@@ -71,12 +72,12 @@ public class JournalVolumeIssueWithAuthorEnhancer extends AbstractPatternEnhance
     }
 
     private String removeFirst(String journal, String prefix) {
-        if (journal.toLowerCase().startsWith(prefix.toLowerCase())) {
+        if (journal.toLowerCase(Locale.ENGLISH).startsWith(prefix.toLowerCase(Locale.ENGLISH))) {
             return journal.substring(prefix.length()).trim();
         }
         String[] strs = prefix.split(" ");
         for (String str : strs) {
-            if (journal.toLowerCase().startsWith(str.toLowerCase())) {
+            if (journal.toLowerCase(Locale.ENGLISH).startsWith(str.toLowerCase(Locale.ENGLISH))) {
                 return journal.substring(str.length()).trim();
             }
         }

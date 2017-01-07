@@ -20,6 +20,7 @@ package pl.edu.icm.cermine.bibref.parsing.features;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
@@ -50,6 +51,6 @@ public class IsCommonPublisherWordFeature extends FeatureCalculator<CitationToke
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {
-        return (KEYWORDS.contains(object.getText().toLowerCase())) ? 1 : 0;
+        return (KEYWORDS.contains(object.getText().toLowerCase(Locale.ENGLISH))) ? 1 : 0;
     }
 }

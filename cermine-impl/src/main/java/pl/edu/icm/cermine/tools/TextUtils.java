@@ -89,7 +89,7 @@ public class TextUtils {
         List<String> ret = new ArrayList<String>();
         for (String candidate : roughRet) {
             if (candidate.length() > 1) {
-                ret.add(candidate.toLowerCase());
+                ret.add(candidate.toLowerCase(Locale.ENGLISH));
             }
         }
         return ret;

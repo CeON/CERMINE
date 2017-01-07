@@ -64,7 +64,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
     public void setTypes(Collection<String> types) {
         this.types.clear();
         for (String type : types) {
-            this.types.add(type.toLowerCase());
+            this.types.add(type.toLowerCase(Locale.ENGLISH));
         }
     }
 
@@ -79,7 +79,7 @@ public class TitleMergedWithTypeEnhancer extends AbstractSimpleEnhancer {
             return false;
         } else {
             Iterator<BxLine> iterator = zone.iterator();
-            String firstLine = iterator.next().toText().toLowerCase();
+            String firstLine = iterator.next().toText().toLowerCase(Locale.ENGLISH);
             if (types.contains(firstLine)) {
                 StringBuilder text = new StringBuilder();
                 text.append(iterator.next().toText());

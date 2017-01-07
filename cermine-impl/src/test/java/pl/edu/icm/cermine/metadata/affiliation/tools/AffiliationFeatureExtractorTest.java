@@ -71,7 +71,7 @@ public class AffiliationFeatureExtractorTest {
         }
     }
 
-    private class TokenContainer {
+    static private class TokenContainer {
 
         public List<Token<AffiliationLabel>> tokens;
         public List<List<String>> features;

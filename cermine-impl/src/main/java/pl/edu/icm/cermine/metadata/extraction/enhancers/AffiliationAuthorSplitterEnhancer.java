@@ -23,6 +23,7 @@ import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
@@ -83,7 +84,7 @@ public class AffiliationAuthorSplitterEnhancer extends AbstractSimpleEnhancer {
             boolean wasAff = false;
             BxLine prev = null;
             for (BxLine line : zone) {
-                String lineText = line.toText().toLowerCase();
+                String lineText = line.toText().toLowerCase(Locale.ENGLISH);
                 if (prev != null && 
                         (!prev.getMostPopularFontName().equals(line.getMostPopularFontName())
                         || prev.getHeight() - line.getHeight() > 1)) {

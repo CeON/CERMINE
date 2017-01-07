@@ -228,11 +228,12 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     }
 
     private boolean looksLikeFigure(BxLine line) {
-        return line.toText().toLowerCase().matches("fig\\.? .*") || line.toText().toLowerCase().matches("figure .*");
+        return line.toText().toLowerCase(Locale.ENGLISH).matches("fig\\.? .*") 
+                || line.toText().toLowerCase(Locale.ENGLISH).matches("figure .*");
     }
     
     private boolean looksLikeTable(BxLine line) {
-        return line.toText().toLowerCase().matches("table .*");
+        return line.toText().toLowerCase(Locale.ENGLISH).matches("table .*");
     }
     
     private boolean containsMostlyLetters(BxLine line) {
@@ -246,7 +247,7 @@ public class HeuristicContentHeadersExtractor implements ContentHeadersExtractor
     }
     
     private boolean containsWord(BxLine line) {
-        return line.toText().toLowerCase().matches(".*[a-z][a-z][a-z][a-z].*");
+        return line.toText().toLowerCase(Locale.ENGLISH).matches(".*[a-z][a-z][a-z][a-z].*");
     }
     
     private boolean startsWithLargeNumber(BxLine line) {

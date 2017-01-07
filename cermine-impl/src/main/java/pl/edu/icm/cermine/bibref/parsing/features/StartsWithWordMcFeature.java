@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.bibref.parsing.features;
 
+import java.util.Locale;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
@@ -29,7 +30,7 @@ public class StartsWithWordMcFeature extends FeatureCalculator<CitationToken, Ci
 
     @Override
     public double calculateFeatureValue(CitationToken object, Citation context) {
-        return (object.getText().toLowerCase().startsWith("mc")) ? 1 : 0;
+        return (object.getText().toLowerCase(Locale.ENGLISH).startsWith("mc")) ? 1 : 0;
     }
 
 }

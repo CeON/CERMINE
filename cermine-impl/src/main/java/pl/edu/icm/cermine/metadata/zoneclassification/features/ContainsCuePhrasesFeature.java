@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import java.util.Locale;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
@@ -37,7 +38,7 @@ public class ContainsCuePhrasesFeature extends FeatureCalculator<BxZone, BxPage>
 
     @Override
     public double calculateFeatureValue(BxZone zone, BxPage page) {
-        String zoneText = zone.toText().toLowerCase();
+        String zoneText = zone.toText().toLowerCase(Locale.ENGLISH);
 
         for (String cuePhrase : cuePhrases) {
             if (zoneText.contains(cuePhrase)) {

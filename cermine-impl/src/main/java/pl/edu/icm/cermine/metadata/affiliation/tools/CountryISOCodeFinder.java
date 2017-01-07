@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -48,8 +49,8 @@ public class CountryISOCodeFinder {
             while ((line = in.readLine()) != null) {
                 String countryName = line.substring(0, line.length() - 3);
                 String countryCode = line.substring(line.length() - 2);
-                countryCodes.put(countryName, countryCode.toUpperCase());
-                countryCodes.put(countryName.replaceAll("[^a-zA-Z]", ""), countryCode.toUpperCase());
+                countryCodes.put(countryName, countryCode.toUpperCase(Locale.ENGLISH));
+                countryCodes.put(countryName.replaceAll("[^a-zA-Z]", ""), countryCode.toUpperCase(Locale.ENGLISH));
             }
         } catch (IOException ex) {
             throw new TransformationException(ex);
@@ -70,9 +71,9 @@ public class CountryISOCodeFinder {
 
     public String getCountryISOCode(String country) {
         if (countryCodes.get(country) != null) {
-            return countryCodes.get(country.toLowerCase());
+            return countryCodes.get(country.toLowerCase(Locale.ENGLISH));
         } else {
-            return countryCodes.get(country.toLowerCase().replaceAll("[^a-zA-Z]", ""));
+            return countryCodes.get(country.toLowerCase(Locale.ENGLISH).replaceAll("[^a-zA-Z]", ""));
         }
     }
 

@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.tools.MetadataTools;
@@ -94,7 +95,7 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
         int entryId = entries.size() - 1;
         String tokenString = tokens.get(0).getText();
         if (!caseSensitive) {
-            tokenString = tokenString.toLowerCase();
+            tokenString = tokenString.toLowerCase(Locale.ENGLISH);
         }
 
         if (!dictionary.containsKey(tokenString)) {
@@ -149,7 +150,7 @@ public class KeywordFeatureCalculator<T extends Token<?>> {
             T token = tokens.get(l);
             String tokenString = token.getText();
             if (!caseSensitive) {
-                tokenString = tokenString.toLowerCase();
+                tokenString = tokenString.toLowerCase(Locale.ENGLISH);
             }
             // candidateIds are indices of keyword sequences in the 'entries' list
             // which start with the 'tokenString'.

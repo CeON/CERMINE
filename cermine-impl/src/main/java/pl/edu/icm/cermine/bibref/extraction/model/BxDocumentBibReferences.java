@@ -21,6 +21,7 @@ package pl.edu.icm.cermine.bibref.extraction.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxZone;
@@ -45,7 +46,7 @@ public class BxDocumentBibReferences {
 
     public void addZone(BxZone zone) {
         for (BxLine line : zone) {
-            String normalized = line.toText().toLowerCase().replaceAll("[^a-z]", "");
+            String normalized = line.toText().toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "");
             if (line.toText().length() < MAX_TITLE_LENGTH && zone.getChild(0) == line && 
                     (normalized.startsWith("refer") || normalized.startsWith("biblio")
                     || normalized.startsWith("acknowled") || normalized.startsWith("conclus"))) {

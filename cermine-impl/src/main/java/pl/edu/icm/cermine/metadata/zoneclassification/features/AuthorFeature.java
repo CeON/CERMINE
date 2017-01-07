@@ -19,6 +19,7 @@
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
 import com.google.common.collect.Lists;
+import java.util.Locale;
 import pl.edu.icm.cermine.structure.model.*;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
 
@@ -33,7 +34,7 @@ public class AuthorFeature extends FeatureCalculator<BxZone, BxPage> {
 
         int count = 0;
         for (String keyword : keywords) {
-            if (zone.toText().toLowerCase().startsWith(keyword)) {
+            if (zone.toText().toLowerCase(Locale.ENGLISH).startsWith(keyword)) {
                 count++;
             }
         }

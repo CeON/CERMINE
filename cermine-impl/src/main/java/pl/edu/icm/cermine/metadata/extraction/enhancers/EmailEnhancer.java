@@ -19,6 +19,7 @@
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
 import java.util.EnumSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,7 +79,7 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
         for (DocumentAuthor a : metadata.getAuthors()) {
             String[] names = a.getName().split(" ");
             String fname = StringUtils.join(names, "");
-            if (fname.toLowerCase().contains(email.toLowerCase().replaceFirst("@.*", ""))) {
+            if (fname.toLowerCase(Locale.ENGLISH).contains(email.toLowerCase(Locale.ENGLISH).replaceFirst("@.*", ""))) {
                 if (author == null) {
                     author = a;
                     break;
@@ -87,7 +88,7 @@ public class EmailEnhancer extends AbstractSimpleEnhancer {
                 }
             } else {
                 for (String namePart : names) {
-                    if (namePart.length() > 2 && email.toLowerCase().contains(namePart.toLowerCase())) {
+                    if (namePart.length() > 2 && email.toLowerCase(Locale.ENGLISH).contains(namePart.toLowerCase(Locale.ENGLISH))) {
                         if (author == null) {
                             author = a;
                             break;

@@ -93,28 +93,34 @@ public abstract class AbstractDocumentProcessorTest {
         Map<String, Integer> dirSamplesCount = new HashMap<String, Integer>();
 
         for (String file : zipFiles) {
-            ZipFile zipFile = new ZipFile(new File(AbstractDocumentProcessorTest.class.getResource(file).toURI()));
-            Enumeration entries = zipFile.entries();
-            while (entries.hasMoreElements()) {
-                ZipEntry zipEntry = (ZipEntry) entries.nextElement();
-                if (zipEntry.getName().endsWith(XML_FILENAME_EX)) {
-                    String parent = new File(zipEntry.getName()).getParent();
-                    if (dirSamplesCount.containsKey(parent)) {
-                        dirSamplesCount.put(parent, dirSamplesCount.get(parent) + 1);
-                    } else {
-                        dirSamplesCount.put(parent, 1);
-                    }
+            ZipFile zipFile = null;
+            try {
+                zipFile = new ZipFile(new File(AbstractDocumentProcessorTest.class.getResource(file).toURI()));
+                Enumeration entries = zipFile.entries();
+                while (entries.hasMoreElements()) {
+                    ZipEntry zipEntry = (ZipEntry) entries.nextElement();
+                    if (zipEntry.getName().endsWith(XML_FILENAME_EX)) {
+                        String parent = new File(zipEntry.getName()).getParent();
+                        if (dirSamplesCount.containsKey(parent)) {
+                            dirSamplesCount.put(parent, dirSamplesCount.get(parent) + 1);
+                        } else {
+                            dirSamplesCount.put(parent, 1);
+                        }
 
-                    if (dirSamplesCount.get(parent) >= samplesFrom &&
-                            (samplesTo < 0 || dirSamplesCount.get(parent) <= samplesTo)) {
-                        testReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
-                        expectedReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
+                        if (dirSamplesCount.get(parent) >= samplesFrom &&
+                                (samplesTo < 0 || dirSamplesCount.get(parent) <= samplesTo)) {
+                            testReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
+                            expectedReaders.add(new InputStreamReader(zipFile.getInputStream(zipEntry), "UTF-8"));
+                        }
                     }
+                }
+                testCollection(testReaders, expectedReaders, percentage);
+            } finally {
+                if (zipFile != null) {
+                    zipFile.close();
                 }
             }
         }
-
-        testCollection(testReaders, expectedReaders, percentage);
     }
 
     private void testCollection(List<Reader> testReaders, List<Reader> expectedReaders, double percentage)

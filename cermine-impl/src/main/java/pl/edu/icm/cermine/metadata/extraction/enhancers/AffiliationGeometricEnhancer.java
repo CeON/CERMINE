@@ -53,7 +53,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
     public void setHeaders(Collection<String> headers) {
         this.headers.clear();
         for (String header : headers) {
-            this.headers.add(header.toLowerCase());
+            this.headers.add(header.toLowerCase(Locale.ENGLISH));
         }
     }
 
@@ -80,7 +80,7 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                 for (BxLine line : zone) {
                     if (firstLine) {
                         firstLine = false;
-                        if (headers.contains(line.toText().toLowerCase().replaceAll("[^0-9a-zA-Z]", ""))) {
+                        if (headers.contains(line.toText().toLowerCase(Locale.ENGLISH).replaceAll("[^0-9a-zA-Z]", ""))) {
                             continue;
                         }
                     }

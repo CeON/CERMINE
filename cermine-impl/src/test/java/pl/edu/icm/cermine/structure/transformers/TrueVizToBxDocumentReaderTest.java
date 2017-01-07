@@ -76,14 +76,27 @@ public class TrueVizToBxDocumentReaderTest {
 
     private BxDocument getDocumentFromZipFile(String zipFilename, String filename) throws TransformationException, IOException, URISyntaxException {
         URL url = TrueVizToBxDocumentReaderTest.class.getResource(PATH + zipFilename);
-        ZipFile zipFile = new ZipFile(new File(url.toURI()));
-        InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
-        InputStreamReader isr = new InputStreamReader(is, "UTF-8");
-
-        TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        BxDocument doc = new BxDocument().setPages(reader.read(isr));
-        isr.close();
-        return doc;
+        ZipFile zipFile = null;
+        InputStream is = null;
+        InputStreamReader isr = null;
+        try {
+            zipFile = new ZipFile(new File(url.toURI()));
+            is = zipFile.getInputStream(zipFile.getEntry(filename));
+            isr = new InputStreamReader(is, "UTF-8");
+            TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
+            BxDocument doc = new BxDocument().setPages(reader.read(isr));
+            return doc;
+        } finally {
+            if (zipFile != null) {
+                zipFile.close();
+            }
+            if (is != null) {
+                is.close();
+            }
+            if (isr != null) {
+                isr.close();
+            }
+        }
     }
 
     @Test

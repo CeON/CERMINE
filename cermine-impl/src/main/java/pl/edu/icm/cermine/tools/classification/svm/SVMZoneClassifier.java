@@ -56,23 +56,29 @@ public class SVMZoneClassifier extends SVMClassifier<BxZone, BxPage, BxZoneLabel
 
     public static List<TrainingSample<BxZoneLabel>> loadProblem(File file, FeatureVectorBuilder<BxZone, BxPage> fvb) throws IOException {
         List<TrainingSample<BxZoneLabel>> ret = new ArrayList<TrainingSample<BxZoneLabel>>();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-        String line;
-        final Pattern partsPattern = Pattern.compile(" ");
-        final Pattern twopartPattern = Pattern.compile(":");
-        while ((line = br.readLine()) != null) {
-            String[] parts = partsPattern.split(line);
-            BxZoneLabel label = BxZoneLabel.values()[Integer.parseInt(parts[0])];
-            FeatureVector fv = new FeatureVector();
-            List<String> featureNames = fvb.getFeatureNames();
-            for (int partIdx = 1; partIdx < parts.length; ++partIdx) {
-                String[] subparts = twopartPattern.split(parts[partIdx]);
-                fv.addFeature(featureNames.get(partIdx - 1), Double.parseDouble(subparts[1]));
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            String line;
+            final Pattern partsPattern = Pattern.compile(" ");
+            final Pattern twopartPattern = Pattern.compile(":");
+            while ((line = br.readLine()) != null) {
+                String[] parts = partsPattern.split(line);
+                BxZoneLabel label = BxZoneLabel.values()[Integer.parseInt(parts[0])];
+                FeatureVector fv = new FeatureVector();
+                List<String> featureNames = fvb.getFeatureNames();
+                for (int partIdx = 1; partIdx < parts.length; ++partIdx) {
+                    String[] subparts = twopartPattern.split(parts[partIdx]);
+                    fv.addFeature(featureNames.get(partIdx - 1), Double.parseDouble(subparts[1]));
+                }
+                TrainingSample<BxZoneLabel> sample = new TrainingSample<BxZoneLabel>(fv, label);
+                ret.add(sample);
             }
-            TrainingSample<BxZoneLabel> sample = new TrainingSample<BxZoneLabel>(fv, label);
-            ret.add(sample);
+        } finally {
+            if (br != null) {
+                br.close();
+            }
         }
-        br.close();
         return ret;
     }
 }

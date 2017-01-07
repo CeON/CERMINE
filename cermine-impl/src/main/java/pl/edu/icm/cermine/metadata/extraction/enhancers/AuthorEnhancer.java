@@ -22,6 +22,7 @@ import com.google.common.base.CharMatcher;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,7 +74,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                 List<String> refs = new ArrayList<String>();
                 boolean auth = false;
 
-                if (text.toLowerCase().contains("vol") && text.toLowerCase().contains("no")) {
+                if (text.toLowerCase(Locale.ENGLISH).contains("vol") && text.toLowerCase(Locale.ENGLISH).contains("no")) {
                     continue;
                 }
 
@@ -159,7 +160,7 @@ public class AuthorEnhancer extends AbstractSimpleEnhancer {
                         }
                     }
                 }
-                if (!author.isEmpty() && !author.toLowerCase().endsWith("introduction")) {
+                if (!author.isEmpty() && !author.toLowerCase(Locale.ENGLISH).endsWith("introduction")) {
                     author = CharMatcher.WHITESPACE.trimFrom(author);
                     if (!author.equalsIgnoreCase("article info") && author.matches(".*[a-zA-Z].*")
                             && author.length() > 4 && author.length() < 50) {

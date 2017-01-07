@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.zoneclassification.features;
 
+import java.util.Locale;
 import pl.edu.icm.cermine.structure.model.BxPage;
 import pl.edu.icm.cermine.structure.model.BxZone;
 import pl.edu.icm.cermine.tools.classification.general.FeatureCalculator;
@@ -40,12 +41,12 @@ public class BibinfoFeature extends FeatureCalculator<BxZone, BxPage> {
         
         int count = 0;
         for (String keyword : keywords) {
-            if (zone.toText().toLowerCase().contains(keyword)) {
+            if (zone.toText().toLowerCase(Locale.ENGLISH).contains(keyword)) {
                 count += 2;
             }
         }
         for (String keyword : otherKeywords) {
-            if (count > 0 && zone.toText().toLowerCase().contains(keyword)) {
+            if (count > 0 && zone.toText().toLowerCase(Locale.ENGLISH).contains(keyword)) {
                 count--;
             }
         }

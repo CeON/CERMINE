@@ -661,7 +661,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             return Double.compare(o1.getX(), o2.getX());
         }
 
-        private static ComponentXComparator instance = new ComponentXComparator();
+        private static final ComponentXComparator instance = new ComponentXComparator();
 
         public static ComponentXComparator getInstance() {
             return instance;
@@ -683,7 +683,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
             return Double.compare(o1.getDistance(), o2.getDistance());
         }
 
-        private static NeighborDistanceComparator instance = new NeighborDistanceComparator();
+        private static final NeighborDistanceComparator instance = new NeighborDistanceComparator();
 
         public static NeighborDistanceComparator getInstance() {
             return instance;
@@ -703,7 +703,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
 
         private final double height;
 
-        private List<Component> components;
+        private final List<Component> components;
 
         public ComponentLine(List<Component> components, double orientation) {
             this.components = components;
@@ -805,7 +805,7 @@ public class DocstrumSegmenter implements DocumentSegmenter {
                     double dist = component.getChunk().getBounds().getX() -
                             previousComponent.getChunk().getBounds().getX() -
                             previousComponent.getChunk().getBounds().getWidth();
-                    if(dist > wordSpacing) {
+                    if (dist > wordSpacing) {
                         BxBoundsBuilder.setBounds(word);
                         line.addWord(word);
                         word = new BxWord();

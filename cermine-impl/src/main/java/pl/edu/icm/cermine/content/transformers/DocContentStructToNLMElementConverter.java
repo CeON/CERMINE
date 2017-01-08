@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
 import pl.edu.icm.cermine.content.citations.CitationPosition;
 import pl.edu.icm.cermine.content.citations.ContentStructureCitationPositions;
@@ -122,17 +123,16 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
             CitationPosition position = positions.get(posIndex).getSecond();
             int start = position.getStartRefPosition();
             int end = position.getEndRefPosition();
-            StringBuilder citationIndex = new StringBuilder();
-            citationIndex.append(positions.get(posIndex).getFirst()+1);
+            List<Integer> citationIndices = new ArrayList<Integer>();
+            citationIndices.add(positions.get(posIndex).getFirst()+1);
             while (++posIndex < positions.size() && positions.get(posIndex).getSecond().getStartRefPosition() == start) {
-                citationIndex.append(" ");
-                citationIndex.append(positions.get(posIndex).getFirst()+1);
-                posIndex++;
+                citationIndices.add(positions.get(posIndex).getFirst()+1);
             }
             element.addContent(XMLTools.removeInvalidXMLChars(paragraph.substring(lastParIndex, start)));
             Element ref = new Element("xref");
             ref.setAttribute("ref-type", "bibr");
-            ref.setAttribute("rid", citationIndex.toString());
+            Collections.sort(citationIndices);
+            ref.setAttribute("rid", StringUtils.join(citationIndices, " "));
             ref.setText(XMLTools.removeInvalidXMLChars(paragraph.substring(start, end)));
             element.addContent(ref);
             lastParIndex = end;

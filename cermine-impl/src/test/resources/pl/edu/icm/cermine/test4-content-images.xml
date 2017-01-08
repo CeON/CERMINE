@@ -77,20 +77,22 @@
 genome diversity with recent measurements suggesting that
 greater than 90% of genes undergo alternative splicing
 [
-        <xref ref-type="bibr" rid="3 2">1-3</xref>
+        <xref ref-type="bibr" rid="1 2 3">1-3</xref>
         ]. The different protein isoforms generated through
 alternative splicing can alter function or cellular
 localization, or it may provide a mechanism to regulate the levels
 of the protein by leading to non-productive splicing and
 RNA turnover (reviewed in [
-        <xref ref-type="bibr" rid="5 4">4,5</xref>
+        <xref ref-type="bibr" rid="4 5">4,5</xref>
         ]). Regulated alternative
 splicing is dependent upon the alternative splicing factors
 present in specific cell types or at different developmental
 stages. Many of these alternative splicing factors appear to
 regulate hundreds of exons and they function by
 recognizing specific RNA sequence elements within or near the
-regulated exons (reviewed in [6]).
+regulated exons (reviewed in [
+        <xref ref-type="bibr" rid="6">6</xref>
+        ]).
       </p>
       <p>
         Muscleblind-like 1 (MBNL1) is an alternative splicing
@@ -107,21 +109,25 @@ acid binding protein (CNBP) gene [
 CCTG repeats, when transcribed, form CUG/CCUG
 RNA stem loops that bind and sequester MBNL1 into
 nuclear foci resulting in a loss of normal MBNL1
-function in the cell (reviewed in [9]). In studying the
+function in the cell (reviewed in [
+        <xref ref-type="bibr" rid="9">9</xref>
+        ]). In studying the
 molecular basis of DM and the role MBNL1 plays, it was
 discovered that MBNL1 regulates the alternative splicing
 of a host of developmentally regulated transcripts
 [
-        <xref ref-type="bibr" rid="13 12 11">10-13</xref>
+        <xref ref-type="bibr" rid="10 11 12 13">10-13</xref>
         ]. In the cells of DM patients, adult splicing
 patterns revert back to embryonic splicing patterns and
 these incorrect splicing events are thought to cause
-many of the symptoms of the disease (reviewed in [9]).
+many of the symptoms of the disease (reviewed in [
+        <xref ref-type="bibr" rid="9">9</xref>
+        ]).
       </p>
       <p>
         Several MBNL1 binding sites have been identified, and
 a few of these have been characterized [
-        <xref ref-type="bibr" rid="10 17 15">10,14-17</xref>
+        <xref ref-type="bibr" rid="10 14 15 16 17">10,14-17</xref>
         ].
 Complicating the analysis of MBNL1 binding to these sites
 and the CUG and CCUG repeats has been
@@ -134,12 +140,14 @@ regulating splicing [
         <xref ref-type="bibr" rid="18">18</xref>
         ]. The ZnFs of MBNL1 fold into
 two compact domains ZnFs1/2 and ZnFs3/4 [
-        <xref ref-type="bibr" rid="20 19">19,20</xref>
+        <xref ref-type="bibr" rid="19 20">19,20</xref>
         ]. A
 crystal structure of ZnFs3/4 in complex with a 6 mer
 RNA (CGCUGU) revealed that these ZnFs bind
 singlestranded RNA through specific recognition of the
-Watson-Crick face of the GC dinucleotide [20]. Each ZnF (3
+Watson-Crick face of the GC dinucleotide [
+        <xref ref-type="bibr" rid="20">20</xref>
+        ]. Each ZnF (3
 and 4) interacts with RNA in a similar manner and the
 structure of the ZnFs domain in complex with RNA
 lead Teplova and Patel to propose that MBNL1 binds
@@ -305,7 +313,7 @@ only two YGCY motifs suggesting that a mode in which
 MBNL1 uses only two of its ZnFs to bind YGCY motifs
 could be a common type of interaction for MBNL1
 [
-          <xref ref-type="bibr" rid="10 15 14">10,14-16</xref>
+          <xref ref-type="bibr" rid="10 14 15 16">10,14-16</xref>
           ].
         </p>
         <p>

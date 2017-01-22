@@ -36,6 +36,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+import org.jdom.DocType;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
@@ -816,7 +817,10 @@ public class ContentExtractor {
                         jats = extractor.getContentAsNLM(null);
                     }
                     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8");
+                    DocType dt = new DocType("article", "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN", "JATS-archivearticle1.dtd");
+                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(dt), "UTF-8");
+                    FileUtils.writeStringToFile(outputs.get("jats"), "\n", "UTF-8", true);
+                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8", true);
                 }
                 
                 if (outputs.containsKey("trueviz")) {

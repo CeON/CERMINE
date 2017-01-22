@@ -63,11 +63,11 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
     private List<Element> toHTML(ContentStructure dcs, 
             ContentStructureCitationPositions positions, List<BxImage> images) {
         List<Element> elements = new ArrayList<Element>();
-        for (DocumentSection part : dcs.getSections()) {
-            elements.addAll(toHTML(part, positions));
-        }
         for (BxImage image : images) {
             elements.add(toHTML(image));
+        }
+        for (DocumentSection part : dcs.getSections()) {
+            elements.addAll(toHTML(part, positions));
         }
         return elements;
     }
@@ -131,8 +131,12 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
             element.addContent(XMLTools.removeInvalidXMLChars(paragraph.substring(lastParIndex, start)));
             Element ref = new Element("xref");
             ref.setAttribute("ref-type", "bibr");
-            Collections.sort(citationIndices);
-            ref.setAttribute("rid", StringUtils.join(citationIndices, " "));
+            List<String> rids = new ArrayList<String>();
+            for (Integer ind : citationIndices) {
+                rids.add("ref"+ind);
+            }
+            Collections.sort(rids);
+            ref.setAttribute("rid", StringUtils.join(rids, " "));
             ref.setText(XMLTools.removeInvalidXMLChars(paragraph.substring(start, end)));
             element.addContent(ref);
             lastParIndex = end;
@@ -154,7 +158,7 @@ public class DocContentStructToNLMElementConverter implements ModelToModelConver
             prefix += "-";
         }
         String id = prefix + index;
-        element.setAttribute("id", id);
+        element.setAttribute("id", "sec-" + id);
         List<Element> sections = element.getChildren("sec");
         int i = 1;
         for (Element section : sections) {

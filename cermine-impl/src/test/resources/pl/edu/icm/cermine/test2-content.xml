@@ -1,4 +1,4 @@
-<article>
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
     <journal-meta>
       <journal-title-group>
@@ -9,33 +9,33 @@
       </publisher>
     </journal-meta>
     <article-meta>
+      <article-id pub-id-type="hindawi-id">157939</article-id>
+      <article-id pub-id-type="doi">10.1155/2010/157939</article-id>
       <title-group>
         <article-title>Patient Experiences of Structured Heart Failure Programmes</article-title>
       </title-group>
-      <article-id pub-id-type="hindawi-id">157939</article-id>
-      <article-id pub-id-type="doi">10.1155/2010/157939</article-id>
       <contrib-group>
         <contrib contrib-type="author">
           <string-name>Nuala E. Tully</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Karen M. Morgan</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Helen M. Burke</string-name>
           <email>helenburke1@rcsi.ie</email>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Hannah M. McGee</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
         <contrib contrib-type="editor">
           <string-name>K. S. Sunnerhagen</string-name>
         </contrib>
-        <aff id="0">
+        <aff id="aff0">
           <label>0</label>
           <institution>Division of Population Health Sciences, Department of Psychology, Royal College of Surgeons in Ireland</institution>
           ,
@@ -44,13 +44,10 @@
           <country country="IE">Ireland</country>
         </aff>
       </contrib-group>
-      <abstract>
-        <p>Objectives. Patient experiences of structured heart failure rehabilitation and their views on the important components of heart failure services were examined. Methods. Focus groups were conducted with fifteen participants (men, n = 12) attending one of two heart failure rehabilitation programmes. Sessions were guided by a semistructured interview schedule covering participants' experiences of the programme, maintenance, and GP role. Focus group transcripts were analysed qualitatively. Results. Participants indicated that rehabilitation programmes substantially met their needs. Supervised exercise sessions increased confidence to resume physical activity, while peer-group interaction and supportive medical staff improved morale. However, once the programme ended, some participants' self-care motivation lapsed, especially maintenance of an exercise routine. Patients doubted their GPs' ability to help them manage their condition. Conclusion. Structured rehabilitation programmes are effective in enabling patients to develop lifestyle skills to live with heart failure. However, postrehabilitation maintenance interventions are necessary to sustain patients' confidence in disease self-management.</p>
-      </abstract>
-      <volume>2010</volume>
       <pub-date>
         <year>2010</year>
       </pub-date>
+      <volume>2010</volume>
       <history>
         <date date-type="accepted">
           <day>25</day>
@@ -63,21 +60,24 @@
           <year>2010</year>
         </date>
       </history>
+      <abstract>
+        <p>Objectives. Patient experiences of structured heart failure rehabilitation and their views on the important components of heart failure services were examined. Methods. Focus groups were conducted with fifteen participants (men, n = 12) attending one of two heart failure rehabilitation programmes. Sessions were guided by a semistructured interview schedule covering participants' experiences of the programme, maintenance, and GP role. Focus group transcripts were analysed qualitatively. Results. Participants indicated that rehabilitation programmes substantially met their needs. Supervised exercise sessions increased confidence to resume physical activity, while peer-group interaction and supportive medical staff improved morale. However, once the programme ended, some participants' self-care motivation lapsed, especially maintenance of an exercise routine. Patients doubted their GPs' ability to help them manage their condition. Conclusion. Structured rehabilitation programmes are effective in enabling patients to develop lifestyle skills to live with heart failure. However, postrehabilitation maintenance interventions are necessary to sustain patients' confidence in disease self-management.</p>
+      </abstract>
     </article-meta>
   </front>
   <body>
-    <sec id="1">
+    <sec id="sec-1">
       <title>1. Introduction</title>
       <p>
         The combined effects of an ageing population and advances
 in treatments for acute myocardial infarction have resulted
 in heart failure becoming what is known as a silent epidemic
 in industrialised nations [
-        <xref ref-type="bibr" rid="1">1</xref>
+        <xref ref-type="bibr" rid="ref1">1</xref>
         ]. Heart failure is associated
 with severe symptom burden, functional limitation, and
 premature death [
-        <xref ref-type="bibr" rid="2">2</xref>
+        <xref ref-type="bibr" rid="ref2">2</xref>
         ]. Treatment regimens are complex,
 and there are many barriers to adherence. Unsurprisingly,
 patients often report poor quality of life, high levels of
@@ -94,7 +94,7 @@ diagnosis, essential in preventing disease progression and
 reducing hospitalisation. A further complication is that many
 patients are never told they have heart failure due to clinician
 reluctance to use the term [
-        <xref ref-type="bibr" rid="3">3</xref>
+        <xref ref-type="bibr" rid="ref3">3</xref>
         ].
       </p>
       <p>
@@ -102,7 +102,7 @@ reluctance to use the term [
 secondary care services. The direct medical costs of heart
 failure treatment constitute from 1% to 2% of total
 healthcare expenditures in developed countries [
-        <xref ref-type="bibr" rid="4">4</xref>
+        <xref ref-type="bibr" rid="ref4">4</xref>
         ]. This
 proportion exceeds that used by HIV or cancer. A significant part
 of this cost is due to high hospital readmission rates. While
@@ -110,7 +110,7 @@ hospitalisations for most other cardiovascular conditions
 have remained static or decreased over the past number
 of decades, hospitalisations for heart failure have increased
 threefold [
-        <xref ref-type="bibr" rid="5">5</xref>
+        <xref ref-type="bibr" rid="ref5">5</xref>
         ].
       </p>
       <p>
@@ -131,12 +131,12 @@ their diagnosis of heart failure. Comprehensive programmes
 combining exercise and education have been found to
 improve physical status and psychosocial well-being, as
 well as reducing hospital readmissions [
-        <xref ref-type="bibr" rid="6">6</xref>
+        <xref ref-type="bibr" rid="ref6">6</xref>
         ]. Developing an
 in-depth understanding of the disease in patients is a
 fundamental aspect of therapy and essential for adherence to
 self-management practices [
-        <xref ref-type="bibr" rid="7">7</xref>
+        <xref ref-type="bibr" rid="ref7">7</xref>
         ].
       </p>
       <p>Neglected in the literature around the subject of heart
@@ -146,7 +146,7 @@ patients’ experiences of these programmes, including their
 views on the important components of heart failure services,
 and to examine their quality of life after rehabilitation.</p>
     </sec>
-    <sec id="2">
+    <sec id="sec-2">
       <title>2. Methods</title>
       <p>
         While much quantitative research seeks to draw conclusions
@@ -154,7 +154,7 @@ that can be generalised, qualitative research aims to provide
 an insight into the meaning of the everyday experiences of
 the participants. To explore the experiences of people living
 with heart failure, focus groups [
-        <xref ref-type="bibr" rid="8">8</xref>
+        <xref ref-type="bibr" rid="ref8">8</xref>
         ] were conducted with
 fifteen participants attending one of two group heart failure
 rehabilitation programmes. Each programme was based in
@@ -199,7 +199,7 @@ permission.</p>
         The focus groups were transcribed verbatim and the
 resulting data was qualitatively analysed using content
 analysis [
-        <xref ref-type="bibr" rid="9">9</xref>
+        <xref ref-type="bibr" rid="ref9">9</xref>
         ]. This generated a more concise set of emergent
 codes. These codes were further examined, and this led the
 researcher to identify the major themes that emerged from
@@ -209,7 +209,7 @@ approved by the Research Ethics Committee of the Royal
 College of Surgeons in Ireland.
       </p>
     </sec>
-    <sec id="3">
+    <sec id="sec-3">
       <title>3. Results</title>
       <p>Themes identified from the focus group discussions included
 improvements in confidence and morale, difficulties in
@@ -218,7 +218,7 @@ with quality of care in other healthcare settings, coping with
 the medication regime, and attitudes to the term “heart
 failure”.</p>
     </sec>
-    <sec id="4">
+    <sec id="sec-4">
       <title>4. Experience of Programmes</title>
       <p>The programmes bolstered the confidence of participants
 by providing a benchmark of their health status. Many
@@ -228,7 +228,7 @@ consequences if they exceeded this unknown threshold.
 Participants repeatedly mentioned how the monitoring of
 their heart rate by the medical staff during the exercise
 sessions provided a sense of security.</p>
-      <sec id="4-1">
+      <sec id="sec-4-1">
         <title>I thought that maybe this thing will creep up</title>
         <p>behind me some day, but having done the course
 here, you’d be on a monitor and you saw your
@@ -236,24 +236,24 @@ reactions to, you knew what you could do and
 what you couldn’t do . . .. That settled me down
 and I was quite happy then. (Centre A, R4).</p>
       </sec>
-      <sec id="4-2">
+      <sec id="sec-4-2">
         <title>It was a great reassurance for me, anyway, personally, a great confidence booster. And I’m not afraid to do things now. And I was certainly afraid before I took the course. (Centre A, R1).</title>
         <p>The programme of exercise was a crucial kick-start to
 becoming functional and mobile once more.</p>
       </sec>
-      <sec id="4-3">
+      <sec id="sec-4-3">
         <title>When I came here first I could hardly lift a cup of</title>
         <p>water and, sure, I could pick two big buckets now
 and go where I like with them. I’d be very fit now,</p>
       </sec>
-      <sec id="4-4">
+      <sec id="sec-4-4">
         <title>I couldn’t be much fitter. (Centre A, R7).</title>
         <p>The patient-centred approach and the focus on their
 needs improved participants’ morale and counteracted the
 sense of isolation and redundancy that often affects heart
 failure patients.</p>
       </sec>
-      <sec id="4-5">
+      <sec id="sec-4-5">
         <title>You got a real feeling from the staff that they’d do</title>
         <p>anything they could for you. It was really about us
 and they’d go above and beyond to help you. They
@@ -262,7 +262,7 @@ are great, the nurses (Centre B, R4).</p>
 had the same condition, which also lessened feelings of
 loneliness and anxiety.</p>
       </sec>
-      <sec id="4-6">
+      <sec id="sec-4-6">
         <title>And then when you see other people and start talking about it, it doesn’t seem nearly as bad. (Centre A, R5).</title>
         <p>Many of the participants had felt ill-informed about
 their condition prior to attending the programme. They
@@ -272,7 +272,7 @@ generally. Information sessions addressed these knowledge
 gaps, helping them to understand their condition and
 manage it more successfully.</p>
       </sec>
-      <sec id="4-7">
+      <sec id="sec-4-7">
         <title>Well, when I left hospital I was given a leaflet to</title>
         <p>read and went through them in a scattered sort of
 a way. It was only when I came down here that
@@ -284,7 +284,7 @@ the amount of paper material, although this feeling was not
 shared by others.</p>
       </sec>
     </sec>
-    <sec id="5">
+    <sec id="sec-5">
       <title>5. Maintenance</title>
       <p>A number of participants had felt somewhat directionless
 when the programme ended. Once they became responsible
@@ -295,12 +295,12 @@ exercise regimen, in particular the participants who had
 symptoms of fatigue and breathlessness. Lack of equipment
 was partly to blame, but the absence of the discipline of the
 programme was also a factor.</p>
-      <sec id="5-1">
+      <sec id="sec-5-1">
         <title>I found I missed, the first week I slacked on</title>
         <p>everything because I had no place, I had no eleven
 o’clock to be up here and two o’clock to be up here.</p>
       </sec>
-      <sec id="5-2">
+      <sec id="sec-5-2">
         <title>I kinda just went into a bit of a trough. (Centre A, R1).</title>
         <p>The participants were not unanimous on this point,
 however, and some seemed to have coped better with
@@ -308,11 +308,11 @@ self-maintenance independently of the programme. These
 participants continued to exercise and did not feel the need
 for external sources of motivation.</p>
       </sec>
-      <sec id="5-3">
+      <sec id="sec-5-3">
         <title>You have to get out and do the bit of walking or whatever, if you don’t do it one day it’s always harder then to do it the next. (Centre B, R2).</title>
       </sec>
     </sec>
-    <sec id="6">
+    <sec id="sec-6">
       <title>6. Improvements</title>
       <p>Neither group had any criticism of the programmes,
 although in both centres participants suggested that facilities
@@ -330,7 +330,7 @@ top form”, didn’t feel a need for a refresher programme on
 the basis that it would demand a time commitment, and that
 he didn’t see what extra benefit it would offer.</p>
     </sec>
-    <sec id="7">
+    <sec id="sec-7">
       <title>7. GP Services</title>
       <p>Participants seemed disillusioned with their GPs, which
 contrasted markedly with the enthusiasm they expressed for
@@ -340,7 +340,7 @@ and expressed little faith in their GP’s ability to recognise
 and effectively meet their needs. One participant spoke of
 his GP’s unwillingness to take responsibility in managing his
 condition:</p>
-      <sec id="7-1">
+      <sec id="sec-7-1">
         <title>I got blood tests done . . . with my GP, and he got</title>
         <p>the results back and he goes . . ., “. . . I’m not taking
 responsibility for you, back to [rehabilitation
@@ -352,7 +352,7 @@ specifically heart failure), many felt that GPs treated them in a
 summary manner, dispensing prescriptions without investigating
 the problem:</p>
       </sec>
-      <sec id="7-2">
+      <sec id="sec-7-2">
         <title>You go with a pain or an ache to them and they’ve</title>
         <p>no test much for it, ah sure, give you an aspirin,
 give you Difene, give you something else for a week
@@ -368,7 +368,7 @@ to hospital as a matter of course. If they needed advice,
 participants were much more likely to contact the hospital
 that was treating them or the cardiac unit.</p>
       </sec>
-      <sec id="7-3">
+      <sec id="sec-7-3">
         <title>But if you have a problem at home, something</title>
         <p>went wrong with you, like what happened to me
 once, the last place you’d be going to would be to
@@ -381,11 +381,11 @@ space nor the facilities to accommodate a programme. They
 also felt more secure doing the programme within a hospital
 setting:</p>
       </sec>
-      <sec id="7-4">
+      <sec id="sec-7-4">
         <title>They know me here, they know what I’ve been through and what I need. He (the GP) doesn’t know the half of it (Centre B, R7).</title>
       </sec>
     </sec>
-    <sec id="8">
+    <sec id="sec-8">
       <title>8. Quality of Care</title>
       <p>During the discussion, several participants expressed
 frustration at the lack of continuity in their care—for example, the
@@ -403,14 +403,14 @@ the day, it was clear that the patients in both groups and
 nursing staff with whom they worked closely shared a very
 good rapport.</p>
     </sec>
-    <sec id="9">
+    <sec id="sec-9">
       <title>9. Labelling the Condition “Heart Failure”</title>
       <p>One participant expressed his aversion to the term “heart
 failure”. The term had a discouraging effect when he was
 first diagnosed, and he wished for an alternative. Two other
 participants disagreed, however, and believed it had made no
 difference to their response to their diagnosis:</p>
-      <sec id="9-1">
+      <sec id="sec-9-1">
         <title>It’s defeatist, we’re failed before we start . . . the</title>
         <p>nurse came to me and I in the bed and I wasn’t
 well at all . . . and she gave me these leaflets, Living
@@ -418,7 +418,7 @@ with Heart Failure, and I said, “That’s some
 motivation, living with heart failure”. (Centre A,
 R1).</p>
       </sec>
-      <sec id="9-2">
+      <sec id="sec-9-2">
         <title>You still have the condition, you can call it what you like, you still have the condition. To me, it doesn’t matter. (Centre A, R3).</title>
         <p>10. Medication
 In both hospitals a pharmacist is available as part of the
@@ -434,7 +434,7 @@ regimens and the slowness of new medications to take effect.
 Participants highlighted the need to be organised and to
 maintain a routine with regard to taking their medication:</p>
       </sec>
-      <sec id="9-3">
+      <sec id="sec-9-3">
         <title>You just get used to it, you’ve a certain number</title>
         <p>of tablets and you just have to take them. That’s
 the way it goes. I find the containers great [pill
@@ -445,7 +445,7 @@ when you’ve already taken it. (Centre B, R5).</p>
 different medications he needed to take, their purpose, and
 their side-effects as described in the medication leaflets.</p>
       </sec>
-      <sec id="9-4">
+      <sec id="sec-9-4">
         <title>How, God in heaven, could you be right with all</title>
         <p>them yokes, and take the leaflet out of the packet
 and read all the side effects, you’d go crazy. So what
@@ -480,11 +480,11 @@ they had had difficulty in assimilating it.</p>
 considerably the morale of participants in this study. A diagnosis
 of heart failure causes fear and worry in patients, and
 many experience anxiety and depression [
-          <xref ref-type="bibr" rid="10">10</xref>
+          <xref ref-type="bibr" rid="ref10">10</xref>
           ]; however,
 maintaining morale is important to succeed in adhering
 to a self-care regimen [
-          <xref ref-type="bibr" rid="11">11</xref>
+          <xref ref-type="bibr" rid="ref11">11</xref>
           ]. Interaction with a peer group,
 all of whom had the same condition, enabled participants
 to share experiences, counteracting feelings of isolation.
@@ -500,7 +500,7 @@ their self-esteem.
           Many heart failure patients do not undertake the
 recommended self-care activities, and noncompliance with
 medication regimens is common [
-          <xref ref-type="bibr" rid="12">12</xref>
+          <xref ref-type="bibr" rid="ref12">12</xref>
           ]. Participants in the current
 study, however, indicated that they took their medication
 as prescribed. This level of compliance may be due to
@@ -519,13 +519,13 @@ dependent upon the equipment and structured routine of
 the formal rehabilitation setting. Regular, moderate daily
 activity is recommended for all patients with heart failure
 [
-          <xref ref-type="bibr" rid="13">13</xref>
+          <xref ref-type="bibr" rid="ref13">13</xref>
           ] and is required to sustain functional improvements
 made when exercise is initiated in heart failure rehabilitation
 [
-          <xref ref-type="bibr" rid="14">14</xref>
+          <xref ref-type="bibr" rid="ref14">14</xref>
           ]. Corvera-Tindel et al. [
-          <xref ref-type="bibr" rid="15">15</xref>
+          <xref ref-type="bibr" rid="ref15">15</xref>
           ] examined the predictors of
 exercise nonadherence in heart failure patients and found
 that patients with longer heart failure duration and increased
@@ -538,9 +538,9 @@ Home-based programmes using cost-effective methods that
 do not require specialist equipment, including walking,
 have shown some promise amongst heart failure patients
 [
-          <xref ref-type="bibr" rid="16">16</xref>
+          <xref ref-type="bibr" rid="ref16">16</xref>
           ]. Evangelista et al. [
-          <xref ref-type="bibr" rid="17">17</xref>
+          <xref ref-type="bibr" rid="ref17">17</xref>
           ] found that through
 homebased exercise training with advanced heart failure patients,
 adherence to exercise was associated with more favourable
@@ -610,7 +610,7 @@ the norm for the much wider group of heart failure patients
 who exist now and will grow in numbers into the future.</p>
       </sec>
     </sec>
-    <sec id="10">
+    <sec id="sec-10">
       <title>Acknowledgments</title>
       <p>This research was funded by the Health Services Executive.
 The authors gratefully acknowledge the assistance of Dr. Ken
@@ -621,7 +621,7 @@ facilitating the focus group sessions.</p>
   </body>
   <back>
     <ref-list>
-      <ref id="1">
+      <ref id="ref1">
         <mixed-citation>
           [1]
           <string-name>
@@ -645,7 +645,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="2">
+      <ref id="ref2">
         <mixed-citation>
           [2]
           <string-name>
@@ -682,7 +682,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="3">
+      <ref id="ref3">
         <mixed-citation>
           [3]
           <string-name>
@@ -731,7 +731,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="4">
+      <ref id="ref4">
         <mixed-citation>
           [4]
           <string-name>
@@ -768,7 +768,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="5">
+      <ref id="ref5">
         <mixed-citation>
           [5]
           <string-name>
@@ -802,7 +802,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="6">
+      <ref id="ref6">
         <mixed-citation>
           [6]
           <string-name>
@@ -835,7 +835,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="7">
+      <ref id="ref7">
         <mixed-citation>
           [7]
           <string-name>
@@ -868,7 +868,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="8">
+      <ref id="ref8">
         <mixed-citation>
           <article-title>[8] Office of Quality Improvement, Focus Groups: A Guide to Learning the Needs of Those We Serve</article-title>
           , University of WisconsinMadison,
@@ -876,7 +876,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="9">
+      <ref id="ref9">
         <mixed-citation>
           [9]
           <string-name>
@@ -896,7 +896,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="10">
+      <ref id="ref10">
         <mixed-citation>
           [10]
           <string-name>
@@ -926,7 +926,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="11">
+      <ref id="ref11">
         <mixed-citation>
           [11]
           <string-name>
@@ -955,7 +955,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="12">
+      <ref id="ref12">
         <mixed-citation>
           [12]
           <string-name>
@@ -989,7 +989,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="13">
+      <ref id="ref13">
         <mixed-citation>
           [13]
           <string-name>
@@ -1016,7 +1016,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="14">
+      <ref id="ref14">
         <mixed-citation>
           [14]
           <string-name>
@@ -1051,7 +1051,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="15">
+      <ref id="ref15">
         <mixed-citation>
           [15]
           <string-name>
@@ -1089,7 +1089,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="16">
+      <ref id="ref16">
         <mixed-citation>
           [16]
           <string-name>
@@ -1138,7 +1138,7 @@ facilitating the focus group sessions.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="17">
+      <ref id="ref17">
         <mixed-citation>
           [17]
           <string-name>

@@ -322,7 +322,7 @@ public class InternalContentExtractor {
         for (int i = 0; i < nlmReferences.size(); i++) {
             Element ref = nlmReferences.get(i);
             Element r = new Element("ref");
-            r.setAttribute("id", String.valueOf(i+1));
+            r.setAttribute("id", "ref" + String.valueOf(i+1));
             r.addContent(ref);
             refList.addContent(r);
         }

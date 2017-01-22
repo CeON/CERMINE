@@ -6,10 +6,10 @@
       </journal-title-group>
     </journal-meta>
     <article-meta>
+      <article-id pub-id-type="doi">10.1186/1471-2199-12-20</article-id>
       <title-group>
         <article-title>The four Zn fingers of MBNL1 provide a flexible platform for recognition of its RNA binding elements</article-title>
       </title-group>
-      <article-id pub-id-type="doi">10.1186/1471-2199-12-20</article-id>
       <contrib-group>
         <contrib contrib-type="author">
           <string-name>Danielle Cass</string-name>
@@ -19,22 +19,22 @@
         </contrib>
         <contrib contrib-type="author">
           <string-name>Paul Barber</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Kimberly Jones</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>Devika P Gates</string-name>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
         <contrib contrib-type="author">
           <string-name>J Andrew Berglund</string-name>
           <email>aberglund@molbio.uoregon.edu</email>
-          <xref ref-type="aff" rid="0">0</xref>
+          <xref ref-type="aff" rid="aff0">0</xref>
         </contrib>
-        <aff id="0">
+        <aff id="aff0">
           <label>0</label>
           <institution>Department of Chemistry and Institute of Molecular Biology, University of Oregon</institution>
           ,
@@ -43,18 +43,15 @@
           <country country="US">USA</country>
         </aff>
       </contrib-group>
-      <abstract>
-        <p>Background: Muscleblind-like 1 (MBNL1) is an alternative splicing factor containing four CCCH Zinc fingers (ZnFs). The sequestration of MBNL1 by expanded CUG and CCUG repeats is a major component in causing myotonic dystrophy. In addition to binding the structured expanded CUG and CCUG repeats; previous results suggested that MBNL1 binds single-stranded RNAs containing GC dinucleotides. Results: We performed a systematic analysis of MBNL1 binding to single-stranded RNAs. These studies revealed that a single GC dinucleotide in poly-uridine is sufficient for MBNL1 binding and that a second GC dinucleotide confers higher affinity MBNL1 binding. However additional GC dinucleotides do not enhance RNA binding. We also showed that the RNA sequences adjacent to the GC dinucleotides play an important role in MBNL1 binding with the following preference: uridines &gt;cytidines &gt;adenosines &gt;guanosines. For high affinity binding by MBNL1, the distance between the two GC dinucleotides can vary from 1 to 17 nucleotides. Conclusions: These results suggest that MBNL1 is highly flexible and able to adopt different conformations to recognize RNAs with varying sequence configurations. Although MBNL1 contains four ZnFs, only two ZnF - GC dinucleotide interactions are necessary for high affinity binding.</p>
-      </abstract>
-      <volume>12</volume>
-      <issue>20</issue>
-      <fpage>12</fpage>
-      <lpage>20</lpage>
       <pub-date>
         <day>6</day>
         <month>5</month>
         <year>2011</year>
       </pub-date>
+      <volume>12</volume>
+      <issue>20</issue>
+      <fpage>12</fpage>
+      <lpage>20</lpage>
       <history>
         <date date-type="accepted">
           <day>6</day>
@@ -67,23 +64,38 @@
           <year>2011</year>
         </date>
       </history>
+      <abstract>
+        <p>Background: Muscleblind-like 1 (MBNL1) is an alternative splicing factor containing four CCCH Zinc fingers (ZnFs). The sequestration of MBNL1 by expanded CUG and CCUG repeats is a major component in causing myotonic dystrophy. In addition to binding the structured expanded CUG and CCUG repeats; previous results suggested that MBNL1 binds single-stranded RNAs containing GC dinucleotides. Results: We performed a systematic analysis of MBNL1 binding to single-stranded RNAs. These studies revealed that a single GC dinucleotide in poly-uridine is sufficient for MBNL1 binding and that a second GC dinucleotide confers higher affinity MBNL1 binding. However additional GC dinucleotides do not enhance RNA binding. We also showed that the RNA sequences adjacent to the GC dinucleotides play an important role in MBNL1 binding with the following preference: uridines &gt;cytidines &gt;adenosines &gt;guanosines. For high affinity binding by MBNL1, the distance between the two GC dinucleotides can vary from 1 to 17 nucleotides. Conclusions: These results suggest that MBNL1 is highly flexible and able to adopt different conformations to recognize RNAs with varying sequence configurations. Although MBNL1 contains four ZnFs, only two ZnF - GC dinucleotide interactions are necessary for high affinity binding.</p>
+      </abstract>
     </article-meta>
   </front>
   <body>
-    <sec id="1">
+    <fig>
+      <graphic xlink:href="pref/img_3_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_4_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_5_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="pref/img_6_1.png" />
+    </fig>
+    <sec id="sec-1">
       <title>Background</title>
       <p>
         Alternative pre-mRNA splicing significantly increases
 genome diversity with recent measurements suggesting that
 greater than 90% of genes undergo alternative splicing
 [
-        <xref ref-type="bibr" rid="1 2 3">1-3</xref>
+        <xref ref-type="bibr" rid="ref1 ref2 ref3">1-3</xref>
         ]. The different protein isoforms generated through
 alternative splicing can alter function or cellular
 localization, or it may provide a mechanism to regulate the levels
 of the protein by leading to non-productive splicing and
 RNA turnover (reviewed in [
-        <xref ref-type="bibr" rid="4 5">4,5</xref>
+        <xref ref-type="bibr" rid="ref4 ref5">4,5</xref>
         ]). Regulated alternative
 splicing is dependent upon the alternative splicing factors
 present in specific cell types or at different developmental
@@ -91,7 +103,7 @@ stages. Many of these alternative splicing factors appear to
 regulate hundreds of exons and they function by
 recognizing specific RNA sequence elements within or near the
 regulated exons (reviewed in [
-        <xref ref-type="bibr" rid="6">6</xref>
+        <xref ref-type="bibr" rid="ref6">6</xref>
         ]).
       </p>
       <p>
@@ -104,30 +116,30 @@ are found in the 3’ UTR of the DMPK gene, and for
 DM type 2 (DM2), the CCTG repeats are found within
 intron 1 of the CCHC-type zinc finger (ZnF), nucleic
 acid binding protein (CNBP) gene [
-        <xref ref-type="bibr" rid="7 8">7,8</xref>
+        <xref ref-type="bibr" rid="ref7 ref8">7,8</xref>
         ]. These CTG and
 CCTG repeats, when transcribed, form CUG/CCUG
 RNA stem loops that bind and sequester MBNL1 into
 nuclear foci resulting in a loss of normal MBNL1
 function in the cell (reviewed in [
-        <xref ref-type="bibr" rid="9">9</xref>
+        <xref ref-type="bibr" rid="ref9">9</xref>
         ]). In studying the
 molecular basis of DM and the role MBNL1 plays, it was
 discovered that MBNL1 regulates the alternative splicing
 of a host of developmentally regulated transcripts
 [
-        <xref ref-type="bibr" rid="10 11 12 13">10-13</xref>
+        <xref ref-type="bibr" rid="ref10 ref11 ref12 ref13">10-13</xref>
         ]. In the cells of DM patients, adult splicing
 patterns revert back to embryonic splicing patterns and
 these incorrect splicing events are thought to cause
 many of the symptoms of the disease (reviewed in [
-        <xref ref-type="bibr" rid="9">9</xref>
+        <xref ref-type="bibr" rid="ref9">9</xref>
         ]).
       </p>
       <p>
         Several MBNL1 binding sites have been identified, and
 a few of these have been characterized [
-        <xref ref-type="bibr" rid="10 14 15 16 17">10,14-17</xref>
+        <xref ref-type="bibr" rid="ref10 ref14 ref15 ref16 ref17">10,14-17</xref>
         ].
 Complicating the analysis of MBNL1 binding to these sites
 and the CUG and CCUG repeats has been
@@ -137,33 +149,33 @@ interacts with RNA through its four CCCH ZnFs,
 although it is possible that other regions of the protein
 interact with RNA as well or play an important role in
 regulating splicing [
-        <xref ref-type="bibr" rid="18">18</xref>
+        <xref ref-type="bibr" rid="ref18">18</xref>
         ]. The ZnFs of MBNL1 fold into
 two compact domains ZnFs1/2 and ZnFs3/4 [
-        <xref ref-type="bibr" rid="19 20">19,20</xref>
+        <xref ref-type="bibr" rid="ref19 ref20">19,20</xref>
         ]. A
 crystal structure of ZnFs3/4 in complex with a 6 mer
 RNA (CGCUGU) revealed that these ZnFs bind
 singlestranded RNA through specific recognition of the
 Watson-Crick face of the GC dinucleotide [
-        <xref ref-type="bibr" rid="20">20</xref>
+        <xref ref-type="bibr" rid="ref20">20</xref>
         ]. Each ZnF (3
 and 4) interacts with RNA in a similar manner and the
 structure of the ZnFs domain in complex with RNA
 lead Teplova and Patel to propose that MBNL1 binds
 RNA in a looped conformation [
-        <xref ref-type="bibr" rid="20">20</xref>
+        <xref ref-type="bibr" rid="ref20">20</xref>
         ]. This model
 predicts that for each ZnF to bind a GC dinucleotide a
 significant RNA linker must separate the GC dinucleotides
 because the RNA binding surfaces of ZnFs3/4 (or 1/2)
 are on opposing sides of the domain [
-        <xref ref-type="bibr" rid="20">20</xref>
+        <xref ref-type="bibr" rid="ref20">20</xref>
         ]. Binding to
 RNAs containing three different RNA linkers of 5, 10
 and 15 nucleotides between the GC dinucleotides to
 ZnFs3/4 of MBNL1 supported this model [
-        <xref ref-type="bibr" rid="20">20</xref>
+        <xref ref-type="bibr" rid="ref20">20</xref>
         ]. However
 these experiments were only performed with the isolated
 ZnFs3/4 and it was unclear if the spacer would be
@@ -176,7 +188,7 @@ singlestranded RNAs varying linker distances and different
 linker sequences were studied with MBNL1.
       </p>
     </sec>
-    <sec id="2">
+    <sec id="sec-2">
       <title>Results and discussion</title>
       <p>
         To better understand the RNA binding specificity of
@@ -185,20 +197,20 @@ contains amino acids 2-260. Previous studies have
 shown that MBNL1 2-260, which contains all four ZnFs,
 binds RNA as well as the corresponding full-length
 protein [
-        <xref ref-type="bibr" rid="14">14</xref>
+        <xref ref-type="bibr" rid="ref14">14</xref>
         ]. This version of the protein was used due to its
 ease in expression and purification in a bacterial system.
 This region of the protein has been shown to be
 sufficient for splicing regulation [
-        <xref ref-type="bibr" rid="18">18</xref>
+        <xref ref-type="bibr" rid="ref18">18</xref>
         ].
       </p>
-      <sec id="2-1">
+      <sec id="sec-2-1">
         <title>Determination of the number of GC dinucleotides required for high affinity binding by MBNL1</title>
         <p>
           According to the crystal structure of the MBNL1 ZnFs3/
 4 - RNA complex [
-          <xref ref-type="bibr" rid="20">20</xref>
+          <xref ref-type="bibr" rid="ref20">20</xref>
           ], the primary determinant of RNA
 specificity is the recognition of the Watson-Crick faces
 of the GC dinucleotide by the ZnFs. To test the
@@ -208,7 +220,7 @@ these motifs were placed into a poly-uridine RNA
 (Figure 1A). Uridines were chosen as the template because
 we had previously shown that MBNL1 generally prefers
 uridines compared to the other three nucleotides [
-          <xref ref-type="bibr" rid="21">21</xref>
+          <xref ref-type="bibr" rid="ref21">21</xref>
           ].
 Additionally, poly-uridine lacks RNA structure so the
 role of RNA structure in binding can be minimized
@@ -223,7 +235,7 @@ to four GC dinucleotides, the melting point was below
 40°C (Figure 1G), while the (CUG)4 RNA which was
 previously shown to be structured and bind MBNL1
 [
-          <xref ref-type="bibr" rid="14">14</xref>
+          <xref ref-type="bibr" rid="ref14">14</xref>
           ] has a melting point of 60.6 +/- 0.6°C (Figure 1G).
 These thermal denaturation results indicate that these
 model RNAs are primarily single-stranded and can be
@@ -241,7 +253,7 @@ to any other sequence or their polarity is reversed (2CC,
 concentrations of protein tested (Figure 1B). Although
 we had found previously that MBNL1 prefers uridines
 over the other three nucleotides [
-          <xref ref-type="bibr" rid="21">21</xref>
+          <xref ref-type="bibr" rid="ref21">21</xref>
           ], these results
 showed that MBNL1 does not bind to long stretches of
 uridines alone with appreciable affinity.
@@ -300,7 +312,7 @@ is supported by the MBNL1 ZnFs3/4 crystal structure
 which formed a ZnF4 - ZnF4 interaction with a 1320 Å2
 interface that would preclude ZnF4 from binding RNA
 [
-          <xref ref-type="bibr" rid="20">20</xref>
+          <xref ref-type="bibr" rid="ref20">20</xref>
           ]. Thus we might predict that ZnF2 and ZnF4 are
 involved in a higher order structure while ZnF1 and
 ZnF3 are involved in RNA binding. Although it is
@@ -313,7 +325,7 @@ only two YGCY motifs suggesting that a mode in which
 MBNL1 uses only two of its ZnFs to bind YGCY motifs
 could be a common type of interaction for MBNL1
 [
-          <xref ref-type="bibr" rid="10 14 15 16">10,14-16</xref>
+          <xref ref-type="bibr" rid="ref10 ref14 ref15 ref16">10,14-16</xref>
           ].
         </p>
         <p>
@@ -326,7 +338,7 @@ nucleotides, and the model proposed by Teplova and
 Patel describing MBNL1 binding to RNAs with multiple
 GC dinucleotides suggests that this type of spacing
 would allow for binding by three of the four ZnFs [
-          <xref ref-type="bibr" rid="20">20</xref>
+          <xref ref-type="bibr" rid="ref20">20</xref>
           ].
 Our data described later also suggests that an RNA
 containing two GC dinucleotides with only a single
@@ -336,14 +348,14 @@ GC dinucleotides was not a problem in these RNA
 constructs.
         </p>
       </sec>
-      <sec id="2-2">
+      <sec id="sec-2-2">
         <title>The role of nucleotides adjacent to the GC dinucleotides in MBNL1 RNA binding</title>
         <p>
           Our previous research showed enrichment for YGCY in
 a SELEX assay of MBNL1 2-260, however the
 importance of the pyrimidines upstream and downstream of
 the GC was never directly tested [
-          <xref ref-type="bibr" rid="21">21</xref>
+          <xref ref-type="bibr" rid="ref21">21</xref>
           ]. Therefore we set
 about to determine the importance of nucleotides
 upstream and downstream of the GC dinucleotide by
@@ -383,7 +395,7 @@ RNA.</p>
           Our characterization of MBNL1 binding specificity is
 consistent with our previously proposed MBNL1
 binding site motif of YGCY [
-          <xref ref-type="bibr" rid="21">21</xref>
+          <xref ref-type="bibr" rid="ref21">21</xref>
           ]. However, there seems to
 be an additional requirement of a uridine rich context
 as seen by the 10-fold decrease in binding between a
@@ -394,7 +406,7 @@ this structure ZnF3 only interacts with the GC
 dinucleotide and ZnF4 makes one base specific contact with the
 downstream uridine, therefore recognizing a GCU motif
 [
-          <xref ref-type="bibr" rid="20">20</xref>
+          <xref ref-type="bibr" rid="ref20">20</xref>
           ]. One explanation for this apparent discrepancy
 between our results and the crystal structure is that
 important protein-RNA contacts were not captured in
@@ -406,23 +418,23 @@ of the protein are responsible for these additional RNA
 sequence requirements.
         </p>
       </sec>
-      <sec id="2-3">
+      <sec id="sec-2-3">
         <title>The effects of the separation between GC dinucleotides in</title>
       </sec>
-      <sec id="2-4">
+      <sec id="sec-2-4">
         <title>MBNL1 RNA binding</title>
         <p>
           The crystal structures of the individual ZnFs domains of
 MBNL1 suggested that a RNA linker of 20 Å would be
 required to allow two ZnFs in one domain to each bind
 a GC dinucleotide [
-          <xref ref-type="bibr" rid="20">20</xref>
+          <xref ref-type="bibr" rid="ref20">20</xref>
           ]. In support of this model,
 Teplova and Patel showed that decreasing the GC
 dinucleotide linker from 15 or 10 nucleotides to 5
 nucleotides reduced RNA binding with the ZnFs3/4 domain
 [
-          <xref ref-type="bibr" rid="20">20</xref>
+          <xref ref-type="bibr" rid="ref20">20</xref>
           ]. To determine if the distance between the two GC
 dinucleotides affects the binding of MBNL1 containing
 four ZnFs we systematically varied the distance between
@@ -486,7 +498,7 @@ use one or more modes of binding to recognize
 singlestranded and structured RNA substrates.</p>
       </sec>
     </sec>
-    <sec id="3">
+    <sec id="sec-3">
       <title>Conclusions</title>
       <p>This study suggests that the ZnFs domains of MBNL1
 are linked together by a highly flexible linker (Figure 4),
@@ -495,23 +507,23 @@ RNA targets. Although MBNL1 contains four ZnFs, it
 appears that only two ZnFs binding GC motifs are
 necessary for high affinity RNA binding.</p>
     </sec>
-    <sec id="4">
+    <sec id="sec-4">
       <title>Materials and methods</title>
-      <sec id="4-1">
+      <sec id="sec-4-1">
         <title>Protein Purification</title>
         <p>
           The MBNL1 protein used in these studies contains
 amino acids 2-260 and was described previously [
-          <xref ref-type="bibr" rid="14">14</xref>
+          <xref ref-type="bibr" rid="ref14">14</xref>
           ].
 Purification of the protein and removal of the GST tag
 was described previously [
-          <xref ref-type="bibr" rid="14">14</xref>
+          <xref ref-type="bibr" rid="ref14">14</xref>
           ] except that for our studies
 the protein was stored at -80°C rather than at -20°C.
         </p>
       </sec>
-      <sec id="4-2">
+      <sec id="sec-4-2">
         <title>RNA synthesis, labeling, and purification</title>
         <p>All RNAs were synthesized by Integrated DNA
 Technologies and 5’ end labeled with [g-32P]ATP. RNAs were
@@ -521,7 +533,7 @@ EDTA). RNA was then ethanol precipitated with
 glycogen and resuspended in TE Buffer. Finally a Bio-spin 6
 column (Bio-Rad) equilibrated in TE Buffer was used.</p>
       </sec>
-      <sec id="4-3">
+      <sec id="sec-4-3">
         <title>RNA thermal denaturation assay</title>
         <p>1.5 μM RNA was incubated at 95°C for two minutes in
 100 mM NaCl, 21 mM Tris 7.5, and 5 mM MgCl2.
@@ -537,7 +549,7 @@ values compared. The Tm of all the RNAs used in these
 studies were measured at below 40°C while the (CUG)4
 RNA was measured with a Tm of 60.6 +/- 0.6°C.</p>
       </sec>
-      <sec id="4-4">
+      <sec id="sec-4-4">
         <title>Gel mobility shift assay</title>
         <p>RNA was initially heated to 95 °C for two minutes and
 then placed directly onto ice. RNA was then mixed with
@@ -556,7 +568,7 @@ overnight.</p>
         <p>
           Quantitation of the binding curve was described
 previously [
-          <xref ref-type="bibr" rid="14">14</xref>
+          <xref ref-type="bibr" rid="ref14">14</xref>
           ]. The data was fit using the equation
 y =
 m1 × m0 + 0.02 + m2 −
@@ -567,7 +579,7 @@ where m1 = a fitting factor, m0 = nM protein
 concentration, and m2 = nM Kd.
 tiony =</p>
       </sec>
-      <sec id="4-5">
+      <sec id="sec-4-5">
         <title>Competition assay</title>
         <p>Competition assays were run under the same conditions
 as the gel shift assays except that the protein and
@@ -591,7 +603,7 @@ m0 + Pt + m2
 plified to y =
 same.</p>
       </sec>
-      <sec id="4-6">
+      <sec id="sec-4-6">
         <title>Modeling of MBNL1 binding RNA</title>
         <p>PDB files 3D2N and 3D2S were used to create Figure 4.
 Each PDB file was opened in separate Pymol windows.
@@ -623,22 +635,10 @@ analyzed data and edited the manuscript. All authors read and approved the
 final manuscript.</p>
       </sec>
     </sec>
-    <fig>
-      <graphic xlink:href="pref/img_3_1.png" />
-    </fig>
-    <fig>
-      <graphic xlink:href="pref/img_4_1.png" />
-    </fig>
-    <fig>
-      <graphic xlink:href="pref/img_5_1.png" />
-    </fig>
-    <fig>
-      <graphic xlink:href="pref/img_6_1.png" />
-    </fig>
   </body>
   <back>
     <ref-list>
-      <ref id="1">
+      <ref id="ref1">
         <mixed-citation>
           1.
           <string-name>
@@ -699,7 +699,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="2">
+      <ref id="ref2">
         <mixed-citation>
           2.
           <string-name>
@@ -740,7 +740,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="3">
+      <ref id="ref3">
         <mixed-citation>
           3.
           <string-name>
@@ -806,7 +806,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="4">
+      <ref id="ref4">
         <mixed-citation>
           4.
           <string-name>
@@ -827,7 +827,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="5">
+      <ref id="ref5">
         <mixed-citation>
           5.
           <string-name>
@@ -853,7 +853,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="6">
+      <ref id="ref6">
         <mixed-citation>
           6.
           <string-name>
@@ -879,7 +879,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="7">
+      <ref id="ref7">
         <mixed-citation>
           7.
           <string-name>
@@ -943,7 +943,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="8">
+      <ref id="ref8">
         <mixed-citation>
           8.
           <string-name>
@@ -999,7 +999,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="9">
+      <ref id="ref9">
         <mixed-citation>
           9.
           <string-name>
@@ -1025,7 +1025,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="10">
+      <ref id="ref10">
         <mixed-citation>
           10.
           <string-name>
@@ -1071,7 +1071,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="11">
+      <ref id="ref11">
         <mixed-citation>
           11.
           <string-name>
@@ -1122,7 +1122,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="12">
+      <ref id="ref12">
         <mixed-citation>
           12.
           <string-name>
@@ -1183,7 +1183,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="13">
+      <ref id="ref13">
         <mixed-citation>
           13.
           <string-name>
@@ -1219,7 +1219,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="14">
+      <ref id="ref14">
         <mixed-citation>
           14.
           <string-name>
@@ -1245,7 +1245,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="15">
+      <ref id="ref15">
         <mixed-citation>
           15.
           <string-name>
@@ -1296,7 +1296,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="16">
+      <ref id="ref16">
         <mixed-citation>
           16.
           <string-name>
@@ -1342,7 +1342,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="17">
+      <ref id="ref17">
         <mixed-citation>
           17.
           <string-name>
@@ -1413,7 +1413,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="18">
+      <ref id="ref18">
         <mixed-citation>
           18.
           <string-name>
@@ -1443,7 +1443,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="19">
+      <ref id="ref19">
         <mixed-citation>
           19.
           <string-name>
@@ -1509,7 +1509,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="20">
+      <ref id="ref20">
         <mixed-citation>
           20.
           <string-name>
@@ -1535,7 +1535,7 @@ final manuscript.</p>
           .
         </mixed-citation>
       </ref>
-      <ref id="21">
+      <ref id="ref21">
         <mixed-citation>
           21.
           <string-name>

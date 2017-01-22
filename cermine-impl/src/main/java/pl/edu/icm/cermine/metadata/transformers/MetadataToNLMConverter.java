@@ -67,13 +67,13 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
     private Element convertArticleMetadata(DocumentMetadata source) throws TransformationException {
         Element metadata = new Element(TAG_ARTICLE_META);
 
-        String[] titlePath = new String[]{TAG_TITLE_GROUP, TAG_ARTICLE_TITLE};
-        addElement(metadata, titlePath, source.getTitle());
-        
         for (String idType : source.getIdTypes()) {
             addElement(metadata, TAG_ARTICLE_ID, source.getId(idType), ATTR_PUB_ID_TYPE, idType);
         }
-
+        
+        String[] titlePath = new String[]{TAG_TITLE_GROUP, TAG_ARTICLE_TITLE};
+        addElement(metadata, titlePath, source.getTitle());
+        
         if (!source.getAuthors().isEmpty() || !source.getEditors().isEmpty()
                 || !source.getAffiliations().isEmpty()) {
             Element contributors = new Element(TAG_CONTRIB_GROUP);
@@ -88,27 +88,17 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
             }
             metadata.addContent(contributors);
         }
-       
-        String[] abstractPath = new String[]{TAG_ABSTRACT, TAG_P};
-        addElement(metadata, abstractPath, source.getAbstrakt());
-       
-        if (!source.getKeywords().isEmpty()) {
-            Element keywords = new Element(TAG_KWD_GROUP);
-            for (String keyword : source.getKeywords()) {
-                addElement(keywords, TAG_KWD, keyword);
-            }
-            metadata.addContent(keywords);
-        }
 
-        addElement(metadata, TAG_VOLUME, source.getVolume());
-        addElement(metadata, TAG_ISSUE, source.getIssue());
-        addElement(metadata, TAG_FPAGE, source.getFirstPage());
-        addElement(metadata, TAG_LPAGE, source.getLastPage());
-        
         DocumentDate pubDate = source.getDate(DocumentDate.DATE_PUBLISHED);
         if (pubDate != null) {
             metadata.addContent(convertDate(TAG_PUB_DATE, DocumentDate.DATE_PUBLISHED, pubDate));
         }
+        
+        addElement(metadata, TAG_VOLUME, source.getVolume());
+        addElement(metadata, TAG_ISSUE, source.getIssue());
+
+        addElement(metadata, TAG_FPAGE, source.getFirstPage());
+        addElement(metadata, TAG_LPAGE, source.getLastPage());
         
         DocumentDate accDate = source.getDate(DocumentDate.DATE_ACCEPTED);
         DocumentDate recDate = source.getDate(DocumentDate.DATE_RECEIVED);
@@ -126,6 +116,17 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
             }
             metadata.addContent(history);
         }
+
+        String[] abstractPath = new String[]{TAG_ABSTRACT, TAG_P};
+        addElement(metadata, abstractPath, source.getAbstrakt());
+       
+        if (!source.getKeywords().isEmpty()) {
+            Element keywords = new Element(TAG_KWD_GROUP);
+            for (String keyword : source.getKeywords()) {
+                addElement(keywords, TAG_KWD, keyword);
+            }
+            metadata.addContent(keywords);
+        }
         
         return metadata;
     }
@@ -142,7 +143,7 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
         for (DocumentAffiliation aff : author.getAffiliations()) {
             Element affRef = createElement(TAG_XREF, aff.getId());
             affRef.setAttribute(ATTR_REF_TYPE, ATTR_VALUE_REF_TYPE_AFF);
-            affRef.setAttribute(ATTR_RID, aff.getId());
+            affRef.setAttribute(ATTR_RID, "aff" + aff.getId());
             contributor.addContent(affRef);
         }
                 
@@ -151,7 +152,7 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
     
     public Element convertAffiliation(DocumentAffiliation affiliation) throws TransformationException {
         Element aff = new Element(TAG_AFFILIATION);
-        aff.setAttribute(ATTR_ID, affiliation.getId());
+        aff.setAttribute(ATTR_ID, "aff" + affiliation.getId());
         addElement(aff, TAG_LABEL, affiliation.getId());
         for (Token<AffiliationLabel> token : affiliation.getTokens()) {
             switch (token.getLabel()) {

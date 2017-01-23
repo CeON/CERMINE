@@ -796,8 +796,8 @@ public class PubmedXMLGenerator {
                 }
                 System.out.print(coverage + " " + set.size() + " " + keys);
 
-                FileWriter fstream = new FileWriter(
-                        TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "." + coverage + ".cxml"));
+                Writer fstream = new OutputStreamWriter(new FileOutputStream(
+                        TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "." + coverage + ".cxml")), "UTF-8");
                 BufferedWriter out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                 out.write(writer.write(Lists.newArrayList(bxDoc)));

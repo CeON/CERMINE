@@ -333,12 +333,12 @@ public class SegmentationEvaluator {
         double wordScores = 0;
         BxDocument origDoc;
         BxDocument testDoc;
-        FileReader reader;
+        Reader reader;
         for (File filee : files) {
             System.out.println(new Date(System.currentTimeMillis()));
             System.out.println(filee.getName());
 
-            reader = new FileReader(filee);
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(filee), "UTF-8"));
             origDoc = evaluator.prepareExpectedDocument(evaluator.readDocument(reader));
             testDoc = evaluator.prepareActualDocument(origDoc);
             Results docRes = evaluator.compareItems(origDoc, testDoc);

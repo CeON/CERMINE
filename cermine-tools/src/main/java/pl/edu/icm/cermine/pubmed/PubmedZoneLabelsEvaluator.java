@@ -34,7 +34,7 @@ import pl.edu.icm.cermine.structure.transformers.TrueVizToBxDocumentReader;
  */
 public class PubmedZoneLabelsEvaluator {
 
-    public static void main(String[] args) throws FileNotFoundException, TransformationException {
+    public static void main(String[] args) throws FileNotFoundException, TransformationException, UnsupportedEncodingException {
 
         List<BxZoneLabel> labels = Lists.newArrayList(
                 BxZoneLabel.MET_ABSTRACT, BxZoneLabel.BODY_ACKNOWLEDGMENT,
@@ -65,12 +65,12 @@ public class PubmedZoneLabelsEvaluator {
             System.out.println(tv.getPath());
             InputStream is = new FileInputStream(tv);
             TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-            Reader r = new InputStreamReader(is);
+            Reader r = new InputStreamReader(is, "UTF-8");
             BxDocument origBxDoc = new BxDocument().setPages(reader.read(r));
 
             File tv2 = new File(tv.getPath().replaceFirst(".cxml-segm", ".cxml-segm-m"));
             InputStream is2 = new FileInputStream(tv2);
-            Reader r2 = new InputStreamReader(is2);
+            Reader r2 = new InputStreamReader(is2, "UTF-8");
             BxDocument corrBxDoc = new BxDocument().setPages(reader.read(r2));
 
             List<BxZone> origZones = Lists.newArrayList(origBxDoc.asZones());

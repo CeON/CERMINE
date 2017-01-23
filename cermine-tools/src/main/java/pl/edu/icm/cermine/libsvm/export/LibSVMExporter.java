@@ -19,8 +19,10 @@ package pl.edu.icm.cermine.libsvm.export;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
@@ -63,7 +65,7 @@ public class LibSVMExporter {
     public static void toLibSVM(List<TrainingSample<BxZoneLabel>> trainingElements, String filePath) throws IOException {
         BufferedWriter svmDataFile = null;
         try {
-            FileWriter fstream = new FileWriter(filePath);
+            Writer fstream = new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8");
             svmDataFile = new BufferedWriter(fstream);
             for (TrainingSample<BxZoneLabel> elem : trainingElements) {
                 if (elem.getLabel() == null) {
@@ -120,12 +122,12 @@ public class LibSVMExporter {
         SampleFilter metaSamplesFilter = new SampleFilter(
                 BxZoneLabelCategory.CAT_METADATA);
 
-        FileWriter initialStream = new FileWriter("initial_"
-                + inputDirFile.getName() + ".dat");
+        Writer initialStream = new OutputStreamWriter(new FileOutputStream("initial_"
+                + inputDirFile.getName() + ".dat"), "UTF-8");
         BufferedWriter svmInitialFile = new BufferedWriter(initialStream);
 
-        FileWriter metaStream = new FileWriter("meta_" + inputDirFile.getName()
-                + ".dat");
+        Writer metaStream = new OutputStreamWriter(
+                new FileOutputStream("meta_" + inputDirFile.getName() + ".dat"), "UTF-8");
         BufferedWriter svmMetaFile = new BufferedWriter(metaStream);
 
         for (BxDocument doc : iter) {

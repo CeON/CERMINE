@@ -124,7 +124,7 @@ public class RuleBasedPubmedXMLGenerator {
         Document domDoc = builder.parse(nlmStream);
 
         TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-        Reader r = new InputStreamReader(pdfStream);
+        Reader r = new InputStreamReader(pdfStream, "UTF-8");
         BxDocument bxDoc = new BxDocument().setPages(reader.read(r));
 
         List<BxZone> zones = Lists.newArrayList(bxDoc.asZones());
@@ -895,8 +895,7 @@ public class RuleBasedPubmedXMLGenerator {
                     }
                 }
 
-                FileWriter fstream = new FileWriter(cpxmlPath);
-                BufferedWriter out = new BufferedWriter(fstream);
+                Writer out = new OutputStreamWriter(new FileOutputStream(cpxmlPath), "UTF-8");
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                 out.write(writer.write(Lists.newArrayList(bxDoc)));
                 out.close();

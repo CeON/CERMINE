@@ -41,7 +41,7 @@ public final class MalletTrainingFileGenerator {
     public static void main(String[] args) throws JDOMException, IOException {
 
         File dir = new File(NLM_DIR);
-        FileWriter writer = null;
+        Writer writer = null;
         try {
             List<Citation> allcitations = new ArrayList<Citation>();
 
@@ -106,8 +106,8 @@ public final class MalletTrainingFileGenerator {
                 }
             }
 
-            writer = new FileWriter(OUT_FILE);
-            FileWriter writer2 = new FileWriter(OUT_FILE2);
+            writer = new OutputStreamWriter(new FileOutputStream(OUT_FILE), "UTF-8");
+            Writer writer2 = new OutputStreamWriter(new FileOutputStream(OUT_FILE2), "UTF-8");
 
             for (String s : additionalFeatures) {
                 writer2.write(s);

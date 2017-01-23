@@ -19,8 +19,10 @@
 package pl.edu.icm.cermine.bx;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
@@ -36,7 +38,7 @@ public abstract class BxDocStatisticsPrinter {
 
     protected abstract Map<String, String> getStatistics(BxDocument document);
     
-    public void run(String[] args) throws ParseException, TransformationException, FileNotFoundException {
+    public void run(String[] args) throws ParseException, TransformationException, FileNotFoundException, UnsupportedEncodingException {
         Options options = new Options();
         options.addOption("input", true, "input path");
         options.addOption("ext", true, "extension");
@@ -48,7 +50,8 @@ public abstract class BxDocStatisticsPrinter {
         File dir = new File(inDir);
         for (File f : FileUtils.listFiles(dir, new String[]{extension}, true)) {
             TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
-            List<BxPage> pages = tvReader.read(new FileReader(f));
+            List<BxPage> pages = tvReader.read(new InputStreamReader(
+                                        new FileInputStream(f), "UTF8"));
             BxDocument doc = new BxDocument().setPages(pages);
             doc.setFilename(f.getName());
             System.out.println("Document: " + f.getPath());

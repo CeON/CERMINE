@@ -18,8 +18,11 @@
 
 package pl.edu.icm.cermine.evaluation.systems;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import pl.edu.icm.cermine.evaluation.tools.EvaluationUtils;
 import pl.edu.icm.cermine.evaluation.tools.NlmPair;
 import pl.edu.icm.cermine.evaluation.tools.NlmIterator;
@@ -51,20 +54,26 @@ public abstract class SystemEvaluator {
 
     protected Document getOriginal(NlmPair pair) throws EvaluationException {
         try {
-            return getOrigReader().read(new FileReader(pair.getOriginalNlm()));
+            return getOrigReader().read(new BufferedReader(
+                    new InputStreamReader(new FileInputStream(pair.getOriginalNlm()), "UTF-8")));
         } catch (TransformationException ex) {
             throw new EvaluationException(ex);
         } catch (FileNotFoundException ex) {
+            throw new EvaluationException(ex);
+        } catch (UnsupportedEncodingException ex) {
             throw new EvaluationException(ex);
         }
     }
 
     protected Document getExtracted(NlmPair pair) throws EvaluationException {
         try {
-            return getExtrReader().read(new FileReader(pair.getExtractedNlm()));
+            return getExtrReader().read(new BufferedReader(
+                    new InputStreamReader(new FileInputStream(pair.getExtractedNlm()), "UTF-8")));
         } catch (TransformationException ex) {
             throw new EvaluationException(ex);
         } catch (FileNotFoundException ex) {
+            throw new EvaluationException(ex);
+        } catch (UnsupportedEncodingException ex) {
             throw new EvaluationException(ex);
         }
     }

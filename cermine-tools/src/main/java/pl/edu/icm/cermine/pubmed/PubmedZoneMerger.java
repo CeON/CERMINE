@@ -53,7 +53,7 @@ public class PubmedZoneMerger {
 
             InputStream is = new FileInputStream(tv);
             TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-            Reader r = new InputStreamReader(is);
+            Reader r = new InputStreamReader(is, "UTF-8");
             BxDocument bxDoc = new BxDocument().setPages(reader.read(r));
 
             double avgDiffZone = 0;
@@ -225,8 +225,7 @@ public class PubmedZoneMerger {
 
             roResolver.resolve(bxDoc);
 
-            FileWriter fstream = new FileWriter(newPath);
-            BufferedWriter out = new BufferedWriter(fstream);
+            Writer out = new OutputStreamWriter(new FileOutputStream(newPath), "UTF-8");
             BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
             out.write(writer.write(Lists.newArrayList(bxDoc)));
             out.close();

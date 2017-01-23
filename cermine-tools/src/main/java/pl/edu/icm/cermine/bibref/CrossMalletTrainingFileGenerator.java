@@ -89,9 +89,9 @@ public final class CrossMalletTrainingFileGenerator {
         Writer[] testWriters = new Writer[5];
         Writer[] nlmWriters = new Writer[5];
         for (int idx = 0; idx < 5; idx++) {
-            trainWriters[idx] = new FileWriter(OUT_FILE + ".train." + idx);
-            testWriters[idx] = new FileWriter(OUT_FILE + ".test." + idx);
-            nlmWriters[idx] = new FileWriter(OUT_FILE + ".nlm." + idx);
+            trainWriters[idx] = new OutputStreamWriter(new FileOutputStream(OUT_FILE + ".train." + idx), "UTF-8");
+            testWriters[idx] = new OutputStreamWriter(new FileOutputStream(OUT_FILE + ".test." + idx), "UTF-8");
+            nlmWriters[idx] = new OutputStreamWriter(new FileOutputStream(OUT_FILE + ".nlm." + idx), "UTF-8");
         }
 
         for (int idx = 0; idx < folds.length; idx++) {

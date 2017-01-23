@@ -20,9 +20,12 @@ package pl.edu.icm.cermine.bx;
 
 import com.google.common.collect.Lists;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.List;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
@@ -54,7 +57,8 @@ public abstract class BxDocRewriter {
         
         for (File f : FileUtils.listFiles(dir, new String[]{extension}, true)) {
             TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
-            List<BxPage> pages = tvReader.read(new FileReader(f));
+            List<BxPage> pages = tvReader.read(new InputStreamReader(
+                                        new FileInputStream(f), "UTF-8"));
             BxDocument doc = new BxDocument().setPages(pages);
             doc.setFilename(f.getName());
            
@@ -66,7 +70,7 @@ public abstract class BxDocRewriter {
             if (!created) {
                 throw new IOException("Cannot create file: ");
             }
-            FileWriter fw = new FileWriter(f2);
+            Writer fw = new OutputStreamWriter(new FileOutputStream(f2), "UTF8");
             wrt.write(fw, Lists.newArrayList(rewritten));
             fw.flush();
             fw.close();

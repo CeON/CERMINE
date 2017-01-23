@@ -40,7 +40,7 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
  */
 public class ZonesToCSVExporter {
 
-    public static void main(String[] args) throws ParseException, FileNotFoundException, TransformationException {
+    public static void main(String[] args) throws ParseException, FileNotFoundException, TransformationException, UnsupportedEncodingException {
         Options options = new Options();
         options.addOption("input", true, "input path");
         options.addOption("ext", true, "extension");
@@ -62,7 +62,7 @@ public class ZonesToCSVExporter {
         for (File tv : FileUtils.listFiles(dir, new String[]{extension}, true)) {
             InputStream is = new FileInputStream(tv);
             TrueVizToBxDocumentReader reader = new TrueVizToBxDocumentReader();
-            Reader r = new InputStreamReader(is);
+            Reader r = new InputStreamReader(is, "UTF-8");
             BxDocument origBxDoc = new BxDocument().setPages(reader.read(r));
             
             for (BxZone z : origBxDoc.asZones()) {

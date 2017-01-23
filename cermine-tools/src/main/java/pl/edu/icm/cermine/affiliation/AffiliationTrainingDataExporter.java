@@ -191,7 +191,8 @@ public class AffiliationTrainingDataExporter {
 			writer = new PrintWriter(outputFileName, "UTF-8");
 			
 			if (loadWords) {
-				wordsReader = new BufferedReader(new FileReader(wordsFileName));
+				wordsReader = new BufferedReader(new InputStreamReader(
+                                        new FileInputStream(new File(wordsFileName)), "UTF-8"));
 			} else {
 				wordsWriter = new PrintWriter(wordsFileName, "UTF-8");
 			}
@@ -199,7 +200,8 @@ public class AffiliationTrainingDataExporter {
 			List<DocumentAffiliation> affiliations = null;
 
 			if (inputType.equals("txt")) {
-				reader = new BufferedReader(new FileReader(file));
+				reader = new BufferedReader(new InputStreamReader(
+                                        new FileInputStream(file), "UTF-8"));
 				affiliations = loadAffiliationsFromTxt(reader);
 			} else if (inputType.equals("xml")) {
 				FileInputStream is = new FileInputStream(file);

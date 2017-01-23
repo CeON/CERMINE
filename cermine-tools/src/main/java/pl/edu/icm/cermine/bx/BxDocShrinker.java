@@ -19,9 +19,12 @@
 package pl.edu.icm.cermine.bx;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
@@ -59,7 +62,8 @@ public class BxDocShrinker {
         for (File f : files) {
             System.out.println(f.getPath());
             TrueVizToBxDocumentReader tvReader = new TrueVizToBxDocumentReader();
-            List<BxPage> pages = tvReader.read(new FileReader(f));
+            List<BxPage> pages = tvReader.read(new InputStreamReader(
+                                        new FileInputStream(f), "UTF-8"));
             
             File f2 = new File(outDir + f.getName());
             BxDocumentToTrueVizWriter wrt = new BxDocumentToTrueVizWriter();
@@ -67,7 +71,7 @@ public class BxDocShrinker {
             if (!created) {
                 throw new IOException("Cannot create file: ");
             }
-            FileWriter fw = new FileWriter(f2);
+            Writer fw = new OutputStreamWriter(new FileOutputStream(f2), "UTF-8");
             wrt.write(fw, pages, BxDocumentToTrueVizWriter.MINIMAL_OUTPUT_SIZE);
             fw.flush();
             fw.close();

@@ -19,14 +19,13 @@ package pl.edu.icm.cermine.evaluation.tools;
 
 import java.util.List;
 import pl.edu.icm.cermine.tools.TextUtils;
-import pl.edu.icm.cermine.tools.distance.CosineDistance;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public class DateComparator {
 
-    public static Boolean yearsMatch(List<String> expected, List<String> extracted) {
+    public static boolean yearsMatch(List<String> expected, List<String> extracted) {
         for (String expectedDate : expected) {
             List<String> expectedParts = TextUtils.tokenize(expectedDate);
             String expectedYear = null;
@@ -37,7 +36,7 @@ public class DateComparator {
                 }
             }
             if (expectedYear == null) {
-                return null;
+                return false;
             } else {
                 String extractedYear = null;
                 for (String extractedDate : extracted) {
@@ -58,28 +57,4 @@ public class DateComparator {
         return false;
     }
 
-    public static Boolean datesMatch(List<String> expected, List<String> extracted) {
-        Boolean anyExpectedOk = false;
-        for (String expectedDate : expected) {
-            List<String> expectedParts = TextUtils.tokenize(expectedDate);
-            if (expectedParts.size() == 1) {
-                continue;
-            }
-            anyExpectedOk = true;
-
-            for (String extractedDate : extracted) {
-                List<String> extractedParts = TextUtils.tokenize(extractedDate);
-                if (extractedParts.size() == 1) {
-                    continue;
-                }
-                if (new CosineDistance().compare(expectedParts, extractedParts) > 0.95) {
-                    return true;
-                }
-            }
-        }
-        if (!anyExpectedOk) {
-            return null;
-        }
-        return false;
-    }
 }

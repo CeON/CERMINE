@@ -95,7 +95,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
             if (!line.hasOption("fold")) {
                 throw new ParseException("Foldness of cross-validation is not given!");
             } else {
-                evaluator.foldness = Integer.valueOf(line.getOptionValue("fold"));
+                evaluator.foldness = Integer.parseInt(line.getOptionValue("fold"));
             }
             String inputFile = remaining[0];
 
@@ -107,7 +107,7 @@ public abstract class CrossvalidatingZoneClassificationEvaluator {
                 degree = Integer.valueOf(degreeStr);
             }
             Integer kernelType;
-            switch(Integer.valueOf(line.getOptionValue("kernel"))) {
+            switch(Integer.parseInt(line.getOptionValue("kernel"))) {
                 case 0: kernelType = svm_parameter.LINEAR; break;
                 case 1: kernelType = svm_parameter.POLY; break;
                 case 2: kernelType = svm_parameter.RBF; break;

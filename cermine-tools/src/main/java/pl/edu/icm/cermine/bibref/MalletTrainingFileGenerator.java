@@ -42,6 +42,7 @@ public final class MalletTrainingFileGenerator {
 
         File dir = new File(NLM_DIR);
         Writer writer = null;
+        Writer writer2 = null;
         try {
             List<Citation> allcitations = new ArrayList<Citation>();
 
@@ -73,7 +74,7 @@ public final class MalletTrainingFileGenerator {
                     allcitations.add(citation);
                     for (CitationToken citationToken : citation.getTokens()) {
                         if (citationToken.getText().matches("^[a-zA-Z]+$")) {
-                            String word = citationToken.getText().toLowerCase();
+                            String word = citationToken.getText().toLowerCase(Locale.ENGLISH);
                             if (wordMap.get(word) == null) {
                                 wordMap.put(word, 0);
                             }
@@ -107,7 +108,7 @@ public final class MalletTrainingFileGenerator {
             }
 
             writer = new OutputStreamWriter(new FileOutputStream(OUT_FILE), "UTF-8");
-            Writer writer2 = new OutputStreamWriter(new FileOutputStream(OUT_FILE2), "UTF-8");
+            writer2 = new OutputStreamWriter(new FileOutputStream(OUT_FILE2), "UTF-8");
 
             for (String s : additionalFeatures) {
                 writer2.write(s);
@@ -127,8 +128,14 @@ public final class MalletTrainingFileGenerator {
 
             writer.flush();
         } finally {
-            if (writer != null) {
-                writer.close();
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } finally {
+                if (writer2 != null) {
+                    writer2.close();
+                }
             }
         }
     }

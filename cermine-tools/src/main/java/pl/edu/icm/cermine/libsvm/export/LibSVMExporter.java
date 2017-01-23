@@ -85,9 +85,6 @@ public class LibSVMExporter {
                 svmDataFile.write("\n");
             }
             svmDataFile.close();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            return;
         } finally {
             if (svmDataFile != null) {
                 svmDataFile.close();

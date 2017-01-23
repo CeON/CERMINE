@@ -21,6 +21,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -71,7 +72,7 @@ public final class CrossMalletTrainingFileGenerator {
         for (Citation citation : citations) {
             for (CitationToken ct : citation.getTokens()) {
                 if (ct.getText().matches("^[a-zA-Z]+$")) {
-                    FileUtils.writeStringToFile(validFile, ct.getText().toLowerCase(), "UTF-8", true);
+                    FileUtils.writeStringToFile(validFile, ct.getText().toLowerCase(Locale.ENGLISH), "UTF-8", true);
                     FileUtils.writeStringToFile(validFile, "\n", "UTF-8", true);
                 }
             }

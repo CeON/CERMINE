@@ -18,6 +18,7 @@
 package pl.edu.icm.cermine.bx;
 
 import java.io.IOException;
+import java.util.Locale;
 import org.apache.commons.cli.ParseException;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -41,16 +42,16 @@ public class BxBibZonesCorrector extends BxDocRewriter {
             if (!BxZoneLabel.MET_BIB_INFO.equals(z.getLabel())
                     && !BxZoneLabel.REFERENCES.equals(z.getLabel())
                     && z.childrenCount() <= 2
-                    && (z.toText().toLowerCase().contains("journal ")
-                    || z.toText().toLowerCase().contains("vol.")
-                    || z.toText().toLowerCase().contains("vol ")
-                    || z.toText().toLowerCase().contains("pp.")
-                    || z.toText().toLowerCase().contains("volume ")
-                    || z.toText().toLowerCase().contains("pp ")
-                    || z.toText().toLowerCase().contains("issn")
-                    || z.toText().toLowerCase().contains("doi:")
-                    || z.toText().toLowerCase().contains("doi ")
-                    || z.toText().toLowerCase().contains("citation:"))) {
+                    && (z.toText().toLowerCase(Locale.ENGLISH).contains("journal ")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("vol.")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("vol ")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("pp.")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("volume ")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("pp ")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("issn")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("doi:")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("doi ")
+                    || z.toText().toLowerCase(Locale.ENGLISH).contains("citation:"))) {
                 System.out.println("DETECTED BIBINFO: ");
                 System.out.println(z.getLabel() + " " + z.toText());
                 System.out.println("");
@@ -59,7 +60,7 @@ public class BxBibZonesCorrector extends BxDocRewriter {
                 if (!BxZoneLabel.OTH_UNKNOWN.equals(z.getLabel())
                         && !BxZoneLabel.MET_BIB_INFO.equals(z.getLabel())
                         && z.childrenCount() <= 2
-                        && (z.toText().toLowerCase().contains("page "))) {
+                        && (z.toText().toLowerCase(Locale.ENGLISH).contains("page "))) {
                     System.out.println("DETECTED PAGE: ");
                     System.out.println(z.getLabel() + " " + z.toText());
                     System.out.println("");

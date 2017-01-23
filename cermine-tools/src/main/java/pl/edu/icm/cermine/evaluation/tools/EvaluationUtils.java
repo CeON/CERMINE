@@ -19,9 +19,9 @@ package pl.edu.icm.cermine.evaluation.tools;
 
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 import pl.edu.icm.cermine.tools.TextUtils;
 import pl.edu.icm.cermine.tools.distance.CosineDistance;
@@ -70,8 +70,7 @@ public class EvaluationUtils {
         return isSubsequence(str.substring(1), sub);
     }
 
-    public static Comparator<String> defaultComparator
-            = new Comparator<String>() {
+    public static final Comparator<String> defaultComparator = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
@@ -96,8 +95,7 @@ public class EvaluationUtils {
         };
     }
 
-    public static Comparator<String> swComparator
-            = new Comparator<String>() {
+    public static final Comparator<String> swComparator = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
@@ -111,25 +109,23 @@ public class EvaluationUtils {
         }
     };
 
-    public static Comparator<String> authorComparator
-            = new Comparator<String>() {
+    public static final Comparator<String> authorComparator = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
-            if (t1.toLowerCase().replaceAll("[^a-z]", "").equals(t2.toLowerCase().replaceAll("[^a-z]", ""))) {
+            if (t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "").equals(t2.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", ""))) {
                 return 0;
             }
             return t1.trim().compareToIgnoreCase(t2.trim());
         }
     };
 
-    public static Comparator<String> emailComparator
-            = new Comparator<String>() {
+    public static final Comparator<String> emailComparator = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
-            String t1Norm = t1.toLowerCase().replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
-            String t2Norm = t1.toLowerCase().replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
+            String t1Norm = t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
+            String t2Norm = t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z0-9@]", "").replaceFirst("^e.?mail:? *", "");
 
             if (t1Norm.equals(t2Norm)) {
                 return 0;
@@ -138,27 +134,11 @@ public class EvaluationUtils {
         }
     };
 
-    public static Comparator<String> journalComparator
-            = new Comparator<String>() {
+    public static final Comparator<String> journalComparator = new Comparator<String>() {
 
         @Override
         public int compare(String t1, String t2) {
-            if (EvaluationUtils.isSubsequence(t1.toLowerCase().replaceAll("[^a-z]", ""), t2.toLowerCase().replaceAll("[^a-z]", ""))) {
-                return 0;
-            }
-            return t1.trim().compareToIgnoreCase(t2.trim());
-        }
-    };
-
-    public static Comparator<String> yearComparator
-            = new Comparator<String>() {
-
-        @Override
-        public int compare(String t1, String t2) {
-            List<String> expected = Arrays.asList(t1.split("---"));
-            List<String> extracted = Arrays.asList(t2.split("---"));
-            Boolean match = DateComparator.yearsMatch(expected, extracted);
-            if (match != null && match) {
+            if (EvaluationUtils.isSubsequence(t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", ""), t2.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", ""))) {
                 return 0;
             }
             return t1.trim().compareToIgnoreCase(t2.trim());

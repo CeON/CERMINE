@@ -81,17 +81,17 @@ public abstract class SVMParameterFinder {
             if (!line.hasOption("fold")) {
                 evaluator.foldness = 5;
             } else {
-                evaluator.foldness = Integer.valueOf(line.getOptionValue("fold"));
+                evaluator.foldness = Integer.parseInt(line.getOptionValue("fold"));
             }
             String inputFile = remaining[0];
 
             String degreeStr = line.getOptionValue("degree");
             Integer degree = -1;
             if (degreeStr != null && !degreeStr.isEmpty()) {
-                degree = Integer.valueOf(degreeStr);
+                degree = Integer.parseInt(degreeStr);
             }
             Integer kernelType;
-            switch(Integer.valueOf(line.getOptionValue("kernel"))) {
+            switch(Integer.parseInt(line.getOptionValue("kernel"))) {
                 case 0: kernelType = svm_parameter.LINEAR; break;
                 case 1: kernelType = svm_parameter.POLY; break;
                 case 2: kernelType = svm_parameter.RBF; break;
@@ -103,7 +103,7 @@ public abstract class SVMParameterFinder {
             int threads = 3;
             String threadsStr = line.getOptionValue("threads");
             if (threadsStr != null && !threadsStr.isEmpty()) {
-                threads = Integer.valueOf(threadsStr);
+                threads = Integer.parseInt(threadsStr);
             }
             
             String ext = "cxml";
@@ -114,19 +114,19 @@ public abstract class SVMParameterFinder {
 
             int minc = -5;
             if (line.hasOption("minc")) {
-                minc = Integer.valueOf(line.getOptionValue("minc"));
+                minc = Integer.parseInt(line.getOptionValue("minc"));
             }
             int maxc = 15;
             if (line.hasOption("maxc")) {
-                maxc = Integer.valueOf(line.getOptionValue("maxc"));
+                maxc = Integer.parseInt(line.getOptionValue("maxc"));
             }
             int ming = -15;
             if (line.hasOption("ming")) {
-                ming = Integer.valueOf(line.getOptionValue("ming"));
+                ming = Integer.parseInt(line.getOptionValue("ming"));
             }
             int maxg = 3;
             if (line.hasOption("maxg")) {
-                maxg = Integer.valueOf(line.getOptionValue("maxg"));
+                maxg = Integer.parseInt(line.getOptionValue("maxg"));
             }
             
             evaluator.setLabelMap(BxZoneLabel.getLabelToGeneralMap());

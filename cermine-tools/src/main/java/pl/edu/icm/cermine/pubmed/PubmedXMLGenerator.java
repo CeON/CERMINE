@@ -268,8 +268,8 @@ public class PubmedXMLGenerator {
         entries.putIf(lPage, BxZoneLabel.OTH_PAGE_NUMBER);
         entries.putIf(lPage, BxZoneLabel.OTH_PAGE_NUMBER);
         try {
-            int f = Integer.valueOf(fPage);
-            int l = Integer.valueOf(lPage);
+            int f = Integer.parseInt(fPage);
+            int l = Integer.parseInt(lPage);
             while (f < l) {
                 f++;
                 entries.putIf(String.valueOf(f), BxZoneLabel.OTH_PAGE_NUMBER);
@@ -520,7 +520,7 @@ public class PubmedXMLGenerator {
                 List<String> zoneTokens = TextUtils.tokenize(
                         TextUtils.removeOrphantSpaces(
                                 TextUtils.cleanLigatures(
-                                        curZone.toText().toLowerCase())));
+                                        curZone.toText().toLowerCase(Locale.ENGLISH))));
 
                 Double smithSim;
                 Double cosSim;
@@ -543,7 +543,7 @@ public class PubmedXMLGenerator {
             for (BxZone zone : page) {
                 Integer zoneIdx = zones.indexOf(zone);
                 BxZone curZone = zones.get(zoneIdx);
-                String zoneText = TextUtils.removeOrphantSpaces(curZone.toText().toLowerCase());
+                String zoneText = TextUtils.removeOrphantSpaces(curZone.toText().toLowerCase(Locale.ENGLISH));
                 List<String> zoneTokens = TextUtils.tokenize(zoneText);
                 Boolean valueSet = false;
 
@@ -735,7 +735,7 @@ public class PubmedXMLGenerator {
         unlabeledZones.removeAll(toBeRemoved);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
         if (args.length != 1) {
             System.err.println("Usage: <pubmed directory>");
             System.exit(1);
@@ -743,80 +743,72 @@ public class PubmedXMLGenerator {
 
         File dir = new File(args[0]);
         for (File pdfFile : FileUtils.listFiles(dir, new String[]{"pdf"}, true)) {
-            try {
-                String pdfPath = pdfFile.getPath();
-                String nxmlPath = TextUtils.getNLMPath(pdfPath);
+            String pdfPath = pdfFile.getPath();
+            String nxmlPath = TextUtils.getNLMPath(pdfPath);
 
-                File xmlFile = new File(TextUtils.getTrueVizPath(nxmlPath));
-                if (xmlFile.exists()) {
-                    continue;
-                }
+            File xmlFile = new File(TextUtils.getTrueVizPath(nxmlPath));
+            if (xmlFile.exists()) {
+                continue;
+            }
 
-                System.out.print(pdfPath + " ");
+            System.out.print(pdfPath + " ");
 
-                InputStream pdfStream = new FileInputStream(pdfPath);
-                InputStream nxmlStream = new FileInputStream(nxmlPath);
+            InputStream pdfStream = new FileInputStream(pdfPath);
+            InputStream nxmlStream = new FileInputStream(nxmlPath);
 
-                PubmedXMLGenerator datasetGenerator = new PubmedXMLGenerator();
-                datasetGenerator.setVerbose(false);
-                BxDocument bxDoc = datasetGenerator.generateTrueViz(pdfStream, nxmlStream);
+            PubmedXMLGenerator datasetGenerator = new PubmedXMLGenerator();
+            datasetGenerator.setVerbose(false);
+            BxDocument bxDoc = datasetGenerator.generateTrueViz(pdfStream, nxmlStream);
 
-                int keys = 0;
-                Set<BxZoneLabel> set = EnumSet.noneOf(BxZoneLabel.class);
-                int total = 0;
-                int known = 0;
-                for (BxZone z : bxDoc.asZones()) {
-                    total++;
-                    if (z.getLabel() != null) {
-                        known++;
-                        if (z.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_METADATA)) {
-                            set.add(z.getLabel());
-                        }
-                        if (BxZoneLabel.REFERENCES.equals(z.getLabel())) {
-                            keys = 1;
-                        }
+            int keys = 0;
+            Set<BxZoneLabel> set = EnumSet.noneOf(BxZoneLabel.class);
+            int total = 0;
+            int known = 0;
+            for (BxZone z : bxDoc.asZones()) {
+                total++;
+                if (z.getLabel() != null) {
+                    known++;
+                    if (z.getLabel().isOfCategoryOrGeneral(BxZoneLabelCategory.CAT_METADATA)) {
+                        set.add(z.getLabel());
+                    }
+                    if (BxZoneLabel.REFERENCES.equals(z.getLabel())) {
+                        keys = 1;
                     }
                 }
+            }
 
-                if (set.contains(BxZoneLabel.MET_AFFILIATION)) {
-                    keys++;
-                }
-                if (set.contains(BxZoneLabel.MET_AUTHOR)) {
-                    keys++;
-                }
-                if (set.contains(BxZoneLabel.MET_BIB_INFO)) {
-                    keys++;
-                }
-                if (set.contains(BxZoneLabel.MET_TITLE)) {
-                    keys++;
-                }
-                int coverage = 0;
-                if (total > 0) {
-                    coverage = known * 100 / total;
-                }
-                System.out.print(coverage + " " + set.size() + " " + keys);
+            if (set.contains(BxZoneLabel.MET_AFFILIATION)) {
+                keys++;
+            }
+            if (set.contains(BxZoneLabel.MET_AUTHOR)) {
+                keys++;
+            }
+            if (set.contains(BxZoneLabel.MET_BIB_INFO)) {
+                keys++;
+            }
+            if (set.contains(BxZoneLabel.MET_TITLE)) {
+                keys++;
+            }
+            int coverage = 0;
+            if (total > 0) {
+                coverage = known * 100 / total;
+            }
+            System.out.print(coverage + " " + set.size() + " " + keys);
 
-                Writer fstream = new OutputStreamWriter(new FileOutputStream(
-                        TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "." + coverage + ".cxml")), "UTF-8");
-                BufferedWriter out = new BufferedWriter(fstream);
+            Writer fstream = new OutputStreamWriter(new FileOutputStream(
+                    TextUtils.getTrueVizPath(nxmlPath).replace(".xml", "." + coverage + ".cxml")), "UTF-8");
+            BufferedWriter out = null;
+            try {
+                out = new BufferedWriter(fstream);
                 BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
                 out.write(writer.write(Lists.newArrayList(bxDoc)));
-                out.close();
-
-                System.out.println(" done");
-            } catch (AnalysisException e) {
-                e.printStackTrace();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XPathExpressionException e) {
-                e.printStackTrace();
-            } catch (TransformationException e) {
-                e.printStackTrace();
+            } finally {
+                if (out != null) {
+                    out.close();
+                }
             }
+
+            System.out.println(" done");
         }
     }
 

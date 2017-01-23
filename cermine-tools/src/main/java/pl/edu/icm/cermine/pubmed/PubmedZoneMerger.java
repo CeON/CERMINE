@@ -225,10 +225,16 @@ public class PubmedZoneMerger {
 
             roResolver.resolve(bxDoc);
 
-            Writer out = new OutputStreamWriter(new FileOutputStream(newPath), "UTF-8");
-            BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-            out.write(writer.write(Lists.newArrayList(bxDoc)));
-            out.close();
+            Writer out = null;
+            try {
+                out = new OutputStreamWriter(new FileOutputStream(newPath), "UTF-8");
+                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                out.write(writer.write(Lists.newArrayList(bxDoc)));
+            } finally {
+                if (out != null) {
+                    out.close();
+                }
+            }
             i++;
             System.out.println("Progress: " + i + " out of " + files.size() + " (" + (i * 100. / files.size()) + "%)");
         }

@@ -153,8 +153,8 @@ public class ListInformationResult implements SingleInformationDocResult<List<St
             for (String extracted : extractedValue) {
                 System.out.println("    " + extracted);
             }
-            System.out.printf("Precision: %4.2f\n", getPrecision());
-            System.out.printf("Recall: %4.2f\n", getRecall());
+            System.out.printf("Precision: %4.2f%n", getPrecision());
+            System.out.printf("Recall: %4.2f%n", getRecall());
         }
         if (mode == 1) {
             if (!hasExtracted() && !hasExpected()) {
@@ -183,8 +183,8 @@ public class ListInformationResult implements SingleInformationDocResult<List<St
         for (String extracted : extractedValue) {
             System.out.println("    " + extracted);
         }
-        System.out.printf("Precision: %4.2f\n", getPrecision());
-        System.out.printf("Recall: %4.2f\n", getRecall());
+        System.out.printf("Precision: %4.2f%n", getPrecision());
+        System.out.printf("Recall: %4.2f%n", getRecall());
     }
 
     @Override

@@ -262,8 +262,8 @@ public class RuleBasedPubmedXMLGenerator {
         entries.putIf(lPage, BxZoneLabel.OTH_PAGE_NUMBER);
         entries.putIf(lPage, BxZoneLabel.OTH_PAGE_NUMBER);
         try {
-            int f = Integer.valueOf(fPage);
-            int l = Integer.valueOf(lPage);
+            int f = Integer.parseInt(fPage);
+            int l = Integer.parseInt(lPage);
             while (f < l) {
                 f++;
                 entries.putIf(String.valueOf(f), BxZoneLabel.OTH_PAGE_NUMBER);
@@ -514,7 +514,7 @@ public class RuleBasedPubmedXMLGenerator {
                 List<String> zoneTokens = TextUtils.tokenize(
                         TextUtils.removeOrphantSpaces(
                                 TextUtils.cleanLigatures(
-                                        curZone.toText().toLowerCase())));
+                                        curZone.toText().toLowerCase(Locale.ENGLISH))));
 
                 Double smithSim;
                 Double cosSim;
@@ -555,7 +555,7 @@ public class RuleBasedPubmedXMLGenerator {
                         }
                     }
 
-                    String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase();
+                    String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase(Locale.ENGLISH);
                     int linesCount = z.childrenCount();
                     int pageIdx = Lists.newArrayList(bxDoc).indexOf(z.getParent());
                     BxLine firstLine = z.getFirstChild();
@@ -700,7 +700,7 @@ public class RuleBasedPubmedXMLGenerator {
 
                     if (pageIdx == 0 && z.getLabel().equals(BxZoneLabel.REFERENCES)
                             && !text.equals("references")
-                            && !(z.hasPrev() && z.getPrev().toText().toLowerCase().equals("references"))) {
+                            && !(z.hasPrev() && z.getPrev().toText().toLowerCase(Locale.ENGLISH).equals("references"))) {
                         z.setLabel(BxZoneLabel.MET_BIB_INFO);
                     }
                     if (z.getLabel().equals(BxZoneLabel.REFERENCES) && linesCount < 10
@@ -738,8 +738,8 @@ public class RuleBasedPubmedXMLGenerator {
                         z.setLabel(BxZoneLabel.MET_AFFILIATION);
                     }
                     if ((z.getLabel().equals(BxZoneLabel.BODY_CONTENT) || z.getLabel().equals(BxZoneLabel.OTH_UNKNOWN))
-                            && (firstLine.toText().toLowerCase().equals("acknowledgments")
-                            || firstLine.toText().toLowerCase().equals("acknowledgements"))) {
+                            && (firstLine.toText().toLowerCase(Locale.ENGLISH).equals("acknowledgments")
+                            || firstLine.toText().toLowerCase(Locale.ENGLISH).equals("acknowledgements"))) {
                         z.setLabel(BxZoneLabel.BODY_ACKNOWLEDGMENT);
                     }
                     if (z.getLabel().equals(BxZoneLabel.MET_TITLE) && z.getY() * 2 > pp.getHeight()) {
@@ -823,9 +823,9 @@ public class RuleBasedPubmedXMLGenerator {
                             || text.startsWith("conflict of interest")
                             || text.startsWith("competing interests")
                             || (z.hasPrev()
-                            && (z.getPrev().toText().toLowerCase().equals("conflicts of interest")
-                            || z.getPrev().toText().toLowerCase().equals("conflict of interest")
-                            || z.getPrev().toText().toLowerCase().equals("competing interests")))) {
+                            && (z.getPrev().toText().toLowerCase(Locale.ENGLISH).equals("conflicts of interest")
+                            || z.getPrev().toText().toLowerCase(Locale.ENGLISH).equals("conflict of interest")
+                            || z.getPrev().toText().toLowerCase(Locale.ENGLISH).equals("competing interests")))) {
                         z.setLabel(BxZoneLabel.BODY_CONFLICT_STMT);
                     }
 
@@ -836,7 +836,7 @@ public class RuleBasedPubmedXMLGenerator {
                 for (BxZone z : pp) {
                     BxZoneLabel orig = z.getLabel();
 
-                    String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase();
+                    String text = ContentCleaner.cleanAllAndBreaks(z.toText()).toLowerCase(Locale.ENGLISH);
                     if (BxZoneLabel.MET_AUTHOR.equals(z.getLabel()) && wasAuthor
                             && ((text.contains("email") && text.contains("@"))
                             || text.startsWith("correspondence"))) {
@@ -855,7 +855,7 @@ public class RuleBasedPubmedXMLGenerator {
         return bxDoc;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, AnalysisException, ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformationException {
         if (args.length != 1) {
             System.err.println("Usage: <pubmed directory>");
             System.exit(1);
@@ -865,7 +865,6 @@ public class RuleBasedPubmedXMLGenerator {
         Collection<File> files = FileUtils.listFiles(dir, new String[]{"pdf"}, true);
         int i = 0;
         for (File pdfFile : files) {
-            try {
                 String pdfPath = pdfFile.getPath();
                 String nxmlPath = TextUtils.getNLMPath(pdfPath);
                 String cxmlPath = pdfPath.replaceFirst("\\.pdf", ".cxml");
@@ -895,24 +894,17 @@ public class RuleBasedPubmedXMLGenerator {
                     }
                 }
 
-                Writer out = new OutputStreamWriter(new FileOutputStream(cpxmlPath), "UTF-8");
-                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                out.write(writer.write(Lists.newArrayList(bxDoc)));
-                out.close();
+                Writer out = null;
+                try {
+                    out = new OutputStreamWriter(new FileOutputStream(cpxmlPath), "UTF-8");
+                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                    out.write(writer.write(Lists.newArrayList(bxDoc)));
+                } finally {
+                    if (out != null) {
+                        out.close();
+                    }
+                }
                 System.out.println("Progress: " + i + " out of " + files.size() + " (" + (i * 100. / files.size()) + "%)");
-            } catch (AnalysisException e) {
-                e.printStackTrace();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XPathExpressionException e) {
-                e.printStackTrace();
-            } catch (TransformationException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

@@ -109,7 +109,10 @@ public class NlmIterator implements Iterable<NlmPair> {
 
             @Override
             public NlmPair next() {
-                ++curItemIdx;
+                curItemIdx++;
+                if (curItemIdx >= entries.size()) {
+                    throw new NoSuchElementException();
+                }
                 NlmPair actualItem = entries.get(curItemIdx);
                 return actualItem;
             }

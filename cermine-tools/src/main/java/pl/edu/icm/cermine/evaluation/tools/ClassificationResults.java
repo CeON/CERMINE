@@ -102,7 +102,7 @@ public class ClassificationResults {
         }
         accuracy = (double) correctly / (double) all;
         Formatter formatter = new Formatter(System.out, Locale.US);
-        formatter.format("Accuracy = %2.2f\n", accuracy * 100.0);
+        formatter.format("Accuracy = %2.2f%n", accuracy * 100.0);
 
         Map<BxZoneLabel, Double> precisions = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
         int pairsInvolved = 0;
@@ -124,7 +124,7 @@ public class ClassificationResults {
         }
         double precision = sum(precisions.values());
         precision /= pairsInvolved;
-        formatter.format("Precision = %2.2f\n", precision * 100.0);
+        formatter.format("Precision = %2.2f%n", precision * 100.0);
 
         Map<BxZoneLabel, Double> recalls = new EnumMap<BxZoneLabel, Double>(BxZoneLabel.class);
         pairsInvolved = 0;
@@ -146,7 +146,7 @@ public class ClassificationResults {
         }
         double recall = sum(recalls.values());
         recall /= pairsInvolved;
-        formatter.format("Recall = %2.2f\n", recall * 100.0);
+        formatter.format("Recall = %2.2f%n", recall * 100.0);
     }
 
     public void printMatrix() {

@@ -89,11 +89,11 @@ public class SVMInitialBuilder {
         }
         Double C = 16.;
         if (line.hasOption("C")) {
-            C = Double.valueOf(line.getOptionValue("C"));
+            C = Double.parseDouble(line.getOptionValue("C"));
         }
         Double gamma = 1.;
         if (line.hasOption("g")) {
-            gamma = Double.valueOf(line.getOptionValue("g"));
+            gamma = Double.parseDouble(line.getOptionValue("g"));
         }
         String inDir = line.getOptionValue("input");
         String outFile = line.getOptionValue("output");
@@ -101,11 +101,11 @@ public class SVMInitialBuilder {
         Integer degree = -1;
 
         if (degreeStr != null && !degreeStr.isEmpty()) {
-            degree = Integer.valueOf(degreeStr);
+            degree = Integer.parseInt(degreeStr);
         }
         Integer kernelType = svm_parameter.RBF;
         if (line.hasOption("kernel")) {
-            switch (Integer.valueOf(line.getOptionValue("kernel"))) {
+            switch (Integer.parseInt(line.getOptionValue("kernel"))) {
                 case 0:
                     kernelType = svm_parameter.LINEAR;
                     break;
@@ -122,7 +122,7 @@ public class SVMInitialBuilder {
                     throw new IllegalArgumentException("Invalid kernel value provided");
             }
         }
-        if (kernelType == svm_parameter.POLY && degree == null) {
+        if (kernelType == svm_parameter.POLY) {
             System.err.println("Polynomial kernel requires the -degree option to be specified");
             System.exit(1);
         }

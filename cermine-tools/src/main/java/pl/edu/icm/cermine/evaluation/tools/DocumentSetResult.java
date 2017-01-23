@@ -32,9 +32,9 @@ public class DocumentSetResult {
     
     private final Map<String, Map<EvalInformationType, SingleInformationDocResult>> results;
     
-    private Map<EvalInformationType, Double> precision;
-    private Map<EvalInformationType, Double> recall;
-    private Map<EvalInformationType, Double> f1;
+    private final Map<EvalInformationType, Double> precision = new EnumMap<EvalInformationType, Double>(EvalInformationType.class);
+    private final Map<EvalInformationType, Double> recall = new EnumMap<EvalInformationType, Double>(EvalInformationType.class);
+    private final Map<EvalInformationType, Double> f1 = new EnumMap<EvalInformationType, Double>(EvalInformationType.class);
         
     public DocumentSetResult(List<EvalInformationType> types) {
         this.evalTypes = types;
@@ -49,9 +49,9 @@ public class DocumentSetResult {
     }
     
     public void evaluate() {
-        precision = new EnumMap<EvalInformationType, Double>(EvalInformationType.class);
-        recall = new EnumMap<EvalInformationType, Double>(EvalInformationType.class);
-        f1 = new EnumMap<EvalInformationType, Double>(EvalInformationType.class);
+        precision.clear();
+        recall.clear();
+        f1.clear();
         
         Map<EvalInformationType, Integer> precisionCount = new EnumMap<EvalInformationType, Integer>(EvalInformationType.class);
         Map<EvalInformationType, Integer> recallCount = new EnumMap<EvalInformationType, Integer>(EvalInformationType.class);
@@ -109,9 +109,9 @@ public class DocumentSetResult {
             avgF1 += f;
         }
         avgF1 /= evalTypes.size();
-        System.out.printf("Average precision\t\t%4.2f\n", 100 * avgPrecision);
-        System.out.printf("Average recall\t\t%4.2f\n", 100 * avgRecall);
-        System.out.printf("Average F1 score\t\t%4.2f\n", 100 * avgF1);
+        System.out.printf("Average precision\t\t%4.2f%n", 100 * avgPrecision);
+        System.out.printf("Average recall\t\t%4.2f%n", 100 * avgRecall);
+        System.out.printf("Average F1 score\t\t%4.2f%n", 100 * avgF1);
     }
     
     public void printTypeSummary(EvalInformationType type) {

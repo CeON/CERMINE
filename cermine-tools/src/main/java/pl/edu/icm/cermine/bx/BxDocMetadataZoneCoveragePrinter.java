@@ -19,6 +19,7 @@
 package pl.edu.icm.cermine.bx;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ import pl.edu.icm.cermine.structure.model.*;
  */
 public class BxDocMetadataZoneCoveragePrinter extends BxDocStatisticsPrinter {
 
-    public static void main(String[] args) throws ParseException, TransformationException, FileNotFoundException {
+    public static void main(String[] args) throws ParseException, TransformationException, FileNotFoundException, UnsupportedEncodingException {
         BxDocMetadataZoneCoveragePrinter printer = new BxDocMetadataZoneCoveragePrinter();
         printer.run(args);
     }

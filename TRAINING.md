@@ -87,7 +87,7 @@ format. To do this, one has to perform the following steps:
           ./segmedit.py
 
     Refer to
-    [SEGMEDITGUI-HELP](https://github.com/CeON/SegmEdit/blob/master/SegmEditGUI/SEGMEDITGUI-HELP)
+    [SEGMEDITGUI-HELP](https://github.com/CeON/SegmEdit/blob/master/SegmEditGUI/SEGMEDITGUI-HELP.md)
     for the help regarding needed Python packages.
 
   1.4 .cermstr files were created automatically and most likely contain errors.

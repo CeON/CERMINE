@@ -119,19 +119,19 @@ format. To do this, one has to perform the following steps:
 
 3. Using the custom models
 
-  3.1 Create .properties file with the following content:
+  3.1 Create .properties file with the following content (see [default .properties file](https://github.com/CeON/CERMINE/blob/master/cermine-impl/src/main/resources/pl/edu/icm/cermine/application-default.properties)):
 
         # paths to category/initial model files
-        zoneClassifier.initial.default.model=model-category
-        zoneClassifier.initial.default.rangeModel=model-category.range
+        zoneClassifier.initial.model=model-category
+        zoneClassifier.initial.ranges=model-category.range
 
         # paths to metadata model files
-        zoneClassifier.metadata.default.model=model-metadata
-        zoneClassifier.metadata.default.rangeModel=model-metadata.range
+        zoneClassifier.metadata.model=model-metadata
+        zoneClassifier.metadata.ranges=model-metadata.range
 
         # paths to body model files
-        contentFilter.default.model=model-body
-        contentFilter.default.rangeModel=model-body.range
+        contentFilter.model=model-body
+        contentFilter.ranges=model-body.range
 
   3.2 Metadata extraction using custom .properties file:
 

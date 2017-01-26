@@ -126,7 +126,7 @@ public class SVMBodyBuilder {
                     throw new IllegalArgumentException("Invalid kernel value provided");
             }
         }
-        if (kernelType == svm_parameter.POLY) {
+        if (kernelType == svm_parameter.POLY && degree == -1) {
             System.err.println("Polynomial kernel requires the -degree option to be specified");
             System.exit(1);
         }

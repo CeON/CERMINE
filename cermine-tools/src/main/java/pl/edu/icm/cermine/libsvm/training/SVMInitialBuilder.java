@@ -99,7 +99,6 @@ public class SVMInitialBuilder {
         String outFile = line.getOptionValue("output");
         String degreeStr = line.getOptionValue("degree");
         Integer degree = -1;
-
         if (degreeStr != null && !degreeStr.isEmpty()) {
             degree = Integer.parseInt(degreeStr);
         }
@@ -122,7 +121,7 @@ public class SVMInitialBuilder {
                     throw new IllegalArgumentException("Invalid kernel value provided");
             }
         }
-        if (kernelType == svm_parameter.POLY) {
+        if (kernelType == svm_parameter.POLY && degree == -1) {
             System.err.println("Polynomial kernel requires the -degree option to be specified");
             System.exit(1);
         }

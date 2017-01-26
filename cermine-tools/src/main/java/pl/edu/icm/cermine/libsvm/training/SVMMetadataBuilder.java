@@ -70,7 +70,6 @@ public class SVMMetadataBuilder {
         zoneClassifier.setParameter(param);
         zoneClassifier.buildClassifier(trainingSamples);
         zoneClassifier.printWeigths(featureVectorBuilder);
-        zoneClassifier.saveModel("svm_initial_classifier");
         return zoneClassifier;
     }
 
@@ -102,13 +101,10 @@ public class SVMMetadataBuilder {
         }
         String inDir = line.getOptionValue("input");
         String outFile = line.getOptionValue("output");
-        String degreeStr = line.getOptionValue("degree");
         Integer degree = 3;
-        if (degreeStr != null && !degreeStr.isEmpty()) {
-            degree = Integer.parseInt(degreeStr);
-        }
         Integer kernelType = svm_parameter.POLY;
         if (line.hasOption("kernel")) {
+            degree = -1;
             switch (Integer.parseInt(line.getOptionValue("kernel"))) {
                 case 0:
                     kernelType = svm_parameter.LINEAR;
@@ -126,7 +122,11 @@ public class SVMMetadataBuilder {
                     throw new IllegalArgumentException("Invalid kernel value provided");
             }
         }
-        if (kernelType == svm_parameter.POLY) {
+        String degreeStr = line.getOptionValue("degree");
+        if (degreeStr != null && !degreeStr.isEmpty()) {
+            degree = Integer.parseInt(degreeStr);
+        }
+        if (kernelType == svm_parameter.POLY && degree == -1) {
             System.err.println("Polynomial kernel requires the -degree option to be specified");
             System.exit(1);
         }

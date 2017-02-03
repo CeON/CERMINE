@@ -23,5 +23,6 @@ package pl.edu.icm.cermine.tools;
  */
 public class PatternUtils {
 
-    public static final String DOI_PATTERN = "10\\.\\d{4}/\\S+";
+    public static final String DOI_PATTERN = "10\\.\\d{4,9}/\\S*\\w";
+    
 }

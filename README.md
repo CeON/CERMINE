@@ -16,9 +16,9 @@ How to cite CERMINE:
 	In International Journal on Document Analysis and Recognition (IJDAR), 2015, 
 	vol. 18, no. 4, pp. 317-335, doi: 10.1007/s10032-015-0249-8.
 
-DOI of CERMINE release 1.8: 
+DOI of CERMINE release 1.11:
 
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45063.svg)](http://dx.doi.org/10.5281/zenodo.45063)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.161547.svg)](https://doi.org/10.5281/zenodo.161547)
 
 Using CERMINE
 -------------

@@ -4,7 +4,7 @@
     <groupId>pl.edu.icm.cermine</groupId>
     <artifactId>cermine-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.12-SNAPSHOT</version>
+    <version>1.12-RC-01</version>
     <name>CERMINE Content Extractor and Miner</name>
     <organization>
         <name>ICM, Warsaw University</name>
@@ -139,7 +139,7 @@
         <connection>scm:git:git@github.com:CeON/CERMINE.git</connection>
         <developerConnection>scm:git:git@github.com:CeON/CERMINE.git</developerConnection>
         <url>https://github.com/CeON/CERMINE</url>
-      <tag>HEAD</tag>
+      <tag>CERMINE-1.12-RC-01</tag>
   </scm>
 
     <distributionManagement>

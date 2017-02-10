@@ -8,8 +8,6 @@
         <version>1.12-SNAPSHOT</version>
     </parent>
 
-    <groupId>pl.edu.icm.cermine</groupId>
-    <version>1.12-SNAPSHOT</version>
     <artifactId>cermine-web</artifactId>
     <packaging>war</packaging>
     <name>CERMINE Web Interface - ${project.version}</name>

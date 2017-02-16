@@ -99,6 +99,7 @@
                     During release:perform, enable the "release" profile
                   -->
                   <releaseProfiles>release</releaseProfiles>
+                  <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
             </plugin>
         </plugins>

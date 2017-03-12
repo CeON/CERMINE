@@ -25,8 +25,9 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DateType;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.metadata.model.IDType;
 import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
@@ -134,7 +135,7 @@ public class GrobidToMetadataConverter implements ModelToModelConverter<Element,
         xpath.addNamespace("x", source.getNamespaceURI());
         Element doi = (Element)xpath.selectSingleNode(source);
         if (doi != null) {
-            metadata.addId(DocumentMetadata.ID_DOI, XMLTools.getTextContent(doi));
+            metadata.addId(IDType.DOI, XMLTools.getTextContent(doi));
         }
     }
     
@@ -143,7 +144,7 @@ public class GrobidToMetadataConverter implements ModelToModelConverter<Element,
         xpath.addNamespace("x", source.getNamespaceURI());
         Attribute pubYear = (Attribute)xpath.selectSingleNode(source);
         if (pubYear != null) {
-            metadata.setDate(DocumentDate.DATE_PUBLISHED, null, null, pubYear.getValue());
+            metadata.setDate(DateType.PUBLISHED, null, null, pubYear.getValue());
         }
     }
     

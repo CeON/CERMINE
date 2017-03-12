@@ -19,7 +19,9 @@
 package pl.edu.icm.cermine.metadata.transformers;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import org.jdom.Element;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.affiliation.tools.CountryISOCodeFinder;
@@ -67,8 +69,12 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
     private Element convertArticleMetadata(DocumentMetadata source) throws TransformationException {
         Element metadata = new Element(TAG_ARTICLE_META);
 
-        for (String idType : source.getIdTypes()) {
-            addElement(metadata, TAG_ARTICLE_ID, source.getId(idType), ATTR_PUB_ID_TYPE, idType);
+        Map<IDType, String> typeToAttr = new EnumMap<IDType, String>(IDType.class);
+        typeToAttr.put(IDType.DOI, "doi");
+        typeToAttr.put(IDType.HINDAWI, "hindawi-id");
+        typeToAttr.put(IDType.URN, "urn");
+        for (IDType idType : source.getIdTypes()) {
+            addElement(metadata, TAG_ARTICLE_ID, source.getId(idType), ATTR_PUB_ID_TYPE, typeToAttr.get(idType));
         }
         
         String[] titlePath = new String[]{TAG_TITLE_GROUP, TAG_ARTICLE_TITLE};
@@ -89,9 +95,9 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
             metadata.addContent(contributors);
         }
 
-        DocumentDate pubDate = source.getDate(DocumentDate.DATE_PUBLISHED);
+        DocumentDate pubDate = source.getDate(DateType.PUBLISHED);
         if (pubDate != null) {
-            metadata.addContent(convertDate(TAG_PUB_DATE, DocumentDate.DATE_PUBLISHED, pubDate));
+            metadata.addContent(convertDate(TAG_PUB_DATE, DateType.PUBLISHED, pubDate));
         }
         
         addElement(metadata, TAG_VOLUME, source.getVolume());
@@ -100,19 +106,19 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
         addElement(metadata, TAG_FPAGE, source.getFirstPage());
         addElement(metadata, TAG_LPAGE, source.getLastPage());
         
-        DocumentDate accDate = source.getDate(DocumentDate.DATE_ACCEPTED);
-        DocumentDate recDate = source.getDate(DocumentDate.DATE_RECEIVED);
-        DocumentDate revDate = source.getDate(DocumentDate.DATE_REVISED);
+        DocumentDate accDate = source.getDate(DateType.ACCEPTED);
+        DocumentDate recDate = source.getDate(DateType.RECEIVED);
+        DocumentDate revDate = source.getDate(DateType.REVISED);
         if (accDate != null || recDate != null || revDate != null) {
             Element history = new Element(TAG_HISTORY);
             if (accDate != null) {
-                history.addContent(convertDate(TAG_DATE, ATTR_VALUE_DATE_ACCEPTED, accDate));
+                history.addContent(convertDate(TAG_DATE, DateType.ACCEPTED, accDate));
             }
             if (recDate != null) {
-                history.addContent(convertDate(TAG_DATE, ATTR_VALUE_DATE_TYPE_RECEIVED, recDate));
+                history.addContent(convertDate(TAG_DATE, DateType.RECEIVED, recDate));
             }
             if (revDate != null) {
-                history.addContent(convertDate(TAG_DATE, ATTR_VALUE_DATE_TYPE_REVISED, revDate));
+                history.addContent(convertDate(TAG_DATE, DateType.REVISED, revDate));
             }
             metadata.addContent(history);
         }
@@ -187,10 +193,15 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
         return contributor;
     }
     
-    private Element convertDate(String name, String type, DocumentDate date) {
+    private Element convertDate(String name, DateType type, DocumentDate date) {
+        Map<DateType, String> typeToAttr = new EnumMap<DateType, String>(DateType.class);
+        typeToAttr.put(DateType.ACCEPTED, ATTR_VALUE_DATE_ACCEPTED);
+        typeToAttr.put(DateType.RECEIVED, ATTR_VALUE_DATE_RECEIVED);
+        typeToAttr.put(DateType.REVISED, ATTR_VALUE_DATE_REVISED);
+        
         Element historyDate = new Element(name);
-        if (!type.equals(DocumentDate.DATE_PUBLISHED)) {
-            historyDate.setAttribute(ATTR_DATE_TYPE, type);
+        if (!type.equals(DateType.PUBLISHED)) {
+            historyDate.setAttribute(ATTR_DATE_TYPE, typeToAttr.get(type));
         }
         addElement(historyDate, TAG_DAY, date.getDay());
         addElement(historyDate, TAG_MONTH, date.getMonth());
@@ -282,8 +293,8 @@ public class MetadataToNLMConverter implements ModelToModelConverter<DocumentMet
     private static final String ATTR_VALUE_CONTRIB_AUTHOR       = "author";
     private static final String ATTR_VALUE_CONTRIB_EDITOR       = "editor";
     private static final String ATTR_VALUE_PUB_TYPE_PPUB        = "ppub";
-    private static final String ATTR_VALUE_DATE_TYPE_RECEIVED   = "received";
+    private static final String ATTR_VALUE_DATE_RECEIVED        = "received";
     private static final String ATTR_VALUE_REF_TYPE_AFF         = "aff";
-    private static final String ATTR_VALUE_DATE_TYPE_REVISED    = "revised";
+    private static final String ATTR_VALUE_DATE_REVISED         = "revised";
            
 }

@@ -24,6 +24,7 @@ import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.metadata.model.IDType;
 import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
@@ -68,7 +69,7 @@ public class PdfxToMetadataConverter implements ModelToModelConverter<Element, D
         XPath xpath = XPath.newInstance("/pdfx/meta/doi");
         Element doi = (Element)xpath.selectSingleNode(source);
         if (doi != null) {
-            metadata.addId(DocumentMetadata.ID_DOI, XMLTools.getTextContent(doi));
+            metadata.addId(IDType.DOI, XMLTools.getTextContent(doi));
         }
     }
     

@@ -22,7 +22,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DateType;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 
@@ -48,8 +48,8 @@ public class JournalYearVolumeEnhancer extends AbstractPatternEnhancer {
     protected boolean enhanceMetadata(MatchResult result, DocumentMetadata metadata) {
         metadata.setJournal(result.group(1).trim()
                 .replaceAll("Published as: ", "").replaceAll(",$", ""));
-        if (metadata.getDate(DocumentDate.DATE_PUBLISHED) == null) {
-            metadata.setDate(DocumentDate.DATE_PUBLISHED, null, null, result.group(2));
+        if (metadata.getDate(DateType.PUBLISHED) == null) {
+            metadata.setDate(DateType.PUBLISHED, null, null, result.group(2));
         }
         metadata.setVolume(result.group(3));
        

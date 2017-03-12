@@ -24,8 +24,9 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DateType;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.metadata.model.IDType;
 import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
@@ -142,7 +143,9 @@ public class NLMToMetadataConverter implements ModelToModelConverter<Element, Do
         List ids = xpath.selectNodes(source);
         for (Object i : ids) {
             Element id = (Element) i;
-            metadata.addId(id.getAttributeValue("pub-id-type"), XMLTools.getTextContent(id));
+            if ("doi".equals(id.getAttributeValue("pub-id-type"))) {
+                metadata.addId(IDType.DOI, XMLTools.getTextContent(id));
+            }
         }
     }
     
@@ -153,16 +156,16 @@ public class NLMToMetadataConverter implements ModelToModelConverter<Element, Do
             xpath = XPath.newInstance("./article-meta//pub-date");
             pubDate = (Element)xpath.selectSingleNode(source);
         }
-        convertDate(DocumentDate.DATE_PUBLISHED, pubDate, metadata);
+        convertDate(DateType.PUBLISHED, pubDate, metadata);
         xpath = XPath.newInstance("./article-meta//history/date[@date-type='received']");
-        convertDate(DocumentDate.DATE_RECEIVED, (Element)xpath.selectSingleNode(source), metadata);
+        convertDate(DateType.RECEIVED, (Element)xpath.selectSingleNode(source), metadata);
         xpath = XPath.newInstance("./article-meta//history/date[@date-type='accepted']");
-        convertDate(DocumentDate.DATE_ACCEPTED, (Element)xpath.selectSingleNode(source), metadata);
+        convertDate(DateType.ACCEPTED, (Element)xpath.selectSingleNode(source), metadata);
         xpath = XPath.newInstance("./article-meta//history/date[@date-type='revised']");
-        convertDate(DocumentDate.DATE_REVISED, (Element)xpath.selectSingleNode(source), metadata);
+        convertDate(DateType.REVISED, (Element)xpath.selectSingleNode(source), metadata);
     }
     
-    private void convertDate(String type, Element source, DocumentMetadata metadata) {
+    private void convertDate(DateType type, Element source, DocumentMetadata metadata) {
         if (source == null) {
             return;
         }

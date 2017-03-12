@@ -21,7 +21,7 @@ package pl.edu.icm.cermine.metadata.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import pl.edu.icm.cermine.content.cleaning.ContentCleaner;
@@ -34,7 +34,7 @@ public class DocumentMetadata {
 
     private String title;
     
-    private final Map<String, String> ids = new HashMap<String, String>();
+    private final Map<IDType, String> ids = new EnumMap<IDType, String>(IDType.class);
     
     private final List<DocumentAuthor> authors = new ArrayList<DocumentAuthor>();
     
@@ -58,7 +58,7 @@ public class DocumentMetadata {
     
     private String publisher;
     
-    private final Map<String, DocumentDate> dates = new HashMap<String, DocumentDate>();
+    private final Map<DateType, DocumentDate> dates = new EnumMap<DateType, DocumentDate>(DateType.class);
 
     private final List<DocumentAffiliation> affiliations = new ArrayList<DocumentAffiliation>();
     
@@ -72,22 +72,22 @@ public class DocumentMetadata {
         this.title = title;
     }
     
-    public List<String> getIdTypes() {
-        List<String> idTypes = new ArrayList<String>();
+    public List<IDType> getIdTypes() {
+        List<IDType> idTypes = new ArrayList<IDType>();
         idTypes.addAll(ids.keySet());
         return idTypes;
     }
     
-    public String getId(String idType) {
+    public String getId(IDType idType) {
         return ids.get(idType);
     }
     
-    public void setDate(String type, String day, String month, String year) {
+    public void setDate(DateType type, String day, String month, String year) {
         DocumentDate date = new DocumentDate(year, month, day);
         dates.put(type, date);
     }
     
-    public DocumentDate getDate(String type) {
+    public DocumentDate getDate(DateType type) {
         return dates.get(type);
     }
     
@@ -125,7 +125,7 @@ public class DocumentMetadata {
         return ret;
     }
     
-    public void addId(String type, String id) {
+    public void addId(IDType type, String id) {
         ids.put(type, id);
     }
     
@@ -261,7 +261,7 @@ public class DocumentMetadata {
 
     public void clean() {
         title = ContentCleaner.cleanAllAndBreaks(title);
-        for (String id : ids.keySet()) {
+        for (IDType id : ids.keySet()) {
             ids.put(id, ContentCleaner.clean(ids.get(id)));
         }
         for (DocumentAffiliation affiliation : affiliations) {
@@ -312,8 +312,4 @@ public class DocumentMetadata {
         publisher = ContentCleaner.clean(publisher);
     }
 
-    public static final String ID_HINDAWI = "hindawi-id";
-    public static final String ID_DOI = "doi";
-    public static final String ID_URN = "urn";
-    
 }

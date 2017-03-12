@@ -54,14 +54,6 @@ public class DocumentDate {
         return year;
     }
 
-    public static final String DATE_ACCEPTED = "accepted";
-    
-    public static final String DATE_RECEIVED = "received";
-    
-    public static final String DATE_REVISED = "revised";
-    
-    public static final String DATE_PUBLISHED = "published";
-
     private void clean() {
         day = ContentCleaner.clean(day);
         month = ContentCleaner.clean(month);

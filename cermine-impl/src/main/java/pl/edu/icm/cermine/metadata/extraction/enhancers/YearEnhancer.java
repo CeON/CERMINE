@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DateType;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.tools.TextUtils;
@@ -58,8 +58,8 @@ public class YearEnhancer extends AbstractMultiPatternEnhancer {
         for (int i = 1; i <= result.groupCount(); i++) {
             String year = result.group(i);
             if (TextUtils.isNumberBetween(year, MIN_YEAR, MAX_YEAR)) {
-                if (metadata.getDate(DocumentDate.DATE_PUBLISHED) == null) {
-                    metadata.setDate(DocumentDate.DATE_PUBLISHED, null, null, year);
+                if (metadata.getDate(DateType.PUBLISHED) == null) {
+                    metadata.setDate(DateType.PUBLISHED, null, null, year);
                 }
                 return true;
             }

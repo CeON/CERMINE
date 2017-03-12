@@ -15,24 +15,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
-
-package pl.edu.icm.cermine.metadata.extraction.enhancers;
-
-import pl.edu.icm.cermine.metadata.model.DateType;
-import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+package pl.edu.icm.cermine.metadata.model;
 
 /**
- * @author Krzysztof Rusek
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class AcceptedDateEnhancer extends AbstractDateEnhancer {
+public enum IDType {
 
-    public AcceptedDateEnhancer() {
-        super(EnhancedField.ACCEPTED_DATE, "accepted");
-    }
-
-    @Override
-    protected void enhanceMetadata(DocumentMetadata metadata, String day, String month, String year) {
-        metadata.setDate(DateType.ACCEPTED, day, month, year);
-    }
-
+    HINDAWI,
+    
+    DOI,
+    
+    URN;
+    
 }

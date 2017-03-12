@@ -34,10 +34,10 @@ import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import pl.edu.icm.cermine.evaluation.tools.RelationInformationResult.StringRelation;
 import pl.edu.icm.cermine.evaluation.tools.*;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.metadata.model.DateType;
 import pl.edu.icm.cermine.metadata.model.DocumentAffiliation;
 import pl.edu.icm.cermine.metadata.model.DocumentAuthor;
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
-import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.metadata.model.IDType;
 import pl.edu.icm.cermine.model.Document;
 import pl.edu.icm.cermine.tools.transformers.FormatToModelReader;
 
@@ -201,20 +201,20 @@ public abstract class SystemEvaluator {
                         break;
                     case YEAR:
                         String origYear = null;
-                        if (origDoc.getMetadata().getDate(DocumentDate.DATE_PUBLISHED) != null) {
-                            origYear = origDoc.getMetadata().getDate(DocumentDate.DATE_PUBLISHED).getYear();
+                        if (origDoc.getMetadata().getDate(DateType.PUBLISHED) != null) {
+                            origYear = origDoc.getMetadata().getDate(DateType.PUBLISHED).getYear();
                         }
                         String testYear = null;
-                        if (testDoc.getMetadata().getDate(DocumentDate.DATE_PUBLISHED) != null) {
-                            testYear = origDoc.getMetadata().getDate(DocumentDate.DATE_PUBLISHED).getYear();
+                        if (testDoc.getMetadata().getDate(DateType.PUBLISHED) != null) {
+                            testYear = origDoc.getMetadata().getDate(DateType.PUBLISHED).getYear();
                         }
                         results.addResult(file, new SimpleInformationResult(type,
                                 origYear, testYear));
                         break;
                     case DOI:
                         results.addResult(file, new SimpleInformationResult(type,
-                                origDoc.getMetadata().getId(DocumentMetadata.ID_DOI),
-                                testDoc.getMetadata().getId(DocumentMetadata.ID_DOI)));
+                                origDoc.getMetadata().getId(IDType.DOI),
+                                testDoc.getMetadata().getId(IDType.DOI)));
                         break;
                     case HEADERS:
                         List<String> headerOrig = new ArrayList<String>();

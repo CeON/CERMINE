@@ -25,8 +25,9 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import pl.edu.icm.cermine.exception.TransformationException;
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DateType;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
+import pl.edu.icm.cermine.metadata.model.IDType;
 import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
@@ -128,7 +129,7 @@ public class BwmetaToMetadataConverter implements ModelToModelConverter<Element,
         xpath.addNamespace("x", source.getNamespaceURI());
         Attribute doi = (Attribute)xpath.selectSingleNode(source);
         if (doi != null) {
-            metadata.addId(DocumentMetadata.ID_DOI, doi.getValue());
+            metadata.addId(IDType.DOI, doi.getValue());
         }
     }
     
@@ -137,7 +138,7 @@ public class BwmetaToMetadataConverter implements ModelToModelConverter<Element,
         xpath.addNamespace("x", source.getNamespaceURI());
         Element year = (Element)xpath.selectSingleNode(source);
         if (year != null) {
-            metadata.setDate(DocumentDate.DATE_PUBLISHED, null, null, XMLTools.getTextContent(year));
+            metadata.setDate(DateType.PUBLISHED, null, null, XMLTools.getTextContent(year));
         }
     }
     

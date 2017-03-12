@@ -18,7 +18,7 @@
 
 package pl.edu.icm.cermine.metadata.extraction.enhancers;
 
-import pl.edu.icm.cermine.metadata.model.DocumentDate;
+import pl.edu.icm.cermine.metadata.model.DateType;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 
 /**
@@ -32,6 +32,6 @@ public class ReceivedDateEnhancer extends AbstractDateEnhancer {
 
     @Override
     protected void enhanceMetadata(DocumentMetadata metadata, String day, String month, String year) {
-        metadata.setDate(DocumentDate.DATE_RECEIVED, day, month, year);
+        metadata.setDate(DateType.RECEIVED, day, month, year);
     }
 }

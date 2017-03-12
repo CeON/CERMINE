@@ -18,6 +18,8 @@
 package pl.edu.icm.cermine.metadata.model;
 
 /**
+ * Identifier types.
+ * 
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public enum IDType {

@@ -18,6 +18,8 @@
 package pl.edu.icm.cermine.metadata.model;
 
 /**
+ * Date types.
+ * 
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public enum DateType {

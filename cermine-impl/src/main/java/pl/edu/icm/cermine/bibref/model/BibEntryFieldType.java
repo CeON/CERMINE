@@ -18,7 +18,9 @@
 package pl.edu.icm.cermine.bibref.model;
 
 /**
- * @author Dominika Tkaczyk (dtkaczyk@icm.edu.pl)
+ * Bibliographic reference field types.
+ * 
+ * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public enum BibEntryFieldType {
 

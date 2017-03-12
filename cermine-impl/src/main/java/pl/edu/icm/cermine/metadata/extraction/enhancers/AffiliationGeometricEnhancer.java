@@ -142,7 +142,8 @@ public class AffiliationGeometricEnhancer extends AbstractSimpleEnhancer {
                             .replaceFirst("[\\.,;]$", "").trim()
                             .replaceFirst("^[-\\)]", "").trim()
                             .replaceAll("(?<=[a-z])- (?=[a-z])", "");
-                    if (text.isEmpty() || !text.matches(".*[A-Z].*") || !text.matches(".*[a-z].*") || text.length() < 12) {
+                    if (text.isEmpty() || !text.matches(".*[A-Z].*") || !text.matches(".*[a-z].*")
+                            || text.length() < 12 || text.length() > 500) {
                         continue;
                     }
                     String index = entry.getKey();

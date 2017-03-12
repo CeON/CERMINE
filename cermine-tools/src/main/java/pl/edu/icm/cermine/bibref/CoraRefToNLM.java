@@ -33,6 +33,7 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
@@ -130,7 +131,7 @@ public final class CoraRefToNLM {
             List<String> toks = new ArrayList<String>();
             List<CitationTokenLabel> labs = new ArrayList<CitationTokenLabel>();
 
-            for (String s : be.getAllFieldValues(BibEntry.FIELD_AUTHOR)) {
+            for (String s : be.getAllFieldValues(BibEntryFieldType.AUTHOR)) {
                 String tmp = s.trim().replaceAll(" +,", ",").replaceAll("\\.", " ").replaceAll(",", ", ").replaceAll(" +", " ");
                 Pattern p1 = Pattern.compile("^[A-Z] [A-Z][-A-Za-z]+ ?($|,|and|AND|&)");
                 Pattern p2 = Pattern.compile("^[A-Z] [A-Z] [A-Z][-A-Za-z]+ ?($|,|and|AND|&)");

@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Locale;
 import org.apache.commons.io.IOUtils;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
+import pl.edu.icm.cermine.bibref.model.BibEntryType;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.transformers.FormatToModelReader;
 
@@ -87,7 +89,7 @@ public class BibTeXToBibEntryReader implements FormatToModelReader<BibEntry> {
         if (indexOfBrace > indexOfAt) {
             String type = lines[0].substring(indexOfAt + 1, indexOfBrace).toLowerCase(Locale.ENGLISH);
             //list??
-            bibEntry.setType(type);
+            bibEntry.setType(BibEntryType.ofType(type));
         } else {
             throw new TransformationException("Cannot parse string as BibTeX!");
         }
@@ -100,18 +102,18 @@ public class BibTeXToBibEntryReader implements FormatToModelReader<BibEntry> {
                 String key = field[0].trim().toLowerCase(Locale.ENGLISH);
                 String value = field[1].substring(0, field[1].length() - 2);
                 String[] values = value.split(",");
-                if (key.equals(BibEntry.FIELD_AUTHOR)) {
+                if (key.equals(BibEntryFieldType.AUTHOR.getType())) {
                     for (int j = 0; j < values.length; j+=2) {
                         String val = values[j];
                         if (j + 1 < values.length) {
                             val += ",";
                             val += values[j+1];
                         }
-                        bibEntry.addField(key, revertEscape(val));
+                        bibEntry.addField(BibEntryFieldType.AUTHOR, revertEscape(val));
                     }
                 } else {
                     for (String val : values) {
-                        bibEntry.addField(key, revertEscape(val));
+                        bibEntry.addField(BibEntryFieldType.ofType(key), revertEscape(val));
                     }
                 }
             }

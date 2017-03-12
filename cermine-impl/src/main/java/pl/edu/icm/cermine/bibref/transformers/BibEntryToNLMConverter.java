@@ -22,6 +22,7 @@ import java.util.*;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.model.BibEntryField;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
@@ -31,20 +32,21 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  */
 public class BibEntryToNLMConverter implements ModelToModelConverter<BibEntry, Element> {
 
-    private static final Map<String, String> BIBENTRY_TO_NLM = new HashMap<String, String>();
+    private static final Map<BibEntryFieldType, String> BIBENTRY_TO_NLM = 
+            new EnumMap<BibEntryFieldType, String>(BibEntryFieldType.class);
 
     static {
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_TITLE,     "article-title");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_CONTENTS,  "named-content");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_EDITION,   "edition");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_PUBLISHER, "publisher-name");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_LOCATION,  "publisher-loc");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_SERIES,    "series");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_JOURNAL,   "source");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_URL,       "uri");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_VOLUME,    "volume");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_YEAR,      "year");
-        BIBENTRY_TO_NLM.put(BibEntry.FIELD_NUMBER,    "issue");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.TITLE,     "article-title");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.CONTENTS,  "named-content");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.EDITION,   "edition");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.PUBLISHER, "publisher-name");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.LOCATION,  "publisher-loc");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.SERIES,    "series");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.JOURNAL,   "source");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.URL,       "uri");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.VOLUME,    "volume");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.YEAR,      "year");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.NUMBER,    "issue");
     }
    
 
@@ -52,11 +54,12 @@ public class BibEntryToNLMConverter implements ModelToModelConverter<BibEntry, E
     public Element convert(BibEntry entry, Object... hints) throws TransformationException {
         Element element = new Element("mixed-citation");
      
-        Map<BibEntryField, String> fieldKeyMap = new HashMap<BibEntryField, String>();
+        Map<BibEntryField, BibEntryFieldType> fieldKeyMap = 
+                new HashMap<BibEntryField, BibEntryFieldType>();
         
         String text = entry.getText();
         List<BibEntryField> fields = new ArrayList<BibEntryField>();
-        for (String key : entry.getFieldKeys()) {
+        for (BibEntryFieldType key : entry.getFieldKeys()) {
             fields.addAll(entry.getAllFields(key));
             for (BibEntryField field : entry.getAllFields(key)) {
                 fieldKeyMap.put(field, key);
@@ -86,7 +89,7 @@ public class BibEntryToNLMConverter implements ModelToModelConverter<BibEntry, E
                 Element fieldElement = new Element(BIBENTRY_TO_NLM.get(fieldKeyMap.get(field)));
                 fieldElement.setText(XMLTools.removeInvalidXMLChars(fieldText));
                 element.addContent(fieldElement);
-            } else if (BibEntry.FIELD_PAGES.equals(fieldKeyMap.get(field))) {
+            } else if (BibEntryFieldType.PAGES.equals(fieldKeyMap.get(field))) {
                 if (!field.getText().contains("--")) {
                     Element firstPageElement = new Element("fpage");
                     firstPageElement.setText(XMLTools.removeInvalidXMLChars(field.getText()));
@@ -110,7 +113,7 @@ public class BibEntryToNLMConverter implements ModelToModelConverter<BibEntry, E
                     lastPageElement.setText(XMLTools.removeInvalidXMLChars(lastPage));
                     element.addContent(lastPageElement);
                 }
-            } else if (BibEntry.FIELD_AUTHOR.equals(fieldKeyMap.get(field))) {
+            } else if (BibEntryFieldType.AUTHOR.equals(fieldKeyMap.get(field))) {
                 if (!field.getText().contains(", ")) {
                     Element nameElement = new Element("string-name");
                     Element firstElement = new Element("surname");

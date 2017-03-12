@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryType;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.XMLTools;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
@@ -33,7 +34,7 @@ public class ElementToBibEntryConverter implements ModelToModelConverter<Element
 
     @Override
     public BibEntry convert(Element source, Object... hints) throws TransformationException {
-        BibEntry bibEntry = new BibEntry(BibEntry.TYPE_ARTICLE);
+        BibEntry bibEntry = new BibEntry(BibEntryType.ARTICLE);
         String text = XMLTools.getTextContent(source);
         bibEntry.setText(text);
         

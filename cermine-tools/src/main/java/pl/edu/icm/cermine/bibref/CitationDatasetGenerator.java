@@ -32,6 +32,7 @@ import org.jdom.output.XMLOutputter;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
@@ -91,7 +92,7 @@ public final class CitationDatasetGenerator {
                 usedIndices.add(index);
                 Citation nlmCitation = nlmCitations.get(index);
                 BibEntry nlmBibEntry = CitationUtils.citationToBibref(nlmCitation);
-                String nlmTitle = nlmBibEntry.getFirstFieldValue(BibEntry.FIELD_TITLE);
+                String nlmTitle = nlmBibEntry.getFirstFieldValue(BibEntryFieldType.TITLE);
                 if (nlmTitle == null) {
                     continue;
                 }

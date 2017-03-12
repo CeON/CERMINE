@@ -29,6 +29,7 @@ import org.junit.Test;
 import pl.edu.icm.cermine.StandardDataExamples;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.bibref.model.BibEntryField;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
 import pl.edu.icm.cermine.exception.TransformationException;
 
 /**
@@ -72,7 +73,7 @@ public class BibTeXToBibEntryReaderTest {
     
     private void removeTextAndIndexes(BibEntry entry) {
         entry.setText(null);
-        for (String key : entry.getFieldKeys()) {
+        for (BibEntryFieldType key : entry.getFieldKeys()) {
             for (BibEntryField field : entry.getAllFields(key)) {
                 field.setIndexes(-1, -1);
             }

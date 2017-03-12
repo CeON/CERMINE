@@ -25,6 +25,8 @@ import java.util.Map;
 import org.jdom.Element;
 import org.jdom.Text;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
+import pl.edu.icm.cermine.bibref.model.BibEntryType;
 import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
 
@@ -33,25 +35,26 @@ import pl.edu.icm.cermine.tools.transformers.ModelToModelConverter;
  */
 public class NLMToBibEntryConverter implements ModelToModelConverter<Element, BibEntry> {
 
-    private static final Map<String, String> NLM_TO_BIBENTRY = new HashMap<String, String>();
+    private static final Map<String, BibEntryFieldType> NLM_TO_BIBENTRY = 
+            new HashMap<String, BibEntryFieldType>();
 
     static {
-        NLM_TO_BIBENTRY.put("article-title",    BibEntry.FIELD_TITLE);
-        NLM_TO_BIBENTRY.put("named-content",    BibEntry.FIELD_CONTENTS);
-        NLM_TO_BIBENTRY.put("edition",          BibEntry.FIELD_EDITION);
-        NLM_TO_BIBENTRY.put("publisher-name",   BibEntry.FIELD_PUBLISHER);
-        NLM_TO_BIBENTRY.put("publisher-loc",    BibEntry.FIELD_LOCATION);
-        NLM_TO_BIBENTRY.put("series",           BibEntry.FIELD_SERIES);
-        NLM_TO_BIBENTRY.put("source",           BibEntry.FIELD_JOURNAL);
-        NLM_TO_BIBENTRY.put("uri",              BibEntry.FIELD_URL);
-        NLM_TO_BIBENTRY.put("volume",           BibEntry.FIELD_VOLUME);
-        NLM_TO_BIBENTRY.put("year",             BibEntry.FIELD_YEAR);
-        NLM_TO_BIBENTRY.put("issue",            BibEntry.FIELD_NUMBER);
+        NLM_TO_BIBENTRY.put("article-title",    BibEntryFieldType.TITLE);
+        NLM_TO_BIBENTRY.put("named-content",    BibEntryFieldType.CONTENTS);
+        NLM_TO_BIBENTRY.put("edition",          BibEntryFieldType.EDITION);
+        NLM_TO_BIBENTRY.put("publisher-name",   BibEntryFieldType.PUBLISHER);
+        NLM_TO_BIBENTRY.put("publisher-loc",    BibEntryFieldType.LOCATION);
+        NLM_TO_BIBENTRY.put("series",           BibEntryFieldType.SERIES);
+        NLM_TO_BIBENTRY.put("source",           BibEntryFieldType.JOURNAL);
+        NLM_TO_BIBENTRY.put("uri",              BibEntryFieldType.URL);
+        NLM_TO_BIBENTRY.put("volume",           BibEntryFieldType.VOLUME);
+        NLM_TO_BIBENTRY.put("year",             BibEntryFieldType.YEAR);
+        NLM_TO_BIBENTRY.put("issue",            BibEntryFieldType.NUMBER);
     }
     
     @Override
     public BibEntry convert(Element source, Object... hints) throws TransformationException {
-        BibEntry bibEntry = new BibEntry(BibEntry.TYPE_ARTICLE);
+        BibEntry bibEntry = new BibEntry(BibEntryType.ARTICLE);
         String text = source.getValue().trim().replaceAll("\\s+", " ");
         bibEntry.setText(text);
       
@@ -95,7 +98,7 @@ public class NLMToBibEntryConverter implements ModelToModelConverter<Element, Bi
                         lastIndex = lIndex.get(nextChild);
                     }
                 }
-                bibEntry.addField(BibEntry.FIELD_PAGES, pages, fIndex.get(child), lastIndex);
+                bibEntry.addField(BibEntryFieldType.PAGES, pages, fIndex.get(child), lastIndex);
             } else if ("string-name".equals(child.getName())) {
                 String name = child.getValue().trim().replaceAll("\\s+", " ");
                 if (child.getChild("surname") != null) {
@@ -105,7 +108,7 @@ public class NLMToBibEntryConverter implements ModelToModelConverter<Element, Bi
                         name += child.getChildTextNormalize("given-names");
                     }
                 }
-                bibEntry.addField(BibEntry.FIELD_AUTHOR, name, fIndex.get(child), lIndex.get(child));
+                bibEntry.addField(BibEntryFieldType.AUTHOR, name, fIndex.get(child), lIndex.get(child));
             }
         }
         

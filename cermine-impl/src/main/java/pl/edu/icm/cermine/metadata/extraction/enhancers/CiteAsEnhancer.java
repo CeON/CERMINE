@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.BibReferenceParser;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.metadata.model.DocumentMetadata;
 import pl.edu.icm.cermine.structure.model.BxDocument;
@@ -73,21 +74,21 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
                         return;
                     }
                     if (!enhancedFields.contains(EnhancedField.JOURNAL)) {
-                        String value = bibEntry.getFirstFieldValue(BibEntry.FIELD_JOURNAL);
+                        String value = bibEntry.getFirstFieldValue(BibEntryFieldType.JOURNAL);
                         if (value != null) {
                             metadata.setJournal(value);
                             enhancedFields.add(EnhancedField.JOURNAL);
                         }
                     }
                     if (!enhancedFields.contains(EnhancedField.VOLUME)) {
-                        String value = bibEntry.getFirstFieldValue(BibEntry.FIELD_VOLUME);
+                        String value = bibEntry.getFirstFieldValue(BibEntryFieldType.VOLUME);
                         if (value != null) {
                             metadata.setVolume(value);
                             enhancedFields.add(EnhancedField.VOLUME);
                         }
                     }
                     if (!enhancedFields.contains(EnhancedField.ISSUE)) {
-                        String value = bibEntry.getFirstFieldValue(BibEntry.FIELD_NUMBER);
+                        String value = bibEntry.getFirstFieldValue(BibEntryFieldType.NUMBER);
                         if (value != null) {
                             metadata.setIssue(value);
                             enhancedFields.add(EnhancedField.ISSUE);

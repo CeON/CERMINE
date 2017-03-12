@@ -22,6 +22,7 @@ import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -39,7 +40,7 @@ public class DOIExtractionTest {
         String input = "Lu TK, Collins JJ. 2007 Dispersing biofilms. Proc. Natl Acad. Sci. USA 104, 11 197–11 202. doi:10.1073/pnas.0704624104";
         BibEntry actual = parser.parseBibReference(input);
         assertEquals(input, actual.getText());
-        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntry.FIELD_DOI));
+        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntryFieldType.DOI));
     }
     
     @Test
@@ -47,7 +48,7 @@ public class DOIExtractionTest {
         String input = "Lu TK, Collins JJ. 2007 Dispersing biofilms. Proc. Natl Acad. Sci. USA 104, 11 197–11 202. doi:10.1073/pnas.0704624104 http://address";
         BibEntry actual = parser.parseBibReference(input);
         assertEquals(input, actual.getText());
-        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntry.FIELD_DOI));
+        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntryFieldType.DOI));
     }
     
     @Test
@@ -55,7 +56,7 @@ public class DOIExtractionTest {
         String input = "Lu TK, Collins JJ. 2007 Dispersing biofilms. Proc. Natl Acad. Sci. USA 104, 11 197–11 202. (doi:10.1073/pnas.0704624104)";
         BibEntry actual = parser.parseBibReference(input);
         assertEquals(input, actual.getText());
-        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntry.FIELD_DOI));
+        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntryFieldType.DOI));
     }
     
     @Test
@@ -63,7 +64,7 @@ public class DOIExtractionTest {
         String input = "Lu TK, Collins JJ. 2007 Dispersing biofilms. Proc. Natl Acad. Sci. USA 104, 11 197–11 202. [doi:10.1073/pnas.0704624104]";
         BibEntry actual = parser.parseBibReference(input);
         assertEquals(input, actual.getText());
-        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntry.FIELD_DOI));
+        assertEquals("10.1073/pnas.0704624104", actual.getFirstFieldValue(BibEntryFieldType.DOI));
     }
     
     @Test
@@ -71,6 +72,6 @@ public class DOIExtractionTest {
         String input = "Lu TK, Collins JJ. 2007 Dispersing biofilms. Proc. Natl Acad. Sci. USA 104, 11 197–11 202. 10.1073309/pnas.0704624104";
         BibEntry actual = parser.parseBibReference(input);
         assertEquals(input, actual.getText());
-        assertEquals("10.1073309/pnas.0704624104", actual.getFirstFieldValue(BibEntry.FIELD_DOI));
+        assertEquals("10.1073309/pnas.0704624104", actual.getFirstFieldValue(BibEntryFieldType.DOI));
     }
 }

@@ -24,6 +24,8 @@ import org.junit.Test;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
+import pl.edu.icm.cermine.bibref.model.BibEntryType;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -59,48 +61,48 @@ public class CitationReferenceFinderTest {
     
     private static final BibEntry[] CITATIONS = {
         new BibEntry().setText(" [12]  W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc, 58 (1963) 13-30.")
-            .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.")
-            .addField(BibEntry.FIELD_TITLE, "Probability inequalities for sums of bounded random variables")
-            .addField(BibEntry.FIELD_JOURNAL, "J. Amer. Statist. Assoc")
-            .addField(BibEntry.FIELD_VOLUME, "58")
-            .addField(BibEntry.FIELD_YEAR, "1963")
-            .addField(BibEntry.FIELD_PAGES, "13--30"),
+            .addField(BibEntryFieldType.AUTHOR, "Hoeffding, W.")
+            .addField(BibEntryFieldType.TITLE, "Probability inequalities for sums of bounded random variables")
+            .addField(BibEntryFieldType.JOURNAL, "J. Amer. Statist. Assoc")
+            .addField(BibEntryFieldType.VOLUME, "58")
+            .addField(BibEntryFieldType.YEAR, "1963")
+            .addField(BibEntryFieldType.PAGES, "13--30"),
         new BibEntry().setText("[2]  Agranovitch (M.S.) and  Vishisk (M.I.). — Elliptic problems with a parameter and parabolic problems of general type, Russian Math. Surveys, 19, 1964, 53-157.")
-            .addField(BibEntry.FIELD_AUTHOR, "Agranovitch, M.S.")
-            .addField(BibEntry.FIELD_AUTHOR, "Vishisk, M.I.")
-            .addField(BibEntry.FIELD_TITLE, "Elliptic problems with a parameter and parabolic problems of general type")
-            .addField(BibEntry.FIELD_JOURNAL, "Russian Math. Surveys")
-            .addField(BibEntry.FIELD_VOLUME, "19")
-            .addField(BibEntry.FIELD_YEAR, "1964")
-            .addField(BibEntry.FIELD_PAGES, "53--157"),
+            .addField(BibEntryFieldType.AUTHOR, "Agranovitch, M.S.")
+            .addField(BibEntryFieldType.AUTHOR, "Vishisk, M.I.")
+            .addField(BibEntryFieldType.TITLE, "Elliptic problems with a parameter and parabolic problems of general type")
+            .addField(BibEntryFieldType.JOURNAL, "Russian Math. Surveys")
+            .addField(BibEntryFieldType.VOLUME, "19")
+            .addField(BibEntryFieldType.YEAR, "1964")
+            .addField(BibEntryFieldType.PAGES, "53--157"),
         new BibEntry().setText("5.  M-Y. Wang,  X. Wang and  D. Guo, A level-set method for structural topology optimization. Comput. Methods Appl. Mech. Engrg, 192 (2003) 227–246.")
-            .addField(BibEntry.FIELD_AUTHOR, "Wang, M-Y.")
-            .addField(BibEntry.FIELD_AUTHOR, "Wang, X.")
-            .addField(BibEntry.FIELD_AUTHOR, "Guo, D.")
-            .addField(BibEntry.FIELD_TITLE, "A level-set method for structural topology optimization")
-            .addField(BibEntry.FIELD_JOURNAL, "Comput. Methods Appl. Mech. Engrg")
-            .addField(BibEntry.FIELD_VOLUME, "192")
-            .addField(BibEntry.FIELD_YEAR, "2003")
-            .addField(BibEntry.FIELD_PAGES, "227--246"),
+            .addField(BibEntryFieldType.AUTHOR, "Wang, M-Y.")
+            .addField(BibEntryFieldType.AUTHOR, "Wang, X.")
+            .addField(BibEntryFieldType.AUTHOR, "Guo, D.")
+            .addField(BibEntryFieldType.TITLE, "A level-set method for structural topology optimization")
+            .addField(BibEntryFieldType.JOURNAL, "Comput. Methods Appl. Mech. Engrg")
+            .addField(BibEntryFieldType.VOLUME, "192")
+            .addField(BibEntryFieldType.YEAR, "2003")
+            .addField(BibEntryFieldType.PAGES, "227--246"),
         new BibEntry().setText("  [4] R. Kobayashi, Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities, Math. Ann. 272 (1985), 385-398.")
-            .addField(BibEntry.FIELD_AUTHOR, "Kobayashi, R.")
-            .addField(BibEntry.FIELD_TITLE, "Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities")
-            .addField(BibEntry.FIELD_JOURNAL, "Math. Ann.")
-            .addField(BibEntry.FIELD_VOLUME, "272")
-            .addField(BibEntry.FIELD_YEAR, "1985")
-            .addField(BibEntry.FIELD_PAGES, "385--398"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Kobayashi, R.")
+            .addField(BibEntryFieldType.TITLE, "Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities")
+            .addField(BibEntryFieldType.JOURNAL, "Math. Ann.")
+            .addField(BibEntryFieldType.VOLUME, "272")
+            .addField(BibEntryFieldType.YEAR, "1985")
+            .addField(BibEntryFieldType.PAGES, "385--398"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("7. W. C. Lee, Y. E. Chavez, T. Baker, and B. R. Luce, “Economic burden of heart failure: a summary of recent literature,” Heart and Lung, vol. 33, no. 6, pp. 362–371, 2004.")
-            .addField(BibEntry.FIELD_AUTHOR, "Lee, W. C.")
-            .addField(BibEntry.FIELD_AUTHOR, "Chavez, Y. E.")
-            .addField(BibEntry.FIELD_AUTHOR, "Baker, T.")
-            .addField(BibEntry.FIELD_AUTHOR, "Luce, B. R.")
-            .addField(BibEntry.FIELD_TITLE, "Economic burden of heart failure: a summary of recent literature")
-            .addField(BibEntry.FIELD_JOURNAL, "Heart and Lung")
-            .addField(BibEntry.FIELD_VOLUME, "33")
-            .addField(BibEntry.FIELD_NUMBER, "6")
-            .addField(BibEntry.FIELD_YEAR, "2004")
-            .addField(BibEntry.FIELD_PAGES, "362--371"),
+            .addField(BibEntryFieldType.AUTHOR, "Lee, W. C.")
+            .addField(BibEntryFieldType.AUTHOR, "Chavez, Y. E.")
+            .addField(BibEntryFieldType.AUTHOR, "Baker, T.")
+            .addField(BibEntryFieldType.AUTHOR, "Luce, B. R.")
+            .addField(BibEntryFieldType.TITLE, "Economic burden of heart failure: a summary of recent literature")
+            .addField(BibEntryFieldType.JOURNAL, "Heart and Lung")
+            .addField(BibEntryFieldType.VOLUME, "33")
+            .addField(BibEntryFieldType.NUMBER, "6")
+            .addField(BibEntryFieldType.YEAR, "2004")
+            .addField(BibEntryFieldType.PAGES, "362--371"),
         
     };
 

@@ -23,13 +23,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
 import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
@@ -50,7 +51,8 @@ public class ReferenceParsingEvaluator {
         String modelPathSuffix = args[1];
         String testPathSuffix = args[2];
 
-        Map<String, List<Result>> results = new HashMap<String, List<Result>>();
+        Map<BibEntryFieldType, List<Result>> results = 
+                new EnumMap<BibEntryFieldType, List<Result>>(BibEntryFieldType.class);
         
         for (int i = 0; i < foldness; i++) {
             System.out.println("Fold "+i);
@@ -80,7 +82,7 @@ public class ReferenceParsingEvaluator {
             for (Citation c : testCitations) {
                 BibEntry entry = CitationUtils.citationToBibref(c);
                 testEntries.add(entry);
-                for (String key : entry.getFieldKeys()) {
+                for (BibEntryFieldType key : entry.getFieldKeys()) {
                     if (results.get(key) == null) {
                         results.put(key, new ArrayList<Result>());
                     }
@@ -96,20 +98,21 @@ public class ReferenceParsingEvaluator {
                 System.out.println(orig.toBibTeX());
                 System.out.println(test.toBibTeX());
             
-                Map<String, Result> map = new HashMap<String, Result>();
-                for (String s : orig.getFieldKeys()) {
+                Map<BibEntryFieldType, Result> map = 
+                        new EnumMap<BibEntryFieldType, Result>(BibEntryFieldType.class);
+                for (BibEntryFieldType s : orig.getFieldKeys()) {
                     if (map.get(s) == null) {
                         map.put(s, new Result());
                     }
                     map.get(s).addOrig(orig.getAllFieldValues(s).size());
                 }
-                for (String s : test.getFieldKeys()) {
+                for (BibEntryFieldType s : test.getFieldKeys()) {
                     if (map.get(s) == null) {
                         map.put(s, new Result());
                     }
                     map.get(s).addExtr(test.getAllFieldValues(s).size());
                 }
-                for (String s : test.getFieldKeys()) {
+                for (BibEntryFieldType s : test.getFieldKeys()) {
                     List<String> origVals = orig.getAllFieldValues(s);
                     for (String testVal : test.getAllFieldValues(s)) {
                         boolean found = false;
@@ -124,7 +127,7 @@ public class ReferenceParsingEvaluator {
                     }
                 }
                 
-                for (Map.Entry<String, Result> s : map.entrySet()) {
+                for (Map.Entry<BibEntryFieldType, Result> s : map.entrySet()) {
                     System.out.println("");
                     System.out.println(s.getKey());
                     System.out.println(s.getValue());
@@ -139,7 +142,7 @@ public class ReferenceParsingEvaluator {
             
         }
         
-        for (Map.Entry<String, List<Result>> e : results.entrySet()) {
+        for (Map.Entry<BibEntryFieldType, List<Result>> e : results.entrySet()) {
             System.out.println("");
             System.out.println(e.getKey());
             System.out.println(e.getValue().size());

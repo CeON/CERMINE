@@ -27,6 +27,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.CRFBibReferenceParser;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
+import pl.edu.icm.cermine.bibref.model.BibEntryType;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
@@ -41,21 +43,21 @@ import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
  */
 public final class CitationUtils {
 
-    private static final Map<CitationTokenLabel, String> TO_BIBENTRY =
-            new EnumMap<CitationTokenLabel, String>(CitationTokenLabel.class);
+    private static final Map<CitationTokenLabel, BibEntryFieldType> TO_BIBENTRY =
+            new EnumMap<CitationTokenLabel, BibEntryFieldType>(CitationTokenLabel.class);
 
     static {
-        TO_BIBENTRY.put(CitationTokenLabel.ARTICLE_TITLE,   BibEntry.FIELD_TITLE);
-        TO_BIBENTRY.put(CitationTokenLabel.CONTENT,         BibEntry.FIELD_CONTENTS);
-        TO_BIBENTRY.put(CitationTokenLabel.EDITION,         BibEntry.FIELD_EDITION);
-        TO_BIBENTRY.put(CitationTokenLabel.PUBLISHER_NAME,  BibEntry.FIELD_PUBLISHER);
-        TO_BIBENTRY.put(CitationTokenLabel.PUBLISHER_LOC,   BibEntry.FIELD_LOCATION);
-        TO_BIBENTRY.put(CitationTokenLabel.SERIES,          BibEntry.FIELD_SERIES);
-        TO_BIBENTRY.put(CitationTokenLabel.SOURCE,          BibEntry.FIELD_JOURNAL);
-        TO_BIBENTRY.put(CitationTokenLabel.URI,             BibEntry.FIELD_URL);
-        TO_BIBENTRY.put(CitationTokenLabel.VOLUME,          BibEntry.FIELD_VOLUME);
-        TO_BIBENTRY.put(CitationTokenLabel.YEAR,            BibEntry.FIELD_YEAR);
-        TO_BIBENTRY.put(CitationTokenLabel.ISSUE,           BibEntry.FIELD_NUMBER);
+        TO_BIBENTRY.put(CitationTokenLabel.ARTICLE_TITLE,   BibEntryFieldType.TITLE);
+        TO_BIBENTRY.put(CitationTokenLabel.CONTENT,         BibEntryFieldType.CONTENTS);
+        TO_BIBENTRY.put(CitationTokenLabel.EDITION,         BibEntryFieldType.EDITION);
+        TO_BIBENTRY.put(CitationTokenLabel.PUBLISHER_NAME,  BibEntryFieldType.PUBLISHER);
+        TO_BIBENTRY.put(CitationTokenLabel.PUBLISHER_LOC,   BibEntryFieldType.LOCATION);
+        TO_BIBENTRY.put(CitationTokenLabel.SERIES,          BibEntryFieldType.SERIES);
+        TO_BIBENTRY.put(CitationTokenLabel.SOURCE,          BibEntryFieldType.JOURNAL);
+        TO_BIBENTRY.put(CitationTokenLabel.URI,             BibEntryFieldType.URL);
+        TO_BIBENTRY.put(CitationTokenLabel.VOLUME,          BibEntryFieldType.VOLUME);
+        TO_BIBENTRY.put(CitationTokenLabel.YEAR,            BibEntryFieldType.YEAR);
+        TO_BIBENTRY.put(CitationTokenLabel.ISSUE,           BibEntryFieldType.NUMBER);
     }
 
     private CitationUtils() {}
@@ -116,15 +118,15 @@ public final class CitationUtils {
         }
 
         String text = citation.getText();
-        BibEntry bibEntry = new BibEntry(BibEntry.TYPE_ARTICLE);
+        BibEntry bibEntry = new BibEntry(BibEntryType.ARTICLE);
         String lcText = text.toLowerCase(Locale.ENGLISH);
 
         if (lcText.contains("tech report") || lcText.contains("technical report")) {
-            bibEntry.setType(BibEntry.TYPE_TECHREPORT);
+            bibEntry.setType(BibEntryType.TECHREPORT);
         } else if (lcText.contains("proceeding") || lcText.contains("conference")
                 || lcText.contains("workshop") || lcText.contains("proc. ") 
                 || lcText.contains("conf. ")) {
-            bibEntry.setType(BibEntry.TYPE_PROCEEDINGS);
+            bibEntry.setType(BibEntryType.PROCEEDINGS);
         }
 
         bibEntry.setText(text);
@@ -149,37 +151,37 @@ public final class CitationUtils {
                     String pagel = text.substring(nextToken.getStartIndex(), nextToken.getEndIndex());
                     String value = pagef + "--" + pagel;
 
-                    bibEntry.addField(BibEntry.FIELD_PAGES, value, actToken.getStartIndex(), nextToken.getEndIndex());
+                    bibEntry.addField(BibEntryFieldType.PAGES, value, actToken.getStartIndex(), nextToken.getEndIndex());
                     i += 2;
                 } else {
                     String value = text.substring(actToken.getStartIndex(), actToken.getEndIndex());
-                    bibEntry.addField(BibEntry.FIELD_PAGES, value, actToken.getStartIndex(), actToken.getEndIndex());
+                    bibEntry.addField(BibEntryFieldType.PAGES, value, actToken.getStartIndex(), actToken.getEndIndex());
                     i++;
                 }
             } else if (actLabel.equals(CitationTokenLabel.PAGEL)) {
                 String value = text.substring(actToken.getStartIndex(), actToken.getEndIndex());
-                bibEntry.addField(BibEntry.FIELD_PAGES, value, actToken.getStartIndex(), actToken.getEndIndex());
+                bibEntry.addField(BibEntryFieldType.PAGES, value, actToken.getStartIndex(), actToken.getEndIndex());
                 i++;
             } else if (actLabel.equals(CitationTokenLabel.GIVENNAME)) {
                 if (nextToken != null && nextToken.getLabel().equals(CitationTokenLabel.SURNAME)) {
                     String value = text.substring(nextToken.getStartIndex(), nextToken.getEndIndex()) + ", "
                             + text.substring(actToken.getStartIndex(), actToken.getEndIndex());
-                    bibEntry.addField(BibEntry.FIELD_AUTHOR, value, actToken.getStartIndex(), nextToken.getEndIndex());
+                    bibEntry.addField(BibEntryFieldType.AUTHOR, value, actToken.getStartIndex(), nextToken.getEndIndex());
                     i += 2;
                 } else {
                     String value = text.substring(actToken.getStartIndex(), actToken.getEndIndex());
-                    bibEntry.addField(BibEntry.FIELD_AUTHOR, value, actToken.getStartIndex(), actToken.getEndIndex());
+                    bibEntry.addField(BibEntryFieldType.AUTHOR, value, actToken.getStartIndex(), actToken.getEndIndex());
                     i++;
                 }
             } else if (actLabel.equals(CitationTokenLabel.SURNAME)) {
                 if (nextToken != null && nextToken.getLabel().equals(CitationTokenLabel.GIVENNAME)) {
                     String value = text.substring(actToken.getStartIndex(), actToken.getEndIndex()) + ", "
                             + text.substring(nextToken.getStartIndex(), nextToken.getEndIndex());
-                    bibEntry.addField(BibEntry.FIELD_AUTHOR, value, actToken.getStartIndex(), nextToken.getEndIndex());
+                    bibEntry.addField(BibEntryFieldType.AUTHOR, value, actToken.getStartIndex(), nextToken.getEndIndex());
                     i += 2;
                 } else {
                     String value = text.substring(actToken.getStartIndex(), actToken.getEndIndex());
-                    bibEntry.addField(BibEntry.FIELD_AUTHOR, value, actToken.getStartIndex(), actToken.getEndIndex());
+                    bibEntry.addField(BibEntryFieldType.AUTHOR, value, actToken.getStartIndex(), actToken.getEndIndex());
                     i++;
                 }
             }
@@ -188,7 +190,7 @@ public final class CitationUtils {
         Pattern doiPattern = Pattern.compile(".*(" + PatternUtils.DOI_PATTERN + ").*");
         Matcher m = doiPattern.matcher(text);
         if (m.matches()) {
-            bibEntry.addField(BibEntry.FIELD_DOI, m.group(1));
+            bibEntry.addField(BibEntryFieldType.DOI, m.group(1));
         }
         
         return bibEntry;

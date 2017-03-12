@@ -31,7 +31,7 @@ public enum BibReferenceLineLabel {
     BIBREF_START,
     /** The inner line of the reference (if the reference has at least three lines) */
     BIBREF_INNER,
-    /* The last line of the reference (if the reference has at leat two lines) */
+    /** The last line of the reference (if the reference has at leat two lines) */
     BIBREF_END,
 
 }

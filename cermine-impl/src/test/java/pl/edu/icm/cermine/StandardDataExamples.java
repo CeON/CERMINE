@@ -28,6 +28,8 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
+import pl.edu.icm.cermine.bibref.model.BibEntryType;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -57,53 +59,53 @@ public class StandardDataExamples {
     
     public static List<BibEntry> getReferencesAsBibEntry() {
         BibEntry[] entries = {
-            new BibEntry(BibEntry.TYPE_ARTICLE)
+            new BibEntry(BibEntryType.ARTICLE)
                 .setText("[6] W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc. 58 (1963) 13-30.")
-                .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.", 4, 16)
-                .addField(BibEntry.FIELD_TITLE, "Probability inequalities for sums of bounded random variables", 18, 79)
-                .addField(BibEntry.FIELD_JOURNAL, "J. Amer. Statist. Assoc.", 81, 105)
-                .addField(BibEntry.FIELD_VOLUME, "58", 106, 108)
-                .addField(BibEntry.FIELD_YEAR, "1963", 110, 114)
-                .addField(BibEntry.FIELD_PAGES, "13--30", 116, 121),
-            new BibEntry(BibEntry.TYPE_ARTICLE)
+                .addField(BibEntryFieldType.AUTHOR, "Hoeffding, W.", 4, 16)
+                .addField(BibEntryFieldType.TITLE, "Probability inequalities for sums of bounded random variables", 18, 79)
+                .addField(BibEntryFieldType.JOURNAL, "J. Amer. Statist. Assoc.", 81, 105)
+                .addField(BibEntryFieldType.VOLUME, "58", 106, 108)
+                .addField(BibEntryFieldType.YEAR, "1963", 110, 114)
+                .addField(BibEntryFieldType.PAGES, "13--30", 116, 121),
+            new BibEntry(BibEntryType.ARTICLE)
                 .setText("S.J. Bean et C.P. Tsakas (1980). - Developments in non-parametric density estimation. Inter. Stat. Review, 48, p. 267-287")
-                .addField(BibEntry.FIELD_AUTHOR, "Bean, S.J.", 0, 9)
-                .addField(BibEntry.FIELD_AUTHOR, "Tsakas, C.P.", 13, 24)
-                .addField(BibEntry.FIELD_TITLE, "Developments in non-parametric density estimation", 35, 84)
-                .addField(BibEntry.FIELD_JOURNAL, "Inter. Stat. Review", 86, 105)
-                .addField(BibEntry.FIELD_VOLUME, "48", 107, 109)
-                .addField(BibEntry.FIELD_YEAR, "1980", 26, 30)
-                .addField(BibEntry.FIELD_PAGES, "267--287", 114, 121),
-            new BibEntry(BibEntry.TYPE_ARTICLE)
+                .addField(BibEntryFieldType.AUTHOR, "Bean, S.J.", 0, 9)
+                .addField(BibEntryFieldType.AUTHOR, "Tsakas, C.P.", 13, 24)
+                .addField(BibEntryFieldType.TITLE, "Developments in non-parametric density estimation", 35, 84)
+                .addField(BibEntryFieldType.JOURNAL, "Inter. Stat. Review", 86, 105)
+                .addField(BibEntryFieldType.VOLUME, "48", 107, 109)
+                .addField(BibEntryFieldType.YEAR, "1980", 26, 30)
+                .addField(BibEntryFieldType.PAGES, "267--287", 114, 121),
+            new BibEntry(BibEntryType.ARTICLE)
                 .setText("[27] M-Y. Wang, X. Wang and D. Guo, A level-set method for structural topology optimization. Comput. Methods Appl. Mech. Engrg. 192 (2003) 227–246.")
-                .addField(BibEntry.FIELD_AUTHOR, "Wang, M-Y.", 5, 14)
-                .addField(BibEntry.FIELD_AUTHOR, "Wang, X.", 16, 23)
-                .addField(BibEntry.FIELD_AUTHOR, "Guo, D.", 28, 34)
-                .addField(BibEntry.FIELD_TITLE, "A level-set method for structural topology optimization", 36, 91)
-                .addField(BibEntry.FIELD_JOURNAL, "Comput. Methods Appl. Mech. Engrg.", 93, 127)
-                .addField(BibEntry.FIELD_VOLUME, "192", 128, 131)
-                .addField(BibEntry.FIELD_YEAR, "2003", 133, 137)
-                .addField(BibEntry.FIELD_PAGES, "227--246", 139, 146),
-            new BibEntry(BibEntry.TYPE_ARTICLE)
+                .addField(BibEntryFieldType.AUTHOR, "Wang, M-Y.", 5, 14)
+                .addField(BibEntryFieldType.AUTHOR, "Wang, X.", 16, 23)
+                .addField(BibEntryFieldType.AUTHOR, "Guo, D.", 28, 34)
+                .addField(BibEntryFieldType.TITLE, "A level-set method for structural topology optimization", 36, 91)
+                .addField(BibEntryFieldType.JOURNAL, "Comput. Methods Appl. Mech. Engrg.", 93, 127)
+                .addField(BibEntryFieldType.VOLUME, "192", 128, 131)
+                .addField(BibEntryFieldType.YEAR, "2003", 133, 137)
+                .addField(BibEntryFieldType.PAGES, "227--246", 139, 146),
+            new BibEntry(BibEntryType.ARTICLE)
                 .setText("[8] R. Kobayashi, Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities, Math. Ann. 272 (1985), 385-398.")
-                .addField(BibEntry.FIELD_AUTHOR, "Kobayashi, R.", 4, 16)
-                .addField(BibEntry.FIELD_TITLE, "Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities", 18, 107)
-                .addField(BibEntry.FIELD_JOURNAL, "Math. Ann.", 109, 119)
-                .addField(BibEntry.FIELD_VOLUME, "272", 120, 123)
-                .addField(BibEntry.FIELD_YEAR, "1985", 125, 129)
-                .addField(BibEntry.FIELD_PAGES, "385--398", 132, 139),
-            new BibEntry(BibEntry.TYPE_ARTICLE)
+                .addField(BibEntryFieldType.AUTHOR, "Kobayashi, R.", 4, 16)
+                .addField(BibEntryFieldType.TITLE, "Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities", 18, 107)
+                .addField(BibEntryFieldType.JOURNAL, "Math. Ann.", 109, 119)
+                .addField(BibEntryFieldType.VOLUME, "272", 120, 123)
+                .addField(BibEntryFieldType.YEAR, "1985", 125, 129)
+                .addField(BibEntryFieldType.PAGES, "385--398", 132, 139),
+            new BibEntry(BibEntryType.ARTICLE)
                 .setText("[15] T. Corvera-Tindel, L. V. Doering, T. Gomez, and K. Dracup, \"Predictors of noncompliance to exercise training in heart failure,\" The Journal of Cardiovascular Nursing, vol. 19, no. 4, pp. 269–279, 2004.")
-                .addField(BibEntry.FIELD_AUTHOR, "Corvera-Tindel, T.", 5, 22)
-                .addField(BibEntry.FIELD_AUTHOR, "Doering, L. V.", 24, 37)
-                .addField(BibEntry.FIELD_AUTHOR, "Gomez, T.", 39, 47)
-                .addField(BibEntry.FIELD_AUTHOR, "Dracup, K.", 53, 62)
-                .addField(BibEntry.FIELD_TITLE, "Predictors of noncompliance to exercise training in heart failure", 65, 130)
-                .addField(BibEntry.FIELD_JOURNAL, "The Journal of Cardiovascular Nursing", 133, 170)
-                .addField(BibEntry.FIELD_VOLUME, "19", 177, 179)
-                .addField(BibEntry.FIELD_NUMBER, "4", 185, 186)
-                .addField(BibEntry.FIELD_PAGES, "269--279", 192, 199)
-                .addField(BibEntry.FIELD_YEAR, "2004", 201, 205)
+                .addField(BibEntryFieldType.AUTHOR, "Corvera-Tindel, T.", 5, 22)
+                .addField(BibEntryFieldType.AUTHOR, "Doering, L. V.", 24, 37)
+                .addField(BibEntryFieldType.AUTHOR, "Gomez, T.", 39, 47)
+                .addField(BibEntryFieldType.AUTHOR, "Dracup, K.", 53, 62)
+                .addField(BibEntryFieldType.TITLE, "Predictors of noncompliance to exercise training in heart failure", 65, 130)
+                .addField(BibEntryFieldType.JOURNAL, "The Journal of Cardiovascular Nursing", 133, 170)
+                .addField(BibEntryFieldType.VOLUME, "19", 177, 179)
+                .addField(BibEntryFieldType.NUMBER, "4", 185, 186)
+                .addField(BibEntryFieldType.PAGES, "269--279", 192, 199)
+                .addField(BibEntryFieldType.YEAR, "2004", 201, 205)
         };
         return Arrays.asList(entries);
     }

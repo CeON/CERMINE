@@ -22,6 +22,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
+import pl.edu.icm.cermine.bibref.model.BibEntryFieldType;
+import pl.edu.icm.cermine.bibref.model.BibEntryType;
 import pl.edu.icm.cermine.exception.AnalysisException;
 
 /**
@@ -31,104 +33,104 @@ public abstract class AbstractBibReferenceParserTest {
     
     private final BibEntry[] entries = {
         new BibEntry().setText("[6]  W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc, 58 (1963) 13-30.")
-            .addField(BibEntry.FIELD_AUTHOR, "Hoeffding, W.")
-            .addField(BibEntry.FIELD_TITLE, "Probability inequalities for sums of bounded random variables")
-            .addField(BibEntry.FIELD_JOURNAL, "J. Amer. Statist. Assoc")
-            .addField(BibEntry.FIELD_VOLUME, "58")
-            .addField(BibEntry.FIELD_YEAR, "1963")
-            .addField(BibEntry.FIELD_PAGES, "13--30"),
+            .addField(BibEntryFieldType.AUTHOR, "Hoeffding, W.")
+            .addField(BibEntryFieldType.TITLE, "Probability inequalities for sums of bounded random variables")
+            .addField(BibEntryFieldType.JOURNAL, "J. Amer. Statist. Assoc")
+            .addField(BibEntryFieldType.VOLUME, "58")
+            .addField(BibEntryFieldType.YEAR, "1963")
+            .addField(BibEntryFieldType.PAGES, "13--30"),
         new BibEntry().setText(" [3]  Agranovitch (M.S.) and  Vishisk (M.I.). — Elliptic problems with a parameter and parabolic problems of general type, Russian Math. Surveys, 19, 1964, 53-157.")
-            .addField(BibEntry.FIELD_AUTHOR, "Agranovitch, M.S.")
-            .addField(BibEntry.FIELD_AUTHOR, "Vishisk, M.I.")
-            .addField(BibEntry.FIELD_TITLE, "Elliptic problems with a parameter and parabolic problems of general type")
-            .addField(BibEntry.FIELD_JOURNAL, "Russian Math. Surveys")
-            .addField(BibEntry.FIELD_VOLUME, "19")
-            .addField(BibEntry.FIELD_YEAR, "1964")
-            .addField(BibEntry.FIELD_PAGES, "53--157"),
+            .addField(BibEntryFieldType.AUTHOR, "Agranovitch, M.S.")
+            .addField(BibEntryFieldType.AUTHOR, "Vishisk, M.I.")
+            .addField(BibEntryFieldType.TITLE, "Elliptic problems with a parameter and parabolic problems of general type")
+            .addField(BibEntryFieldType.JOURNAL, "Russian Math. Surveys")
+            .addField(BibEntryFieldType.VOLUME, "19")
+            .addField(BibEntryFieldType.YEAR, "1964")
+            .addField(BibEntryFieldType.PAGES, "53--157"),
         new BibEntry().setText("[27]  M-Y. Wang,  X. Wang and  D. Guo, A level-set method for structural topology optimization. Comput. Methods Appl. Mech. Engrg, 192 (2003) 227–246.")
-            .addField(BibEntry.FIELD_AUTHOR, "Wang, M-Y.")
-            .addField(BibEntry.FIELD_AUTHOR, "Wang, X.")
-            .addField(BibEntry.FIELD_AUTHOR, "Guo, D.")
-            .addField(BibEntry.FIELD_TITLE, "A level-set method for structural topology optimization")
-            .addField(BibEntry.FIELD_JOURNAL, "Comput. Methods Appl. Mech. Engrg")
-            .addField(BibEntry.FIELD_VOLUME, "192")
-            .addField(BibEntry.FIELD_YEAR, "2003")
-            .addField(BibEntry.FIELD_PAGES, "227--246"),
+            .addField(BibEntryFieldType.AUTHOR, "Wang, M-Y.")
+            .addField(BibEntryFieldType.AUTHOR, "Wang, X.")
+            .addField(BibEntryFieldType.AUTHOR, "Guo, D.")
+            .addField(BibEntryFieldType.TITLE, "A level-set method for structural topology optimization")
+            .addField(BibEntryFieldType.JOURNAL, "Comput. Methods Appl. Mech. Engrg")
+            .addField(BibEntryFieldType.VOLUME, "192")
+            .addField(BibEntryFieldType.YEAR, "2003")
+            .addField(BibEntryFieldType.PAGES, "227--246"),
         new BibEntry().setText("  [8] R. Kobayashi, Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities, Math. Ann. 272 (1985), 385-398.")
-            .addField(BibEntry.FIELD_AUTHOR, "Kobayashi, R.")
-            .addField(BibEntry.FIELD_TITLE, "Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities")
-            .addField(BibEntry.FIELD_JOURNAL, "Math. Ann.")
-            .addField(BibEntry.FIELD_VOLUME, "272")
-            .addField(BibEntry.FIELD_YEAR, "1985")
-            .addField(BibEntry.FIELD_PAGES, "385--398"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Kobayashi, R.")
+            .addField(BibEntryFieldType.TITLE, "Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities")
+            .addField(BibEntryFieldType.JOURNAL, "Math. Ann.")
+            .addField(BibEntryFieldType.VOLUME, "272")
+            .addField(BibEntryFieldType.YEAR, "1985")
+            .addField(BibEntryFieldType.PAGES, "385--398"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("[4] W. C. Lee, Y. E. Chavez, T. Baker, and B. R. Luce, “Economic burden of heart failure: a summary of recent literature,” Heart and Lung, vol. 33, no. 6, pp. 362–371, 2004.")
-            .addField(BibEntry.FIELD_AUTHOR, "Lee, W. C.")
-            .addField(BibEntry.FIELD_AUTHOR, "Chavez, Y. E.")
-            .addField(BibEntry.FIELD_AUTHOR, "Baker, T.")
-            .addField(BibEntry.FIELD_AUTHOR, "Luce, B. R.")
-            .addField(BibEntry.FIELD_TITLE, "Economic burden of heart failure: a summary of recent literature")
-            .addField(BibEntry.FIELD_JOURNAL, "Heart and Lung")
-            .addField(BibEntry.FIELD_VOLUME, "33")
-            .addField(BibEntry.FIELD_NUMBER, "6")
-            .addField(BibEntry.FIELD_YEAR, "2004")
-            .addField(BibEntry.FIELD_PAGES, "362--371"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Lee, W. C.")
+            .addField(BibEntryFieldType.AUTHOR, "Chavez, Y. E.")
+            .addField(BibEntryFieldType.AUTHOR, "Baker, T.")
+            .addField(BibEntryFieldType.AUTHOR, "Luce, B. R.")
+            .addField(BibEntryFieldType.TITLE, "Economic burden of heart failure: a summary of recent literature")
+            .addField(BibEntryFieldType.JOURNAL, "Heart and Lung")
+            .addField(BibEntryFieldType.VOLUME, "33")
+            .addField(BibEntryFieldType.NUMBER, "6")
+            .addField(BibEntryFieldType.YEAR, "2004")
+            .addField(BibEntryFieldType.PAGES, "362--371"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("[6] C. Chan, D. Tang, and A. Jones, “Clinical outcomes of a cardiac rehabilitation and maintenance program for Chinese patients with congestive heart failure,” Disability and Rehabilitation, vol. 30, no. 17, pp. 1245–1253, 2008.")
-            .addField(BibEntry.FIELD_AUTHOR, "Chan, C.")
-            .addField(BibEntry.FIELD_AUTHOR, "Tang, D.")
-            .addField(BibEntry.FIELD_AUTHOR, "Jones, A.")
-            .addField(BibEntry.FIELD_TITLE, "Clinical outcomes of a cardiac rehabilitation and maintenance program for Chinese patients with congestive heart failure")
-            .addField(BibEntry.FIELD_JOURNAL, "Disability and Rehabilitation")
-            .addField(BibEntry.FIELD_VOLUME, "30")
-            .addField(BibEntry.FIELD_NUMBER, "17")
-            .addField(BibEntry.FIELD_YEAR, "2008")
-            .addField(BibEntry.FIELD_PAGES, "1245--1253"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Chan, C.")
+            .addField(BibEntryFieldType.AUTHOR, "Tang, D.")
+            .addField(BibEntryFieldType.AUTHOR, "Jones, A.")
+            .addField(BibEntryFieldType.TITLE, "Clinical outcomes of a cardiac rehabilitation and maintenance program for Chinese patients with congestive heart failure")
+            .addField(BibEntryFieldType.JOURNAL, "Disability and Rehabilitation")
+            .addField(BibEntryFieldType.VOLUME, "30")
+            .addField(BibEntryFieldType.NUMBER, "17")
+            .addField(BibEntryFieldType.YEAR, "2008")
+            .addField(BibEntryFieldType.PAGES, "1245--1253"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("[11] E. Rideout and M. Montemuro, “ Hope, morale and adapta- tion in patients with chronic heart failure,” Journal of Advanced Nursing, vol. 11, no. 4, pp. 429–438, 1986.")
-            .addField(BibEntry.FIELD_AUTHOR, "Rideout, E.")
-            .addField(BibEntry.FIELD_AUTHOR, "Montemuro, M.")
-            .addField(BibEntry.FIELD_TITLE, "Hope, morale and adapta- tion in patients with chronic heart failure")
-            .addField(BibEntry.FIELD_JOURNAL, "Journal of Advanced Nursing")
-            .addField(BibEntry.FIELD_VOLUME, "11")
-            .addField(BibEntry.FIELD_NUMBER, "4")
-            .addField(BibEntry.FIELD_YEAR, "1986")
-            .addField(BibEntry.FIELD_PAGES, "429--438"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Rideout, E.")
+            .addField(BibEntryFieldType.AUTHOR, "Montemuro, M.")
+            .addField(BibEntryFieldType.TITLE, "Hope, morale and adapta- tion in patients with chronic heart failure")
+            .addField(BibEntryFieldType.JOURNAL, "Journal of Advanced Nursing")
+            .addField(BibEntryFieldType.VOLUME, "11")
+            .addField(BibEntryFieldType.NUMBER, "4")
+            .addField(BibEntryFieldType.YEAR, "1986")
+            .addField(BibEntryFieldType.PAGES, "429--438"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("S.E. Fahlman and C. Lebiere. The cascade-correlation learn-ing architecture. In D.S.   Touretzky, editor, Advances in Neural Information Processing Systems, volume 2, pages 524-532, San Mateo, 1990. Morgan Kaufmann.")
-            .addField(BibEntry.FIELD_AUTHOR, "Fahlman, S.E.")
-            .addField(BibEntry.FIELD_AUTHOR, "Lebiere, C.")
-            .addField(BibEntry.FIELD_TITLE, "The cascade-correlation learn-ing architecture")
-            .addField(BibEntry.FIELD_JOURNAL, "Advances in Neural Information Processing Systems")
-            .addField(BibEntry.FIELD_VOLUME, "2")
-            .addField(BibEntry.FIELD_YEAR, "1990")
-            .addField(BibEntry.FIELD_PAGES, "524--532"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Fahlman, S.E.")
+            .addField(BibEntryFieldType.AUTHOR, "Lebiere, C.")
+            .addField(BibEntryFieldType.TITLE, "The cascade-correlation learn-ing architecture")
+            .addField(BibEntryFieldType.JOURNAL, "Advances in Neural Information Processing Systems")
+            .addField(BibEntryFieldType.VOLUME, "2")
+            .addField(BibEntryFieldType.YEAR, "1990")
+            .addField(BibEntryFieldType.PAGES, "524--532"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("Sridhar Mahadevan and Jonathan Connell. >Scaling reinforcement learning to robotics by exploiting the subsumption architecture. In Proceedings of the Eighth International Workshop on Machine Learning, 1991.")
-            .addField(BibEntry.FIELD_AUTHOR, "Mahadevan, Sridhar")
-            .addField(BibEntry.FIELD_AUTHOR, "Connell, Jonathan")
-            .addField(BibEntry.FIELD_TITLE, "Scaling reinforcement learning to robotics by exploiting the subsumption architecture")
-            .addField(BibEntry.FIELD_JOURNAL, "In Proceedings of the Eighth International Workshop on Machine Learning")
-            .addField(BibEntry.FIELD_YEAR, "1991"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Mahadevan, Sridhar")
+            .addField(BibEntryFieldType.AUTHOR, "Connell, Jonathan")
+            .addField(BibEntryFieldType.TITLE, "Scaling reinforcement learning to robotics by exploiting the subsumption architecture")
+            .addField(BibEntryFieldType.JOURNAL, "In Proceedings of the Eighth International Workshop on Machine Learning")
+            .addField(BibEntryFieldType.YEAR, "1991"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("S.D. Whitehead and D. H. Ballard. Active perception and reinforcement learning. Neural Computation, 2 (4): 409-419, 1990.")
-            .addField(BibEntry.FIELD_AUTHOR, "Whitehead, S.D.")
-            .addField(BibEntry.FIELD_AUTHOR, "Ballard, D. H.")
-            .addField(BibEntry.FIELD_TITLE, "Active perception and reinforcement learning")
-            .addField(BibEntry.FIELD_JOURNAL, "Neural Computation")
-            .addField(BibEntry.FIELD_VOLUME, "2")
-            .addField(BibEntry.FIELD_NUMBER, "4")
-            .addField(BibEntry.FIELD_YEAR, "1990")
-            .addField(BibEntry.FIELD_PAGES, "409--419"),
-        new BibEntry(BibEntry.TYPE_ARTICLE)
+            .addField(BibEntryFieldType.AUTHOR, "Whitehead, S.D.")
+            .addField(BibEntryFieldType.AUTHOR, "Ballard, D. H.")
+            .addField(BibEntryFieldType.TITLE, "Active perception and reinforcement learning")
+            .addField(BibEntryFieldType.JOURNAL, "Neural Computation")
+            .addField(BibEntryFieldType.VOLUME, "2")
+            .addField(BibEntryFieldType.NUMBER, "4")
+            .addField(BibEntryFieldType.YEAR, "1990")
+            .addField(BibEntryFieldType.PAGES, "409--419"),
+        new BibEntry(BibEntryType.ARTICLE)
             .setText("Garijo, D., & Gil, Y. (2011). A new approach for publishing workflows: abstractions, standards, and linked data. In Proceedings of the 6th workshop on Workflows in support of large-scale science: 47–56. DOI: 10.1145/2110497.2110504")
-            .addField(BibEntry.FIELD_AUTHOR, "Garijo, D.")
-            .addField(BibEntry.FIELD_AUTHOR, "Gil, Y.")
-            .addField(BibEntry.FIELD_DOI, "10.1145/2110497.2110504")
-            .addField(BibEntry.FIELD_JOURNAL, "In Proceedings of the 6th")
-            .addField(BibEntry.FIELD_PAGES, "47--56")
-            .addField(BibEntry.FIELD_TITLE, "A new approach for publishing workflows: abstractions, standards, and linked data")
-            .addField(BibEntry.FIELD_YEAR, "2011"),
+            .addField(BibEntryFieldType.AUTHOR, "Garijo, D.")
+            .addField(BibEntryFieldType.AUTHOR, "Gil, Y.")
+            .addField(BibEntryFieldType.DOI, "10.1145/2110497.2110504")
+            .addField(BibEntryFieldType.JOURNAL, "In Proceedings of the 6th")
+            .addField(BibEntryFieldType.PAGES, "47--56")
+            .addField(BibEntryFieldType.TITLE, "A new approach for publishing workflows: abstractions, standards, and linked data")
+            .addField(BibEntryFieldType.YEAR, "2011"),
     };
 
     @Test
@@ -144,7 +146,7 @@ public abstract class AbstractBibReferenceParserTest {
         int parsedFields = 0;
         for (BibEntry entry : entries) {
             BibEntry testEntry = getParser().parseBibReference(entry.getText());
-            for (String key : entry.getFieldKeys()) {
+            for (BibEntryFieldType key : entry.getFieldKeys()) {
                 allFields++;
                 if (entry.getAllFieldValues(key).equals(testEntry.getAllFieldValues(key))) {
                     parsedFields++;

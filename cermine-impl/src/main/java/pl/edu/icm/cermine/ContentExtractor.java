@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import org.apache.commons.cli.ParseException;
@@ -726,6 +727,154 @@ public class ContentExtractor {
         return Timeout.min(mainTimeout, local);
     }
 
+    private static void my_parallel_parser(ExtractionConfigBuilder builder, Collection<File> files, Map<String, String> extensions,Long start, Long stop, boolean override, Long timeoutSeconds, CommandLineOptionsParser parser, Long workers, String outpath) throws ParseException, AnalysisException, IOException, TransformationException{
+        class paraTask implements Runnable {
+            ExtractionConfigBuilder builder;
+            Collection<File> files;
+            Map<String, String> extensions;
+            Long start_point;
+            Long stop_point;
+            boolean override;
+            Long timeoutSeconds;
+            CommandLineOptionsParser parser;
+            String outpath;
+
+            paraTask(ExtractionConfigBuilder m_builder, Collection<File> m_files, Map<String, String> m_extensions,Long m_start, Long m_stop, boolean m_override, Long m_timeoutSeconds, CommandLineOptionsParser m_parser, String m_outpath) { 
+                start_point = m_start;
+                stop_point = m_stop;
+                builder = m_builder;
+                files = m_files;
+                extensions = m_extensions;
+                override = m_override;
+                timeoutSeconds = m_timeoutSeconds;
+                parser = m_parser;
+                outpath = m_outpath;
+            }
+
+            public void run() {
+                try{
+                    runParallel();
+                }catch(IOException e) {
+                    printException(e);
+                }catch(ParseException e) {
+                     printException(e);
+                }catch(AnalysisException e) {
+                    printException(e);
+                }catch(TransformationException e) {
+                    printException(e);
+                }
+                
+            }
+            public void runParallel() throws ParseException, AnalysisException, IOException, TransformationException{
+                int iter = 0;
+                for (File pdf : files) {
+                    if (iter >= start_point && iter < stop_point){
+                        Map<String, File> outputs = new HashMap<String, File>();
+                        for (Map.Entry<String, String> entry : extensions.entrySet()) {
+                            File outputFile = getOutputFile(outpath, pdf, entry.getValue());
+                            if (override || !outputFile.exists()) {
+                                outputs.put(entry.getKey(), outputFile);
+                            }
+                        }
+                        if (outputs.isEmpty()) {
+                            continue;
+                        }
+                      
+                        long start = System.currentTimeMillis();
+                        float elapsed;
+
+                        System.out.println("File processed: " + pdf.getPath());
+
+                        ContentExtractor extractor = null;
+                        try {
+                            extractor = createContentExtractor(timeoutSeconds);
+                      
+                            InputStream in = new FileInputStream(pdf);
+                            extractor.setPDF(in);
+                            
+                            if (outputs.containsKey("images")) {
+                                List<BxImage> images = extractor.getImages(outputs.get("images").getPath());
+                                FileUtils.forceMkdir(outputs.get("images"));
+                                for (BxImage image : images) {
+                                    ImageIO.write(image.getImage(), "png", new File(image.getPath()));
+                                }
+                            }
+                            
+                            if (outputs.containsKey("jats")) {
+                                Element jats;
+                                if (outputs.containsKey("images")) {
+                                    jats = extractor.getContentAsNLM(outputs.get("images").getPath());
+                                } else {
+                                    jats = extractor.getContentAsNLM(null);
+                                }
+                                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                                DocType dt = new DocType("article", "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN", "JATS-archivearticle1.dtd");
+                                FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(dt), "UTF-8");
+                                FileUtils.writeStringToFile(outputs.get("jats"), "\n", "UTF-8", true);
+                                FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8", true);
+                            }
+                            
+                            if (outputs.containsKey("trueviz")) {
+                                BxDocument doc = extractor.getBxDocumentWithSpecificLabels();
+                                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                                Writer fw = new OutputStreamWriter(new FileOutputStream(outputs.get("trueviz")), "UTF-8");
+                                writer.write(fw, Lists.newArrayList(doc), "UTF-8");
+                            }
+                            
+                            if (outputs.containsKey("zones")) {
+                                Element text = extractor.getLabelledFullText();
+                                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                                FileUtils.writeStringToFile(outputs.get("zones"), outputter.outputString(text), "UTF-8");
+                            }
+                            
+                            if (outputs.containsKey("text")) {
+                                String text = extractor.getRawFullText();
+                                FileUtils.writeStringToFile(outputs.get("text"), text, "UTF-8");
+                            }
+                            
+                        } catch (AnalysisException ex) {
+                            printException(ex);
+                        } catch (TransformationException ex) {
+                            printException(ex);
+                        } catch (TimeoutException ex) {
+                            printException(ex);
+                        }catch (IOException ex) {
+                            printException(ex);
+                        }catch (Exception ex) {
+                            System.out.println("OOps..........");
+                        } finally {
+                            if (extractor != null) {
+                                extractor.removeTimeout();
+                            }
+                            long end = System.currentTimeMillis();
+                            elapsed = (end - start) / 1000F;
+                        }
+
+                    } else if (iter >= stop_point){
+                        break;
+                    }
+                    iter++;
+                }
+            }
+        }
+        Thread myThreads[] = new Thread[workers.intValue()];
+        Long chunk = (stop - start)/workers;
+        for(int i=0; i < workers; i++){
+            stop = start + chunk;
+            myThreads[i] = new Thread(new paraTask(builder, files, extensions,start, stop, override, timeoutSeconds, parser, outpath));
+            myThreads[i].start();
+            start = stop;
+        }
+
+        for (int j = 0; j < workers; j++) {
+            try{
+                myThreads[j].join(); //todo add catch exception
+            } catch (InterruptedException e){
+                 printException(e);
+            }
+        }
+    }
+
     public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
         String error = parser.parse(args);
@@ -736,13 +885,17 @@ public class ContentExtractor {
                     + "Tool for extracting metadata and content from PDF files.\n\n"
                     + "Arguments:\n"
                     + "  -path <path>           path to a directory containing PDF files\n"
+                    + "  -start <int>           which point to start parsing the PDF files\n"
+                    + "  -stop <int>            which point to stop parsing the PDF files\n"
+                    + "  -workers <int>         how many workers to run in parallel\n"
+                    + "  -outpath <path>        path to a directory to write the resulting files\n"
                     + "  -outputs <list>        (optional) comma-separated list of extraction\n"
                     + "                         output(s); possible values: \"jats\" (document\n"
                     + "                         metadata and content in NLM JATS format), \"text\"\n"
                     + "                         (raw document text), \"zones\" (text zones with\n"
                     + "                         their labels), \"trueviz\" (geometric structure in\n"
                     + "                         TrueViz format), \"images\" (images from the\n"
-                    + "                         document); default: \"jats,images\"\n"
+                    + "                         document); default: \"jats\"\n"
                     + "  -exts <list>           (optional) comma-separated list of extensions of the\n"
                     + "                         resulting files; the list has to have the same\n"
                     + "                         length as output list; default: \"cermxml,images\"\n"
@@ -763,10 +916,22 @@ public class ContentExtractor {
         Long timeoutSeconds = parser.getTimeout();
         
         String path = parser.getPath();
+        String outpath = parser.getOutPath()+'/';
         Map<String, String> extensions = parser.getTypesAndExtensions();
 
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
+
+        Long start_point = parser.getStart();
+        Long stop_point = parser.getStop();
+        if (stop_point == null){
+            stop_point = new Long(files.size());
+        }
+
+        Long workers = parser.getWorkers();
+        if(workers > (stop_point - start_point)){
+            workers = stop_point - start_point;
+        }
 
         ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
@@ -774,93 +939,8 @@ public class ContentExtractor {
         }
         builder.setProperty(ExtractionConfigProperty.IMAGES_EXTRACTION, extensions.containsKey("images"));
         ExtractionConfigRegister.set(builder.buildConfiguration());
-
-        int i = 0;
-        for (File pdf : files) {
-            Map<String, File> outputs = new HashMap<String, File>();
-            for (Map.Entry<String, String> entry : extensions.entrySet()) {
-                File outputFile = getOutputFile(pdf, entry.getValue());
-                if (override || !outputFile.exists()) {
-                    outputs.put(entry.getKey(), outputFile);
-                }
-            }
-            if (outputs.isEmpty()) {
-                i++;
-                continue;
-            }
-          
-            long start = System.currentTimeMillis();
-            float elapsed;
-
-            System.out.println("File processed: " + pdf.getPath());
-
-            ContentExtractor extractor = null;
-            try {
-                extractor = createContentExtractor(timeoutSeconds);
-          
-                InputStream in = new FileInputStream(pdf);
-                extractor.setPDF(in);
-                
-                if (outputs.containsKey("images")) {
-                    List<BxImage> images = extractor.getImages(outputs.get("images").getPath());
-                    FileUtils.forceMkdir(outputs.get("images"));
-                    for (BxImage image : images) {
-                        ImageIO.write(image.getImage(), "png", new File(image.getPath()));
-                    }
-                }
-                
-                if (outputs.containsKey("jats")) {
-                    Element jats;
-                    if (outputs.containsKey("images")) {
-                        jats = extractor.getContentAsNLM(outputs.get("images").getPath());
-                    } else {
-                        jats = extractor.getContentAsNLM(null);
-                    }
-                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                    DocType dt = new DocType("article", "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN", "JATS-archivearticle1.dtd");
-                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(dt), "UTF-8");
-                    FileUtils.writeStringToFile(outputs.get("jats"), "\n", "UTF-8", true);
-                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8", true);
-                }
-                
-                if (outputs.containsKey("trueviz")) {
-                    BxDocument doc = extractor.getBxDocumentWithSpecificLabels();
-                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                    Writer fw = new OutputStreamWriter(new FileOutputStream(outputs.get("trueviz")), "UTF-8");
-                    writer.write(fw, Lists.newArrayList(doc), "UTF-8");
-                }
-                
-                if (outputs.containsKey("zones")) {
-                    Element text = extractor.getLabelledFullText();
-                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                    FileUtils.writeStringToFile(outputs.get("zones"), outputter.outputString(text), "UTF-8");
-                }
-                
-                if (outputs.containsKey("text")) {
-                    String text = extractor.getRawFullText();
-                    FileUtils.writeStringToFile(outputs.get("text"), text, "UTF-8");
-                }
-                
-            } catch (AnalysisException ex) {
-                printException(ex);
-            } catch (TransformationException ex) {
-                printException(ex);
-            } catch (TimeoutException ex) {
-                printException(ex);
-            } finally {
-                if (extractor != null) {
-                    extractor.removeTimeout();
-                }
-                long end = System.currentTimeMillis();
-                elapsed = (end - start) / 1000F;
-            }
-
-            i++;
-            int percentage = i * 100 / files.size();
-            System.out.println("Extraction time: " + Math.round(elapsed) + "s");
-            System.out.println("Progress: " + percentage + "% done (" + i + " out of " + files.size() + ")");
-            System.out.println("");
-        }
+        my_parallel_parser(builder, files, extensions,start_point, stop_point, override, timeoutSeconds, parser, workers, outpath);
+        
     }
 
     private static ContentExtractor createContentExtractor(Long timeoutSeconds)
@@ -875,8 +955,8 @@ public class ContentExtractor {
         return extractor;
     }
 
-    private static File getOutputFile(File pdf, String ext) {
-        return new File(pdf.getPath().replaceFirst("pdf$", ext));
+    private static File getOutputFile(String outfile, File pdf, String ext) {
+        return new File(Paths.get(outfile+pdf.getName().replaceFirst("pdf$", ext)).toString());
     }
     
     private static void printException(Exception ex) {

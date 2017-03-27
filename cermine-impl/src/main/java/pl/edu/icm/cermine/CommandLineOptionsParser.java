@@ -38,6 +38,10 @@ public class CommandLineOptionsParser {
     public CommandLineOptionsParser() {
         options = new Options();
         options.addOption("path", true, "file or directory path");
+        options.addOption("start", true, "start point");
+        options.addOption("stop", true, "stop point");
+        options.addOption("workers", true, "number of workers");
+        options.addOption("outpath", true, "file or directory path for output");
         options.addOption("outputs", true, "types of the output");
         options.addOption("exts", true, "extensions of the output files");
         options.addOption("ext", true, "metadata file extension");
@@ -55,7 +59,7 @@ public class CommandLineOptionsParser {
         if (commandLine.getOptionValue("path") == null) {
             return "\"path\" parameter not specified";
         }
-        
+
         String output = commandLine.getOptionValue("outputs");
         String exts = commandLine.getOptionValue("exts");
         if (output != null) {
@@ -75,6 +79,53 @@ public class CommandLineOptionsParser {
     public String getPath() {
         return commandLine.getOptionValue("path");
     }
+
+    public String getOutPath() {
+        if (!commandLine.hasOption("outpath")) {
+            return commandLine.getOptionValue("path");
+        } else {
+            return commandLine.getOptionValue("outpath");
+        }
+    }
+
+    public Long getStart() {
+        if (!commandLine.hasOption("start")) {
+            return 0L;
+        } else {
+            Long value = Long.parseLong(commandLine.getOptionValue("start"));
+            if (value < 0) {
+                throw new RuntimeException("The 'start' value given as a " 
+                        + "command line parameter has to be nonnegative.");
+            }
+            return value;
+        }
+    }
+
+    public Long getStop() {
+        if (!commandLine.hasOption("stop")) {
+            return null;
+        } else {
+            Long value = Long.parseLong(commandLine.getOptionValue("stop"));
+            if (value < 0) {
+                throw new RuntimeException("The 'stop' value given as a " 
+                        + "command line parameter has to be nonnegative.");
+            }
+            return value;
+        }
+    }
+
+    public Long getWorkers() {
+        if (!commandLine.hasOption("workers")) {
+            return 1L;
+        } else {
+            Long value = Long.parseLong(commandLine.getOptionValue("workers"));
+            if (value <= 0) {
+                throw new RuntimeException("The 'workers' value given as a " 
+                        + "command line parameter has to be nonnegative.");
+            }
+            return value;
+        }
+    }
     
     public Map<String, String> getTypesAndExtensions() {
         Map<String, String> typesAndExts = new HashMap<String, String>();
@@ -84,7 +135,7 @@ public class CommandLineOptionsParser {
         typesAndExts.put("trueviz", "cermstr");
         typesAndExts.put("images", "images");
 
-        String[] types = getStringOptionValue("jats,images", "outputs").split(",");
+        String[] types = getStringOptionValue("jats", "outputs").split(",");
         for (String type: Lists.newArrayList(typesAndExts.keySet())) {
             if (!ArrayUtils.contains(types, type)) {
                 typesAndExts.remove(type);

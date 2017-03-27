@@ -841,7 +841,7 @@ public class ContentExtractor {
                         }catch (IOException ex) {
                             printException(ex);
                         }catch (Exception ex) {
-                            System.out.println("OOps..........");
+                            printException(ex);
                         } finally {
                             if (extractor != null) {
                                 extractor.removeTimeout();
@@ -885,10 +885,10 @@ public class ContentExtractor {
                     + "Tool for extracting metadata and content from PDF files.\n\n"
                     + "Arguments:\n"
                     + "  -path <path>           path to a directory containing PDF files\n"
-                    + "  -start <int>           which point to start parsing the PDF files\n"
-                    + "  -stop <int>            which point to stop parsing the PDF files\n"
-                    + "  -workers <int>         how many workers to run in parallel\n"
-                    + "  -outpath <path>        path to a directory to write the resulting files\n"
+                    + "  -start <int>           (optional) which point to start parsing the PDF files  default: \"beginning\"\n"
+                    + "  -stop <int>            (optional) which point to stop parsing the PDF files  default: \"end\"\n"
+                    + "  -workers <int>         (optional) how many workers to run in parallel  default: \"1\"\n"
+                    + "  -outpath <path>        (optional) path to a directory to write the resulting files  default: \"-path\"\n"
                     + "  -outputs <list>        (optional) comma-separated list of extraction\n"
                     + "                         output(s); possible values: \"jats\" (document\n"
                     + "                         metadata and content in NLM JATS format), \"text\"\n"

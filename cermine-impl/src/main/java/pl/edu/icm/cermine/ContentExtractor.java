@@ -22,8 +22,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.FileVisitResult;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutorService;  
+import java.util.concurrent.Executors;
+import java.net.URI;
+import java.net.URISyntaxException;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -51,7 +60,7 @@ import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.timeout.Timeout;
 import pl.edu.icm.cermine.tools.timeout.TimeoutException;
-import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister; 
 
 /**
  * Extracts content from PDF files.
@@ -72,6 +81,8 @@ public class ContentExtractor {
     private final InternalContentExtractor extractor;
 
     private Timeout mainTimeout = new Timeout();
+
+    private static int progressCount = 0;
 
     /**
      * Creates the object with overridden default configuration.
@@ -727,155 +738,126 @@ public class ContentExtractor {
         return Timeout.min(mainTimeout, local);
     }
 
-    private static void my_parallel_parser(ExtractionConfigBuilder builder, Collection<File> files, Map<String, String> extensions,Long start, Long stop, boolean override, Long timeoutSeconds, CommandLineOptionsParser parser, Long workers, String outpath) throws ParseException, AnalysisException, IOException, TransformationException{
-        class paraTask implements Runnable {
-            ExtractionConfigBuilder builder;
-            Collection<File> files;
-            Map<String, String> extensions;
-            Long start_point;
-            Long stop_point;
-            boolean override;
-            Long timeoutSeconds;
-            CommandLineOptionsParser parser;
-            String outpath;
 
-            paraTask(ExtractionConfigBuilder m_builder, Collection<File> m_files, Map<String, String> m_extensions,Long m_start, Long m_stop, boolean m_override, Long m_timeoutSeconds, CommandLineOptionsParser m_parser, String m_outpath) { 
-                start_point = m_start;
-                stop_point = m_stop;
-                builder = m_builder;
-                files = m_files;
-                extensions = m_extensions;
-                override = m_override;
-                timeoutSeconds = m_timeoutSeconds;
-                parser = m_parser;
-                outpath = m_outpath;
+    synchronized void printProgress(int total) {
+        progressCount++;
+        int percentage = progressCount * 100 / total;
+        System.out.println("Progress: " + percentage + "% done (" + progressCount + " out of " + total + ")");
+        System.out.println("");
+    }
+
+    private static class parallelTask implements Runnable {
+        File file;
+        Map<String, String> extensions;
+        boolean override;
+        Long timeoutSeconds;
+        String outpath;
+        Long total;
+
+         parallelTask ( File files, Map<String, String> extensions, boolean override, Long timeoutSeconds, String outpath, Long limit) { 
+            this.file = files;
+            this.extensions = extensions;
+            this.override = override;
+            this.timeoutSeconds = timeoutSeconds;
+            this.outpath = outpath;
+            this.total = limit;
+        }
+
+        public void run() {
+            try {
+                runParallel();
+            }catch(IOException e) {
+                printException(e);
+            }catch(ParseException e) {
+                 printException(e);
+            }catch(AnalysisException e) {
+                printException(e);
+            }catch(TransformationException e) {
+                printException(e);
+            } 
+            
+        }
+
+        public void runParallel () throws ParseException, AnalysisException, IOException, TransformationException {
+            Map<String, File> outputs = new HashMap<String, File>();
+            for (Map.Entry<String, String> entry : extensions.entrySet()) {
+                File outputFile = getOutputFile(outpath, file, entry.getValue());
+                if (override || !outputFile.exists()) {
+                    outputs.put(entry.getKey(), outputFile);
+                }
             }
+            if (outputs.isEmpty()) {
+                return;
+            }
+          
 
-            public void run() {
-                try{
-                    runParallel();
-                }catch(IOException e) {
-                    printException(e);
-                }catch(ParseException e) {
-                     printException(e);
-                }catch(AnalysisException e) {
-                    printException(e);
-                }catch(TransformationException e) {
-                    printException(e);
+            ContentExtractor extractor = null;
+            try {
+                extractor = createContentExtractor(timeoutSeconds);
+          
+                InputStream in = new FileInputStream(file);
+                extractor.setPDF(in);
+                
+                if (outputs.containsKey("images")) {
+                    List<BxImage> images = extractor.getImages(outputs.get("images").getPath());
+                    FileUtils.forceMkdir(outputs.get("images"));
+                    for (BxImage image : images) {
+                        ImageIO.write(image.getImage(), "png", new File(image.getPath()));
+                    }
                 }
                 
-            }
-            public void runParallel() throws ParseException, AnalysisException, IOException, TransformationException{
-                int iter = 0;
-                for (File pdf : files) {
-                    if (iter >= start_point && iter < stop_point){
-                        Map<String, File> outputs = new HashMap<String, File>();
-                        for (Map.Entry<String, String> entry : extensions.entrySet()) {
-                            File outputFile = getOutputFile(outpath, pdf, entry.getValue());
-                            if (override || !outputFile.exists()) {
-                                outputs.put(entry.getKey(), outputFile);
-                            }
-                        }
-                        if (outputs.isEmpty()) {
-                            continue;
-                        }
-                      
-                        long start = System.currentTimeMillis();
-                        float elapsed;
-
-                        System.out.println("File processed: " + pdf.getPath());
-
-                        ContentExtractor extractor = null;
-                        try {
-                            extractor = createContentExtractor(timeoutSeconds);
-                      
-                            InputStream in = new FileInputStream(pdf);
-                            extractor.setPDF(in);
-                            
-                            if (outputs.containsKey("images")) {
-                                List<BxImage> images = extractor.getImages(outputs.get("images").getPath());
-                                FileUtils.forceMkdir(outputs.get("images"));
-                                for (BxImage image : images) {
-                                    ImageIO.write(image.getImage(), "png", new File(image.getPath()));
-                                }
-                            }
-                            
-                            if (outputs.containsKey("jats")) {
-                                Element jats;
-                                if (outputs.containsKey("images")) {
-                                    jats = extractor.getContentAsNLM(outputs.get("images").getPath());
-                                } else {
-                                    jats = extractor.getContentAsNLM(null);
-                                }
-                                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                                DocType dt = new DocType("article", "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN", "JATS-archivearticle1.dtd");
-                                FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(dt), "UTF-8");
-                                FileUtils.writeStringToFile(outputs.get("jats"), "\n", "UTF-8", true);
-                                FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8", true);
-                            }
-                            
-                            if (outputs.containsKey("trueviz")) {
-                                BxDocument doc = extractor.getBxDocumentWithSpecificLabels();
-                                BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-                                Writer fw = new OutputStreamWriter(new FileOutputStream(outputs.get("trueviz")), "UTF-8");
-                                writer.write(fw, Lists.newArrayList(doc), "UTF-8");
-                            }
-                            
-                            if (outputs.containsKey("zones")) {
-                                Element text = extractor.getLabelledFullText();
-                                XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-                                FileUtils.writeStringToFile(outputs.get("zones"), outputter.outputString(text), "UTF-8");
-                            }
-                            
-                            if (outputs.containsKey("text")) {
-                                String text = extractor.getRawFullText();
-                                FileUtils.writeStringToFile(outputs.get("text"), text, "UTF-8");
-                            }
-                            
-                        } catch (AnalysisException ex) {
-                            printException(ex);
-                        } catch (TransformationException ex) {
-                            printException(ex);
-                        } catch (TimeoutException ex) {
-                            printException(ex);
-                        }catch (IOException ex) {
-                            printException(ex);
-                        }catch (Exception ex) {
-                            printException(ex);
-                        } finally {
-                            if (extractor != null) {
-                                extractor.removeTimeout();
-                            }
-                            long end = System.currentTimeMillis();
-                            elapsed = (end - start) / 1000F;
-                        }
-
-                    } else if (iter >= stop_point){
-                        break;
+                if (outputs.containsKey("jats")) {
+                    Element jats;
+                    if (outputs.containsKey("images")) {
+                        jats = extractor.getContentAsNLM(outputs.get("images").getPath());
+                    } else {
+                        jats = extractor.getContentAsNLM(null);
                     }
-                    iter++;
+                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                    DocType dt = new DocType("article", "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN", "JATS-archivearticle1.dtd");
+                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(dt), "UTF-8");
+                    FileUtils.writeStringToFile(outputs.get("jats"), "\n", "UTF-8", true);
+                    FileUtils.writeStringToFile(outputs.get("jats"), outputter.outputString(jats), "UTF-8", true);
                 }
-            }
-        }
-        Thread myThreads[] = new Thread[workers.intValue()];
-        Long chunk = (stop - start)/workers;
-        for(int i=0; i < workers; i++){
-            stop = start + chunk;
-            myThreads[i] = new Thread(new paraTask(builder, files, extensions,start, stop, override, timeoutSeconds, parser, outpath));
-            myThreads[i].start();
-            start = stop;
-        }
-
-        for (int j = 0; j < workers; j++) {
-            try{
-                myThreads[j].join(); //todo add catch exception
-            } catch (InterruptedException e){
-                 printException(e);
+                
+                if (outputs.containsKey("trueviz")) {
+                    BxDocument doc = extractor.getBxDocumentWithSpecificLabels();
+                    BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
+                    Writer fw = new OutputStreamWriter(new FileOutputStream(outputs.get("trueviz")), "UTF-8");
+                    writer.write(fw, Lists.newArrayList(doc), "UTF-8");
+                }
+                
+                if (outputs.containsKey("zones")) {
+                    Element text = extractor.getLabelledFullText();
+                    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+                    FileUtils.writeStringToFile(outputs.get("zones"), outputter.outputString(text), "UTF-8");
+                }
+                
+                if (outputs.containsKey("text")) {
+                    String text = extractor.getRawFullText();
+                    FileUtils.writeStringToFile(outputs.get("text"), text, "UTF-8");
+                }
+                
+            } catch (AnalysisException ex) {
+                printException(ex);
+            } catch (TransformationException ex) {
+                printException(ex);
+            } catch (TimeoutException ex) {
+                printException(ex);
+            }catch (IOException ex) {
+                printException(ex);
+            }catch (Exception ex) {
+                printException(ex);
+            } finally {
+                if (extractor != null) {
+                    extractor.printProgress(total.intValue());
+                    extractor.removeTimeout();
+                }
             }
         }
     }
 
-    public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
+    public static void main(String[] args) throws ParseException, AnalysisException, URISyntaxException, IOException, TransformationException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
         String error = parser.parse(args);
         if (error != null) {
@@ -885,8 +867,7 @@ public class ContentExtractor {
                     + "Tool for extracting metadata and content from PDF files.\n\n"
                     + "Arguments:\n"
                     + "  -path <path>           path to a directory containing PDF files\n"
-                    + "  -start <int>           (optional) which point to start parsing the PDF files  default: \"beginning\"\n"
-                    + "  -stop <int>            (optional) which point to stop parsing the PDF files  default: \"end\"\n"
+                    + "  -limit <int>            (optional) the number of PDF files to parse starting from the top  default: \"all\"\n"
                     + "  -workers <int>         (optional) how many workers to run in parallel  default: \"1\"\n"
                     + "  -outpath <path>        (optional) path to a directory to write the resulting files  default: \"-path\"\n"
                     + "  -outputs <list>        (optional) comma-separated list of extraction\n"
@@ -912,34 +893,74 @@ public class ContentExtractor {
             System.exit(1);
         }
 
-        boolean override = parser.override();
-        Long timeoutSeconds = parser.getTimeout();
+        final boolean override = parser.override();
+        final Long timeoutSeconds = parser.getTimeout();
         
         String path = parser.getPath();
-        String outpath = parser.getOutPath()+'/';
-        Map<String, String> extensions = parser.getTypesAndExtensions();
+        final String outpath = parser.getOutPath()+'/';
+        final Map<String, String> extensions = parser.getTypesAndExtensions();
 
         File file = new File(path);
         Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
 
-        Long start_point = parser.getStart();
-        Long stop_point = parser.getStop();
-        if (stop_point == null){
-            stop_point = new Long(files.size());
+        Long getlimit = parser.getLimit();
+        Long workers = parser.getWorkers();
+
+        if (getlimit == null || getlimit > files.size()) {
+            getlimit = new Long(files.size());
         }
 
-        Long workers = parser.getWorkers();
-        if(workers > (stop_point - start_point)){
-            workers = stop_point - start_point;
+        if (workers > getlimit) {
+            workers = getlimit;
         }
 
         ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
             builder.addConfiguration(parser.getConfigurationPath());
         }
+
+        final Long limit = getlimit;
         builder.setProperty(ExtractionConfigProperty.IMAGES_EXTRACTION, extensions.containsKey("images"));
         ExtractionConfigRegister.set(builder.buildConfiguration());
-        my_parallel_parser(builder, files, extensions,start_point, stop_point, override, timeoutSeconds, parser, workers, outpath);
+        final ExecutorService executor = Executors.newFixedThreadPool(workers.intValue());
+
+        final Path startFilePath = Paths.get(new URI("file://"+path));
+
+        long start = System.currentTimeMillis();
+        float elapsed;
+
+        Files.walkFileTree(startFilePath, new SimpleFileVisitor<Path>() {
+            int counter = 0;
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (file.toString().toLowerCase().endsWith(".pdf") && counter < limit) {
+                    Runnable worker = new parallelTask(file.toFile(), extensions, override, timeoutSeconds, outpath, limit);
+                    executor.execute(worker);
+                    counter++;
+                } else if (counter >= limit) {
+                    return FileVisitResult.SKIP_SIBLINGS;
+                }
+                return FileVisitResult.CONTINUE;
+            }
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
+                if (e == null) {
+                    if (dir == startFilePath) {
+                        executor.shutdown();
+                        while (!executor.isTerminated()) {   }
+                    }
+                    return FileVisitResult.CONTINUE;
+                } else {
+                    // directory iteration failed
+                    executor.shutdown();
+                    throw e;
+                }
+            }
+        });
+
+        long end = System.currentTimeMillis();
+        elapsed = (end - start) / 1000F;
+        System.out.println("Total extraction time: " + Math.round(elapsed) + "s");
         
     }
 
@@ -955,8 +976,8 @@ public class ContentExtractor {
         return extractor;
     }
 
-    private static File getOutputFile(String outfile, File pdf, String ext) {
-        return new File(Paths.get(outfile+pdf.getName().replaceFirst("pdf$", ext)).toString());
+    private static File getOutputFile(String outfile, File file, String ext) {
+        return new File(Paths.get(outfile+file.getName().replaceFirst("pdf$", ext)).toString());
     }
     
     private static void printException(Exception ex) {

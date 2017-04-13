@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.ArrayUtils; 
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -38,8 +38,7 @@ public class CommandLineOptionsParser {
     public CommandLineOptionsParser() {
         options = new Options();
         options.addOption("path", true, "file or directory path");
-        options.addOption("start", true, "start point");
-        options.addOption("stop", true, "stop point");
+        options.addOption("limit", true, "number of pdfs to parse starting from the top");
         options.addOption("workers", true, "number of workers");
         options.addOption("outpath", true, "file or directory path for output");
         options.addOption("outputs", true, "types of the output");
@@ -76,11 +75,11 @@ public class CommandLineOptionsParser {
         return null;
     }
 
-    public String getPath() {
+    public String getPath () {
         return commandLine.getOptionValue("path");
     }
 
-    public String getOutPath() {
+    public String getOutPath () {
         if (!commandLine.hasOption("outpath")) {
             return commandLine.getOptionValue("path");
         } else {
@@ -88,26 +87,13 @@ public class CommandLineOptionsParser {
         }
     }
 
-    public Long getStart() {
-        if (!commandLine.hasOption("start")) {
-            return 0L;
-        } else {
-            Long value = Long.parseLong(commandLine.getOptionValue("start"));
-            if (value < 0) {
-                throw new RuntimeException("The 'start' value given as a " 
-                        + "command line parameter has to be nonnegative.");
-            }
-            return value;
-        }
-    }
-
-    public Long getStop() {
-        if (!commandLine.hasOption("stop")) {
+    public Long getLimit() {
+        if (!commandLine.hasOption("limit")) {
             return null;
         } else {
-            Long value = Long.parseLong(commandLine.getOptionValue("stop"));
+            Long value = Long.parseLong(commandLine.getOptionValue("limit"));
             if (value < 0) {
-                throw new RuntimeException("The 'stop' value given as a " 
+                throw new RuntimeException("The 'start' value given as a " 
                         + "command line parameter has to be nonnegative.");
             }
             return value;

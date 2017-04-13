@@ -900,14 +900,12 @@ public class ContentExtractor {
         final String outpath = parser.getOutPath()+'/';
         final Map<String, String> extensions = parser.getTypesAndExtensions();
 
-        File file = new File(path);
-        Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
-
+        Long fileLength = Files.list(Paths.get(path)).count();
         Long getlimit = parser.getLimit();
         Long workers = parser.getWorkers();
 
-        if (getlimit == null || getlimit > files.size()) {
-            getlimit = new Long(files.size());
+        if (getlimit == null || getlimit > fileLength) {
+            getlimit = fileLength;
         }
 
         if (workers > getlimit) {

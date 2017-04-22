@@ -123,7 +123,7 @@
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
-            <version>5.5.9</version>
+            <version>5.5.11</version>
             <type>jar</type>
         </dependency>
         <dependency>

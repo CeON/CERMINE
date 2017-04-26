@@ -1,8 +1,6 @@
 Content ExtRactor and MINEr
 ===========================
 
-[![Join the chat at https://gitter.im/CeON/CERMINE](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CeON/CERMINE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 CERMINE is a Java library and a web service ([cermine.ceon.pl](http://cermine.ceon.pl/)) for extracting metadata
 and content from PDF files containing academic publications.
 CERMINE is written in Java at [Centre for Open Science](http://ceon.pl/en/research/) at [Interdisciplinary Centre for Mathematical and Computational Modelling](http://www.icm.edu.pl/), [University of Warsaw](http://www.uw.edu.pl/).
@@ -16,9 +14,9 @@ How to cite CERMINE:
 	In International Journal on Document Analysis and Recognition (IJDAR), 2015, 
 	vol. 18, no. 4, pp. 317-335, doi: 10.1007/s10032-015-0249-8.
 
-DOI of CERMINE release 1.11:
+DOI of CERMINE release 1.12:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.161547.svg)](https://doi.org/10.5281/zenodo.161547)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.343939.svg)](https://doi.org/10.5281/zenodo.343939)
 
 Using CERMINE
 -------------
@@ -42,7 +40,7 @@ Refer to one of the sections below for details.
 
 **Standalone application**
 
-The easiest way to process files on a laptop/server is using CERMINE as a standalone application. All you will need is a single JAR file containing all the tools, external libraries and learned models. The latest release can be downloaded from [the repository](http://maven.icm.edu.pl/artifactory/simple/kdd-releases/pl/edu/icm/cermine/cermine-impl/) (look for a file called `cermine-impl-<VERSION>-jar-with-dependencies.jar`).
+The easiest way to process files on a laptop/server is using CERMINE as a standalone application. All you will need is a single JAR file containing all the tools, external libraries and learned models. The latest release can be downloaded from [the repository](http://maven.ceon.pl/artifactory/webapp/#/artifacts/browse/simple/General/kdd-releases/pl/edu/icm/cermine/cermine-impl) (look for a file called `cermine-impl-<VERSION>-jar-with-dependencies.jar`). The current version is [1.12](https://maven.ceon.pl/artifactory/kdd-releases/pl/edu/icm/cermine/cermine-impl/1.12/cermine-impl-1.12-jar-with-dependencies.jar).
 
 The file can be directly used for extraction. The following command will extract the metadata and content from PDF files:
 

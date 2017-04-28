@@ -4,7 +4,7 @@
     <parent>
         <groupId>pl.edu.icm.cermine</groupId>
         <artifactId>cermine-parent</artifactId>
-        <version>1.13-SNAPSHOT</version>
+        <version>1.13</version>
     </parent>
     <artifactId>cermine-tools</artifactId>
     <packaging>jar</packaging>

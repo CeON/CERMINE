@@ -53,6 +53,7 @@ public enum BibEntryFieldType {
     NUMBER          ("number"),
     ORGANIZATION    ("organization"),
     PAGES           ("pages"),
+    PMID            ("pmid"),
     PUBLISHER       ("publisher"),
     SCHOOL          ("school"),
     SERIES          ("series"),

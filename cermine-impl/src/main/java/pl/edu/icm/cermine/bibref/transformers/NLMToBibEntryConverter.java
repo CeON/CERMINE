@@ -87,8 +87,12 @@ public class NLMToBibEntryConverter implements ModelToModelConverter<Element, Bi
             Element child = (Element) children.get(i);
             if (NLM_TO_BIBENTRY.containsKey(child.getName())) {
                 bibEntry.addField(NLM_TO_BIBENTRY.get(child.getName()), child.getTextNormalize(), fIndex.get(child), lIndex.get(child));
-            } else if ("pub-id".equals(child.getName()) && "doi".equals(child.getAttributeValue("pub-id-type"))) {
-                bibEntry.addField(BibEntryFieldType.DOI, child.getTextNormalize(), fIndex.get(child), lIndex.get(child));
+            } else if ("pub-id".equals(child.getName())) {
+                if ("doi".equals(child.getAttributeValue("pub-id-type"))) {
+                  bibEntry.addField(BibEntryFieldType.DOI, child.getTextNormalize(), fIndex.get(child), lIndex.get(child));
+                } else if ("pmid".equals(child.getAttributeValue("pub-id-type"))) {
+                  bibEntry.addField(BibEntryFieldType.PMID, child.getTextNormalize(), fIndex.get(child), lIndex.get(child));
+                }
             } else if ("fpage".equals(child.getName())) {
                 String pages = child.getText();
                 int lastIndex = lIndex.get(child);

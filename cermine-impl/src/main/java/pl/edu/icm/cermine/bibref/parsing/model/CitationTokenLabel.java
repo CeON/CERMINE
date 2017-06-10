@@ -41,6 +41,7 @@ public enum CitationTokenLabel {
     ISSUE,
     PAGEF,
     PAGEL,
+    PMID,
     PUBLISHER_LOC,
     PUBLISHER_LOC_FIRST,
     PUBLISHER_NAME,

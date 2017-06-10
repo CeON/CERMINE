@@ -741,7 +741,9 @@ Competing interests None.</p>
       </ref>
       <ref id="ref3">
         <mixed-citation>
-          <source>(PMID: 17693180)</source>
+          <source>(PMID:</source>
+          <pub-id pub-id-type="pmid">17693180</pub-id>
+          <source>)</source>
           , doi:
           <pub-id pub-id-type="doi">10.1016/S0140-6736(07)61235-5</pub-id>
           .
@@ -788,7 +790,9 @@ Competing interests None.</p>
           <year>2007</year>
           ;
           <volume>56</volume>
-          :772e81 (PMID: 17170018), doi:
+          :772e81 (PMID:
+          <pub-id pub-id-type="pmid">17170018</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1136/gut.2006.101634</pub-id>
           .
         </mixed-citation>
@@ -811,7 +815,9 @@ Competing interests None.</p>
           <year>2005</year>
           ;
           <volume>100</volume>
-          :453e9 (PMID: 15667507), doi:
+          :453e9 (PMID:
+          <pub-id pub-id-type="pmid">15667507</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1111/j.1572-0241.2005.30252.x</pub-id>
           .
         </mixed-citation>
@@ -839,7 +845,9 @@ Competing interests None.</p>
           <year>1999</year>
           ;
           <volume>131</volume>
-          :668e72 (PMID:10577329).
+          :668e72 (PMID:
+          <pub-id pub-id-type="pmid">10577329</pub-id>
+          ).
         </mixed-citation>
       </ref>
       <ref id="ref11">
@@ -863,7 +871,9 @@ Competing interests None.</p>
           :
           <fpage>1808e25</fpage>
           .
-          <source>(PMID:17608775)</source>
+          <source>(PMID:</source>
+          <pub-id pub-id-type="pmid">17608775</pub-id>
+          <source>)</source>
           , doi:
           <pub-id pub-id-type="doi">10.1111/j.1572-0241.2007.01393.x</pub-id>
           .
@@ -892,7 +902,9 @@ Competing interests None.</p>
           <year>1987</year>
           ;
           <volume>107</volume>
-          :224e33 (PMID: 3300460).
+          :224e33 (PMID:
+          <pub-id pub-id-type="pmid">3300460</pub-id>
+          ).
         </mixed-citation>
       </ref>
       <ref id="ref13">
@@ -921,7 +933,9 @@ Competing interests None.</p>
           :
           <fpage>1896e900</fpage>
           .
-          <source>(PMID: 10584742)</source>
+          <source>(PMID:</source>
+          <pub-id pub-id-type="pmid">10584742</pub-id>
+          <source>)</source>
           , doi: 10.1016/ S0140-
           <volume>6736</volume>
           (
@@ -958,7 +972,9 @@ Competing interests None.</p>
           :
           <fpage>1e12</fpage>
           .
-          <source>(PMID: 8721797)</source>
+          <source>(PMID:</source>
+          <pub-id pub-id-type="pmid">8721797</pub-id>
+          <source>)</source>
           , doi:
           <pub-id pub-id-type="doi">10.1016/0197-2456(95)00134-4</pub-id>
           .
@@ -1009,7 +1025,9 @@ Competing interests None.</p>
           <volume>273</volume>
           : 408e12 (
           <issue>PMid</issue>
-          :7823387),
+          :
+          <pub-id pub-id-type="pmid">7823387</pub-id>
+          ),
           <source>doi:</source>
           <pub-id pub-id-type="doi">10.1001/jama.273.5.408</pub-id>
           .
@@ -1040,7 +1058,9 @@ Competing interests None.</p>
           <volume>231</volume>
           :1038e42 (
           <issue>PMid</issue>
-          :163386), doi:
+          :
+          <pub-id pub-id-type="pmid">163386</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1001/jama.231.10.1038</pub-id>
           .
         </mixed-citation>
@@ -1067,7 +1087,8 @@ Competing interests None.</p>
           <source>Star Med</source>
           <year>1989</year>
           ;
-          <article-title>8:441e54 (PMid:2727468</article-title>
+          <article-title>8:441e54 (PMid:</article-title>
+          <pub-id pub-id-type="pmid">2727468</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1002/sim.4780080408</pub-id>
           .
@@ -1096,7 +1117,9 @@ Competing interests None.</p>
           <year>1992</year>
           ;
           <volume>45</volume>
-          :769e73 (PMID: 1619456), doi:
+          :769e73 (PMID:
+          <pub-id pub-id-type="pmid">1619456</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1016/0895-4356(92)90054-Q</pub-id>
           .
         </mixed-citation>
@@ -1111,7 +1134,9 @@ Competing interests None.</p>
           <volume>326</volume>
           :219 (
           <issue>PMid</issue>
-          :12543843), doi:
+          :
+          <pub-id pub-id-type="pmid">12543843</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1136/bmj.326.7382.219</pub-id>
           .
         </mixed-citation>
@@ -1218,7 +1243,9 @@ Competing interests None.</p>
           <volume>327</volume>
           :
           <fpage>557e60</fpage>
-          . (PMid:12958120), doi: 10.1136/ bmj.327.7414.557.
+          . (PMid:
+          <pub-id pub-id-type="pmid">12958120</pub-id>
+          ), doi: 10.1136/ bmj.327.7414.557.
         </mixed-citation>
       </ref>
       <ref id="ref25">
@@ -1233,7 +1260,8 @@ Competing interests None.</p>
           <source>Controlled Clin Trials</source>
           <year>1986</year>
           ;
-          <article-title>7:177e88 (PMid:3802833</article-title>
+          <article-title>7:177e88 (PMid:</article-title>
+          <pub-id pub-id-type="pmid">3802833</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1016/0197-2456(86)90046-2</pub-id>
           .
@@ -1247,7 +1275,9 @@ Competing interests None.</p>
           <year>1999</year>
           ;
           <volume>150</volume>
-          : 469e75 (PMID: 1672966).
+          : 469e75 (PMID:
+          <pub-id pub-id-type="pmid">1672966</pub-id>
+          ).
         </mixed-citation>
       </ref>
       <ref id="ref27">
@@ -1275,7 +1305,9 @@ Competing interests None.</p>
           <volume>315</volume>
           :629e34 (
           <issue>PMid</issue>
-          :9310563).
+          :
+          <pub-id pub-id-type="pmid">9310563</pub-id>
+          ).
         </mixed-citation>
       </ref>
       <ref id="ref28">
@@ -1300,7 +1332,8 @@ Competing interests None.</p>
           <source>Helicobacter</source>
           <year>1999</year>
           ;
-          <article-title>4:135e9 (PMid:10382128</article-title>
+          <article-title>4:135e9 (PMid:</article-title>
+          <pub-id pub-id-type="pmid">10382128</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1046/j.1523</pub-id>
           -
@@ -1422,7 +1455,9 @@ Competing interests None.</p>
           <volume>13</volume>
           :5380e3 (
           <issue>PMid</issue>
-          :17879411).
+          :
+          <pub-id pub-id-type="pmid">17879411</pub-id>
+          ).
         </mixed-citation>
       </ref>
       <ref id="ref34">
@@ -1450,7 +1485,9 @@ Competing interests None.</p>
           <volume>13</volume>
           :796e800 (
           <issue>PMid</issue>
-          :17278206).
+          :
+          <pub-id pub-id-type="pmid">17278206</pub-id>
+          ).
         </mixed-citation>
       </ref>
       <ref id="ref35">
@@ -1461,7 +1498,9 @@ Competing interests None.</p>
           <volume>135</volume>
           :1534e42 (
           <issue>PMid</issue>
-          :18775429), doi:
+          :
+          <pub-id pub-id-type="pmid">18775429</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1053/j</pub-id>
           .
         </mixed-citation>
@@ -1504,7 +1543,9 @@ Competing interests None.</p>
           <volume>13</volume>
           :323e40 (
           <issue>PMid</issue>
-          :19250507), doi:
+          :
+          <pub-id pub-id-type="pmid">19250507</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1111/j.1523-5378.2008.00617.x</pub-id>
           .
         </mixed-citation>
@@ -1534,7 +1575,9 @@ Competing interests None.</p>
           <volume>56</volume>
           :1291e5 (
           <issue>PMid</issue>
-          :17344278), doi:
+          :
+          <pub-id pub-id-type="pmid">17344278</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1136/gut.2006.108613</pub-id>
           .
         </mixed-citation>
@@ -1564,7 +1607,9 @@ Competing interests None.</p>
           <volume>24</volume>
           :1587e600 (
           <issue>PMid</issue>
-          :19788600), doi:
+          :
+          <pub-id pub-id-type="pmid">19788600</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1111/j.1440-1746.2009.05982.x</pub-id>
           .
         </mixed-citation>
@@ -1586,7 +1631,9 @@ Competing interests None.</p>
           <year>2002</year>
           ;
           <volume>359</volume>
-          :14e22 (PMID: 11809181), doi:
+          :14e22 (PMID:
+          <pub-id pub-id-type="pmid">11809181</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1016/S0140-6736(02)07273-2</pub-id>
           .
         </mixed-citation>
@@ -1602,7 +1649,9 @@ Competing interests None.</p>
           <year>2001</year>
           ;
           <volume>48</volume>
-          :283e4 (PMID: 11211859), doi:
+          :283e4 (PMID:
+          <pub-id pub-id-type="pmid">11211859</pub-id>
+          ), doi:
           <pub-id pub-id-type="doi">10.1136/gut.48.2.283b</pub-id>
           .
         </mixed-citation>
@@ -1638,7 +1687,9 @@ Competing interests None.</p>
           ;
           <volume>33</volume>
           :
-          <article-title>86e118 (PMID 6986756)</article-title>
+          <article-title>86e118 (PMID</article-title>
+          <pub-id pub-id-type="pmid">6986756</pub-id>
+          <article-title>)</article-title>
           .
         </mixed-citation>
       </ref>

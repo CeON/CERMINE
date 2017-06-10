@@ -160,6 +160,11 @@ public class BibEntry {
         return addField(key, field);
     }
 
+    public BibEntry removeField(BibEntryFieldType key) {
+        fields.remove(key);
+        return this;
+    }
+    
     public String generateKey() {
         String result = "Unknown";
         if (fields.get(BibEntryFieldType.AUTHOR) != null && 

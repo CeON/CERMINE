@@ -43,7 +43,7 @@ public class StandardDataExamples {
             "<mixed-citation>[27] <string-name><given-names>M-Y.</given-names> <surname>Wang</surname></string-name>, <string-name><given-names>X.</given-names> <surname>Wang</surname></string-name> and <string-name><given-names>D.</given-names> <surname>Guo</surname></string-name>, <article-title>A level-set method for structural topology optimization</article-title>. <source>Comput. Methods Appl. Mech. Engrg.</source> <volume>192</volume> (<year>2003</year>) <fpage>227</fpage>–<lpage>246</lpage>.</mixed-citation>",
             "<mixed-citation>[8] <string-name><given-names>R.</given-names> <surname>Kobayashi</surname></string-name>, <article-title>Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities</article-title>, <source>Math. Ann.</source> <volume>272</volume> (<year>1985</year>), <fpage>385</fpage>-<lpage>398</lpage>.</mixed-citation>",
             "<mixed-citation>[15] <string-name><given-names>T.</given-names> <surname>Corvera-Tindel</surname></string-name>, <string-name><given-names>L. V.</given-names> <surname>Doering</surname></string-name>, <string-name><given-names>T.</given-names> <surname>Gomez</surname></string-name>, and <string-name><given-names>K.</given-names> <surname>Dracup</surname></string-name>, \"<article-title>Predictors of noncompliance to exercise training in heart failure</article-title>,\" <source>The Journal of Cardiovascular Nursing</source>, vol. <volume>19</volume>, no. <issue>4</issue>, pp. <fpage>269</fpage>–<lpage>279</lpage>, <year>2004</year>.</mixed-citation>",
-            "<mixed-citation><string-name><surname>Van Heuven</surname> <given-names>WJB</given-names></string-name>, <string-name><surname>Dijkstra</surname> <given-names>T.</given-names></string-name> <article-title>Language comprehension in the bilingual brain: fMRI and ERP support for psycholinguistic models</article-title>. <source>Brain Res Rev</source>. <year>2010</year>; <volume>64</volume>(<issue>1</issue>):104 – 22. doi: <pub-id pub-id-type=\"doi\">10.1016/j.brainresrev.2010.03.002</pub-id> PMID: 20227440</mixed-citation>"
+            "<mixed-citation><string-name><surname>Van Heuven</surname> <given-names>WJB</given-names></string-name>, <string-name><surname>Dijkstra</surname> <given-names>T.</given-names></string-name> <article-title>Language comprehension in the bilingual brain: fMRI and ERP support for psycholinguistic models</article-title>. <source>Brain Res Rev</source>. <year>2010</year>; <volume>64</volume>(<issue>1</issue>):104 – 22. doi: <pub-id pub-id-type=\"doi\">10.1016/j.brainresrev.2010.03.002</pub-id> PMID: <pub-id pub-id-type=\"pmid\">20227440</pub-id></mixed-citation>"
         };
         
         SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
@@ -117,6 +117,7 @@ public class StandardDataExamples {
                 .addField(BibEntryFieldType.TITLE, "Language comprehension in the bilingual brain: fMRI and ERP support for psycholinguistic models", 28, 123)
                 .addField(BibEntryFieldType.VOLUME, "64", 146, 148)
                 .addField(BibEntryFieldType.YEAR, "2010", 140, 144)
+                .addField(BibEntryFieldType.PMID, "20227440", 207, 215)
         };
         return Arrays.asList(entries);
     }
@@ -169,6 +170,7 @@ public class StandardDataExamples {
         	+ "\tdoi = {10.1016/j.brainresrev.2010.03.002},\n"
                 + "\tjournal = {Brain Res Rev},\n"
                 + "\tnumber = {1},\n"
+                + "\tpmid = {20227440},\n"
                 + "\ttitle = {Language comprehension in the bilingual brain: fMRI and ERP support for psycholinguistic models},\n"
                 + "\tvolume = {64},\n"
                 + "\tyear = {2010},\n"

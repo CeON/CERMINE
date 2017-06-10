@@ -59,6 +59,7 @@ public final class CitationUtils {
         TO_BIBENTRY.put(CitationTokenLabel.YEAR,            BibEntryFieldType.YEAR);
         TO_BIBENTRY.put(CitationTokenLabel.ISSUE,           BibEntryFieldType.NUMBER);
         TO_BIBENTRY.put(CitationTokenLabel.DOI,             BibEntryFieldType.DOI);
+        TO_BIBENTRY.put(CitationTokenLabel.PMID,            BibEntryFieldType.PMID);
     }
 
     private CitationUtils() {}
@@ -95,6 +96,15 @@ public final class CitationUtils {
             for (CitationToken t :citation.getTokens()) {
                 if (t.getStartIndex() >= m.start(1) && t.getEndIndex() <= m.end(1)) {
                     t.setLabel(CitationTokenLabel.DOI);
+                }
+            }
+        }
+        Pattern pmidPattern = Pattern.compile(".*pmid\\s*:?\\s*(\\d+).*", Pattern.CASE_INSENSITIVE);
+        m = pmidPattern.matcher(text);
+        if (m.matches()) {
+            for (CitationToken t :citation.getTokens()) {
+                if (t.getStartIndex() >= m.start(1) && t.getEndIndex() <= m.end(1)) {
+                    t.setLabel(CitationTokenLabel.PMID);
                 }
             }
         }

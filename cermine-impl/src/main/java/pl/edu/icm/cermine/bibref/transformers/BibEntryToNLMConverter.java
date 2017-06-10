@@ -94,6 +94,11 @@ public class BibEntryToNLMConverter implements ModelToModelConverter<BibEntry, E
                 doiElement.setText(XMLTools.removeInvalidXMLChars(fieldText));
                 doiElement.setAttribute("pub-id-type", "doi");
                 element.addContent(doiElement);
+            } else if (BibEntryFieldType.PMID.equals(fieldKeyMap.get(field))) {
+                Element doiElement = new Element("pub-id");
+                doiElement.setText(XMLTools.removeInvalidXMLChars(fieldText));
+                doiElement.setAttribute("pub-id-type", "pmid");
+                element.addContent(doiElement);
             } else if (BibEntryFieldType.PAGES.equals(fieldKeyMap.get(field))) {
                 if (!field.getText().contains("--")) {
                     Element firstPageElement = new Element("fpage");

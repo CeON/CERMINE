@@ -63,7 +63,10 @@ public class ContentExtractorTest {
     static final private String TEST_PDF_4 = "/pl/edu/icm/cermine/test4.pdf";
     static final private String EXP_CONT_4 = "/pl/edu/icm/cermine/test4-content-images.xml";
     static final private String EXP_IMGS_4 = "/pl/edu/icm/cermine/test4-images/";
-    
+   
+    static final private String TEST_PDF_5 = "/pl/edu/icm/cermine/test5.pdf";
+    static final private String EXP_CONT_5 = "/pl/edu/icm/cermine/test5-content.xml";
+   
     private ContentExtractor extractor;
     SAXBuilder saxBuilder;
     
@@ -326,6 +329,36 @@ public class ContentExtractorTest {
         assertTrue(diff.similar());
     }
 
+        @Test
+    public void getNLMContentRefsTest() throws AnalysisException, JDOMException, IOException, SAXException {
+        InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_5);
+        Element testContent;
+        try {
+            extractor.setPDF(testStream);
+            testContent = extractor.getContentAsNLM();
+        } finally {
+            testStream.close();
+        }
+        
+        InputStream expStream = ContentExtractorTest.class.getResourceAsStream(EXP_CONT_5);
+        InputStreamReader expReader = null;
+        Document dom;
+        try {
+            expReader = new InputStreamReader(expStream, "UTF-8");
+            dom = saxBuilder.build(expReader);
+        } finally {
+            expStream.close();
+            if (expReader != null) {
+                expReader.close();
+            }
+        }
+        Element expContent = dom.getRootElement();
+        
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+        Diff diff = new Diff(outputter.outputString(expContent), outputter.outputString(testContent));
+        assertTrue(diff.similar());
+    }
+    
     @Test
     public void getImagesTest() throws IOException, AnalysisException, JDOMException, SAXException {
         InputStream testStream = ContentExtractorTest.class.getResourceAsStream(TEST_PDF_4);

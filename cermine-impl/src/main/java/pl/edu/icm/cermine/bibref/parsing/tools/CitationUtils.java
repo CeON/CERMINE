@@ -58,6 +58,7 @@ public final class CitationUtils {
         TO_BIBENTRY.put(CitationTokenLabel.VOLUME,          BibEntryFieldType.VOLUME);
         TO_BIBENTRY.put(CitationTokenLabel.YEAR,            BibEntryFieldType.YEAR);
         TO_BIBENTRY.put(CitationTokenLabel.ISSUE,           BibEntryFieldType.NUMBER);
+        TO_BIBENTRY.put(CitationTokenLabel.DOI,             BibEntryFieldType.DOI);
     }
 
     private CitationUtils() {}
@@ -87,6 +88,17 @@ public final class CitationUtils {
     }
 
     public static BibEntry citationToBibref(Citation citation) {
+        String text = citation.getText();
+        Pattern doiPattern = Pattern.compile(".*(" + PatternUtils.DOI_PATTERN + ").*");
+        Matcher m = doiPattern.matcher(text);
+        if (m.matches()) {
+            for (CitationToken t :citation.getTokens()) {
+                if (t.getStartIndex() >= m.start(1) && t.getEndIndex() <= m.end(1)) {
+                    t.setLabel(CitationTokenLabel.DOI);
+                }
+            }
+        }
+       
         List<CitationToken> tokens = new ArrayList<CitationToken>();
         CitationToken token = null;
         for (CitationToken actToken : citation.getTokens()) {
@@ -117,7 +129,6 @@ public final class CitationUtils {
             tokens.add(token);
         }
 
-        String text = citation.getText();
         BibEntry bibEntry = new BibEntry(BibEntryType.ARTICLE);
         String lcText = text.toLowerCase(Locale.ENGLISH);
 
@@ -185,12 +196,6 @@ public final class CitationUtils {
                     i++;
                 }
             }
-        }
-        
-        Pattern doiPattern = Pattern.compile(".*(" + PatternUtils.DOI_PATTERN + ").*");
-        Matcher m = doiPattern.matcher(text);
-        if (m.matches()) {
-            bibEntry.addField(BibEntryFieldType.DOI, m.group(1));
         }
         
         return bibEntry;

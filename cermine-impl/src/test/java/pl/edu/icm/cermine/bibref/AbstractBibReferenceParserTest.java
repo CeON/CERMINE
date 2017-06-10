@@ -131,6 +131,17 @@ public abstract class AbstractBibReferenceParserTest {
             .addField(BibEntryFieldType.PAGES, "47--56")
             .addField(BibEntryFieldType.TITLE, "A new approach for publishing workflows: abstractions, standards, and linked data")
             .addField(BibEntryFieldType.YEAR, "2011"),
+        new BibEntry(BibEntryType.ARTICLE)
+            .setText("Van Heuven WJB, Dijkstra T. Language comprehension in the bilingual brain: fMRI and ERP support for psycholinguistic models. Brain Res Rev. 2010; 64(1):104 – 22. doi: 10.1016/j.brainresrev.2010.03.002 PMID: 20227440")
+            .addField(BibEntryFieldType.AUTHOR, "Van Heuven, WJB")
+            .addField(BibEntryFieldType.AUTHOR, "Dijkstra, T.")
+            .addField(BibEntryFieldType.DOI, "10.1016/j.brainresrev.2010.03")
+            .addField(BibEntryFieldType.JOURNAL, "Brain Res Rev")
+            .addField(BibEntryFieldType.NUMBER, "1")
+            .addField(BibEntryFieldType.PAGES, "104--22")
+            .addField(BibEntryFieldType.TITLE, "Language comprehension in the bilingual brain: fMRI and ERP support for psycholinguistic models")
+            .addField(BibEntryFieldType.VOLUME, "64")
+            .addField(BibEntryFieldType.YEAR, "2010"),
     };
 
     @Test

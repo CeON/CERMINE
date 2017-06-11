@@ -82,8 +82,8 @@ Example code to extract the content from a PDF file:
 
 	ContentExtractor extractor = new ContentExtractor();
 	InputStream inputStream = new FileInputStream("path/to/pdf/file");
-    extractor.setPDF(inputStream);
-	Element result = extractor.getNLMContent();
+	extractor.setPDF(inputStream);
+	Element result = extractor.getContentAsNLM();
 
 Example code to extract metadata from a reference string:
 

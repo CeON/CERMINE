@@ -116,6 +116,8 @@ public class InternalContentExtractor {
     public void setBxDocument(BxDocument bxDocument) throws IOException {
         reset();
         this.bxDocument = bxDocument;
+        stepsDone.add(Step.CHARACTER_EXTRACTION);
+        stepsDone.add(Step.PAGE_SEGMENTATION);
     }
     
     /**
@@ -395,13 +397,18 @@ public class InternalContentExtractor {
      * @throws IOException IOException
      */
     public void reset() throws IOException {
+        referenceStrings = null;
+        bxBody = null;
+        citationPositions = null;
         bxDocument = null;
         metadata = null;
         references = null;
+        body = null;
         if (pdfFile != null) {
             pdfFile.close();
         }
         pdfFile = null;
+        stepsDone.clear();
     }
 
     public ComponentConfiguration getConf() {

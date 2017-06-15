@@ -139,8 +139,8 @@ public class DocumentPlane {
         /*
          * iterate over grid squares
          */
-        for (int y = ((int) obj.getY()) / gridSize; y < ((int) (obj.getY() + obj.getHeight() + gridSize - 1)) / gridSize; ++y) {
-            for (int x = ((int) obj.getX()) / gridSize; x < ((int) (obj.getX() + obj.getWidth() + gridSize - 1)) / gridSize; ++x) {
+       for (int y = ((int) obj.getY()) / gridSize; y <= ((int) (obj.getY() + obj.getHeight() + gridSize - 1)) / gridSize; ++y) {
+            for (int x = ((int) obj.getX()) / gridSize; x <= ((int) (obj.getX() + obj.getWidth() + gridSize - 1)) / gridSize; ++x) {
                 GridXY xy = new GridXY(x, y);
                 if (!grid.keySet().contains(xy)) {
                     /*
@@ -170,8 +170,8 @@ public class DocumentPlane {
         /*
          * iterate over grid squares
          */
-        for (int y = ((int) obj.getY()) / gridSize; y < ((int) (obj.getY() + obj.getHeight() + gridSize - 1)) / gridSize; ++y) {
-            for (int x = ((int) obj.getX()) / gridSize; x < ((int) (obj.getX() + obj.getWidth() + gridSize - 1)) / gridSize; ++x) {
+        for (int y = ((int) obj.getY()) / gridSize; y <= ((int) (obj.getY() + obj.getHeight() + gridSize - 1)) / gridSize; ++y) {
+            for (int x = ((int) obj.getX()) / gridSize; x <= ((int) (obj.getX() + obj.getWidth() + gridSize - 1)) / gridSize; ++x) {
                 GridXY xy = new GridXY(x, y);
                 if (grid.get(xy).contains(obj)) {
                     grid.get(xy).remove(obj);

@@ -37,7 +37,8 @@ public class ContentExtractorLoopTest {
                     "/pl/edu/icm/cermine/test2.pdf",
                     "/pl/edu/icm/cermine/test3.pdf",
                     "/pl/edu/icm/cermine/test4.pdf",
-                    "/pl/edu/icm/cermine/test5.pdf"
+                    "/pl/edu/icm/cermine/test5.pdf",
+                    "/pl/edu/icm/cermine/test6.pdf"
             );
 
     private ContentExtractor extractor;
@@ -56,13 +57,14 @@ public class ContentExtractorLoopTest {
             extractor.getContentAsNLM();
             titles.add(extractor.getMetadata().getTitle());
         }
-        
+
         assertEquals(Lists.newArrayList(
                 "Complications related to deep venous thrombosis prophylaxis in trauma: a systematic review of the literature",
                 "Patient Experiences of Structured Heart Failure Programmes",
                 "Phytochemical and Biological investigations of Phoenix paludosa Roxb.",
                 "The four Zn fingers of MBNL1 provide a flexible platform for recognition of its RNA binding elements",
-                "Iron deficiency anaemia can be improved after eradication of Helicobacter pylori"),
+                "Iron deficiency anaemia can be improved after eradication of Helicobacter pylori",
+                "VESPA: Very large-scale Evolutionary and Selective Pressure Analyses"),
             titles); 
     }
 

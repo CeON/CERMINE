@@ -20,9 +20,11 @@ package pl.edu.icm.cermine.content.citations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
@@ -38,12 +40,12 @@ import pl.edu.icm.cermine.tools.TextUtils;
  */
 public class CitationPositionFinder {
     
-    public List<List<CitationPosition>> findReferences(String fullText, List<BibEntry> citations) {
+    public List<Set<CitationPosition>> findReferences(String fullText, List<BibEntry> citations) {
         DocumentPositions docPositions = new DocumentPositions(fullText.length(), citations);
         for (BibEntry citation: citations) {
             findByNumber(fullText, citation, "\\[", "\\]", docPositions);
         }
-        List<List<CitationPosition>> positionsBySquare = docPositions.getPositions();
+        List<Set<CitationPosition>> positionsBySquare = docPositions.getPositions();
         
         docPositions = new DocumentPositions(fullText.length(), citations);
         for (BibEntry citation: citations) {
@@ -52,22 +54,22 @@ public class CitationPositionFinder {
                 findByAuthorYearFuzzy(fullText, citation, docPositions);
             }
         }
-        List<List<CitationPosition>> positionsByAuthor = docPositions.getPositions();
+        List<Set<CitationPosition>> positionsByAuthor = docPositions.getPositions();
         
         docPositions = new DocumentPositions(fullText.length(), citations);
         for (BibEntry citation: citations) {
             findByNumber(fullText, citation, "\\(", "\\)", docPositions);
         }
-        List<List<CitationPosition>> positionsByRound = docPositions.getPositions();
+        List<Set<CitationPosition>> positionsByRound = docPositions.getPositions();
         
-        List<List<CitationPosition>> positions = positionsByAuthor;
+        List<Set<CitationPosition>> positions = positionsByAuthor;
         if (sumOfSizes(positionsBySquare) > sumOfSizes(positions)) {
             positions = positionsBySquare;
         }
         if (sumOfSizes(positionsByRound) > sumOfSizes(positions)) {
             positions = positionsByRound;
         }
-        
+
         return positions;
     }
 
@@ -76,14 +78,14 @@ public class CitationPositionFinder {
         for (CitationToken token : CitationUtils.stringToCitation(citation.getText()).getTokens()) {
             tokens.add(token.getText().toLowerCase(Locale.ENGLISH).trim());
         }
-           
+
         Pattern refPattern = Pattern.compile("\\([^\\(\\)]+\\d{4}[^\\(\\)]*\\)");
         Matcher refMatcher = refPattern.matcher(fullText);
         while (refMatcher.find()) {
             String reference = refMatcher.group().toLowerCase(Locale.ENGLISH).replaceAll("^.", "").replaceAll(".$", "");
             String[] refs = reference.split(";");
             for (String ref : refs) {
-                Pattern namePattern = Pattern.compile("[a-z]+");
+                Pattern namePattern = Pattern.compile("[a-z]{2,}");
                 Matcher nameMatcher = namePattern.matcher(ref);
                 Pattern yearPattern = Pattern.compile("\\d{4}");
                 Matcher yearMatcher = yearPattern.matcher(ref);
@@ -197,9 +199,9 @@ public class CitationPositionFinder {
         }
     }
 
-    private int sumOfSizes(List<List<CitationPosition>> positions) {
+    private int sumOfSizes(List<Set<CitationPosition>> positions) {
         int sum = 0;
-        for (List<CitationPosition> pos : positions) {
+        for (Set<CitationPosition> pos : positions) {
             sum += pos.size();
         }
         return sum;
@@ -209,15 +211,15 @@ public class CitationPositionFinder {
         private final boolean[] covered;
         List<CitationPosition> positions = new ArrayList<CitationPosition>();
         List<BibEntry> citations;
-        Map<BibEntry, List<CitationPosition>> citationPositions = new HashMap<BibEntry, List<CitationPosition>>();
+        Map<BibEntry, Set<CitationPosition>> citationPositions = new HashMap<BibEntry, Set<CitationPosition>>();
 
         public DocumentPositions(int size, List<BibEntry> citations) {
             covered = new boolean[size];
             this.citations = citations;
             positions = new ArrayList<CitationPosition>();
-            citationPositions = new HashMap<BibEntry, List<CitationPosition>>();
+            citationPositions = new HashMap<BibEntry, Set<CitationPosition>>();
             for (BibEntry citation : citations) {
-                citationPositions.put(citation, new ArrayList<CitationPosition>());
+                citationPositions.put(citation, new HashSet<CitationPosition>());
             }
         }
 
@@ -247,15 +249,15 @@ public class CitationPositionFinder {
             }
         }
 
-        private List<List<CitationPosition>> getPositions() {
-            List<List<CitationPosition>> ret = new ArrayList<List<CitationPosition>>();
+        private List<Set<CitationPosition>> getPositions() {
+            List<Set<CitationPosition>> ret = new ArrayList<Set<CitationPosition>>();
             for (BibEntry citation : citations) {
                 ret.add(citationPositions.get(citation));
             }
             return ret;
         }
 
-        private List<CitationPosition> getPositions(BibEntry citation) {
+        private Set<CitationPosition> getPositions(BibEntry citation) {
             return citationPositions.get(citation);
         }
         

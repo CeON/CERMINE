@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import pl.edu.icm.cermine.bibref.model.BibEntry;
 import pl.edu.icm.cermine.content.model.ContentStructure;
 import pl.edu.icm.cermine.content.model.DocumentSection;
@@ -53,12 +54,12 @@ public class ContentCitationPositionFinder {
 
         String fullText = sb.toString();
         CitationPositionFinder finder = new CitationPositionFinder();
-        List<List<CitationPosition>> positions = finder.findReferences(fullText, citations);
+        List<Set<CitationPosition>> positions = finder.findReferences(fullText, citations);
         
         ContentStructureCitationPositions contentPositions = new ContentStructureCitationPositions();
         
         for (int i = 0; i < positions.size(); i++) {
-            List<CitationPosition> citationPositions = positions.get(i);
+            Set<CitationPosition> citationPositions = positions.get(i);
             for (CitationPosition pos : citationPositions) {
                 int start = findIndex(pos.getStartRefPosition(), indexes);
                 int end = findIndex(pos.getEndRefPosition(), indexes);

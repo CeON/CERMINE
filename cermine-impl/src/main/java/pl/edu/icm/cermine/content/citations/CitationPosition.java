@@ -57,5 +57,29 @@ public class CitationPosition {
     public void setStartRefPosition(int startRefPosition) {
         this.startRefPosition = startRefPosition;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 47 * hash + this.startRefPosition;
+        hash = 47 * hash + this.endRefPosition;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CitationPosition other = (CitationPosition) obj;
+        return this.startRefPosition == other.startRefPosition &&
+               this.endRefPosition == other.endRefPosition;
+    }
+ 
 }

@@ -38,7 +38,7 @@ public class CommandLineOptionsParser {
     public CommandLineOptionsParser() {
         options = new Options();
         options.addOption("path", true, "file or directory path");
-        options.addOption("limit", true, "number of pdfs to parse starting from the top");
+        options.addOption("limit", true, "maximum number of files to process");
         options.addOption("workers", true, "number of workers");
         options.addOption("outpath", true, "file or directory path for output");
         options.addOption("outputs", true, "types of the output");
@@ -75,39 +75,43 @@ public class CommandLineOptionsParser {
         return null;
     }
 
-    public String getPath () {
+    public String getPath() {
         return commandLine.getOptionValue("path");
     }
 
-    public String getOutPath () {
+    public String getOutPath() {
         if (!commandLine.hasOption("outpath")) {
-            return commandLine.getOptionValue("path");
+            return null;
         } else {
             return commandLine.getOptionValue("outpath");
         }
     }
 
-    public Long getLimit() {
+    public int getLimit() {
         if (!commandLine.hasOption("limit")) {
-            return null;
+            return -1;
         } else {
-            Long value = Long.parseLong(commandLine.getOptionValue("limit"));
+            int value = Integer.parseInt(commandLine.getOptionValue("limit"));
             if (value < 0) {
-                throw new RuntimeException("The 'start' value given as a " 
+                throw new RuntimeException("The 'limit' value given as a " 
                         + "command line parameter has to be nonnegative.");
             }
             return value;
         }
     }
 
-    public Long getWorkers() {
+    public int getWorkers(int limit) {
         if (!commandLine.hasOption("workers")) {
-            return 1L;
+            return 1;
         } else {
-            Long value = Long.parseLong(commandLine.getOptionValue("workers"));
+            int value = Integer.parseInt(commandLine.getOptionValue("workers"));
             if (value <= 0) {
                 throw new RuntimeException("The 'workers' value given as a " 
                         + "command line parameter has to be nonnegative.");
+            }
+
+            if (value > limit) {
+                value = limit;
             }
             return value;
         }

@@ -27,12 +27,10 @@ import java.nio.file.Files;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.FileVisitResult;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ExecutorService;  
+import java.util.ArrayList;
+import java.util.concurrent.CompletionService;  
 import java.util.concurrent.Executors;
-import java.net.URI;
-import java.net.URISyntaxException;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -62,6 +60,12 @@ import pl.edu.icm.cermine.tools.timeout.Timeout;
 import pl.edu.icm.cermine.tools.timeout.TimeoutException;
 import pl.edu.icm.cermine.tools.timeout.TimeoutRegister; 
 
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 /**
  * Extracts content from PDF files.
  * <p>
@@ -82,7 +86,8 @@ public class ContentExtractor {
 
     private Timeout mainTimeout = new Timeout();
 
-    private static int progressCount = 0;
+
+    private static ArrayList<Path> filePaths =  new ArrayList<Path>();
 
     /**
      * Creates the object with overridden default configuration.
@@ -738,47 +743,32 @@ public class ContentExtractor {
         return Timeout.min(mainTimeout, local);
     }
 
-
-    synchronized void printProgress(int total) {
-        progressCount++;
-        int percentage = progressCount * 100 / total;
-        System.out.println("Progress: " + percentage + "% done (" + progressCount + " out of " + total + ")");
-        System.out.println("");
+    private static String parseOutputPath(String outpath, String currentPath) {
+        if (outpath == null) {
+            return currentPath + "/";
+        }
+        return outpath + "/";
     }
 
-    private static class parallelTask implements Runnable {
+
+    private static class ParallelTask implements Callable<String> {
         File file;
         Map<String, String> extensions;
         boolean override;
         Long timeoutSeconds;
         String outpath;
-        Long total;
 
-         parallelTask ( File files, Map<String, String> extensions, boolean override, Long timeoutSeconds, String outpath, Long limit) { 
+         ParallelTask ( File files, Map<String, String> extensions, boolean override, Long timeoutSeconds, String outpath) { 
             this.file = files;
             this.extensions = extensions;
             this.override = override;
             this.timeoutSeconds = timeoutSeconds;
             this.outpath = outpath;
-            this.total = limit;
         }
 
-        public void run() {
-            try {
-                runParallel();
-            }catch(IOException e) {
-                printException(e);
-            }catch(ParseException e) {
-                 printException(e);
-            }catch(AnalysisException e) {
-                printException(e);
-            }catch(TransformationException e) {
-                printException(e);
-            } 
-            
-        }
-
-        public void runParallel () throws ParseException, AnalysisException, IOException, TransformationException {
+        public String call () throws ParseException, AnalysisException, IOException, TransformationException {
+            long start = System.currentTimeMillis();
+            float elapsed;
             Map<String, File> outputs = new HashMap<String, File>();
             for (Map.Entry<String, String> entry : extensions.entrySet()) {
                 File outputFile = getOutputFile(outpath, file, entry.getValue());
@@ -787,7 +777,9 @@ public class ContentExtractor {
                 }
             }
             if (outputs.isEmpty()) {
-                return;
+                long end = System.currentTimeMillis();
+                elapsed = (end - start) / 1000F;
+                return file.getAbsolutePath() + "; extraction time: " + Math.round(elapsed) + "s";
             }
           
 
@@ -850,14 +842,16 @@ public class ContentExtractor {
                 printException(ex);
             } finally {
                 if (extractor != null) {
-                    extractor.printProgress(total.intValue());
                     extractor.removeTimeout();
                 }
             }
+            long end = System.currentTimeMillis();
+            elapsed = (end - start) / 1000F;
+            return file.getAbsolutePath() + "; extraction time: " + Math.round(elapsed) + "s";
         }
     }
 
-    public static void main(String[] args) throws ParseException, AnalysisException, URISyntaxException, IOException, TransformationException {
+    public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
         CommandLineOptionsParser parser = new CommandLineOptionsParser();
         String error = parser.parse(args);
         if (error != null) {
@@ -867,9 +861,9 @@ public class ContentExtractor {
                     + "Tool for extracting metadata and content from PDF files.\n\n"
                     + "Arguments:\n"
                     + "  -path <path>           path to a directory containing PDF files\n"
-                    + "  -limit <int>            (optional) the number of PDF files to parse starting from the top  default: \"all\"\n"
-                    + "  -workers <int>         (optional) how many workers to run in parallel  default: \"1\"\n"
-                    + "  -outpath <path>        (optional) path to a directory to write the resulting files  default: \"-path\"\n"
+                    + "  -limit <int>           (optional) max number of files to process; default: \"all\"\n"
+                    + "  -workers <int>         (optional) number of workers to do task; default: \"1\"\n"
+                    + "  -outpath <path>        (optional) output file location;  default: \"-path\"\n"
                     + "  -outputs <list>        (optional) comma-separated list of extraction\n"
                     + "                         output(s); possible values: \"jats\" (document\n"
                     + "                         metadata and content in NLM JATS format), \"text\"\n"
@@ -897,45 +891,27 @@ public class ContentExtractor {
         final Long timeoutSeconds = parser.getTimeout();
         
         String path = parser.getPath();
-        final String outpath = parser.getOutPath()+'/';
+        final String outpath = parser.getOutPath();
         final Map<String, String> extensions = parser.getTypesAndExtensions();
-
-        Long fileLength = Files.list(Paths.get(path)).count();
-        Long getlimit = parser.getLimit();
-        Long workers = parser.getWorkers();
-
-        if (getlimit == null || getlimit > fileLength) {
-            getlimit = fileLength;
-        }
-
-        if (workers > getlimit) {
-            workers = getlimit;
-        }
+        final int limit = parser.getLimit();  
 
         ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
         if (parser.getConfigurationPath() != null) {
             builder.addConfiguration(parser.getConfigurationPath());
         }
 
-        final Long limit = getlimit;
         builder.setProperty(ExtractionConfigProperty.IMAGES_EXTRACTION, extensions.containsKey("images"));
         ExtractionConfigRegister.set(builder.buildConfiguration());
-        final ExecutorService executor = Executors.newFixedThreadPool(workers.intValue());
-
-        final Path startFilePath = Paths.get(new URI("file://"+path));
-
-        long start = System.currentTimeMillis();
-        float elapsed;
+        final Path startFilePath = Paths.get(path);
 
         Files.walkFileTree(startFilePath, new SimpleFileVisitor<Path>() {
             int counter = 0;
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (file.toString().toLowerCase().endsWith(".pdf") && counter < limit) {
-                    Runnable worker = new parallelTask(file.toFile(), extensions, override, timeoutSeconds, outpath, limit);
-                    executor.execute(worker);
+                if (file.toString().toLowerCase().endsWith(".pdf") && ((limit != -1 && counter < limit) || limit == -1)) {
+                    filePaths.add(file);
                     counter++;
-                } else if (counter >= limit) {
+                } else if (limit != -1 && counter >= limit) {
                     return FileVisitResult.SKIP_SIBLINGS;
                 }
                 return FileVisitResult.CONTINUE;
@@ -943,18 +919,45 @@ public class ContentExtractor {
             @Override
             public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
                 if (e == null) {
-                    if (dir == startFilePath) {
-                        executor.shutdown();
-                        while (!executor.isTerminated()) {   }
-                    }
                     return FileVisitResult.CONTINUE;
                 } else {
-                    // directory iteration failed
-                    executor.shutdown();
                     throw e;
                 }
             }
         });
+
+
+        int progressCount = 0;
+        int fileLength = filePaths.size();
+        int workers = parser.getWorkers(fileLength);
+        final ExecutorService executor = Executors.newFixedThreadPool(workers);
+        final CompletionService<String> completionService = new ExecutorCompletionService<String>(executor);
+
+        for (Path file : filePaths) {
+            completionService.submit(new ParallelTask(file.toFile(), extensions, override, timeoutSeconds, parseOutputPath(outpath,file.getParent().toString())));
+        }
+
+        long start = System.currentTimeMillis();
+        float elapsed;
+
+        try {
+            for (int t = 0, n = fileLength; t < n; t++) {
+                Future<String> processedFile = completionService.take();
+                System.out.println("File processed : " + processedFile.get());
+                progressCount++;
+                int percentage = progressCount * 100 / fileLength;
+                System.out.println("Progress: " + percentage + "% done (" + progressCount + " out of " + fileLength + ")");
+                System.out.println("");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            if (executor != null) {
+                executor.shutdownNow();
+            }
+        }
 
         long end = System.currentTimeMillis();
         elapsed = (end - start) / 1000F;

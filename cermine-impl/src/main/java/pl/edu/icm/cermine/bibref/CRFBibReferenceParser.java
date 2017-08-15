@@ -41,8 +41,11 @@ import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
+import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
+import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.ResourceUtils;
 
 /**
  * CRF-based bibiliographic reference parser.
@@ -55,77 +58,58 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     
     private ACRF model;
     
-    private static final String DEFAULT_MODEL_FILE = "/pl/edu/icm/cermine/bibref/acrf.ser.gz";
-    
-    private static final String DEFAULT_WORDS_FILE = "/pl/edu/icm/cermine/bibref/crf-train-words.txt";
-    private static final Set<String> WORDS;
+    private Set<String> terms;
 
-    static {
-        WORDS = new HashSet<String>();
-        InputStream wis = CitationUtils.class.getResourceAsStream(DEFAULT_WORDS_FILE);
+    public CRFBibReferenceParser(String modelFile, String termsFile) throws AnalysisException {
+        InputStream modelIS;
+        InputStream termsIS;
         try {
-            WORDS.addAll(IOUtils.readLines(wis, "UTF-8"));
+            modelIS = ResourceUtils.openResourceStream(modelFile);
+            termsIS = ResourceUtils.openResourceStream(termsFile);
+            loadModels(modelIS, termsIS);
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot set model!", ex);
+        } finally {
+        }
+    }
+    
+    public CRFBibReferenceParser(InputStream modelIS, InputStream termsIS) throws AnalysisException {
+        loadModels(modelIS, termsIS);
+    }
+
+    public void loadModels(InputStream modelIS, InputStream termsIS) throws AnalysisException {
+        // prevents MALLET from printing info messages
+        System.setProperty("java.util.logging.config.file",
+            "edu/umass/cs/mallet/base/util/resources/logging.properties");
+        
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(modelIS)));
+            model = (ACRF)(ois.readObject());
+        } catch (IOException ex) {
+            throw new AnalysisException("Cannot set model!", ex);
+        } catch (ClassNotFoundException ex) {
+            throw new AnalysisException("Cannot set model!", ex);
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (IOException ex) {
+                throw new AnalysisException("Cannot set model!", ex);
+            }
+        }
+        
+        terms = new HashSet<String>();
+        try {
+            terms.addAll(IOUtils.readLines(termsIS, "UTF-8"));
         } catch (IOException ex) {
             Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common words!", ex);
         }
     }
     
-    public CRFBibReferenceParser(String modelFile) throws AnalysisException {
-        // prevents MALLET from printing info messages
-        System.setProperty("java.util.logging.config.file",
-            "edu/umass/cs/mallet/base/util/resources/logging.properties");
-        
-        InputStream is;
-        ObjectInputStream ois = null;
-        try {
-            is = new FileInputStream(new File(modelFile));
-            ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(is)));
-            model = (ACRF)(ois.readObject());
-        } catch (ClassNotFoundException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (IOException ex) {
-                throw new AnalysisException("Cannot set model!", ex);
-            }
-        }
-    }
-    
-    public CRFBibReferenceParser(InputStream modelInputStream) throws AnalysisException {
-        // prevents MALLET from printing info messages
-        System.setProperty("java.util.logging.config.file",
-            "edu/umass/cs/mallet/base/util/resources/logging.properties");
-        
-        ObjectInputStream ois = null;
-        try {
-            ois = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(modelInputStream)));
-            model = (ACRF)(ois.readObject());
-        } catch (IOException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        } catch (ClassNotFoundException ex) {
-            throw new AnalysisException("Cannot set model!", ex);
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (IOException ex) {
-                throw new AnalysisException("Cannot set model!", ex);
-            }
-        }
-    }
-
-    public static Set<String> getWords() {
-        return WORDS;
-    }
-
     @Override
-	public BibEntry parseBibReference(String text) throws AnalysisException {
+    public BibEntry parseBibReference(String text) throws AnalysisException {
         if (text.length() > MAX_REFERENCE_LENGTH) {
             return new BibEntry().setText(text);
         }
@@ -135,7 +119,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         }
         
         Citation citation = CitationUtils.stringToCitation(text);
-        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation), "\n");
+        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation, terms), "\n");
         
         Pipe pipe = model.getInputPipe();
         InstanceList instanceList = new InstanceList(pipe);
@@ -161,7 +145,7 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
             return citation;
         }
         
-        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation), "\n");
+        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation, terms), "\n");
         
         Pipe pipe = model.getInputPipe();
         InstanceList instanceList = new InstanceList(pipe);
@@ -176,7 +160,8 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     }
   
     public static CRFBibReferenceParser getInstance() throws AnalysisException {
-        return new CRFBibReferenceParser(CRFBibReferenceParser.class.getResourceAsStream(DEFAULT_MODEL_FILE));
+        return new CRFBibReferenceParser(ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_MODEL_PATH),
+            ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_TERMS_PATH));
     }
     
     public static void main(String[] args) throws ParseException, AnalysisException, TransformationException {

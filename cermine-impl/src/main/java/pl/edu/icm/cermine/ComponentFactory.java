@@ -127,7 +127,6 @@ public class ComponentFactory {
      * @throws IOException IOException
      */
     public static ZoneClassifier getMetadataZoneClassifier(String modelPath, String rangePath) throws AnalysisException, IOException {
-        
         return getMetadataZoneClassifier(ResourceUtils.openResourceStream(modelPath), ResourceUtils.openResourceStream(rangePath));
     }
     
@@ -196,11 +195,12 @@ public class ComponentFactory {
      * The method creates an instance of a bib reference parser.
      * 
      * @param model crf model 
+     * @param terms terms file
      * @return parser
      * @throws AnalysisException AnalysisException
      */
-    public static BibReferenceParser<BibEntry> getBibReferenceParser(InputStream model) throws AnalysisException {
-        return new CRFBibReferenceParser(model);
+    public static BibReferenceParser<BibEntry> getBibReferenceParser(InputStream model, InputStream terms) throws AnalysisException {
+        return new CRFBibReferenceParser(model, terms);
     }
 
     /**

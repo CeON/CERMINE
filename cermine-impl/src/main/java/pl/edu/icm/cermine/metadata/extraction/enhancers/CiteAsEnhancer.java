@@ -37,8 +37,6 @@ import pl.edu.icm.cermine.structure.model.BxZoneLabel;
  */
 public class CiteAsEnhancer extends AbstractFilterEnhancer {
 
-    private static final String MODEL_FILE = "/pl/edu/icm/cermine/bibref/acrf.ser.gz";
-
     private static final Pattern PATTERN = Pattern.compile(
             "Cite this article as: (.*)",
             Pattern.DOTALL);
@@ -48,7 +46,7 @@ public class CiteAsEnhancer extends AbstractFilterEnhancer {
     public CiteAsEnhancer() {
         setSearchedZoneLabels(BxZoneLabel.MET_BIB_INFO);
         try {
-            referenceParser = new CRFBibReferenceParser(CiteAsEnhancer.class.getResourceAsStream(MODEL_FILE));
+            referenceParser = CRFBibReferenceParser.getInstance();
         } catch (AnalysisException ex) {
             referenceParser = null;
         }

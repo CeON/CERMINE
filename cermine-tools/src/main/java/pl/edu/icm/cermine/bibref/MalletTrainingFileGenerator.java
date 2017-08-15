@@ -18,6 +18,7 @@
 
 package pl.edu.icm.cermine.bibref;
 
+import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Map.Entry;
 import java.util.*;
@@ -33,108 +34,86 @@ import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
  */
 public final class MalletTrainingFileGenerator {
 
-    private static final String NLM_DIR = "cermine-tests/out/";
-    private static final String OUT_FILE = "crf-train.txt";
-    private static final String OUT_FILE2 = "crf-train-words.txt";
-    private static final int MIN_COUNT = 5;
+    private static final int MIN_TERM_COUNT = 5;
 
     public static void main(String[] args) throws JDOMException, IOException {
-
-        File dir = new File(NLM_DIR);
-        Writer writer = null;
-        Writer writer2 = null;
+        File inputFile = new File(args[0]);
+        List<Citation> citations = new ArrayList<Citation>();
+        Map<String, Integer> termCounts = new HashMap<String, Integer>();
+       
+        InputStream is = null;
         try {
-            List<Citation> allcitations = new ArrayList<Citation>();
+            is = new FileInputStream(inputFile);
+            InputSource source = new InputSource(is);
+            citations = NlmCitationExtractor.extractCitations(source);
+        } finally {
+             if (is != null) {
+                is.close();
+            }
+        }
 
-            Map<String, Integer> wordMap = new HashMap<String, Integer>();
-
-            for (File file : dir.listFiles()) {
-                if (file.isDirectory()) {
-                    continue;
-                }
-                if (!file.getName().endsWith(".xml")) {
-                    continue;
-                }
-
-                InputStream is = null;
-                List<Citation> citations;
-                try {
-                    is = new FileInputStream(file);
-                    InputSource source = new InputSource(is);
-                    citations = NlmCitationExtractor.extractCitations(source);
-                } finally {
-                    if (is != null) {
-                        is.close();
+        for (Citation citation : citations) {
+            for (CitationToken citationToken : citation.getTokens()) {
+                if (citationToken.getText().matches("^[a-zA-Z]+$")) {
+                    String term = citationToken.getText().toLowerCase(Locale.ENGLISH);
+                    if (termCounts.get(term) == null) {
+                        termCounts.put(term, 0);
                     }
-                }
-
-                citations = citations.subList(0, 500);
-
-                for (Citation citation : citations) {
-                    allcitations.add(citation);
-                    for (CitationToken citationToken : citation.getTokens()) {
-                        if (citationToken.getText().matches("^[a-zA-Z]+$")) {
-                            String word = citationToken.getText().toLowerCase(Locale.ENGLISH);
-                            if (wordMap.get(word) == null) {
-                                wordMap.put(word, 0);
-                            }
-                            wordMap.put(word, wordMap.get(word) + 1);
-                        }
-                    }
+                    termCounts.put(term, termCounts.get(term) + 1);
                 }
             }
-
-            List<Entry<String, Integer>> wordCounts = new ArrayList<Entry<String, Integer>>();
-            for (Entry<String, Integer> entry : wordMap.entrySet()) {
-                wordCounts.add(entry);
-            }
-            Collections.sort(wordCounts, new Comparator<Entry<String, Integer>>() {
-
-                @Override
-                public int compare(Entry<String, Integer> t1, Entry<String, Integer> t2) {
-                    if (t1.getValue().compareTo(t2.getValue()) != 0) {
-                        return t2.getValue().compareTo(t1.getValue());
-                    }
-                    return t1.getKey().compareTo(t2.getKey());
+        }
+        
+        List<Entry<String, Integer>> wordCounts = Lists.newArrayList(termCounts.entrySet());
+        Collections.sort(wordCounts, new Comparator<Entry<String, Integer>>() {
+            @Override
+            public int compare(Entry<String, Integer> t1, Entry<String, Integer> t2) {
+                if (t1.getValue().compareTo(t2.getValue()) != 0) {
+                    return t2.getValue().compareTo(t1.getValue());
                 }
-            });
-
-            Set<String> additionalFeatures = new HashSet<String>();
-
-            for (Entry<String, Integer> wordCount : wordCounts) {
-                if (wordCount.getValue() > MIN_COUNT) {
-                    additionalFeatures.add(wordCount.getKey());
-                }
+                return t1.getKey().compareTo(t2.getKey());
             }
+        });
 
-            writer = new OutputStreamWriter(new FileOutputStream(OUT_FILE), "UTF-8");
-            writer2 = new OutputStreamWriter(new FileOutputStream(OUT_FILE2), "UTF-8");
+        Set<String> additionalFeatures = new HashSet<String>();
+        for (Entry<String, Integer> wordCount : wordCounts) {
+            if (wordCount.getValue() > MIN_TERM_COUNT) {
+                additionalFeatures.add(wordCount.getKey());
+            }
+        }
+
+        Writer featuresWriter = null;
+        Writer termsWriter = null;
+            
+        try {
+            featuresWriter = new OutputStreamWriter(new FileOutputStream(args[1]), "UTF-8");
+            termsWriter = new OutputStreamWriter(new FileOutputStream(args[2]), "UTF-8");
 
             for (String s : additionalFeatures) {
-                writer2.write(s);
-                writer2.write("\n");
+                termsWriter.write(s);
+                termsWriter.write("\n");
             }
-            writer2.flush();
-            writer2.close();
-            System.out.println(allcitations.size());
-            for (Citation citation : allcitations) {
-                List<String> tokens = CitationUtils.citationToMalletInputFormat(citation);
+            termsWriter.flush();
+            termsWriter.close();
+            
+            for (Citation citation : citations) {
+                List<String> tokens = CitationUtils.citationToMalletInputFormat(citation, additionalFeatures);
                 for (String token : tokens) {
-                    writer.write(token);
-                    writer.write("\n");
+                    featuresWriter.write(token);
+                    featuresWriter.write("\n");
                 }
-                writer.write("\n");
+                featuresWriter.write("\n");
             }
 
-            writer.flush();
+            featuresWriter.flush();
         } finally {
             try {
-                if (writer != null) {
-                    writer.close();
+                if (featuresWriter != null) {
+                    featuresWriter.close();
                 }
             } finally {
-                if (writer2 != null) {
-                    writer2.close();
+                if (termsWriter != null) {
+                    termsWriter.close();
                 }
             }
         }

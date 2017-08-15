@@ -57,7 +57,8 @@ public class ReferenceParsingEvaluator {
         for (int i = 0; i < foldness; i++) {
             System.out.println("Fold "+i);
             String modelPath = modelPathSuffix + i;
-            CRFBibReferenceParser parser = new CRFBibReferenceParser(modelPath);
+            String termsPath = modelPathSuffix + "terms" + i;
+            CRFBibReferenceParser parser = new CRFBibReferenceParser(modelPath, termsPath);
             
             String testPath = testPathSuffix + i;
 

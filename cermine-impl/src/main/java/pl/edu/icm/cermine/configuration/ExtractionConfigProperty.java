@@ -34,6 +34,9 @@ public enum ExtractionConfigProperty {
     
     CONTENT_FILTER_MODEL_PATH           ("contentFilter.model"),
     CONTENT_FILTER_RANGE_PATH           ("contentFilter.ranges"),
+
+    BIBREF_MODEL_PATH                   ("bibref.model"),
+    BIBREF_TERMS_PATH                   ("bibref.terms"),
     
     IMAGES_EXTRACTION                   ("images.extraction"),
     

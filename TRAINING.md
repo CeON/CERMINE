@@ -15,7 +15,7 @@ default models.
 
 This document describes the procedures of preparing custom models for two tasks:
 document zone classification and reference parsing, and gives information about
-how to include them in the system.
+how to include custom models in the system.
 
 ## Zone classification
 
@@ -47,7 +47,7 @@ classifiers code, default models, and also tools for training new models.
 CERMINE contains three [zone classification
 models](https://github.com/CeON/CERMINE/tree/master/cermine-impl/src/main/resources/pl/edu/icm/cermine),
 one for each zone classifier. The models were trained using 2,500 documents from
-[GROTOAP2 dataset](http://cermine.ceon.pl/grotoap2).
+[GROTOAP2 dataset](https://repod.pon.edu.pl/dataset/grotoap2).
 
 GROTOAP2 contains 13,210 documents generated from [PubMed Central Open Access
 Subset resources](https://www.ncbi.nlm.nih.gov/pmc/tools/openftlist/). The
@@ -63,14 +63,14 @@ which the elements should be read and also zone labels.
 
 Sometimes the default models will not result in satisfactory results, especially
 if we deal with documents with layouts very different from those used for
-training CERMINE’s models. In such cases it is possible retrain zone classifiers
-based on a set of documents in PDF format.
+training CERMINE's models. In such cases it is possible to retrain zone
+classifiers based on a set of documents in PDF format.
 
 #### Preparing the dataset
 
-First, PDF documents have to be transformed in TrueViz format, which is a format
-training operates on. This step is necessary because PDF format does not contain
-the information needed for building the feature representations of the zones.
+First, PDF documents have to be transformed in TrueViz format. This step is
+necessary, because PDF format does not preserve the information needed for
+building the feature representations of the zones.
 
 First, download the latest version of CERMINE's JAR file:
 
@@ -98,13 +98,14 @@ top of the original PDF file.
 The following instructions can be used to download and open SegmEdit tool
 (refer to [SegmEdit
 help](https://github.com/CeON/SegmEdit/blob/master/SegmEditGUI/SEGMEDITGUI-HELP.md)
-for the help regarding needed Python packages). After opening, use SegmEdit to
-correct the contents of the training files. The most important thing is to
-correct the labelling of all the zones.
+for the help regarding needed Python packages).
 
     $ git clone https://github.com/CeON/SegmEdit.git
     $ cd SegmEdit/SegmEditGUI/
     $ ./segmedit.py
+
+After opening, use SegmEdit to correct the contents of the training files. The
+most important thing is to correct the labelling of all the zones.
 
 #### Training the classifiers
 
@@ -113,7 +114,7 @@ commands will train new models for three zone classifiers based on the prepared
 set of TrueViz files:
 
     $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMMetadataBuilder \
-      -input path/to/directory/with/trueviz/ -output model-metadata*
+      -input path/to/directory/with/trueviz/ -output model-metadata
 
     $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMBodyBuilder \
       -input path/to/directory/with/trueviz/ -output model-body
@@ -189,9 +190,9 @@ In CERMINE reference parsing is done in three steps: 1) tokenizing the reference
 string, 2) assigning labels to the individual tokens, and 3) concatenating
 tokens to form final metadata record. Tokenizing and concatenating steps are
 straightforward, but assigning labels is a non-trivial problem. In CERMINE it is
-solved it by a supervised classifier, which analyses the tokens represented by
-bags of features. The features including: terms (tokens themselves), general
-term classes and orthographic properties.
+solved by a supervised classifier, which analyses the tokens represented by bags
+of features. The features include: terms (tokens themselves), general term
+classes and orthographic properties.
 
 Token classification in CERMINE is based on Conditional Random Fields and
 implemented using [GRMM library](http://mallet.cs.umass.edu/grmm/index.php).
@@ -204,15 +205,15 @@ for reference token labelling. The model is composed of two files: a
 GRMM-specific model file, and a list of common terms used as features.
 
 Both files were prepared using [GROTOAP2-citations
-dataset](http://cermine.ceon.pl/grotoap2). The dataset contains 6,858 citations
-in various formats: text (raw strings), BibTeX and NLM JATS (parsed citations
-with metadata).
+dataset](https://repod.pon.edu.pl/dataset/grotoap-citations). The dataset
+contains 6,858 citations in various formats: text (raw strings), BibTeX and NLM
+JATS (parsed citations with metadata).
 
 ### Training
 
 Similarly as in the case of zone classifier, it is possible to prepare a custom
 model for reference parsing. This feature is useful if we deal with a new
-citation format, not familiar to the default model.
+citation format, not known to the default model.
 
 First, we will need a dataset of citations in NLM JATS format. It is an
 XML-based format, in which the raw citation string is preserved, and metadata
@@ -268,7 +269,8 @@ required by GRMM. Now we can train the model:
 
 Since we are interested in training only, we should not need the *--testing*
 parameter. However, GRMM throws an exception if it is not given. It should be
-noted, however, that since we are training and testing on the same dataset, the\evaluation results from the command above are meaningless and should be
+noted, however, that since we are training and testing on the same dataset, the
+evaluation results from the command above are meaningless and should be
 discarded.
 
 This will result in *acrf.ser.gz* file, which is a GRMM model. This model, along

@@ -21,8 +21,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.FileVisitResult;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.CompletionService;  
+import java.util.concurrent.Executors;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -50,8 +58,14 @@ import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 import pl.edu.icm.cermine.tools.timeout.Timeout;
 import pl.edu.icm.cermine.tools.timeout.TimeoutException;
-import pl.edu.icm.cermine.tools.timeout.TimeoutRegister;
+import pl.edu.icm.cermine.tools.timeout.TimeoutRegister; 
 
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 /**
  * Extracts content from PDF files.
  * <p>
@@ -71,6 +85,9 @@ public class ContentExtractor {
     private final InternalContentExtractor extractor;
 
     private Timeout mainTimeout = new Timeout();
+
+
+    private static ArrayList<Path> filePaths =  new ArrayList<Path>();
 
     /**
      * Creates the object with overridden default configuration.
@@ -726,79 +743,51 @@ public class ContentExtractor {
         return Timeout.min(mainTimeout, local);
     }
 
-    public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
-        CommandLineOptionsParser parser = new CommandLineOptionsParser();
-        String error = parser.parse(args);
-        if (error != null) {
-            System.err.println(error + "\n");
-            System.err.println(
-                    "Usage: ContentExtractor -path <path> [optional parameters]\n\n"
-                    + "Tool for extracting metadata and content from PDF files.\n\n"
-                    + "Arguments:\n"
-                    + "  -path <path>           path to a directory containing PDF files\n"
-                    + "  -outputs <list>        (optional) comma-separated list of extraction\n"
-                    + "                         output(s); possible values: \"jats\" (document\n"
-                    + "                         metadata and content in NLM JATS format), \"text\"\n"
-                    + "                         (raw document text), \"zones\" (text zones with\n"
-                    + "                         their labels), \"trueviz\" (geometric structure in\n"
-                    + "                         TrueViz format), \"images\" (images from the\n"
-                    + "                         document); default: \"jats,images\"\n"
-                    + "  -exts <list>           (optional) comma-separated list of extensions of the\n"
-                    + "                         resulting files; the list has to have the same\n"
-                    + "                         length as output list; default: \"cermxml,images\"\n"
-                    + "  -override              override already existing files\n"
-                    + "  -timeout <seconds>     (optional) approximate maximum allowed processing\n"
-                    + "                         time for a PDF file in seconds; by default, no\n"
-                    + "                         timeout is used; the value is approximate because in\n"
-                    + "                         some cases, the program might be allowed to slightly\n"
-                    + "                         exceeded this time, say by a second or two\n"
-                    + "  -configuration <path>	(optional) path to configuration properties file\n"
-                    + "                         see https://github.com/CeON/CERMINE\n"
-                    + "                         for description of available configuration properties\n"
-                    );
-            System.exit(1);
+    private static String parseOutputPath(String outpath, String currentPath) {
+        if (outpath == null) {
+            return currentPath + "/";
+        }
+        return outpath + "/";
+    }
+
+
+    private static class ParallelTask implements Callable<String> {
+        File file;
+        Map<String, String> extensions;
+        boolean override;
+        Long timeoutSeconds;
+        String outpath;
+
+         ParallelTask ( File files, Map<String, String> extensions, boolean override, Long timeoutSeconds, String outpath) { 
+            this.file = files;
+            this.extensions = extensions;
+            this.override = override;
+            this.timeoutSeconds = timeoutSeconds;
+            this.outpath = outpath;
         }
 
-        boolean override = parser.override();
-        Long timeoutSeconds = parser.getTimeout();
-        
-        String path = parser.getPath();
-        Map<String, String> extensions = parser.getTypesAndExtensions();
-
-        File file = new File(path);
-        Collection<File> files = FileUtils.listFiles(file, new String[]{"pdf"}, true);
-
-        ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
-        if (parser.getConfigurationPath() != null) {
-            builder.addConfiguration(parser.getConfigurationPath());
-        }
-        builder.setProperty(ExtractionConfigProperty.IMAGES_EXTRACTION, extensions.containsKey("images"));
-        ExtractionConfigRegister.set(builder.buildConfiguration());
-
-        int i = 0;
-        for (File pdf : files) {
+        public String call () throws ParseException, AnalysisException, IOException, TransformationException {
+            long start = System.currentTimeMillis();
+            float elapsed;
             Map<String, File> outputs = new HashMap<String, File>();
             for (Map.Entry<String, String> entry : extensions.entrySet()) {
-                File outputFile = getOutputFile(pdf, entry.getValue());
+                File outputFile = getOutputFile(outpath, file, entry.getValue());
                 if (override || !outputFile.exists()) {
                     outputs.put(entry.getKey(), outputFile);
                 }
             }
             if (outputs.isEmpty()) {
-                i++;
-                continue;
+                long end = System.currentTimeMillis();
+                elapsed = (end - start) / 1000F;
+                return file.getAbsolutePath() + "; extraction time: " + Math.round(elapsed) + "s";
             }
           
-            long start = System.currentTimeMillis();
-            float elapsed;
-
-            System.out.println("File processed: " + pdf.getPath());
 
             ContentExtractor extractor = null;
             try {
                 extractor = createContentExtractor(timeoutSeconds);
           
-                InputStream in = new FileInputStream(pdf);
+                InputStream in = new FileInputStream(file);
                 extractor.setPDF(in);
                 
                 if (outputs.containsKey("images")) {
@@ -847,20 +836,133 @@ public class ContentExtractor {
                 printException(ex);
             } catch (TimeoutException ex) {
                 printException(ex);
+            }catch (IOException ex) {
+                printException(ex);
+            }catch (Exception ex) {
+                printException(ex);
             } finally {
                 if (extractor != null) {
                     extractor.removeTimeout();
                 }
-                long end = System.currentTimeMillis();
-                elapsed = (end - start) / 1000F;
             }
-
-            i++;
-            int percentage = i * 100 / files.size();
-            System.out.println("Extraction time: " + Math.round(elapsed) + "s");
-            System.out.println("Progress: " + percentage + "% done (" + i + " out of " + files.size() + ")");
-            System.out.println("");
+            long end = System.currentTimeMillis();
+            elapsed = (end - start) / 1000F;
+            return file.getAbsolutePath() + "; extraction time: " + Math.round(elapsed) + "s";
         }
+    }
+
+    public static void main(String[] args) throws ParseException, AnalysisException, IOException, TransformationException {
+        CommandLineOptionsParser parser = new CommandLineOptionsParser();
+        String error = parser.parse(args);
+        if (error != null) {
+            System.err.println(error + "\n");
+            System.err.println(
+                    "Usage: ContentExtractor -path <path> [optional parameters]\n\n"
+                    + "Tool for extracting metadata and content from PDF files.\n\n"
+                    + "Arguments:\n"
+                    + "  -path <path>           path to a directory containing PDF files\n"
+                    + "  -limit <int>           (optional) max number of files to process; default: \"all\"\n"
+                    + "  -workers <int>         (optional) number of workers to do task; default: \"1\"\n"
+                    + "  -outpath <path>        (optional) output file location;  default: \"-path\"\n"
+                    + "  -outputs <list>        (optional) comma-separated list of extraction\n"
+                    + "                         output(s); possible values: \"jats\" (document\n"
+                    + "                         metadata and content in NLM JATS format), \"text\"\n"
+                    + "                         (raw document text), \"zones\" (text zones with\n"
+                    + "                         their labels), \"trueviz\" (geometric structure in\n"
+                    + "                         TrueViz format), \"images\" (images from the\n"
+                    + "                         document); default: \"jats\"\n"
+                    + "  -exts <list>           (optional) comma-separated list of extensions of the\n"
+                    + "                         resulting files; the list has to have the same\n"
+                    + "                         length as output list; default: \"cermxml,images\"\n"
+                    + "  -override              override already existing files\n"
+                    + "  -timeout <seconds>     (optional) approximate maximum allowed processing\n"
+                    + "                         time for a PDF file in seconds; by default, no\n"
+                    + "                         timeout is used; the value is approximate because in\n"
+                    + "                         some cases, the program might be allowed to slightly\n"
+                    + "                         exceeded this time, say by a second or two\n"
+                    + "  -configuration <path>	(optional) path to configuration properties file\n"
+                    + "                         see https://github.com/CeON/CERMINE\n"
+                    + "                         for description of available configuration properties\n"
+                    );
+            System.exit(1);
+        }
+
+        final boolean override = parser.override();
+        final Long timeoutSeconds = parser.getTimeout();
+        
+        String path = parser.getPath();
+        final String outpath = parser.getOutPath();
+        final Map<String, String> extensions = parser.getTypesAndExtensions();
+        final int limit = parser.getLimit();  
+
+        ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
+        if (parser.getConfigurationPath() != null) {
+            builder.addConfiguration(parser.getConfigurationPath());
+        }
+
+        builder.setProperty(ExtractionConfigProperty.IMAGES_EXTRACTION, extensions.containsKey("images"));
+        ExtractionConfigRegister.set(builder.buildConfiguration());
+        final Path startFilePath = Paths.get(path);
+
+        Files.walkFileTree(startFilePath, new SimpleFileVisitor<Path>() {
+            int counter = 0;
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (file.toString().toLowerCase().endsWith(".pdf") && ((limit != -1 && counter < limit) || limit == -1)) {
+                    filePaths.add(file);
+                    counter++;
+                } else if (limit != -1 && counter >= limit) {
+                    return FileVisitResult.SKIP_SIBLINGS;
+                }
+                return FileVisitResult.CONTINUE;
+            }
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
+                if (e == null) {
+                    return FileVisitResult.CONTINUE;
+                } else {
+                    throw e;
+                }
+            }
+        });
+
+
+        int progressCount = 0;
+        int fileLength = filePaths.size();
+        int workers = parser.getWorkers(fileLength);
+        final ExecutorService executor = Executors.newFixedThreadPool(workers);
+        final CompletionService<String> completionService = new ExecutorCompletionService<String>(executor);
+
+        for (Path file : filePaths) {
+            completionService.submit(new ParallelTask(file.toFile(), extensions, override, timeoutSeconds, parseOutputPath(outpath,file.getParent().toString())));
+        }
+
+        long start = System.currentTimeMillis();
+        float elapsed;
+
+        try {
+            for (int t = 0, n = fileLength; t < n; t++) {
+                Future<String> processedFile = completionService.take();
+                System.out.println("File processed : " + processedFile.get());
+                progressCount++;
+                int percentage = progressCount * 100 / fileLength;
+                System.out.println("Progress: " + percentage + "% done (" + progressCount + " out of " + fileLength + ")");
+                System.out.println("");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            if (executor != null) {
+                executor.shutdownNow();
+            }
+        }
+
+        long end = System.currentTimeMillis();
+        elapsed = (end - start) / 1000F;
+        System.out.println("Total extraction time: " + Math.round(elapsed) + "s");
+        
     }
 
     private static ContentExtractor createContentExtractor(Long timeoutSeconds)
@@ -875,8 +977,8 @@ public class ContentExtractor {
         return extractor;
     }
 
-    private static File getOutputFile(File pdf, String ext) {
-        return new File(pdf.getPath().replaceFirst("pdf$", ext));
+    private static File getOutputFile(String outfile, File file, String ext) {
+        return new File(Paths.get(outfile+file.getName().replaceFirst("pdf$", ext)).toString());
     }
     
     private static void printException(Exception ex) {

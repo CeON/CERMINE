@@ -58,9 +58,8 @@ public class CommandLineOptionsParserTest {
         assertEquals("/path/to/pdfs/folder", cmdLineOptionsParser.getPath());
         
         Map<String, String> typesAndExtensions = cmdLineOptionsParser.getTypesAndExtensions();
-        assertEquals(2, typesAndExtensions.size());
+        assertEquals(1, typesAndExtensions.size());
         assertEquals("cermxml", typesAndExtensions.get("jats"));
-        assertEquals("images", typesAndExtensions.get("images"));
         
         assertFalse(cmdLineOptionsParser.override());
         assertNull(cmdLineOptionsParser.getTimeout());
@@ -84,7 +83,10 @@ public class CommandLineOptionsParserTest {
                 "-configuration", "config.properties",
                 "-ext", "xml2",
                 "-str",
-                "-strext", "xml3",});
+                "-strext", "xml3",
+                "-limit", "20",
+                "-outpath", "/path/to/pdfs/folder",
+                "-workers", "1"});
         
         // assert
         assertNull(error);
@@ -104,6 +106,9 @@ public class CommandLineOptionsParserTest {
         assertEquals("xml2", cmdLineOptionsParser.getTextExtension());
         assertTrue(cmdLineOptionsParser.extractStructure());
         assertEquals("xml3", cmdLineOptionsParser.getBxExtension());
+        assertEquals(20, cmdLineOptionsParser.getLimit());
+        assertEquals("/path/to/pdfs/folder", cmdLineOptionsParser.getOutPath());
+        assertEquals(1, cmdLineOptionsParser.getWorkers(20));
     }
     
     @Test
@@ -111,6 +116,7 @@ public class CommandLineOptionsParserTest {
         // execute
         String error = cmdLineOptionsParser.parse(new String[] {
                 "-path", "/path/to/pdfs/folder",
+                "-outpath", "/path/to/pdfs/folder",
                 "-outputs", "jats,zones,trueviz",
                 "-exts", "xml,xml2"});
         

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.*;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.ArrayUtils; 
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -38,6 +38,9 @@ public class CommandLineOptionsParser {
     public CommandLineOptionsParser() {
         options = new Options();
         options.addOption("path", true, "file or directory path");
+        options.addOption("limit", true, "maximum number of files to process");
+        options.addOption("workers", true, "number of workers");
+        options.addOption("outpath", true, "file or directory path for output");
         options.addOption("outputs", true, "types of the output");
         options.addOption("exts", true, "extensions of the output files");
         options.addOption("ext", true, "metadata file extension");
@@ -55,7 +58,7 @@ public class CommandLineOptionsParser {
         if (commandLine.getOptionValue("path") == null) {
             return "\"path\" parameter not specified";
         }
-        
+
         String output = commandLine.getOptionValue("outputs");
         String exts = commandLine.getOptionValue("exts");
         if (output != null) {
@@ -75,6 +78,44 @@ public class CommandLineOptionsParser {
     public String getPath() {
         return commandLine.getOptionValue("path");
     }
+
+    public String getOutPath() {
+        if (!commandLine.hasOption("outpath")) {
+            return null;
+        } else {
+            return commandLine.getOptionValue("outpath");
+        }
+    }
+
+    public int getLimit() {
+        if (!commandLine.hasOption("limit")) {
+            return -1;
+        } else {
+            int value = Integer.parseInt(commandLine.getOptionValue("limit"));
+            if (value < 0) {
+                throw new RuntimeException("The 'limit' value given as a " 
+                        + "command line parameter has to be nonnegative.");
+            }
+            return value;
+        }
+    }
+
+    public int getWorkers(int limit) {
+        if (!commandLine.hasOption("workers")) {
+            return 1;
+        } else {
+            int value = Integer.parseInt(commandLine.getOptionValue("workers"));
+            if (value <= 0) {
+                throw new RuntimeException("The 'workers' value given as a " 
+                        + "command line parameter has to be nonnegative.");
+            }
+
+            if (value > limit) {
+                value = limit;
+            }
+            return value;
+        }
+    }
     
     public Map<String, String> getTypesAndExtensions() {
         Map<String, String> typesAndExts = new HashMap<String, String>();
@@ -84,7 +125,7 @@ public class CommandLineOptionsParser {
         typesAndExts.put("trueviz", "cermstr");
         typesAndExts.put("images", "images");
 
-        String[] types = getStringOptionValue("jats,images", "outputs").split(",");
+        String[] types = getStringOptionValue("jats", "outputs").split(",");
         for (String type: Lists.newArrayList(typesAndExts.keySet())) {
             if (!ArrayUtils.contains(types, type)) {
                 typesAndExts.remove(type);

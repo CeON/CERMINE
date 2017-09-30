@@ -48,7 +48,7 @@ The basic command for processing PDF files is the following:
 
     $ java -cp cermine-impl-<VERSION>-jar-with-dependencies.jar pl.edu.icm.cermine.ContentExtractor -path path/to/directory/with/pdfs/
 
-Additional argument *-outputs* can be used to specify the types of the outputs. The value should be a comma-separated list of one or more of hthe following:
+Additional argument *-outputs* can be used to specify the types of the outputs. The value should be a comma-separated list of one or more of the following:
 
   * *jats* - document metadata and content in NLM JATS format
   * *text* - raw document text with the reading order preserved

@@ -42,15 +42,30 @@ Refer to one of the sections below for details.
 
 The easiest way to process files on a laptop/server is using CERMINE as a standalone application. All you will need is a single JAR file containing all the tools, external libraries and learned models. The latest release can be downloaded from [the repository](http://maven.ceon.pl/artifactory/webapp/#/artifacts/browse/simple/General/kdd-releases/pl/edu/icm/cermine/cermine-impl) (look for a file called `cermine-impl-<VERSION>-jar-with-dependencies.jar`). The current version is [1.13](https://maven.ceon.pl/artifactory/kdd-releases/pl/edu/icm/cermine/cermine-impl/1.13/cermine-impl-1.13-jar-with-dependencies.jar).
 
-The file can be directly used for extraction. The following command will extract the metadata and content from PDF files:
+***Processing PDF documents***
+
+The basic command for processing PDF files is the following:
 
     $ java -cp cermine-impl-<VERSION>-jar-with-dependencies.jar pl.edu.icm.cermine.ContentExtractor -path path/to/directory/with/pdfs/
+
+Additional argument *-outputs* can be used to specify the types of the outputs. The value should be a comma-separated list of one or more of hthe following:
+
+  * *jats* - document metadata and content in NLM JATS format
+  * *text* - raw document text with the reading order preserved
+  * *zones* - text zones of the documents labeled with functional classes
+  * *trueviz* - geometric structure of the document in TrueViz format
+  * *images* - images from the document
+  * *bibtex* - references in BibTeX format
+
+***Processing references***
 
 To extract metadata from a reference string use the following:
 
     $ java -cp cermine-impl-<VERSION-jar-with-dependencies.jar pl.edu.icm.cermine.bibref.CRFBibReferenceParser -reference "the text of the reference"
 
-Finally, to extract metadata from an affiliation string use:
+***Processing affiliations***
+
+To extract metadata from an affiliation string use:
 
     $ java -cp cermine-impl-<VERSION>-jar-with-dependencies.jar pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser -affiliation "the text of the affiliation"
 

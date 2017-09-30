@@ -60,7 +60,7 @@ public class CommandLineOptionsParser {
         String exts = commandLine.getOptionValue("exts");
         if (output != null) {
             List<String> outputs = Lists.newArrayList(output.split(","));
-            outputs.removeAll(Lists.newArrayList("jats", "text", "zones", "trueviz", "images"));
+            outputs.removeAll(Lists.newArrayList("jats", "text", "zones", "trueviz", "images", "bibtex"));
             if (!outputs.isEmpty()) {
                 return "Unknown output types: " + outputs;
             }
@@ -83,6 +83,7 @@ public class CommandLineOptionsParser {
         typesAndExts.put("zones", "cermzones");
         typesAndExts.put("trueviz", "cermstr");
         typesAndExts.put("images", "images");
+        typesAndExts.put("bibtex", "bibtex");
 
         String[] types = getStringOptionValue("jats,images", "outputs").split(",");
         for (String type: Lists.newArrayList(typesAndExts.keySet())) {

@@ -742,7 +742,8 @@ public class ContentExtractor {
                     + "                         (raw document text), \"zones\" (text zones with\n"
                     + "                         their labels), \"trueviz\" (geometric structure in\n"
                     + "                         TrueViz format), \"images\" (images from the\n"
-                    + "                         document); default: \"jats,images\"\n"
+                    + "                         document), \"bibtex\" (references in BibTex format);\n"
+                    + "                         default: \"jats,images\"\n"
                     + "  -exts <list>           (optional) comma-separated list of extensions of the\n"
                     + "                         resulting files; the list has to have the same\n"
                     + "                         length as output list; default: \"cermxml,images\"\n"
@@ -839,6 +840,14 @@ public class ContentExtractor {
                 if (outputs.containsKey("text")) {
                     String text = extractor.getRawFullText();
                     FileUtils.writeStringToFile(outputs.get("text"), text, "UTF-8");
+                }
+                
+                if (outputs.containsKey("bibtex")) {
+                    List<BibEntry> references = extractor.getReferences();
+                    for (BibEntry reference: references) {
+                        FileUtils.writeStringToFile(outputs.get("bibtex"), reference.toBibTeX(), "UTF-8", true);
+                        FileUtils.writeStringToFile(outputs.get("bibtex"), "\n", "UTF-8", true);
+                    }
                 }
                 
             } catch (AnalysisException ex) {

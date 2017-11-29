@@ -109,7 +109,12 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 processAlternativeColorSpace(resources);
 
                 processor.reset();
-                processor.processContent(ContentByteUtils.getContentBytesForPage(reader, pageNumber), resources);
+                try {
+                  processor.processContent(ContentByteUtils.getContentBytesForPage(reader, pageNumber), resources);
+                } catch (com.itextpdf.text.ExceptionConverter ex) {
+                  System.out.println("Failed to parse page" + pageNumber + " ... skipping page!");
+                  continue;
+                }
                 TimeoutRegister.get().check();
             }
 

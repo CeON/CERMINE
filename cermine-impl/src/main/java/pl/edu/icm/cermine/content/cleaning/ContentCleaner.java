@@ -133,33 +133,30 @@ public class ContentCleaner {
         }
     }
      /**
-     * Adapted from: https://gist.github.com/mumumu/5003175
+     * Adapted from: https://stackoverflow.com/questions/4237625
      * This method ensures that the output String has only
      * valid XML unicode characters as specified by the
      * XML 1.0 standard. For reference, please see
-     * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
-     * standard</a>. This method will return an empty
-     * String if the input is null or empty.
+     * http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char
+     * This method will return an empty String if the input is null or empty.
+     * Also handles surrogate pairs.
      *
      * @param in The String whose non-valid characters we want to remove.
      * @return The in String, stripped of non-valid characters.
      */
     private static String skipInvalidXMLChars(String in) {
         StringBuffer out = new StringBuffer();
-        char current;
-
-        if (in == null || ("".equals(in))) {
-          return "";
-        }
         for (int i = 0; i < in.length(); i++) {
-            current = in.charAt(i);
-            if ((current == 0x9) ||
-                (current == 0xA) ||
-                (current == 0xD) ||
-                ((current >= 0x20) && (current <= 0xD7FF)) ||
-                ((current >= 0xE000) && (current <= 0xFFFD)) ||
-                ((current >= 0x10000) && (current <= 0x10FFFF)))
-                out.append(current);
+            int codePoint = in.codePointAt(i);
+            if (codePoint > 0xFFFF) {
+                i++;
+            }
+            if ((codePoint == 0x9) || (codePoint == 0xA) || (codePoint == 0xD)
+                    || ((codePoint >= 0x20) && (codePoint <= 0xD7FF))
+                    || ((codePoint >= 0xE000) && (codePoint <= 0xFFFD))
+                    || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF))) {
+                out.appendCodePoint(codePoint);
+            }
         }
         return out.toString();
     }

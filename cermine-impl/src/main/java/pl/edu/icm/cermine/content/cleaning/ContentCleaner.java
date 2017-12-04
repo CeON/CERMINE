@@ -132,35 +132,7 @@ public class ContentCleaner {
             contentPart.setCleanContentTexts(contentTexts);
         }
     }
-     /**
-     * Adapted from: https://stackoverflow.com/questions/4237625
-     * This method ensures that the output String has only
-     * valid XML unicode characters as specified by the
-     * XML 1.0 standard. For reference, please see
-     * http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char
-     * This method will return an empty String if the input is null or empty.
-     * Also handles surrogate pairs.
-     *
-     * @param in The String whose non-valid characters we want to remove.
-     * @return The in String, stripped of non-valid characters.
-     */
-    private static String skipInvalidXMLChars(String in) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 0; i < in.length(); i++) {
-            int codePoint = in.codePointAt(i);
-            if (codePoint > 0xFFFF) {
-                i++;
-            }
-            if ((codePoint == 0x9) || (codePoint == 0xA) || (codePoint == 0xD)
-                    || ((codePoint >= 0x20) && (codePoint <= 0xD7FF))
-                    || ((codePoint >= 0xE000) && (codePoint <= 0xFFFD))
-                    || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF))) {
-                out.appendCodePoint(codePoint);
-            }
-        }
-        return out.toString();
-    }
-
+    
     public static String cleanOther(String str) {
         if (str == null) {
             return null;
@@ -189,7 +161,7 @@ public class ContentCleaner {
         if (str == null) {
             return null;
         }
-        return skipInvalidXMLChars(cleanOther(cleanLigatures(str)));
+        return cleanOther(cleanLigatures(str));
     }
     
     public static String cleanHyphenationAndBreaks(String str) {

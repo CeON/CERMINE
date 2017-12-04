@@ -29,6 +29,7 @@ import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxLine;
 import pl.edu.icm.cermine.structure.model.BxZoneLabel;
 import pl.edu.icm.cermine.structure.model.BxZoneLabelCategory;
+import pl.edu.icm.cermine.tools.XMLTools;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -98,7 +99,7 @@ public class RawTextWithLabelsExtractor {
     private void addZone(Element root, BxZoneLabel label, String rawText) {
         Element z = new Element("zone");
         z.setAttribute("label", label.toString());
-        z.addContent(ContentCleaner.cleanAll(rawText));
+        z.addContent(ContentCleaner.cleanAll(XMLTools.removeInvalidXMLChars(rawText)));
         root.addContent(z);
     }
     

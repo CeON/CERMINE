@@ -37,6 +37,9 @@ public enum ExtractionConfigProperty {
 
     BIBREF_MODEL_PATH                   ("bibref.model"),
     BIBREF_TERMS_PATH                   ("bibref.terms"),
+    BIBREF_JOURNALS_PATH                ("bibref.journals"),
+    BIBREF_SURNAMES_PATH                ("bibref.surnames"),
+    BIBREF_INSTITUTIONS_PATH            ("bibref.institutions"),
     
     IMAGES_EXTRACTION                   ("images.extraction"),
     

@@ -18,8 +18,10 @@
 
 package pl.edu.icm.cermine.bibref.parsing.tools;
 
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,6 +35,7 @@ import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.cermine.tools.PatternUtils;
+import pl.edu.icm.cermine.tools.PrefixTree;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVector;
 import pl.edu.icm.cermine.tools.classification.general.FeatureVectorBuilder;
 
@@ -60,6 +63,7 @@ public final class CitationUtils {
         TO_BIBENTRY.put(CitationTokenLabel.ISSUE,           BibEntryFieldType.NUMBER);
         TO_BIBENTRY.put(CitationTokenLabel.DOI,             BibEntryFieldType.DOI);
         TO_BIBENTRY.put(CitationTokenLabel.PMID,            BibEntryFieldType.PMID);
+        TO_BIBENTRY.put(CitationTokenLabel.INSTITUTION,     BibEntryFieldType.INSTITUTION);
     }
 
     private CitationUtils() {}
@@ -212,18 +216,57 @@ public final class CitationUtils {
     }
     
     public static List<String> citationToMalletInputFormat(Citation citation) {
-        return citationToMalletInputFormat(citation, null);
+        return citationToMalletInputFormat(citation, null, null, null, null);
     }
     
     public static List<String> citationToMalletInputFormat(Citation citation,
-            Set<String> terms) {
+            Set<String> terms, PrefixTree journals, PrefixTree surnames, PrefixTree insts) {
         List<String> trainingExamples = new ArrayList<String>();
 
         FeatureVectorBuilder vectorBuilder = FeatureList.VECTOR_BUILDER;
         
         List<CitationToken> tokens = citation.getTokens();
         List<FeatureVector> featureVectors = new ArrayList<FeatureVector>();
+        
+        List<String> tokenTexts = new ArrayList<String>();
         for (CitationToken token : tokens) {
+            tokenTexts.add(token.getText().toLowerCase(Locale.ENGLISH));
+        }
+        Set<Integer> journalTokenIndices = new HashSet<Integer>();
+        if (journals != null) {
+            for (int i = 0; i< tokenTexts.size(); i++) {
+                int m = journals.match(Lists.newArrayList(tokenTexts.subList(i, tokenTexts.size())));
+                if (m > 0) {
+                    for (int j = i; j < i + m; j++) {
+                        journalTokenIndices.add(j);
+                    }
+                }  
+            }
+        }
+        Set<Integer> instTokenIndices = new HashSet<Integer>();
+        if (insts != null) {
+            for (int i = 0; i< tokenTexts.size(); i++) {
+                int m = insts.match(Lists.newArrayList(tokenTexts.subList(i, tokenTexts.size())));
+                if (m > 0) {
+                    for (int j = i; j < i + m; j++) {
+                        instTokenIndices.add(j);
+                    }
+                }  
+            }
+        }
+        Set<Integer> surnameTokenIndices = new HashSet<Integer>();
+        if (surnames != null) {
+            for (int i = 0; i< tokenTexts.size(); i++) {
+                int m = surnames.match(Lists.newArrayList(tokenTexts.subList(i, tokenTexts.size())));
+                if (m > 0) {
+                    for (int j = i; j < i + m; j++) {
+                        surnameTokenIndices.add(j);
+                    }
+                }  
+            }
+        }
+        for (int i = 0; i < tokens.size(); i++) {
+            CitationToken token = tokens.get(i);
             FeatureVector featureVector = vectorBuilder.getFeatureVector(token, citation);
             for (String featureName : featureVector.getFeatureNames()) {
                 if (Double.isNaN(featureVector.getValue(featureName))) {
@@ -231,19 +274,48 @@ public final class CitationUtils {
                 }
             }
             if (terms == null) {
-                featureVector.addFeature(token.getText().toLowerCase(Locale.ENGLISH), 1);
+                featureVector.addFeature("W=" + token.getText().toLowerCase(Locale.ENGLISH), 1);
             } else if (terms.contains(token.getText().toLowerCase(Locale.ENGLISH))) {
-                featureVector.addFeature(token.getText().toLowerCase(Locale.ENGLISH), 1);
+                featureVector.addFeature("W=" + token.getText().toLowerCase(Locale.ENGLISH), 1);
+            }
+            if (journalTokenIndices.contains(i)) {
+                featureVector.addFeature("PartOfJournal", 1);
+            }
+            if (surnameTokenIndices.contains(i)) {
+                featureVector.addFeature("PartOfSurname", 1);
+            }
+            if (instTokenIndices.contains(i)) {
+                featureVector.addFeature("PartOfInst", 1);
             }
             featureVectors.add(featureVector);
         }
-        
+  
         for (int i = 0; i < tokens.size(); i++) {
             StringBuilder stringBuilder = new StringBuilder();
             
-            stringBuilder.append(tokens.get(i).getLabel());
+            CitationTokenLabel label = tokens.get(i).getLabel();
+            if (i < tokens.size()-1 && label == CitationTokenLabel.TEXT
+                    && tokens.get(i+1).getLabel() != CitationTokenLabel.TEXT) {
+                label = CitationTokenLabel.getTextBeforeLabel(tokens.get(i+1).getLabel());
+            }
+            if (label != CitationTokenLabel.TEXT && CitationTokenLabel.getNormalizedLabel(label) != CitationTokenLabel.TEXT 
+                    && CitationTokenLabel.getFirstLabel(label) != null
+                    && (i == 0 || label != tokens.get(i-1).getLabel())) {
+                label = CitationTokenLabel.getFirstLabel(label);
+            }
+            stringBuilder.append(label);
             stringBuilder.append(" ---- ");
-               
+             
+            if (i >= 3) {
+                for (String n : featureVectors.get(i-3).getFeatureNames()) {
+                    if (featureVectors.get(i-3).getValue(n) > Double.MIN_VALUE) {
+                        stringBuilder.append(n);
+                        stringBuilder.append("@-3 ");
+                    }
+                }
+            } else {
+                stringBuilder.append("<START>@-3 ");
+            }
             if (i >= 2) {
                 for (String n : featureVectors.get(i-2).getFeatureNames()) {
                     if (featureVectors.get(i-2).getValue(n) > Double.MIN_VALUE) {
@@ -251,6 +323,8 @@ public final class CitationUtils {
                         stringBuilder.append("@-2 ");
                     }
                 }
+            } else {
+                stringBuilder.append("<START>@-2 ");
             }
             if (i >= 1) {
                 for (String n : featureVectors.get(i-1).getFeatureNames()) {
@@ -259,6 +333,8 @@ public final class CitationUtils {
                         stringBuilder.append("@-1 ");
                     }
                 }
+            } else {
+                stringBuilder.append("<START>@-1 ");
             }
             for (String n : featureVectors.get(i).getFeatureNames()) {
                 if (featureVectors.get(i).getValue(n) > Double.MIN_VALUE) {
@@ -273,6 +349,8 @@ public final class CitationUtils {
                         stringBuilder.append("@1 ");
                     }
                 }
+            } else {
+                stringBuilder.append("<END>@1 ");
             }
             if (i < featureVectors.size()-2) {
                 for (String n : featureVectors.get(i+2).getFeatureNames()) {
@@ -281,11 +359,20 @@ public final class CitationUtils {
                         stringBuilder.append("@2 ");
                     }
                 }
+            } else {
+                stringBuilder.append("<END>@2 ");
             }
-            while (stringBuilder.length() > 0 && Character.isWhitespace(stringBuilder.charAt(stringBuilder.length() - 1))) {
-                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            if (i < featureVectors.size()-3) {
+                for (String n : featureVectors.get(i+3).getFeatureNames()) {
+                    if (featureVectors.get(i+3).getValue(n) > Double.MIN_VALUE) {
+                        stringBuilder.append(n);
+                        stringBuilder.append("@3 ");
+                    }
+                }
+            } else {
+                stringBuilder.append("<END>@3 ");
             }
-            trainingExamples.add(stringBuilder.toString());
+            trainingExamples.add(stringBuilder.toString().trim());
         }
         
         return trainingExamples; 

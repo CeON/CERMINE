@@ -32,7 +32,6 @@ public class PrefixTreeTest {
     public void testPT() {
         PrefixTree pt = new PrefixTree(PrefixTree.START_TERM);
         pt.build(Sets.newHashSet("one", "one two", "one two three", "one three", "four five"));
-        pt.print();
         
         assertEquals(1, pt.match(Lists.newArrayList("one")));
         assertEquals(2, pt.match(Lists.newArrayList("one", "two")));

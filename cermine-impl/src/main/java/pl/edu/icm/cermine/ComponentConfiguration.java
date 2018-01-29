@@ -168,8 +168,9 @@ public class ComponentConfiguration {
         this.bibReferenceParser = bibReferenceParser;
     }
     
-    public void setBibReferenceParser(InputStream model, InputStream terms) throws AnalysisException {
-        this.bibReferenceParser = ComponentFactory.getBibReferenceParser(model, terms);
+    public void setBibReferenceParser(InputStream model, InputStream terms,
+            InputStream journals, InputStream surnames, InputStream insts) throws AnalysisException {
+        this.bibReferenceParser = ComponentFactory.getBibReferenceParser(model, terms, journals, surnames, insts);
     }
     
     public void setContentCleaner(ContentCleaner contentCleaner) {

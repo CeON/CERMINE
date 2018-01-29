@@ -58,7 +58,10 @@ public class ReferenceParsingEvaluator {
             System.out.println("Fold "+i);
             String modelPath = modelPathSuffix + i;
             String termsPath = modelPathSuffix + "terms" + i;
-            CRFBibReferenceParser parser = new CRFBibReferenceParser(modelPath, termsPath);
+            String journalsPath = modelPathSuffix + "journals" + i;
+            String surnamesPath = modelPathSuffix + "surnames" + i;
+            String institutionsPath = modelPathSuffix + "institutions" + i;
+            CRFBibReferenceParser parser = new CRFBibReferenceParser(modelPath, termsPath, journalsPath, surnamesPath, institutionsPath);
             
             String testPath = testPathSuffix + i;
 

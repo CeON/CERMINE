@@ -59,7 +59,7 @@ public abstract class AbstractBibReferenceParserTest {
         new BibEntry().setText("  [8] R. Kobayashi, Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities, Math. Ann. 272 (1985), 385-398.")
             .addField(BibEntryFieldType.AUTHOR, "Kobayashi, R.")
             .addField(BibEntryFieldType.TITLE, "Einstein-Kähler V metrics on open Satake V -surfaces with isolated quotient singularities")
-            .addField(BibEntryFieldType.JOURNAL, "Math. Ann.")
+            .addField(BibEntryFieldType.JOURNAL, "Math. Ann")
             .addField(BibEntryFieldType.VOLUME, "272")
             .addField(BibEntryFieldType.YEAR, "1985")
             .addField(BibEntryFieldType.PAGES, "385--398"),
@@ -110,7 +110,7 @@ public abstract class AbstractBibReferenceParserTest {
             .addField(BibEntryFieldType.AUTHOR, "Mahadevan, Sridhar")
             .addField(BibEntryFieldType.AUTHOR, "Connell, Jonathan")
             .addField(BibEntryFieldType.TITLE, "Scaling reinforcement learning to robotics by exploiting the subsumption architecture")
-            .addField(BibEntryFieldType.JOURNAL, "In Proceedings of the Eighth International Workshop on Machine Learning")
+            .addField(BibEntryFieldType.JOURNAL, "Proceedings of the Eighth International Workshop on Machine Learning")
             .addField(BibEntryFieldType.YEAR, "1991"),
         new BibEntry(BibEntryType.ARTICLE)
             .setText("S.D. Whitehead and D. H. Ballard. Active perception and reinforcement learning. Neural Computation, 2 (4): 409-419, 1990.")
@@ -127,7 +127,7 @@ public abstract class AbstractBibReferenceParserTest {
             .addField(BibEntryFieldType.AUTHOR, "Garijo, D.")
             .addField(BibEntryFieldType.AUTHOR, "Gil, Y.")
             .addField(BibEntryFieldType.DOI, "10.1145/2110497.2110504")
-            .addField(BibEntryFieldType.JOURNAL, "In Proceedings of the 6th")
+            .addField(BibEntryFieldType.JOURNAL, "Proceedings of the 6th workshop on Workflows in support of large-scale science")
             .addField(BibEntryFieldType.PAGES, "47--56")
             .addField(BibEntryFieldType.TITLE, "A new approach for publishing workflows: abstractions, standards, and linked data")
             .addField(BibEntryFieldType.YEAR, "2011"),
@@ -135,7 +135,7 @@ public abstract class AbstractBibReferenceParserTest {
             .setText("Van Heuven WJB, Dijkstra T. Language comprehension in the bilingual brain: fMRI and ERP support for psycholinguistic models. Brain Res Rev. 2010; 64(1):104 – 22. doi: 10.1016/j.brainresrev.2010.03.002 PMID: 20227440")
             .addField(BibEntryFieldType.AUTHOR, "Van Heuven, WJB")
             .addField(BibEntryFieldType.AUTHOR, "Dijkstra, T.")
-            .addField(BibEntryFieldType.DOI, "10.1016/j.brainresrev.2010.03")
+            .addField(BibEntryFieldType.DOI, "10.1016/j.brainresrev.2010.03.002")
             .addField(BibEntryFieldType.JOURNAL, "Brain Res Rev")
             .addField(BibEntryFieldType.NUMBER, "1")
             .addField(BibEntryFieldType.PAGES, "104--22")
@@ -164,7 +164,7 @@ public abstract class AbstractBibReferenceParserTest {
                 }
             }
         }
-        
+
         assertTrue((double) parsedFields / (double) allFields >= getMinPercentage());
     }
     

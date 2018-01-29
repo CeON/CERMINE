@@ -41,10 +41,12 @@ import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
 import pl.edu.icm.cermine.bibref.transformers.BibEntryToNLMConverter;
+import pl.edu.icm.cermine.configuration.ExtractionConfigBuilder;
 import pl.edu.icm.cermine.configuration.ExtractionConfigProperty;
 import pl.edu.icm.cermine.configuration.ExtractionConfigRegister;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
+import pl.edu.icm.cermine.tools.PrefixTree;
 import pl.edu.icm.cermine.tools.ResourceUtils;
 
 /**
@@ -59,25 +61,35 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
     private ACRF model;
     
     private Set<String> terms;
+    
+    private Set<String> journals;
+    private Set<String> surnames;
+    private Set<String> insts;
 
-    public CRFBibReferenceParser(String modelFile, String termsFile) throws AnalysisException {
+    public CRFBibReferenceParser(String modelFile, String termsFile, String journalsFile, String surnamesFile, String instsFile) throws AnalysisException {
         InputStream modelIS;
         InputStream termsIS;
+        InputStream journalsIS;
+        InputStream surnamesIS;
+        InputStream instsIS;
         try {
             modelIS = ResourceUtils.openResourceStream(modelFile);
             termsIS = ResourceUtils.openResourceStream(termsFile);
-            loadModels(modelIS, termsIS);
+            journalsIS = ResourceUtils.openResourceStream(journalsFile);
+            surnamesIS = ResourceUtils.openResourceStream(surnamesFile);
+            instsIS = ResourceUtils.openResourceStream(instsFile);
+            loadModels(modelIS, termsIS, journalsIS, surnamesIS, instsIS);
         } catch (IOException ex) {
             throw new AnalysisException("Cannot set model!", ex);
         } finally {
         }
     }
     
-    public CRFBibReferenceParser(InputStream modelIS, InputStream termsIS) throws AnalysisException {
-        loadModels(modelIS, termsIS);
+    public CRFBibReferenceParser(InputStream modelIS, InputStream termsIS, InputStream journalsIS, InputStream surnamesIS, InputStream instsIS) throws AnalysisException {
+        loadModels(modelIS, termsIS, journalsIS, surnamesIS, instsIS);
     }
 
-    public void loadModels(InputStream modelIS, InputStream termsIS) throws AnalysisException {
+    public void loadModels(InputStream modelIS, InputStream termsIS, InputStream journalsIS, InputStream surnamesIS, InputStream instsIS) throws AnalysisException {
         // prevents MALLET from printing info messages
         System.setProperty("java.util.logging.config.file",
             "edu/umass/cs/mallet/base/util/resources/logging.properties");
@@ -106,33 +118,32 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
         } catch (IOException ex) {
             Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common words!", ex);
         }
+        
+        journals = new HashSet<String>();
+        try {
+            journals.addAll(IOUtils.readLines(journalsIS, "UTF-8"));
+        } catch (IOException ex) {
+            Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common journals!", ex);
+        }
+        
+        surnames = new HashSet<String>();
+        try {
+            surnames.addAll(IOUtils.readLines(surnamesIS, "UTF-8"));
+        } catch (IOException ex) {
+            Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common surnames!", ex);
+        }
+        
+        insts = new HashSet<String>();
+        try {
+            insts.addAll(IOUtils.readLines(instsIS, "UTF-8"));
+        } catch (IOException ex) {
+            Logger.getLogger(CRFBibReferenceParser.class.getName()).log(Level.SEVERE, "Cannot load common institutions!", ex);
+        }
     }
     
     @Override
     public BibEntry parseBibReference(String text) throws AnalysisException {
-        if (text.length() > MAX_REFERENCE_LENGTH) {
-            return new BibEntry().setText(text);
-        }
-        
-        if (model == null) {
-            throw new AnalysisException("Model object is not set!");
-        }
-        
-        Citation citation = CitationUtils.stringToCitation(text);
-        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation, terms), "\n");
-        
-        Pipe pipe = model.getInputPipe();
-        InstanceList instanceList = new InstanceList(pipe);
-        instanceList.add(new LineGroupIterator(new StringReader(data), Pattern.compile ("\\s*"), true)); 
-        if (model.getBestLabels(instanceList).isEmpty()) {
-            return new BibEntry().setText(text);
-        }
-        LabelsSequence labelSequence = (LabelsSequence)model.getBestLabels(instanceList).get(0);
-           
-        for (int i = 0; i < labelSequence.size(); i++) {
-            citation.getTokens().get(i).setLabel(CitationTokenLabel.valueOf(labelSequence.get(i).toString()));
-        }
-        
+        Citation citation = parseToTokenList(text);
         return CitationUtils.citationToBibref(citation);
     }
     
@@ -145,15 +156,28 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
             return citation;
         }
         
-        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation, terms), "\n");
+        PrefixTree journalsPt = new PrefixTree(PrefixTree.START_TERM);
+        journalsPt.build(journals);
+        PrefixTree surnamesPt = new PrefixTree(PrefixTree.START_TERM);
+        surnamesPt.build(surnames);
+        PrefixTree instPt = new PrefixTree(PrefixTree.START_TERM);
+        instPt.build(insts);
+        String data = StringUtils.join(CitationUtils.citationToMalletInputFormat(citation, terms, journalsPt, surnamesPt, instPt), "\n");
         
         Pipe pipe = model.getInputPipe();
         InstanceList instanceList = new InstanceList(pipe);
         instanceList.add(new LineGroupIterator(new StringReader(data), Pattern.compile ("\\s*"), true)); 
+        if (model.getBestLabels(instanceList).isEmpty()) {
+            return citation;
+        }
         LabelsSequence labelSequence = (LabelsSequence)model.getBestLabels(instanceList).get(0);
-           
+        
         for (int i = 0; i < labelSequence.size(); i++) {
-            citation.getTokens().get(i).setLabel(CitationTokenLabel.valueOf(labelSequence.get(i).toString()));
+            CitationTokenLabel label = CitationTokenLabel.valueOf(labelSequence.get(i).toString());
+            if (CitationTokenLabel.getNormalizedLabel(label) != null) {
+                label = CitationTokenLabel.getNormalizedLabel(label);
+            }
+            citation.getTokens().get(i).setLabel(label);
         }
         
         return citation;
@@ -161,19 +185,29 @@ public class CRFBibReferenceParser implements BibReferenceParser<BibEntry> {
   
     public static CRFBibReferenceParser getInstance() throws AnalysisException {
         return new CRFBibReferenceParser(ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_MODEL_PATH),
-            ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_TERMS_PATH));
+            ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_TERMS_PATH),
+            ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_JOURNALS_PATH),
+            ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_SURNAMES_PATH),
+            ExtractionConfigRegister.get().getStringProperty(ExtractionConfigProperty.BIBREF_INSTITUTIONS_PATH));
     }
     
     public static void main(String[] args) throws ParseException, AnalysisException, TransformationException {
         Options options = new Options();
         options.addOption("reference", true, "reference text");
         options.addOption("format", true, "output format");
+        options.addOption("configuration", true, "config path");
         
         CommandLineParser clParser = new DefaultParser();
         CommandLine line = clParser.parse(options, args);
         String referenceText = line.getOptionValue("reference");
         String outputFormat = line.getOptionValue("format");
-        
+
+        ExtractionConfigBuilder builder = new ExtractionConfigBuilder();
+        if (line.hasOption("configuration")) {
+            builder.addConfiguration(line.getOptionValue("configuration"));
+        }
+        ExtractionConfigRegister.set(builder.buildConfiguration());
+
         if (referenceText == null || (outputFormat != null && !outputFormat.equals("bibtex") && !outputFormat.equals("nlm"))) {
        		System.err.println("Usage: CRFBibReferenceParser -ref <reference text> [-format <output format>]\n\n"
                              + "Tool for extracting metadata from reference strings.\n\n"

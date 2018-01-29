@@ -1,0 +1,896 @@
+2nd ieee symposium on high - performance computer architecture
+acta orthop scand
+acta psychiatr scand
+adaptive user
+adaptive user support
+advanced language implementation
+advances in neural information processing
+advances in neural information processing structures
+advances in neural information processing systems
+adv cancer res
+adv drug deliv rev
+adv exp med biol
+aging ment health
+ai communications
+aids
+aids res hum retroviruses
+ai magazine
+ajnr am j neuroradiol
+ajr am j roentgenol
+allergy
+altern lab anim
+american naturalist
+am heart j
+am j cardiol
+am j clin nutr
+am j clin pathol
+am j dis child
+am j epidemiol
+am j gastroenterol
+am . j . hum . genet
+am j hum genet
+am j kidney dis
+am j med
+am j med genet
+am j obstet gynecol
+am j ophthalmol
+am j orthoddentofacial orthop
+am j pathol
+am j physiol
+am j physiol cell physiol
+am j physiol heart circ physiol
+am j physiol lung cell mol physiol
+am j prev med
+am j public health
+am j respir cell mol biol
+am j respir crit care med
+am j surg
+am j surg pathol
+am j trop med hyg
+am nat
+am . psychol
+am rev respir dis
+am surg
+anal biochem
+anal chem
+anal quant cytol histol
+analytical chemistry
+angew chem int ed
+angle orthod
+ann agric environ med
+annals of behavioral medicine
+ann emerg med
+ann epidemiol
+ann intern med
+ann neurol
+ann n y acad sci
+ann oncol
+ann plast surg
+ann rheum dis
+ann surg
+ann surg oncol
+ann thorac surg
+annual review of immunology
+annu rev cell dev biol
+annu rev entomol
+annu rev genet
+annu rev immunol
+annu rev microbiol
+annu rev plant biol
+annu rev public health
+antimicrob agents chemother
+antioxid redox signal
+appl environ microbiol
+appl phys lett
+arch environ health
+arch gen psychiatry
+arch intern med
+archives of physical medicine and rehabilitation
+arch neurol
+arch ophthalmol
+arch pathol lab med
+arch surg
+arch virol
+arterioscler thromb vasc biol
+arthritis rheum
+artificial intelligence
+art of humancomputer interface design
+atherosclerosis
+basic res cardiol
+biochem biophys res commun
+biochemistry
+biochem j
+biochem pharmacol
+biochim . biophys . acta
+biochim biophys acta
+bioessays
+bioinformatics
+biol pharm bull
+biol psychiatry
+biol reprod
+biomaterials
+biometrics
+biometrika
+biostatistics
+biotechnol bioeng
+bju int
+blood
+bmc bioinformatics
+bmc biol
+bmc cancer
+bmc genomics
+bmc health services research
+bmc medical informatics and decision making
+bmc microbiol
+bmc public health
+bmj
+bone marrow transplant
+brain lang
+brain res
+breast cancer res
+breast cancer res treat
+british journal of general practice
+br j cancer
+br j dermatol
+br j haematol
+br j nutr
+br j ophthalmol
+br j psychiatry
+br j rheumatol
+br j surg
+bull eur physiopath respir
+bull world health organ
+byte
+ca cancer j clin
+cacm
+cancer
+cancer causes control
+cancer cell
+cancer epidemiol biomarkers prev
+cancer gene ther
+cancer res
+can j surg
+carbon
+carcinogenesis
+cardiovasc res
+case - based reasoning :
+cell
+cell cycle
+cell metab
+cell microbiol
+cell signal
+cell transplant
+cephalalgia
+cereb cortex
+chang gung med j
+chembiochem
+chemosphere
+chemotherapy
+chem senses
+chest
+child adolesc psychiatry ment health
+chinese journal of zoology
+chin med sci j
+chromosoma
+chromosome res
+circ res
+circulation
+cleve clin j med
+clin cancer res
+clin chem
+clin exp nephrol
+clin exp rheumatol
+clinical cancer research
+clin infect dis
+clin j am soc nephrol
+clin microbiol rev
+clin orthop relat res
+clin pharmacol ther
+clin psychol rev
+clin rheumatol
+cmaj
+cochrane database syst rev
+cognition
+cognition and social worlds
+cognitive science
+colloids surf b biointerfaces
+communication of the acm
+communications of acm
+communications of the acm
+communications of the association for computing machinery
+commun inst for fenn
+community dent health
+community dent oral epidemiol
+compiler construction
+computational intelligence
+computational learning theory and natural learning systems , constraints and prospects
+computational linguistics
+computer graphics
+computers and graphics
+computer software
+computer speech and language
+connection science
+constraints
+crit care
+crit care med
+curr biol
+curr . biol
+curr opin biotechnol
+curr opin cell biol
+curr opin genet dev
+curr opin investig drugs
+curr pharm des
+curr top microbiol immunol
+cyberpsychology & behavior
+cytokine
+decision sciences
+dev biol
+development
+diabetes
+diabetes care
+diabet med
+dimacs series in discrete mathematics and theoretical computer science : cliques , colors and satisfiability
+dis aquat organ
+dis colon rectum
+dna cell biol
+dna repair
+dphil thesis
+drug resist updat
+drug saf
+ecological modelling
+ecology
+embo j
+embo rep
+emerg med clin north am
+endocrine reviews
+endocrinology
+entomol exp appl
+environ health
+environ health perspect
+environment and planning b
+environ res
+environ sci technol
+epidemiol infect
+epidemiology
+epilepsia
+escherichia coli and salmonella : cellular and molecular biology
+eukaryot cell
+eur heart j
+eur j appl physiol
+eur j biochem
+eur j cancer
+eur j cardiothorac surg
+eur j hum genet
+eur j immunol
+eur . j . neurosci
+eur j pharmacol
+eur j public health
+eur j radiol
+eur j surg oncol
+european journal of obstetrics & gynecology and reproductive biology
+eur respir j
+eur spine j
+eur urol
+evolution
+exp brain res
+exp cell res
+expert opin biol ther
+expert opin investig drugs
+expert opin ther targets
+exp eye res
+exp neurol
+exp parasitol
+external interfaces working group arpa knowledge sharing initiative
+faseb j
+febs j
+febs lett
+febs letters
+fems microbiol lett
+fems microbiol rev
+forensic sci int
+free radic biol med
+from animals to animats 4 : proceedings of the fourth inte
+from animals to animats : proceedings of the first international conference on simulation of adaptive behavior
+functional ecology
+gan to kagaku ryoho
+gastroenterology
+gastrointest endosc
+gene
+genes brain behav
+genes cells
+genes dev
+genes immun
+genet . epidemiol
+genetics
+genome
+genome biol
+genome res
+genomics
+haematologica
+health educ res
+health law j
+health policy
+health serv res
+heart
+hepatology
+heredity
+hernia
+high altitude medicine & biology
+hippocampus
+histochem cell biol
+histopathology
+hum genet
+hum . mol . genet
+hum mol genet
+hum mutat
+hum pathol
+hum reprod update
+ieee computer
+ieee control systems magazine
+ieee expert
+ieee international conference on acoustics , speech and signal processing
+ieee micro
+ieee spectrum
+ieee transactions on information theory
+ieee transactions on neural networks
+ieee transactions on neural systems and rehabilitation engineering
+ieee transactions on pattern analysis and machine intelligence
+ieee transactions on systems , man , and cybernetics
+ieee trans on information theory
+ieee trans . on pattern analysis and machine intelligence
+ieee trans . pattern anal . mach . intell .
+immunity
+immunol rev
+immunol . today
+infect dis clin north am
+infect immun
+infection and immunity
+information science
+inhal toxicol
+in proceedings from the case - based reasoning workshop
+int arch occup environ health
+intelligent user interfaces
+intensive care audit . london : intensive care society
+intensive care med
+interdisciplinary systems research
+interfaces
+international joint conference on artificial intelligence
+international journal of approximate reasoning
+international journal of drug policy
+international journal of intelligent systems
+international journal of nursing practice
+international workshop on automatic faceand gesture - recognition
+int j biochem cell biol
+int . j . biol . macromol
+int j cancer
+int j card
+int j clin pharmacol ther
+int j epidemiol
+int j ment health syst
+int j obes
+int j oncol
+int j radiat biol
+int j radiat oncol biol phys
+int j syst bacteriol
+int j tuberc lung dis
+intl . conf . gis | from space
+invest ophthalmol vis sci
+j agric food chem
+j allergy clin immunol
+j altern complement med
+jama
+j am acad dermatol
+j . am . chem . soc
+j am chem soc
+j am coll cardiol
+j am coll surg
+j am geriatr soc
+j appl . phys .
+j appl physiol
+j bacteriol
+j . bacteriol
+j . biol . chem
+j biol chem
+j biomech
+j biomol nmr
+j bone joint surg br
+j . cell biol
+j cell biol
+j cell physiol
+j cell sci
+j cereb blood flow metab
+j chem ecol
+j clin endocrinol metab
+j clin epidemiol
+j . clin . invest
+j clin invest
+j clin microbiol
+j clin oncol
+j clin pathol
+j clin psychiatry
+j clin virol
+j . colloid and interface science
+j control release
+j craniofac surg
+j cutan pathol
+j emerg med
+j epidemiol community health
+j eur acad dermatol venereol
+j exp bot
+j . exp . med
+j exp med
+j gastroenterol
+j gastroenterol hepatol
+j gastrointest surg
+j gen intern med
+j gen physiol
+j gen virol
+j gerontol
+j hand surg am
+j healthc qual
+j hepatol
+j hered
+j immigr health
+j immunol
+j . immunol
+j ind microbiol biotechnol
+j infect dis
+j invest dermatol
+j leukoc biol
+j lipid res
+j . math . psychol
+j med ethics
+j med genet
+j med screen
+j med virol
+j . mol . biol
+j mol biol
+j mol diagn
+j . mol . evol
+j nanosci nanotechnol
+j natl cancer inst
+j neurochem
+j neuroimmunol
+j neurol
+j neurooncol
+j neurophysiol
+j neurosci
+j . neurosci
+j neurosurg
+j neurosurg spine
+j nutr
+j occup environ med
+j . of cognitive neurosci .
+j oral maxillofac surg
+j oral rehabil
+j orthop trauma
+journal of
+journal of abnormal child psychology
+journal of antimicrobial chemotherapy
+journal of applied psychology
+journal of artificial intelligence research
+journal of artificial intelligence research 1
+journal of automated reasoning
+journal of biological chemistry
+journal of cognitive neuroscience
+journal of ecology
+journal of food composition and analysis
+journal of general internal medicine
+journal of logic programming
+journal of molecular biology
+journal of molecular medicine
+journal of neurochemistry
+journal of neurocytology
+journal of neurophysiology
+journal of psychiatric research
+journal of psychosomatic research
+journal of symbolic computation
+journal of the american dietetic association
+journal of the american statistical association
+journal of the association for computing machinery
+journal of the royal statistical society b
+j parasitol
+j pathol
+j pediatr surg
+j pharmacol exp ther
+j pharm sci
+j phys chem b
+j pineal res
+j plankton res
+j plast reconstr aesthet surg
+j prosthet dent
+j psychosom res
+j reprod fertil
+j rheumatol
+j shellfish res
+jsls
+j surg oncol
+j theor biol
+j thorac cardiovasc surg
+j trauma
+j urol
+j urology
+j vasc interv radiol
+j virol
+j womens health gend based med
+kidney int
+lab invest
+laboratory investigation ; a journal of technical methods and pathology
+lancet
+lancet oncol
+langmuir
+laryngoscope
+learning to learn
+leukemia
+leuk lymphoma
+machine intelligence
+machine learning
+machine learning , an artificial intelligence approach
+machine learning : an artificial intelligence approach
+machine learning . an artificial intelligence approach
+machine learning an artificial intelligence approach
+machine learning journal
+machine learning of inductive bias
+machine learning : proceedings of teh ninth international conference
+machine learning : proceedings of the eleventh international conference
+machine learning : proceedings of the ninth international conference
+machine learning : proceedings of the ninth international workshop
+machine learning : proceedings of the tenth international conference
+machine learning : proceedings of the thirteenth international conference
+machine learning : proceedings of the twelfth international conference
+macromolecules
+mar biotechnol
+master ' s thesis
+materials letters
+mathematical programming
+maturitas
+mayo clin proc
+measuring oral health and quality of life
+mech ageing dev
+med care
+med clin north am
+medical education
+med j aust
+med j chin pla
+med sci sports exerc
+metabolism
+meth . enzymol
+methods
+methods cell biol
+methods enzymol
+microbiology
+microp mesop mater
+milbank q
+mil med
+mol biol cell
+mol biol evol
+mol cell
+mol . cell
+mol . cell . biol
+mol cell biol
+mol cell endocrinol
+mol ecol
+molecular psychiatry
+mol endocrinol
+mol gen genet
+mol interv
+mol med
+mol microbiol
+mol syst biol
+mutagenesis
+mutat res
+mycologia
+naim - nordisk ai magasin
+nano lett
+nat biotechnol
+nat . biotechnol
+nat . cell biol
+nat genet
+nat . genet
+nat . immunol
+nat med
+nat neurosci
+nat rev cancer
+nat rev genet
+nat rev immunol
+nat . rev . microbiol
+nat rev mol cell biol
+nat rev neurosci
+nat struct mol biol
+nature
+nature genetics
+n engl j med
+neoplasia
+nephrol dial transplant
+neural computation
+neural information processing systems
+neural information systems
+neural networks
+neurochemical research
+neuroimage
+neurology
+neuron
+neuropsychopharmacology
+neurorehabil neural repair
+neuroreport
+neuroscience
+neurosci lett
+neurosurg focus
+new england journal of medicine
+new engl j med
+new generation computing
+new zealand medical journal
+nucleic acid res
+nucleic acids res
+nutr cancer
+n z med j
+obesity
+odontogenic tumors and allied lesions
+oecologia
+of economic theory
+of lecture notes in computer science
+oncogene
+oncologist
+oncology
+ophthalmol clin north am
+ophthalmology
+oral surg oral med oral pathol
+orthopedics
+osteoarthritis cartilage
+osteoporos int
+osterreichische artificial intelligence tagung
+pain
+palliat med
+parasitology
+pathology
+pathol res pract
+pattern recognition
+pattern recognition letters
+pcr protocols : a guide to methods and applications
+pediatr crit care med
+pediatrics
+pediatr nephrol
+pediatr pulmonol
+pediatr radiol
+pediatr res
+peptides
+perception
+perception & psychophysics
+perspectives in plant ecology , evolution and systematics
+pflügers arch
+pharmacogenomics
+pharmacotherapy
+ph . d . dissertation
+ph . d . thesis
+phd thesis
+phd . thesis
+physiol genomics
+physiol . rev
+phys med biol
+phytopathology
+placenta
+plant
+planta
+plant cell
+plant cell rep
+plant j
+plant physiol
+plast reconstr surg
+plos biol
+plos comput biol
+plos genet
+plos one
+plos pathog
+pnas
+police quarterly
+principles of knowledge representation and reasoning : proceedings of the 3rd international conference ( kr - 92 )
+proc . 10th european conf on ai
+proc . 1st int . conf . on principles of knowledge representation and reasoning
+proc . 3rd int . conf . on principles of knowledge representation and reasoning
+proc . 4th int . conf . dexa 1993
+proc . 4th int . conf . on principles of knowledge representation and reasoning
+proc . 4th international workshop on machine learning
+proc . 5th int . conf . computer vision
+proc . 5th intl . conf . mach . learning
+proc . 9th intl . ml conf .
+proc . acm symp . functional programming and computer architecture
+proceedings aaai - 87
+proceedings acm symposium on functional programming and computer architecture
+proceedings , ninth national conference on artificial intelligence
+proceedings of
+proceedings of 3rd european working session on learning
+proceedings of aaai
+proceedings of a workshop on case - based reasoning
+proceedings of ecai 92
+proceedings of ijcai - 89
+proceedings of ijcai 93
+proceedings of interchi ' 93
+proceedings of international joint conference on artificial intelligence
+proceedings of kcsl93 , 3rd international workshop on knowledge compilation and speedup learning
+proceedings of ninth national conference on artificial intelligence
+proceedings of the 10th international conference on machine learning
+proceedings of the 14th international joint conference on artificial intelligence
+proceedings of the 1988 connectionist models summer school
+proceedings of the 1993 international workshop on intelligent user interfaces
+proceedings of the 1994 aaai workshop on case - based reasoning
+proceedings of the 1994 aaai workshop on casebased reasoning
+proceedings of the 21st annual symposium on computer architecture
+proceedings of the 4 th international workshop on machine learning
+proceedings of the 4th international workshop on machine learning
+proceedings of the annual meeting of acl
+proceedings of the case - based reasoning workshop
+proceedings of the eighth international machine learning workshop
+proceedings of the eighth international workshop on machine learning
+proceedings of the eighth national conference on artificial intelligence
+proceedings of the eight international workshop on machine learning
+proceedings of the eleventh international conference on machine learning
+proceedings of the eleventh international joint conference on 39 artificial intelligence
+proceedings of the eleventh international joint conference on artificial intelligence
+proceedings of the fifth international conference on machine learning
+proceedings of the first international conference on multiagent systems ( icmas95 )
+proceedings of the first international conference on principles of knowledge representation and reasoning
+proceedings of the fourteenth acm symposium of the principles of programming languages
+proceedings of the fourteenth annual conference of the cognitive science society
+proceedings of the fourth annual symposium on document analysis and information retrieval
+proceedings of the fourth connectionist models summer school
+proceedings of the fourth international conference on compiler construction
+proceedings of the fourth international conference on compiler construction , lecture notes in computer science
+proceedings of the fourth international conference on genetic algorithms
+proceedings of the fourth international conference on machine learning
+proceedings of the fourth international conference on principles of knowledge representation and reasoning
+proceedings of the fourth international workshop on machine learning
+proceedings of the international workshop on compiler construction ( cc - 92 )
+proceedings of the international workshop on reasoning with uncertainty in robotics
+proceedings of the machine learning conference
+proceedings of the ml92 workshop on biases in inductive learning
+proceedings of the mlt - colt 94 workshop on robot learning
+proceedings of the national academy of sciences of the united states of america
+proceedings of the national conference on artificial intelligence
+proceedings of the ninth annual conference on artificial intelligence
+proceedings of the ninth conference on machine learning
+proceedings of the ninth international conference on machine learning
+proceedings of the ninth international machine learning conference
+proceedings of the ninth national conference on artificial intelligence
+proceedings of the royal society london b ( in press ) .
+proceedings of the second international conference on genetic algorithms
+proceedings of the second international conference on simulation of adaptive behavior : from animals to animats
+proceedings of the seventh international conference on machine learning
+proceedings of the seventh international joint conference on artificial intelligence
+proceedings of the seventh national conference on artificial intelligence
+proceedings of the sixth international workshop on machine learning
+proceedings of the sixth national conference on artificial intelligence
+proceedings of the symposium on object oriented programming emphasizing practical applications
+proceedings of the tenth international conference on artificial intelligence
+proceedings of the tenth international conference on logic programming
+proceedings of the tenth international conference on machine learning
+proceedings of the tenth national conference on artificial intelligence
+proceedings of the third euro - pean working session on learning
+proceedings of the third european working session on learning
+proceedings of the third international conference on genetic algorithms
+proceedings of the third international conference on principles of knowledge representation and reasoning
+proceedings of the third international conference on principles of knowledge representation and reasoning .
+proceedings of the twelfth international conference on machine learning
+proceedings of the twelfth iternational conference on machine learning
+proceedings of the twelfth national conference on articial intelligence
+proceedings of the twelfth national conference on artificial intelligence
+proceedings : second case - based reasoning workshop
+proceedings , tenth international conference on machine learning
+proc . ijcai - 89
+proc natl acad sci
+proc . natl . acad . sci . u . s
+proc . natl . acad . sci . usa
+proc . natl . acad . sci . u . s . a
+proc . natl acad . sci . usa
+proc natl acad sci usa
+proc natl acad sci u s a
+proc . of 1988 euro . working session on learning
+proc . of 5th international workshop on machine learning
+proc . of ecai - 94
+proc . of ieee / rsj / gi international conference on intelligent robots and systems 1994 ( iros ' 94 )
+proc . of ieee / rsj international conference on intelligent robots and systems 1996 ( iros ' 96 )
+proc . of ijcai - 95
+proc . of the 1988 connectionist models summer school
+proc . of the 4 th international workshop on machine learning
+proc . of the 6th int ' l workshop on machine learning
+proc . of the eleventh international joint conf . on artificial intelligence
+proc . of the fourth int . conf . on comp . construct .
+proc . of the international workshop on intelligent user interfaces
+proc . of the national academy of sciences
+proc . of the ninth international workshop on machine learning
+proc . of the ninth national conference on artificial intelligence
+proc . of the second case - based reasoning workshop
+proc . of the second international workshop on multistrategy learning
+proc . of the sixth australian joint conference on ai
+proc . of the sixth national conference on artificial intelligence
+proc . of the third european working session on learning
+proc . of the third international workshop on user modeling
+proc . recomb
+procs . of the 1992 ieee international conference on systems , man , and cybernetics proceedings
+proc . twelfth international conference on machine learning
+production
+prog exp tumor res
+programs in biomedicine
+protein eng
+proteins
+proteomics
+psychol bull
+psychol . rev
+psychopharmacology
+radiographics
+radiother oncol
+reasoning about actions and plans
+reprod biol endocrinol
+respir care
+respir physiol
+resuscitation
+retina
+rev clin esp
+rheumatology
+rna
+robotics and autonomous systems
+science
+science communication
+sci stke
+second symposium on large spatial databases
+semin cell dev biol
+sensors and actuators b
+shavlik and dietterich
+shock
+siam j . comput .
+sigman aaai - 94 workshop : reasoning about the shop floor
+situation theory and its applications
+sixth international workshop on machine learning
+sixth national conference on artificial intelligence
+soc sci med
+soil science society of american journal
+spatial concepts : connecting cognitive theories with formal representations . ecai - 92 workshop .
+spine
+stat appl genet mol biol
+statistics in medicine
+stat med
+stroke
+surface science
+surg
+surg endosc
+surgeon
+surgery
+surg laparosc endosc
+surg laparosc endosc percutan tech
+syst biol
+tech coloproctol
+technical report
+tech . rep .
+the art of human computer interface design
+the authority of experts
+the lancet
+theor appl genet
+theories and methods of spatio - temporal reasoning in geographic space
+thorax
+thyroid
+topics in case - based reasoning
+toxicol lett
+toxicology
+toxicol sci
+transplantation
+tree
+trends biochem sci
+trends biotechnol
+trends cell biol
+trends genet
+trends microbiol
+trends neurosci
+trends parasitol
+tropical animal health
+trop med int health
+urology
+vaccine
+virology
+vision , instruction , and action
+vision research
+wilson bull
+working notes of the aaai - 94 workshop on case - based reasoning
+working notes of the aaai94 workshop on case - based reasoning
+workshop notes : 2nd dimacs challenge
+world j gastroenterol
+world j surg
+yeast

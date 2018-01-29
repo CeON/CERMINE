@@ -707,10 +707,8 @@ Competing interests None.</p>
       <ref id="ref1">
         <mixed-citation>
           1. World Health Organization.
-          <source>World prevalence of anaemia</source>
-          <year>1993</year>
-          <article-title>-2005</article-title>
-          . WHO Global Database on Anaemia. World Health Organization. http://whqlibdoc.who.int/ publications/2008/9789241596657_eng.pdf, (accessed
+          <article-title>World prevalence of anaemia 1993-2005. WHO Global Database on Anaemia</article-title>
+          . World Health Organization. http://whqlibdoc.who.int/ publications/2008/9789241596657_eng.pdf, (accessed
           <year>2008</year>
           ).
         </mixed-citation>
@@ -734,17 +732,14 @@ Competing interests None.</p>
           <year>2007</year>
           ;
           <volume>370</volume>
-          :
-          <fpage>511e20</fpage>
-          .
+          :511e20.
         </mixed-citation>
       </ref>
       <ref id="ref3">
         <mixed-citation>
-          <source>(PMID:</source>
+          (PMID:
           <pub-id pub-id-type="pmid">17693180</pub-id>
-          <source>)</source>
-          , doi:
+          ), doi:
           <pub-id pub-id-type="doi">10.1016/S0140-6736(07)61235-5</pub-id>
           .
         </mixed-citation>
@@ -758,23 +753,21 @@ Competing interests None.</p>
       </ref>
       <ref id="ref5">
         <mixed-citation>
-          <source>Report of an intercountry workshop</source>
-          . http://whqlibdoc.who.int/searo/1994-99/ SEA_NUT_134.
-          <string-name>
-            <surname>pdf</surname>
-          </string-name>
-          (accessed
+          <article-title>Report of an intercountry workshop</article-title>
+          .
+          <source>http://whqlibdoc</source>
+          .who.int/searo/1994-99/ SEA_NUT_134.pdf (accessed
           <year>1995</year>
           ).
         </mixed-citation>
       </ref>
       <ref id="ref6">
         <mixed-citation>
-          World Health Organization, United Nations University,
-          <article-title>The United Nations Children's Fund. Iron deficiency anaemia. Assessment, prevention and control: A guide for programme managers</article-title>
-          . http://whqlibdoc.who.int/hq/2001/WHO_NHD_
-          <fpage>01</fpage>
-          .3.
+          World Health Organization, United Nations University, The United Nations Children's Fund.
+          <article-title>Iron deficiency anaemia. Assessment, prevention and control: A guide for programme managers</article-title>
+          .
+          <source>http://whqlibdoc</source>
+          .who.int/hq/2001/WHO_NHD_01.3.
         </mixed-citation>
       </ref>
       <ref id="ref7">
@@ -868,13 +861,9 @@ Competing interests None.</p>
           <year>2007</year>
           ;
           <volume>102</volume>
-          :
-          <fpage>1808e25</fpage>
-          .
-          <source>(PMID:</source>
+          :1808e25. (PMID:
           <pub-id pub-id-type="pmid">17608775</pub-id>
-          <source>)</source>
-          , doi:
+          ), doi:
           <pub-id pub-id-type="doi">10.1111/j.1572-0241.2007.01393.x</pub-id>
           .
         </mixed-citation>
@@ -882,18 +871,25 @@ Competing interests None.</p>
       <ref id="ref12">
         <mixed-citation>
           <string-name>
-            <surname>L'Abbe´</surname>
+            <given-names>L'</given-names>
+            <surname>Abbe</surname>
+          </string-name>
+          ´
+          <string-name>
             <given-names>KA</given-names>
-          </string-name>
-          ,
-          <string-name>
+            ,
             <surname>Detsky</surname>
-            <given-names>AS</given-names>
+          </string-name>
+          <string-name>
+            <surname>AS</surname>
           </string-name>
           ,
           <string-name>
-            <surname>O'Rourke</surname>
-            <given-names>K.</given-names>
+            <given-names>O</given-names>
+            <surname>'Rourke</surname>
+          </string-name>
+          <string-name>
+            <surname>K.</surname>
           </string-name>
           <article-title>Meta-analysis in clinical research</article-title>
           .
@@ -924,23 +920,15 @@ Competing interests None.</p>
             <given-names>S</given-names>
           </string-name>
           , et al.
-          <article-title>Improving the quality of reports of metaanalyses of randomised controlled trials: the QUOROM statement</article-title>
+          <article-title>Improving the quality of reports of metaanalyses of randomised controlled trials: the QUOROM statement. Quality reporting of Meta-Analyses</article-title>
           .
-          <source>Quality reporting of Meta-Analyses. Lancet</source>
+          <source>Lancet</source>
           <year>1999</year>
           ;
           <volume>354</volume>
-          :
-          <fpage>1896e900</fpage>
-          .
-          <source>(PMID:</source>
+          :1896e900. (PMID:
           <pub-id pub-id-type="pmid">10584742</pub-id>
-          <source>)</source>
-          , doi: 10.1016/ S0140-
-          <volume>6736</volume>
-          (
-          <issue>99</issue>
-          )
+          ), doi: 10.1016/ S0140-6736(99)
           <fpage>04149</fpage>
           -
           <lpage>5</lpage>
@@ -969,13 +957,9 @@ Competing interests None.</p>
           <year>1996</year>
           ;
           <volume>17</volume>
-          :
-          <fpage>1e12</fpage>
-          .
-          <source>(PMID:</source>
+          :1e12. (PMID:
           <pub-id pub-id-type="pmid">8721797</pub-id>
-          <source>)</source>
-          , doi:
+          ), doi:
           <pub-id pub-id-type="doi">10.1016/0197-2456(95)00134-4</pub-id>
           .
         </mixed-citation>
@@ -1023,12 +1007,9 @@ Competing interests None.</p>
           <year>1995</year>
           ;
           <volume>273</volume>
-          : 408e12 (
-          <issue>PMid</issue>
-          :
+          : 408e12 (PMid:
           <pub-id pub-id-type="pmid">7823387</pub-id>
-          ),
-          <source>doi:</source>
+          ), doi:
           <pub-id pub-id-type="doi">10.1001/jama.273.5.408</pub-id>
           .
         </mixed-citation>
@@ -1056,9 +1037,7 @@ Competing interests None.</p>
           <year>1975</year>
           ;
           <volume>231</volume>
-          :1038e42 (
-          <issue>PMid</issue>
-          :
+          :1038e42 (PMid:
           <pub-id pub-id-type="pmid">163386</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1001/jama.231.10.1038</pub-id>
@@ -1079,15 +1058,15 @@ Competing interests None.</p>
           ,
           <string-name>
             <surname>Mosteller</surname>
-            <given-names>F</given-names>
+            <given-names>F.</given-names>
           </string-name>
-          .
           <article-title>How study design affects outcomes in camparisons of therapy. I: medical</article-title>
           .
           <source>Star Med</source>
           <year>1989</year>
           ;
-          <article-title>8:441e54 (PMid:</article-title>
+          <volume>8</volume>
+          :441e54 (PMid:
           <pub-id pub-id-type="pmid">2727468</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1002/sim.4780080408</pub-id>
@@ -1126,15 +1105,11 @@ Competing interests None.</p>
       </ref>
       <ref id="ref20">
         <mixed-citation>
-          <string-name>
-            <surname>BMJ</surname>
-          </string-name>
+          <source>BMJ</source>
           <year>2003</year>
           ;
           <volume>326</volume>
-          :219 (
-          <issue>PMid</issue>
-          :
+          :219 (PMid:
           <pub-id pub-id-type="pmid">12543843</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1136/bmj.326.7382.219</pub-id>
@@ -1153,7 +1128,9 @@ Competing interests None.</p>
             <given-names>S</given-names>
           </string-name>
           :
-          <source>Cochrane Handbook for Systematic Reviews of Interventions Version 5.0.0 [updated February</source>
+          <article-title>Cochrane Handbook for Systematic Reviews of Interventions Version 5</article-title>
+          .
+          <source>0.0 [updated February</source>
           <year>2008</year>
           ]. The Cochrane Collaboration2008 http:// www.cochrane.org/resources/handbook.
         </mixed-citation>
@@ -1172,9 +1149,8 @@ Competing interests None.</p>
           ,
           <string-name>
             <surname>Egger</surname>
-            <given-names>M</given-names>
+            <given-names>M.</given-names>
           </string-name>
-          .
           <article-title>Meta-analysis in STATATM</article-title>
           . In:
           <string-name>
@@ -1191,9 +1167,11 @@ Competing interests None.</p>
             <surname>Altman</surname>
             <given-names>DG</given-names>
           </string-name>
-          , eds. Systematic Reviews in Health Care:
-          <article-title>Meta-analysis in Context</article-title>
-          . London: BMJ Publishing,
+          , eds.
+          <article-title>Systematic Reviews in Health Care: Meta-analysis in Context</article-title>
+          .
+          <source>London: BMJ Publishing</source>
+          ,
           <year>2001</year>
           ;347e69.doi:
           <pub-id pub-id-type="doi">10.1002/9780470693926.ch18</pub-id>
@@ -1241,9 +1219,7 @@ Competing interests None.</p>
           <year>2003</year>
           ;
           <volume>327</volume>
-          :
-          <fpage>557e60</fpage>
-          . (PMid:
+          :557e60. (PMid:
           <pub-id pub-id-type="pmid">12958120</pub-id>
           ), doi: 10.1136/ bmj.327.7414.557.
         </mixed-citation>
@@ -1254,13 +1230,18 @@ Competing interests None.</p>
             <surname>DerSimonian</surname>
             <given-names>R</given-names>
           </string-name>
-          , Laird N.
+          ,
+          <string-name>
+            <surname>Laird</surname>
+            <given-names>N.</given-names>
+          </string-name>
           <article-title>Meta analysis in clinical trials</article-title>
           .
           <source>Controlled Clin Trials</source>
           <year>1986</year>
           ;
-          <article-title>7:177e88 (PMid:</article-title>
+          <volume>7</volume>
+          :177e88 (PMid:
           <pub-id pub-id-type="pmid">3802833</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1016/0197-2456(86)90046-2</pub-id>
@@ -1269,9 +1250,7 @@ Competing interests None.</p>
       </ref>
       <ref id="ref26">
         <mixed-citation>
-          <string-name>
-            <surname>Am J Epidemiol</surname>
-          </string-name>
+          <source>Am J Epidemiol</source>
           <year>1999</year>
           ;
           <volume>150</volume>
@@ -1303,9 +1282,7 @@ Competing interests None.</p>
           <year>1997</year>
           ;
           <volume>315</volume>
-          :629e34 (
-          <issue>PMid</issue>
-          :
+          :629e34 (PMid:
           <pub-id pub-id-type="pmid">9310563</pub-id>
           ).
         </mixed-citation>
@@ -1332,17 +1309,14 @@ Competing interests None.</p>
           <source>Helicobacter</source>
           <year>1999</year>
           ;
-          <article-title>4:135e9 (PMid:</article-title>
+          <volume>4</volume>
+          :135e9 (PMid:
           <pub-id pub-id-type="pmid">10382128</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1046/j.1523</pub-id>
-          -
-          <fpage>5378</fpage>
-          .
+          - 5378.
           <year>1999</year>
-          .
-          <volume>98066</volume>
-          .x.
+          .98066.x.
         </mixed-citation>
       </ref>
       <ref id="ref29">
@@ -1359,8 +1333,9 @@ Competing interests None.</p>
           ,
           <string-name>
             <surname>Bei</surname>
-            <given-names>GP.</given-names>
+            <given-names>GP</given-names>
           </string-name>
+          .
           <article-title>Clinical treatment study of iron deficiency anemia associated Helicobacter pylori infection</article-title>
           .
           <source>J appal clin ediatr</source>
@@ -1368,8 +1343,7 @@ Competing interests None.</p>
           <year>2005</year>
           ;
           <volume>20</volume>
-          :
-          <article-title>30e1 (in chinese).</article-title>
+          :30e1 (in chinese).
         </mixed-citation>
       </ref>
       <ref id="ref30">
@@ -1390,10 +1364,13 @@ Competing interests None.</p>
           </string-name>
           .
           <article-title>Treatment of iron-deficiency anemia in patients with concomitant Helicobacter pylori infection:experience of 68 cases</article-title>
-          . Chin J Contemp Pediatr.
+          .
+          <source>Chin J Contemp Pediatr</source>
+          .
           <year>2005</year>
           ;
-          <article-title>7:429e31 (in chinese).</article-title>
+          <volume>7</volume>
+          :429e31 (in chinese).
         </mixed-citation>
       </ref>
       <ref id="ref31">
@@ -1415,8 +1392,7 @@ Competing interests None.</p>
           <year>2005</year>
           ;
           <volume>15</volume>
-          :
-          <article-title>2969e71 (in chinese).</article-title>
+          : 2969e71 (in chinese).
         </mixed-citation>
       </ref>
       <ref id="ref32">
@@ -1431,8 +1407,7 @@ Competing interests None.</p>
           <year>2006</year>
           ;
           <volume>11</volume>
-          :
-          <article-title>1805e6 (in chinese).</article-title>
+          :1805e6 (in chinese).
         </mixed-citation>
       </ref>
       <ref id="ref33">
@@ -1453,9 +1428,7 @@ Competing interests None.</p>
           <year>2007</year>
           ;
           <volume>13</volume>
-          :5380e3 (
-          <issue>PMid</issue>
-          :
+          :5380e3 (PMid:
           <pub-id pub-id-type="pmid">17879411</pub-id>
           ).
         </mixed-citation>
@@ -1483,9 +1456,7 @@ Competing interests None.</p>
           <year>2007</year>
           ;
           <volume>13</volume>
-          :796e800 (
-          <issue>PMid</issue>
-          :
+          :796e800 (PMid:
           <pub-id pub-id-type="pmid">17278206</pub-id>
           ).
         </mixed-citation>
@@ -1496,9 +1467,7 @@ Competing interests None.</p>
           <year>2008</year>
           ;
           <volume>135</volume>
-          :1534e42 (
-          <issue>PMid</issue>
-          :
+          :1534e42 (PMid:
           <pub-id pub-id-type="pmid">18775429</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1053/j</pub-id>
@@ -1511,9 +1480,7 @@ Competing interests None.</p>
             <surname>gastro.</surname>
           </string-name>
           <year>2008</year>
-          .
-          <volume>07</volume>
-          .030.
+          .07.030.
         </mixed-citation>
       </ref>
       <ref id="ref37">
@@ -1525,7 +1492,11 @@ Competing interests None.</p>
           .
           <article-title>World health organization hemoglobin color scale, a practical answer to a vital need</article-title>
           .
-          <source>Update in Anaesthesia 2002;6/1e6/2.</source>
+          <source>Update in Anaesthesia</source>
+          <year>2002</year>
+          ;
+          <volume>6</volume>
+          /1e6/2.
         </mixed-citation>
       </ref>
       <ref id="ref38">
@@ -1534,16 +1505,18 @@ Competing interests None.</p>
             <surname>Muhsen</surname>
             <given-names>K</given-names>
           </string-name>
-          , Cohen D.
+          ,
+          <string-name>
+            <surname>Cohen</surname>
+            <given-names>D.</given-names>
+          </string-name>
           <article-title>Helicobacter pylori infection and iron stores: a systematic review and meta-analysis</article-title>
           .
           <source>Helicobacter</source>
           <year>2008</year>
           ;
           <volume>13</volume>
-          :323e40 (
-          <issue>PMid</issue>
-          :
+          :323e40 (PMid:
           <pub-id pub-id-type="pmid">19250507</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1111/j.1523-5378.2008.00617.x</pub-id>
@@ -1573,9 +1546,7 @@ Competing interests None.</p>
           <year>2007</year>
           ;
           <volume>56</volume>
-          :1291e5 (
-          <issue>PMid</issue>
-          :
+          :1291e5 (PMid:
           <pub-id pub-id-type="pmid">17344278</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1136/gut.2006.108613</pub-id>
@@ -1605,9 +1576,7 @@ Competing interests None.</p>
           <year>2009</year>
           ;
           <volume>24</volume>
-          :1587e600 (
-          <issue>PMid</issue>
-          :
+          :1587e600 (PMid:
           <pub-id pub-id-type="pmid">19788600</pub-id>
           ), doi:
           <pub-id pub-id-type="doi">10.1111/j.1440-1746.2009.05982.x</pub-id>
@@ -1677,20 +1646,17 @@ Competing interests None.</p>
           ,
           <string-name>
             <surname>Stekel</surname>
-            <given-names>A</given-names>
+            <given-names>A.</given-names>
           </string-name>
-          .
           <article-title>Iron deficiency in infancy and childhood</article-title>
           .
           <source>Am J Clin Nutr</source>
           <year>1980</year>
           ;
           <volume>33</volume>
-          :
-          <article-title>86e118 (PMID</article-title>
+          :86e118 (PMID
           <pub-id pub-id-type="pmid">6986756</pub-id>
-          <article-title>)</article-title>
-          .
+          ).
         </mixed-citation>
       </ref>
     </ref-list>

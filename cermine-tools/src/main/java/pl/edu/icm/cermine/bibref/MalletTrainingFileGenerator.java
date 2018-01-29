@@ -18,7 +18,6 @@
 
 package pl.edu.icm.cermine.bibref;
 
-import com.google.common.collect.Lists;
 import java.io.*;
 import java.util.Map.Entry;
 import java.util.*;
@@ -26,20 +25,29 @@ import org.jdom.JDOMException;
 import org.xml.sax.InputSource;
 import pl.edu.icm.cermine.bibref.parsing.model.Citation;
 import pl.edu.icm.cermine.bibref.parsing.model.CitationToken;
+import pl.edu.icm.cermine.bibref.parsing.model.CitationTokenLabel;
 import pl.edu.icm.cermine.bibref.parsing.tools.CitationUtils;
 import pl.edu.icm.cermine.bibref.parsing.tools.NlmCitationExtractor;
+import pl.edu.icm.cermine.tools.CountMap;
+import pl.edu.icm.cermine.tools.PrefixTree;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
 public final class MalletTrainingFileGenerator {
 
-    private static final int MIN_TERM_COUNT = 5;
+    private static final int MIN_TERM_COUNT = 3;
+    private static final int MIN_JOURNAL_COUNT = 2;
+    private static final int MIN_SURNAME_COUNT = 2;
+    private static final int MIN_INST_COUNT = 1;
 
     public static void main(String[] args) throws JDOMException, IOException {
         File inputFile = new File(args[0]);
         List<Citation> citations = new ArrayList<Citation>();
-        Map<String, Integer> termCounts = new HashMap<String, Integer>();
+        CountMap<String> termCounts = new CountMap<String>();
+        CountMap<String> journalCounts = new CountMap<String>();
+        CountMap<String> surnameCounts = new CountMap<String>();
+        CountMap<String> instCounts = new CountMap<String>();
        
         InputStream is = null;
         try {
@@ -54,40 +62,65 @@ public final class MalletTrainingFileGenerator {
 
         for (Citation citation : citations) {
             for (CitationToken citationToken : citation.getTokens()) {
-                if (citationToken.getText().matches("^[a-zA-Z]+$")) {
-                    String term = citationToken.getText().toLowerCase(Locale.ENGLISH);
-                    if (termCounts.get(term) == null) {
-                        termCounts.put(term, 0);
-                    }
-                    termCounts.put(term, termCounts.get(term) + 1);
+                String term = citationToken.getText().toLowerCase(Locale.ENGLISH);
+                termCounts.add(term);
+            }
+            for (CitationToken citationToken : citation.getConcatenatedTokens()) {
+                String term = citationToken.getText().toLowerCase(Locale.ENGLISH);
+                if (citationToken.getLabel() == CitationTokenLabel.SOURCE) {
+                    journalCounts.add(term);
+                }
+                if (citationToken.getLabel() == CitationTokenLabel.SURNAME) {
+                    surnameCounts.add(term);
+                }
+                if (citationToken.getLabel() == CitationTokenLabel.INSTITUTION) {
+                    instCounts.add(term);
                 }
             }
         }
         
-        List<Entry<String, Integer>> wordCounts = Lists.newArrayList(termCounts.entrySet());
-        Collections.sort(wordCounts, new Comparator<Entry<String, Integer>>() {
-            @Override
-            public int compare(Entry<String, Integer> t1, Entry<String, Integer> t2) {
-                if (t1.getValue().compareTo(t2.getValue()) != 0) {
-                    return t2.getValue().compareTo(t1.getValue());
-                }
-                return t1.getKey().compareTo(t2.getKey());
-            }
-        });
-
+        List<Entry<String, Integer>> wordCounts = termCounts.getSortedEntries(MIN_TERM_COUNT);
         Set<String> additionalFeatures = new HashSet<String>();
         for (Entry<String, Integer> wordCount : wordCounts) {
-            if (wordCount.getValue() > MIN_TERM_COUNT) {
-                additionalFeatures.add(wordCount.getKey());
-            }
+            additionalFeatures.add(wordCount.getKey());
         }
 
+        List<Entry<String, Integer>> jCounts = journalCounts.getSortedEntries(MIN_JOURNAL_COUNT);
+        Set<String> journals = new HashSet<String>();
+        for (Entry<String, Integer> jCount : jCounts) {
+            journals.add(jCount.getKey());
+        }
+        PrefixTree journalTree = new PrefixTree(PrefixTree.START_TERM);
+        journalTree.build(journals);
+
+        List<Entry<String, Integer>> sCounts = surnameCounts.getSortedEntries(MIN_SURNAME_COUNT);
+        Set<String> surnames = new HashSet<String>();
+        for (Entry<String, Integer> sCount : sCounts) {
+            surnames.add(sCount.getKey());
+        }
+        PrefixTree surnameTree = new PrefixTree(PrefixTree.START_TERM);
+        surnameTree.build(surnames);
+        
+        List<Entry<String, Integer>> iCounts = instCounts.getSortedEntries(MIN_INST_COUNT);
+        Set<String> insts = new HashSet<String>();
+        for (Entry<String, Integer> iCount : iCounts) {
+            insts.add(iCount.getKey());
+        }
+        PrefixTree instTree = new PrefixTree(PrefixTree.START_TERM);
+        instTree.build(insts);
+        
         Writer featuresWriter = null;
         Writer termsWriter = null;
+        Writer journalsWriter = null;
+        Writer surnamesWriter = null;
+        Writer instsWriter = null;
             
         try {
             featuresWriter = new OutputStreamWriter(new FileOutputStream(args[1]), "UTF-8");
             termsWriter = new OutputStreamWriter(new FileOutputStream(args[2]), "UTF-8");
+            journalsWriter = new OutputStreamWriter(new FileOutputStream(args[3]), "UTF-8");
+            surnamesWriter = new OutputStreamWriter(new FileOutputStream(args[4]), "UTF-8");
+            instsWriter = new OutputStreamWriter(new FileOutputStream(args[5]), "UTF-8");
 
             for (String s : additionalFeatures) {
                 termsWriter.write(s);
@@ -96,8 +129,29 @@ public final class MalletTrainingFileGenerator {
             termsWriter.flush();
             termsWriter.close();
             
+            for (String s : journals) {
+                journalsWriter.write(s);
+                journalsWriter.write("\n");
+            }
+            journalsWriter.flush();
+            journalsWriter.close();
+            
+            for (String s : surnames) {
+                surnamesWriter.write(s);
+                surnamesWriter.write("\n");
+            }
+            surnamesWriter.flush();
+            surnamesWriter.close();
+            
+            for (String s : insts) {
+                instsWriter.write(s);
+                instsWriter.write("\n");
+            }
+            instsWriter.flush();
+            instsWriter.close();
+            
             for (Citation citation : citations) {
-                List<String> tokens = CitationUtils.citationToMalletInputFormat(citation, additionalFeatures);
+                List<String> tokens = CitationUtils.citationToMalletInputFormat(citation, additionalFeatures, journalTree, surnameTree, instTree);
                 for (String token : tokens) {
                     featuresWriter.write(token);
                     featuresWriter.write("\n");
@@ -107,14 +161,11 @@ public final class MalletTrainingFileGenerator {
 
             featuresWriter.flush();
         } finally {
-            try {
-                if (featuresWriter != null) {
-                    featuresWriter.close();
-                }
-            } finally {
-                if (termsWriter != null) {
-                    termsWriter.close();
-                }
+            if (featuresWriter != null) {
+                featuresWriter.close();
+            }
+            if (termsWriter != null) {
+                termsWriter.close();
             }
         }
     }

@@ -36,17 +36,18 @@ public class BibEntryToNLMConverter implements ModelToModelConverter<BibEntry, E
             new EnumMap<BibEntryFieldType, String>(BibEntryFieldType.class);
 
     static {
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.TITLE,     "article-title");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.CONTENTS,  "named-content");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.EDITION,   "edition");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.PUBLISHER, "publisher-name");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.LOCATION,  "publisher-loc");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.SERIES,    "series");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.JOURNAL,   "source");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.URL,       "uri");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.VOLUME,    "volume");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.YEAR,      "year");
-        BIBENTRY_TO_NLM.put(BibEntryFieldType.NUMBER,    "issue");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.TITLE,        "article-title");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.CONTENTS,     "named-content");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.EDITION,      "edition");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.PUBLISHER,    "publisher-name");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.LOCATION,     "publisher-loc");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.SERIES,       "series");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.JOURNAL,      "source");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.URL,          "uri");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.VOLUME,       "volume");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.YEAR,         "year");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.NUMBER,       "issue");
+        BIBENTRY_TO_NLM.put(BibEntryFieldType.INSTITUTION,  "institution");
     }
    
 

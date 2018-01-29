@@ -199,8 +199,8 @@ public class ComponentFactory {
      * @return parser
      * @throws AnalysisException AnalysisException
      */
-    public static BibReferenceParser<BibEntry> getBibReferenceParser(InputStream model, InputStream terms) throws AnalysisException {
-        return new CRFBibReferenceParser(model, terms);
+    public static BibReferenceParser<BibEntry> getBibReferenceParser(InputStream model, InputStream terms, InputStream journals, InputStream surnames, InputStream insts) throws AnalysisException {
+        return new CRFBibReferenceParser(model, terms, journals, surnames, insts);
     }
 
     /**

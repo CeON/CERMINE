@@ -30,6 +30,7 @@ public class Citation {
 
     private String text;
     private List<CitationToken> tokens;
+    private List<CitationToken> consolidated;
 
     public Citation(String text, List<CitationToken> tokens) {
         this.text = text;
@@ -50,6 +51,35 @@ public class Citation {
 
     public List<CitationToken> getTokens() {
         return tokens;
+    }
+    
+    public List<CitationToken> getConcatenatedTokens() {
+        if (consolidated == null) {
+            consolidated = new ArrayList<CitationToken>();
+            CitationTokenLabel prevLabel = null;
+            String prevText = "";
+            int prevStart = 0;
+            int prevEnd = 0;
+            for (CitationToken token : tokens) {
+                if (prevLabel != token.getLabel()) {
+                    if (prevLabel != null) {
+                        consolidated.add(new CitationToken(prevText, prevStart, prevEnd, prevLabel));
+                    }
+                    prevLabel = token.getLabel();
+                    prevText = token.getText();
+                    prevStart = token.getStartIndex();
+                    prevEnd = token.getEndIndex();
+                } else {
+                    prevEnd = token.getEndIndex();
+                    prevText += " ";
+                    prevText += token.getText();
+                }
+            }
+            if (prevLabel != null) {
+                consolidated.add(new CitationToken(prevText, prevStart, prevEnd, prevLabel));
+            }
+        }
+        return consolidated;
     }
 
     public void setText(String text) {

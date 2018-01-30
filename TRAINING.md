@@ -74,14 +74,12 @@ building the feature representations of the zones.
 
 First, download the latest version of CERMINE's JAR file:
 
-    $ wget http://maven.ceon.pl/artifactory/simple/kdd-snapshots/pl/edu/icm/cermine/cermine-tools/<VERSION>-SNAPSHOT/cermine-tools-<VERSION>-jar-with-dependencies.jar \
-      -O cermine.jar
+    $ wget http://maven.ceon.pl/artifactory/simple/kdd-snapshots/pl/edu/icm/cermine/cermine-tools/<VERSION>-SNAPSHOT/cermine-tools-<VERSION>-jar-with-dependencies.jar -O cermine.jar
 
 Initial TrueViz files can be generated from a set of PDFs using CERMINE's
 extraction tools:
 
-    $ java -cp cermine.jar pl.edu.icm.cermine.ContentExtractor \
-      -path path/to/directory/with/pdfs -outputs trueviz
+    $ java -cp cermine.jar pl.edu.icm.cermine.ContentExtractor -path path/to/directory/with/pdfs -outputs trueviz
 
 This will result in a single **.cermstr* file for every **.pdf* file found in
 the input directory. The new files contain the structure in TrueViz format. Of
@@ -113,14 +111,11 @@ The corrected training files can now be fed to the trainers. The following
 commands will train new models for three zone classifiers based on the prepared
 set of TrueViz files:
 
-    $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMMetadataBuilder \
-      -input path/to/directory/with/trueviz/ -output model-metadata
+    $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMMetadataBuilder -input path/to/directory/with/trueviz/ -output model-metadata
 
-    $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMBodyBuilder \
-      -input path/to/directory/with/trueviz/ -output model-body
+    $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMBodyBuilder -input path/to/directory/with/trueviz/ -output model-body
 
-    $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMInitialBuilder \
-      -input path/to/directory/with/trueviz/ -output model-category
+    $ java -cp cermine.jar pl.edu.icm.cermine.libsvm.training.SVMInitialBuilder -input path/to/directory/with/trueviz/ -output model-category
 
 During the training process, CERMINE reads TrueViz files from the input
 directory, converts all zones to feature vectors and generates an SVM model
@@ -158,8 +153,7 @@ classifiers only, it is enough to provide only the relevant two paths. After
 creating a custom *.properties* file, the path to the file  needs to be given as
 a parameter for the extraction:
 
-    $ java -cp cermine.jar pl.edu.icm.cermine.ContentExtractor \
-      -configuration file.properties -path path/to/directory/with/pdfs/
+    $ java -cp cermine.jar pl.edu.icm.cermine.ContentExtractor -configuration file.properties -path path/to/directory/with/pdfs/
 
 ## Reference parsing
 
@@ -172,7 +166,7 @@ For example, parsing could transform the following string:
 
 into a machine readable version (BibTex format):
 
-    @article{DBLP:journals/ijdar/TkaczykSFDB15,
+    @article{TkaczykSFDB15,
       author    = {Dominika Tkaczyk and
                    Pawel Szostek and
                    Mateusz Fedoryszak and
@@ -245,11 +239,13 @@ from another format, manually or using external XML editing tools.
 Next, we can extract the features from the citation tokens and the dataset
 should be represented in a GRMM-specific training format:
 
-    $ java -cp cermine.jar pl.edu.icm.cermine.bibref.MalletTrainingFileGenerator \
-      input/path/to/dataset output/path/to/GRMM/input output/path/to/terms/list
+    $ java -cp cermine.jar pl.edu.icm.cermine.bibref.MalletTrainingFileGenerator input/path/to/dataset output/path/to/GRMM/input output/path/to/terms.txt output/path/to/journals.txt output/path/to/surnames.txt output/path/to/institutions.txt
 
 This will result in two files: a file with features for GRMM
-(*output/path/to/GRMM/input*) and terms file (*output/path/to/terms/list*).
+(*output/path/to/GRMM/input*) and additional files with lists of: terms
+(*output/path/to/terms.txt*), jorunals (*output/path/to/journals.txt*),
+surnames (*output/path/to/surnames.txt*) and institutions
+(*output/path/to/insts.txt*).
 
 Download GRMM library and build it:
 
@@ -262,10 +258,7 @@ Download GRMM library and build it:
 The last command creates a file with CRF architecture specification, which is
 required by GRMM. Now we can train the model:
 
-    $ java -cp $GRMM/class:$GRMM/lib/mallet-deps.jar:$GRMM/lib/grmm-deps.jar \
-      edu.umass.cs.mallet.grmm.learning.GenericAcrfTui \ 
-      --training output/path/to/GRMM/input --testing output/path/to/GRMM/input \
-      --model-file tmpls.txt
+    $ java -cp $GRMM/class:$GRMM/lib/mallet-deps.jar:$GRMM/lib/grmm-deps.jar edu.umass.cs.mallet.grmm.learning.GenericAcrfTui --training output/path/to/GRMM/input --testing output/path/to/GRMM/input --model-file tmpls.txt
 
 Since we are interested in training only, we should not need the *--testing*
 parameter. However, GRMM throws an exception if it is not given. It should be
@@ -281,4 +274,11 @@ Similarly as in the case of zone classifiers, this is done by providing a custom
     # path to bibref parsing model
     bibref.model=path/to/acrf.ser.gz
     # path to bibref terms list
-    bibref.terms=/output/path/to/terms/list
+    bibref.terms=output/path/to/terms.txt
+    # path to bibref journal list
+    bibref.journals=output/path/to/journals.txt
+    # path to bibref surnames list
+    bibref.surnames=output/path/to/surnames.txt
+    # path to bibref institutions list
+    bibref.institutions=output/path/to/institutions.txt
+

@@ -196,6 +196,9 @@ public class ComponentFactory {
      * 
      * @param model crf model 
      * @param terms terms file
+     * @param journals journals file
+     * @param surnames surnames file
+     * @param insts institutions file
      * @return parser
      * @throws AnalysisException AnalysisException
      */

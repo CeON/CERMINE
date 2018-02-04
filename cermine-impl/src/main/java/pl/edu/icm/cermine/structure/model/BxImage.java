@@ -34,9 +34,15 @@ public class BxImage {
     
     private final BufferedImage image;
 
-    public BxImage(String filename, BufferedImage image) {
+    private final float x;
+
+    private final float y;
+
+    public BxImage(String filename, BufferedImage image, float x, float y) {
         this.filename = filename;
         this.image = image;
+        this.x = x;
+        this.y = y;
     }
 
     public BufferedImage getImage() {
@@ -57,5 +63,13 @@ public class BxImage {
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
-    
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
 }

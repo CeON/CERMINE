@@ -98,8 +98,8 @@ public class ITextCharacterExtractor implements CharacterExtractor {
             PdfContentStreamProcessor processor = new PdfContentStreamProcessor(documentCreator);
             
             for (int pageNumber = 1; pageNumber <= reader.getNumberOfPages(); pageNumber++) {
-                if (frontPagesLimit > 0 && backPagesLimit > 0 && pageNumber > frontPagesLimit 
-                        && pageNumber < reader.getNumberOfPages() - 1 - backPagesLimit) {
+                if (frontPagesLimit >= 0 && backPagesLimit >= 0 && pageNumber > frontPagesLimit
+                        && pageNumber <= reader.getNumberOfPages() - backPagesLimit) {
                     continue;
                 }
                 documentCreator.processNewBxPage(reader.getPageSize(pageNumber));
@@ -363,11 +363,21 @@ public class ITextCharacterExtractor implements CharacterExtractor {
                 return;
             }
             try {
-                BufferedImage bi = iri.getImage().getBufferedImage();
-                if (bi != null && bi.getHeight() > 1 && bi.getWidth() > 1) {
-                    actPage.addImage(new BxImage(
-                            "img_" + pageNumber + "_" + (imageNumber++) + ".png", bi));
+                if (iri.getArea() < 0) {
+                    return;
                 }
+                BufferedImage bi = iri.getImage().getBufferedImage();
+                if (bi == null || bi.getHeight() <= 1 || bi.getWidth() <= 1) {
+                    return;
+                }
+                for (BxImage img : actPage.getImages()) {
+                    if (img.getX() == iri.getStartPoint().get(0) && img.getY() == iri.getStartPoint().get(1)) {
+                        return;
+                    }
+                }
+                actPage.addImage(new BxImage(
+                        "img_" + pageNumber + "_" + (imageNumber++) + ".png", bi,
+                        iri.getStartPoint().get(0), iri.getStartPoint().get(1)));
             } catch (IOException ex) {
             } catch (InvalidImageException ex) {}
         }

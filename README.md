@@ -69,14 +69,6 @@ To extract metadata from an affiliation string use:
 
     $ java -cp cermine-impl-<VERSION>-jar-with-dependencies.jar pl.edu.icm.cermine.metadata.affiliation.CRFAffiliationParser -affiliation "the text of the affiliation"
 
-(OPTIONAL) if you would like to build an executable JAR yourself, clone the project and execute:
-
-    $ cd CERMINE/cermine-impl
-    $ mvn compile assembly:single
-
-This will result in a file `cermine-impl-<VERSION>-jar-with-dependencies.jar` in `cermine-impl/target` directory.
-
-
 **Maven dependency**
 
 CERMINE can be used in Java projects by adding the following dependency and repository to the project's `pom.xml` file:
@@ -131,3 +123,30 @@ To extract metadata from an affiliation string:
 	$ curl -X POST --data "affiliation=the text of the affiliation" \
 	  http://cermine.ceon.pl/parse.do
 
+
+(OPTIONAL) Build & Run from sources
+-------------
+
+If you would like to build an executable JAR yourself, clone the project and follow these steps.
+
+**Preconditions**
+
+- Ensure that Apache Maven is installed (`sudo apt install maven`)
+
+**Build **
+
+```
+$ cd CERMINE/cermine-impl
+$ mvn clean compile assembly:single
+```
+
+Afterwards a new `target` directory is placed within `CERMINE/cermine-impl/` containing a `cermine-impl-<VERSION>-jar-with-dependencies.jar` file. Ensure the file is readable by `java`.
+```
+$ chmod u+x target/cermine-impl-<VERSION>-jar-with-dependencies.jar
+```
+
+**Run**
+
+```
+$ java -cp target/cermine-impl-1.14-SNAPSHOT-jar-with-dependencies.jar pl.edu.icm.cermine.ContentExtractor -path /path/to/pdfs
+```

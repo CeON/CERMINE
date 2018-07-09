@@ -36,6 +36,7 @@ public class DoiEnhancer extends AbstractMultiPatternEnhancer {
 
     private static final List<Pattern> PATTERNS = Lists.newArrayList(
             Pattern.compile("\\bdoi:?\\s*(" + PatternUtils.DOI_PATTERN + ")", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("\\bhttps://doi.org/(" + PatternUtils.DOI_PATTERN + ")", Pattern.CASE_INSENSITIVE),
             Pattern.compile("\\bdx\\.doi\\.org/(" + PatternUtils.DOI_PATTERN + ")", Pattern.CASE_INSENSITIVE)
             );
     private static final Set<BxZoneLabel> SEARCHED_ZONE_LABELS = EnumSet.of(BxZoneLabel.MET_BIB_INFO);

@@ -65,7 +65,7 @@
         <repository>
             <id>google-maven-repository</id>
             <name>Google Maven Repository</name>
-            <url>http://google-maven-repository.googlecode.com/svn/repository/</url>
+            <url>https://google-maven-repository.googlecode.com/svn/repository/</url>
         </repository>
     </repositories>
 

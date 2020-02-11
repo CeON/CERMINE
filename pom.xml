@@ -117,7 +117,7 @@
         <repository>
             <id>yadda</id>
             <name>YADDA project repository</name>
-            <url>http://maven.icm.edu.pl/artifactory/repo</url>
+            <url>https://maven.icm.edu.pl/artifactory/repo</url>
         </repository>
     </repositories>
     <dependencyManagement>
@@ -155,11 +155,11 @@
     <distributionManagement>
         <repository>
             <id>kdd-releases</id>
-            <url>http://maven.ceon.pl/artifactory/kdd-releases</url>
+            <url>https://maven.ceon.pl/artifactory/kdd-releases</url>
         </repository>
         <snapshotRepository>
             <id>kdd-snapshots</id>
-            <url>http://maven.ceon.pl/artifactory/kdd-snapshots</url>
+            <url>https://maven.ceon.pl/artifactory/kdd-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
